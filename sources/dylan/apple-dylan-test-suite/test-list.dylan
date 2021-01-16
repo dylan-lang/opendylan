@@ -8,20 +8,20 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // Operations on Lists
 // pair
 
-define test pair-type (description: "")
+define test pair-type ()
   check-true("", instance?(pair, <function>));
   check-false("", instance?(pair, <generic-function>));
 end test pair-type;
 
 /* pair not implemented in the emulator
-define test pair-0 (description: "")
+define test pair-0 ()
   check-true("", pair(1, 2) = #(1 . 2));
   check-true("", pair(#"a", #(#"b", #"c")) = #(#"a", #"b", #"c"));
   check-true("", pair(#(), #(#"b", #"c")) = #(#(), #"b", #"c"));
@@ -31,12 +31,12 @@ define test pair-0 (description: "")
   check-true("", pair(#"a", pair(#"b", pair(#"c", #()))) = #(#"a", #"b", #"c"));
 end test pair-0;
 */
-define test list-type (description: "")
+define test list-type ()
   check-true("", instance?(list, <function>));
   check-false("", instance?(list, <generic-function>));
 end test list-type;
 
-define test list-0 (description: "")
+define test list-0 ()
  check-true("",  list(1, 2, 3) = #(1, 2, 3));
   check-true("", list() = #());
   check-true("", list(#"a") = #(#"a"));
@@ -44,7 +44,7 @@ define test list-0 (description: "")
   check-true("", list(#(#"a", #"b"), #()) = #(#(#"a", #"b"), #()));
 end test list-0;
 
-define test list-quote-0 (description: "")
+define test list-quote-0 ()
   check-true("", #"john" = #"john");
       let t
         = #(#"john", #(#"quote", #(#"mary", #(#"quote", #(#"joe", #"cindy")), #"bob")), #(#"quote", #(#"joy")));
@@ -52,10 +52,10 @@ define test list-quote-0 (description: "")
       = #(#(#"quote", #(#"mary", #(#"quote", #(#"joe", #"cindy")), #"bob")), #(#"quote", #(#"joy"))));
   check-true("", t.tail.tail.head = #(#"quote", #(#"joy")));
   check-true("", t.tail.tail.head.head = #"quote");
-  
+
 end test list-quote-0;
 
-define test list-ops-2 (description: "")
+define test list-ops-2 ()
   begin
     local method reuse-pair (x, y, x-y)
             if (x = x-y.head & y = x-y.tail)
@@ -78,7 +78,7 @@ define test list-ops-2 (description: "")
   end
 end test list-ops-2;
 
-define test list-ops-3 (description: "")
+define test list-ops-3 ()
   local method reuse-pair (x, y, x-y)
           if (x = x-y.head & y = x-y.tail)
             x-y
@@ -101,7 +101,7 @@ define test list-ops-3 (description: "")
   check-true("", flatten2(#(#(#"a"), #(#"b", #(#"c"), #"d"))) = #(#"a", #"b", #"c", #"d"));
 end test list-ops-3;
 
-define suite test-list-suite () 
+define suite test-list-suite ()
   test pair-type;
 //  test pair-0;
   test list-type;

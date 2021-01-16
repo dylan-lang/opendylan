@@ -9,11 +9,12 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
-define test map-into-7 (description: "Simple-object-vector")
+// Simple-object-vector
+define test map-into-7 ()
   let var = vector(1, 2, 3);
   check-equal("", map-into
     (var,
@@ -31,7 +32,8 @@ define test map-into-7 (description: "Simple-object-vector")
      var);
 end test map-into-7;
 
-define test map-into-8 (description: "String")
+// String
+define test map-into-8 ()
   let var = "ABC";
   check-equal("", map-into
     (var,
@@ -49,13 +51,15 @@ define test map-into-8 (description: "String")
      var);
 end test map-into-8;
 
-define test map-into-9 (description: "with #rest collections")
+// with #rest collections
+define test map-into-9 ()
     let t = #(100, 100, 200, 200);
     map-into(t, \+, t, #(1, 2, 3, 4));
     check-equal("", t, #(101, 102, 203, 204));
 end test map-into-9;
 
-define test map-into-11 (description: "not a new collection")
+// not a new collection
+define test map-into-11 ()
   let col = #(1, 0, 3, 0);
   check-equal("", col, map-into(col, zero?, col));
 end test map-into-11;
@@ -64,7 +68,8 @@ define test any?-type ()
   check-true("", instance?(any?, <generic-function>));
 end test any?-type;
 
-define test any?-0 (description: "list")
+// list
+define test any?-0 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -81,7 +86,8 @@ define test any?-0 (description: "list")
     #f);
 end test any?-0;
 
-define test any?-1 (description: "empty-list")
+// empty-list
+define test any?-1 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -93,7 +99,8 @@ define test any?-1 (description: "empty-list")
    #f);
 end test any?-1;
 
-define test any?-2 (description: "range")
+// range
+define test any?-2 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -114,7 +121,8 @@ define test any?-2 (description: "range")
      #f);
 end test any?-2;
 
-define test any?-3 (description: "deque")
+// deque
+define test any?-3 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -135,7 +143,8 @@ define test any?-3 (description: "deque")
      #f);
 end test any?-3;
 
-define test any?-4 (description: "table")
+// table
+define test any?-4 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -156,7 +165,8 @@ define test any?-4 (description: "table")
      #f);
 end test any?-4;
 
-define test any?-5 (description: "stretchy-vector")
+// stretchy-vector
+define test any?-5 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -177,7 +187,8 @@ define test any?-5 (description: "stretchy-vector")
      #f);
 end test any?-5;
 
-define test any?-6 (description: "simple-object-vector")
+// simple-object-vector
+define test any?-6 ()
   check-equal("", any?(method (e)
          if (e > 5)
            e;
@@ -198,7 +209,8 @@ define test any?-6 (description: "simple-object-vector")
      #f);
 end test any?-6;
 
-define test any?-7 (description: "string")
+// string
+define test any?-7 ()
   check-equal("", any?(method (e)
          if (e = 'c')
            "Yes";
@@ -219,12 +231,14 @@ define test any?-7 (description: "string")
      #f);
 end test any?-7;
 
-define test any?-8 (description: "multiple collections")
+// multiple collections
+define test any?-8 ()
   check-true("", any?(\>, #(1, 2, 3, 4), #(5, 4, 3, 2)));
 end test any?-8;
 
 /* commented out by amit - look at ~amit/dylan/lib/test-suites/issues
-define test any?-9 (description: "with #rest collections")
+// with #rest collections
+define test any?-9 ()
   check-equal("", any?(method (x, y)
          if (instance?(x, <character>) & instance?(y, <vector>))
            pair(x, y);
@@ -237,7 +251,8 @@ define test any?-9 (description: "with #rest collections")
    pair('a', make(<vector>)));
 end test any?-9;
 
-define test any?-10 (description: "only returns 1st value")
+// only returns 1st value
+define test any?-10 ()
     let (a, b)
       = any?(method (x, y)
                if (instance?(x, <character>) & instance?(y, <vector>))
@@ -252,8 +267,9 @@ define test any?-10 (description: "only returns 1st value")
 end test any?-10;
 */
 
-define test any?-11 (description: "Stops on first true return")
-  
+// Stops on first true return
+define test any?-11 ()
+
     let var = 0;
     any?(method (x)
            if ((var := x) = 4)
@@ -270,7 +286,8 @@ define test every?-type ()
   check-true("", instance?(every?, <generic-function>));
 end test every?-type;
 
-define test every?-0 (description: "list")
+// list
+define test every?-0 ()
   check-true("", every?
     (method (e)
        if (e > -5)
@@ -288,7 +305,8 @@ define test every?-0 (description: "list")
        #(1, 2, 3, 4, 5)));
 end test;
 
-define test every?-1 (description: "empty-list")
+// empty-list
+define test every?-1 ()
   check-equal("", every?
     (method (e)
        if (e > 5)
@@ -301,7 +319,8 @@ define test every?-1 (description: "empty-list")
    #t);
 end test every?-1;
 
-define test every?-2 (description: "range")
+// range
+define test every?-2 ()
   check-equal("", every?
     (method (e)
        if (e > -10)
@@ -324,7 +343,8 @@ define test every?-2 (description: "range")
      #f);
 end test every?-2;
 
-define test every?-3 (description: "deque")
+// deque
+define test every?-3 ()
   check-equal("", every?
     (method (e)
        if (e > -5)
@@ -347,7 +367,8 @@ define test every?-3 (description: "deque")
      #f);
 end test every?-3;
 
-define test every?-4 (description: "table")
+// table
+define test every?-4 ()
   check-equal("", every?
     (method (e)
        if (e > -5)
@@ -370,7 +391,8 @@ define test every?-4 (description: "table")
      #f);
 end test every?-4;
 
-define test every?-5 (description: "stretchy-vector")
+// stretchy-vector
+define test every?-5 ()
   check-equal("", every?
     (method (e)
        if (e > -5)
@@ -393,7 +415,8 @@ define test every?-5 (description: "stretchy-vector")
      #f);
 end test every?-5;
 
-define test every?-6 (description: "simple-object-vector")
+// simple-object-vector
+define test every?-6 ()
   check-equal("", every?
     (method (e)
        if (e > -5)
@@ -416,7 +439,8 @@ define test every?-6 (description: "simple-object-vector")
      #f);
 end test every?-6;
 
-define test every?-7 (description: "string")
+// string
+define test every?-7 ()
   check-equal("", every?
     (method (e)
        e = 'c';
@@ -435,7 +459,8 @@ define test every?-7 (description: "string")
      #f);
 end test every?-7;
 
-define test every?-8 (description: "with #rest collections")
+// with #rest collections
+define test every?-8 ()
   check-true("", ~every?
      (method (x, y)
         if (instance?(x, <character>) & instance?(y, <vector>))
@@ -458,9 +483,10 @@ define test every?-8 (description: "with #rest collections")
        #(99, 6, 4, #[], 2)));
 end test every?-8;
 
-define test every?-9 (description: "Stops on first false return")
+// Stops on first false return
+define test every?-9 ()
     let var = 0;
-    check-equal("", 
+    check-equal("",
      begin
       every?
       (method (x)
@@ -480,38 +506,46 @@ define test reduce-type ()
   check-true("", instance?(reduce, <generic-function>));
 end test reduce-type;
 
-define test reduce-0 (description: "list")
+// list
+define test reduce-0 ()
   let high-score = 10;
   check-equal("", reduce(\+, 0, list(1, 2, 3, 4)), 10);
   check-equal("", reduce(max, high-score, #(3, 1, 4, 1, 5, 9)), 10);
   check-equal("", reduce(max, high-score, #(3, 12, 9, 8, 8, 6)), 12);
 end test reduce-0;
 
-define test reduce-1 (description: "empty-list")
+// empty-list
+define test reduce-1 ()
   check-equal("", reduce(\+, 0, #()), 0);
 end test reduce-1;
 
-define test reduce-2 (description: "range")
+// range
+define test reduce-2 ()
   check-equal("", reduce(\+, 0, range(from: -5, below: 5)), -5);
 end test reduce-2;
 
-define test reduce-3 (description: "deque")
+// deque
+define test reduce-3 ()
   check-equal("", reduce(\+, 0, deque-instance(1, 2, 3, 4, 5)), 15);
 end test reduce-3;
 
-define test reduce-4 (description: "table")
+// table
+define test reduce-4 ()
   check-equal("", reduce(\+, 0, table-instance(#(1, 2), #(3, 4), #(5, 6))), 12);
 end test reduce-4;
 
-define test reduce-5 (description: "stretchy-vector")
+// stretchy-vector
+define test reduce-5 ()
   check-equal("", reduce(\+, 0, stretchy-vector-instance(1, 2, 3, 4, 5)), 15);
 end test reduce-5;
 
-define test reduce-6 (description: "simple-object-vector")
+// simple-object-vector
+define test reduce-6 ()
   check-equal("", reduce(\+, 0, vector(1, 2, 3, 4, 5)), 15);
 end test reduce-6;
 
-define test reduce-7 (description: "string")
+// string
+define test reduce-7 ()
   check-equal("", reduce
     (method (l, c)
        pair(c, l);
@@ -527,37 +561,45 @@ define test reduce1-type ()
   check-true("", instance?(reduce1, <generic-function>));
 end test reduce1-type;
 
-define test reduce1-0 (description: "simple cases")
+// simple cases
+define test reduce1-0 ()
   check-true("", #t);
 end test reduce1-0;
 
-define test reduce1-1 (description: "list")
+// list
+define test reduce1-1 ()
   let high-score = 10;
   check-equal("", reduce1(\+, list(1, 2, 3, 4)), 10);
   check-equal("", reduce1(max, list(high-score, 3, 1, 4, 1, 5, 9)), 10);
 end test reduce1-1;
 
-define test reduce1-2 (description: "range")
+// range
+define test reduce1-2 ()
   check-equal("", reduce1(\+, range(from: -5, below: 5)), -5);
 end test reduce1-2;
 
-define test reduce1-3 (description: "deque")
+// deque
+define test reduce1-3 ()
   check-equal("", reduce1(\+, deque-instance(1, 2, 3, 4, 5)), 15);
 end test reduce1-3;
 
-define test reduce1-4 (description: "table")
+// table
+define test reduce1-4 ()
   check-equal("", reduce1(\+, table-instance(#(1, 2), #(3, 4), #(5, 6))), 12);
 end test reduce1-4;
 
-define test reduce1-5 (description: "stretchy-vector")
+// stretchy-vector
+define test reduce1-5 ()
   check-equal("", reduce1(\+, stretchy-vector-instance(1, 2, 3, 4, 5)), 15);
 end test reduce1-5;
 
-define test reduce1-6 (description: "simple-object-vector")
+// simple-object-vector
+define test reduce1-6 ()
   check-equal("", reduce1(\+, vector(1, 2, 3, 4, 5)), 15);
 end test reduce1-6;
 
-define test reduce1-7 (description: "string")
+// string
+define test reduce1-7 ()
   check-equal("", reduce1
     (method (l, c)
        pair(c, l);
@@ -566,8 +608,8 @@ define test reduce1-7 (description: "string")
        pair('o', pair('l', pair('l', pair('e', 'H')))));
 end test reduce1-7;
 
-define test reduce1-8
-  (description: "this should work like reduce w foo as init-val and empty list")
+// this should work like reduce w foo as init-val and empty list
+define test reduce1-8 ()
   check-equal("", reduce1(\+, #(#"foo")), #"foo");
 end test reduce1-8;
 
@@ -577,41 +619,49 @@ end test member?-type;
 
 // note -- must return a boolean, see design change note #16
 
-define test member?-0 (description: "list")
+// list
+define test member?-0 ()
   check-equal("", member?(5, list(1, 2, 3, 4, 5, 6)), #t);
   check-true("", ~member?(5, list(1, 2, 3, 4)));
 end test member?-0;
 
-define test member?-1 (description: "empty-list")
+// empty-list
+define test member?-1 ()
   check-true("", ~member?(5, #()));
 end test member?-1;
 
-define test member?-2 (description: "range")
+// range
+define test member?-2 ()
   check-equal("", member?(5, range(from: -5, below: 6)), #t);
   check-true("", ~member?(5, range(from: -5, below: 5)));
 end test member?-2;
 
-define test member?-3 (description: "deque")
+// deque
+define test member?-3 ()
   check-equal("", member?(5, deque-instance(1, 2, 3, 4, 5, 6)), #t);
   check-true("", ~member?(5, deque-instance(1, 2, 3, 4)));
 end test member?-3;
 
-define test member?-4 (description: "deque")
+// deque
+define test member?-4 ()
   check-equal("", member?(6, table-instance(#(1, 2), #(3, 4), #(5, 6))), #t);
   check-true("", ~member?(5, table-instance(#(1, 2), #(3, 4), #(5, 6))));
 end test member?-4;
 
-define test member?-5 (description: "stretchy-vector")
+// stretchy-vector
+define test member?-5 ()
   check-equal("", member?(6, stretchy-vector-instance(1, 2, 3, 4, 5, 6)), #t);
   check-true("", ~member?(5, stretchy-vector-instance(1, 2, 3, 4)));
 end test member?-5;
 
-define test member?-6 (description: "simple-object-vector")
+// simple-object-vector
+define test member?-6 ()
   check-equal("", member?(6, vector(1, 2, 3, 4, 5, 6)), #t);
   check-true("", ~member?(5, vector(1, 2, 3, 4)));
 end test member?-6;
 
-define test member?-7 (description: "string")
+// string
+define test member?-7 ()
   check-equal("", member?('c', "abcdef"), #t );
   check-true("", ~member?('c', "abdef"));
 end test member?-7;

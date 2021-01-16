@@ -8,13 +8,14 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // Chapter 10. Functions
 
-define test method-0 (description: "does it return a <method>?")
+// does it return a <method>?
+define test method-0 ()
   check("", instance?,
      method (a, b)
        1 + 2
@@ -22,7 +23,8 @@ define test method-0 (description: "does it return a <method>?")
      <method>);
 end test \method-0;
 
-define test method-1 (description: "Does it do something reasonable")
+// Does it do something reasonable
+define test method-1 ()
   check-equal("", method (a, b)
     a + b
   end (4, 5),
@@ -37,10 +39,10 @@ define test method-1 (description: "Does it do something reasonable")
    , 9);
 end test method-1;
 
-define test bind-methods-0 (description: "") 
+define test bind-methods-0 ()
 check("", \=, #(1, 2, 3, 4, 5),
   do (method (s :: <sequence>)
-    local method plus-rev (seq1) 
+    local method plus-rev (seq1)
        map(\+, seq1, seq1.reverse)
     end method plus-rev;
     local method same-element? (seq2 :: <sequence>)
@@ -83,7 +85,8 @@ end;
 // Something seems to be wrong with add-method
 // wonder why this is not working
 
-define test ambiguous-method-1 (description: "unambiguous calls")
+// unambiguous calls
+define test ambiguous-method-1 ()
   let type1 = limited(<integer>, min: 1, max: 10);
   let type2 = limited(<integer>, min: 0, max: 7);
   let f = make(<generic-function>);
@@ -107,8 +110,8 @@ define test ambiguous-method-1 (description: "unambiguous calls")
   check-equal("", f(5), #"five");
 end test ambiguous-method-1;
 
-define test ambiguous-method-2
-  (signal: <error>, description: "error on ambiguous method")
+// error on ambiguous method
+define test ambiguous-method-2 ()
   let type1 = limited(<integer>, min: 1, max: 10);
   let type2 = limited(<integer>, min: 0, max: 7);
   let f = make(<generic-function>);
@@ -132,28 +135,28 @@ end test ambiguous-method-2;
 
 // add-method (86)
 
-define test add-method-type (description: "")
+define test add-method-type ()
   check("", instance?, add-method, <generic-function>);
 end test add-method-type;
 
-define test sorted-applicable-methods-type (description: "")
+define test sorted-applicable-methods-type ()
   check("", instance?, sorted-applicable-methods, <generic-function>);
 end test sorted-applicable-methods-type;
 
 // freeze-methods
 // generic-function-methods
 
-define test generic-function-methods-0 (description: "")
+define test generic-function-methods-0 ()
   check-true("", ~deque-instance.generic-function-methods.empty?);
 end test generic-function-methods-0;
 
-define test generic-function-methods-type (description: "")
+define test generic-function-methods-type ()
   check("", instance?, generic-function-methods, <generic-function>);
 end test generic-function-methods-type;
 
 // function-arguments
 
-define test function-arguments-0 (description: "")
+define test function-arguments-0 ()
   check-equal("", function-arguments
     (method (a, b)
        list(a, b)
@@ -161,11 +164,11 @@ define test function-arguments-0 (description: "")
   2);
 end test function-arguments-0;
 
-define test function-arguments-1 (disabled: #t, #"description", "")
+define test function-arguments-1 (/* disabled: #t */)
   begin
     let (req-no, rest-bool, kwd-seq) = withdraw.function-arguments;
-    check-equal("", req-no, 2); 
-    check-equal("", rest-bool, #t); 
+    check-equal("", req-no, 2);
+    check-equal("", rest-bool, #t);
     check-equal("", kwd-seq, #(#"passwd"));
   end
 end test function-arguments-1;
@@ -174,25 +177,25 @@ end test function-arguments-1;
 
 // applicable-method?
 
-define test applicable-method?-type (description: "")
+define test applicable-method?-type ()
   check("", instance?, applicable-method?, <function>);
 end test applicable-method?-type;
 
 // find-method
 
-define test find-method-type (description: "")
+define test find-method-type ()
   check("", instance?, find-method, <function>);
 end test find-method-type;
 
 // method-specializers
 
-define test method-specializers-type (description: "")
+define test method-specializers-type ()
   check("", instance?, method-specializers, <generic-function>);
 end test method-specializers-type;
 
 // remove-method
 
-define test remove-method-type (description: "")
+define test remove-method-type ()
   check("", instance?, remove-method, <function>);
 end test remove-method-type;
 
@@ -210,7 +213,7 @@ define suite test-function-suite ()
   test generic-function-methods-type;
   test function-arguments-0;
   test function-arguments-1;
-  test applicable-method?-type; 
+  test applicable-method?-type;
   test find-method-type;
   test method-specializers-type;
   test remove-method-type;

@@ -8,14 +8,15 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // Chapter 13. Conditions
 
 
-define test condition-classes (description: "see if they exist")
+// see if they exist
+define test condition-classes ()
   check-true("", every?
     (rcurry(instance?, <class>),
      list(<condition>,
@@ -30,8 +31,9 @@ define test condition-classes (description: "see if they exist")
 //          <abort>)));
 end test condition-classes;
 
+// check superclasses for each condition class
 define test condition-classes-hierarchy
-  (description: "check superclasses for each condition class")
+  ()
   check-true("", every?
     (method (x)
        every?(curry(subtype?, x.first), x.tail)
@@ -49,7 +51,7 @@ define test condition-classes-hierarchy
           list(<restart>, <condition>))));
 end test condition-classes-hierarchy;
 
-define test simple-error-slots (description: "")
+define test simple-error-slots ()
   let e
     = make(<simple-error>,
            format-string: "This is a test.",
@@ -58,12 +60,12 @@ define test simple-error-slots (description: "")
   check-true("", #(1, 2, 3) = e.condition-format-arguments);
 end test simple-error-slots;
 
-define test type-error-slots (description: "")
+define test type-error-slots ()
   let e = make(<type-error>, value: 7, type: <string>);
   check-true("", 7 = e.type-error-value & <string> = e.type-error-expected-type);
 end test type-error-slots;
 
-define test simple-warning-slots (description: "")
+define test simple-warning-slots ()
   let e
     = make(<simple-warning>,
            format-string: "This is a test.",
@@ -72,8 +74,8 @@ define test simple-warning-slots (description: "")
   check-true("", #(1, 2, 3) = e.condition-format-arguments);
 end test simple-warning-slots;
 
-define test restart-slots
-  (description: "condition: is accepted by <restart>, but ignored for now")
+// condition: is accepted by <restart>, but ignored for now
+define test restart-slots ()
   let e = make(<simple-restart>, condition: #f);
   check-true("", instance?(e, <restart>));
 end test restart-slots;
@@ -88,18 +90,21 @@ end class <test-error>;
 // While making instances of <simple-error> and <simple-warning>
 // the slot format-string seems to be unbound.
 
-define test signal-1 (description: "signal")
+// signal
+define test signal-1 ()
   check-condition("", <error>, signal(make(<test-condition>)));
 end test signal-1;
 
-define test signal-2 (description: "simple-error")
-  check-condition("", <simple-error>, 
+// simple-error
+define test signal-2 ()
+  check-condition("", <simple-error>,
 		  signal(make(<test-error>, format-string: "Just testing.")));
 end test signal-2;
 
-define test signal-3 (description: "simple-warning")
-  check-condition("", <error>, 
-		  signal(make(<simple-warning>, 
+// simple-warning
+define test signal-3 ()
+  check-condition("", <error>,
+		  signal(make(<simple-warning>,
 			      format-string: "Just testing.")))
 end test signal-3;
 
@@ -115,61 +120,67 @@ end method default-handler;
 // be caught by the default-handler for <catcher-test-condition>
 //
 
-define test signal-4
-  (description: "default handler called by default")
+// default handler called by default
+define test signal-4 ()
   check-true("", signal(make(<catcher-test-condition>)) = #"catcher");
 end test signal-4;
 
 // Are signal and error really supposed to return true here???
 
-define test signal-5 (description: "string, no args")
+// string, no args
+define test signal-5 ()
   check-condition("", <simple-warning>, signal("Just testing."));
 end test signal-5;
 
-define test signal-6
-  (description: "string, some args")
+// string, some args
+define test signal-6 ()
   check-condition("", <simple-error>, signal("Just testing.", 1, 2, 3));
 end test signal-6;
 
-define test error-1 (description: "")
+define test error-1 ()
   check-condition("", <test-error>, error(make(<test-error>)));
 end test error-1;
 
-define test error-2 (description: "string, no args")
+// string, no args
+define test error-2 ()
   check-condition("", <error>, error("Just testing."));
 end test error-2;
 
-define test error-3 (description: "string, some args")
+// string, some args
+define test error-3 ()
   check-condition("", <simple-error>, error("Just testing.", 1, 2, 3));
 end test error-3;
 
-define test cerror-1 (description: "")
-  check-condition("", <test-error>, 
+define test cerror-1 ()
+  check-condition("", <test-error>,
 		  cerror("Restart description", make(<test-error>)));
 end test cerror-1;
 
-define test cerror-2 (description: "string, no args")
+// string, no args
+define test cerror-2 ()
   check-condition("", <simple-error>,
 		  cerror("Restart description", "Just testing."));
 end test cerror-2;
 
-define test cerror-3 (description: "string, some args")
+// string, some args
+define test cerror-3 ()
   check-condition("", <simple-error>,
 		  cerror("Restart description", "Just testing.", 1, 2, 3));
 end test cerror-3;
 
-define test check-type-0 (description: "")
+define test check-type-0 ()
   check-condition("", <type-error>, check-type(3, <string>));
 end test check-type-0;
 
 // This is because abort is undefined!!
-//define test abort-0 (description: "")
+//define test abort-0 ()
 //  check-condition("", <abort>, abort());
 //end test abort-0;
 
 // Handler-bind
 /*
-define test handler-bind (description: "No condition to handle")
+// No condition to handle
+define test handler-bind ()
   let (result1, result2, result3)
     = begin
         let handler <simple-error> = method (c, h)
@@ -183,14 +194,16 @@ end test handler-bind;
 
  I dont understand what is being attempted here
 
-define test handler-bind-1 (description: "#f if no forms")
+// #f if no forms
+define test handler-bind-1 ()
   check-false("", let handler <simple-error> = method (c, h)
                                     list(c, h)
                                   end method);
 end test handler-bind-1;
 
 
-define test handler-bind-2 (description: "With condition to handle")
+// With condition to handle
+define test handler-bind-2 ()
   let (result1, result2)
     = begin
         let handler <simple-error> = method (c, h)
@@ -205,7 +218,8 @@ end test handler-bind-2;
 
 // next-handler
 
-define test handler-bind-3 (description: "call the handler in the function")
+// call the handler in the function
+define test handler-bind-3 ()
 
     let handler <simple-error> = method (c, h)
                                    #"outer"
@@ -213,11 +227,12 @@ define test handler-bind-3 (description: "call the handler in the function")
     let handler <simple-error> = method (c, d)
                                    d()
                                  end method;
-  check-equal("", signal(make(<simple-error>)),  
+  check-equal("", signal(make(<simple-error>)),
   #"outer");
 end test handler-bind-3;
 
-define test handler-bind-4 (description: "check test arg")
+// check test arg
+define test handler-bind-4 ()
   check-true("", begin
     let handler <simple-error> = method (c, h)
                                    #"outer"
@@ -258,8 +273,8 @@ end test handler-bind-4;
 
 // handler-case
 
-define test handler-case
-  (description: "signal with string signals simple-warning")
+// signal with string signals simple-warning
+define test handler-case ()
   check-true("", block ()
     signal("hey!")
   exception (<simple-error>)
@@ -276,7 +291,8 @@ define test handler-case
   = #"<simple-warning>");
 end test handler-case;
 
-define test handler-case-1 (description: "but signal can signal anything")
+// but signal can signal anything
+define test handler-case-1 ()
   check-true("", block ()
     signal(make(<simple-restart>))
   exception (<simple-error>)
@@ -293,8 +309,8 @@ define test handler-case-1 (description: "but signal can signal anything")
   = #"<simple-restart>");
 end test handler-case-1;
 
-define test handler-case-2
-  (description: "error with string signals simple-error")
+// error with string signals simple-error
+define test handler-case-2 ()
   check-true("", block ()
     error("hey!")
   exception (<simple-error>)
@@ -311,7 +327,8 @@ define test handler-case-2
   = #"<simple-error>");
 end test handler-case-2;
 
-define test handler-case-3 (description: "but error can signal anything")
+// but error can signal anything
+define test handler-case-3 ()
   check-true("", block ()
     error(make(<type-error>))
   exception (<simple-error>)
@@ -328,8 +345,8 @@ define test handler-case-3 (description: "but error can signal anything")
   = #"<type-error>");
 end test handler-case-3;
 
-define test handler-case-4
-  (description: "cerror with string signals simple-error")
+// cerror with string signals simple-error
+define test handler-case-4 ()
   check-true("", block ()
     cerror("restart", "hey!")
   exception (<simple-error>)
@@ -346,7 +363,8 @@ define test handler-case-4
   = #"<simple-error>");
 end test handler-case-4;
 
-define test handler-case-5 (description: "but cerror can signal anything")
+// but cerror can signal anything
+define test handler-case-5 ()
   check-true("", block ()
     error(make(<abort>))
   exception (<simple-error>)
@@ -363,8 +381,8 @@ define test handler-case-5 (description: "but cerror can signal anything")
   = #"<abort>");
 end test handler-case-5;
 
-define test handler-case-6
-  (description: "check-type with string signals type-error")
+// check-type with string signals type-error
+define test handler-case-6 ()
   check-true("", block ()
     check-type("restart", <integer>)
   exception (<simple-error>)
@@ -381,7 +399,8 @@ define test handler-case-6
   = #"<type-error>");
 end test handler-case-6;
 
-define test handler-case-7 (description: "abort")
+// abort
+define test handler-case-7 ()
   check-true("", block ()
     abort()
   exception (<simple-error>)
@@ -400,8 +419,8 @@ end test handler-case-7;
 
 // default handler
 
-define test default-handler-1
-  (description: "this should return #f and also print a warning")
+// this should return #f and also print a warning
+define test default-handler-1 ()
   check-true("", #f
   = make(<simple-warning>,
          format-string: "This warning is part of the test suite, please ignore.").default-handler);
@@ -410,20 +429,21 @@ end test default-handler-1;
 // <simple-restart> should be able to have default-handler
 // called upon it as <condition> is one of its superclasses
 //
-define test default-handler-2 (signal: <error>, description: "")
+define test default-handler-2 (signal: <error>, )
   check-true("", make(<simple-restart>).default-handler);
 end test default-handler-2;
 
 // restart-query
 
-define test restart-query
-  (description: "there is a default handler for <restart>")
+// there is a default handler for <restart>
+define test restart-query ()
   check-true("", make(<simple-restart>).restart-query); //  do nothing | #t
 end test restart-query;
 
 // do-handler
 
-define test do-handler (description: "check the args to do-handlers")
+// check the args to do-handlers
+define test do-handler ()
   let all-handlers-info = #();
   let handler-fcn
     = method (condition, next-handler)
@@ -457,7 +477,8 @@ define test do-handler (description: "check the args to do-handlers")
      all-handlers-info));
 end test do-handler;
 
-define test do-handler-2 (description: "most recent first, both done")
+// most recent first, both done
+define test do-handler-2 ()
   let all-handlers-info = #();
   let inner-handler-fcn
     = method (condition, next-handler)
@@ -516,7 +537,7 @@ end test do-handler-2;
 // instantiable condition-types.
 //
 
-define test return-allowed? (description: "")
+define test return-allowed? ()
   check-true("", every?
     (method (instantiable-error-type)
        let result = make(instantiable-error-type).return-allowed?;
@@ -533,7 +554,7 @@ end test return-allowed?;
 // instantiable condition-types.
 //
 
-define test return-description (description: "")
+define test return-description ()
   check-true("", every?
     (method (instantiable-error-type)
        let condition = make(instantiable-error-type);
@@ -564,7 +585,7 @@ define suite test-condition-suite ()
   test simple-warning-slots;
   test restart-slots;
   test signal-1;
-  test signal-2;  
+  test signal-2;
   test signal-3;
   test signal-4;
   test signal-5;
@@ -584,7 +605,7 @@ define suite test-condition-suite ()
 //  test handler-bind-4;
 //  test handler-case;
 //  test handler-case-1;
-//  test handler-case-2; 
+//  test handler-case-2;
 //  test handler-case-3;
 //  test handler-case-4;
 //  test handler-case-5;

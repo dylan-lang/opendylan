@@ -777,7 +777,8 @@ define test test-position-alt-string-streams ()
   */
 end test;
 
-define test test-stretchy-stream (description: "<string-stream> stretchy vector tests")
+// <string-stream> stretchy vector tests
+define test test-stretchy-stream ()
   begin
     let sv = make(<stretchy-vector>);
     let s = make(<string-stream>, contents: sv, direction: #"output");

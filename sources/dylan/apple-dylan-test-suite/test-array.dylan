@@ -66,7 +66,7 @@ define test aref-setter-1 ()
   check-equal("t = \"dbc\"", t, "dbc");
 end test;
 
-define test dimensions-type (description: "")
+define test dimensions-type ()
   check("instance of function?", instance?, dimensions, <function>);
   check("instance of generic function?", instance?, dimensions, <generic-function>);
 end test;
@@ -89,4 +89,4 @@ define suite test-array-suite ()
  test aref-setter-1;
  test dimensions-type;
  test dimensions-1;
-end suite; 
+end suite;

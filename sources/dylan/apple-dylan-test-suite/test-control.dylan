@@ -8,27 +8,28 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // Chapter 8. Conditionals, Flow of Control, and Evaluation
 
-define test truth (description: "")
+define test truth ()
   check-true("", #t = #t & ~(#t = #f) & #"a" & 0 & #() & #t);
 end test truth;
 
 // not sure what this is supposed to be -it acts weird
 
-define test not-type-0 (description: "")
+define test not-type-0 ()
   check-true("", instance?(\~, <function>));
 end test not-type-0;
 
-define test not-0 (description: "")
+define test not-0 ()
   check-true("", ~(~100) & ~100 = #f & ~(~#()) & ~#f & ~#t = #f);
 end test not-0;
 
-define test if-0 (description: "Simple cases - true")
+// Simple cases - true
+define test if-0 ()
   check-true("", if (#t)
     #"true"
   else
@@ -65,7 +66,8 @@ define test if-0 (description: "Simple cases - true")
     = 0);
 end test if-0;
 
-define test if-1 (description: "Simple cases false")
+// Simple cases false
+define test if-1 ()
   check-true("", if (#f)
     #"true"
   else
@@ -80,7 +82,8 @@ define test if-1 (description: "Simple cases false")
     = #"false");
 end test if-1;
 
-define test if-2 (description: "Dylan is not lisp!")
+// Dylan is not lisp!
+define test if-2 ()
   check-true("", if (#())
     #"true"
   else
@@ -89,7 +92,8 @@ define test if-2 (description: "Dylan is not lisp!")
   = #"true");
 end test if-2;
 
-define test when-0 (description: "Simple cases - true")
+// Simple cases - true
+define test when-0 ()
   check-true("", if (#t)
     #"ok"
   end if
@@ -132,7 +136,8 @@ define test when-0 (description: "Simple cases - true")
     = 0);
 end test when-0;
 
-define test when-1 (description: "Simple cases - false")
+// Simple cases - false
+define test when-1 ()
   check-true("", if (#f)
     1;
     2;
@@ -147,12 +152,14 @@ define test when-1 (description: "Simple cases - false")
     = #f);
 end test when-1;
 
-define test when-2 (description: "If no forms, #f is returned")
+// If no forms, #f is returned
+define test when-2 ()
   check("", \=, begin if (#t) #(); end if; end, #());
   check("", \=, begin if (3 < 2) #(); end if; end, #f);
 end test when-2;
 
-define test unless-0 (description: "Simple cases - true")
+// Simple cases - true
+define test unless-0 ()
   check-true("", unless (#t)
     1;
     2;
@@ -189,7 +196,8 @@ define test unless-0 (description: "Simple cases - true")
     = 0);
 end test unless-0;
 
-define test unless-1 (description: "Simple cases - false")
+// Simple cases - false
+define test unless-1 ()
   check-true("", unless (#f)
     #"ok"
   end unless
@@ -204,7 +212,8 @@ define test unless-1 (description: "Simple cases - false")
     = #"ok");
 end test unless-1;
 
-define test unless-2 (description: "If no forms, #f is returned")
+// If no forms, #f is returned
+define test unless-2 ()
   check-true("", unless (#t)
     #()
   end unless
@@ -215,7 +224,8 @@ define test unless-2 (description: "If no forms, #f is returned")
     = #());
 end test unless-2;
 
-define test cond-0 (description: "Simple cases")
+// Simple cases
+define test cond-0 ()
   check-true("", if (2 < 2)
     "2 less than 2"
   elseif (3 > 3)
@@ -238,7 +248,8 @@ define test cond-0 (description: "Simple cases")
     = "none of above");
 end test cond-0;
 
-define test cond-1 (description: "Remaining tests not evaluated")
+// Remaining tests not evaluated
+define test cond-1 ()
  check-true("", begin
     let x = 0;
     if (100 = 100)
@@ -251,7 +262,8 @@ define test cond-1 (description: "Remaining tests not evaluated")
   = 0);
 end test cond-1;
 
-define test cond-2 (description: "Returns #f if no test evals to true")
+// Returns #f if no test evals to true
+define test cond-2 ()
   check-false("", if (2 = 3)
 		    #f
 		  elseif (#t = #f)
@@ -259,8 +271,8 @@ define test cond-2 (description: "Returns #f if no test evals to true")
 		  end);
 end test cond-2;
 
-define test cond-3
-  (description: "No consequents, returns 1st value of test case")
+// No consequents, returns 1st value of test case
+define test cond-3 ()
   check-true("", begin
     let (a, b, c)
       = if (3 = 2)
@@ -274,7 +286,8 @@ define test cond-3
   = #(3, #f, #f));
 end test cond-3;
 
-define test cond-4 (description: "Returns all values from last consequent")
+// Returns all values from last consequent
+define test cond-4 ()
   check-true("", begin
     let (a, b, c)
       = if (3 = 2)
@@ -290,7 +303,8 @@ define test cond-4 (description: "Returns all values from last consequent")
   = #(9, 8, 7));
 end test cond-4;
 
-define test cond-5 (description: "Some devious boundaries")
+// Some devious boundaries
+define test cond-5 ()
   check-true("", if (#t)
     #"always-true"
   end if
@@ -354,7 +368,8 @@ define test cond-5 (description: "Some devious boundaries")
     = #());
 end test cond-5;
 
-define test case-0 (description: "Simple cases.")
+// Simple cases.
+define test case-0 ()
   check-true("", select (3 + 2)
     1 =>;
     2 =>;
@@ -391,7 +406,8 @@ define test case-0 (description: "Simple cases.")
     end
 end test case-0;
 
-define test case-1 (description: "If no consequents, #f")
+// If no consequents, #f
+define test case-1 ()
   check-true("", select (1 + 1)
     1 =>;
     2 =>;
@@ -409,7 +425,8 @@ define test case-1 (description: "If no consequents, #f")
     = #f);
 end test case-1;
 
-define test case-2 (description: "multiple values return")
+// multiple values return
+define test case-2 ()
   check-true("", begin
     let (a, b, c)
       = select (3 + 2)
@@ -425,7 +442,8 @@ define test case-2 (description: "multiple values return")
   = #(4, 5, 6));
 end test case-2;
 
-define test case-3 (description: "Some cases")
+// Some cases
+define test case-3 ()
   check-true("", select (999)
     1, 2, 999 =>
       #"ok"
@@ -466,7 +484,8 @@ define test case-3 (description: "Some cases")
     = #"ok");
 end test case-3;
 
-define test select-0 (description: "Simple cases")
+// Simple cases
+define test select-0 ()
   check-true("", select (10 + 5 by \<)
     12, 12 + 1 =>
       "12 or 13";
@@ -518,7 +537,8 @@ define test select-0 (description: "Simple cases")
     = #"ok");
 end test select-0;
 
-define test select-1 (description: "If no consequents, #f")
+// If no consequents, #f
+define test select-1 ()
   check-true("", select (1 + 1 by \=)
     1 =>;
     3 - 1 =>;
@@ -546,16 +566,19 @@ define test select-1 (description: "If no consequents, #f")
   /* (not (select 999 instance? (#t))) */
 end test select-1;
 
-define test or-0 (description: "Simple cases")
-  check-true("", (1 | 2 | 3) = 1); 
+// Simple cases
+define test or-0 ()
+  check-true("", (1 | 2 | 3) = 1);
   check-true("", (even?(3) | zero?(2) | 0) = 0);
 end test or-0;
 
-define test or-1 (description: "None true, return #f")
+// None true, return #f
+define test or-1 ()
   check-true("", (even?(3) | odd?(2) | zero?(-1)) = #f);
 end test or-1;
 
-define test or-2 (description: "Nothing evaled after one returns true")
+// Nothing evaled after one returns true
+define test or-2 ()
   check-true("", begin
     let x = 0;
     #f | 1 | (x := 999);
@@ -566,7 +589,8 @@ end test or-2;
 
 // This looks quite buggy...this should work, looks okay to me
 //
-define test or-3 (description: "Multiple values before last, 1st val returned")
+// Multiple values before last, 1st val returned
+define test or-3 ()
   check-true("", (values(1, 2, 3) | #t) = 1);
   check-true("", begin
       let (a, b, c) = values(1, 2, 3) | #f;
@@ -575,7 +599,8 @@ define test or-3 (description: "Multiple values before last, 1st val returned")
     = #(1, #f, #f));
 end test or-3;
 
-define test or-4 (description: "Multiple values in last, all vals returned")
+// Multiple values in last, all vals returned
+define test or-4 ()
   check-true("", begin
     let (a, b, c) = #f | values(1, 2, 3);
     list(a, b, c)
@@ -589,18 +614,19 @@ define test or-4 (description: "Multiple values in last, all vals returned")
     = #(1, 2, 3));
 end test or-4;
 
-define test or-5
-  (description: "1st value only thing that matters to judge truth")
+// 1st value only thing that matters to judge truth
+define test or-5 ()
   check-true("", (even?(1) | values(#f, #t) | 3) = 3);
 end test or-5;
 
-define test and-0 (description: "Simple cases")
-  check-true("", (1 & 2 & 3) = 3); 
+// Simple cases
+define test and-0 ()
+  check-true("", (1 & 2 & 3) = 3);
   check-true("", (1 & 2 & even?(3)) = #f);
 end test and-0;
 
-define test and-1
-  (description: "Multiple values as last form returns all vals")
+// Multiple values as last form returns all vals
+define test and-1 ()
   check-true("", begin
     let (a, b, c) = 1 & 2 & values(1, #f, 3);
     list(a, b, c)
@@ -610,8 +636,8 @@ end test and-1;
 
 // This looks quite buggy...test should work, looks okay to me
 //
-define test and-2
-  (description: "1st value only thing that matters to judge truth")
+// 1st value only thing that matters to judge truth
+define test and-2 ()
   check-true("", begin
     let (a, b, c) = values(1, #f, 3) & 1 & 2;
     list(a, b, c);
@@ -620,7 +646,8 @@ define test and-2
   check-true("", (odd?(1) & values(#f, #t) & 3) = #f);
 end test and-2;
 
-define test and-3 (description: "Things past 1st false don't get evaled")
+// Things past 1st false don't get evaled
+define test and-3 ()
   check-true("", begin
     let x = 0;
     values(1, #f) & values(#f, 1) & (x := 999);
@@ -629,13 +656,15 @@ define test and-3 (description: "Things past 1st false don't get evaled")
   = 0);
 end test and-3;
 
-define test begin-0 (description: "No forms, return #f")
+// No forms, return #f
+define test begin-0 ()
   check-true("", begin
   end
   = #f);
 end test begin-0;
 
-define test begin-1 (description: "Returns last form")
+// Returns last form
+define test begin-1 ()
   check-true("", begin
     1;
     2;
@@ -652,8 +681,8 @@ define test begin-1 (description: "Returns last form")
     = #"anything");
 end test begin-1;
 
-define test begin-2
-  (description: "Not just skipping to the last form, I hope?")
+// Not just skipping to the last form, I hope?
+define test begin-2 ()
   check-true("", begin
     let x = 0;
     begin
@@ -666,8 +695,8 @@ define test begin-2
   = 3);
 end test begin-2;
 
-define test begin-3
-  (description: "If last form is multiple values, return them all")
+// If last form is multiple values, return them all
+define test begin-3 ()
   check-true("", begin
     let (a, b)
       = begin
@@ -680,7 +709,8 @@ define test begin-3
   = #(#"step3", #"step4"));
 end test begin-3;
 
-define test for-0 (description: "Simple cases")
+// Simple cases
+define test for-0 ()
   check-true("", begin
     let v = 0;
     for (i from 10 to 0 by -1)
@@ -707,7 +737,8 @@ define test for-0 (description: "Simple cases")
     = #(9, 8, 7, 6, 5, 4, 3, 2, 1, 0));
 end test for-0;
 
-define test for-1 (description: "Multiple vars")
+// Multiple vars
+define test for-1 ()
   check-true("", begin
     let i = 0;
     let j = 0;
@@ -741,8 +772,8 @@ define test for-1 (description: "Multiple vars")
     = 100);
 end test for-1;
 
-define test for-2
-  (description: "doesn't do it the first time if end-test initially true")
+// doesn't do it the first time if end-test initially true
+define test for-2 ()
   check-true("", begin
     let v = 0;
     for (i from 0, j from 10 by -1, until: i < j)
@@ -753,7 +784,8 @@ define test for-2
   = 0);
 end test for-2;
 
-define test for-3 (description: "multiple return forms, do all, return last")
+// multiple return forms, do all, return last
+define test for-3 ()
   check-true("", begin
     let v = 0;
     let w = 0;
@@ -769,7 +801,8 @@ define test for-3 (description: "multiple return forms, do all, return last")
   = #(#"last", 100));
 end test for-3;
 
-define test for-4 (description: "multiple values return")
+// multiple values return
+define test for-4 ()
   check-true("", begin
     let v = 0;
     let w = 0;
@@ -788,7 +821,8 @@ end test for-4;
 
 // !@#$ JB used to be 10 100
 
-define test for-5 (description: "Some boundary cases")
+// Some boundary cases
+define test for-5 ()
 //  check-true("", for (until: #f)
 //  end for
 //  = #f);
@@ -810,7 +844,8 @@ end test for-5;
 /// !@#$ JB all for-each's are very disfunctional
 
 /* check issues
-define test for-each (description: "simple case")
+// simple case
+define test for-each ()
   check("", \=, 2, do (method (s :: <sequence>)
     block (return)
       for (number in s)
@@ -823,7 +858,8 @@ define test for-each (description: "simple case")
     #(5, 3, 2, 4, 7)));
 end test for-each;
 */
-define test for-each-1 (description: "Multiple returns")
+// Multiple returns
+define test for-each-1 ()
   check-true("", begin
     let x = 0;
     list(block (return)
@@ -839,7 +875,8 @@ define test for-each-1 (description: "Multiple returns")
   = #(4, 100));
 end test for-each-1;
 
-define test for-each-2 (description: "Multiple values return")
+// Multiple values return
+define test for-each-2 ()
   check-true("", begin
     let (a, b)
       = block (return)
@@ -854,7 +891,8 @@ define test for-each-2 (description: "Multiple values return")
   = #(4, 4));
 end test for-each-2;
 
-define test for-each-3 (description: "Never true, return #f")
+// Never true, return #f
+define test for-each-3 ()
   check-true("", block (return)
     for (number in #(5, 3, 9, 9, 7))
       if (number.even?)
@@ -865,7 +903,8 @@ define test for-each-3 (description: "Never true, return #f")
   = #f);
 end test for-each-3;
 
-define test for-each-4 (description: "One runs out first, return #f")
+// One runs out first, return #f
+define test for-each-4 ()
   check-true("", block (return)
     for (number1 in #(5, 3, 9, 2), number2 in #(1, 2, 3))
       if (number1.even?)
@@ -922,7 +961,8 @@ end test for-each-4;
    '(500 1000 #t)))
 */
 
-define test while-0 (description: "simple")
+// simple
+define test while-0 ()
   check-true("", begin
     let v = 0;
     let n = 10;
@@ -935,7 +975,8 @@ define test while-0 (description: "simple")
   = 55);
 end test while-0;
 
-define test while-1 (description: "initially false test, never eval body")
+// initially false test, never eval body
+define test while-1 ()
   check-true("", begin
     let v = 1;
     let n = 10;
@@ -948,7 +989,8 @@ define test while-1 (description: "initially false test, never eval body")
   = 1);
 end test while-1;
 
-define test while-2 (description: "While returns #f")
+// While returns #f
+define test while-2 ()
   check-true("", begin
     let v = 0;
     let n = 10;
@@ -960,7 +1002,8 @@ define test while-2 (description: "While returns #f")
   = #f);
 end test while-2;
 
-define test until-0 (description: "simple")
+// simple
+define test until-0 ()
   check-true("", begin
     let v = 0;
     let n = 10;
@@ -973,7 +1016,8 @@ define test until-0 (description: "simple")
   = 55);
 end test until-0;
 
-define test until-1 (description: "initially negative test")
+// initially negative test
+define test until-1 ()
   check-true("", begin
     let v = 0;
     let n = 10;
@@ -986,7 +1030,8 @@ define test until-1 (description: "initially negative test")
   = 0);
 end test until-1;
 
-define test until-2 (description: "until returns #f")
+// until returns #f
+define test until-2 ()
   check-true("", begin
     let v = 0;
     let n = 10;
@@ -998,7 +1043,8 @@ define test until-2 (description: "until returns #f")
   = #f);
 end test until-2;
 
-define test bind-exit-0 (description: "Simple")
+// Simple
+define test bind-exit-0 ()
   check-true("", begin
     let seq = #(1, 3, 5, 2, 7, 9, 10);
     block (exit)
@@ -1015,7 +1061,8 @@ define test bind-exit-0 (description: "Simple")
   = 2);
 end test bind-exit-0;
 
-define test bind-exit-1 (description: "Normal return")
+// Normal return
+define test bind-exit-1 ()
   check-true("", begin
     let seq = #(1, 3, 5, 7, 9);
     block (exit)
@@ -1032,13 +1079,15 @@ define test bind-exit-1 (description: "Normal return")
   = #(1, 3, 5, 7, 9));
 end test bind-exit-1;
 
-define test bind-exit-2 (description: "no forms, #f returned")
+// no forms, #f returned
+define test bind-exit-2 ()
   check-true("", block (exit)
   end block
   = #f);
 end test bind-exit-2;
 
-define test bind-exit-3 (description: "exit proc accepts any number of args")
+// exit proc accepts any number of args
+define test bind-exit-3 ()
   check-true("", begin
     let seq = #(1, 3, 5, 2, 7, 9);
     let (a, b, c)
@@ -1057,7 +1106,8 @@ define test bind-exit-3 (description: "exit proc accepts any number of args")
   = #(2, #t, 4));
 end test bind-exit-3;
 
-define test bind-exit-4 (description: "exit proc is a first-class value")
+// exit proc is a first-class value
+define test bind-exit-4 ()
   check-true("", block (exit)
     local method e (f :: <function>)
             map(method (item)
@@ -1074,7 +1124,8 @@ define test bind-exit-4 (description: "exit proc is a first-class value")
   = 2);
 end test bind-exit-4;
 
-define test unwind-protect-0 (description: "Simple case")
+// Simple case
+define test unwind-protect-0 ()
   check-true("", begin
     let v = 0;
     block (exit)
@@ -1088,8 +1139,8 @@ define test unwind-protect-0 (description: "Simple case")
   = 1);
 end test unwind-protect-0;
 
-define test unwind-protect-1
-  (description: "If normal exit, returns vals returned by protected-form")
+// If normal exit, returns vals returned by protected-form
+define test unwind-protect-1 ()
   check-true("", begin
     let v = 0;
     block (exit)
@@ -1101,18 +1152,20 @@ define test unwind-protect-1
   = 99);
 end test unwind-protect-1;
 
-define test quote-control-0 (description: "Simple case")
+// Simple case
+define test quote-control-0 ()
   check-equal("", #(#"+", 1, 2), #(#"+", 1, 2));
 end test quote-control-0;
 
-define test apply-0 (description: "Simple cases")
+// Simple cases
+define test apply-0 ()
   check-equal("", apply(\+, 1, #(2, 3)), 6);
   check-equal("", apply(list(\+, \*, \/, \-).second, 1, 2, #(3, 4)), 24);
 end test apply-0;
 
 define suite test-control-suite ()
   test truth;
-  test not-type-0; 
+  test not-type-0;
   test not-0;
   test if-0;
   test if-1;
@@ -1137,7 +1190,7 @@ define suite test-control-suite ()
   test select-1;
   test or-0;
   test or-1;
-  test or-2; 
+  test or-2;
   test or-3;
   test or-4;
   test or-5;

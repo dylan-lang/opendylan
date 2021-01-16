@@ -8,17 +8,18 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // iteration protocol, page 122
 
-define test initial-state-type (description: "")
+define test initial-state-type ()
   check-true("", instance?(initial-state, <generic-function>));
 end test initial-state-type;
 
-define test initial-state-empty-collections (description: "empty collections")
+// empty collections
+define test initial-state-empty-collections ()
   check-true("", every?
     (method (class)
        #f = make(class).initial-state
@@ -34,25 +35,27 @@ define test initial-state-empty-collections (description: "empty collections")
           <deque>)));
 end test initial-state-empty-collections;
 
-define test initial-state-range (description: "empty range")
+// empty range
+define test initial-state-range ()
   check-true("", #f = make(<range>, size: 0).initial-state);
 end test initial-state-range;
 
 // This returns as an instance of <test> looks buggy
 //
-define test final-state-type (description: "")
+define test final-state-type ()
   check-true("", instance?(final-state, <generic-function>));
 end test final-state-type;
 
-define test final-state (description: "vector, deque")
+// vector, deque
+define test final-state ()
   check-false("", #f = deque-instance(1, 2, 3).final-state);
   check-false("", #f = vector(1, 2, 3).final-state);
   check-false("", #f = vector(1, 2, 3).final-state);
   check-false("", #f = final-state("abc"));
 end test final-state;
 
-define test final-state-1
-  (description: "gets the last elt of various collections the hard way")
+// gets the last elt of various collections the hard way
+define test final-state-1 ()
   check-true("", every?
     (method (x)
        let elt = x.first;
@@ -65,12 +68,12 @@ define test final-state-1
           list('c', "abc"))));
 end test final-state-1;
 
-define test next-state-0 (description: "")
+define test next-state-0 ()
   check-true("", instance?(next-state, <generic-function>));
 end test next-state-0;
 
-define test iteration-protocol
-  (description: "gets the 3rd elt of various collections the hard way")
+// gets the 3rd elt of various collections the hard way
+define test iteration-protocol ()
   check-true("", every?
     (method (x)
        let elt = x.first;
@@ -88,8 +91,8 @@ define test iteration-protocol
           list(9, range(from: 7, size: 3)))));
 end test iteration-protocol;
 
-define test next-previous-state
-  (description: "gets the 2nd elt using next-state and previous-state")
+// gets the 2nd elt using next-state and previous-state
+define test next-previous-state ()
   check-true("", every?
     (method (x)
        let elt = x.first;
@@ -108,8 +111,8 @@ define test next-previous-state
           list('b', "abc"))));
 end test next-previous-state;
 
-define test final-previous-state
-  (description: "gets the 2nd elt using final-state and previous-state")
+// gets the 2nd elt using final-state and previous-state
+define test final-previous-state ()
   check-true("", every?
     (method (x)
        let elt = x.first;
@@ -123,11 +126,11 @@ define test final-previous-state
           list('b', "abc"))));
 end test final-previous-state;
 
-define test current-element-0 (description: "")
+define test current-element-0 ()
   check-true("", instance?(current-element, <generic-function>));
 end test current-element-0;
 
-define test copy-state (description: "")
+define test copy-state ()
   check-true("", instance?(copy-state, <generic-function>));
 end test copy-state;
 

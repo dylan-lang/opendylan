@@ -8,8 +8,8 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // Chapter 6: Introduction to Functions and Classes
@@ -25,7 +25,7 @@ define class t-c (<object>)
 end class t-c;
 
 define class t-subc1 (t-c)
-  slot password :: <string>, setter: set-password, 
+  slot password :: <string>, setter: set-password,
 		init-keyword: password:;
 end class t-subc1;
 
@@ -86,7 +86,7 @@ define constant cust3
          limit: 800,
          password: "7654321");
 
-define test slot-operations (description: "")
+define test slot-operations ()
   check-true("", 180 = withdraw(cust1, 30, passwd: "Nickson"));
   check-true("", 250 = withdraw(cust2, 50));
   check-true("", 320 = deposit(cust2, 70));
@@ -101,7 +101,7 @@ define test slot-operations (description: "")
   check-true("", cust3.balance = 1980);
 end test slot-operations;
 
-define test method-type (description: "")
+define test method-type ()
   check-false("", subtype?(<method>, <generic-function>));
 
 // This is most likely a bug as <g-f> is of type <function>
@@ -109,7 +109,8 @@ define test method-type (description: "")
   check-false("", subtype?(<generic-function>, <method>));
 end test method-type;
 
-define test method-syntax-0 (description: "simple method syntax")
+// simple method syntax
+define test method-syntax-0 ()
   check-true("", method (a :: <number>, b :: <number>)
     list(a - b, a + b)
   end method
@@ -122,7 +123,8 @@ define test method-syntax-0 (description: "simple method syntax")
     = 42);
 end test method-syntax-0;
 
-define test method-syntax-1 (description: "with keys")
+// with keys
+define test method-syntax-1 ()
   check-true("",method (x, #key y = 3)
     x * (y + 5)
   end method
@@ -165,7 +167,8 @@ define test method-syntax-1 (description: "with keys")
     = #(10, 20, 30));
 end test method-syntax-1;
 
-define test method-syntax-2 (description: "default of keyword is #f")
+// default of keyword is #f
+define test method-syntax-2 ()
   check-true("",method (a, b, #key c, d)
     list(a, b, c, d)
   end method
@@ -173,7 +176,8 @@ define test method-syntax-2 (description: "default of keyword is #f")
   = #(10, 20, #f, #f));
 end test method-syntax-2;
 
-define test method-syntax-3 (description: "method should return a <method>")
+// method should return a <method>
+define test method-syntax-3 ()
   check-true("",instance?
     (method (x, y)
        x + y
@@ -181,7 +185,8 @@ define test method-syntax-3 (description: "method should return a <method>")
      <method>));
 end test method-syntax-3;
 
-define test method-syntax-4 (description: "with #rest")
+// with #rest
+define test method-syntax-4 ()
   check-true("",method (a, #rest b)
     list(a, b)
   end method
@@ -204,7 +209,8 @@ define test method-syntax-4 (description: "with #rest")
     = #(#(), 10, 20));
 end test method-syntax-4;
 
-define test method-syntax-5 (description: "#key and #rest")
+// #key and #rest
+define test method-syntax-5 ()
   check-true("",method (#rest all, #key fee, fi)
     list(all, fee, fi)
   end method
@@ -217,9 +223,9 @@ define test method-syntax-5 (description: "#key and #rest")
     = #(1, #(#"a", 2, #"b", 3), 2, 3));
 end test method-syntax-5;
 
-define test symbol? (description: "")
+define test symbol? ()
   check-false("", instance?(#"a", <symbol>));
-  check-true("", instance?(foo: <symbol>)); 
+  check-true("", instance?(foo: <symbol>));
   check-false("", instance?(3, <symbol>));
 end test symbol?;
 
@@ -229,11 +235,13 @@ define method test-plus (x, y) => (total :: <integer>)
   x + y
 end method test-plus;
 
-define test result-type-1 (description: "test-plus")
+// test-plus
+define test result-type-1 ()
   check-true("",25 = test-plus(22, 3));
 end test result-type-1;
 
-define test result-type-1a (description: "bind method")
+// bind method
+define test result-type-1a ()
   let foo
     = method (x, y) => (total :: <integer>)
         x + y
@@ -241,7 +249,8 @@ define test result-type-1a (description: "bind method")
   check-true("",25 = foo(22, 3));
 end test result-type-1a;
 
-define test result-type-1b (description: "bind-methods")
+// bind-methods
+define test result-type-1b ()
   local method foo (x, y) => (total :: <integer>)
           x + y
         end method foo;
@@ -255,13 +264,14 @@ end test result-type-1b;
 // because the expression returns and instance of RATIO and
 // from the previous test-suites we saw that RATIO was not
 // implemented
-//
-define test result-type-2
-  (description: "should always return integer")
+
+// should always return integer
+define test result-type-2 ()
   check-condition("", <error>, test-plus(22, 1 / 2));
 end test result-type-2;
 
-define test result-type-2a (description: "bind method")
+// bind method
+define test result-type-2a ()
   let foo
     = method (x, y) => (total :: <integer>)
         x + y
@@ -269,7 +279,8 @@ define test result-type-2a (description: "bind method")
   check-condition("", <error>, foo(22, 1 / 2));
 end test result-type-2a;
 
-define test result-type-2b (description: "bind-methods")
+// bind-methods
+define test result-type-2b ()
   local method foo (x, y) => (total :: <integer>)
           x + y
         end method foo;
@@ -282,12 +293,14 @@ define method rtype-3-fcn (#rest a)
   apply(values, a)
 end method rtype-3-fcn;
 
-define test result-type-3 (description: "return multiple values")
+// return multiple values
+define test result-type-3 ()
   let (a, b, c, d) = rtype-3-fcn(1, 2, 3, 4);
   check-true("",a  = 1 & b = 2 & c = 3 & d = 4);
 end test result-type-3;
 
-define test result-type-3a (description: "bind method")
+// bind method
+define test result-type-3a ()
   let foo
     = method (#rest a)
         apply(values, a)
@@ -296,7 +309,8 @@ define test result-type-3a (description: "bind method")
   check-true("",a = 1 & b = 2 & c = 3 & d = 4);
 end test result-type-3a;
 
-define test result-type-3b (description: "bind-methods")
+// bind-methods
+define test result-type-3b ()
   local method foo (#rest a)
           apply(values, a)
         end method foo;
@@ -313,12 +327,13 @@ define method rtype-4-fcn (#rest a)
   apply(values, a)
 end method rtype-4-fcn;
 
-define test result-type-4
-  (description: "have to return just integers")
+// have to return just integers
+define test result-type-4 ()
   check-condition("", <error>, rtype-4-fcn(1, 2, 3, "string"));
 end test result-type-4;
 
-define test result-type-4a (description: "bind method")
+// bind method
+define test result-type-4a ()
   let foo
     = method (#rest a)
         apply(values, a)
@@ -326,7 +341,8 @@ define test result-type-4a (description: "bind method")
   check-condition("", <type-error>, foo(1, 2, 3, "string"));
 end test result-type-4a;
 
-define test result-type-4b (description: "bind-methods")
+// bind-methods
+define test result-type-4b ()
   local method foo (#rest a)
           apply(values, a)
         end method foo;
@@ -344,11 +360,12 @@ end method rtype-5-fcn;
 // that is a NULL and so it does not match against
 // #f ??
 
-define test result-type-5 (description: "")
+define test result-type-5 ()
   check-true("", rtype-5-fcn() = #(1, 2, #f));
 end test result-type-5;
 
-define test result-type-5a (description: "bind method")
+// bind method
+define test result-type-5a ()
   let foo
     = method () => (x, y, z)
         values(1, 2)
@@ -357,7 +374,8 @@ define test result-type-5a (description: "bind method")
   check-true("",result = #(1, 2, #f));
 end test result-type-5a;
 
-define test result-type-5b (description: "bind-methods")
+// bind-methods
+define test result-type-5b ()
   local method foo () => (x, y, z)
           values(1, 2)
         end method foo;
@@ -374,11 +392,12 @@ define method rtype-6-fcn (foo :: <integer>)
   values(1, 2)
 end method rtype-6-fcn;
 
-define test result-type-6 (description: "")
+define test result-type-6 ()
   check-condition("", <type-error>, rtype-6-fcn(1));
 end test result-type-6;
 
-define test result-type-6a (description: "bind method")
+// bind method
+define test result-type-6a ()
   let foo
     = method () => (x :: <integer>, y :: <integer>, z :: <integer>)
         values(1, 2)
@@ -386,7 +405,8 @@ define test result-type-6a (description: "bind method")
   check-condition("", <error>, foo(1));
 end test result-type-6a;
 
-define test result-type-6b (description: "bind-methods")
+// bind-methods
+define test result-type-6b ()
   local method foo () => (x :: <integer>, y :: <integer>, z :: <integer>)
           values(1, 2)
         end method foo;
@@ -399,8 +419,8 @@ end test result-type-6b;
 
 define generic gfun-test-1 (a, b) => (c :: <integer>, d :: <integer>);
 
-define test generic-fcn-values-1a
-  (description: "can't add a method with #rest return vals if the gf doesn't have them")
+// can't add a method with #rest return vals if the gf doesn't have them
+define test generic-fcn-values-1a ()
   check-condition("", <error>,
 		  add-method(gfun-test-1,
 			     method
@@ -410,8 +430,8 @@ define test generic-fcn-values-1a
 			     end method));
 end test generic-fcn-values-1a;
 
-define test generic-fcn-values-1b
-  (description: "can't add a method with different number of required return vals")
+// can't add a method with different number of required return vals
+define test generic-fcn-values-1b ()
   check-condition("", <error>,
 		  add-method(gfun-test-1,
 			     method (a, b) => (c :: <integer>)
@@ -419,20 +439,20 @@ define test generic-fcn-values-1b
 			     end method));
 end test generic-fcn-values-1b;
 
-define test generic-fcn-values-1c
-  (description: "can't add a method with different number of required return vals")
+// can't add a method with different number of required return vals
+define test generic-fcn-values-1c ()
   check-condition("", <error>,
 		  add-method(gfun-test-1,
 			     method
 				 (a, b)
-			      => (c :: <integer>, d :: <integer>, 
+			      => (c :: <integer>, d :: <integer>,
 				  e :: <integer>)
 			       values(a + b, 2, 3)
 			     end method));
 end test generic-fcn-values-1c;
 
-define test generic-fcn-values-1d
-  (description: "can't add a method returning types which are not subtypes")
+// can't add a method returning types which are not subtypes
+define test generic-fcn-values-1d ()
   check-condition("", <error>,
 		  add-method(gfun-test-1,
 			     method (a, b) => (c, d)
@@ -440,9 +460,9 @@ define test generic-fcn-values-1d
 			     end method));
 end test generic-fcn-values-1d;
 
-define test generic-fcn-values-1e
-  (description: "can't add a method returning types which are not subtypes")
-  check-condition("", <error>, 
+// can't add a method returning types which are not subtypes
+define test generic-fcn-values-1e ()
+  check-condition("", <error>,
 		  add-method(gfun-test-1,
 			     method (a, b) => (c :: <integer>, d :: <string>)
 			       values(a, b)
@@ -456,9 +476,9 @@ define generic gfun-test-2 (a, b) => (c :: <integer>, #rest d);
 // This should theoretically work because the method creates
 // and instance of <method> and gfun-test-2 is defined as
 // generic..dunno what is up with this?
-//
-define test generic-fcn-values-2a
-  (description: "permitted, but not required, to add methods which have #rest")
+
+// permitted, but not required, to add methods which have #rest
+define test generic-fcn-values-2a ()
     add-method (gfun-test-2,
        method (a == #"test1", b) => (c :: <integer>, d :: <integer>, #rest e)
          values(1, b, 3, 4, 5)
@@ -469,11 +489,11 @@ define test generic-fcn-values-2a
        end method);
     let (c1, d1, e1) = gfun-test-2(#"test1", 7);
     let (c2, d2, e2) = gfun-test-2(#"test2", 7);
-    check-true("", list(c1, d1, e1) = #(1, 7, 3)); 
+    check-true("", list(c1, d1, e1) = #(1, 7, 3));
     check-true("", list(c2, d2, e2) = #(2, 7, #f));
 end test generic-fcn-values-2a;
 
-define suite test-intro-mop-suite () 
+define suite test-intro-mop-suite ()
   test slot-operations;
   test method-type;
   test method-syntax-0;

@@ -9,10 +9,10 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
- 
+
  // Chapter 12. Collections
  // collection operations
 
@@ -21,38 +21,46 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(size, <generic-function>));
  end test size-type;
 
- define test size-0 (description: "Size on list objects")
+// Size on list objects
+ define test size-0 ()
    check-equal("", list(1, 2, 3, 4).size, 4);
  end test size-0;
 
- define test size-1 (description: "Size on empty-lists")
+// Size on empty-lists
+ define test size-1 ()
    check-equal("", size(#()), 0);
    check-equal("", list().size, 0);
  end test size-1;
 
- define test size-2 (description: "Size on range objects")
+// Size on range objects
+ define test size-2 ()
    check-true("", ~range(from: 3, by: 3).size);
    check-equal("", range(from: 1, below: 11, by: 2).size, 5);
    check-equal("", range(from: 1, to: 11, by: 2).size, 6);
  end test size-2;
 
- define test size-3 (description: "size on deque objects")
+// size on deque objects
+ define test size-3 ()
    check-equal("", deque-instance(1, 2, 3, 4, 5).size, 5);
  end test size-3;
 
- define test size-4 (description: "size on table objects")
+// size on table objects
+ define test size-4 ()
    check-equal("", table-instance(#(1, 2), #(3, 4), #(5, 6)).size, 3);
  end test size-4;
 
- define test size-5 (description: "on stretchy-vectors")
+// on stretchy-vectors
+ define test size-5 ()
    check-equal("", stretchy-vector-instance(1, 2, 3, 4, 5).size, 5);
  end test size-5;
 
- define test size-6 (description: "Size on simple-object-vector objects")
+// Size on simple-object-vector objects
+ define test size-6 ()
    check-equal("", vector(1, 2, 3).size, 3);
  end test size-6;
 
- define test size-7 (description: "size on byte-string objects")
+// size on byte-string objects
+ define test size-7 ()
    check-equal("", size("now "), 4);
  end test size-7;
 
@@ -62,7 +70,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(size-setter, <generic-function>));
  end test size-setter-type;
 
- define test size-setter-1 (description: "deques")
+// deques
+ define test size-setter-1 ()
      let my-deque = make(<deque>, size: 5, fill: 10);
      my-deque.size := 10;
      check-equal("", my-deque.size, 10);
@@ -71,12 +80,13 @@ Copyright: (c) 1996 Functional Objects, Inc.
      check-equal("", my-deque.size, 3);
  end test size-setter-1;
 
- define test size-setter-2 (description: "stretchy-vectors")
+// stretchy-vectors
+ define test size-setter-2 ()
    begin
      let my-sv = make(<stretchy-vector>, size: 5, fill: 10);
      my-sv.size := 10;
      check-equal("", my-sv.size, 10);
-   end; 
+   end;
    begin
        let my-sv = make(<stretchy-vector>, size: 5, fill: 10);
        my-sv.size := 3;
@@ -90,21 +100,21 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(type-for-copy, <generic-function>));
  end test type-for-copy-type;
 
- define test type-for-copy-0
- (description: "of a sequence, should be a subclass of <sequence>")
+// of a sequence, should be a subclass of <sequence>
+ define test type-for-copy-0 ()
    let r = range(from: 2, to: 4);
    check-true("", instance?(r, <sequence>) & subtype?(r.type-for-copy, <sequence>));
  end test type-for-copy-0;
 
- define test type-for-copy-1 
-  (description: "of an explicit-key-collection, should be a subclass of <e-k-c>")
+// of an explicit-key-collection, should be a subclass of <e-k-c>
+ define test type-for-copy-1 ()
    let t = make(<table>);
    check-true("", instance?(t, <explicit-key-collection>));
    check-true("", subtype?(t.type-for-copy, <explicit-key-collection>));
  end test type-for-copy-1;
 
- define test type-for-copy-3 
-   (description: "of bot <e-k-c> and <sequence>, be a subclass of <e-k-c> and <seq>")
+// of bot <e-k-c> and <sequence>, be a subclass of <e-k-c> and <seq>
+ define test type-for-copy-3 ()
    let v = make(<vector>);
    check-true("", instance?(v, <explicit-key-collection>));
    check-true("", instance?(v, <sequence>));
@@ -116,37 +126,45 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(empty?, <generic-function>));
  end test empty?-type;
 
- define test empty?-0  (description: "empty? on lists")
+// empty? on lists
+ define test empty?-0  ()
    check-true("", ~empty?(#(#"a", #"b", #"c", #"d")));
  end test empty?-0;
 
- define test empty?-1 (description: "empty? on empty-lists")
+// empty? on empty-lists
+ define test empty?-1 ()
    check-true("", empty?(#()));
  end test empty?-1;
 
- define test empty?-2 (description: "empy? on ranges")
+// empy? on ranges
+ define test empty?-2 ()
    check-true("", ~range(from: 1, to: 11, by: 2).empty?);
  end test empty?-2;
 
- define test empty?-3 (description: "emtpy? on deques")
+// emtpy? on deques
+ define test empty?-3 ()
    check-true("", deque-instance().empty? & ~deque-instance(1, 2, 3).empty?);
  end test empty?-3;
 
- define test empty?-4 (description: "empty? on tables")
+// empty? on tables
+ define test empty?-4 ()
    check-true("", ~table-instance(#(1, 2), #(2, 3)).empty?);
    check-true("", table-instance().empty?);
  end test empty?-4;
 
- define test empty?-5 (description: "empty? on stretchy-vectors")
+// empty? on stretchy-vectors
+ define test empty?-5 ()
    check-true("", ~stretchy-vector-instance(1, 2, 3).empty?);
  end test empty?-5;
 
- define test empty?-6 (description: "empty on vectors")
+// empty on vectors
+ define test empty?-6 ()
    check-true("", vector().empty?);
    check-equal("", vector(1, 2, 3).empty?, #f);
  end test empty?-6;
 
- define test empty?-7 (description: "empty? on strings")
+// empty? on strings
+ define test empty?-7 ()
    check-true("", empty?(""));
    check-true("", ~empty?("now is the time"));
  end test empty?-7;
@@ -155,7 +173,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(do, <generic-function>));
  end test do-type;
 
- define test do-0 (description: "do returns #f")
+// do returns #f
+ define test do-0 ()
    check-true("", ~do(method (a, b)
 	pair(a, b.list);
        end method,
@@ -163,7 +182,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
        #(1, 2, 3, 4)));
  end test do-0;
 
- define test do-1 (description: "do doesn't run if empty list")
+// do doesn't run if empty list
+ define test do-1 ()
    check-equal("", begin
      let x = 0;
      do(method (a)
@@ -174,7 +194,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
 	    end, 0);
  end test do-1;
 
- define test do-2 (description: "with more than one collection")
+// with more than one collection
+ define test do-2 ()
    check-equal("", begin
      let sum = 0;
      do(method (a, b)
@@ -190,7 +211,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(map, <generic-function>));
  end test map-type;
 
- define test map-0 (description: "List")
+// List
+ define test map-0 ()
    check-equal("", map(method (x)
 			x * -1;
                         end method,
@@ -198,7 +220,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     		#(-1, -2, -3, -4));
  end test map-0;
 
- define test map-1 (description: "Empty-List")
+// Empty-List
+ define test map-1 ()
    check-equal("", map(method (x)
 	 x * -1;
        end method,
@@ -206,7 +229,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    #());
  end test map-1;
 
- define test map-2 (description: "Range")
+// Range
+ define test map-2 ()
    check-equal("", map(method (x)
 	 x * -1;
        end method,
@@ -214,7 +238,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    #(-1, -2, -3, -4));
  end test map-2;
 
- define test map-3 (description: "Deque")
+// Deque
+ define test map-3 ()
    check-equal("", map(method (x)
 	 x * -1;
        end method,
@@ -222,7 +247,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     deque-instance(-1, -2, -3));
  end test map-3;
 
- define test map-4 (description: "Table")
+// Table
+ define test map-4 ()
    check-equal("", map(method (x)
 	 x * -1;
        end method,
@@ -230,7 +256,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     table-instance(#(1, -2), #(2, -3)));
  end test map-4;
 
- define test map-5 (description: "Stretchy-vector")
+// Stretchy-vector
+ define test map-5 ()
    check-equal("", map(method (x)
 	 x * -1;
        end method,
@@ -238,7 +265,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     stretchy-vector-instance(-1, -2, -3));
  end test map-5;
 
- define test map-6 (description: "Simple-object-vector")
+// Simple-object-vector
+ define test map-6 ()
    check-equal("", map(method (x)
 	 x * -1;
        end method,
@@ -246,7 +274,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     vector(-1, -2, -3));
  end test map-6;
 
- define test map-7 (description: "String")
+// String
+ define test map-7 ()
    check-equal("", map(method (x)
 	 x;
        end method,
@@ -254,8 +283,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     "ABC");
  end test map-7;
 
- define test map-8 
-   (description: "returns a collection whose value is an inst of type-for-copy val")
+// returns a collection whose value is an inst of type-for-copy val
+ define test map-8 ()
    let s = list(1, 2, 3, 4);
    check-true("", instance?
      (map(method (x)
@@ -265,7 +294,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
       s.type-for-copy));
  end test map-8;
 
- define test map-9 (description: "creates a new collection")
+// creates a new collection
+ define test map-9 ()
    let s = list(1, 2, 3, 4);
    let new-s
      = map(method (x)
@@ -275,7 +305,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", \= (s, new-s));
  end test map-9;
 
- define test map-10 (description: "more than one collection arg")
+// more than one collection arg
+ define test map-10 ()
    check-equal("", map(\+, #(100, 200, 300, 400), #(1, 2, 3, 4)),
 	    #(101, 202, 303, 404));
    check-equal("", map(method (x)
@@ -289,7 +320,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
       #('1', '0', '1', '0'));
  end test map-10;
 
- define test map-11 (description: "with bind-exit")
+// with bind-exit
+ define test map-11 ()
    check-equal("", do(method (seq :: <sequence>)
      block (exit)
        map(method (item)
@@ -307,7 +339,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(map-as, <generic-function>));
  end test map-as-type;
 
- define test map-as-0 (description: "List")
+// List
+ define test map-as-0 ()
    check-equal("", map-as
      (<list>,
       method (x)
@@ -317,7 +350,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    #(-1, -2, -3, -4));
  end test map-as-0;
 
- define test map-as-1 (description: "Empty-List")
+// Empty-List
+ define test map-as-1 ()
    check-equal("", map-as
      (<list>,
       method (x)
@@ -327,7 +361,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
      #());
  end test map-as-1;
 
- define test map-as-2 (description: "Range")
+// Range
+ define test map-as-2 ()
    check-equal("", map-as
      (<list>,
       method (x)
@@ -337,7 +372,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     #(-1, -2, -3, -4));
  end test map-as-2;
 
- define test map-as-3 (description: "Deque")
+// Deque
+ define test map-as-3 ()
    check-equal("", map-as
      (<deque>,
       method (x)
@@ -347,7 +383,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     deque-instance(-1, -2, -3));
  end test map-as-3;
 
- define test map-as-4 (description: "Table")
+// Table
+ define test map-as-4 ()
    check-equal("", map-as
      (<table>,
       method (x)
@@ -357,7 +394,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     table-instance(#(1, -2), #(2, -3)));
  end test map-as-4;
 
- define test map-as-5 (description: "Stretchy-vector")
+// Stretchy-vector
+ define test map-as-5 ()
    check-equal("", map-as
      (<stretchy-vector>,
       method (x)
@@ -367,7 +405,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     stretchy-vector-instance(-1, -2, -3));
  end test map-as-5;
 
- define test map-as-6 (description: "Simple-object-vector")
+// Simple-object-vector
+ define test map-as-6 ()
    check-equal("", map-as
      (<simple-object-vector>,
       method (x)
@@ -377,7 +416,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     vector(-1, -2, -3));
  end test map-as-6;
 
- define test map-as-7 (description: "String")
+// String
+ define test map-as-7 ()
    check-equal("", map-as
      (<string>,
       method (x)
@@ -387,7 +427,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
     "ABC");
  end test map-as-7;
 
- define test map-as-8 (description: "new collection")
+// new collection
+ define test map-as-8 ()
    let s = #('a', 'b');
    check-true("", \~=(map-as
        (<byte-string>,
@@ -397,10 +438,11 @@ Copyright: (c) 1996 Functional Objects, Inc.
 	s), s));
  end test map-as-8;
 
- define test map-as-9 (description: "various coercions")
+// various coercions
+ define test map-as-9 ()
      let l = map-as(<list>, curry(\+, 1), range(below: 5));
-     check-true("", instance?(l, <list>)); 
-     check-equal("", l, #(1, 2, 3, 4, 5)); 
+     check-true("", instance?(l, <list>));
+     check-equal("", l, #(1, 2, 3, 4, 5));
      let v = map-as(<vector>, \+, #(100, 100, 200, 200), #(1, 2, 3, 4));
      check-true("", instance?(v, <vector>));
      check-equal("", v, #[101, 102, 203, 204]);
@@ -415,7 +457,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
 		end if
 	      end method,
 	      #(1, 2, 3, 4));
-     check-true("", instance?(s, <string>)); 
+     check-true("", instance?(s, <string>));
      check-equal("", s, "1010");
  end test map-as-9;
 
@@ -423,13 +465,15 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-true("", instance?(map-into, <generic-function>));
  end test map-into-type;
 
- define test map-into-0 (description: "the simple cases")
+// the simple cases
+ define test map-into-0 ()
      let col = #(1, 0, 3, 0);
      map-into (col, zero?, col);
      check-equal("", col, #(#f, #t, #f, #t));
  end test map-into-0;
 
- define test map-into-1 (description: "List")
+// List
+ define test map-into-1 ()
    let var = #(1, 2, 3, 4, 5);
    check-equal("", map-into
      (var,
@@ -447,7 +491,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
      var);
  end test map-into-1;
 
- define test map-into-2 (description: "Empty-List")
+// Empty-List
+ define test map-into-2 ()
    let var = #();
    check-equal("", map-into
      (var,
@@ -465,7 +510,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
        var);
  end test map-into-2;
 
- define test map-into-3 (description: "Range")
+// Range
+ define test map-into-3 ()
    let var = #(1, 2, 3, 4, 5);
    check-equal("", map-into
      (var,
@@ -483,7 +529,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
       var);
  end test map-into-3;
 
- define test map-into-4 (description: "Deque")
+// Deque
+ define test map-into-4 ()
    let var = deque-instance(1, 2, 3, 4);
    check-equal("", map-into
      (var,
@@ -501,7 +548,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
       var);
  end test map-into-4;
 
- define test map-into-5 (description: "Table")
+// Table
+ define test map-into-5 ()
    let var = table-instance(#(1, 2), #(2, 3));
    check-equal("", map-into
      (var,
@@ -519,7 +567,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
       var);
  end test map-into-5;
 
-define test map-into-6 (description: "Stretchy-vector")
+// Stretchy-vector
+define test map-into-6 ()
   let var = stretchy-vector-instance(1, 2, 3);
   check-equal("", map-into
     (var,

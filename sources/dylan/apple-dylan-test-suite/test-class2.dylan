@@ -9,8 +9,8 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // chapter 11. Classes
@@ -45,7 +45,7 @@ define test make-<class> ()
   let wclass3
     = make(<class>, superclasses: <object>.list, slots: *widget-slots-spec*);
   every?(method (wclass)
-           check("", instance?(wclass, <class>));	
+           check("", instance?(wclass, <class>));
            let i = make(wclass);
            // No init-keywords
            check("", \=, i.widget-x, 0);
@@ -102,7 +102,7 @@ end test;
 // this is where we'll check out the class heterarchy, too.
 
 define test instance?-0 ()
-  check-true("", every?(method (c)		
+  check-true("", every?(method (c)
                           instance?(make, c)
                         end method,
                         list(<object>, <function>, <generic-function>)));

@@ -219,7 +219,7 @@ end;
 
 
 /// try some things with a variable defined via define c-variable
-define test variable-address-test (description: "Variable Address Tests")
+define test variable-address-test ()
   check-equal("set c-address",
                (pointer-value($foos-address) := 1), 1);
   check-equal("c-address value", pointer-value($foos-address), 1);
@@ -233,7 +233,7 @@ end;
 
 /// try some C-struct in different ways
 /// Could always use some more tests here.
-define test c-struct-test (description: "C-Struct Tests")
+define test c-struct-test ()
   format-out("minimal-size: %s", size-of(<minimal>));
   check-equal("<minimal> struct size",
               struct-minimal-size(), size-of(<minimal>));
@@ -267,7 +267,7 @@ end;
 
 /// Try some C functions in some different ways.
 /// this could always use more tests.
-define test c-function-test (description: "C Function Tests")
+define test c-function-test ()
   format-out("Running c-function tests\n");
   for (i from 0 below (ash(1, 8 * size-of(<C-unsigned-char>)) - 2) by 17)
     check-equal("c-function unsigned char increment",
@@ -413,8 +413,7 @@ end;
 
 
 
-
-define test c-types-test (description: "C Types Tests")
+define test c-types-test ()
   format-out("Running c-types tests\n");
   /// check that all of these things are classes
   /// All of the names below are wrapped in '<c-` and '>`
