@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Create a single thread and then join it. Make sure it returns the correct
 // thread object and return values.
 //
-define test single-thread-join(description: "join-thread (single thread)")
+define test single-thread-join ()
   let thread = make (<thread>,
                      name: "join test",
                      function: method () sleep(10); values(1,2,3) end);
@@ -25,7 +25,7 @@ end test;
 //////////
 // Test join-thread when given a vector of thread objects to join.
 //
-define test multiple-thread-join(description: "join-thread (multiple threads)")
+define test multiple-thread-join ()
   let n = 10;
   let thread-maker
     = method (i :: <integer>) => (thread :: <thread>)
@@ -56,9 +56,10 @@ end test;
 //////////
 // Make sure current-thread returns the correct thread object.
 //
-define test current-thread-test(description: "current-thread")
-  let thread = make(<thread>, name: "current-thread test",
-                              function: method() current-thread() end);
+define test current-thread-test ()
+  let thread = make(<thread>,
+                    name: "current-thread test",
+                    function: method() current-thread() end);
   let (rthread, result) = join-thread(thread);
   check-true("returns correct thread object", thread == result);
 end test;
@@ -67,15 +68,15 @@ end test;
 //////////
 // Just run thread-yield.
 //
-define test yield-test(description: "thread-yield")
+define test yield-test ()
   check-no-errors("thread-yield works",
-                 begin
-                   thread-yield();
-                 end);
+                  begin
+                    thread-yield();
+                  end);
 end test;
 
 
-define suite threads-suite (description: "Threads")
+define suite threads-suite ()
   test single-thread-join;
   test multiple-thread-join;
   test current-thread-test;

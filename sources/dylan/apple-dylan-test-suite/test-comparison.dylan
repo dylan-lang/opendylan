@@ -8,50 +8,55 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
-define test id?-type (description: "")
-  check("", instance?, \==, <function>); 
+define test id?-type ()
+  check("", instance?, \==, <function>);
   check("", method(a, b) ~instance?(a, b) end, \==, <generic-function>);
 end test id?-type;
 
-define test id?-0 (description: "Simple cases")
+// Simple cases
+define test id?-0 ()
   check-equal("", #f, #f);
   check-equal("", 3, 3);
   check-equal("", #"foo", #"foo");
   check-equal("", #(), #());
-  check-equal("", #"abc", #"abc"); 
+  check-equal("", #"abc", #"abc");
 end test id?-0;
 
 // It's not clear whether literal constants are id?
 //  (not (id? '(1 2 3) '(1 2 3)))
 //  (not (id? "abc" "abc"))
 
-define test id?-1 (description: "#rest args")
+// #rest args
+define test id?-1 ()
   check-true("", #t == #t & #t == #t);
   check-true("", #f == even?(3) & ~(#(1, 2, 3) == #(1, 2, 3)));
 end test id?-1;
 
-define test equal-type (description: "")
+define test equal-type ()
   check-true("", instance?(\=, <function>));
   check-true("", instance?(\=, <generic-function>));
 end test equal-type;
 
-define test equal-0 (description: "Numeric cases")
-  check-true("", 1 + 2 = 5 - 2);  
+// Numeric cases
+define test equal-0 ()
+  check-true("", 1 + 2 = 5 - 2);
   check-true("", 1 + 2 = 3);
   check-true("", 3 = 3);
   check-true("", ~(3 = 4));
 //  check-true("<ratio> is undefined in emulator", {RATIO instance} = {RATIO instance});
 end test equal-0;
 
-define test equal-complex (description: "= on complex numbers")
+// = on complex numbers
+define test equal-complex ()
   check-true("", complex-instance() = complex-instance());
 end test equal-complex;
 
-define test a=-1 (description: "collections")
+// collections
+define test a=-1 ()
   check-true("", "abc" = "abc" & "abc" = "abc");
   check-true("", ~("abc" = "aBc" & "abc" = "abc"));
   check-true("", list(#"a", #"b", #"c") = list(#"a", #"b", #"c"));
@@ -60,7 +65,7 @@ define test a=-1 (description: "collections")
   check-false("", list(#"a", #"z", #"c") = list(#"a", #"b", #"c"));
   check-true("", stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 2, 3));
   check-true("", stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 2, 3));
-  check-true("", ~(stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 999, 3)));  
+  check-true("", ~(stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 999, 3)));
   check-true("", stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 2, 3));
   check-true("", vector(1, 2, 3)
      = vector(1, 2, 3));
@@ -89,21 +94,24 @@ define test a=-1 (description: "collections")
   // check-false("", \& = \& & \& = =hash);
 end test a=-1;
 
-define test a=-type (description: "")
+define test a=-type ()
   check-true("", instance?(\&=, <function>));
   check-false("", instance?(\&=, <generic-function>));
 end test a=-type;
 
-define test qw (description: "Numeric cases")
+// Numeric cases
+define test qw ()
   check-true("", 3 ~= 4);
 //  check-true("<ratio> is yet undefined", {RATIO instance} ~= {RATIO instance});
 end test;
 
-define test p=-complex (description: "/= on complex numbers")
+// ~= on complex numbers
+define test p=-complex ()
   check-true("", complex-instance(real: 5, imag: 2) ~= complex-instance(real: 5, imag: 3));
 end test;
 
-define test p=-1 (description: "collections")
+// collections
+define test p=-1 ()
   check-true("", "abc" = "abc");
   check-true("", "abc" ~= "aBc");
   check-true("", list(#"a", #"z", #"c") ~= list(#"a", #"b", #"c"));
@@ -120,35 +128,39 @@ define test p=-1 (description: "collections")
   // check-true("", \& ~= =hash);
 end test p=-1;
 
-define test p=-2 (description: "symbols - not case sensitive")
+// symbols - not case sensitive
+define test p=-2 ()
   check-true("", #"foo" = #"FOO" & #"FOo" = #"foO");
 end test;
 
-define test binary=-type (description: "")
+define test binary=-type ()
   check-true("", instance?(binary=, <generic-function>));
 end test binary=-type;
 
-define test binary= (description: "")
-  check-true("", ~binary=(1, 2));  
+define test binary= ()
+  check-true("", ~binary=(1, 2));
   check-true("", binary=(#(1, 2, 3), #(1, 2, 3)));
 end test binary=;
 
-define test p=hash-type (description: "")
+define test p=hash-type ()
   check-true("", instance?(=hash, <generic-function>));
 end test;
 
-define test p=hash (description: "Numeric cases")
+// Numeric cases
+define test p=hash ()
   check-true("", =hash(1 + 2) = =hash(5 - 2));
   check-true("", =hash(3) = =hash(3));
 //  check-true("<ratio> is undefined", =hash({RATIO instance}) = =hash({RATIO instance}));
 end test;
 
-define test =hash-complex (description: "=hash on complex")
+// =hash on complex
+define test =hash-complex ()
   check-equal("", complex-instance(real: 3, imag: 2).=hash,
   complex-instance(real: 3, imag: 2).=hash);
 end test =hash-complex;
 
-define test =hash-1 (description: "collections")
+// collections
+define test =hash-1 ()
   check-true("", =hash("abc") = =hash("abc"));
   check-true("", list(#"a", #"b", #"c").=hash = list(#"a", #"b", #"c").=hash);
   check-equal("", stretchy-vector-instance(1, 2, 3).=hash,
@@ -165,11 +177,12 @@ define test =hash-1 (description: "collections")
   // check-true("", \&.=hash = \&.=hash);
 end test =hash-1;
 
-define test less-than-type (description: "")
+define test less-than-type ()
   check-true("", instance?(\<, <function>) & ~instance?(\<, <generic-function>));
 end test less-than-type;
 
-define test q (description: "Numeric cases")
+// Numeric cases
+define test q ()
   check-true("", 1 + 2 < 15 - 4);
   check-true("", 3 < 5);
   check-true("", 3 < 5);
@@ -177,7 +190,8 @@ define test q (description: "Numeric cases")
 //  check-true("<ratio> undefined", {RATIO instance} < {RATIO instance});
 end test q;
 
-define test less-than-1 (description: "strings, without knowing underlying char set")
+// strings, without knowing underlying char set
+define test less-than-1 ()
   check-true("", "prefix" < "prefix is less than");
   check-true("", if ('a' < 'c')
       "aaa" < "ccc"
@@ -186,18 +200,20 @@ define test less-than-1 (description: "strings, without knowing underlying char 
     end if);
 end test less-than-1;
 
-define test greater-than-type (description: "")
+define test greater-than-type ()
   check-true("", instance?(\>, <function>) & ~instance?(\>, <generic-function>));
 end test greater-than-type;
 
-define test w> (description: "Numeric cases")
+// Numeric cases
+define test w> ()
   check-true("", 15 - 4 > 1 + 2);
   check-true("", 5 > 3);
   check-true("", (9 > 5 & 9 > 3));
 //  check-true("<ratio> undefined", {RATIO instance} > {RATIO instance});
 end;
 
-define test greater-than-1 (description: "strings, without knowing underlying char set")
+// strings, without knowing underlying char set
+define test greater-than-1 ()
   check-true("", "prefix is less than" > "prefix");
   check-true("", if ('a' > 'c')
       "aaa" > "ccc"
@@ -206,11 +222,11 @@ define test greater-than-1 (description: "strings, without knowing underlying ch
     end if);
 end test greater-than-1;
 
-define test binary<-type (description: "")
+define test binary<-type ()
   check-true("", instance?(binary<, <generic-function>));
 end test binary<-type;
 
-define test binary< (description: "")
+define test binary< ()
   check-true("", binary<(1, 2));
 end test binary<;
 

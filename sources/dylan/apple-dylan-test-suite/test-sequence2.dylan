@@ -8,11 +8,12 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
-define test add-new!-4 (description: "add old element, using test: argument")
+// add old element, using test: argument
+define test add-new!-4 ()
   every?(method (s)
            let collection = s.first;
            let elements = s.second;
@@ -59,42 +60,50 @@ end test add-new!-4;
 
 // remove
 
-define test remove-type (description: "")
+define test remove-type ()
   check-true("", instance?(remove, <generic-function>));
 end test remove-type;
 
-define test remove-0 (description: "list")
+// list
+define test remove-0 ()
   check-true("", remove(#(1, 2, 4, 1, 3, 4, 5), 4) = #(1, 2, 1, 3, 5));
 end test remove-0;
 
-define test remove-1 (description: "empty-list")
+// empty-list
+define test remove-1 ()
   check-true("", remove(#(), 4) = #());
 end test remove-1;
 
-define test remove-2 (description: "range")
+// range
+define test remove-2 ()
   check-true("", remove(range(from: 1, below: 5), 4) = #(1, 2, 3));
 end test remove-2;
 
-define test remove-3 (description: "deque")
+// deque
+define test remove-3 ()
   check-true("", remove(deque-instance(1, 2, 3, 4, 5), 4) = deque-instance(1, 2, 3, 5));
 end test remove-3;
 
-define test remove-4 (description: "stretchy-vector")
+// stretchy-vector
+define test remove-4 ()
   check-true("", remove(stretchy-vector-instance(1, 2, 3, 4, 5), 4)
   = stretchy-vector-instance(1, 2, 3, 5));
 end test remove-4;
 
-define test remove-5 (description: "simple-object-vector")
+// simple-object-vector
+define test remove-5 ()
   check-true("", remove(vector(1, 2, 3, 4, 5), 4)
   = vector(1, 2, 3, 5));
 end test remove-5;
 
-define test remove-6 (description: "string")
+// string
+define test remove-6 ()
   check-true("", remove("Abandon every hope all ye who enter here!", ' ')
   = "Abandoneveryhopeallyewhoenterhere!");
 end test remove-6;
 
-define test remove-7 (description: "with test: arg")
+// with test: arg
+define test remove-7 ()
   check-true("", remove
     (#(#"a", #"b", #(#"a", #"c"), #"d", #"e", #(#"a", #"c"), #"f"),
      #(#"a", #"c"),
@@ -102,17 +111,19 @@ define test remove-7 (description: "with test: arg")
   = #(#"a", #"b", #"d", #"e", #"f"));
 end test remove-7;
 
-define test remove-8 (description: "with count: arg")
+// with count: arg
+define test remove-8 ()
   check-true("", remove(#(1, 2, 4, 1, 3, 4, 5), 4, count: 1) = #(1, 2, 1, 3, 4, 5));
 end test remove-8;
 
-define test remove-9 (description: "with count: and test: args")
+// with count: and test: args
+define test remove-9 ()
   check-true("", remove("Abandon every hope all ye who enter here!", 'e', test: \&=)
   = "eeeeeeee");
 end test remove-9;
 
-define test remove-10
-  (description: "doesn't modify sequence, & result doesn't share structure")
+// doesn't modify sequence, & result doesn't share structure
+define test remove-10 ()
   let x = #(#"a", #"b");
   let numbers = list(3, 1, 4, 1, x, 9);
   let result = remove(numbers, 1, test: \>, count: 2);
@@ -121,42 +132,50 @@ end test remove-10;
 
 //remove!
 
-define test remove!-type (description: "")
+define test remove!-type ()
   check-true("", instance?(remove!, <generic-function>));
 end test remove!-type;
 
-define test remove!-0 (description: "list")
+// list
+define test remove!-0 ()
   check-true("", remove!(#(1, 2, 4, 1, 3, 4, 5), 4) = #(1, 2, 1, 3, 5));
 end test remove!-0;
 
-define test remove!-1 (description: "empty-list")
+// empty-list
+define test remove!-1 ()
   check-true("", remove!(#(), 4) = #());
 end test remove!-1;
 
-define test remove!-2 (description: "range")
+// range
+define test remove!-2 ()
   check-true("", remove!(range(from: 1, below: 5), 4) = #(1, 2, 3));
 end test remove!-2;
 
-define test remove!-3 (description: "deque")
+// deque
+define test remove!-3 ()
   check-true("", remove!(deque-instance(1, 2, 3, 4, 5), 4) = deque-instance(1, 2, 3, 5));
 end test remove!-3;
 
-define test remove!-4 (description: "stretchy-vector")
+// stretchy-vector
+define test remove!-4 ()
   check-true("", remove!(stretchy-vector-instance(1, 2, 3, 4, 5), 4)
   = stretchy-vector-instance(1, 2, 3, 5));
 end test remove!-4;
 
-define test remove!-5 (description: "simple-object-vector")
+// simple-object-vector
+define test remove!-5 ()
   check-true("", remove!(vector(1, 2, 3, 4, 5), 4)
   = vector(1, 2, 3, 5));
 end test remove!-5;
 
-define test remove!-6 (description: "string")
+// string
+define test remove!-6 ()
   check-true("", remove!("Abandon every hope all ye who enter here!", ' ')
   = "Abandoneveryhopeallyewhoenterhere!");
 end test remove!-6;
 
-define test remove!-7 (description: "with test: arg")
+// with test: arg
+define test remove!-7 ()
   check-true("", remove!
     (#(#"a", #"b", #(#"a", #"c"), #"d", #"e", #(#"a", #"c"), #"f"),
      #(#"a", #"c"),
@@ -164,20 +183,23 @@ define test remove!-7 (description: "with test: arg")
   = #(#"a", #"b", #"d", #"e", #"f"));
 end test remove!-7;
 
-define test remove!-8 (description: "with count: arg")
+// with count: arg
+define test remove!-8 ()
   check-true("", remove!(#(1, 2, 4, 1, 3, 4, 5), 4, count: 1) = #(1, 2, 1, 3, 4, 5));
 end test remove!-8;
 
-define test remove!-9 (description: "with cound: and test: args")
+// with cound: and test: args
+define test remove!-9 ()
   check-true("", remove!("Abandon every hope all ye who enter here!", 'e', test: \&=)
   = "eeeeeeee");
 end test remove!-9;
 
-define test choose-type (description: "")
+define test choose-type ()
   check-true("", instance?(choose, <generic-function>));
 end test choose-type;
 
-define test choose-0 (description: "list")
+// list
+define test choose-0 ()
   check-true("", choose
     (method (e)
        e > 5
@@ -186,7 +208,8 @@ define test choose-0 (description: "list")
   = #(6));
 end test choose-0;
 
-define test choose-1 (description: "empty list")
+// empty list
+define test choose-1 ()
   check-true("", choose
     (method (e)
        e > 5
@@ -195,26 +218,31 @@ define test choose-1 (description: "empty list")
   = #());
 end test choose-1;
 
-define test choose-2 (description: "range")
+// range
+define test choose-2 ()
   check-true("", choose(even?, range(from: 0, below: 8)) = #(0, 2, 4, 6));
 end test choose-2;
 
-define test choose-3 (description: "deque")
+// deque
+define test choose-3 ()
   check-true("", choose(even?, deque-instance(1, 2, 3, 4, 5, 6, 7, 8))
   = deque-instance(2, 4, 6, 8));
 end test choose-3;
 
-define test choose-4 (description: "stretchy-vector")
+// stretchy-vector
+define test choose-4 ()
   check-true("", choose(even?, stretchy-vector-instance(1, 2, 3, 4, 5, 6, 7, 8))
   = stretchy-vector-instance(2, 4, 6, 8));
 end test choose-4;
 
-define test choose-5 (description: "simple-object-vector")
+// simple-object-vector
+define test choose-5 ()
   check-true("", choose(even?, vector(1, 2, 3, 4, 5, 6, 7, 8))
   = vector(2, 4, 6, 8));
 end test choose-5;
 
-define test choose-6 (description: "string")
+// string
+define test choose-6 ()
   check-true("", choose
     (method (c)
        c >= 'a' & c <= 'z'
@@ -227,18 +255,20 @@ define test choose-6 (description: "string")
   check-true("", choose(even?, #(1, 3, 5, 7)) = #());
 end test choose-6;
 
-define test choose-7 (description: "returns *new* sequence")
+// returns *new* sequence
+define test choose-7 ()
   let t = make(<deque>, fill: 9);
   let new-t = choose(odd?, t) = t;
   check-true("", t = new-t);
   check-true("", ~(t == new-t));
 end test choose-7;
 
-define test choose-by-type (description: "")
+define test choose-by-type ()
   check-true("", instance?(choose-by, <generic-function>));
 end test choose-by-type;
 
-define test choose-by-0 (description: "list")
+// list
+define test choose-by-0 ()
   check-true("", choose-by
     (even?,
      #(1, 2, 3, 4, 5, 6, 7, 8),
@@ -246,12 +276,14 @@ define test choose-by-0 (description: "list")
   = #(#"b", #"d", #"f", #"h"));
 end test choose-by-0;
 
-define test choose-by-1 (description: "Empty list")
+// Empty list
+define test choose-by-1 ()
   check-true("", choose-by(even?, #(1, 2, 3, 4), #()) = #());
   check-true("", choose-by(even?, #(), #(1, 2, 3, 4)) = #());
 end test choose-by-1;
 
-define test choose-by-2 (description: "deque")
+// deque
+define test choose-by-2 ()
   check-true("", choose-by
     (even?,
      deque-instance(1, 2, 3, 4, 5, 6, 7, 8),
@@ -259,13 +291,15 @@ define test choose-by-2 (description: "deque")
   = deque-instance(#"b", #"d", #"f", #"h"));
 end test choose-by-2;
 
-define test choose-by-3 (description: "range")
+// range
+define test choose-by-3 ()
   check-true("", choose-by
     (even?, range(from: 0, below: 15), range(from: 0, above: -15, by: -1))
   = #(0, -2, -4, -6, -8, -10, -12, -14));
 end test choose-by-3;
 
-define test choose-by-4 (description: "stretchy-vector")
+// stretchy-vector
+define test choose-by-4 ()
   check-true("", choose-by
     (even?,
      stretchy-vector-instance(1, 2, 3, 4, 5, 6, 7, 8),
@@ -273,7 +307,8 @@ define test choose-by-4 (description: "stretchy-vector")
   = stretchy-vector-instance(#"b", #"d", #"f", #"h"));
 end test choose-by-4;
 
-define test choose-by-5 (description: "simple-object-vector-vector")
+// simple-object-vector-vector
+define test choose-by-5 ()
   check-true("", choose-by
     (even?,
      vector(1, 2, 3, 4, 5, 6, 7, 8),
@@ -282,7 +317,8 @@ define test choose-by-5 (description: "simple-object-vector-vector")
   = vector(#"b", #"d", #"f", #"h"));
 end test choose-by-5;
 
-define test choose-by-6 (description: "string")
+// string
+define test choose-by-6 ()
   check-true("", choose-by
     (method (c)
        c >= 'a' & c <= 'z'
@@ -292,7 +328,8 @@ define test choose-by-6 (description: "string")
   = "This is the right ans");
 end test choose-by-6;
 
-define test choose-by-7 (description: "a few mixed cases")
+// a few mixed cases
+define test choose-by-7 ()
   check-true("", choose-by
     (even?,
      deque-instance(1, 2, 3, 4, 5, 6, 7, 8),
@@ -309,7 +346,8 @@ define test choose-by-7 (description: "a few mixed cases")
     = #(#"b", #"d", #"f"));
 end test choose-by-7;
 
-define test choose-by-8 (description: "returns new sequence")
+// returns new sequence
+define test choose-by-8 ()
   let x = "abcdefgh";
   let result = choose-by(odd?, #(1, 1, 1, 1, 1, 1, 1, 1), x);
  check-true("",  ~(x == result) & x = result);
@@ -317,11 +355,12 @@ end test choose-by-8;
 
 // these test intersection
 
-define test intersection-type (description: "")
+define test intersection-type ()
   check-true("", instance?(intersection, <generic-function>));
 end test intersection-type;
 
-define test intersection-0 (description: "list")
+// list
+define test intersection-0 ()
   begin
     let result
       = intersection
@@ -334,18 +373,20 @@ define test intersection-0 (description: "list")
        #(#"richard", #"edward", #"charles")).empty?);
 end test intersection-0;
 
-define test intersection-1 (description: "empty-list")
+// empty-list
+define test intersection-1 ()
   check-true("", intersection(#(), #()).empty?);
 end test intersection-1;
 
-define test intersection-2
-  (description: "always terminates, even with unbounded ranges")
+// always terminates, even with unbounded ranges
+define test intersection-2 ()
   check-true("", intersection(range(from: 0, by: 2), range(from: 1, by: 2)).empty?);
   check-true("", intersection(range(from: 8, by: 2), range(from: 9, by: 3))
     = range(from: 12, by: 6));
 end test intersection-2;
 
-define test intersection-2a (description: "with test")
+// with test
+define test intersection-2a ()
   let result
     = intersection
         (as(<list>, range(from: 0, by: 2, size: 5)),
@@ -359,7 +400,8 @@ end test intersection-2a;
 // See design note #18
 //
 
-define test intersection-2b (description: "same, but with ranges not lists")
+// same, but with ranges not lists
+define test intersection-2b ()
   let result
     = intersection
         (range(from: 0, by: 2, size: 5),
@@ -370,37 +412,43 @@ define test intersection-2b (description: "same, but with ranges not lists")
   check-true("", every?(rcurry(member?, result), #(0, 2, 4, 6, 8)) & result.size = 5);
 end test intersection-2b;
 
-define test intersection-2c (description: "range, test: =")
+// range, test: =
+define test intersection-2c ()
   check-true("", intersection
     (range(from: 0, by: 2, size: 5), range(from: 6, by: 2, size: 5), test: \=)
   = range(from: 6, by: 2, size: 2));
 end test intersection-2c;
 
-define test intersection-2d (description: "semi-infinite ranges, test: id?")
+// semi-infinite ranges, test: id?
+define test intersection-2d ()
   check-true("", intersection(range(from: 0, by: 2), range(by: 2, to: 10), test: \==)
   = range(from: 0, by: 2, size: 6));
 end test intersection-2d;
 
-define test intersection-3 (description: "deque")
+// deque
+define test intersection-3 ()
   check-true("", intersection(deque-instance(1, 2, 3, 4, 5), deque-instance(4, 6, 8, 10, 12))
   = deque-instance(4));
 end test intersection-3;
 
-define test intersection-4 (description: "stretchy-vector")
+// stretchy-vector
+define test intersection-4 ()
   check-true("", intersection
     (stretchy-vector-instance(1, 2, 3, 4, 5),
      stretchy-vector-instance(4, 6, 8, 10, 12))
   = stretchy-vector-instance(4));
 end test intersection-4;
 
-define test intersection-5 (description: "simple-object-vector")
+// simple-object-vector
+define test intersection-5 ()
   check-true("", intersection
     (vector(1, 2, 3, 4, 5),
      vector(4, 6, 8, 10, 12))
   = vector(4));
 end test intersection-5;
 
-define test intersection-6 (description: "string")
+// string
+define test intersection-6 ()
   let result
     = intersection
         ("When, in the course of human events",
@@ -408,4 +456,3 @@ define test intersection-6 (description: "string")
   check-true("", every?(rcurry(member?, "aehnort "), result));
   check-true("", every?(rcurry(member?, result), "aehnort "));
 end test intersection-6;
-

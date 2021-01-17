@@ -59,7 +59,7 @@ define method wait-for-resources ()
 end method;
 
 
-define test dynamic-binds-test (description: "Test dynamic bindings")
+define test dynamic-binds-test ()
   let *lock* = make(<lock>);
   let n = 10;
   let iterations = 10;

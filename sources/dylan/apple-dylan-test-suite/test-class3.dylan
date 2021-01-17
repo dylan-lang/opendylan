@@ -9,8 +9,8 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 define test type-survive-assignment-1 ()
@@ -29,8 +29,8 @@ end test;
 
 define test type-survive-assignment-2 ()
   check-condition
-    ("", <error>, 
-     method (n :: <integer>) 
+    ("", <error>,
+     method (n :: <integer>)
        if (n < 0)
 	 n := #f
        end if;
@@ -50,7 +50,7 @@ define test subtype?-type ()
   check("", instance?, subtype?, <function>);
 end test;
 
-define test subtype?-0 (description: "indirectly")
+define test subtype?-0 ()
   check-true("", subtype?(<dtest-test-subclass>, <dtest-test-class>));
   check-true("", ~subtype?(<dtest-test-class>, <dtest-test-subclass>));
   check-true("", subtype?(<sequence>, <collection>));
@@ -72,7 +72,7 @@ end test;
 
 define test all-superclasses-0 ()
   check-equal("", <object>.all-superclasses, <object>.list);
-  let c = <dtest-test-class>.all-superclasses;   
+  let c = <dtest-test-class>.all-superclasses;
   check-equal("", c.size, 2);
   check-equal("", c.first, <dtest-test-class>);
   check-equal("", c.second, <object>);
@@ -177,14 +177,14 @@ define suite test-class-suite ()
   test instance?-20;
   test instance?-22;
   test instance?-23;
-  test as-type;  
+  test as-type;
   test subtype?-type;
   test subtype?-0;
   test object-class-type;
   test object-class-0;
   test all-superclasses-type;
   test all-superclasses-0;
-  test direct-subclasses-type; 
+  test direct-subclasses-type;
   test direct-subclasses-0;
   test singleton-type;
   test singleton-0;
@@ -192,7 +192,3 @@ define suite test-class-suite ()
   test type-survive-assignment-2;
   test type-survive-assignment-3;
 end suite;
-
-
-
-

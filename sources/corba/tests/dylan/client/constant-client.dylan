@@ -16,7 +16,7 @@ define method close-enough? (x, y)
   (abs(x - y) / abs(x)) < $epsilon
 end method;
 
-define test constant-integer-test (description: "Test integer constants")
+define test constant-integer-test ()
   check-equal("Value of MIN_SHORT", $MIN-SHORT, -32768);
   check-equal("Value of MAX_SHORT", $MAX-SHORT, 32767);
   check-equal("Value of MIN_USHORT", $MIN-USHORT, 0);
@@ -30,7 +30,7 @@ define test constant-integer-test (description: "Test integer constants")
   check-equal("Value of HEXADECIMAL_INTEGER", $HEXADECIMAL-INTEGER-2, #xABCDEF);
 end test;
 
-define test constant-character-test (description: "Test character constants")
+define test constant-character-test ()
   check-equal("Value of SPACE", $SPACE, ' ');
   check-equal("Value of UNDERSCORE", $UNDERSCORE, '_');
   check-equal("Value of DIGIT0", $DIGIT0, '0');
@@ -53,12 +53,12 @@ define test constant-character-test (description: "Test character constants")
   check-equal("Value of HEXADECIMAL_NUMBER_2", $HEXADECIMAL-NUMBER-2, '\<12>');
 end test;
 
-define test constant-boolean-test (description: "Test boolean constants")
+define test constant-boolean-test ()
   check-equal("Value of MY_TRUE", $MY-TRUE, #t);
   check-equal("Value of MY_FALSE", $MY-FALSE, #f);
 end test;
 
-define test constant-string-test (description: "Test string constants")
+define test constant-string-test ()
   check-equal("Value of EMPTY_STRING", $EMPTY-STRING, "");
   check-equal("Value of NAME", $NAME, "Keith");
   check-equal("Value of CONCATENATED_STRINGS", $CONCATENATED-STRINGS, "First part+Second part");
@@ -66,7 +66,7 @@ define test constant-string-test (description: "Test string constants")
 // TODO: Add check for: const string CONCATENATED_STRINGS_2 = "\xA" "B";
 end test;
 
-define test constant-float-test (description: "Test float and double constants")
+define test constant-float-test ()
   check-equal("Value of ZERO_FLOAT", $ZERO-FLOAT, 0.0);
   check-equal("Value of WEE_FLOAT", $WEE-FLOAT, 1.175494s-30);
   check-equal("Value of BIG_FLOAT", $BIG-FLOAT, 3.4028236s+30);
@@ -81,7 +81,7 @@ define test constant-float-test (description: "Test float and double constants")
   check-equal("Value of DOUBLE_EXPR2", $DOUBLE-EXPR2, 0.0d0);
 end test;
 
-define test constant-expression-test (description: "Test constant expressions")
+define test constant-expression-test ()
   check-equal("Value of UNARY_PLUS", $UNARY-PLUS, 2);
   check-equal("Value of UNARY_MINUS", $UNARY-MINUS, -3);
   check-equal("Value of BINARY_MINUS", $BINARY-MINUS, -1);

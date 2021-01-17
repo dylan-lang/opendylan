@@ -9,15 +9,17 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
-define test member?-8 (description: "test defaults to id?")
+// test defaults to id?
+define test member?-8 ()
   check-true("", ~member?(#[2], #[#[1], #[2], #[3]]));
 end test member?-8;
 
-define test member?-9 (description: "with other tests")
+// with other tests
+define test member?-9 ()
   check-true("", member?(#[2], #[#[1], #[2], #[3]], test: \=));
   check-true("", ~member?(0, range(from: 0, below: 6), test: \>));
   check-true("", member?(1, range(from: 0, below: 6), test: \>));
@@ -26,7 +28,8 @@ define test member?-9 (description: "with other tests")
   check-true("", member?('a', #[3, 5, 'b', 7, 'a']));
 end test member?-9;
 
-define test member?-10 (description: "test may be non-commutative")
+// test may be non-commutative
+define test member?-10 ()
   let error = #f;
   check-true("", member?
     (1, #('a', 'b'),
@@ -43,62 +46,72 @@ define test find-key-type ()
   check-true("", instance?(find-key, <generic-function>))
 end test find-key-type;
 
-define test find-key-0 (description: "list")
+// list
+define test find-key-0 ()
   let var = list(1, 2, 3, 4, 4);
   check-equal("", 4, var[find-key(var, curry(\==, 4))] & even?(var[find-key(var, even?)]));
   check-equal("", find-key(#(#()), empty?), 0);
   check-equal("", find-key(#(#(#())), empty?), #f);
 end test find-key-0;
 
-define test find-key-1 (description: "empty-list")
+// empty-list
+define test find-key-1 ()
   check-equal("", find-key(#(), empty?), #f);
 end test find-key-1;
 
-define test find-key-2 (description: "range")
+// range
+define test find-key-2 ()
     let var = range(from: 1, below: 6, by: 3);
     check-true("", even?(var[find-key(var, even?)]));
- 
+
   check-equal("", find-key(range(from: 1, below: 6, by: 2), even?), #f);
 end test find-key-2;
 
-define test find-key-3 (description: "deque")
+// deque
+define test find-key-3 ()
     let var = deque-instance(1, 2, 3, 4, 5);
   check-true("", even?(var[find-key(var, even?)]));
   check-equal("", find-key(deque-instance(1, 3, 5), even?), #f);
 end test find-key-3;
 
-define test find-key-4 (description: "table")
+// table
+define test find-key-4 ()
     let var = table-instance(#(1, 2), #(3, 4), #(5, 6));
   check-true("",  even?(var[find-key(var, even?)]));
   check-equal("", find-key(table-instance(#(1, 1), #(3, 3), #(5, 5)), even?), #f);
 end test find-key-4;
 
-define test find-key-5 (description: "stretchy-vector")
+// stretchy-vector
+define test find-key-5 ()
     let var = stretchy-vector-instance(1, 2, 3, 4, 5);
   check-true("",  even?(var[find-key(var, even?)]));
 
   check-equal("", find-key(stretchy-vector-instance(1, 3, 5), even?), #f);
 end test find-key-5;
 
-define test find-key-6 (description: "simple-object-vector")
- 
+// simple-object-vector
+define test find-key-6 ()
+
     let var = vector(1, 2, 3, 4, 5);
   check-true("",  even?(var[find-key(var, even?)]));
   check-equal("", find-key(vector(1, 3, 5), even?), #f);
 end test find-key-6;
 
-define test find-key-7 (description: "string")
+// string
+define test find-key-7 ()
 
     let var = "abcdefgh";
     check-equal("", 'c', var[find-key(var, curry(\=, 'c'))]);
   check-equal("", find-key("abdefgh", curry(\=, 'c')), #f);
 end test find-key-7;
 
-define test find-key-8 (description: "skip arg")
+// skip arg
+define test find-key-8 ()
   check-equal("", 5, find-key(list(1, 2, 3, 4, 5, 6), even?.curry, skip: 2));
 end test find-key-8;
 
-define test find-key-9 (description: "failure")
+// failure
+define test find-key-9 ()
   check-equal("", #f, find-key(list(1, 2, 3, 4, 5, 6), curry(\<, 9)));
   check-equal("", "Can't find the key",
      find-key
@@ -112,7 +125,8 @@ define test replace-elements!-type ()
   check-true("", instance?(replace-elements!, <generic-function>));
 end test replace-elements!-type;
 
-define test replace-elements!-0 (description: "list")
+// list
+define test replace-elements!-0 ()
   check-equal("", replace-elements!
     (#(1, 2, 3, 4, 5),
      even?,
@@ -122,7 +136,8 @@ define test replace-elements!-0 (description: "list")
    #(1, 3, 3, 5, 5));
 end test replace-elements!-0;
 
-define test replace-elements!-1 (description: "empty-list")
+// empty-list
+define test replace-elements!-1 ()
   check-equal("", replace-elements!
     (#(),
      even?,
@@ -132,7 +147,8 @@ define test replace-elements!-1 (description: "empty-list")
    #());
 end test replace-elements!-1;
 
-define test replace-elements!-2 (description: "deque")
+// deque
+define test replace-elements!-2 ()
   check-equal("", replace-elements!
     (deque-instance(1, 2, 3, 4, 5),
      even?,
@@ -142,7 +158,8 @@ define test replace-elements!-2 (description: "deque")
    deque-instance(1, 3, 3, 5, 5));
 end test replace-elements!-2;
 
-define test replace-elements!-3 (description: "table")
+// table
+define test replace-elements!-3 ()
   check-equal("", replace-elements!
     (table-instance(#(1, 2), #(3, 4), #(5, 6)),
      even?,
@@ -152,7 +169,8 @@ define test replace-elements!-3 (description: "table")
    table-instance(#(1, 3), #(3, 5), #(5, 7)));
 end test replace-elements!-3;
 
-define test replace-elements!-4 (description: "stretchy-vector")
+// stretchy-vector
+define test replace-elements!-4 ()
   check-equal("", replace-elements!
     (stretchy-vector-instance(1, 2, 3, 4, 5),
      even?,
@@ -162,7 +180,8 @@ define test replace-elements!-4 (description: "stretchy-vector")
    stretchy-vector-instance(1, 3, 3, 5, 5));
 end test replace-elements!-4;
 
-define test replace-elements!-5 (description: "simple-object-vector")
+// simple-object-vector
+define test replace-elements!-5 ()
   check-equal("", replace-elements!
     (vector(1, 2, 3, 4, 5),
      even?,
@@ -172,7 +191,8 @@ define test replace-elements!-5 (description: "simple-object-vector")
    vector(1, 3, 3, 5, 5));
 end test replace-elements!-5;
 
-define test replace-elements!-6 (description: "string")
+// string
+define test replace-elements!-6 ()
   check-equal("", replace-elements!
     ("abandon hope!",
      method (c)
@@ -184,7 +204,8 @@ define test replace-elements!-6 (description: "string")
    "zbzndon hope!");
 end test replace-elements!-6;
 
-define test replace-elements!-7 (description: "with count arg")
+// with count arg
+define test replace-elements!-7 ()
   check-equal("", replace-elements!
     (#(1, 2, 3, 4, 5, 6),
      odd?,
@@ -195,45 +216,55 @@ define test replace-elements!-7 (description: "with count arg")
    #(2, 2, 6, 4, 5, 6));
 end test replace-elements!-7;
 
-define test fill!-0 (description: "list")
+// list
+define test fill!-0 ()
   check-equal("", fill!(#(1, 2, 3, 4), 3), #(3, 3, 3, 3));
 end test fill!-0;
 
-define test fill!-1 (description: "empty-list")
+// empty-list
+define test fill!-1 ()
   check-equal("", fill!(#(), 4), #());
 end test fill!-1;
 
-define test fill!-2 (description: "deque")
+// deque
+define test fill!-2 ()
   check-equal("", fill!(deque-instance(#"a", #"b", #"c", #"d"), 4), deque-instance(4, 4, 4, 4));
 end test fill!-2;
 
-define test fill!-3 (description: "table")
+// table
+define test fill!-3 ()
   check-equal("", fill!(table-instance(#(#"a", #"b"), #(#"c", #"d")), 4), table-instance(#(#"a", 4), #(#"c", 4)));
 end test fill!-3;
 
-define test fill!-4 (description: "stretchy-vector")
+// stretchy-vector
+define test fill!-4 ()
   check-equal("", fill!(stretchy-vector-instance(#"a", #"b", #"c", #"d"), 4), stretchy-vector-instance(4, 4, 4, 4));
 end test fill!-4;
 
-define test fill!-5 (description: "simple-object-vector")
+// simple-object-vector
+define test fill!-5 ()
   check-equal("", fill!(vector(#"a", #"b", #"c", #"d"), 4), vector(4, 4, 4, 4));
 end test fill!-5;
 
-define test fill!-6 (description: "string")
+// string
+define test fill!-6 ()
   check-equal("", fill!("abcdefgh", 'x'), "xxxxxxxx");
   check-equal("", fill!("", 'x'), "");
 end test fill!-6;
 
-define test fill!-7 (description: "with start: arg")
+// with start: arg
+define test fill!-7 ()
   check-equal("", fill!("abcdefgh", 'x', start: 3), "abcxxxxx");
 end test fill!-7;
 
-define test fill!-8 (description: "with end: arg")
+// with end: arg
+define test fill!-8 ()
     let t = "abcdefgh";
     check-equal("", fill!(t, 'x', end: 2), "xxcdefgh");
 end test fill!-8;
 
-define test fill!-9 (description: "with start: and end: args")
+// with start: and end: args
+define test fill!-9 ()
   check-equal("", fill!(#[#"a", #"b", #"c", #"d"], 1, start: 1, end: 3), #[#"a", 1, 1, #"d"]);
   check-equal("", fill!("abcdefgh", 'x', start: 3, end: 5), "abcxxfgh");
   check-equal("", fill!(#(), #"x", start: 0, end: 0), #());
@@ -241,7 +272,8 @@ end test fill!-9;
 
 // KJP: end: 3 -> 0
 
-define test fill!-10 (description: "alters mutable-collection")
+// alters mutable-collection
+define test fill!-10 ()
   let s = "abcdefgh";
   check-equal("", fill!(s, 'x'), "xxxxxxxx" );
   check-equal("", fill!(s, 'x'), s);
@@ -251,7 +283,8 @@ define test element-type ()
   check-true("", instance?(element, <generic-function>));
 end test element-type;
 
-define test element-0 (description: "simple cases")
+// simple cases
+define test element-0 ()
   check-equal("", deque-instance(1, 2, 3, 4)[2], 3);
   check-equal("", stretchy-vector-instance(1, 2, 3, 4)[2], 3);
   check-equal("", vector(1, 2, 3, 4)[2], 3);
@@ -260,7 +293,8 @@ define test element-0 (description: "simple cases")
   check-equal("", #(99, 98, 97, 96, 95)[4], 95);
 end test element-0;
 
-define test element-1 (description: "with default")
+// with default
+define test element-1 ()
   check-true("", empty?(element(deque-instance(1, 2, 3, 4), 7, default: deque-instance())));
   check-equal("", element(stretchy-vector-instance(1, 2, 3, 4), 6, default: #()), #());
   check-equal("", element(vector(1, 2, 3, 4), 8, default: #t), #t);
@@ -268,7 +302,7 @@ define test element-1 (description: "with default")
       (table-instance(#(1, #"a"), #(2, #"b"), #(3, #"c")), 87, default: #"d"), #"d");
   check-equal("", element("Now is the time", 100, default: "no"), "no");
   check-equal("", element(#(99, 98, 97, 96, 95), 5, default: #f), #f);
- 
+
       let a = "foobar";
     check-equal("", apply(aref, list(a, 3)), a[3]);
     check-equal("", apply(aref, list(a, 3)), 'b');
@@ -291,88 +325,95 @@ end test element-setter-0;
 
 // These do not exhaustively test all possible collections
 
-define test element-setter-list1
-  (description: "list: index too low")
+// list: index too low
+define test element-setter-list1 ()
   check-condition("", <error>, list(1, 2, 3)[-1] := 0);
 end test element-setter-list1;
 
-define test element-setter-list2
-  (signal: <error>, description: "list: index too high")
+// list: index too high
+define test element-setter-list2 ()
   check-condition("", <error>, list(1, 2, 3)[5] := 5);
 end test element-setter-list2;
 
-define test element-setter-list3
-  (signal: <error>, description: "improper list")
+// improper list
+define test element-setter-list3 ()
   check-condition("", <error>, pair(1, 2)[1] := #"a");
 end test element-setter-list3;
 
-define test element-setter-vector1
-  (signal: <error>, description: "vector: index too low")
+// vector: index too low
+define test element-setter-vector1 ()
   check-condition("", <error>, vector(1, 2, 3)[-1] := 0);
 end test element-setter-vector1;
 
-define test element-setter-vector2
-  (signal: <error>, description: "vector: index too high")
+// vector: index too high
+define test element-setter-vector2 ()
   check-condition("", <error>, vector(1, 2, 3)[5] := 5);
 end test element-setter-vector2;
 
-define test element-setter-string1
-  (signal: <error>, description: "string: index too low")
+// string: index too low
+define test element-setter-string1 ()
   let s = "foo";
   check-condition("", <error>, s[-1] := 'a');
 end test element-setter-string1;
 
-define test element-setter-string2
-  (signal: <error>, description: "string: index too high")
+// string: index too high
+define test element-setter-string2 ()
   let s = "foo";
   check-condition("", <error>, s[5] := 'a');
 end test element-setter-string2;
 
-define test element-setter-string3
-  (signal: <error>, description: "string: not a char")
+// string: not a char
+define test element-setter-string3 ()
   let s = "foo";
   check-condition("", <error>, s[1] := #"a");
 end test element-setter-string3;
 
 // element, page 124
 
-define test element1-0 (description: "list")
+// list
+define test element1-0 ()
   let c = #(1, 2, 3, 4);
   check-equal("", c[0], 1);
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-0;
 
-define test element1-1 (description: "range")
+// range
+define test element1-1 ()
   let c = range(from: 1, below: 6);
   check-equal("", c[0], 1);
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-1;
 
-define test element1-2 (description: "deque")
+// deque
+define test element1-2 ()
   let c = deque-instance(1, 2, 3, 4);
   check-equal("", c[0], 1);
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-2;
 
-define test element1-3 (description: "table")
+// table
+define test element1-3 ()
   let c = table-instance(#(1, 2), #(3, 4));
   check-equal("", c[3], 4 );
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-3;
 
-define test element1-4 (description: "stretchy-vector")
+// stretchy-vector
+define test element1-4 ()
   let c = stretchy-vector-instance(1, 2, 3, 4);
   check-equal("", c[0], 1 );
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-4;
 
-define test element1-5 (description: "simple-object-vector")
+// simple-object-vector
+define test element1-5 ()
   let c = vector(1, 2, 3, 4);
   check-equal("", c[0], 1);
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-5;
 
-define test element1-6 (description: "string")
+// string
+define test element1-6 ()
   let c = "1234";
   check-equal("", c[0], '1' );
   //---*** Triggers compiler crash:
@@ -429,9 +470,9 @@ define suite test-collection-suite ()
   test size-setter-1;
   test size-setter-2;
   test type-for-copy-type;
-  test type-for-copy-0; 
+  test type-for-copy-0;
   test type-for-copy-1;
-  test type-for-copy-3; 
+  test type-for-copy-3;
   test empty?-type;
   test empty?-0;
   test empty?-1;
@@ -458,7 +499,7 @@ define suite test-collection-suite ()
   test map-9;
   test map-10;
   test map-11;
-  test map-as-type; 
+  test map-as-type;
   test map-as-0;
   test map-as-1;
   test map-as-2;
@@ -472,7 +513,7 @@ define suite test-collection-suite ()
   test map-into-type;
   test map-into-0;
   test map-into-1;
-  test map-into-2; 
+  test map-into-2;
   test map-into-3;
   test map-into-4;
   test map-into-5;
@@ -495,7 +536,7 @@ define suite test-collection-suite ()
 //  test any?-10; or test-collection2.dylan
   test any?-11;
   test every?-type;
-  test every?-0; 
+  test every?-0;
   test every?-1;
   test every?-2;
   test every?-3;
@@ -566,7 +607,7 @@ define suite test-collection-suite ()
   test fill!-7;
   test fill!-8;
   test fill!-9;
-  test fill!-10; 
+  test fill!-10;
   test element-type;
   test element-0;
   test element-1;
