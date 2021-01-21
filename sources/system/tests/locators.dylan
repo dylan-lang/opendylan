@@ -248,7 +248,25 @@ define test test-supports-list-locator? ()
 end test;
 
 define test test-list-locator ()
-  // Fill this in.
+  // Create some structure
+  let root = test-temp-directory();
+  let dir1 = create-directory(root, "dir1");
+  let file1 = merge-locators(as(<file-locator>, "file1"), root);
+  let file2 = merge-locators(as(<file-locator>, "file2"), dir1);
+  // Just need to touch the files, no need to write anything
+  close(open-locator(file1, direction: #"output"));
+  close(open-locator(file2, direction: #"output"));
+  // test it.
+  let entries = list-locator(root);
+  assert-equal(2, size(entries));
+  let found-file = any?(method(x)
+                            instance?(x, <file-locator>) & x
+                        end, entries);
+  let found-dir = any?(method(x)
+                           instance?(x, <directory-locator>) & x
+                       end, entries);
+  assert-equal(locator-name(file1), found-file & locator-name(found-file));
+  assert-equal(locator-name(dir1), found-dir & locator-name(found-dir));
 end test;
 
 define test test-locator-host ()
