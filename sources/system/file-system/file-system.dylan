@@ -502,9 +502,7 @@ define sideways method list-locator
        let sublocator
          = select (type)
              #"file", #"link" =>
-               make(<file-system-file-locator>,
-                    directory: locator,
-                    name:      name);
+               merge-locators(as(<file-locator>, name), locator);
              #"directory" =>
                subdirectory-locator(locator, name);
            end;
