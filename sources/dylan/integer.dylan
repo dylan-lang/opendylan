@@ -454,8 +454,6 @@ define method power-of-two-ceiling (value :: <integer>) => (result :: <integer>)
   end iterate
 end method power-of-two-ceiling;
 
-// TODO: EXPORT THESE
 define constant <bit>         = limited(<integer>, min: 0, max: 1);
 define constant <byte>        = limited(<integer>, min: 0, max: 255);
 define constant <double-byte> = limited(<integer>, min: 0, max: 65535);
-
