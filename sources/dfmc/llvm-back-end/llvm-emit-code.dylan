@@ -281,7 +281,7 @@ end method;
 define method llvm-calling-convention
     (back-end :: <llvm-back-end>, o :: <&iep>)
  => (calling-convention :: <integer>);
-  $llvm-calling-convention-fast
+  llvm-back-end-calling-convention-fast(back-end)
 end method;
 
 // Calling convention for shared entry points

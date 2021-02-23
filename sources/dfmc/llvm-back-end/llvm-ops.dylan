@@ -314,7 +314,8 @@ define method op--call-iep
      #key function-type :: false-or(<llvm-function-type>),
           next :: <llvm-value> = $object-pointer-undef,
           function :: <llvm-value> = $object-pointer-undef,
-          calling-convention :: <integer> = $llvm-calling-convention-fast,
+          calling-convention :: <integer>
+            = llvm-back-end-calling-convention-fast(back-end),
           tail-call? = #f)
  => (call :: <llvm-value>);
   let word-size = back-end-word-size(back-end);
@@ -373,7 +374,6 @@ define method op--call-error-iep
   let err-global = llvm-builder-global(back-end, err-name);
   op--call-iep(back-end, err-global, arguments,
                function-type: llvm-lambda-type(back-end, err-iep),
-               calling-convention: llvm-calling-convention(back-end, err-iep),
-               tail-call?: #t);
+               calling-convention: llvm-calling-convention(back-end, err-iep));
   ins--unreachable(back-end);
 end method;

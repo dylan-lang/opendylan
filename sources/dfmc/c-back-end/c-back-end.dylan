@@ -12,6 +12,7 @@ define class <c-back-end> (<back-end>)
     = make(<string-stream>, direction: #"output",
            contents: make(<byte-string>,
                           size: $initial-string-stream-contents-size));
+  slot %back-end-word-size :: <integer>;
 end;
 
 register-back-end(<c-back-end>, #"c", #f);
@@ -118,12 +119,18 @@ define method emit-reference
 end method;
 
 define method back-end-word-size
-    (object :: <c-back-end>) => (size :: <integer>)
-  if (member?(target-architecture-name(), #(#"alpha", #"x86_64")))
-    8
+    (back-end :: <c-back-end>) => (size :: <integer>)
+  if (slot-initialized?(back-end, %back-end-word-size))
+    back-end.%back-end-word-size
   else
-    4
-  end;
+    back-end.%back-end-word-size
+      := if (member?(target-architecture-name(),
+                     #[#"alpha", #"x86_64", #"ppc64", #"aarch64", #"riscv64"]))
+           8
+         else
+           4
+         end
+  end
 end method;
 
 define function format-emit

@@ -51,6 +51,10 @@ case $host in
       OPEN_DYLAN_TARGET_PLATFORM=aarch64-linux;
       SUPPORT_LLVM=yes
     ;;
+  riscv64-*-linux*)
+      OPEN_DYLAN_TARGET_PLATFORM=riscv64-linux;
+      SUPPORT_LLVM=yes
+    ;;
   i*86-*-netbsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-netbsd;
     ;;

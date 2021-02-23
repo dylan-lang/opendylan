@@ -861,7 +861,7 @@ define method emit-call
                        map(curry(emit-reference, back-end, m),
                            c.arguments)),
            type: return-type,
-           calling-convention: $llvm-calling-convention-fast)
+           calling-convention: llvm-back-end-calling-convention-fast(back-end))
 end method;
 
 // Calls through a function's MEP using apply() where next-methods are known
@@ -879,7 +879,7 @@ define method emit-call
                        map(curry(emit-reference, back-end, m),
                            c.arguments)),
            type: return-type,
-           calling-convention: $llvm-calling-convention-fast)
+           calling-convention: llvm-back-end-calling-convention-fast(back-end))
 end method;
 
 define method emit-call

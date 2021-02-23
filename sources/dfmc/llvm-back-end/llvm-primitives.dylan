@@ -335,7 +335,7 @@ define method make-primitive-function
             | member?(#"c-callable", descriptor.primitive-attributes))
         $llvm-calling-convention-c
       else
-        $llvm-calling-convention-fast
+        llvm-back-end-calling-convention-fast(back-end)
       end if;
 
   make(<llvm-function>,

@@ -26,6 +26,9 @@ Run-time
 Platform Support
 ================
 
+* The 64-bit RISC-V architecture (rv64gc ISA) is now supported on
+  Linux.
+
 IDE
 ===
 
