@@ -374,7 +374,6 @@ define method op--call-error-iep
   let err-global = llvm-builder-global(back-end, err-name);
   op--call-iep(back-end, err-global, arguments,
                function-type: llvm-lambda-type(back-end, err-iep),
-               calling-convention: llvm-calling-convention(back-end, err-iep),
-               tail-call?: #t);
+               calling-convention: llvm-calling-convention(back-end, err-iep));
   ins--unreachable(back-end);
 end method;
