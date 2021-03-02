@@ -2,12 +2,6 @@
 The command-line-parser Library
 *******************************
 
-.. TODO:
-   * List init arguments for all classes.
-   * parse-command-line doesn't talk about <usage-error>
-   * Document error classes.
-   * Link <string-table>.
-
 .. current-library:: command-line-parser
 .. current-module:: command-line-parser
 
@@ -20,68 +14,135 @@ command line.  It exports two modules:
 * *command-line-parser* - Main API module
 * *option-parser-protocol* - For extending the API
 
+Overview
+========
+
+Here's a quick list of features to get a sense of what's available:
+
+* Various option types
+
+  * :class:`<flag-option>` for simple ``--boolean`` flags.
+  * :class:`<parameter-option>` for ``--foo=bar`` options.
+  * :class:`<repeated-parameter-option>` options may be repeated: ``-r a -r b``
+  * :class:`<optional-parameter-option>` in which the value is optional:
+    ``--foo`` or ``--foo bar``
+  * :class:`<keyed-option>` fills a table with key/value pairs, for example:
+    ``-Dk1=v1 -Dk2=v2``
+  * :class:`<choice-option>` the value may be chosen from a predefined set.
+  * :class:`<positional-option>` to receive positional arguments.
+
+* Automatic and extensible conversion of arguments to other types. For example,
+  an option with ``type: <integer>`` is automatically converted to integer by
+  the parser.
+* Subcommands
+* Automatic usage and ``--help`` generation.
+* A convenient and readable syntax for creating the command line.
+* Extensibility. Add your own argument converters with :gf:`parse-option-value`
+  or create entirely new option types.
+
 
 Quick Start
 ===========
+
+The best way to build a command line parser is with
+:macro:`command-line-definer`, since it is far more concise and readable than
+building one "by hand" with ``make(<command-line-parser>, options: ...)``.  It
+also provides convenient methods to retrieve command-line option values rather
+than accessing them by name, with strings.
+
+.. note:: :macro:`command-line-definer` does not currently support subcommands.
+          If you need subcommands you will have to build the parser by hand for
+          now.
 
 Let's say you want to parse a command line that looks like this::
 
   frob --name=zoo --debug -r a -r b -r c --choice=foo one two three
 
-The "frob" command accepts a ``--name`` argument that takes a value, a
-boolean ``--debug`` (or ``--nodebug``) a ``-r`` argument that may be
-repeated, and then at least one positional argument (here "one", "two",
-and "three").  Here's how to create a parser for the frob command:
+The "frob" command accepts a ``--name`` option that takes a value, a boolean
+``--debug`` (or ``--nodebug``) a repeatable ``-r`` option, a ``--choice``
+option that accepts one of several values, and then at least one positional
+argument (here "one", "two", and "three").  Here's what that parser looks like:
 
 .. code-block:: dylan
 
-  let parser = make(<command-line-parser>, min-positional-options: 1);
-  add-option(parser,
-             make(<parameter-option>,
-                  names: #("name"),
-                  help: "A name"));
-  add-option(parser,
-             make(<flag-option>,
-                  names: #("debug"),
-                  negative-names: #("nodebug"),
-                  default: #f,
-                  help: "Enable or disable debugging"));
-  add-option(parser,
-             make(<repeated-parameter-option>,
-                  names: #("r"),
-                  variable: "RAD",  // shows up in --help output
-                  help: "Free radicals"));
-  add-option(parser,
-             make(<choice-option>,
-                  names: #("choice"),
-                  choices: #("foo", "bar", "baz"),
-                  default: "foo"));
-
-There are additional option classes not shown here.  See the reference
-section for more info.
+  define command-line <frob-command-line> ()
+    option frob-name :: <string>,
+      names: #("name"),
+      help: "Name of the frob",
+      kind: <parameter-option>;
+    option frob-debug? :: <boolean>,
+      names: #("debug"),
+      negative-names: #("nodebug"),
+      help: "Enable or disable debugging",
+      kind: <flag-option>;   // This is the default.
+    option frob-radicals :: <sequence>,
+      names: #("r"),
+      kind: <repeated-parameter-option>,
+      variable: "RAD",       // Makes --help show "-r RAD"
+      help: "Free radicals";
+    option frob-choice :: <string>,
+      names: #("choice"),
+      choices: #("foo", "bar", "baz"),
+      default: "foo",
+      help: "Your choice";
+    option frob-filenames :: <sequence>,
+      names: #("filenames"),
+      kind: <positional-option>,
+      repeated?: #t,
+      help: "One or more filenames";
+  end command-line;
 
 Now parse the command line:
 
 .. code-block:: dylan
 
   block ()
-    parse-command-line(parser, application-arguments(),
-                       description: "The most excellent Frobber.");
-  exception (ex :: <help-requested>)
-    exit-application(0);
-  exception (ex :: <usage-error>)
-    exit-application(2);
+    let cmd = make(<frob-command-line>, help: "frob things");
+    parse-command-line(parser, application-arguments());
+    // Now execute your main program code with cmd containing
+    // the parsed argument values.
+    frob(cmd);
+  exception (err :: <abort-command-error>)
+    // This condition is signaled by parse-command-line and also if
+    // your own code calls abort-command().
+    format-err("%s", ex);
+    exit-application(err.exit-status);
   end;
 
-And to access the option values:
+To access the option values simply read the ``<frob-command-line>`` slot
+values. Assuming ``cmd`` is the command parsed above:
 
 .. code-block:: dylan
 
-  let debug? :: <boolean> = get-option-value(parser, "debug");
-  let name :: false-or(<string>) = get-option-value(parser, "name");
-  let dash-r :: <deque> = get-option-value(parser, "r");
-  let choice :: <string> = get-option-value(parser, "choice");
-  let args :: <sequence> = positional-options(parser);
+   for (file in cmd.frob-filenames)
+     if (cmd.frob-debug?)
+       format-out(...);
+     end;
+     ...more...
+   end;
+
+Of course, it is also possible to make a command line parser without the macro
+above, but doing so is much more verbose and requires accessing the option
+values by calling ``get-option-value(cmd, "option-name")``. Briefly, just call
+:drm:`make`, like this:
+
+.. code-block:: dylan
+
+   let cmd
+     = make(<command-line-parser>,
+            help: "a most excellent program",
+            options: list(make(<flag-option>,
+                               names: #("name"),
+                               help: "provide a name"),
+                          ...,
+                          make(<positional-option>,
+                               names: #("filenames"),
+                               repeated?: #t,
+                               help: "one or more filenames")),
+            subcommands: list(make(<my-subcommand>, ...)));
+   parse-command-line(cmd, application-arguments());
+   let filenames = get-option-value(cmd, "filenames");
+   ...etc...
 
 
 Reference
@@ -91,42 +152,88 @@ Reference
 The command-line-parser Module
 ------------------------------
 
+.. class:: <command>
+   :abstract:
+   :sealed:
+
+   Abstract superclass of :class:`<command-line-parser>` and
+   :class:`<subcommand>`.
+
+   :keyword options:
+
+      A sequence of :class:`<option>` instances. Note that
+      :class:`<positional-option>` instances must follow all other options, and
+      there may be only a single :class:`<positional-option>` that specifies
+      ``repeated?: #t`` and it must be the last option in the sequence.
+
+   :keyword help:
+
+      Required. A :drm:`<string>` to display when help is requested via the
+      ``--help`` option or the ``help`` subcommand.
+
+.. class:: <subcommand>
+   :open:
+   :abstract:
+
+   A named subcommand. Subcommands have their own set of command-line
+   options. They may not contain other subcommands.
+
+   :superclasses: :class:`<command>`
+
+   :keyword name: Required. The subcommand name, a :drm:`<string>`.
+
+   :description:
+
+      Subclass this for each subcommand you need and implement a method on
+      :gf:`execute-subcommand` for each subclass.
+
 .. class:: <command-line-parser>
    :open:
 
-   Encapsulates a set of command-line options.
+   Encapsulates a set of command-line options. May optionally contain a set of
+   subcommands, each of which has its own set of options.
 
-   :superclasses: :drm:`<object>`
+   :superclasses: :class:`<command>`
 
-   :keyword provide-help-option?:
+   :keyword help-option?:
 
-     A boolean specifying whether the parser should automatically add
-     the default help option.  By default, help may be requested via
-     ``--help`` or ``-h``.  If ``#f``, no help option will be added to
-     the parser, and you must explicitly handle any request for help
-     yourself.
+      A boolean specifying whether the parser should automatically add the
+      default help option.  By default, help can be requested via ``--help`` or
+      ``-h``.  If false, no help option will be added to the parser, and you
+      must explicitly handle any request for help yourself. The default is
+      true. See :class:`<help-option>`.
 
-   :keyword help-option:
+   :keyword help-subcommand?:
 
-     A :class:`<flag-option>` that will be added to the parser as the
-     option that signals a request for help.  The main purpose of this
-     init keyword is to make it possible to use something other than
-     ``--help`` and ``-h`` to request help.  This keyword has no
-     effect if ``provide-help-option?`` is ``#f``.
+      A boolean specifying whether the parser should automatically add the
+      default help subcommand. The default is true if the command-line has any
+      subcommands. Set to false if you prefer to call the subcommand something
+      else (e.g., non-English). See :class:`<help-subcommand>`.
 
-   :keyword min-positional-options:
+   :keyword subcommands: A sequence of :class:`<subcommand>`.
 
-     The minimum number of positional (unnamed) options.  An
-     :drm:`<integer>`, defaulting to zero.  If fewer positional
-     options than this are supplied, :class:`<usage-error>` is
-     signaled.
+.. class:: <help-subcommand>
 
-   :keyword max-positional-options:
+   Implements the ``help`` subcommand. Normally there is no need to use this
+   since the command line parser implements the ``help`` subcommand itself.
+   However, if you wanted to implement the ``help`` subcommand differently, or
+   just give it a different (or an additional) name, this is how to do it:
 
-     The maximum number of positional (unnamed) options.  An
-     :drm:`<integer>`, defaulting to ``$maximum-integer``.  If more
-     positional options than this are supplied, :class:`<usage-error>`
-     is signaled.
+   .. code-block:: dylan
+
+      define class <my-help-subcommand> (<help-subcommand>) end;
+
+      let p = make(<command-line-parser>,
+                   help-subcommand?: #f,
+                   ...
+                   subcommands: list(make(<my-help-subcommand>,
+                                          names: #("ayuda"))
+                                     ...));
+
+      define method execute-subcommand
+          (parser, sub :: <my-help-subcommand>) => (s :: false-or(<integer>))
+        ...etc...
+      end
 
 .. class:: <command-line-parser-error>
    :open:
@@ -135,33 +242,43 @@ The command-line-parser Module
 
    :superclasses: :class:`<format-string-condition>`, :drm:`<error>`
 
+.. class:: <abort-command-error>
+   :sealed:
+
+   Provides a standard way for program code to indicate that the application
+   should exit. Signaled by the command line parser itself after the standard
+   ``--help`` option or ``help`` subcommand have completed, so programs should
+   always handle this at top level.
+
+   :superclasses: :class:`<command-line-parser-error>`
+
+   :keyword status: Required. A status code to pass to
+                    :func:`exit-application`. An :drm:`<integer>`.
+
+   :description:
+
+     This is commonly handled by calling ``exit-application(err.exit-status)``
+     after printing the error.
+
+.. function:: exit-status
+
+   Returns the exit status associated with an error.
+
+   :parameter error: An instance of :class:`<abort-command-error>`
+   :value status: An instance of :drm:`<integer>`
 
 .. class:: <usage-error>
    :open:
 
    Signaled when a command-line cannot be parsed.
 
-   :superclasses: :class:`<command-line-parser-error>`
+   :superclasses: :class:`<abort-command-error>`
 
    :description:
 
-     This is commonly handled by calling ``exit-application(2)`` since
-     the error has already been displayed on :var:`*standard-error*`.
-
-.. class:: <help-requested>
-   :sealed:
-
-   Signaled when help was explicitly requested via the help option,
-   usually ``--help``.
-
-   :superclasses: :class:`<usage-error>`
-
-   :description:
-
-     This is commonly handled by calling ``exit-application(0)`` since
-     the command-line synopsis has already been displayed on
-     :var:`*standard-output*`.
-
+     This is commonly handled by calling ``exit-application(err.exit-status)``.
+     This condition need not be handled specially if the application already
+     handles :class:`<abort-command-error>`.
 
 .. function:: add-option
 
@@ -184,50 +301,61 @@ The command-line-parser Module
    :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter argv: An instance of :drm:`<sequence>`.  Normally the value
      returned by :func:`application-arguments` is passed here.
-   :parameter #key usage: As for :func:`print-synopsis`.
-   :parameter #key description: As for :func:`print-synopsis`.
    :description:
 
-     By default, the ``--help`` flag is handled automatically by
-     displaying the usage string, the description, and calling
-     ``print-synopsis(parser, *standard-output*)``.  Then
-     :class:`<help-requested>` is signaled and the caller should
-     handle it, perhaps by calling ``exit-application(0)``.
+     By default, the ``--help`` flag and the "help" subcommand are handled
+     automatically by calling :gf:`print-synopsis` and then signaling
+     :class:`<abort-command-error>`, so the caller should handle that
+     condition.
 
      If ``argv`` isn't a valid set of options as described by the
-     ``parser`` then :class:`<usage-error>` is signaled and the caller
-     should handle it, perhaps by calling ``exit-application(2)``.
-     
+     ``parser`` then :class:`<usage-error>`.
+
      See `Quick Start`_ for an example.
+
+.. generic-function:: execute-command
+
+   When using subcommands, call this to execute the parsed command line.
+
+   :signature: execute-command (parser) => (false-or(<integer>))
+   :parameter parser: An instance of :class:`<command-line-parser>`.
+
+   :description:
+
+      Call this after calling :gf:`parse-command-line`, if your command-line
+      has subcommands. (If not using subcommands there is no need to call this;
+      just read option values from parser directly.) It determines the
+      subcommand indicated by the user and invokes :gf:`execute-subcommand` on
+      it. The ``help`` subcommand is handled specially.
+
+.. generic-function:: execute-subcommand
+
+   Implement a method on this generic for each subclass of
+   :class:`<subcommand>` you create.
+
+   :signature: execute-subcommand (parser subcommand) => (false-or(<integer>))
+   :parameter parser: An instance of :class:`<command-line-parser>`.
+   :parameter subcommand: An instance of :class:`<subcommand>`.
+
+   :description:
+
+      This is the implementation of your subcommand. Read command-line options
+      from ``subcommand`` and read global options (if any) from ``parser``.
 
 .. generic-function:: print-synopsis
    :open:
 
-   Display a synopsis of the command line described by ``parser`` on
-   ``stream``.
+   Display a synopsis of the command line options.
 
-   :signature: print-synopsis (parser stream) => ()
+   :signature: print-synopsis (parser subcommand #key stream) => ()
    :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter stream: An instance of :class:`<stream>`.
+   :parameter subcommand: An instance of :class:`<subcommand>` or ``#f``.
+   :parameter #key stream: An instance of :class:`<stream>`.
 
-   :parameter #key usage: An instance of :drm:`<string>` or ``#f``.  A
-     brief synopsis of the overall command-line syntax.  The default
-     is ``#f``, in which case "Usage: <application-name> [options]\\n"
-     will be displayed, where <application-name> is the result of
-     calling ``locator-base(application-name())``.
+   :description:
 
-   :parameter #key description: An instance of :drm:`<string>` or ``#f``.
-     This is displayed after ``usage`` and before the detailed list of
-     options.  This is intended to be a sentence or short paragraph.
-
-.. generic-function:: positional-options
-
-   Returns the sequence of command line arguments that remain after
-   all optional arguments have been consumed.
-
-   :signature: positional-options (parser) => (args :: :drm:`<sequence>`)
-   :parameter object: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+      It is not normally necessary to call this function since the ``--help``
+      option and ``help`` subcommand are handled automatically by the parser.
 
 .. function:: option-present?
 
@@ -244,15 +372,50 @@ The command-line-parser Module
 
 .. function:: get-option-value
 
-   Retrieves an option from an :class:`<command-line-parser>` by its
-   long name.
+   Retrieves an option from a :class:`<command>` by name.
 
-   :signature: get-option-value (parser long-name) => (value)
+   :signature: get-option-value (parser name) => (value)
 
-   :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter long-name: An instance of :drm:`<string>`.
+   :parameter parser: An instance of :class:`<command>`.
+   :parameter name: An instance of :drm:`<string>`.
    :value value: An instance of :drm:`<object>`.
 
+.. generic-function:: parse-option-value
+   :open:
+
+   Convert a command line argument from a :drm:`<string>` to the
+   :class:`<option>` type.
+
+   :signature: parse-option-value(argument, type) => (value)
+   :parameter argument: An instance of :drm:`<string>`.
+   :parameter type: An instance of :drm:`<type>`.
+   :value value: An instance of :drm:`<object>`.
+
+   :description:
+
+      Convert a command-line argument (a string) to the type specified in the
+      corresponding :class:`<option>` instance. For example, given the
+      following code, the "version" option's :gf:`option-value` slot would be
+      set to an instance of ``<version>`` by the command line parser so that
+      you don't have to manually do it in your application.
+
+      .. code-block:: dylan
+
+         make(<parameter-option>,
+              names: #("version"),
+              help: "A version specifier. Ex: v1.2.3",
+              type: <version>)
+
+         define method parse-option-value
+             (arg :: <string>, type :: <version>) => (v :: <version>)
+           parse-version(arg)
+         end;
+
+      There are predefined methods that convert to :drm:`<number>`,
+      :drm:`<boolean>`, :drm:`<symbol>`, and :drm:`<sequence>`. For
+      :drm:`<boolean>`, valid values are yes/no, on/off, true/false.
+      For :drm:`<sequence>`, strings are simply split around commas,
+      without any attempt to be smart about quoting.
 
 
 Option Classes
@@ -261,7 +424,6 @@ Option Classes
 .. class:: <option>
    :abstract:
    :open:
-   :primary:
 
    Superclass of all other option types.
 
@@ -269,17 +431,22 @@ Option Classes
 
    :keyword names:
 
-     Names for this option; a sequence of strings.  For convenience a
-     single string may also be specified.  Strings of length 1 are
-     considered to be short options, i.e., they are prefixed by a
-     single dash on the command line.
+     Names for this option; a sequence of strings.  For convenience a single
+     string may be given if the option only has one name.  Strings of length 1
+     are considered to be short options, i.e., they are prefixed by a single
+     dash on the command line.
+
+     The first name in the list is considered the "canonical" name of the
+     option and is used in various parts of the auto-generated ``--help``
+     message.
 
    :keyword type:
 
-     The kind of value represented by this option.  That is, the
-     string passed on the command line will be coerced to this type
-     via the ``parse-option-parameter`` generic function.  Clients may
-     implement that function for their own types to extend the parser.
+     The kind of value represented by this option.  That is, the string passed
+     on the command line will be coerced to this type via
+     :gf:`parse-option-value` if a relevant method exists.  Clients may
+     implement methods on that function for their own types to extend the
+     parser.
 
      Predefined types include :drm:`<integer>`, ``subclass(<float>)``,
      ``subclass(<sequence>)``.
@@ -289,12 +456,23 @@ Option Classes
      A string documenting the option.  Displayed in ``--help`` output.
      Some automatic substitutions are performed:
 
-       1. "%default" => the string representation of the default value
+       1. "%default%" => The string representation of the default value
           for the option.
 
-       2. "%app" => the basename of the executable program.
+       2. "%app%" => The basename of the executable program.
 
-       3. "%%" => "%"
+     For example, given this option specification:
+
+     .. code-block:: dylan
+
+        make(<parameter-option>,
+             names: #("v", "version"),
+             help: "Package version [%default%]",
+             default: "latest")
+
+     it will be displayed as::
+
+       --version V   Package version [latest]
 
    :keyword variable:
 
@@ -302,13 +480,25 @@ Option Classes
      For example, if the option name is ``--database`` this might be
      "URL", which would display as::
 
-       --database  URL  A database URL.
-   
+       --database URL  A database URL.
+
+     When not specified, the first name of the option is used. For example:
+
+     .. code-block:: dylan
+
+        make(<parameter-option>,
+             names: #("n", "name"),
+             help: "A name")
+
+     And on the command-line this will be displayed as::
+
+       -n, --name N   A name
+
    :keyword default:
 
-     A default value for the option that will be used if the option
-     isn't specified by the user.
-
+     A default value for the option that will be used if the option isn't
+     specified by the user. The default value should be a member of the type
+     specified with the ``type:`` keyword. ``#f`` is the default default value.
 
 .. class:: <flag-option>
    :sealed:
@@ -323,13 +513,13 @@ Option Classes
 
    :description:
 
-     They default to ``#f`` and exist in both positive and negative forms:
-     "--foo" and "--no-foo".  In the case of conflicting options, the
-     rightmost takes precedence to allow for abuse of the shell's
-     "alias" command.
+     They default to ``#f`` and may exist in both positive and negative forms:
+     ``--foo`` and ``--no-foo``.  In the case of conflicting options, the
+     rightmost takes precedence to allow for abuse of the shell's "alias"
+     command.
 
-     For example, a single instance of this class could be used to
-     specify *all* of the following command-line options::
+     For example, a single instance of this class could be used to specify
+     *all* of the following command-line options::
 
          -q, -v, --quiet, --verbose
 
@@ -423,9 +613,9 @@ Option Classes
 
        make(<choice-option>,
             names: #("foo"),
+            help: "a or b",
             choices: #("a", "b"),
             test: string-equal-ic?)
-       
 
 
 .. class:: <keyed-option>
@@ -452,13 +642,60 @@ Option Classes
 
        -Dkey, -Dkey=value, -D key = value, --define key = value
 
+.. class:: <positional-option>
+   :sealed:
 
-.. macro:: option-parser-definer
+   Accepts an argument that is passed by possition on the command line.
+
+   :superclasses: :class:`<option>`
+
+   :description:
+
+      If you want your command-line parser to accept positional arguments you
+      must add :class:`<positional-option>` instances to it. Positional options
+      must come after all non-positional options.
+
+      By default, positional options are marked as required but you may pass
+      ``required?: #f`` to make them optional. *Note that it is an error to add
+      a required positional option after an optional positional option since
+      there is no way to parse that unambiguously.*
+
+      A :class:`<positional-option>` may be marked as accepting any number of
+      arguments by passing ``repeated?: #t`` when calling :drm:`make`. An
+      option marked as repeated *must* be the last option in the parser's list
+      of options.
+
+      In this example the command line requires one filename to be passed on
+      the command line, and one or more words after that:
+
+      .. code-block:: dylan
+
+         add-option(parser, make(<positional-option>,
+                                 names: #("filename"),
+                                 help: "A filename"));
+         add-option(parser, make(<positional-option>,
+                                 names: #("words"),
+                                 help: "One or more words",
+                                 repeated?: #t));
+
+         // Usage: app [options] FILENAME WORDS...
+
+.. class:: <help-option>
+   :open:
+
+   The standard ``--help`` option.
+
+   :superclasses: :class:`<flag-option>`
+
+   :description:
+
+      May be subclassed if you want to implement your own help option instead
+      of the default one.
 
 
 The option-parser-protocol Module
 ---------------------------------
 
-This module exports an API that can be used to extend the existing
-command line parser without modifying the source in this library.  It
-shouldn't be common to need this.  See the source code for details.
+This module exports an API that can be used to extend the existing command line
+parser without modifying the source in this library.  It shouldn't be common to
+need this and it is likely to be incomplete.  See the source code for details.
