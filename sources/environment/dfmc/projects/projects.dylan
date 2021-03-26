@@ -560,7 +560,7 @@ define sealed method link-project
                      mode:        if (unify?) #"combine" end,
                      target-type: target,
                      build-script: build-script | default-build-script(),
-                     jobs:        jobs,
+                     jobs:        jobs | 1,
                      release?:    release?)
       end
     cleanup
