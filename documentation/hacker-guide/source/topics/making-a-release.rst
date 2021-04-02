@@ -79,7 +79,7 @@ now here is a manual check-list.
 
 #. Update other packages
 
-   * archlinux -- https://aur.archlinux.org/opendylan.git
+   * archlinux -- https://aur.archlinux.org/packages/opendylan/
    * debian
    * homebrew
 
