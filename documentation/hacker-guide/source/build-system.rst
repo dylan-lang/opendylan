@@ -324,4 +324,4 @@ There is an `Emacs major mode`_ for editing Jam files.
 .. _Jam manual page: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html
 .. _Jambase: https://swarm.workshop.perforce.com/files/guest/perforce_software/jam/src/Jambase
 .. _Jambase reference: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jambase.html
-.. _Emacs major mode: https://github.com/emacsmirror/jam-mode
+.. _Emacs major mode: https://web.archive.org/web/20100211015821/http://www.tenfoot.org.uk/index.html

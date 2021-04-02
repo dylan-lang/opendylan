@@ -18,7 +18,7 @@ You'll want to fork this repository so you can push changes to your
 fork and then submit pull requests.
 
 Aside from `dylan-lang <https://github.com/dylan-lang>`_ there are two
-other GitHub oranizations that may be of interest:
+other GitHub organizations that may be of interest:
 
 * `dylan-foundry <https://github.com/dylan-foundry>`_ is Bruce
   Mitchener's large collection of Dylan libraries.
