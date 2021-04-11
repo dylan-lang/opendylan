@@ -66,7 +66,7 @@ Cheat Sheets
 References
 ==========
 
-`Dylan Reference Manual <https://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
+`Dylan Reference Manual <https://opendylan.org/books/drm/>`_ (`Errata <https://opendylan.org/books/drm/Errata>`_)
     The official definition of the Dylan language and standard library.
 
 `Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
