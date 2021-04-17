@@ -13,9 +13,7 @@ https://github.com/dylan-lang/opendylan/tree/master/sources/system/.
 LID File
 --------
 
-For further details of the LID file format, see `LID file`_.
-
-.. _LID file: https://opendylan.org/documentation/library-reference/lid.html
+For further details of the LID file format, see :doc:`library-reference:lid`.
 
 1) Library
 
