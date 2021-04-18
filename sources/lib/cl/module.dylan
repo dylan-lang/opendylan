@@ -24,43 +24,18 @@ define module CL-sequences
          cl-merge;
 end module CL-sequences;
 
+// The only thing left here is string-pluralize. Use the strings library
+// instead.
 define module CL-strings
-  create char-equal?, char-not-equal?,
-         char-less?, char-not-less?,
-         char-greater?, char-not-greater?,
-         string-equal?, string-not-equal?,
-         string-less?, string-not-less?,
-         string-greater?, string-not-greater?,
-         alpha-char?, digit-char?,
-         alphanumeric-char?,
-         upper-case?, lower-case?,
-         standard-char?,
-         graphic-char?,
-         ordinary-char?,
-         whitespace-char?,
-         string-capitalize, string-capitalize!,
-         string-capitalize-words, string-capitalize-words!,
-         string-trim, string-left-trim, string-right-trim,
-         string-search-set, string-search-not-set,
-         string-pluralize,
-         string-a-or-an;
-end module CL-strings;
+  create string-pluralize;
+end module;
 
 define module CL-internals
   use common-dylan;
   use format;
+  use strings;
 
   use CL-macros, export: all;
   use CL-sequences, export: all;
   use CL-strings, export: all;
-
-  export do-char-equal?,
-	 do-char-less?,
-	 do-char-greater?,
-	 do-alpha-char?,
-	 do-digit-char?,
-	 do-upper-case?,
-	 do-lower-case?,
-	 do-standard-char?,
-	 do-graphic-char?;
 end module CL-internals;
