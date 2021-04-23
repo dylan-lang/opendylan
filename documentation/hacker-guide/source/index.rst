@@ -14,6 +14,7 @@ Contents:
    build-system
    compiler/index
    runtime/index
+   runtime-manager/index
    duim/index
    topics/index
    glossary
