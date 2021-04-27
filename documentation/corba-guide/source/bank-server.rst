@@ -220,7 +220,7 @@ that might be used to extract the entries in the ``Name`` and
 
           // ...
        end with-connection;
-       disonnect(connection); // disconnect from the database
+       disconnect(connection); // disconnect from the database
      end with-dbms;
    end;
 
