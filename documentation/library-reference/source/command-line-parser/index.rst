@@ -98,14 +98,14 @@ Now parse the command line:
 
   block ()
     let cmd = make(<frob-command-line>, help: "frob things");
-    parse-command-line(parser, application-arguments());
+    parse-command-line(cmd, application-arguments());
     // Now execute your main program code with cmd containing
     // the parsed argument values.
     frob(cmd);
   exception (err :: <abort-command-error>)
     // This condition is signaled by parse-command-line and also if
     // your own code calls abort-command().
-    format-err("%s", ex);
+    format-err("%s", err);
     exit-application(err.exit-status);
   end;
 
