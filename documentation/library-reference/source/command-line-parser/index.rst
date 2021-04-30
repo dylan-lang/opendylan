@@ -361,14 +361,33 @@ The command-line-parser Module
 
    Returns ``#t`` if this option was supplied on the command line.
 
-   :signature: option-present? (parser name) => (present?)
-   :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter name: An instance of :drm:`<string>`.
+   :signature: option-present? (option) => (present?)
+   :parameter option: An instance of :class:`<option>`.
    :value present?: An instance of :drm:`<boolean>`.
    :description:
 
-     If called before :func:`parse-command-line` has been called on the
-     associated parser, this will always return ``#f``.
+     Returns ``#t`` if this option was supplied on the command line. Returns
+     ``#f`` if called before :func:`parse-command-line` has been called on the
+     associated parser, or if the option wasn't supplied on the command line.
+
+.. function:: option-value
+
+   Returns the parsed value of the option supplied on the command line.
+
+   :signature: option-value (option) => (value)
+   :parameter option: An instance of :class:`<option>`.
+   :value value: An instance of :drm:`<object>`.
+   :description:
+
+     Returns the parsed value of the option supplied on the command line.  If
+     no value was supplied on the command line it returns the value specified
+     with ``default:`` when the option was created, which in turn defaults to
+     ``#f``.
+
+     Note that the type of the return value is specified by the ``type:``
+     keyword argument when the option was created and the string supplied on
+     the command line is converted to that type by a method on
+     :gf:`parse-option-value`.
 
 .. function:: get-option-value
 
@@ -407,7 +426,7 @@ The command-line-parser Module
               type: <version>)
 
          define method parse-option-value
-             (arg :: <string>, type :: <version>) => (v :: <version>)
+             (arg :: <string>, type == <version>) => (v :: <version>)
            parse-version(arg)
          end;
 
