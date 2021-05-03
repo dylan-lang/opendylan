@@ -13,21 +13,18 @@
 
 import sys, os
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../../sphinx-extensions/sphinxcontrib'))
-
 import dylan.themes as dylan_themes
+
+# Shared settings. They may be overridden later in this file.
+sys.path.insert(0, os.path.abspath('../..'))
+from shared_sphinx_config import *
+
 
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
-
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['dylan.domain']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -58,7 +55,8 @@ release = '1.0'
 # for a list of supported languages.
 #language = None
 
-# The primary domain.
+# The primary domain. Specifying this means (for example) that rather than
+# writing :dylan:func:`foo` we can just write :func:`foo`.
 primary_domain = 'dylan'
 
 # There are two options for replacing |today|: either, you set today to some
@@ -71,7 +69,10 @@ primary_domain = 'dylan'
 # directories to ignore when looking for source files.
 exclude_patterns = []
 
-# The reST default role (used for this markup: `text`) to use for all documents.
+# The reST default role (used for this markup: `text`) to use for all
+# documents.  (We could set this to 'func', for example, to make `foo`
+# equivalent to :func:`foo`. --cgay)
+
 #default_role = None
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
