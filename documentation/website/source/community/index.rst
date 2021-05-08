@@ -48,7 +48,8 @@ https://gitter.im/dylan-lang/general
 
 The dylan-lang community is where most of the day-to-day Dylan activity
 takes place. You may sign in with a GitHub, GitLab, or Twitter account.
-
+Or use a Matrix client, connected to the same Gitter channel. For example,
+`element.io <https://app.element.io/#/room/#dylan-lang_general:gitter.im>`_.
 
 .. _irc:
 
