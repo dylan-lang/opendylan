@@ -16,26 +16,22 @@ end class;
 
 define abstract class <place-holding-runtime-entry-point> 
                  (<abstract-runtime-entry-point>)
-
   constant slot runtime-name :: <string>,
     required-init-keyword: runtime-name:;
 
   constant slot runtime-component :: false-or(<string>),
     init-value: #f,
     init-keyword: runtime-component:;
-
 end class;
 
 define abstract class <interpreted-runtime-entry-point> 
                          (<place-holding-runtime-entry-point>)
-
   slot runtime-symbol :: false-or(<remote-symbol>),
     init-keyword: symbol:,
     init-value: #f;
 
   slot attempted-to-locate? :: <boolean>,
     init-value: #f;
-
 end class;
 
 
@@ -52,11 +48,9 @@ end class;
 //    conventions.
 
 define class <c-spy-function-descriptor> (<spy-function-descriptor>)
-
   slot runtime-entry-point :: false-or(<remote-value>),
     init-keyword: entry-point:,
     init-value: #f;
-
 end class;
 
 
@@ -66,7 +60,6 @@ end class;
 //    use a <C-SPY-FUNCTION-DESCRIPTOR> as the invoker.
 
 define class <dylan-spy-function-descriptor> (<spy-function-descriptor>)
-
   slot runtime-function-object :: false-or(<remote-value>),
     init-keyword: function-object:,
     init-value: #f;
@@ -76,7 +69,6 @@ define class <dylan-spy-function-descriptor> (<spy-function-descriptor>)
 
   constant slot dylan-function-invoker :: <C-spy-function-descriptor>,
     required-init-keyword: invoked-by:;
-
 end class;
 
 
@@ -178,7 +170,6 @@ define method run-spy-on-thread
     (application :: <debug-target>, thread :: false-or(<remote-thread>),
      descriptor :: <C-spy-function-descriptor>, #rest arguments)
       => (hopefully-result :: false-or(<remote-value>))
-
   locate-C-spy-function(application, descriptor);
 
   let result = #f;
@@ -211,7 +202,6 @@ define method run-spy-on-thread
     (application :: <debug-target>, thread :: false-or(<remote-thread>),
      descriptor :: <dylan-spy-function-descriptor>, #rest arguments)
       => (hopefully-result :: false-or(<remote-value>))
-
   let result = #f;
 
   // If this spy function has not been called yet, we need to locate its
@@ -253,7 +243,6 @@ define abstract class <spy-catalogue> (<object>)
 end class;
 
 define class <C-spy-catalogue> (<spy-catalogue>)
-
   constant slot read-location-through-barrier :: <C-spy-function-descriptor>
      = make(<C-spy-function-descriptor>,
             runtime-name: "spy_read_location_through_barrier");
@@ -318,7 +307,6 @@ define class <C-spy-catalogue> (<spy-catalogue>)
   constant slot primitive-clear-class-breakpoint :: <C-spy-function-descriptor>
      = make(<C-spy-function-descriptor>,
             runtime-name: "primitive_clear_class_breakpoint");
-
 end class;
 
 
@@ -332,7 +320,6 @@ define constant $running-dylan-spy-function? = "Prunning_dylan_spy_functionQ";
 define constant $spy-namespace = $dylan-internal;
 
 define class <dylan-spy-catalogue> (<spy-catalogue>)
-
   constant slot remote-object-strong-register 
                             :: <dylan-spy-function-descriptor>
      = make(<dylan-spy-function-descriptor>,
@@ -387,7 +374,6 @@ define class <dylan-spy-catalogue> (<spy-catalogue>)
   // the created thread is still running as a spy even after the creating
   // thread has returned control. So the spy runtime variable is set and
   // restored in the debugger manager itself
-
   constant slot spy-create-interactive-thread 
                        :: <dylan-spy-function-descriptor>
      = make(<dylan-spy-function-descriptor>,
@@ -409,7 +395,6 @@ define class <dylan-spy-catalogue> (<spy-catalogue>)
             namespace: $spy-namespace,
             invoked-by: make(<C-spy-function-descriptor>,
                              runtime-name: "spy_call_dylan_function"));
-
 end class;
 
 

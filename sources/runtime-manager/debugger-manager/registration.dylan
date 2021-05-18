@@ -11,10 +11,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // but it might have more general use as the DM gets more fully implemented.
 
 define abstract class <dm-registered-descriptor> (<object>)
-
        slot marked-for-removal :: <boolean>,
             init-value: #f;
-
 end class;
 
 

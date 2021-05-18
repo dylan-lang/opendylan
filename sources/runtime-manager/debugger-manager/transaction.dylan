@@ -238,14 +238,10 @@ end function;
 //    A class used to store remote dylan objects in fast-lookup form.
 //    The values in the table can be arbitrary information that needs to
 //    be obtained from the key.
-
 define open abstract class <page-relative-object-table> (<object>)
-
   constant slot lookup-table-debug-target :: <debug-target>,
     required-init-keyword: debug-target:;
-
   slot objects-by-virtual-page :: <table> = make(<table>);
-
 end class;
 
 // Make it instantiable.
@@ -263,14 +259,12 @@ end method;
 ///// <PAGE-RELATIVE-OBJECT-TABLE-ENTRY>
 //    Any object stored as a value in a <page-relative-object-table> must
 //    be a general instance of this class.
-
 define open abstract class <page-relative-object-table-entry> (<object>)
 end class;
 
 
 ///// INVALIDATE-PAGE-RELATIVE-OBJECT-TABLE
 //    Removes all entries.
-
 define open generic invalidate-page-relative-object-table
     (table :: <page-relative-object-table>) => ();
 
@@ -284,7 +278,6 @@ end method;
 //    Checks to see whether a dylan object is present in a table. If so,
 //    returns the description that was supplied to ADD-OBJECT when the
 //    object was put into the table, otherwise returns #f.
-
 define open generic enquire-object
     (table :: <page-relative-object-table>, instance :: <remote-value>)
  => (entry :: false-or(<page-relative-object-table-entry>));
@@ -310,7 +303,6 @@ end method;
 //    already an entry for the object, it will be overwritten with this
 //    entry.
 //    (Generic function and its default method)
-
 define open generic add-object
     (table :: <page-relative-object-table>, instance :: <remote-value>,
      entry :: <page-relative-object-table-entry>)
@@ -337,7 +329,6 @@ end method;
 //    Removes an object from a page-relative table. Silently does nothing
 //    if the object is not present in the table.
 //    (Generic function and its default method).
-
 define open generic remove-object
     (table :: <page-relative-object-table>, instance :: <remote-value>)
  => ();
@@ -361,5 +352,3 @@ define method remove-object
     end if
   end if
 end method;
-
-

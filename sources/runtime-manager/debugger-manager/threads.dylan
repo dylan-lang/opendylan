@@ -263,7 +263,6 @@ define method thread-current-mv-vector
 
     // Read the MV count. It is a raw integer. Create a vector big enough
     // to hold the multiple values.
-
     block () 
       let mv-count = as-integer(read-value(path, mv-count-address));
 
@@ -279,10 +278,9 @@ define method thread-current-mv-vector
         let addr-mv = indexed-remote-value(mv-0-address, i);
         mv-space[i] := read-value(path, addr-mv);
       end for;
-  
+
       // Cache it while the thread is stopped.
       dm-thread.cached-mv := mv-space;  
-
     exception (pants :: <remote-access-violation-error>)
       dm-thread.cached-mv := #[];
     end block;
@@ -324,16 +322,13 @@ end method;
 //    save doing pointless re-calculation when walking the stack.
 
 define class <application-thread> (<object>)
-
   // Encapsulate the actual <remote-thread> as presented to us
   // via the access path.
-
   constant slot remote-thread-object :: <remote-thread>,
     required-init-keyword: remote-thread:;
 
   // Cache the multiple values vector, the active handlers, and the
   // vector of local variables.
-
   slot cached-mv :: false-or(<sequence>),
     init-value: #f;
 
@@ -344,14 +339,12 @@ define class <application-thread> (<object>)
     init-value: #f;
 
   // Cache the restarts.
-
   slot cached-restarts :: false-or(<sequence>),
     init-value: #f;
 
   // Finally, slots to model the stepping behaviour of this thread.
   // That is, whether it is stepping, and where it might be stepping
   // to.
-
   slot stepping-mode :: <integer>,
     init-value: $thread-not-stepping;
 
@@ -375,8 +368,6 @@ define class <application-thread> (<object>)
 
   slot thread-pause-state-description :: <thread-pause-state-description>,
     init-value: #"random-location";
-
-
 end class;
 
 
@@ -541,7 +532,6 @@ define method spawn-interactive-thread
     (application :: <debug-target>, tname :: <byte-string>,
      #key thread)
   => (success? :: <boolean>)
-
   let spy-thread = thread | select-thread-for-spy(application);
   let static-block = application.interactive-thread-download-block;
   let path = application.debug-target-access-path;
@@ -570,13 +560,11 @@ define method spawn-interactive-thread
   let success? = #f;
 
   if (spy-thread & static-block)
-
     let running-dylan-spy-function? =
       remote-symbol-address
       (lookup-runtime-symbol(application, $running-dylan-spy-function?));
 
     block ()
-
     write-value(path, running-dylan-spy-function?, as-remote-value(1));
 
     debugger-message("spawn-interactive-thread %= on Thread %=", tname, spy-thread);
@@ -589,7 +577,6 @@ define method spawn-interactive-thread
                           address-of-name))
       success? := #t;
     end if;
-
     cleanup
       write-value(path, running-dylan-spy-function?, as-remote-value(0));
     end;
@@ -664,4 +651,3 @@ define method resume-all-suspended-threads
 
   threads
 end method;
-

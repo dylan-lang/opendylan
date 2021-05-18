@@ -44,10 +44,8 @@ define method live-frame-lexical-variables
     (application :: <debug-target>, dm-frame :: <call-frame>,
      #key arguments-only? = #f)
        => (vars :: <sequence>, vals :: <sequence>)
-
   // Find out how many variables we're talking about, and build
   // the vectors to hold the return values.
-
   let count = number-of-lexical-variables(application, dm-frame);
   let vars = make(<vector>, size: count);
   let vals = make(<vector>, size: count);
@@ -71,7 +69,6 @@ define method live-frame-lexical-variables
 
   // And return it.
   values(vars, vals);
-
 end method;
 
 
@@ -82,7 +79,6 @@ end method;
 define method seperate-arguments-and-lexicals
     (application :: <debug-target>, call-frame :: <call-frame>)
  => (args :: <sequence>, lex :: <sequence>)
-
   let ap-frame = call-frame-description(application, call-frame);
   let args = make(<stretchy-vector>);
   let lex = make(<stretchy-vector>);
@@ -122,7 +118,6 @@ define method active-dylan-lexical-variables
           models :: <sequence>, 
           vals :: <sequence>,
           locations :: <sequence>)
-
   let names = #[];
   let models = #[];
   let vals = #[];
@@ -237,7 +232,6 @@ define method number-of-active-dylan-variables
     (application :: <debug-target>, dm-frame :: <call-frame>,
      #key arguments-only? = #f)
       => (count :: <integer>)
-
   let path = application.debug-target-access-path;
   let ap-frame = call-frame-description(application, dm-frame);
   let count = 0;
@@ -271,4 +265,3 @@ define method number-of-active-dylan-variables
 
   count
 end method;
-

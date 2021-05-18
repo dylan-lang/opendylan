@@ -9,7 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// <TRACEPOINT>
 //    The superclass of all debug-points to do with function tracing.
-
 define abstract class <tracepoint> (<debug-point>)
 end class;
 
@@ -17,16 +16,13 @@ end class;
 ///// <ENTRY-TRACEPOINT>
 //    The superclass of all debug-points used to trace entry into
 //    functions.
-
 define open abstract class <entry-tracepoint> (<tracepoint>)
   constant slot return-callback :: <function>,
     required-init-keyword: return-callback:;
 end class;
 
-
 ///// <SIMPLE-ENTRY-TRACEPOINT>
 //    Ensures that <entry-tracepoint> is a bit instantiable.
-
 define class <simple-entry-tracepoint>
                   (<entry-tracepoint>)
 end class;
@@ -41,18 +37,13 @@ end method;
 ///// <RETURN-TRACEPOINT>
 //    The superclass of all debug-points used to trace return from
 //    functions.
-
 define open abstract class <return-tracepoint> (<tracepoint>)
-
   constant slot relevant-frame :: <remote-value>,
     required-init-keyword: frame:;
-
   constant slot relevant-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
   constant slot corresponding-entry-tracepoint :: <entry-tracepoint>,
     required-init-keyword: entry:;
-
 end class;
 
 
@@ -73,7 +64,6 @@ end method;
 ///// MAKE-RETURN-TRACEPOINT (and default method).
 //    This is called to create a general instance of <return-tracepoint>
 //    in order to register it when an <entry-tracepoint> is encountered.
-
 define open generic make-return-tracepoint
    (app :: <debug-target>, bp :: <entry-tracepoint>,
     thr :: <remote-thread>, #rest keys, #key, #all-keys)
@@ -90,7 +80,6 @@ end method;
 ///// INITIALIZE-RETURN-TRACEPOINT (and default method).
 //    This is called to initialize a <return-tracepoint> once it has
 //    been created by make-return-tracepoint
-
 define open generic initialize-return-tracepoint
     (app :: <debug-target>, bp :: <return-tracepoint>,
      thr :: <remote-thread>, #key, #all-keys)
@@ -114,9 +103,7 @@ define method handle-debug-point-event
     (app :: <debug-target>, bp :: <entry-tracepoint>,
      thr :: <remote-thread>) 
        => (interested? :: <boolean>)
-
   // We have just entered the trace callee.
-
   let trace-callee-frame 
     = initialize-stack-trace (app.debug-target-access-path, thr);
   let trace-caller-frame
@@ -144,7 +131,6 @@ end method;
 //    Otherwise, this is not an interesting event, and the application
 //    should be allowed to continue (as far as this debug-point is
 //    concerned, at least).
-
 define method handle-debug-point-event 
     (app :: <debug-target>, bp :: <return-tracepoint>,
      thr :: <remote-thread>) 
@@ -167,7 +153,6 @@ end method;
 
 ///// DYLAN-CALLING-CONVENTION-INFORMATION (Internal)
 //    For now, this is just a bit of a hack.
-
 define method dylan-calling-convention-information
     (application :: <debug-target>)
  => (argument-register-codes :: <sequence>, return-register :: <integer>,
@@ -188,7 +173,6 @@ define method dylan-trace-entry-arguments
  => (required-arguments :: <sequence>,
      rest-vector :: false-or(<remote-value>),
      keyword-arguments :: false-or(<sequence>))
-
   // Get information about which registers are used to house arguments.
   let (argument-register-codes, return-register, function-register)
     = dylan-calling-convention-information(application);
@@ -249,7 +233,6 @@ define method dylan-trace-entry-arguments
   end if;
 
   values(required-arguments, rest-vector, keyword-arguments);
-
 end method;
 
 
@@ -281,4 +264,3 @@ define method dylan-trace-return-values
     vector(read-value(path, active-register(path, thread, register)));
   end if;
 end method;
-

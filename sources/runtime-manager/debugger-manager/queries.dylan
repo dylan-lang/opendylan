@@ -29,12 +29,10 @@ define method remote-instance?
        => (answer :: <boolean>)
   let answer = #f;
   block ()
-
     // Find out what the broad "type" of the dylan object is (making
     // sure that it is indeed a dylan object!). At the moment, return
     // #f if the object is tagged. Also return #f if the supposed class
     // is in fact not a class at all.
-
     let instance-classification = 
       classify-dylan-object(application, instance);
     let class-classification = 
@@ -54,7 +52,6 @@ define method remote-instance?
     elseif (class-classification ~== $class-type)
       answer := #f
     else
-
       // If the object is a direct instance of the class, there will be
       // a pointer ID between the object's wrapper, and the wrapper used
       // by the class.
@@ -63,7 +60,6 @@ define method remote-instance?
       // given to the query.
       // If, at any time, a remote access violation occurs, just return
       // #f.
-
       let (instance-wrapper, ok) =
         read-instance-header(application, instance);
       let class-wrapper =
@@ -113,13 +109,11 @@ define method remote-subclass?
     (application :: <debug-target>, sub :: <remote-value>, 
      super :: <remote-value>)
        => (answer :: <boolean>)
-
   // Both remote values must be classifiable as classes for this
   // to work. Simply test whether 'super' is contained within
   // the list of all 'sub's superclasses. (With a quick test to
   // see whether the two classes are ID to each other, in which
   // case we return #t straight away).
-
   let type-sub = classify-dylan-object(application, sub);
   let type-super = classify-dylan-object(application, super);
   if ((type-sub == $class-type) & (type-super == $class-type))
@@ -173,17 +167,13 @@ define method remote-collection-inspect
      #key first-index = 0, last-index = #f)
         => (key-sequence :: false-or(<sequence>), 
             value-sequence :: <sequence>)
-
   // Find out the type of the instance. If it is not a collection of
   // any sort we know about, there's not much we can do!
-
   let instance-type = 
     classify-dylan-object(application, collection-instance);
 
   // And now dispatch to a more specific function.
-
   select (instance-type)
-
     $empty-list-type =>
       values(#f, #[]);
 
@@ -238,9 +228,7 @@ define method remote-collection-inspect
 
     otherwise =>
       values(#f, #[]);  // Two empty sequences is better than an error!
-
   end select;
-
 end method;
 
 define method remote-vector-inspect
@@ -325,11 +313,9 @@ define method remote-list-inspect
     (application :: <debug-target>, list-instance :: <remote-value>,
      #key first-index = 0, last-index = #f)
         => (key-sequence :: false-or(<sequence>), value-sequence :: <sequence>)
-
   // BEFORE-LAST?
   // Checks that an index is still within the valid subrange, given that
   // the last-index might not even have a numerical value!
-
   local method before-last? (idx :: <integer>) => (answer :: <boolean>)
           if (last-index)
             idx <= last-index
@@ -367,10 +353,8 @@ define method remote-table-inspect
     (application :: <debug-target>, table-instance :: <remote-value>,
      #key first-index = 0, last-index = #f)
         => (key-sequence :: false-or(<sequence>), value-sequence :: <sequence>)
-
   // Get the remote vectors of keys and elements, and their sizes - which
   // should be equal.
-
   let keys-vector = dylan-table-keys-vector(application, table-instance);
   let vals-vector = dylan-table-values-vector(application, table-instance);
   let keys-limit = dylan-entry-vector-size(application, keys-vector);
@@ -379,7 +363,6 @@ define method remote-table-inspect
   // We know that there is a specific constant internally defined in the
   // dylan library that indicates an unused key in the table. We need to
   // know this value.
-
   let dylan-lib = application.application-dylan-library;
   let empty-entry = resolve-dylan-name(application,
                                        "$table-entry-empty",
@@ -388,7 +371,6 @@ define method remote-table-inspect
 
   // Make sure that last-index, if it was not supplied, has a meaningful
   // numeric value of some kind.
-
   unless (last-index & (last-index < keys-limit))
     last-index := keys-limit - 1;
   end unless;
@@ -546,10 +528,8 @@ define method remote-signature-inspect
             sig-rest-type :: false-or(<remote-value>),
             sig-keys :: false-or(<sequence>),
             sig-key-types :: false-or(<sequence>))
-
   // Find out what kind of signature we are looking at, or even if we
   // are looking at a signature at all.
-
   let sig-type = classify-dylan-object(application, sig);
   let sig-required-types = #[];
   let sig-value-types = #[];
@@ -688,7 +668,6 @@ define method remote-signature-inspect
 
   values(sig-required-types, sig-value-types, sig-rest-type,
          sig-keys, sig-key-types);
-
 end method;
 
 
@@ -752,11 +731,9 @@ define method remote-slot-inspect
             slot-init-req? :: <boolean>,
             slot-init-val :: false-or(<remote-value>),
             slot-spec :: <remote-value>)
-
   // NULLIFY-IF-FALSE
   // A local method that turns a <remote-value> into #f if it is
   // equal to #f _within_ the runtime.
-
   local method nullify-if-false (x :: <remote-value>)
                      => (maybe-x :: false-or(<remote-value>))
           let cl = classify-dylan-object(application, x);
@@ -770,7 +747,6 @@ define method remote-slot-inspect
   // REMOTE-BOOLEAN-TO-ACTUAL-BOOLEAN
   // A local convenience function that turns <remote-value> into a
   // boolean.
-
   local method remote-boolean-to-actual-boolean (x :: <remote-value>)
                       => (local-x :: <boolean>)
           let maybe-x = nullify-if-false(x);
@@ -782,13 +758,11 @@ define method remote-slot-inspect
         end method;
 
   // Find out what kind of runtime slot descriptor this is.
-
   let slot-classification =
      classify-dylan-object(application, slot-instance);
 
   // Use more primitive accessors for most of the return values, turning
   // remote booleans into real booleans as necessary.
-
   let slot-basic-name = dylan-slot-name(application, slot-instance);
   let slot-basic-type = #"instance-slot";
   let slot-owner-class = dylan-slot-owner-class(application, slot-instance);
@@ -806,7 +780,6 @@ define method remote-slot-inspect
   let slot-spec = dylan-slot-specializer(application, slot-instance);
 
   // We really hope one of these 'select' branches will be applicable....
-
   select(slot-classification)
      $instance-slot-descriptor-type =>
        slot-basic-type := #"instance-slot";
@@ -822,7 +795,6 @@ define method remote-slot-inspect
 
      $each-subclass-slot-descriptor-type =>
        slot-basic-type := #"each-subclass-slot";
-
   end select;
 
   // And return all the values.
@@ -863,9 +835,7 @@ define method remote-range-inspect
         => (start-val :: <remote-value>,
             end-val :: false-or(<remote-value>),
             step-val :: <remote-value>)
-
   // This cannot be assumed to work, but it probably will in most cases.
-
   local method compute-end 
                   (starting :: <remote-value>, 
                    stepping :: <remote-value>,
@@ -888,7 +858,6 @@ define method remote-range-inspect
 
   // Depending on exactly what kind of range this is, set the return
   // values.
-
   select(range-classification)
     $infinite-range-type =>
       start-val := dylan-range-start(application, range-instance);
@@ -911,7 +880,6 @@ define method remote-range-inspect
       start-val := dylan-range-start(application, range-instance);
       end-val := dylan-range-start(application, range-instance);
       step-val := dylan-range-by(application, range-instance);
-
   end select;
 
   values(start-val, end-val, step-val);
@@ -1064,7 +1032,6 @@ define method wrapper-trace-information
       slot-count :: <integer>,
       repeat-information :: <symbol>,
       repeat-offset :: <integer>)
-
   let symbolic-name = "Unknown Wrapper";
   let presented-name = "Unknown Class";
   let module-name = "INTERNAL";
@@ -1104,7 +1071,7 @@ end method;
 
 ///// DYLAN-OBJECT-SIZE
 //    Returns size information about an instance.
-
+//    FIXME: Add support for 64-bit platformsa
 define method dylan-object-size
     (application :: <debug-target>, instance :: <remote-value>)
   => (byte-size-of-whole-object :: <integer>,
@@ -1167,7 +1134,6 @@ define method dylan-class-slot-storage
   for (i from 0 below storage-spaces.size)
     let this-space = storage-spaces[i];
     select (classify-dylan-object(application, this-space))
-
       $pair-type =>
         let storage-val = dylan-head(application, this-space);
         let remote-descriptor = dylan-tail(application, this-space);
@@ -1259,7 +1225,6 @@ define method dylan-class-browser-information
     end if;
 
   // Now initialize the return values.
-
   slots := make(<vector>, size: slotd-count);
   navigation := make(<string-table>, size: slotd-count);
   count-offset := slotd-count + 1;
@@ -1267,14 +1232,12 @@ define method dylan-class-browser-information
 
   // Make sure that the element-size is updated if the repeated slot only
   // holds bytes.
-
   if (has-byte-repeats?)
     element-size := 1
   end if;
 
   // Add the details of each slot descriptor to the "slots" and
   // "navigation" results.
-
   for (i from 0 below slotd-count)
     let remote-descriptor = dylan-vector-element(application, slotd-vec, i);
     let remote-getter = dylan-slot-getter(application, remote-descriptor);
@@ -1285,7 +1248,6 @@ define method dylan-class-browser-information
   end for;
 
   // If there is a repeated slot, fill in slot name.
-
   if (rdescriptor-genuine?)
     let rslot-getter = dylan-slot-getter(application, rdescriptor);
     let (lib, mod, rslot-name) =
@@ -1294,7 +1256,6 @@ define method dylan-class-browser-information
   end if;
 
   // And return it all...
-
   values
     (slots, navigation, repeat, count-offset, element-size, element-offset,
      dylan-vector-size(application, slot-storage-vector));
@@ -1310,7 +1271,6 @@ end method;
 define method remote-collection-size
     (application :: <debug-target>, collection-instance :: <remote-value>)
       => (entry-count :: <integer>)
-
   // Classify the instance.
   let instance-type = classify-dylan-object(application, collection-instance);
 
@@ -1383,6 +1343,5 @@ define method remote-collection-size
     $infinite-range-type => -1;
 
     otherwise => 0;
-
   end select;
 end method;

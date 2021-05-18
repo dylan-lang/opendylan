@@ -8,13 +8,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 ///// $STANDARD-DYLAN-INITIALIZER
-
 define constant $standard-dylan-initializer = "_call_init_dylan";
 
 
 // HACK! We need some standard initializers for self-contained
 // Dylan components; here is one such marker for Win32 OLE components
-
 define constant $standard-dylan-component-initializer
   = "_DllGetClassObject@12";
 
@@ -40,19 +38,15 @@ define method interpret-stop-reason
        => (maybe-modified-stop-reason :: false-or(<stop-reason>),
            interesting-debug-points? :: <boolean>,
            original-stop-reason :: <stop-reason>);
-
   let maybe-modified-stop-reason = #f;
   let path = application.debug-target-access-path;
   let interesting-debug-points? = #f;
 
   select (stop-reason by instance?)
-
     <invoke-debugger-stop-reason> =>
-
        // If this is a dylan-level invocation of the debugger,
        // generate the required high-level stop reason. Otherwise,
        // just keep with this stop reason.
-
        let thread = stop-reason.stop-reason-thread;
        let process = stop-reason.stop-reason-process;
        let dm-thread = find-thread(application, thread);
@@ -65,18 +59,15 @@ define method interpret-stop-reason
        if (address-corresponds-to-primitive?
             (application, code-location, 
              application.debug-message-primitive))
-
          // This is a hard-coded breakpoint within primitive-debug-message.
          // We know that the control string for the message is at top of
          // stack, followed by a (raw) integer counting the format arguments,
          // followed in turn by each format argument. We calculate the
          // stack relative addresses and read the relevant values.
-
          use-thread-for-spy-functions(application, thread);
          dm-thread.thread-pause-state-description := #"interactive-location";
 
          block ()
-
            let control-string-address =
              calculate-stack-address(path, thread, 0);
            let format-arg-count-address =
@@ -89,7 +80,6 @@ define method interpret-stop-reason
 
            // Now build a vector of the right size to hold the format
            // arguments. Pull each one off the stack in turn.
-
            let arg-vector = make(<vector>, size: actual-counter);
            for (i from 0 below actual-counter)
              let arg-address = calculate-stack-address(path, thread, i + 2);
@@ -99,7 +89,6 @@ define method interpret-stop-reason
            // Construct our language-level stop reason for the dylan
            // debugging message. Note we are not formatting the string and
            // arguments at this stage. We will do that later on demand.
-
            maybe-modified-stop-reason :=
               make(<dylan-debug-message-stop-reason>,
                    process: process,
@@ -111,17 +100,14 @@ define method interpret-stop-reason
          exception (<remote-access-violation-error>)
            maybe-modified-stop-reason := stop-reason;
          end block;
-
        elseif (address-corresponds-to-primitive?
                 (application, code-location,
                  application.invoke-debugger-primitive))
-
          // This is a hard-coded breakpoint within primitive-invoke-debugger.
          // We know that the control string for the error msg is at top of
          // stack, followed by a (raw) integer counting the format arguments,
          // followed in turn by each format argument. We calculate the
          // stack relative addresses and read the relevant values.
-
          use-thread-for-spy-functions(application, thread);
          dm-thread.thread-pause-state-description := #"unhandled-condition";
 
@@ -136,7 +122,6 @@ define method interpret-stop-reason
          end unless;
 
          block ()
-
            let control-string-address =
              calculate-stack-address(path, thread, 0);
            let format-arg-count-address =
@@ -149,7 +134,6 @@ define method interpret-stop-reason
 
            // Now build a vector of the right size to hold the format
            // arguments. Pull each one off the stack in turn.
-
            let arg-vector = make(<vector>, size: actual-counter);
            for (i from 0 below actual-counter)
              let arg-address = calculate-stack-address(path, thread, i + 2);
@@ -159,7 +143,6 @@ define method interpret-stop-reason
            // Construct our language-level stop reason for the dylan
            // error. Note we are not formatting the string and
            // arguments at this stage. We will do that later on demand.
-
 	   maybe-modified-stop-reason :=
 	     make(<dylan-invoke-debugger-stop-reason>,
 		  process: process,
@@ -167,26 +150,20 @@ define method interpret-stop-reason
 		  target: application,
 		  string-instance: control-string,
 		  format-args: arg-vector);
-
          exception (<remote-access-violation-error>)
            maybe-modified-stop-reason := stop-reason;
          end block;
-
        elseif (address-corresponds-to-primitive?
                 (application, code-location,
                  application.class-breakpoint-primitive))
-
          // This is a hard-coded breakpoint within primitive-invoke-debugger.
          // We know that the control string for the error msg is at top of
          // stack, followed by a (raw) integer counting the format arguments,
          // followed in turn by each format argument. We calculate the
          // stack relative addresses and read the relevant values.
-
          use-thread-for-spy-functions(application, thread);
          dm-thread.thread-pause-state-description := #"unhandled-condition";
-
          block ()
-
 	   let class-address
 	     = calculate-stack-address(path, thread, 0);
 	   let size-address 
@@ -197,18 +174,15 @@ define method interpret-stop-reason
            // Construct our language-level stop reason for the dylan
            // error. Note we are not formatting the string and
            // arguments at this stage. We will do that later on demand.
-
 	   maybe-modified-stop-reason :=
 	     make(<class-breakpoint-stop-reason>,
 		  process: process,
 		  thread: thread,
 		  size: size,
 		  class: class);
-
          exception (<remote-access-violation-error>)
            maybe-modified-stop-reason := stop-reason;
          end block;
-
        else
          maybe-modified-stop-reason := stop-reason;
        end if;
@@ -340,7 +314,6 @@ define method interpret-stop-reason
       // We have performed a source-stepping operation. If this was
       // due to a request for source-code alignment, we need to
       // modify the stop-reason.
-
       let dm-thread = find-thread(application, stop-reason.stop-reason-thread);
       use-thread-for-spy-functions
         (application, stop-reason.stop-reason-thread);
@@ -359,7 +332,6 @@ define method interpret-stop-reason
       // list of all of those that registered interest in the current
       // context. Discard the stop reason if no callbacks registered any
       // interest.
-
       let dm-thread = find-thread(application, stop-reason.stop-reason-thread);
       use-thread-for-spy-functions
          (application, stop-reason.stop-reason-thread);
@@ -382,7 +354,6 @@ define method interpret-stop-reason
     // but this requires more work; in particular, this should behave the
     // same way as normal timeouts (not currently modelled as a stop-reason),
     // and poll for stop callbacks before waiting on the running application
-
     <timeout-stop-reason> => #f;
 
     otherwise =>

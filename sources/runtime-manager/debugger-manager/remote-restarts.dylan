@@ -11,7 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Models an available restart within the application.
 
 define class <remote-restart> (<object>)
-
   slot remote-restart-formatted-description :: <string>,
     init-value: "Undescribed Restart",
     init-keyword: description:;
@@ -49,7 +48,6 @@ define class <remote-restart> (<object>)
 
   constant slot remote-restart-index :: <integer>,
     required-init-keyword: index:;
-
 end class;
 
 
@@ -179,7 +177,6 @@ define method signal-restart-on-thread
     (application :: <debug-target>, thread :: <remote-thread>,
      rst :: <remote-restart>)
        => ()
-
   use-thread-for-spy-functions(application, thread);
   let dylan-runtime = application.application-dylan-runtime-library;
   let dylan-library = application.application-dylan-library;

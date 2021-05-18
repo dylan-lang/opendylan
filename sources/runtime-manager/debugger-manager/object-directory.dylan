@@ -14,7 +14,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    manager for various purposes.
 
 define class <static-object-directory> (<object>)
-
   constant slot directory-static-objects-by-module :: <string-table>
     = make(<string-table>);
 
@@ -57,7 +56,6 @@ end method;
 
 define sealed method initialize
     (sod :: <static-object-directory>, #key, #all-keys) => ()
-
   // Make subtables for all modules within the dylan library that we
   // happen to care about.
 
@@ -70,7 +68,6 @@ define sealed method initialize
 
   // Introduce some convenient local pointers to prevent performing
   // the same hash over and over again.
-
   let objects-in-internal-module :: <string-table>  =
     sod.directory-static-objects-by-module["internal"];
   let objects-in-dylan-module :: <string-table> =
@@ -85,7 +82,6 @@ define sealed method initialize
     sod.directory-wrappers-by-module["threads"];
 
   // And now add the elements.
-
   objects-in-dylan-module["<integer>"]         := #"not-located";
   objects-in-dylan-module["<character>"]       := #"not-located";
   objects-in-dylan-module["<restart>"]         := #"not-located";
@@ -97,211 +93,148 @@ define sealed method initialize
   objects-in-internal-module["%empty-list"]    := #"not-located";
   objects-in-internal-module["%empty-vector"]  := #"not-located";
 
-
   wrappers-in-dylan-module["<pair>"]
     := pair(#"not-located", $pair-type);
-
   wrappers-in-dylan-module["<single-float>"]
     := pair(#"not-located", $single-float-type);
-
   wrappers-in-dylan-module["<double-float>"]
     := pair(#"not-located", $double-float-type);
-
   wrappers-in-dylan-module["<byte-string>"]
     := pair(#"not-located", $string-type);
-
   wrappers-in-dylan-module["<simple-object-vector>"]
     := pair(#"not-located", $vector-type);
-
   wrappers-in-dylan-extensions-module["<object-deque>"]
     := pair(#"not-located", $deque-type);
-
   wrappers-in-dylan-module["<empty-list>"]
     := pair(#"not-located", $empty-list-type);
-
   wrappers-in-dylan-module["<symbol>"]
     := pair(#"not-located", $symbol-type);
-
   wrappers-in-dylan-module["<class>"]
     := pair(#"not-located", $class-type);
-
   wrappers-in-dylan-module["<generic-function>"]
     := pair(#"not-located", $generic-function-type);
-
   wrappers-in-dylan-module["<simple-error>"]
     := pair(#"not-located", $simple-error-type);
-
   wrappers-in-dylan-module["<simple-warning>"]
     := pair(#"not-located", $simple-warning-type);
-
   wrappers-in-dylan-module["<simple-restart>"]
     := pair(#"not-located", $simple-restart-type);
-
   wrappers-in-dylan-module["<singleton>"]
     := pair(#"not-located", $singleton-type);
-
   wrappers-in-dylan-module["<table>"]
     := pair(#"not-located", $table-type);
-
   wrappers-in-dylan-module["<object-table>"]
     := pair(#"not-located", $table-type);
-
   wrappers-in-internal-module["<function-class>"]
     := pair(#"not-located", $class-type);
-
   wrappers-in-internal-module["<value-class>"]
     := pair(#"not-located", $class-type);
-
   wrappers-in-internal-module["<virtual-slot-descriptor>"]
     := pair(#"not-located", $virtual-slot-descriptor-type);
-
   wrappers-in-internal-module["<class-slot-descriptor>"]
     := pair(#"not-located", $class-slot-descriptor-type);
-
   wrappers-in-internal-module
     ["<each-subclass-slot-descriptor>"] 
       := pair(#"not-located", $each-subclass-slot-descriptor-type);
-
   wrappers-in-internal-module["<simple-closure-method>"]
     := pair(#"not-located", $simple-method-type);
-
   wrappers-in-internal-module["<standard-object-table>"]
     := pair(#"not-located", $table-type);
-
   wrappers-in-internal-module["<symbol-table>"]
     := pair(#"not-located", $table-type);
-
   wrappers-in-internal-module["<simple-object-array>"]
     := pair(#"not-located", $array-type);
-
   wrappers-in-dylan-extensions-module["<simple-element-type-array>"]
     := pair(#"not-located", $limited-array-type);
-
   wrappers-in-dylan-extensions-module["<stretchy-element-type-vector>"]
     := pair(#"not-located", $limited-stretchy-vector-type);
-
   wrappers-in-dylan-extensions-module["<simple-element-type-vector>"]
     := pair(#"not-located", $limited-simple-vector-type);
-
   wrappers-in-internal-module["<signature+values>"]
     := pair(#"not-located", $signature+values-type);
-
   wrappers-in-internal-module
     ["<signature+values+rest-value>"]
       := pair(#"not-located", $signature+values+rest-value-type);
-
   wrappers-in-internal-module["<signature+rest-value>"]
     := pair(#"not-located", $signature+rest-value-type);
-
   wrappers-in-internal-module["<keyword-signature+values>"]
     := pair(#"not-located", $keyword-signature+values-type);
-
   wrappers-in-internal-module
     ["<keyword-signature+values+rest-value>"]
       := pair(#"not-located", $keyword-signature+values+rest-value-type);
-
   wrappers-in-internal-module
     ["<keyword-signature+rest-value>"]
     := pair(#"not-located", $keyword-signature+rest-value-type);
-
   wrappers-in-internal-module["<finite-range>"]
     := pair(#"not-located", $finite-range-type);
-
   wrappers-in-internal-module["<infinite-range>"]
     := pair(#"not-located", $infinite-range-type);
-
   wrappers-in-internal-module["<constant-range>"]
     := pair(#"not-located", $constant-range-type);
-
   wrappers-in-internal-module["<empty-range>"]
     := pair(#"not-located", $empty-range-type);
-
   wrappers-in-dylan-extensions-module["<sealed-generic-function>"]
     := pair(#"not-located", $generic-function-type);
-
   wrappers-in-dylan-extensions-module["<incremental-generic-function>"]
     := pair(#"not-located", $generic-function-type);
-
   wrappers-in-dylan-extensions-module["<double-integer>"]
     := pair(#"not-located", $double-integer-type);
-
   wrappers-in-dylan-extensions-module["<machine-word>"]
     := pair(#"not-located", $machine-integer-type);
-
   wrappers-in-dylan-extensions-module["<union>"]
     := pair(#"not-located", $union-type);
-
   wrappers-in-dylan-extensions-module["<subclass>"]
     := pair(#"not-located", $subclass-type);
-
   wrappers-in-dylan-extensions-module["<bottom-type>"]
     := pair(#"not-located", $bottom-type);
-
   wrappers-in-dylan-extensions-module
     ["<instance-slot-descriptor>"]
       := pair(#"not-located", $instance-slot-descriptor-type);
-
   wrappers-in-dylan-extensions-module
     ["<repeated-slot-descriptor>"]
       := pair(#"not-located", $repeated-slot-descriptor-type);
-
   wrappers-in-dylan-extensions-module
     ["<simple-method>"]
       := pair(#"not-located", $simple-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<keyword-method>"]
        := pair(#"not-located", $keyword-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<keyword-closure-method>"]
       := pair(#"not-located", $keyword-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<accessor-method>"]
       := pair(#"not-located", $accessor-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<getter-accessor-method>"]
       := pair(#"not-located", $accessor-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<setter-accessor-method>"]
       := pair(#"not-located", $accessor-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<single-accessor-method>"]
       := pair(#"not-located", $accessor-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<repeated-accessor-method>"]
       := pair(#"not-located", $accessor-method-type);
-
   wrappers-in-dylan-extensions-module
     ["<stretchy-object-vector>"]
       := pair(#"not-located", $stretchy-vector-type);
-
   wrappers-in-dylan-extensions-module
     ["<signature>"]
       := pair(#"not-located", $signature-required-only-type);
-
   wrappers-in-dylan-extensions-module
     ["<object-signature>"]
       := pair(#"not-located", $signature-required-only-type);
-
   wrappers-in-dylan-extensions-module
     ["<keyword-signature>"]
       := pair(#"not-located", $keyword-signature-type);
-
   wrappers-in-dylan-extensions-module["<string-table>"]
     := pair(#"not-located", $string-table-type);
-
   wrappers-in-threads-module["<thread>"]
     := pair(#"not-located", $thread-type);
-
   wrappers-in-threads-module["<synchronous-thread>"]
     := pair(#"not-located", $thread-type);
-
   wrappers-in-internal-module["<temp-pointer-type-class>"]
       := pair(#"not-located", $class-type);
   wrappers-in-internal-module["<c-pointer-type-class>"]
@@ -319,7 +252,6 @@ define sealed method initialize
 
   sod.directory-keywords-by-id[#"format-string"] := #"not-located";
   sod.directory-keywords-by-id[#"format-arguments"] := #"not-located";
-
 end method;
 
 
@@ -430,10 +362,8 @@ end method;
 ///// INITIALIZE-STATIC-WRAPPERS
 //    Searches for all of the pre-defined static wrapper objects in the
 //    static object directory.
-
 define method initialize-static-wrappers
     (application :: <debug-target>) => ()
-
   let path = application.debug-target-access-path;
   let sod = application.static-object-directory;
   let page-table = sod.directory-wrappers-by-page;
@@ -493,7 +423,6 @@ define method initialize-static-keywords
     illegal-value;
   sod.directory-keywords-initialized? := #t;
 end method;
-
 
 define method lookup-runtime-symbol
     (application :: <debug-target>, name :: <string>)

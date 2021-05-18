@@ -51,13 +51,11 @@ define constant $UPF-cleanup-address-offset      = 2;
 define constant $UPF-last                        = as-remote-value(0);
 
 define class <unwind-protect-frame> (<implementation-stack-frame>)
-
   constant slot cleanup-address :: <remote-value>,
     required-init-keyword: cleanup-address:;
 
   constant slot unwind-protect-call-frame-pointer :: <remote-value>,
     required-init-keyword: call-frame-pointer:;
-
 end class;
 
 
@@ -152,7 +150,6 @@ define method build-dynamic-environment
     (application :: <debug-target>, thread :: <remote-thread>,
      upf :: <remote-value>)
        => (newest-to-oldest :: <vector>)
-
   // Allocate an empty stretchy-vector to hold the sequence of frames.
   let seq = #[];
 
@@ -203,7 +200,6 @@ define method build-bind-exit
     (application :: <debug-target>, thread :: <remote-thread>, 
      bxf :: <remote-value>)
        => (bxf-object :: <bind-exit-frame>)
-
   let (heap-mv-vector, stack-mv-vector, up-chain, call-fp, continuation)
     = read-bind-exit(application, bxf);
 

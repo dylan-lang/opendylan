@@ -13,10 +13,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    The name's a bit crap, though...
 
 define abstract class <runtime-registered-handle> (<object>)
-
   constant slot runtime-handle :: <remote-value>,
     required-init-keyword: handle:;
-
 end class;
 
 
@@ -32,13 +30,11 @@ end class;
 //    remote objects.
 
 define abstract class <remote-object> (<runtime-registered-handle>)
-
   constant slot remote-object-debug-target :: <debug-target>,
     required-init-keyword: debug-target:;
 
   slot explicitly-freed? :: <boolean>,
     init-value: #f;
-
 end class;
 
 define abstract class <finalized-remote-object> (<remote-object>)
@@ -123,7 +119,6 @@ define method free-remote-object
   end unless;
 end method;
 
-
 ///// REMOTE-OBJECT-VALUE
 
 define method remote-object-value
@@ -131,7 +126,6 @@ define method remote-object-value
    robj :: <remote-object>,
    #key thread = #f) 
       => (val-or-false :: false-or (<remote-value>))
- 
   if (robj.explicitly-freed?)
     #f
   else
@@ -147,7 +141,6 @@ define method remote-object-value
    robj :: <weak-remote-object>,
    #key thread = #f) 
       => (val-or-false :: false-or (<remote-value>))
- 
   if (robj.explicitly-freed?)
     #f
   else
@@ -393,5 +386,3 @@ end method;
 
 define method terminate-when-unreachable (anything)
 end method;
-
-
