@@ -49,7 +49,6 @@ end method;
 
 define method sort-symbol-table-by-address
     (st :: <interactive-symbol-table>) => ()
-
   local method compare-heads (x :: <pair>, y :: <pair>) => (z :: <boolean>)
     head(x) < head(y)
   end method;
@@ -62,7 +61,6 @@ define method sort-symbol-table-by-address
     subtable.symbols-by-address := 
       sort!(subtable.symbols-by-address, test: compare-heads);
   end for;
-
 end method;
 
 
@@ -89,7 +87,7 @@ define method find-subtable-from-address
   result;
 end method;
 
- 
+
 ///// SEARCH-IN-ORDERED-PAIR-SEQUENCE (Internal)
 //    Given a sequence of pairs of the form (x :: <integer>, y :: <object>),
 //    and a target value T, attempt to find a member M of the sequence

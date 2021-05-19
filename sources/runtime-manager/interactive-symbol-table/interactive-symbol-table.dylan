@@ -12,13 +12,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    a region of memory.
 
 define sealed class <subtable-address-boundary> (<object>)
-
   constant slot boundary-lower-address :: <remote-value>,
     required-init-keyword: from:;
-
   constant slot boundary-upper-address :: <remote-value>,
     required-init-keyword: to:;
-
 end class;
 
 
@@ -27,7 +24,6 @@ end class;
 //    on <remote-library> objects.
 
 define sealed class <remote-library-subtable> (<object>)
-
   slot subtable-empty? :: <boolean>,
     init-value: #t;
 
@@ -36,7 +32,6 @@ define sealed class <remote-library-subtable> (<object>)
 
   // (Not constant due to use of idiom x := sort!(x). Maybe could be
   // constant).
-
   slot symbols-by-address :: <stretchy-vector> = 
     make(<stretchy-vector>);
 
@@ -45,9 +40,7 @@ define sealed class <remote-library-subtable> (<object>)
 
   // Maps <remote-object-file> to a <string-table> for the symbols static
   // object files:
-
   constant slot statics-by-object-file :: <table> = make(<table>);
-
 end class;
 
 
@@ -56,7 +49,6 @@ end class;
 //    and allows new definitions to be created.
 
 define sealed class <interactive-symbol-table> (<object>)
-
   ///// Exported Slots
 
   constant slot symbol-table-redefinition-allowed? :: <boolean>,
@@ -73,7 +65,6 @@ define sealed class <interactive-symbol-table> (<object>)
 
   ///// SYMBOLS-BY-LIBRARY
   //    Maps <remote-library> to <remote-library-subtable>.
-
   constant slot symbols-by-library :: <table> = make(<table>);
 
   ///// KNOWN-SYMBOL-LIBRARIES
@@ -81,7 +72,6 @@ define sealed class <interactive-symbol-table> (<object>)
   //    Every member of this sequence must also be a key in the
   //    above table. Further, there must be no keys in the table that
   //    are not members of this sequence.
-
   constant slot known-symbol-libraries :: <sequence> = make(<stretchy-vector>);
 
   // This slot is set to TRUE when a client knows that a number of
@@ -91,10 +81,8 @@ define sealed class <interactive-symbol-table> (<object>)
   // the sort will be deferred if this flag is set to #t.
   // The library provides a macro to set this flag during a period of
   // 'symbol-table-define-symbol' calls.
-
   slot performing-multiple-definitions? :: <boolean>,
     init-value: #f;
-
 end class;
 
 
@@ -104,10 +92,8 @@ end class;
 //    implementation of this library.
 
 define abstract class <interactive-symbol-table-error> (<error>)
-
   constant slot offending-symbol-table :: <interactive-symbol-table>,
     required-init-keyword: table:;
-
 end class;
 
 
@@ -117,10 +103,8 @@ end class;
 
 define class <symbol-does-not-exist-error>
                   (<interactive-symbol-table-error>)
-
   constant slot target-name :: <string>,
     required-init-keyword: name:;
-
 end class;
 
 
@@ -130,10 +114,8 @@ end class;
 
 define class <symbol-no-library-error>
                  (<interactive-symbol-table-error>)
-
   constant slot defined-name :: <string>,
     required-init-keyword: name:;
-
 end class;
 
 define class <symbol-static-no-file-error> (<symbol-no-library-error>)
@@ -146,10 +128,8 @@ end class;
 
 define class <file-no-library-error>
                  (<interactive-symbol-table-error>)
-
   constant slot defined-filename :: <string>,
     required-init-keyword: name:;
-
 end class;
 
 
@@ -160,16 +140,12 @@ end class;
 
 define class <symbol-attempted-definition-in-undefined-file-error>
                  (<interactive-symbol-table-error>)
-
   constant slot defined-name :: <string>,
     required-init-keyword: name:;
-
   constant slot associated-library :: <remote-library>,
     required-init-keyword: library:;
-
   constant slot undefined-file :: <remote-object-file>,
     required-init-keyword: file:;
-
 end class;
 
 
@@ -179,13 +155,10 @@ end class;
 
 define abstract class <symbol-illegal-redefinition-error> 
                        (<interactive-symbol-table-error>)
-
   constant slot redefined-name :: <string>,
     required-init-keyword: name:;
-
   constant slot existing-symbol :: <remote-symbol>,
     required-init-keyword: symbol:;
-
 end class;
 
 

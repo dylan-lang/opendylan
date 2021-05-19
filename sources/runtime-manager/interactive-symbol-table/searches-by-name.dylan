@@ -16,7 +16,6 @@ define method symbol-table-find-symbol
     #key library = #f, local-lookup-only? = #f,
          file = #f)
       => (maybe-sym :: false-or(<remote-symbol>))
-
   // A quick test. If the symbol table is empty, don't even bother with
   // the most trivial checking of it. Just defer to access path.
 
@@ -24,7 +23,6 @@ define method symbol-table-find-symbol
   // action depending on whether 'library' was supplied to this call.
   // Since, if we pass 'library' on, it _must_ be a <remote-library> (and
   // not #f).
-
   if (st.symbol-table-empty?)
     if (local-lookup-only?)
       #f
@@ -34,7 +32,6 @@ define method symbol-table-find-symbol
       find-symbol(st.symbol-table-access-path, name)
     end if
   else
-
     let local-sym =
       if (library)
         st-find-symbol-in-known-library(st, name, library, file: file)
@@ -53,7 +50,6 @@ define method symbol-table-find-symbol
 
     // If that lookup succeeded, then that's a hit on the local symbol
     // table. If the lookup failed, defer to the access-path once again.
-
     if (local-sym)
       local-sym
     elseif (local-lookup-only?)
