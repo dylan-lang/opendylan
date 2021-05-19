@@ -47,13 +47,11 @@ define method perform-debugger-transaction
     (application :: <target-application>, transaction :: <function>,
      #key continue)
  => (#rest results)
-
   if (application.performing-debugger-transaction?)
     assert(~continue,
            "Cannot continue from inside another debugger transaction");
     transaction()
   else
-
   local method do-transaction () => (#rest results)
           block()
             transaction();
@@ -71,25 +69,19 @@ define method perform-debugger-transaction
       if (continue) continue() end
     end
   else
-
     with-lock (application.debugger-transaction-request)
-
       // Request an application stop
-
       stop-application-request(application);
 
       let temporary-stop? = #f;
 
       block ()
         with-lock (application.debugger-session, mode: #"read")
-
           // Discard the application stop request as we are now
           // being served
-
           discard-stop-application-request(application);
 
           if (application.under-management?)
-
           temporary-stop? := application-temporary-stop?(application);
 
           thread-debug-message("Performing debugger transaction");
@@ -99,9 +91,7 @@ define method perform-debugger-transaction
           cleanup
             application.thread-being-served := #f
           end block;
-
           end if;
-
         end with-lock;
       afterwards
         // Continue the application only if explicitly requested to do
@@ -118,9 +108,7 @@ define method perform-debugger-transaction
         end if
       end
     end with-lock;
-
   end if;
-
   end if;
 end method;
 
@@ -131,7 +119,6 @@ end function;
 
 define method manage-debugger-transaction
     (application :: <target-application>) => ()
-
   unless (application.debugger-session.owned?)
     error("Debugger Manager transaction synchronization protocol error.");
   end unless;
@@ -139,23 +126,18 @@ define method manage-debugger-transaction
   let thunk :: <interruption-type> = #f;
 
   with-lock (application.debugger-transaction)
-
     // with a lock on the current transaction, open the floodgates
     // for threads requiring debugger transactions
-
     thread-debug-message("Releasing debugger-session");
     release(application.debugger-session);
 
     // Enter a wait state for continuously serving client thread
     // requests that can only be run by the Debugger Manager
-
     application.in-debugger-transaction? := #t;
 
     while (begin
              let wait-state = #"waiting";
-
              while (wait-state == #"waiting")
-
              thread-debug-message("Waiting for debugger-transaction-notification");
              if (wait-for(application.debugger-transaction-notification,
                           timeout: application.debugger-transaction-timeout))
@@ -168,9 +150,7 @@ define method manage-debugger-transaction
                  wait-state := #f;
                end;
              end;
-
              end while;
-
              wait-state
            end)
       block()
@@ -184,7 +164,6 @@ define method manage-debugger-transaction
 
       thread-debug-message("Releasing interruption-evaluated");
       release(application.interruption-evaluated);
-
     end while;
 
     application.in-debugger-transaction? := #f;
@@ -193,7 +172,6 @@ define method manage-debugger-transaction
     // Now wait until all other threads have released their
     // inclusive claims on the session before going back into
     // exclusive mode
-
     unless (application.debugger-session.owned?)
       thread-debug-message("Waiting for debugger-session");
       wait-for(application.debugger-session, mode: #"write");
@@ -202,14 +180,10 @@ define method manage-debugger-transaction
     // Lastly, signal all client threads that this debugger
     // transaction is now complete, in response to a request
     // to continue the stopped thread
-
     thread-debug-message("Releasing debugger-transaction-complete");
     release-all(application.debugger-transaction-complete);
-
   end with-lock;
-
   thread-debug-message("debugger transaction is complete");
-
 end method;
 
 
@@ -217,7 +191,6 @@ end method;
 //    Calls a function with arguments, ensuring that the call
 //    happens on the debugger manager's thread. This is achieved
 //    by notifying an interruption of the debugger transaction.
-
 define method call-debugger-function
     (application :: <target-application>, function :: <function>,
      #rest arguments)
@@ -227,13 +200,11 @@ define method call-debugger-function
   if (transaction-thread == application.manager-thread)
     apply(function, arguments)
   else
-
     unless (application.performing-debugger-transaction?)
       error("Debugger transaction synchronization protocol error.");
     end unless;
 
     with-lock (application.debugger-transaction)
-
       application.interruption-function :=
         method() apply(function, arguments) end;
 
@@ -247,12 +218,9 @@ define method call-debugger-function
       application.interruption-results := #[];
 
       apply(values, results);
-
     end with-lock;
-
   end if;
 end method;
-
 
 
 ///// PERFORM-REQUIRING-DEBUGGER-TRANSACTION
