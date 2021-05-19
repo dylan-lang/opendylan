@@ -93,13 +93,11 @@ define method project-valid-code?
      thread :: <thread-object>,
      #key module = #f, runtime-context = #f, stack-frame = #f)
     => (valid? :: <boolean>, warnings :: <sequence>)
-
   // Get a copy of the <debug-target>.
   let target = app.application-target-app;
 
   // If the runtime context hasn't been supplied explicitly, use the
   // thread's "current" runtime context for the parse.
-
   unless (runtime-context)
     runtime-context :=
        project-runtime-context(app, thread, stack-frame: stack-frame)
@@ -109,13 +107,11 @@ define method project-valid-code?
   // body of this clause...
   // (My real reason for hoping that, is that 'find-module' doesn't seem to
   // be implemented anywhere...)
-
   unless (module)
     module := find-module(app.server-project, "dylan-user");
   end unless;
 
   if (module)
-
     // ASSUMPTION: The primitive name for <module-object>, is the actual
     // name of the module it defines.
 
@@ -177,7 +173,6 @@ define method project-execute-code
      thread :: <thread-object>,
      #key module = #f, runtime-context = #f, stack-frame = #f)
     => (execution-id :: <object>, execution-deferred? :: <boolean>)
-
   // Assume that we will be able to call the interactive downloader
   // straight away.
   let execution-deferred? = #f;
@@ -206,10 +201,8 @@ define method project-execute-code
   end unless;
 
   if (module)
-
     // ASSUMPTION: The primitive name for <module-object>, is the actual
     // name of the module it defines.
-
     let module-actual-name =
       environment-object-primitive-name(app.server-project, module);
 
@@ -222,7 +215,6 @@ define method project-execute-code
 
     // Note the lack of warning/error handlers here. It is hoped that these
     // will be handled by the environment at a higher level.
-
     let id = #f;
 
     // Find out whether we can cope with this interaction now, or defer
@@ -231,7 +223,6 @@ define method project-execute-code
     // queue the interaction request.
     // Otherwise, call the project manager's API to actually download the
     // expression.
-
     perform-continuing-debugger-transaction
       (app, remote-thread,
        method ()
@@ -322,7 +313,6 @@ define method execute-function
   perform-debugger-transaction
       (target,
        method ()
-
          let evaluation-on-suspended-thread? =
            thread-permanently-suspended?(path, remote-thread);
 
@@ -343,11 +333,9 @@ define method execute-function
 
            invoke-application-callback
              (app, application-started-interaction-callback, thread, id);
-
          else
            error("Cannot perform the requested interaction");
          end if;
-
        end method);
 
     id

@@ -13,7 +13,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method singleton-value
     (application :: <dfmc-application>, singleton-obj :: <singleton-object>)
  => (val :: <environment-object>)
-
   let target = application.application-target-app;
   with-debugger-transaction (target)
     let proxy = singleton-obj.application-object-proxy;
@@ -41,13 +40,11 @@ define method do-direct-subclasses
      class :: <class-object>,
      #key client)
  => ()
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct subclass, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
@@ -69,13 +66,11 @@ define method do-direct-superclasses
      class :: <class-object>,
      #key client)
  => ()
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct superclass, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
@@ -97,13 +92,11 @@ define method do-direct-methods
      class :: <class-object>,
      #key client)
  => ()
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct method, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
@@ -125,13 +118,11 @@ define method do-direct-slots
      class :: <class-object>,
      #key client)
  => ()
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct slot, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
@@ -153,13 +144,11 @@ define method do-all-superclasses
      class :: <class-object>,
      #key client)
  => ()
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, get an exploded view of the class.
   // For each superclass, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
@@ -181,13 +170,11 @@ define method do-all-slots
      class :: <class-object>,
      #key client)
  => ()
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, get an exploded view of the class.
   // For each slot, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);

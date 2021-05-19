@@ -57,15 +57,12 @@ define method invoke-application-restart
     (application :: <dfmc-application>, thread :: <thread-object>,
      rst :: <restart-object>)
  => ()
-
   // Get all the DM-type objects out of the higher-level stuff.
-
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
   let remote-restart = rst.application-object-proxy;
 
   // We must be in a debugger transaction to do this.
-
   perform-continuing-debugger-transaction
      (application, remote-thread,
       method ()

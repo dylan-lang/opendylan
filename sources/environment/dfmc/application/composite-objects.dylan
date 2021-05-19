@@ -20,7 +20,6 @@ define method composite-object-size
   // Within a debugger transaction, get the proxy for this composite
   // object, and call the DM to calculate the total number of slots
   // in the object.
-
   perform-debugger-transaction
     (target,
      method ()
@@ -65,7 +64,6 @@ define method composite-object-contents
   // Within a debugger transaction, get the proxy for this composite
   // object, and exchange it for its class proxy. Get the browser
   // navigation info from the class, and use that to unpick the object.
-
   perform-debugger-transaction
     (target,
      method ()

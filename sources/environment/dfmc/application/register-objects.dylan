@@ -12,7 +12,6 @@ define method do-application-registers
     (f :: <function>, application :: <dfmc-application>,
      #key category = #f)
  => ()
-
   local method wrap-for-env
                  (reg :: <remote-register>) => (obj :: <register-object>)
           make-environment-object

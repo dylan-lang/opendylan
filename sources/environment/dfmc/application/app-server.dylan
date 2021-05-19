@@ -19,7 +19,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    in a sequence of ordered data.
 
 define class <application-proxy-factory> (<object>)
-
    slot static-proxies :: <page-relative-object-table>;
    slot static-address-proxies :: <page-relative-object-table>;
    slot per-transaction-proxies :: <page-relative-object-table>;
@@ -47,8 +46,6 @@ end class;
 /// since this code is written in terms of the Debugger-manager.
 ///
 define sealed class <dfmc-application> (<application>)
-
-  //
   // This holds the <debug-target> that the debugger needs to talk to the
   // target application.  When users of the Environment-protocol library
   // make calls on an application server (that is, <application>), those
@@ -57,7 +54,6 @@ define sealed class <dfmc-application> (<application>)
   // There is no portable way to access this application handle, as there is
   // with the application's project, so this detail of the implementation
   // has no ramifications in the user model.
-
   slot application-target-app :: false-or(<target-application>) = #f;
 
   slot application-stop-reason :: false-or(<stop-reason>) = #f;
@@ -167,7 +163,6 @@ define sealed class <dfmc-application> (<application>)
 
   // This slot has no init-value, because RUN-APPLICATION always
   // puts a freshly allocated stretchy-vector into it.
-
   slot interactor-contexts-used :: <stretchy-vector>;
 
   slot application-initial-breakpoint :: false-or(<breakpoint-object>) = #f;
@@ -354,4 +349,3 @@ define method application-just-hit-error?
     | (instance?(stop-reason, <exception-stop-reason>)
          & ~instance?(stop-reason, <invoke-debugger-stop-reason>))
 end method application-just-hit-error?;
-
