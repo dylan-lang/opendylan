@@ -69,7 +69,6 @@ define generic query-execute-watchpoint?
 define method enable-breakpoint 
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
-
   let success-code :: <integer> =
     set-breakpoint-in-application (ap.connection, address);
 
@@ -102,9 +101,7 @@ define open generic clear-breakpoint-in-application
 define method recover-breakpoint 
     (ap :: <access-path>, thread :: <remote-thread>)
       => ()
-
   recover-breakpoint-in-application (ap.connection, thread);
-
 end method;
 
 define open generic recover-breakpoint-in-application
@@ -117,7 +114,6 @@ define open generic recover-breakpoint-in-application
 define method query-breakpoint? 
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
-
   let code :: <integer> =
     query-breakpoint-in-application (ap.connection, address);
 
@@ -223,10 +219,8 @@ define method apply-thread-stepping-control
      locations :: <sequence>, operation :: <integer>,
      #key stack-frame = #f)
        => ()
-
   // Perform all stepping operations on the topmost stack frame unless
   // otherwise specified.
-
   unless (stack-frame)
     stack-frame := initialize-stack-trace(access-path, thread)
   end unless;
@@ -234,7 +228,6 @@ define method apply-thread-stepping-control
   // Find out the calling frame of the given frame, if there is one. It is
   // not essential that there be a calling frame, but the debugger nub will
   // happily accept that extra context if it can be provided.
-
   let calling-frame = previous-frame(access-path, stack-frame);
   let fp = stack-frame.stack-frame-pointer;
   let calling-fp =
@@ -256,7 +249,6 @@ define method apply-thread-stepping-control
   end if;
 
   // Dispatch to the appropriate debugger nub API.
-
   apply-thread-stepping-control-on-connection
      (access-path, access-path.connection, thread, fp, calling-fp, count,
       locations, operation);
@@ -290,4 +282,3 @@ end method;
 
 define open generic remove-all-stepping-control-for-thread-on-connection
     (conn :: <access-connection>, thread :: <remote-thread>) => ();
-

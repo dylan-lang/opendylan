@@ -187,7 +187,7 @@ define debugger-nub-interface nub-get-library-undecorated-name
        parameter buf              :: <C-string>;
        c-name: "nub_get_library_undecorated_name";
 end debugger-nub-interface;
-                                           
+
 define debugger-nub-interface nub-get-register-name-length
        parameter nub              :: <NUB>;
        parameter register         :: <NUB-INDEX>;

@@ -12,7 +12,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method do-processes 
   (function :: <function>, dc :: <remote-debugger-connection-implementation>) => ()
-
   local method find-existing (descr :: <NUBPROCESS>) 
              => (p? :: false-or(<remote-process>))
           block (return)
@@ -80,7 +79,6 @@ define method construct-thread-object
    (conn :: <remote-access-connection>, thread :: <NUBTHREAD>,
      #key path, priority)
       => (thread :: <remote-thread>)
-
   let thread-name = format-to-string ("DBGTHREAD%d", *next-thread-id*);
   let rthread = as-integer(thread);
   let priority :: <integer>
@@ -93,7 +91,6 @@ define method construct-thread-object
          os-priority: priority,
          nub-descriptor: thread,
          rnub-descriptor: rthread);
-
 end method;
 
 

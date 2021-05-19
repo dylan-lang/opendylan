@@ -12,7 +12,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    be in the same file (surely!!).
 
 define sealed class <source-location-map> (<object>)
-
   constant slot source-filename :: <byte-string>,
     required-init-keyword: filename:;
 
@@ -30,7 +29,6 @@ define sealed class <source-location-map> (<object>)
 
   constant slot line-offset-pairs :: <vector>,
     required-init-keyword: pairs:;
-
 end class;
 
 

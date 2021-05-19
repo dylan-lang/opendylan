@@ -203,5 +203,3 @@ define method connection-thread-stopped-at-first-chance?
     #f
   end if
 end method;
-
-

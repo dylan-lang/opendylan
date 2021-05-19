@@ -9,7 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method register-vector-on-connection
     (conn :: <remote-access-connection>) => (vec :: <vector>)
-
   local method nub-register-descriptor
           (cat :: <symbol>, r :: <integer>)
             => (descriptor :: <unassigned-remote-register>)
@@ -52,7 +51,6 @@ define method read-value-from-register
     (conn :: <remote-access-connection>, register :: <active-remote-register>,
      #key frame-index = #f)
       => (val :: <remote-value>)
-
   let (value :: <RTARGET-ADDRESS>, error) = 
     if (frame-index)
       Rtmgr/RemoteNub/read-value-from-process-register-in-stack-frame
@@ -74,7 +72,6 @@ end method;
 define method read-value-from-memory 
     (conn :: <remote-access-connection>, location :: <remote-value>)
       => (val :: <remote-value>)
-
   let (value :: <RTARGET-ADDRESS>, error) =
     Rtmgr/RemoteNub/read-value-from-process-memory (conn.nub, as-integer(location));
 
@@ -229,7 +226,6 @@ define method read-byte-string-from-memory
    (conn :: <remote-access-connection>, address :: <remote-value>,
     length :: <integer>)
       => (val :: <byte-string>)
-
   let (string-destination :: <string>, error) =
     Rtmgr/RemoteNub/read-byte-string-from-process-memory
     (conn.nub, as-integer(address), length);

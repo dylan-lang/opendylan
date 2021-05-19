@@ -15,10 +15,8 @@ define method remote-call-on-connection
      thread-was-suspended? :: <boolean>,
      #rest arguments)
        => (ra :: <remote-value>, cookie :: <object>)
-
   // The arguments need to be converted from the #rest sequence
   // into a vector of <RTARGET-ADDRESS> objects.
-
   let arg-count :: <integer> = size(arguments);
   let arg-vector = make (<RTARGET-ADDRESS-SEQ>,
 			 size: arg-count, fill: 0);
@@ -29,8 +27,6 @@ define method remote-call-on-connection
   // We have everything we need to make the call. The return
   // value is a thread context cookie. The nub function is called
   // as a side-effect.
-
-
   let (ret-addr :: <RTARGET-ADDRESS>, context-cookie :: <RNUBHANDLE>)
     = Rtmgr/RemoteNub/setup-function-call
       (conn.nub, thr.rnub-descriptor,
@@ -69,11 +65,9 @@ define method remote-call-spy-on-connection
     (ap :: <access-path>, conn :: <remote-access-connection>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (result :: <remote-value>, errcode :: <integer>)
-
   let arg-vector :: <RTARGET-ADDRESS-SEQ> = ap.%spy-function-argument-remote-vector;
 
   // Construct the vector of arguments
-
   let arg-count :: <integer>
     = size(arguments);
 
@@ -87,7 +81,6 @@ define method remote-call-spy-on-connection
   end for;
 
   // And make the call, returning the results from the nub.
-
   let (result :: <RTARGET-ADDRESS>, errcode) =
     Rtmgr/RemoteNub/remote-call-spy(conn.nub, thr.rnub-descriptor,
 			       as-integer(function), arg-count, arg-vector);

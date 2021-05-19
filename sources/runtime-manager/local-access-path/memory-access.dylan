@@ -11,7 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method register-vector-on-connection
     (conn :: <local-access-connection>) => (vec :: <vector>)
-
   local method nub-register-descriptor
           (cat :: <symbol>, r :: <integer>)
             => (descriptor :: <unassigned-remote-register>)
@@ -33,26 +32,21 @@ define method register-vector-on-connection
 
   let (first-general, last-general)
     = nub-general-registers (conn.connection-process);
-
   let (first-special, last-special)
     = nub-special-registers (conn.connection-process);
-
   let (first-register, last-register)
     = nub-all-registers (conn.connection-process);
 
   let register-vector =
     make (<vector>, size: (last-register - first-register + 1));
-
   for (i from first-general to last-general)
     register-vector[i - 1] := 
       nub-register-descriptor (#"general", i);
   end for;
-
   for (i from first-special to last-special)
     register-vector[i - 1] := 
       nub-register-descriptor (#"special", i);
   end for;
-
   register-vector;
 end method;
 
@@ -63,7 +57,6 @@ define method read-value-from-register
     (conn :: <local-access-connection>, register :: <active-remote-register>,
      #key frame-index = #f)
       => (val :: <remote-value>)
-
   let (value, error) = 
     if (frame-index)
       nub-read-value-from-process-register-in-stack-frame
@@ -85,7 +78,6 @@ end method;
 define method read-value-from-memory 
     (conn :: <local-access-connection>, location :: <remote-value>)
       => (val :: <remote-value>)
-
   let (value, error) =
     nub-read-value-from-process-memory (conn.connection-process, location);
 
@@ -102,7 +94,6 @@ define method write-value-to-register
     (conn :: <local-access-connection>,
      register :: <active-remote-register>,
      value :: <remote-value>) => ()
-
   let err = 
     nub-write-value-to-process-register
     (conn.connection-process,
@@ -117,10 +108,8 @@ end method;
 define method write-value-to-memory 
     (conn :: <local-access-connection>, address :: <remote-value>,
      value :: <remote-value>) => ()
-
   let err =
     nub-write-value-to-process-memory (conn.connection-process, address, value);
-
   if (err ~= $access-ok)
      signal (make (<remote-access-violation-error>));
   end if

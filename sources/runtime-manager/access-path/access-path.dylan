@@ -27,7 +27,6 @@ define constant $max-stepping-locations = 512;
 //    Documented.
 
 define abstract class <access-path> (<object>)
-
   slot connection :: <access-connection>;
 
   constant slot access-path-application-object,
@@ -76,7 +75,6 @@ define abstract class <access-path> (<object>)
   slot spy-function-argument-remote-vector = #f;
 
   slot stepping-locations-remote-vector = #f;
-
 end class;
 
 
@@ -85,7 +83,6 @@ end class;
 //    (and, optionally, the "arguments:" keyword).
 
 define class <application-access-path> (<access-path>)
-
   constant slot access-path-application :: <string>,
     required-init-keyword: application:;
 
@@ -104,7 +101,6 @@ define class <application-access-path> (<access-path>)
   constant slot access-path-library-search-paths :: <sequence>,
     init-value: #[],
     init-keyword: library-search-paths:;
-
 end class;
 
 // ACCESS-PATH-APPLICATION should return #f for <access-path> objects
@@ -163,9 +159,7 @@ define method make
                     arguments = #f, process = #f, core-file = #f,
                     debugger-connection = *default-local-debugger-connection*,
                     #all-keys) => (access-path)
-
   // Create the appropriate instance.
-
   if (application)
     apply (make, <application-access-path>, keys);
   elseif (process)
@@ -264,7 +258,6 @@ define variable *debugger-stream* = #f;
 define variable *debugger-stream-count* = 0;
 
 define function make-debugger-stream(file-name :: <byte-string>)
-
   *debugging-debugger?* := #t;
 
   *debugger-stream* :=
@@ -274,13 +267,11 @@ define function make-debugger-stream(file-name :: <byte-string>)
 	  direction: #"output");
 
   *debugger-stream-count* := *debugger-stream-count* + 1;
-
 end function;
 
 // make-debugger-stream("U:\\nosa\\dylan\\admin\\logs\\debugging");
 
 define function close-debugger-stream()
-
   if (*debugger-stream*)
     close(*debugger-stream*);
   end;
@@ -288,7 +279,6 @@ end function;
 
 define function debugger-message
     (string :: <string>, #rest args) => ()
-
   if (*debugging-debugger?*)
     let string :: <byte-string> = as(<byte-string>, string);
     if (*debugger-stream*)
@@ -299,21 +289,16 @@ define function debugger-message
       apply(nub-debug-message, string, args)
     end if;
   end if;
-
 end function;
 
 define function nub-debug-message
     (string :: <string>, #rest args) => ()
-
   let string :: <byte-string> = as(<byte-string>, string);
   apply(debug-message, string, args)
   // apply(format-out, concatenate("\n### ", string, "\n"), args);
-
 end function;
 
 define function debugger-error
     (string :: <string>, #rest args) => ()
-
   apply(error, as(<byte-string>, string), args)
-
 end function;

@@ -43,7 +43,6 @@ define constant $RepositoryID = "IDL:functionalobjects.com/Rtmgr/NubServer:1.0";
 
 define method initialize
     (connection :: <remote-debugger-connection-implementation>, #key, #all-keys) => ()
-
   next-method();
 
   let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
@@ -165,7 +164,6 @@ define method attach-application-on-connection
    process :: <remote-process>,
    symbol-file-directories :: <sequence>,
    system-info :: <string>) => ()
-
   conn.nub :=
     block ()
       Rtmgr/NubServer/CreateNub

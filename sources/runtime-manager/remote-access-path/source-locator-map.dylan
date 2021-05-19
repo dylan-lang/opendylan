@@ -11,12 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method construct-source-location-map
     (conn :: <remote-access-connection>, sym :: <remote-symbol>) => ()
-
   if (instance?(sym, <remote-function>))
-
     // We have a function, so build the map of source locations
     // if possible.
-
     let sl-table :: <RNUBHANDLE>
       = Rtmgr/RemoteNub/fetch-source-locations
           (conn.nub, as-integer(sym.remote-symbol-address),

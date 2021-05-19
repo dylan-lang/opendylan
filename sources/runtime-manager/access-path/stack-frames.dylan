@@ -12,7 +12,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    The abstract description of a stack frame.
 
 define sealed abstract class <stack-frame> (<object>)
-
   constant slot nub-vector-frame-index :: <integer>,
     required-init-keyword: index:;
 
@@ -31,11 +30,9 @@ define sealed abstract class <stack-frame> (<object>)
   slot link-next :: false-or(<stack-frame>),
     init-value: #f,
     init-keyword: link-next:;
-
   slot link-previous :: false-or(<stack-frame>),
     init-value: #f,
     init-keyword: link-previous:;
-
 end class;
 
 
@@ -45,7 +42,6 @@ end class;
 //    function frames.
 
 define sealed class <function-frame> (<stack-frame>)
-
   slot partial-lexicals-read? :: <boolean>,
     init-value: #f;
 
@@ -59,7 +55,6 @@ define sealed class <function-frame> (<stack-frame>)
 
   slot lexicals :: <vector>,
     init-value: #[];
-
 end class;
 
 
@@ -77,7 +72,6 @@ end;
 //    The class that describes a variable local to a stack frame.
 
 define abstract class <lexical-variable> (<object>)
-
   constant slot C-name :: <byte-string>,
     required-init-keyword: name:;
 
@@ -86,7 +80,6 @@ define abstract class <lexical-variable> (<object>)
 
   constant slot lexical-variable-is-argument? :: <boolean>,
     required-init-keyword: argument?:;
-
 end class;
 
 define class <simple-lexical-variable> (<lexical-variable>)
@@ -204,17 +197,14 @@ end method;
 define method do-frame-arguments 
   (function :: <function>, ap :: <access-path>, frame :: <function-frame>) 
      => ()
-
   // Since we are lazily pulling debug info, we may not yet have
   // examined the lexicals for this frame. Read them now if
   // necessary.
-
   unless(frame.full-lexicals-read?)
     read-frame-lexicals (ap.connection, frame)
   end unless;
 
   // Apply the function only to frame arguments.
-
   for (lexvar in frame.lexicals)
     if (lexvar.lexical-variable-is-argument?)
       function (lexvar)
@@ -228,10 +218,8 @@ end method;
 define method do-frame-lexicals 
   (function :: <function>, ap :: <access-path>, frame :: <function-frame>) 
      => ()
-
   // Again, now is the time to pull lexical variable information if
   // we need it.
-
   unless (frame.full-lexicals-read?)
     read-frame-lexicals (ap.connection, frame)
   end unless;

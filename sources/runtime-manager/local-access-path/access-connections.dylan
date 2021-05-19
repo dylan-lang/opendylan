@@ -90,7 +90,6 @@ define method attach-application-on-connection
    process :: <remote-process>,
    symbol-file-directories :: <sequence>,
    system-info :: <string>) => ()
-
   let symfile-c-strings = map(curry(as, <C-string>), symbol-file-directories);
   let symfile-dir-array = make(<C-string*>, 
                                element-count: symfile-c-strings.size);
