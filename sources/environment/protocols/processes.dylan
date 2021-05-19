@@ -12,19 +12,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    machine.
 
 define open abstract class <process> (<object>)
-
   constant slot process-host-machine :: <machine>,
     required-init-keyword: process-host-machine:;
-
   constant slot process-executable-file :: <file-locator>,
     required-init-keyword: process-executable-file:;
-
   constant slot process-id :: <string>,
     required-init-keyword: process-id:;
-
   constant slot process-debuggable? :: <boolean>,
     required-init-keyword: process-debuggable?:;
-
 end class;
 
 

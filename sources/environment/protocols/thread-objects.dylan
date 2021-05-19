@@ -9,13 +9,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Thread objects
 
 define class <thread-object> (<application-object>)
-
   slot thread-runtime-state :: <symbol>,
     init-value: #"running";
-
   slot thread-suspended? :: <boolean>,
     init-value: #f;
-
 end class <thread-object>;
 
 define open generic thread-stack-trace
