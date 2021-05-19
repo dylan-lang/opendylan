@@ -15,7 +15,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    of the machine to which we are tethered.
 
 define sealed class <static-block> (<object>)
-
   // Exported slots
 
   constant slot static-block-size :: <integer>,
@@ -34,7 +33,6 @@ define sealed class <static-block> (<object>)
 
   constant slot block-access-path :: <access-path>,
     required-init-keyword: access-path:;
-
 end class;
 
 
@@ -43,10 +41,8 @@ end class;
 //    library.
 
 define class <static-block-error> (<error>)
-
   constant slot offending-static-block :: <static-block>,
     required-init-keyword: static-block:;
-
 end class;
 
 
@@ -75,10 +71,8 @@ end class;
 //    allocate the block in the first place.
 
 define class <wrong-access-path-error> (<static-block-error>)
-
   constant slot bad-access-path :: <access-path>,
     required-init-keyword: bad-access-path:;
-
 end class;
 
 
@@ -87,10 +81,8 @@ end class;
 //    static block.
 
 define class <no-room-in-block-error> (<static-block-error>)
-
   constant slot failed-request-size :: <integer>,
     required-init-keyword: request-size:;
-
 end class;
 
   
