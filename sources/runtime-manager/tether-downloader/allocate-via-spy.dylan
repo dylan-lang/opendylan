@@ -37,7 +37,6 @@ define method allocate-single-static-block
   let spy-thread = thread-for-spy | get-thread-for-spy(access-path);
 
   // Find the size in bytes of a remote virtual memory page.
-
   let 
     page-size = 
       remote-virtual-page-size(access-path) * 
@@ -46,7 +45,6 @@ define method allocate-single-static-block
   // By default, a block of the platform virtual page size will be
   // allocated, but clients can request blocks of specific byte sizes,
   // or of a multiple of the page size. 
-
   let request-size =
     if (byte-granularity)
       byte-granularity
@@ -60,7 +58,6 @@ define method allocate-single-static-block
   // a return value of zero indicates failure. We also assume that the
   // remote allocator adopts C calling convention, and takes a single
   // raw integer argument giving the byte-size of the request.
-
   let (malloc-result, aborted?) =
     remote-call-spy(access-path, 
                     spy-thread, 

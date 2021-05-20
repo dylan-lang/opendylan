@@ -20,7 +20,6 @@ define method align-thread-to-source-location
     (application :: <debug-target>, thread :: <remote-thread>,
      #key interactive? = #f)
   => (success? :: <boolean>)
-
   debugger-message("align-thread-to-source-location %=", thread);
   let success? = #f;
   let call-frame = get-top-call-frame(application, thread);
@@ -74,7 +73,6 @@ define method instruct-thread-to-step-over
     (application :: <debug-target>, thread :: <remote-thread>,
      #key call-frame = #f)
   => (success? :: <boolean>)
-
   let success? = #f;
   let path = application.debug-target-access-path;
   let dm-thread = find-thread(application, thread);
@@ -82,7 +80,6 @@ define method instruct-thread-to-step-over
   // If the call-frame is not specified as context for the step operation,
   // then assume that we want to step within the topmost call frame on the
   // thread's stack.
-
   unless(call-frame)
     call-frame := get-top-call-frame(application, thread)
   end unless;
@@ -91,7 +88,6 @@ define method instruct-thread-to-step-over
   // a calling frame, we will additionally set up a "step out", since
   // it's quite possible that "step over" will result in a return.
   // If there is no calling frame, we cannot do this.
-
   let calling-frame = get-previous-call-frame(application, call-frame);
 
   block (exit)
@@ -199,7 +195,6 @@ define method instruct-thread-to-step-into
     (application :: <debug-target>, thread :: <remote-thread>,
      #key call-frame = #f, precomputed-addresses = #f)
   => (success? :: <boolean>)
-  
   let success? = #f;
   let path = application.debug-target-access-path;
   let dm-thread = find-thread(application, thread);
@@ -232,7 +227,6 @@ define method instruct-thread-to-step-into
   // If the call-frame is not specified as context for the step operation,
   // then assume that we want to step within the topmost call frame on the
   // thread's stack.
-
   unless(call-frame)
     call-frame := get-top-call-frame(application, thread)
   end unless;
@@ -291,4 +285,3 @@ define method instruct-thread-to-step-into
   end block;
   success?;
 end method;
-

@@ -20,7 +20,6 @@ define class <per-address-debug-point-list> (<dm-registered-descriptor>)
     = make(<stretchy-vector>);
 end class;
 
-
 /////
 ///// <DEBUG-POINT>
 /////
@@ -59,7 +58,6 @@ define open generic handle-debug-point-event
    thr :: <remote-thread>) 
     => (register-interest? :: <boolean>);
 
-
 define method handle-debug-point-event
   (application :: <debug-target>, debug-point :: <debug-point>,
    thr :: <remote-thread>) 
@@ -78,7 +76,6 @@ end method;
 
 define method register-debug-point
   (application :: <debug-target>, debug-point :: <debug-point>) => ()
-
   // get-per-address-list
   // If there is already a <per-address-debug-point-list> for the address
   // that the client wants to register this new debug-point at, then
@@ -87,7 +84,6 @@ define method register-debug-point
   // returns it. (The boolean result is #t if a new list was created,
   // since this means that an actual new breakpoint has to be set in the
   // access-path.
-
   local method get-per-address-list () 
       => (l :: <per-address-debug-point-list>, n :: <boolean>)
     let i = 0;
@@ -132,7 +128,6 @@ end method;
 
 define method deregister-debug-point
    (application :: <debug-target>, debug-point :: <debug-point>) => ()
-
   // Registered debug-points are stored in sequences.
   // We CANNOT physically remove the debug point at this time,
   // since debug-points are allowed to deregister themselves at
@@ -141,7 +136,6 @@ define method deregister-debug-point
   // This is deadlier than a four-second egg, so just mark the
   // thing as "deregistered" for now, and remove it "safely"
   // later on.
-
   dm-deregister (debug-point);
   application.need-to-clear-debug-points? := #t;
 end method;
@@ -153,10 +147,8 @@ end method;
 
 define method clear-deregistered-debug-points
     (application :: <debug-target>) => ()
-
   // For each address that has registered debug-points, clear
   // away all debug points that have since been deregistered.
-
   if (application.need-to-clear-debug-points?)
     for (per-address-list in application.registered-debug-points)
       per-address-list.debug-point-sequence :=
@@ -176,7 +168,6 @@ define method clear-deregistered-debug-points
       dm-tidy-sequence (application.registered-debug-points);
 
     application.need-to-clear-debug-points? := #f;
-
   end if;
 end method;
 
@@ -187,7 +178,6 @@ end method;
 //    handle-debug-point-event on each one. Also builds up a sequence of 
 //    those <debug-point> objects that signalled themselves as 
 //    being "interesting"
-
 define method process-debug-points
     (application :: <debug-target>, stop-reason :: <source-step-stop-reason>)
   => (interested-debug-points :: <sequence>)
@@ -200,7 +190,6 @@ define method process-debug-points
 
   local method get-per-address-list ()
        =>  (l :: <per-address-debug-point-list>)
-      
     let stopped-address = stop-reason-debug-point-address (stop-reason);
     let i = 0;
     let lst = #f;
@@ -217,7 +206,6 @@ define method process-debug-points
 
     // THIS CAN BREAK IF SOMEBODY DOES AN END-RUN AROUND THE DM AND
     // SETS A BREAKPOINT DIRECTLY.
-
     while (~lst)
       if (application.registered-debug-points[i].registered-address =
           stopped-address)
@@ -250,18 +238,15 @@ end method;
 /////
 
 define /* open */ abstract class <thread-sensitive-breakpoint> (<breakpoint>)
-
   constant slot
     breakpoint-affected-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
 end class;
 
 define method handle-debug-point-event
     (application :: <debug-target>, bp :: <thread-sensitive-breakpoint>,
      signalling-thread :: <remote-thread>)
       => (interested? :: <boolean>)
-
   if (signalling-thread == bp.breakpoint-affected-thread)
     next-method();
   else

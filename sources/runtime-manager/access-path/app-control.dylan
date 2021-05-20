@@ -131,10 +131,8 @@ define open generic stop-application
 
 define method continue
     (ap :: <access-path>, #key resume) => ()
-
   // We're entering the running state, so throw out all cached
   // stack links.
-
   do-threads (method (t :: <remote-thread>)
                 unless (thread-suspended?(t))
                   t.thread-stack := #f;
@@ -170,10 +168,8 @@ define open generic continue-application
 
 define method continue-unhandled
     (ap :: <access-path>, #key resume) => ()
-
   // We're entering the running state, so throw out all cached
   // stack links.
-
   do-threads (method (t :: <remote-thread>)
                 unless (thread-suspended?(t))
                   t.thread-stack := #f;

@@ -75,7 +75,6 @@ define method compiled-lambda-in-context-from-symbol
     (application :: <debug-target>, symbol :: <remote-symbol>)
  => (context,
      lambda :: false-or(<compiled-lambda>))
-
   local method make-runtime-compiled-lambda ()
 	 => (lambda :: false-or(<runtime-compiled-lambda>))
           if (symbol.remote-symbol-language == $symbol-language-Dylan)
@@ -126,7 +125,6 @@ define method call-frame-recorded-locations
       caller-frame-pointer-context :: <remote-value>,
       step-out-location :: <remote-value>,
       step-over-locations :: <sequence>)
-
   let path = application.debug-target-access-path;
   let ap-frame = call-frame-description(application, call-frame);
   let frame-pointer-context = frame-pointer(path, ap-frame);

@@ -15,12 +15,10 @@ define method nearest-symbols-from-nub
       => (any-luck? :: <boolean>,
           where-is-it? :: <NUBLIBRARY>,
           gimme-handle :: <NUBHANDLE>)
-
   // Wraps up the debugger nub function which does a brute-force
   // search in the debug map for the three nearest symbols and
   // constructs an opaque lookup table which is passed back later
   // to get information about the symbols.
-
   let worked = #f;
   let (success, lib :: <RNUBLIBRARY>, table :: <RNUBHANDLE>) =
     Rtmgr/RemoteNub/nearest-symbols(conn.nub, as-integer(address));
@@ -39,7 +37,6 @@ define method collect-nearest-symbols
        => (closest :: <remote-symbol>,
            prev :: <remote-symbol>,
            nxt :: <remote-symbol>)
-
   // For nearest-symbols, the nub creates a quick lookup table with
   // three entries: 1. The nearest symbol, 2. The closest symbol
   // preceding the nearest, 3. The closest symbol following the
@@ -155,7 +152,6 @@ define method find-symbol-in-library
      lib :: <remote-library>,
      name :: <string>) 
        => (maybe-sym :: false-or(<remote-symbol>))
-
   let (found, address :: <RTARGET-ADDRESS>, type, is-func,
        debug-start :: <RTARGET-ADDRESS>, debug-end :: <RTARGET-ADDRESS>,
        lang, lasta :: <RTARGET-ADDRESS>)
@@ -185,9 +181,7 @@ define method symbol-relative-address-on-connection
    path :: <access-path>, address :: <remote-value>)
      => (sym-if-found :: false-or(<remote-symbol>),
          offset       :: <abstract-integer>)
-
   // Call the debugger nub.
-
   let (foundit :: <abstract-integer>,
        lib :: <RNUBLIBRARY>,
        addr :: <RTARGET-ADDRESS>,

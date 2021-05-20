@@ -39,7 +39,6 @@ define method symbol-table-define-file
           client-data = #f, source-extension = "c",
           object-extension = "obj", path = "")
   => (defined-file :: <remote-object-file>)
-
   let access-path = st.symbol-table-access-path;
 
   let newfile = make(<remote-object-file>,
@@ -53,7 +52,6 @@ define method symbol-table-define-file
 
   // It is an error if no <remote-library> is supplied for this file to be
   // associated with.
-
   if (~library)
     error(make(<file-no-library-error>,
                table: st, name: name))
@@ -61,7 +59,6 @@ define method symbol-table-define-file
 
   // If this <remote-library> is not yet known by the symbol table, create
   // an entry for it now.
-
   unless (member?(library, st.known-symbol-libraries))
     add!(st.known-symbol-libraries, library);
     st.symbols-by-library[library] := make(<remote-library-subtable>);
@@ -72,7 +69,6 @@ define method symbol-table-define-file
 
   // And create a fresh <string-table> to hold static symbol definitions
   // that are made for this file.
-  
   let subtable = st.symbols-by-library[library];
   subtable.statics-by-object-file[newfile] := make(<string-table>);
 

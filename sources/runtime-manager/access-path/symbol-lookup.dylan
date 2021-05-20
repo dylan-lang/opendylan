@@ -15,7 +15,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    <access-path> is open, and associate them with a <remote-library>.
 
 define class <remote-object-file> (<object>)
-
   constant slot remote-object-file-core-name :: <byte-string>,
     required-init-keyword: name:;
 
@@ -41,11 +40,9 @@ define class <remote-object-file> (<object>)
   // Clients of <access-path> are permitted to allocate new
   // <remote-object-file> instances. Therefore, an untyped slot is
   // provided for storage of client data.
-
   constant slot remote-object-file-client-data :: <object>,
     init-value: #f,
     init-keyword: client-data:;
-
 end class;
 
 
@@ -65,7 +62,6 @@ end method;
 ///// <REMOTE-SYMBOL>
 
 define class <remote-symbol> (<object>)
-
   constant slot remote-symbol-name :: <string>,
     required-init-keyword: name:;
 
@@ -93,7 +89,6 @@ define class <remote-symbol> (<object>)
 
   slot definitely-no-source-locations :: <boolean>,
     init-value: #f;
-
 end class;
 
 
@@ -117,11 +112,9 @@ define constant $symbol-language-Dylan = 9;
 //    stack frame is set up.
 
 define class <remote-function> (<remote-symbol>)
-
   // These are both 'absolute', not offsets from the function's
   // remote-symbol-address. The debugger nub does the calculation,
   // since this will be more efficient.
-
   constant slot remote-function-debug-start :: <remote-value>,
     required-init-keyword: debug-start:;
 
@@ -130,7 +123,6 @@ define class <remote-function> (<remote-symbol>)
 
   constant slot remote-function-end :: <remote-value>,
     required-init-keyword: absolute-end:;
-
 end class;
 
 
@@ -208,7 +200,6 @@ define method nearest-symbols
        => (symbol :: false-or (<remote-symbol>),
            previous :: false-or (<remote-symbol>),
            next :: false-or (<remote-symbol>))
-
   let (success, lib, table) 
     = nearest-symbols-from-nub (ap.connection, address);
   if (success)
@@ -235,7 +226,6 @@ define method find-symbol
     (ap :: <access-path>, name :: <string>,
      #key library = #f, type = #f)
         => (maybe-sym :: false-or (<remote-symbol>))
-
   if (library)
     find-symbol-in-library (ap.connection, library, name)
   else

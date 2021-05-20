@@ -17,21 +17,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    downloader need to unpick this object.
 
 define sealed abstract class <runtime-context> (<object>)
-
   constant slot runtime-context-debug-target :: <debug-target>,
     required-init-keyword: target:;
-
   constant slot runtime-context-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
   constant slot runtime-context-frame :: false-or(<application-stack-frame>),
     init-value: #f,
     init-keyword: stack-frame:;
-
   constant slot runtime-context-scoped-variables :: <sequence>,
     init-value: #[],
     init-keyword: scoped-variables:;
-
 end class;
 
 
@@ -54,13 +49,10 @@ end method;
 //    we create one of these objects as a place-holder.
 
 define class <history-place-holder> (<object>)
-
   constant slot history-place-holder-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
   constant slot history-place-holder-index :: <integer>,
     required-init-keyword: index:;
-
 end class;
 
 
@@ -99,12 +91,10 @@ define method current-runtime-context
     (application :: <debug-target>, thread :: <remote-thread>,
      #key stack-frame = #f)
        => (context :: <runtime-context>)
-
   let dm-thread = find-thread(application, thread);
 
   // If we've already computed the runtime context for the
   // global (stack-frame == #f) or frame-local case, then use it.
-
   let cached-context = 
     element(dm-thread.thread-runtime-context, stack-frame, default: #f);
 

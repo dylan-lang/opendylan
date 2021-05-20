@@ -84,7 +84,6 @@ end method;
 //    Performs all work associated with starting off a debugger transaction.
 //    This means ensuring that no thread is running within the MM, and
 //    telling the MM not to relocate objects.
-
 define method open-debugger-transaction (application :: <debug-target>)
     => ()
 //    ensure-mm-function-info-initialized(application);
@@ -118,12 +117,10 @@ end method;
 
 define method default-poll-for-stop-callback 
               (application :: <debug-target>) => ()
-
 end method;
 
 define method default-ready-to-continue-callback
               (application :: <debug-target>, sc :: <stop-reason>) => ()
-       
 end method;
 
 
@@ -133,20 +130,15 @@ define method manage-running-application
         poll-for-stop-callback = default-poll-for-stop-callback,
         ready-to-continue-callback = default-ready-to-continue-callback)
   => ()
-
   let access-path = application.debug-target-access-path;
 
   // MAYBE-CONTINUE
   // Continues the application unless a control API has signalled
   // otherwise. Might kill or restart the application.
-
   local method maybe-continue (stop-reason :: false-or(<stop-reason>))
-
     if (instance?(stop-reason, <internal-stop-reason>))
-
       take-thread-out-of-source-step-mode
          (application, stop-reason.stop-reason-thread);
-
     end if;
 
     suspend-interesting-thread(application, stop-reason);
@@ -168,7 +160,6 @@ define method manage-running-application
       application.application-restarted? := #f;
       restart(access-path);
     elseif (stop-reason)
-
     let threads = #();
     let remote-thread = application.application-selected-thread;
     if (remote-thread)
@@ -191,11 +182,9 @@ define method manage-running-application
     end if;
   end method;
 
-
   // DEFINITELY-CONTINUE
   // Disposes all cached state in the debug target, and continues
   // the application.
-
   local method definitely-continue (stop-reason :: false-or(<stop-reason>))
     if (stop-reason)
       clear-deregistered-debug-points(application);
@@ -225,10 +214,8 @@ define method manage-running-application
   start-it-all-off();
 
   while (application.up-and-running?)
-
     // Indicate that threads are beginning to run, so we can't assume any
     // one thread to be 'good' for running spy functions on.
-
     use-thread-for-spy-functions(application, #f);
 
     // Obtain the "primitive" stop reason from the access path,
@@ -246,7 +233,6 @@ define method manage-running-application
 
     // Interpret the stop-reason, perform housekeeping and debug-point
     // processing.
-
     let (dm-stop-reason, interesting-debug-points?, original-stop-reason)
       = if (stop-reason) 
           interpret-stop-reason(application, stop-reason);
@@ -286,7 +272,6 @@ define method manage-running-application
 
     // Perform a periodic poll of the stop
     // button. (The application may be running now).
-
     poll-for-stop-callback(application);
     if (application.application-stopped?)
       stop (application.debug-target-access-path);
@@ -294,7 +279,6 @@ define method manage-running-application
       use-thread-for-spy-functions(application, #f);
       maybe-continue(application.debugger-generated-stop-reason);
     end if;
-  
   end while;
 
   close-application(access-path);

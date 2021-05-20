@@ -15,7 +15,6 @@ define method user-object-slot-value
      slt :: <definition-id>,
      #key repeated-element = 0)
  => (val :: false-or(<environment-object>))
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, explosively inspect the user's object.
@@ -24,7 +23,6 @@ define method user-object-slot-value
   // find a match between the desired slot name, and the name of a slot
   // in the instance. If we find a match, we return and environment object
   // for the corresponding slot value.
-
   with-debugger-transaction (target)
     let proxy = obj.application-object-proxy;
     let class-proxy
@@ -61,7 +59,6 @@ define method user-object-slot-value
      slt :: <slot-object>,
      #key repeated-element = 0)
  => (val :: false-or(<environment-object>))
-
   let target = application.application-target-app;
 
   // Within a debugger transaction, explosively inspect the user's object.
@@ -70,7 +67,6 @@ define method user-object-slot-value
   // find a match between the desired slot name, and the name of a slot
   // in the instance. If we find a match, we return and environment object
   // for the corresponding slot value.
-
   with-debugger-transaction (target)
     let proxy = obj.application-object-proxy;
     let class-proxy

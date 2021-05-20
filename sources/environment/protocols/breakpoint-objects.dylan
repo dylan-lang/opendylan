@@ -433,7 +433,6 @@ end method destroy-breakpoint;
 define method destroy-breakpoint
     (breakpoint :: <method-breakpoint-object>)
  => ()
-
   let project = breakpoint.breakpoint-project;
 
   ///// BREAKPOINT-FOR-METHOD (Local convenience function)
@@ -441,7 +440,6 @@ define method destroy-breakpoint
   //    there is a breakpoint on the method, otherwise returns #f.
   //    The implementation is clearly trivial, but having this improves
   //    the clarity of some other code in this function.
-
   local method breakpoint-for-method
             (m :: <method-object>)
          => (maybe-bp :: false-or(<method-breakpoint-object>))
@@ -453,7 +451,6 @@ define method destroy-breakpoint
   ///// ZERO-BREAKPOINTED-METHODS? (Local convenience function).
   //    Given a <generic-function-object>, returns #f if one or more of
   //    its methods has an associated breakpoint, otherwise returns #t.
-
   local method zero-breakpointed-methods?
             (gf :: <generic-function-object>)
          => (well? :: <boolean>)
@@ -461,12 +458,10 @@ define method destroy-breakpoint
           ~any?(breakpoint-for-method, methods);
         end method zero-breakpointed-methods?;
 
-
   ///// MAYBE-GARBAGE-COLLECT-GF-BREAKPOINT (Local convenience function).
   //    Takes a <generic-function-object>. If a breakpoint exists for the
   //    generic function, but none of its methods have associated
   //    breakpoints, removes the breakpoint on the generic.
-
   local method maybe-garbage-collect-gf-breakpoint
             (gf :: <generic-function-object>)
          => ()

@@ -36,7 +36,6 @@ end method;
 ///// <REMOTE THREAD>
 
 define abstract class <remote-thread> (<object>)
-
        constant slot nub-descriptor :: <NUBTHREAD>,
             required-init-keyword: nub-descriptor:;
 
@@ -73,7 +72,6 @@ define abstract class <remote-thread> (<object>)
 
        slot source-stepping-control-applied? :: <boolean>,
             init-value: #f;
-
 end class;
 
 
@@ -98,7 +96,6 @@ end;
 ///// <REMOTE LIBRARY>
 
 define abstract class <remote-library> (<object>)
-
   constant slot nub-descriptor :: <NUBLIBRARY>,
     init-keyword: nub-descriptor:;
 

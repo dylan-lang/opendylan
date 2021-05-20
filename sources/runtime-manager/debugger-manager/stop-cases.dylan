@@ -14,14 +14,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///// <DEBUGGER-GENERATED-STOP-REASON>
 //    The application stopped due to some behaviour on behalf of the
 //    debugger.
-
 define open abstract class <debugger-generated-stop-reason>
                              (<external-stop-reason>)
-
   constant slot stop-reason-client-data :: <object>,
     init-value: #f,
     init-keyword: client-data:;
-
 end class;
 
 
@@ -42,25 +39,19 @@ end class;
 
 define abstract class <with-stack-protocol-stop-reason>
                            (<language-level-stop-reason>)
-
   constant slot stored-debug-target :: <debug-target>,
     required-init-keyword: target:;
-
   slot formatted-string-cache :: false-or(<string>),
     init-value: #f;
-
   constant slot control-string-instance :: <remote-value>,
     required-init-keyword: string-instance:;
-
   constant slot format-args-vector :: <vector>,
     required-init-keyword: format-args:;
-
 end class;
 
 
 ///// <DYLAN-DEBUG-MESSAGE-STOP-REASON>
 //    The debugger was notified because of a runtime call to debug-message.
-
 define class <dylan-debug-message-stop-reason>
                 (<with-stack-protocol-stop-reason>)
 end class;
@@ -78,13 +69,10 @@ end class;
 
 define class <class-breakpoint-stop-reason>
                            (<language-level-stop-reason>)
-
   constant slot class-breakpoint-class :: <remote-value>,
     required-init-keyword: class:;
-
   constant slot class-breakpoint-size :: <integer>,
     required-init-keyword: size:;
-
 end class;
 
 ///// <INTERACTIVE-THREAD-INITIALIZED-STOP-REASON>
@@ -93,10 +81,8 @@ end class;
 
 define class <interactive-thread-initialized-stop-reason>
                 (<language-level-stop-reason>)
-
   constant slot interactive-thread-name :: <byte-string>,
     required-init-keyword: name:;
-
 end class;
 
 
@@ -114,10 +100,8 @@ end class;
 
 define class <interactor-return-stop-reason>
                (<language-level-stop-reason>)
-
   constant slot interactor-transaction-id :: <object>,
     required-init-keyword: transaction-id:;
-
 end class;
 
 
@@ -149,7 +133,6 @@ end method;
 
 
 ///// DYLAN-DEBUG-MESSAGE-STRING
-
 define method dylan-debug-message-string
     (sr :: <dylan-debug-message-stop-reason>)
       => (str :: <string>)
@@ -168,7 +151,6 @@ end method;
 
 
 ///// DYLAN-ERROR-MESSAGE-STRING
-
 define method dylan-error-message-string
     (sr :: <dylan-invoke-debugger-stop-reason>)
       => (str :: <string>)
@@ -187,7 +169,6 @@ end method;
 
 
 ///// STOP-REASON-DEBUG-POINTS
-
 define method stop-reason-debug-points
     (application :: <debug-target>, sr :: <debug-point-stop-reason>)
       => (interested-debug-points :: <sequence>)

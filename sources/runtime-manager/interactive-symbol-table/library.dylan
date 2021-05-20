@@ -93,7 +93,6 @@ define module interactive-symbol-table
      // Registering regions of interactive memory.
 
      symbol-table-register-region-for-library;
-
 end module;
 
 define module ist-implementation

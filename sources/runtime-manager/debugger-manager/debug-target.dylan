@@ -12,20 +12,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Describes everything about a primitive in the runtime.
 
 define class <runtime-primitive> (<interpreted-runtime-entry-point>)
-
   slot last-matched-address :: false-or(<remote-value>),
     init-value: #f;
-
 end class;
 
 
 ///// <DEBUG-TARGET>
 
-
 define open abstract class <debug-target> (<object>)
-
   // Exported slots.
-
   slot debug-target-access-path :: <access-path>;
   slot debug-target-symbol-table :: <interactive-symbol-table>;
   slot debug-target-compilation-context,
@@ -36,7 +31,6 @@ define open abstract class <debug-target> (<object>)
 
   // The directory of non-relocatable objects, wrappers and
   // keywords.
-
   slot static-object-directory :: <static-object-directory>
     = make(<static-object-directory>);
 
@@ -48,7 +42,6 @@ define open abstract class <debug-target> (<object>)
   // the supplied <compilation-context>, but it is necessary for
   // clients to specify it directly if no compilation-context is
   // installed in the <debug-target>.
-
   constant slot top-level-component-name :: false-or(<string>),
     init-value: #f,
     init-keyword: top-level-component-name:;
@@ -56,10 +49,8 @@ define open abstract class <debug-target> (<object>)
   // Certain callbacks may request that the application be stopped
   // or killed. Such requests are stored in the following slots
   // until they can be processed.
-
   slot application-killed? :: <boolean>,
        init-value: #f;
-
   slot application-stopped? :: <boolean>,
        init-value: #f;
 
@@ -85,7 +76,6 @@ define open abstract class <debug-target> (<object>)
   // from the actual ID to the deferred ID is stored in this table at the
   // point where the debugger-manager actually starts to execute the
   // interactive code.
-
   constant slot interactor-deferred-id-table :: <table> = make(<table>);
 
   slot application-threads :: <table>
@@ -99,7 +89,6 @@ define open abstract class <debug-target> (<object>)
 
   // registered-debug-points is a table holding all known <debug-points>
   // that have been registered with this <debug-target>
-
   slot registered-debug-points :: <stretchy-vector>
        = make(<stretchy-vector>, size: 0);
 
@@ -107,7 +96,6 @@ define open abstract class <debug-target> (<object>)
        init-value: #f;
 
   // Tracking the loading and initialization of shared libraries.
-
   slot dylan-application? :: <boolean>, init-value: #f;
   slot application-dylan-library :: false-or(<remote-library>),
     init-value: #f;
@@ -141,32 +129,25 @@ define open abstract class <debug-target> (<object>)
   // A Debugger Manager client can create a special reserved thread for
   // running the Spy on behalf of regular application threads;
   // the client sets this slot if that's the case
-
   slot reserved-spy-thread? :: <boolean>,
     init-value: #f;
 
   // ***************** PRIMITIVES FROM THE RUNTIME ***************
-
   constant slot nlx-primitive :: <runtime-primitive>
     = make(<runtime-primitive>, 
 	   runtime-name: "primitive_nlx");
-
   constant slot debug-message-primitive :: <runtime-primitive>
     = make(<runtime-primitive>, 
 	   runtime-name: "primitive_debug_message");
-
   constant slot invoke-debugger-primitive :: <runtime-primitive>
     = make(<runtime-primitive>, 
 	   runtime-name: "primitive_invoke_debugger");
-
   constant slot exit-application-primitive :: <runtime-primitive>
     = make(<runtime-primitive>, 
 	   runtime-name: "_spy_exit_application");
-
   constant slot class-breakpoint-primitive :: <runtime-primitive>
     = make(<runtime-primitive>, 
 	   runtime-name: "_class_allocation_break");
-
   constant slot wrapper-wrapper-primitive :: <runtime-primitive>
     = make(<runtime-primitive>,
 	   runtime-name: 
@@ -182,7 +163,6 @@ define open abstract class <debug-target> (<object>)
   // interactive form is invoked. When a form returns, the level
   // is restored. Note that, due to the potential of non-local exits,
   // "restored" does not necessarily mean "decremented".
-
   slot current-interactor-level :: <integer>,
     init-value: 0;
 
@@ -191,13 +171,11 @@ define open abstract class <debug-target> (<object>)
   // which downloads the keyword's name into the runtime before
   // effectively calling as(<symbol>, x) on it. The tether-downloader
   // is called upon to create this block the first time it is needed.
-
   slot temporary-download-block :: false-or(<static-block>),
     init-value: #f;
 
   // We also need some space to download the names and "break"
   // messages of interactively-created threads.
-
   slot interactive-thread-download-block :: false-or(<static-block>),
     init-value: #f;
 
@@ -205,14 +183,12 @@ define open abstract class <debug-target> (<object>)
   // enables read-dylan-value to know when it is being called for the
   // first time in a transaction so it can flush
   // pages-safe-to-read-cache.
-
   slot new-debugger-transaction? :: <boolean>,
     init-value: #f;
 
   // This is a cache of the pages which have been read from during
   // the current debugger transaction. It is guaranteed that these
   // pages can be read safely using the access-path.
-
   slot pages-safe-to-read-cache :: <set> = make(<set>);
 /*
   // This slot holds info about the MM entry functions so that we
@@ -240,9 +216,7 @@ end method;
 define method initialize
     (t :: <debug-target>,
      #rest keys, #key application-object, #all-keys)
-
   // Obligatory call to next-method...
-
   next-method();
 
   let application-object =
@@ -252,7 +226,6 @@ define method initialize
 
   // Construct the appropriate access path for this debuggee, passing
   // down whatever keywords were supplied.
-
   t.debug-target-access-path :=
     apply (make, <access-path>,
 	   application-object: application-object,
@@ -261,22 +234,18 @@ define method initialize
   // It must always be possible to map in either direction between
   // the <debug-target> and the <access-path>. Hence, set up a
   // circularity with this statement...
-
   t.debug-target-access-path.access-path-abstract-handle := t;
 
   // The debug target must also have an interactive symbol table linked
   // to the same <access-path>.
-
   t.debug-target-symbol-table := make(<interactive-symbol-table>,
                                       access-path: t.debug-target-access-path);
-
 end method;
 
 
 ///// ADDRESS-CORRESPONDS-TO-PRIMITIVE? (Internal function)
 //    Decides whether a given instruction pointer is within the definition
 //    of a runtime primitive.
-
 define method address-corresponds-to-primitive?
     (application :: <debug-target>, address :: <remote-value>,
      primitive :: <runtime-primitive>) => (answer :: <boolean>)
@@ -303,7 +272,6 @@ end method;
 //    Called once the application has loaded up the DLL (remote library)
 //    that contains the lowlevel runtime system, this function tries to
 //    find addresses for all required runtime primitives.
-
 define method locate-runtime-primitives (application :: <debug-target>) => ()
   let path = application.debug-target-access-path;
   let lib = application.application-dylan-runtime-library;
@@ -327,7 +295,6 @@ define method locate-runtime-primitives (application :: <debug-target>) => ()
   register-exit-process-function
     (path,
      application.exit-application-primitive.runtime-symbol);
-
 end method;
 
 
@@ -335,10 +302,8 @@ end method;
 //    Called once the application has unloaded the DLL (remote library)
 //    that contains the lowlevel runtime system, this function de-caches
 //    the information about runtime primitives.
-
 define method invalidate-runtime-primitives 
      (application :: <debug-target>) => ()
-
   let path = application.debug-target-access-path;
   let lib = application.application-dylan-runtime-library;
 
@@ -354,7 +319,6 @@ define method invalidate-runtime-primitives
   invalidate-this-one(application.class-breakpoint-primitive);
   invalidate-this-one(application.exit-application-primitive);
   invalidate-this-one(application.wrapper-wrapper-primitive);
-
 end method;
 
 
@@ -369,7 +333,6 @@ define macro spy-function-definer
     { } => { }
     { ?thingy:* ; ...} => { ?thingy , ...}
 end macro;
-
 
 define inline method application-just-interacted-on-running-thread?
     (application :: <debug-target>)

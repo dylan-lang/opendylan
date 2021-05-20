@@ -31,7 +31,6 @@ end method;
 define method wait-for-stop-reason-no-timeout 
     (conn :: <local-access-connection>,
      #key profile-at = #f) => (code :: <integer>)
-
   let code :: <integer> =
     if (profile-at)
       nub-profile-wait-for-stop-reason-no-timeout (conn.connection-process, profile-at);
@@ -46,7 +45,7 @@ end method;
 ///// GET-DEBUG-EVENT-PROCESS-EXIT-CODE
 //    Given that the last received stop reason was an
 //    <exit-process-stop-reason>, this returns the exit code.
-       
+
 define method get-debug-event-process-exit-code
     (conn :: <local-access-connection>) => (code :: <integer>)
   let raw-code =

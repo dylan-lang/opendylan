@@ -16,20 +16,17 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method initialize-user-object-class-mappings
     (application :: <dfmc-application>) => ()
-
   let target = application.application-target-app;
   application.runtime-class-user-class-mappings := make(<stretchy-vector>);
 
   // The environment-protocols library holds the ordered sequence of
   // class mappings, and exports the USER-OBJECT-CLASS-MAPPINGS
   // accessor to the servers. Get the mappings now.
-
   let mappings = user-object-class-mappings();
 
   // The runtime class for each method is described by a namespace-qualified
   // binding name. It is now our responsibility to find a runtime
   // <remote-value> to correspond to this name.
-
   for (mapping in mappings)
     let id = mapping.user-class-info-id;
     let (name, modname, libname) =
@@ -47,7 +44,6 @@ define method initialize-user-object-class-mappings
 
   // And set the flag so we never do that more than once!
   application.runtime-class-user-class-mappings-initialized? := #t;
-
 end method;
 
 
@@ -169,7 +165,6 @@ define method make-environment-object-for-runtime-value
     // can deliver an environment object, then the app-server will use
     // it, and install its proxy. Otherwise, the app-server will actually
     // allocate the environment object, proxy and all.
-
     let environment-object
       = select (classification)
           #"dylan-method" =>

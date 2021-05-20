@@ -17,24 +17,20 @@ define method symbol-table-register-region-for-library
     lower-bound :: <remote-value>, upper-bound :: <remote-value>,
     classification :: <symbol>)
   => ()
-
   // If no symbols (or address regions) have been entered into this
   // table for the given <remote-library>, then initialize the entry
   // first.
-
   unless (member?(library, st.known-symbol-libraries))
     add!(st.known-symbol-libraries, library);
     st.symbols-by-library[library] := make(<remote-library-subtable>);
   end unless;
 
   // Add these delimiting addresses to the known boundaries.
-
   let subtable = st.symbols-by-library[library];
   add!(subtable.subtable-address-boundaries,
        make(<subtable-address-boundary>, 
             from: lower-bound, to: upper-bound, 
             classification: classification));
-
 end method;
 
 /*
@@ -74,7 +70,6 @@ define method symbol-table-symbol-relative-address
      #key library = #f)
        => (sym :: false-or(<remote-symbol>),
            offset :: <integer>)
-
   if (st.performing-multiple-definitions?)
     error("Attempted to search for a symbol in a potentially unordered table")
   end if;
@@ -89,7 +84,6 @@ define method symbol-table-symbol-relative-address
      end if;
 
   // Here, things get pretty unpleasant...
-
   if (subtable)
     let sym = #f;
     let offset = 0;
@@ -207,7 +201,6 @@ define method symbol-table-nearest-symbols
       => (closest :: false-or(<remote-symbol>),
           preceding :: false-or(<remote-symbol>),
           following :: false-or(<remote-symbol>))
-
   if (st.performing-multiple-definitions?)
     error("Attempted to search for a symbol in a potentially unordered table")
   end if;

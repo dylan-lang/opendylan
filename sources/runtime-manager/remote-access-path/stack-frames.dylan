@@ -25,19 +25,16 @@ end method;
 define method update-thread-stack-trace-on-connection
     (connection :: <remote-access-connection>, thread :: <remote-thread>) 
       => ()
-
   // We gain knowledge of the stack in two stages. The first stage is for
   // the debugger nub to do its initializations. A useful side-effect of that
   // stage is that we get to know how big the stack trace is.
   // Do that stage now, if we haven't already.
-
   unless (thread.stack-size-valid?)
     update-thread-stack-size-on-connection(connection, thread)
   end unless;
 
   // Now we know that the debugger nub is harbouring an up-to-date stack
   // trace, and also that we know the size of that trace.
-
   let stack-frame-vector = make(<vector>, size: thread.stack-size);
 
   // Call the debugger nub to actually fill in the required data for each
@@ -51,7 +48,6 @@ define method update-thread-stack-trace-on-connection
   let last-frame = thread.stack-size - 1;
 
   // Construct the higher-level <function-frame> objects themselves.
-
   for (i from 0 to last-frame)
     stack-frame-vector[i] :=
       make(<function-frame>, index: i, thread: thread,
@@ -62,7 +58,6 @@ define method update-thread-stack-trace-on-connection
 
   // Now see that the frames are correctly chained together. The frames are
   // chained in a two-way linked list.
-
   stack-frame-vector[0].link-next := #f;
   stack-frame-vector[last-frame].link-previous := #f;
   unless (last-frame == 0)
@@ -78,7 +73,6 @@ define method update-thread-stack-trace-on-connection
   // Put a reference to the head of the chain into the <remote-thread>
   // itself. This serves as a cache that will remain valid until the
   // thread is allowed to continue and run some more code.
-
   thread.thread-stack := stack-frame-vector[0];
   thread.stack-trace-valid? := #t;
 end method;
@@ -88,7 +82,6 @@ end method;
 
 define method read-frame-lexicals 
   (conn :: <remote-access-connection>, frame :: <function-frame>) => ()
-
   unless (frame.partial-lexicals-read?)
     partial-read-frame-lexicals(conn, frame);
   end unless;
@@ -101,7 +94,6 @@ define method read-frame-lexicals
   for (i :: <integer> from 0 below frame.lexicals-count)
      // Find out all information about this lexical variable
      // from the debugger nub.
-
      let variable-type = #f; // Until we figure <remote-type> out!
 
      let variable-location = #f;
@@ -135,7 +127,6 @@ define method read-frame-lexicals
                                 name: variable-name,
                                 address: variable-location,
                                 argument?: (is-argument == 1));
-           
   end for;
 
   frame.full-lexicals-read? := #t;

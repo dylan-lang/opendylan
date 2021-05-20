@@ -105,7 +105,6 @@ define method variable-value (application :: <dfmc-application>,
                               variable :: <global-variable-object>,
                               #key thread = #f)
     => (value :: false-or(<application-object>));
-
   let target = application.application-target-app;
   let value = #f;
 
@@ -132,14 +131,12 @@ define method variable-value (application :: <dfmc-application>,
                               variable :: <constant-object>,
                               #key thread = #f)
     => (value :: false-or(<application-object>));
-
   let target = application.application-target-app;
   let value = #f;
 
   // At the moment, constants are proxied in the same way as
   // thread-global variables, so this method is identical. This
   // may need to change one day.
-
   perform-debugger-transaction
     (target,
      method () => ()
@@ -163,7 +160,6 @@ define method variable-value (application :: <dfmc-application>,
                               variable :: <thread-variable-object>,
                               #key thread = #f)
     => (value :: false-or(<application-object>));
-
   let target = application.application-target-app;
   let value = #f;
 

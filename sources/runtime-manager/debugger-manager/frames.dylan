@@ -11,15 +11,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    The superclass of any stack frame on any thread in the runtime.
 
 define abstract class <application-stack-frame> (<object>)
-
   // The generic frame pointer is used to compare two stack frames of
   // any type, in order to determine which is the more recent.
-
   constant slot frame-generic-frame-pointer :: <remote-value>,
     required-init-keyword: generic-fp:;
 
   // The thread, of whose stack trace this frame is a part.
-
   constant slot frame-associated-thread :: <remote-thread>,
     required-init-keyword: thread:;
 
@@ -27,7 +24,6 @@ define abstract class <application-stack-frame> (<object>)
   // age, regardless of type. This describes a chain where call frames
   // and unwind-protect frames (for example) can be intermixed.
   // These links are generated lazily.
-
   slot frame-generic-link-newer :: false-or(<application-stack-frame>),
     init-value: #f,
     init-keyword: newer:;
@@ -35,7 +31,6 @@ define abstract class <application-stack-frame> (<object>)
   slot frame-generic-link-older :: false-or(<application-stack-frame>),
     init-value: #f,
     init-keyword: older:;
-
 end class;
 
 
@@ -60,10 +55,8 @@ end class;
 //    more primitive descriptor obtained via the access path.
 
 define abstract class <access-path-stack-frame> (<application-stack-frame>)
-
   slot ap-frame-description :: <function-frame>,
     required-init-keyword: ap-frame:;
-
 end class;
 
 
@@ -71,7 +64,6 @@ end class;
 //    The class of stack frames that correspond to function calls.
 
 define class <call-frame> (<access-path-stack-frame>)
-
   slot attempted-to-locate-called-function? :: <boolean>,
     init-value: #f;
 
@@ -99,7 +91,6 @@ define class <call-frame> (<access-path-stack-frame>)
 
   constant slot call-frame-return-address-cache :: <remote-value>,
     required-init-keyword: ret:;
-
 end class;
 
 
@@ -141,19 +132,15 @@ define method merge-new-call-frame-vector
     (application :: <debug-target>, thread :: <remote-thread>,
      existing-vector :: <vector>, new-access-path-vector :: <vector>)
       => (new-call-frame-vector :: <vector>)
-
   let path = application.debug-target-access-path;
   let table = application.debug-target-symbol-table;
 
   // MAKE-OR-RECYCLE-CALL-FRAME
-  
   local method make-or-recycle-call-frame
           (call-frame :: <call-frame>, ap-frame :: <function-frame>)
              => (frame-to-use :: <call-frame>, fresh? :: <boolean>)
-
     // We consider two stack frames to be equivalent if both their
     // frame pointers and their instruction pointers are identical.
-
     let dm-fp = call-frame-frame-pointer(application, call-frame);
     let dm-ip = call-frame-instruction-pointer(application, call-frame);
     let ap-fp = frame-pointer(path, ap-frame);
@@ -185,7 +172,6 @@ define method merge-new-call-frame-vector
     = make(<vector>, size: size(new-access-path-vector));
 
   // Vectors are ordered newest to oldest!
-
   let oldest-ap-frame = size(new-access-path-vector) - 1;
   let oldest-dm-frame = size(existing-vector) - 1;
   let ap-frame-i = oldest-ap-frame;
@@ -304,19 +290,15 @@ define method sort-thread-stack-trace
     let sorted-frames = #f;
 
     if (dm-thread.dynamic-environment-vector = #[])
-
       // In the simple case where there are no unwind protect frames,
       // the sorted set of frames is identical to the sorted sequence of
       // call frames.
       // Note: There must be at least one call frame in a stack trace.
 
       sorted-frames := dm-thread.call-frame-vector;
-
     else
-
       // The final vector of frames must be as large as the combined
       // size of the call frame and unwind frame vectors.
-
       sorted-frames := 
         make(<vector>, 
              size: size(dm-thread.dynamic-environment-vector) +
@@ -357,7 +339,6 @@ define method sort-thread-stack-trace
     // but the generic links are still not yet in place.
     // However, it's now very easy to go through the vector and insert those
     // links.
-
     let sorted-last = size(sorted-frames) - 1;
     sorted-frames[0].frame-generic-link-newer := #f;
     unless (sorted-last == 0)

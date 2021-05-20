@@ -20,13 +20,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Used as the proxy for a <function-breakpoint-object>.
 
 define class <function-entry-tracepoint> (<entry-tracepoint>)
-
   slot function-entry-registered? :: <boolean> = #f;
 
   constant
     slot function-entry-breakpoint-object :: <function-breakpoint-object>,
       required-init-keyword: breakpoint-object:;
-
 end class <function-entry-tracepoint>;
 
 
@@ -42,13 +40,11 @@ end class <function-return-tracepoint>;
 //    A subclass of <BREAKPOINT>, imported from the debugger-manager.
 
 define class <location-breakpoint> (<breakpoint>)
-
   slot location-break-registered? :: <boolean> = #f;
 
   constant
     slot location-breakpoint-object :: <source-location-breakpoint-object>,
       required-init-keyword: breakpoint-object:;
-
 end class <location-breakpoint>;
 
 

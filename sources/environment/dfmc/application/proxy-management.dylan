@@ -45,13 +45,10 @@ define constant <runtime-proxy>
 //    co-ordinate of a breakpoint.
 
 define class <runtime-entry-point-proxy> (<object>)
-
   slot proxy-entry-point-symbol :: <remote-symbol>,
     required-init-keyword: entry-point-symbol:;
-
   slot proxy-entry-point-offset :: <integer>,
     required-init-keyword: entry-point-offset:;
-
 end class;
 */
 
@@ -81,10 +78,8 @@ end class;
 //    have no way to track foreign objects.
 
 define class <foreign-runtime-proxy> (<runtime-value-proxy>)
-
   constant slot static-foreign-value :: <remote-value>,
     required-init-keyword: value:;
-
 end class;
 
 
@@ -92,10 +87,8 @@ end class;
 //    A proxy for a foreign function runtime object.
 
 define class <foreign-function-runtime-proxy> (<runtime-value-proxy>)
-
   constant slot static-foreign-symbol :: <remote-symbol>,
     required-init-keyword: symbol:;
-
 end class;
 
 /*---*** andrewa: will be useful, how do we turn it into a source location?
@@ -118,10 +111,8 @@ end method;
 //    not subject to any relocation by the memory manager.
 
 define class <static-dylan-runtime-proxy> (<dylan-runtime-proxy>)
-
   constant slot static-dylan-value :: <remote-value>,
     required-init-keyword: value:;
-
 end class;
 
 
@@ -152,10 +143,8 @@ end class;
 //    to be tracked.
 
 define abstract class <tracked-dylan-runtime-proxy> (<dylan-runtime-proxy>)
-
   constant slot tracked-dylan-value :: <remote-object>,
     required-init-keyword: value:;
-
 end class;
 
 /* --- Currently not used.
@@ -500,7 +489,6 @@ define method application-name-to-runtime-proxy
               // If this object has a precise symbolic name, it cannot be
               // subject to any relocations by the MM, and hence we need
               // only generate a static proxy.
-
               remote-value-to-runtime-proxy(application, value);
 
             // If an indirection was performed, then the binding name
@@ -508,7 +496,6 @@ define method application-name-to-runtime-proxy
             // created: the DM will need to decide whether the variable
             // is thread local, based upon the contents of the value
             // cell.
-
             elseif (thread-local-variable?(target, address))
               make(<application-thread-local-variable>,
                    name: binding-name, namespace: context, address: address);

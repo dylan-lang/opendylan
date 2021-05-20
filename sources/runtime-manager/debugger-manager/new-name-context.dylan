@@ -30,20 +30,16 @@ define constant $demangler = make(<demangler>);
 //    As currently described in the DM document.
 
 define class <dylan-name-context> (<object>)
-
   slot context-library :: <byte-string> = "dylan",
     init-keyword: library:;
-
   slot context-module :: <byte-string> = "dylan",
     init-keyword: module:;
-
 end class;
 
 
 ///// $DYLAN-INTERNAL
 //    A frequently-used name context - the "dylan" library and "internal"
 //    module.
-
 define constant $dylan-internal
   = make(<dylan-name-context>, module: "internal");
 
@@ -221,7 +217,6 @@ end method;
 ///// MANGLED-NAME-TO-REMOTE-LIBRARY
 //    Given a dylan mangled name, find a <remote-library> object that
 //    should be defining it. 
-
 define method mangled-name-to-remote-library
     (application :: <debug-target>, name :: <byte-string>)
          => (search-library :: <remote-library>)

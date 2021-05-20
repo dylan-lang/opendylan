@@ -15,10 +15,8 @@ define constant $access-ok = 0;
 ///// <REMOTE-REGISTER>
 
 define sealed abstract class <remote-register> (<object>)
-
   // The register is a handle on a descriptor for that register,
   // held within the nub.
-
   constant slot nub-descriptor :: <integer>,
     required-init-keyword: descriptor:;
 
@@ -30,7 +28,6 @@ define sealed abstract class <remote-register> (<object>)
 
   constant slot register-category :: <symbol>,
     required-init-keyword: category:;
-
 end class;
 
 
@@ -43,10 +40,8 @@ end class;
 ///// <ACTIVE-REMOTE-REGISTER>
 
 define class <active-remote-register> (<remote-register>)
-
   constant slot register-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
 end class;
 
 
@@ -169,15 +164,12 @@ define generic write-byte-string
 define method do-registers 
     (f :: <function>, ap :: <access-path>,
      #key type = #f) => ()
-
   // Acquire the vector of register descriptors if we need it.
-
   if (ap.register-set = #[])
     read-access-path-register-set (ap)
   end if;
 
   // Now iterate over all registers with the function.
-
   for (r in ap.register-set)
     if (r)
       if (type)
@@ -199,7 +191,6 @@ end method;
 define method find-register
     (ap :: <access-path>, nub-register :: <integer>)
        => (descriptor :: <unassigned-remote-register>)
-
   let found = #f;
   let i = 0;
 
@@ -225,7 +216,6 @@ define method find-register
   found;
 end method;
 
-    
 define method read-access-path-register-set 
     (ap :: <access-path>) => (registers :: <vector>)
   ap.register-set := register-vector-on-connection (ap.connection);
@@ -287,7 +277,6 @@ end method;
 
 define method build-register-tables (ap :: <access-path>) => ()
   unless (ap.register-tables-built?)
-
     // If we haven't read the register model yet, do so now.
     if (ap.register-set = #[])
       read-access-path-register-set(ap)

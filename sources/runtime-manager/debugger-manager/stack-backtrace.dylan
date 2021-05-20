@@ -289,4 +289,3 @@ define method call-frame-nearest-source-locator
     end if
   end if
 end method;
-

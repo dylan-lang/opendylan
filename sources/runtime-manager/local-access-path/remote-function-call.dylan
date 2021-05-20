@@ -15,10 +15,8 @@ define method remote-call-on-connection
      thread-was-suspended? :: <boolean>,
      #rest arguments)
        => (ra :: <remote-value>, cookie :: <object>)
-
   // The arguments need to be converted from the #rest sequence
   // into a primitive vector of <remote-value> objects.
-
   let arg-count :: <integer>
     = size(arguments);
   let arg-vector
@@ -31,14 +29,12 @@ define method remote-call-on-connection
   // We have everything we need to make the call. The return
   // value is a thread context cookie. The nub function is called
   // as a side-effect.
-
   let (ret-addr, context-cookie)
     = nub-setup-function-call(conn.connection-process, thr.nub-descriptor,
                               function, arg-count, arg-vector);
 
   // Since the debugger nub will now have copied the arguments onto the
   // runtime stack, we can destroy the allocated vector.
-
   destroy(arg-vector);
 
   values (ret-addr,
@@ -74,14 +70,11 @@ define method remote-call-spy-on-connection
     (ap :: <access-path>, conn :: <local-access-connection>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (result :: <remote-value>, errcode :: <integer>)
-
   let arg-vector :: <REMOTE-ARG-ARRAY> = conn.spy-function-argument-vector;
 
   // Construct the vector of arguments
-
   let arg-count :: <integer>
     = size(arguments);
-
   if (arg-count > $max-spy-function-arguments)
     error("Serious internal debugger error: Exceeded maximum arg count "
           "in a spy call.")
@@ -92,7 +85,6 @@ define method remote-call-spy-on-connection
   end for;
 
   // And make the call, returning the results from the nub.
-
   nub-remote-call-spy(conn.connection-process, thr.nub-descriptor,
                       function, arg-count, arg-vector);
 end method;

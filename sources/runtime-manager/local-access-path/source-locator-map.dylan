@@ -12,7 +12,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method construct-source-location-map
     (conn :: <local-access-connection>, sym :: <remote-symbol>) => ()
-
   if (instance?(sym, <remote-function>))
     // Okay, so we could have specialized on <remote-function> here,
     // and saved the nasty use of instance?. However, there's a
@@ -21,7 +20,6 @@ define method construct-source-location-map
 
     // We have a function, so build the map of source locations
     // if possible.
-
     let sl-table 
       = nub-fetch-source-locations(conn.connection-process, sym.remote-symbol-address,
                                    sym.remote-function-end);

@@ -12,14 +12,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method slot-class
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (class :: <class-object>)
-
   let target = application.application-target-app;
   let slot-proxy = slot.application-object-proxy;
   let class-object = #f;
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <class-object> for the slot's owner class.
-
   perform-debugger-transaction
      (target,
       method ()
@@ -27,7 +25,6 @@ define method slot-class
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
-
         let (basic-name, basic-type, owner-class, getter, setter,
              init-key, init-req?, init-val, specializer)
                = remote-slot-inspect(target, slot-descriptor);
@@ -51,14 +48,12 @@ end method;
 define method slot-getter
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (getter :: false-or(<function-object>))
-
   let target = application.application-target-app;
   let slot-proxy = slot.application-object-proxy;
   let function-object = #f;
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <function-object> for the getter function, if it exists.
-
   perform-debugger-transaction
      (target,
       method ()
@@ -66,7 +61,6 @@ define method slot-getter
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
-
         let (basic-name, basic-type, owner-class, getter, setter,
              init-key, init-req?, init-val, specializer)
                = remote-slot-inspect(target, slot-descriptor);
@@ -74,7 +68,6 @@ define method slot-getter
         // We are interested in the getter function, but it might be #f.
         // If it is a <remote-value>, then build the correct environment
         // object.
-
         if (getter)
           function-object
             := make-environment-object-for-runtime-value
@@ -94,14 +87,12 @@ end method;
 define method slot-setter
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (setter :: false-or(<function-object>))
-
   let target = application.application-target-app;
   let slot-proxy = slot.application-object-proxy;
   let function-object = #f;
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <function-object> for the setter function, if it exists.
-
   perform-debugger-transaction
      (target,
       method ()
@@ -109,7 +100,6 @@ define method slot-setter
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
-
         let (basic-name, basic-type, owner-class, getter, setter,
              init-key, init-req?, init-val, specializer)
                = remote-slot-inspect(target, slot-descriptor);
@@ -117,7 +107,6 @@ define method slot-setter
         // We are interested in the setter function, but it might be #f.
         // If it is a <remote-value>, then build the correct environment
         // object.
-
         if (setter)
           function-object
             := make-environment-object-for-runtime-value
@@ -137,14 +126,12 @@ end method;
 define method slot-type
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (type :: <type-object>)
-
   let target = application.application-target-app;
   let slot-proxy = slot.application-object-proxy;
   let type = #f;
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <symbol-object> for the init-keyword, if it exists.
-
   perform-debugger-transaction
      (target,
       method ()

@@ -35,7 +35,6 @@ define method remote-call
     (ap :: <access-path>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (ret-addr :: <remote-value>, cookie :: <object>)
-
   debugger-message("remote-call %= %=", thr, function);
 
   let thread-was-suspended? = thr.thread-suspended?;
@@ -103,7 +102,6 @@ define method remote-call-spy
     (ap :: <access-path>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (result :: <remote-value>, aborted? :: <boolean>)
-
   debugger-message("remote-call-spy %= %= %=", thr, function, arguments);
 
   // If the selected thread is suspended, release it for the duration
@@ -111,7 +109,6 @@ define method remote-call-spy
 
   // Relax permanent suspension temporarily so that these threads can
   // continue to be used for spy calls while interacting on other threads
-
   let thread-was-permanently-suspended? = thread-permanently-suspended?(ap, thr);
   if (thread-was-permanently-suspended?)
     debugger-message("Releasing permanent suspension on %= for spy call %=", thr, function);
@@ -124,19 +121,14 @@ define method remote-call-spy
   end if;
 
   block ()
-
   // Do the call.
-
   let (result, errcode)
     = apply(remote-call-spy-on-connection, ap, ap.connection, thr,
             function, arguments);
 
   values(result, errcode == 1);
-
   cleanup
-
   // And re-suspend the thread if necessary.
-
   if (thread-was-suspended?)
     suspend-thread(ap, thr);
   end if;
@@ -145,9 +137,7 @@ define method remote-call-spy
     debugger-message("Restoring permanent suspension on %= for spy call %=", thr, function);
     thread-permanently-suspended?(ap, thr) := #t;
   end if;
-
   end block;
-
 end method;
 
 

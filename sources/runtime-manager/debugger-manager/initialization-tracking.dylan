@@ -51,7 +51,6 @@ end method;
 //    initialization of libraries.
 
 define abstract class <library-initialization-tracker> (<object>)
-
   constant slot tracker-debug-target :: <debug-target>,
     required-init-keyword: debug-target:;
 
@@ -62,26 +61,21 @@ define abstract class <library-initialization-tracker> (<object>)
 
   constant slot tracker-top-level? :: <boolean>,
     required-init-keyword: top-level?:;
-
 end class;
 
 define class <foreign-library-initialization-tracker> 
     (<library-initialization-tracker>)
-
   inherited slot tracker-initialization-state,
     init-value: #"foreign";
-
 end class;
 
 define class <dylan-library-initialization-tracker> 
     (<library-initialization-tracker>)
-
   inherited slot tracker-initialization-state,
     init-value: #"uninitialized";
 
   constant slot tracker-initialization-symbol :: <remote-symbol>,
     required-init-keyword: initializer-function:;
-
 end class;
 
 
@@ -109,12 +103,10 @@ end method;
 //    signalled, the library is known to be statically initialized.
 
 define class <starting-dynamic-initialization> (<entry-tracepoint>)
-
   constant 
     slot 
       entry-initialization-tracker :: <dylan-library-initialization-tracker>,
       required-init-keyword: tracker:;
-
 end class;
 
 
@@ -123,12 +115,10 @@ end class;
 //    has finished its dynamic initialization.
 
 define class <done-dynamic-initialization> (<return-tracepoint>)
-
   constant
     slot 
       exit-initialization-tracker :: <dylan-library-initialization-tracker>,
       required-init-keyword: tracker:;
-
 end class;
 
 
@@ -206,7 +196,6 @@ define constant $runtime-module-variable-name = "*dylan-runtime-modules*";
 
 define method construct-component-name-table
     (application :: <debug-target>) => ()
-
   let path = application.debug-target-access-path;
   let cache = pair(as-remote-value(0), #f);
 
@@ -242,13 +231,11 @@ define method construct-component-name-table
           end if;
         end method;
 
-
   ///// GET-LIBRARY-FROM-COMPONENT-NAME
   //    A local utility to scan over the known <REMOTE-LIBRARY>
   //    images, and return one whose core name matches the one
   //    given. If none is found, the top-level executable is
   //    returned instead.
-
   local method get-library-from-component-name (cname :: <string>)
                 => (lib :: <remote-library>)
           block(return)
@@ -275,7 +262,6 @@ define method construct-component-name-table
   // Ensure that we managed to resolve this name, and that the value
   // we have obtained is indeed a Dylan table object. If not,
   // we can't construct the mapping.
-
   if (object-table & 
       (classify-dylan-object(application, object-table) == $table-type))
 

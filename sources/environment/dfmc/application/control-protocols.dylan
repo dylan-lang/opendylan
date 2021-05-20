@@ -49,12 +49,10 @@ define method run-application
   // the console debugger.
 
   local
-
     ///// WRAPPED-SR-CALLBACK
     //    This callback is a valid stop reason callback for the DM, and is
     //    used as an adapter. It delegates to the registered stop-reason
     //    callback.
-
     method wrapped-sr-callback
         (target :: <target-application>, sr :: <stop-reason>)
      => (interested? :: <boolean>)
@@ -81,7 +79,6 @@ define method run-application
 
     ///// WRAPPED-DT-PROLOG
     //    Another adapter.
-
     method wrapped-DT-prolog
         (target :: <target-application>, sr :: <stop-reason>) => ()
       reset-breakpoint-failure-recording(application);
@@ -92,7 +89,6 @@ define method run-application
 
     ///// WRAPPED-DT-EPILOG
     //    Another adapter.
-
     method wrapped-DT-epilog
         (target :: <target-application>, sr :: <stop-reason>) => ()
       note-all-recorded-breakpoint-failures(application);
@@ -106,7 +102,6 @@ define method run-application
 
     ///// WRAPPED-INTERACTOR-HANDLER
     //    Aaaand another one...
-
     method wrapped-interactor-handler
         (target :: <target-application>, thread :: <remote-thread>,
          trans-id :: <object>, #rest rvals)
@@ -138,7 +133,6 @@ define method run-application
 
     ///// WRAPPED-LIBRARY-INIT-HANDLER
     //    This is absolutely the _last_ one of 'em...
-
     method wrapped-library-init-handler
         (target :: <target-application>, thread :: <remote-thread>,
          lib :: <remote-library>, phase :: <library-initialization-phase>,
@@ -171,7 +165,6 @@ define method run-application
 
     ///// WRAPPED-APPLICATION-STATE-SETTER
     //    ...apart from this one.
-
     method wrapped-application-state-setter
         (target :: <target-application>, new-state :: <symbol>) => ()
       if (new-state == #"closed")
@@ -215,7 +208,6 @@ define method run-application
       end;
 
   // Get the arguments to send to the target program in the same way.
-
   let args :: <string>
     = if (arguments)
         let app-obj-args = application.application-arguments;
@@ -231,7 +223,6 @@ define method run-application
       end;
 
   // Set the debugger flag if we want to debug this application.
-
   application.application-tether-status := startup-option;
   application.pause-before-termination-flag := pause-before-termination?;
 
@@ -261,7 +252,6 @@ define method run-application
         function:
           method ()
             block (exit)
-
               let target-app
                 = if (process)
                     make(<target-application>,
@@ -449,7 +439,6 @@ define method step-application-out
     (application :: <dfmc-application>, thread :: <thread-object>,
      #key stack-frame = #f)
  => ()
-
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
   let call-frame =
@@ -462,7 +451,6 @@ define method step-application-out
 
   // Ensuring that a debugger transaction is in effect, tell the DM
   // to instruct the thread to perform the step-out operation.
-
   perform-continuing-debugger-transaction
      (application, remote-thread,
       method ()
@@ -473,7 +461,6 @@ define method step-application-out
           instruct-thread-to-step-out(target, remote-thread);
         end if;
       end method);
-
 end method;
 
 
@@ -485,7 +472,6 @@ define method step-application-over
     (application :: <dfmc-application>, thread :: <thread-object>,
      #key stack-frame = #f)
         => ()
-
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
   let call-frame =
@@ -498,7 +484,6 @@ define method step-application-over
 
   // Ensuring that a debugger transaction is in effect, tell the DM
   // to instruct the thread to perform the step-over operation.
-
   perform-continuing-debugger-transaction
      (application, remote-thread,
       method ()
@@ -509,7 +494,6 @@ define method step-application-over
           instruct-thread-to-step-over(target, remote-thread);
         end if;
       end method);
-
 end method;
 
 
@@ -594,8 +578,6 @@ end method;
 define method interactive-thread-break-event-handler
     (application :: <dfmc-application>)
  => (stop-reason :: <stop-reason>)
-
   interactive-thread-break-event-handler
     (application.application-target-app);
-
 end method;

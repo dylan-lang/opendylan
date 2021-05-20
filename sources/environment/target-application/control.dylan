@@ -70,7 +70,6 @@ define method continue-target-application
       thread-debug-message("Waiting for debugger-transaction-complete");
       wait-for(application.debugger-transaction-complete);
     end with-lock;
-
   end;
 end method;
 

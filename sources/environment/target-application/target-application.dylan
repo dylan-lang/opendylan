@@ -28,47 +28,38 @@ define constant <interruption-type>
 //    for environment objects.
 
 define class <target-application> (<debug-target>)
-
   // Lock and serialize all calls into the DM.
-
 
   // Use a single-exclusive/multiple-inclusive lock over the entire
   // debugger session, to lock all threads out until the Debugger
   // Manager thread itself effortlessly releases its exclusive rights
   // to the session lock.
-
   constant slot debugger-session :: <read-write-lock> = make(<read-write-lock>);
 
   // A lock on the current debugger transaction to synchronize threads
   // requesting spy calls on DM or requesting DM to continue the application
-
   constant slot debugger-transaction :: <simple-lock> = make(<simple-lock>);
 
   slot debugger-transaction-timeout = #f;
 
   // A lock for client threads when requesting debugger transactions to
   // lock out other requesting threads until DM has served our request
-
   constant slot debugger-transaction-request :: <simple-lock> = make(<simple-lock>);
 
   // A lock for enabling client threads to optionally synchronize
   // with the Debugger Manager on application termination
-
   constant slot application-shut-down-lock :: <simple-lock> = make(<simple-lock>);
 
   // Record the current stop reason for the application
-
   slot current-stop-reason :: <stop-reason>;
 
   // Store the thread that runs the DM loop, as well as any thread
   // that gains exclusive debug access.
-
   slot manager-thread :: <thread>;
   slot thread-being-served :: false-or(<thread>) = #f;
 
   // Two notifications that can be used anywhere in the UI. These
   // get notified when debugger transactions start and finish.
-
   slot debugger-transaction-notification :: <notification>;
   slot debugger-transaction-complete :: <notification>;
 
@@ -90,7 +81,6 @@ define class <target-application> (<debug-target>)
 
   // Support for "interrupting" transactions (to perform spy calls
   // without officially ending the transaction)
-
   slot interruption-evaluated :: <notification>;
 
   slot interruption-function :: <interruption-type> = #f;
@@ -98,7 +88,6 @@ define class <target-application> (<debug-target>)
   slot interruption-results :: <sequence> = #[];
 
   slot stored-library-initialization-phase-handler :: <function>;
-
 end class;
 
 
@@ -161,7 +150,6 @@ define method handle-library-initialization-phase
      remote-library :: <remote-library>,
      phase :: <library-initialization-phase>, top-level? :: <boolean>)
  => (interested? :: <boolean>)
-
   let interested? =
     application.stored-library-initialization-phase-handler
       (application, thread, remote-library, phase, top-level?);
@@ -177,7 +165,6 @@ define method handle-interactor-return
     (application :: <target-application>, thread :: <remote-thread>,
      transaction-id :: <object>, #rest return-values)
        => (answer :: <boolean>)
-
   next-method();
   let answer =
     apply(application.stored-interactor-handler,
@@ -216,11 +203,9 @@ define method run-target-application
           application-state-callback =
             null-application-state-callback)
       => ()
-
   local method manage-stop-reason
             (app :: <target-application>, sr :: <stop-reason>)
          => (interested? :: <boolean>)
-
            thread-debug-message
              ("Entering stop-reason callback for %=", sr);
            let stopping? :: <boolean> =
@@ -268,18 +253,14 @@ define method run-target-application
 
             application-state-callback(app, #"running");
           end unless;
-
         end method;
-
 
   if (application.been-managed?)
     error("This application has run and terminated already");
   elseif (application.under-management?)
     error("This application is already running");
   else
-
     with-lock (application.application-shut-down-lock)
-
     application.under-management? := #t;
     application.manager-thread := current-thread();
     application.stored-interactor-handler := interactor-callback;
@@ -296,9 +277,7 @@ define method run-target-application
       application.under-management? := #f;
       application.been-managed? := #t;
     end with-lock;
-
     end with-lock;
-
   end if;
 end method;
 
@@ -314,14 +293,11 @@ define method initialize
   application.debugger-transaction-notification :=
     make(<notification>,
          lock: application.debugger-transaction);
-
   application.debugger-transaction-complete :=
     make(<notification>,
          lock: application.debugger-transaction);
-
   application.interruption-evaluated :=
     make(<notification>,
          lock: application.debugger-transaction);
-
 end method;
 

@@ -12,13 +12,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// All the interesting stuff is in the application-proxy-object.
 ///
 define class <stack-frame-object> (<application-object>)
-
   slot next-frame-cache-slot :: false-or(<stack-frame-object>),
     init-value: #f;
-
   slot previous-frame-cache-slot :: false-or(<stack-frame-object>),
     init-value: #f;
-
   slot local-variables-cache-slot :: false-or(<sequence>),
     init-value: #f;
 
@@ -28,7 +25,6 @@ define class <stack-frame-object> (<application-object>)
   // the pair holds a boolean flag indicating that a <function-object>
   // is known for the stack frame. The tail of the pair holds a
   // <function-object> iff the head is #t.
-
   slot function-cache-slot :: false-or(<pair>),
     init-value: #f;
 
@@ -52,10 +48,8 @@ define class <stack-frame-object> (<application-object>)
   //                          correspond to the program counter.
   //   #"location-exact"    - An exact source location is stored in
   //                          the cache.
-
   slot source-location-cache-slot :: false-or(<pair>),
     init-value: #f;
-
 end class <stack-frame-object>;
 
 

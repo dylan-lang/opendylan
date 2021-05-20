@@ -62,13 +62,10 @@ end class;
 //    within the application.
 
 define abstract sealed class <internal-stop-reason> (<stop-reason>)
-
   constant slot stop-reason-process :: <remote-process>,
     required-init-keyword: process:;
-
   constant slot stop-reason-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
 end class;
 
 
@@ -243,13 +240,10 @@ define constant $access-violation-on-write = 2;
 define constant $access-violation-on-execute = 3;
 
 define class <access-violation-stop-reason> (<memory-exception-stop-reason>)
-
   constant slot stop-reason-access-violation-address :: <remote-value>,
     required-init-keyword: violation-address:;
-
   constant slot stop-reason-access-violation-operation :: <integer>,
     required-init-keyword: violation-operation:;
-
 end class;
 
 define class <array-bounds-exception-stop-reason>
@@ -333,9 +327,7 @@ end class;
 define method wait-for-stop-reason 
     (ap :: <access-path>, #key timeout = #f, profile-interval = #f)
       => (maybe-sr :: false-or(<stop-reason>))
-
   let sr = #f;
-
   if (timeout)
     sr := wait-for-stop-reason-with-timeout (ap.connection, timeout,
                                              profile-at: profile-interval)
@@ -478,7 +470,6 @@ define method construct-stop-reason
     (ap :: <access-path>, event-type :: <integer>,
      #key process, thread)
        => (maybe-sr :: false-or(<stop-reason>))
-
   let source-process :: <remote-process> =
     process | get-debug-event-process (ap.connection);
   let source-thread = 
@@ -502,16 +493,12 @@ define method construct-stop-reason
   end if;
 
   select (event-type)
-
     $timed-out => 
       stop-reason := #f;
-
     $timed-out-handled => 
       stop-reason := make(<timeout-handled-stop-reason>);
-
     $timed-out-unhandled => 
       stop-reason := make(<timeout-unhandled-stop-reason>);
-
     $create-process =>
       source-library := find-or-make-library 
                           (ap, get-debug-event-library (ap.connection));
@@ -520,12 +507,10 @@ define method construct-stop-reason
 			   thread: source-thread,
 			   executable: source-library);
       register-access-path(ap);
-
     $create-thread =>
       stop-reason := make (<create-thread-stop-reason>,
                            process: source-process,
                            thread: source-thread);
-
     $exit-process =>
       stop-reason := make (<exit-process-stop-reason>,
                            process: source-process,
@@ -534,7 +519,6 @@ define method construct-stop-reason
                              get-debug-event-process-exit-code
                                (ap.connection));
       deregister-access-path(ap);
-
     $exit-thread =>
       stop-reason := make (<exit-thread-stop-reason>,
                            process: source-process,
@@ -543,7 +527,6 @@ define method construct-stop-reason
                              get-debug-event-thread-exit-code
                                (ap.connection));
       ap.threads := remove! (ap.threads, source-thread);
- 
     $load-dll =>
       source-library :=
         find-or-make-library 
@@ -552,7 +535,6 @@ define method construct-stop-reason
                            process: source-process,
                            thread: source-thread,
                            library: source-library);
-
     $unload-dll =>
       source-library :=
         find-or-make-library 
@@ -562,7 +544,6 @@ define method construct-stop-reason
                            thread: source-thread,
                            library: source-library);
       ap.libraries := remove! (ap.libraries, source-library);
-
     $output-debug-string =>
       let (string-address, string-length, string-unicode?)
         = get-debug-event-string-information(ap.connection);
@@ -578,7 +559,6 @@ define method construct-stop-reason
                            process: source-process,
                            thread: source-thread,
                            debug-string: str);
-
     $access-violation => 
       stop-reason := make (<access-violation-stop-reason>,
                            exception-address: 
@@ -591,7 +571,6 @@ define method construct-stop-reason
                                get-exception-violation-op(ap.connection),
                            process: source-process,
                            thread: source-thread);
-
     $array-bounds-exception =>
       stop-reason := make (<array-bounds-exception-stop-reason>,
                            exception-address: 
@@ -600,7 +579,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                            process: source-process,
                            thread: source-thread);
-
     $illegal-instruction-exception =>
       stop-reason := make (<illegal-instruction-exception-stop-reason>,
                             exception-address: 
@@ -609,7 +587,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $privileged-instruction-exception =>
       stop-reason := make (<privileged-instruction-exception-stop-reason>,
                            exception-address: 
@@ -618,7 +595,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                            process: source-process,
                            thread: source-thread);
-
     $denormal-exception =>
       stop-reason := make (<denormal-exception-stop-reason>,
                            exception-address: 
@@ -627,7 +603,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                            process: source-process,
                            thread: source-thread);
-
     $float-divide-by-zero-exception =>
       stop-reason := make (<float-divide-by-zero-exception-stop-reason>,
                            exception-address: 
@@ -636,7 +611,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $inexact-result-exception =>
       stop-reason := make (<inexact-result-exception-stop-reason>,
                            exception-address: 
@@ -645,7 +619,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                            process: source-process,
                            thread: source-thread);
- 
     $invalid-float-operation-exception =>
       stop-reason := make (<invalid-float-operation-exception-stop-reason>,
                             exception-address: 
@@ -654,7 +627,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $float-overflow-exception =>
       stop-reason := make (<float-overflow-exception-stop-reason>,
                             exception-address: 
@@ -663,7 +635,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $float-underflow-exception =>
       stop-reason := make (<float-underflow-exception-stop-reason>,
                             exception-address: 
@@ -672,7 +643,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-  
     $float-stack-check-exception =>
       stop-reason := make (<float-stack-check-exception-stop-reason>,
                             exception-address: 
@@ -681,7 +651,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
- 
     $integer-divide-by-zero-exception =>
       stop-reason := make (<integer-divide-by-zero-exception-stop-reason>,
                             exception-address: 
@@ -690,7 +659,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $noncontinuable-exception =>
       stop-reason := make (<noncontinuable-exception-stop-reason>,
                             exception-address: 
@@ -699,7 +667,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $integer-overflow-exception =>
       stop-reason := make (<integer-overflow-exception-stop-reason>,
                             exception-address: 
@@ -708,7 +675,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $stack-overflow-exception =>
       stop-reason := make (<stack-overflow-exception-stop-reason>,
                             exception-address: 
@@ -717,31 +683,26 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             process: source-process,
                             thread: source-thread);
-
     $breakpoint-exception =>
       stop-reason := make (<breakpoint-stop-reason>,
                             process: source-process,
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
-
     $source-step-out =>
       stop-reason := make (<source-step-out-stop-reason>,
                             process: source-process,
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
-
     $source-step-into =>
       stop-reason := make (<source-step-into-stop-reason>,
                             process: source-process,
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
-
     $source-step-over =>
       stop-reason := make (<source-step-over-stop-reason>,
                             process: source-process,
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
-
     $hard-coded-breakpoint-exception =>
       if (first-debugger-invocation?(ap.connection))
         stop-reason := make (<system-initialized-stop-reason>,
@@ -760,19 +721,15 @@ define method construct-stop-reason
                               process: source-process,
                               thread: source-thread);
       end if;
-
     $single-step-exception =>
       stop-reason := make (<single-step-stop-reason>,
                             process: source-process,
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
-
     $profiler =>
       stop-reason := make (<profiler-stop-reason>);
-
     $profiler-unhandled =>
       stop-reason := make (<profiler-unhandled-stop-reason>);
-
     otherwise =>
       stop-reason := make (<unclassified-exception-stop-reason>,
                             process: source-process,
@@ -781,7 +738,6 @@ define method construct-stop-reason
                                exception-is-first-chance?(ap.connection),
                             exception-address: 
                                  get-exception-address (ap.connection));
-
   end select;
 stop-reason;
 end method;
@@ -819,7 +775,6 @@ define constant $exception-subset =
 
 define method receivable-first-chance-exceptions
   (ap :: <access-path>) => (seq :: <sequence>)
-
   if (ap.cached-receivable-first-chance-exceptions?)
     ap.cached-exception-set
   else
@@ -853,7 +808,6 @@ define open generic connection-can-receive-first-chance
 
 define method receiving-first-chance?
     (ap :: <access-path>, etype :: <class>) => (yes-or-no :: <boolean>)
-
   if (member?(etype, receivable-first-chance-exceptions(ap)))
     if (member?(etype, ap.first-chance-exception-set))
       #t

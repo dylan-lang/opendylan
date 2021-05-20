@@ -11,7 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    about the state of a thread.
 
 define class <application-thread-state> (<object>)
-
   constant slot thread-state-interactor-queue :: <deque> = make(<deque>);
 
   slot thread-state-requesting-interaction? :: <boolean> = #f,
@@ -29,9 +28,7 @@ define class <application-thread-state> (<object>)
   // suspended threads; this will be used to determine whether
   // the interaction has completed, and so the thread can be put
   // back into permanent suspension by the environment
-
   slot thread-transaction-id = #f;
-
 end class <application-thread-state>;
 
 define inline method thread-state-model
@@ -73,13 +70,10 @@ end method thread-state-transaction-setter;
 //    to actually evaluate the expression.
 
 define class <thread-interaction-request> (<object>)
-
   constant slot interaction-request-string :: <byte-string>,
     required-init-keyword: string:;
-
   constant slot interaction-request-module :: <module-object>,
     required-init-keyword: module:;
-
   constant slot interaction-request-context :: <runtime-context>,
     required-init-keyword: context:;
 
@@ -87,16 +81,13 @@ define class <thread-interaction-request> (<object>)
   // real ID from the project manager. This can be stored here, and
   // the app-server can perform the indirection when
   // FETCH-INTERACTOR-RETURN-VALUES is called.
-
   slot interaction-request-actual-id :: <object>,
     init-keyword: id:;
 
   // Also remember what the value of APPLICATION-STATE was when the
   // interactive code was entered.
-
   slot interaction-request-application-state = #"stopped",
     required-init-keyword: application-state:;
-
 end class;
 
 
@@ -538,7 +529,6 @@ end method;
 //    Returns a <thread-object> that can be used to execute some code
 //    interactively.
 
-
 define method application-default-interactor-thread
     (application :: <dfmc-application>)
   => (thread-or-bust :: false-or(<thread-object>))
@@ -585,7 +575,6 @@ ignore(application-available-interactor-thread);
 // to the currently selected thread)
 //
 // Nosa   Mar 31, 1999
-
 
 
 define method application-open-interactor-thread
@@ -641,7 +630,6 @@ end method;
 
 define method resume-evaluator-thread
     (application :: <dfmc-application>, thread :: <remote-thread>) => ()
-
   let target = application.application-target-app;
   let path = target.debug-target-access-path;
 
@@ -653,7 +641,6 @@ define method resume-evaluator-thread
     debugger-message("Resuming environment interactive thread %=", thread);
     thread-permanently-suspended?(path, thread) := #f;
   end if;
-
 end method;
 
 
@@ -664,7 +651,6 @@ end method;
 define method suspend-evaluator-thread
     (application :: <dfmc-application>, thread :: <remote-thread>,
      trans-id :: <interactor-return-breakpoint>) => ()
-
   let target = application.application-target-app;
   let path = target.debug-target-access-path;
   let thread-trans-id = thread-state-transaction(application, thread);
@@ -673,7 +659,6 @@ define method suspend-evaluator-thread
     debugger-message("Suspending environment interactive thread %=", thread);
     thread-permanently-suspended?(path, thread) := #t;
   end if;
-
 end method;
 
 
@@ -683,13 +668,10 @@ define method reserved-interactive-thread?
     (application :: <dfmc-application>, thread :: <remote-thread>)
  => (reserved? :: <boolean>)
   select (thread)
-
     application.dylan-thread-manager,
     application.application-target-app.target-spy-thread
       => #t;
-
     otherwise => #f;
-
   end;
 end method;
 
@@ -703,7 +685,6 @@ define method initialize-interactive-threads
   // The Thread Manager is explicitly reserved for spawning
   // new application threads by running a particular deemed
   // safe spy function
-
   application.dylan-thread-manager :=
   request-evaluator-thread(application,
                            name: "Thread Manager",
@@ -711,14 +692,12 @@ define method initialize-interactive-threads
 
   // The Spy Thread is explicitly reserved for running
   // Debugger Manager spy calls in the application space
-
   let spy-thread =
     request-evaluator-thread(application,
                              name: "Spy Thread",
                              thread: thread);
 
   // Register this thread as a reserved Spy Thread in the debug-target
-
   use-thread-for-spy-functions
     (application.application-target-app,
      spy-thread,
@@ -726,7 +705,6 @@ define method initialize-interactive-threads
 
   // In addition, a regular interactive thread is spawned at
   // the same time
-
   request-evaluator-thread(application,
                            thread: thread);
 

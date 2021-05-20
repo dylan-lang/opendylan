@@ -23,10 +23,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define open abstract class <machine> (<object>)
-
   constant slot %network-address :: false-or(<string>),
     required-init-keyword: network-address:;
-
 end class;
 
 
@@ -146,10 +144,8 @@ end class;
 
 define class <remote-connection-closed-error>
                 (<remote-debug-connection-error>)
-
   constant slot failed-connection :: <machine>,
     required-init-keyword: failed-connection:;
-
 end class;
 
 
@@ -160,10 +156,8 @@ end class;
 
 define class <remote-connection-failed-error>
                 (<remote-debug-connection-error>)
-
   constant slot failed-network-address :: <string>,
     required-init-keyword: network-address:;
-
 end class;
 
 
@@ -173,10 +167,8 @@ end class;
 
 define class <remote-connection-password-mismatch-error>
                  (<remote-debug-connection-error>)
-
   constant slot failed-password :: <string>,
     required-init-keyword: password:;
-
 end class;
 
 

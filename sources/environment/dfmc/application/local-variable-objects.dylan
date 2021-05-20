@@ -17,13 +17,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    The superclass of all application local variable proxies.
 
 define sealed abstract class <application-local-variable> (<object>)
-
   constant slot local-lexical-name :: <string>,
     required-init-keyword: name:;
-
   constant slot is-argument? :: <boolean> = #f,
     init-keyword: argument?:;
-
 end class;
 
 
@@ -31,10 +28,8 @@ end class;
 //    An application local variable that is not from Dylan.
 
 define class <foreign-local-variable> (<application-local-variable>)
-
   constant slot local-foreign-value :: <remote-value>,
     required-init-keyword: foreign-value:;
-
 end class;
 
 
@@ -42,13 +37,10 @@ end class;
 //    An application local variable that _is_ from Dylan.
 
 define class <dylan-local-variable> (<application-local-variable>)
-
   constant slot dm-compiler-model :: <object> = #f,
     init-keyword: model-object:;
-
   constant slot local-dylan-location :: <remote-location>,
     init-keyword: location:;
-
 end class;
 
 
@@ -80,10 +72,8 @@ end method;
 define method all-frame-local-variables
     (application :: <dfmc-application>, frame :: <application-stack-frame>)
        => (var-seq :: <sequence>)
-
   // This default method returns an empty sequence. If the frame is not
   // a call frame, then there are no local variables.
-
   #[]
 end method;
 
@@ -91,14 +81,12 @@ end method;
 define method all-frame-local-variables
     (application :: <dfmc-application>, frame :: <call-frame>)
         => (var-seq :: <sequence>)
-
   let target = application.application-target-app;
 
   // We know that a debugger transaction is in effect. If this method is
   // being called, then the stack frame must be a foreign call frame.
   // We get a list of all live lexical variables from the DM, and
   // build a <foreign-local-variable> wrapper around each one.
-
   if (dylan-call-frame?(target, frame))
     let (names, types, models, vals, locations)
       = active-dylan-lexical-variables(target, frame);
@@ -137,7 +125,6 @@ define method count-frame-local-variables
 
   // This default method returns an empty sequence. If the frame is not
   // a call frame, then there are no local variables.
-
   0
 end method;
 
@@ -169,7 +156,6 @@ define method variable-value
   // Ensuring a debugger transaction, get the <remote-value> for the
   // local variable, and construct the right kind of environment object
   // for it.
-
   perform-debugger-transaction
      (target,
       method ()
@@ -183,5 +169,3 @@ define method variable-value
 
   val;
 end method;
-
-

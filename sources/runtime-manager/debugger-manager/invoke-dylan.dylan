@@ -8,63 +8,45 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-
 ///// <DYLAN-RETURN-BREAKPOINT>
 //    A <breakpoint> that is triggered when a remote dylan call returns.
-
 define class <dylan-return-breakpoint> (<breakpoint>)
-
   constant slot used-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
   constant slot used-frame :: <remote-value>,
     required-init-keyword: frame:;
-
   constant slot calling-frame :: false-or(<remote-value>),
     init-value: #f,
     init-keyword: calling-frame:;
-
   constant slot stored-context :: <object>,
     required-init-keyword: context:;
-
   constant slot interactor-cookie :: <integer>,
     init-value: 0,
     init-keyword: cookie:;
-
   slot dylan-function-result :: <remote-value>;
-
   constant slot saved-mv-vector :: <sequence>,
     init-value: #[],
     init-keyword: saved-mv-vector:;
-
 end class;
 
 
 // Need to remember the application state on code entry
 // for interactions on suspended threads, as these happen
 // immediately behind the back of a running application
-
 define open generic interaction-request-application-state
     (interaction-transaction-id) => (application-state);
 
 define open generic interaction-request-application-state-setter
     (application-state, interaction-transaction-id) => (application-state);
 
-
 ///// <INTERACTOR-RETURN-BREAKPOINT>
-
 define class <interactor-return-breakpoint> (<dylan-return-breakpoint>)
-
   constant slot interactor-result-spec :: <symbol>,
     required-init-keyword: result-spec:;
-
   // Also remember what the value of APPLICATION-STATE was when the
   // interactive code was entered.
-
   slot interaction-request-application-state = #"stopped",
     required-init-keyword: application-state:;
-
 end class;
 
 
@@ -73,7 +55,6 @@ end class;
 //    restore the state from the remote call, and grab the function
 //    result, and call next-method to invoke the registered callback.
 //    If we are not in the correct context, just ignore the trigger.
-
 define method handle-debug-point-event
     (application :: <debug-target>, bp :: <dylan-return-breakpoint>,
      thread :: <remote-thread>)
@@ -169,7 +150,6 @@ end method;
 
 
 ///// EMPTY-CALLBACK
-
 define method empty-callback
     (application :: <debug-target>, bp :: <debug-point>,
      thread :: <remote-thread>)
@@ -181,13 +161,11 @@ end method;
 ///// INVOKE-DYLAN
 //    Sets up the thread to run a dylan function with a given sequence
 //    of arguments. Sets a breakpoint, so requires a callback.
-
 define method invoke-dylan
    (application :: <debug-target>, thread :: <remote-thread>,
     dylan-function :: <remote-value>, return-callback :: <function>,
     #rest argument-list)
        => (succeeded? :: <boolean>)
-
   let dylan-library = application.application-dylan-library;
   let dylan-runtime = application.application-dylan-runtime-library;
 
@@ -272,7 +250,6 @@ end method;
 ///// HANDLE-INTERACTOR-RETURN
 //    An open generic function to allow the DM client to process the
 //    return from the evaluation.
-
 define open generic handle-interactor-return
     (application :: <debug-target>, thread :: <remote-thread>,
      transaction-id :: <object>, #rest return-values)
@@ -315,13 +292,11 @@ end method;
 //            should be located.
 //      return-spec - #"single-value" or #"multiple-value".
 //      arguments - <remote-value>s to be passed to the C function.
-
 define method setup-interactor
     (application :: <debug-target>, thread :: <remote-thread>,
      symbolic-C-entry-point :: <string>, symbolic-dll :: false-or(<string>),
      return-spec :: <symbol>, #rest args)
        => (transaction-id :: <object>)
-
   debugger-message("setup-interactor %= running on %=", thread, current-thread().thread-name-internal);
 
   let recovery-manager =
@@ -344,10 +319,8 @@ define method setup-interactor
   let debug-point = #f;
 
   if (invoker)
-
     // We have our C-callable entry point. Now read as much stack
     // context information as we need.
-
     let top-frame = 
       initialize-stack-trace(application.debug-target-access-path, thread);
     let top-frame-pointer =
@@ -363,7 +336,6 @@ define method setup-interactor
 
     // And actually set up the remote function call using an access-path
     // API.
-
     let (return-address, context) =
         if (recovery-manager)
           call-debugger-function(
@@ -388,7 +360,6 @@ define method setup-interactor
 
     // This will tell us the address to register our breakpoint. Construct the
     // breakpoint object, caching all important information.
-
     debug-point :=
       make(<interactor-return-breakpoint>,
            address: return-address,
@@ -422,7 +393,6 @@ define method C-setup-interactor
      application :: <debug-target>, thread :: <remote-thread>,
      invoker :: <C-spy-function-descriptor>, #rest args)
        => (transaction-id :: <object>)
-
   debugger-message("C-setup-interactor %= running on %=",
 		   thread, current-thread().thread-name-internal);
 
@@ -431,10 +401,8 @@ define method C-setup-interactor
   let debug-point = #f;
 
   if (invoker.runtime-entry-point)
-
     // We have our C-callable entry point. Now read as much stack
     // context information as we need.
-
     let top-frame = 
       initialize-stack-trace(application.debug-target-access-path, thread);
     let top-frame-pointer =
@@ -450,7 +418,6 @@ define method C-setup-interactor
 
     // And actually set up the remote function call using an access-path
     // API.
-
     let (return-address, context) =
       call-debugger-function
       (application,
@@ -463,7 +430,6 @@ define method C-setup-interactor
 
     // This will tell us the address to register our breakpoint. Construct the
     // breakpoint object, caching all important information.
-
     debug-point :=
       make(breakpoint-class,
            address: return-address,
@@ -478,14 +444,12 @@ define method C-setup-interactor
 
     // Perform the breakpoint registration.
     register-debug-point(application, debug-point);
-
   else
     error("Could not locate C Spy function");
   end if;
 
   // Actually use the registered debug point as the transaction ID, since it
   // is guaranteed to be unique.
-
   debug-point;
 end method;
 

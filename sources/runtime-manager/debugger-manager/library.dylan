@@ -35,9 +35,7 @@ define module debugger-manager
   use dfmc-namespace;
   use source-records;
   create
-           
     ///// <DEBUG-TARGET>
-
     <debug-target>,
     debug-target-access-path,
     debug-target-symbol-table,
@@ -51,7 +49,6 @@ define module debugger-manager
     interaction-request-application-state-setter,
 
     ///// Debugger transaction caching utilities.
-
     <page-relative-object-table>,
     <page-relative-object-table-entry>,
     add-object,
@@ -60,7 +57,6 @@ define module debugger-manager
     invalidate-page-relative-object-table,
 
     ///// <STOP-REASON>s
-
     stop-reason-debug-points,
     <debugger-generated-stop-reason>,
     stop-reason-client-data,
@@ -82,7 +78,6 @@ define module debugger-manager
     class-breakpoint-size,
 
     ///// Application control
-
     stop-application,
     kill-application,
     restart-application,
@@ -91,7 +86,6 @@ define module debugger-manager
     application-stopped?-setter,
 
     ///// <DEBUG-POINT>
-
     <debug-point>,
     <breakpoint>,
     <watchpoint>,
@@ -115,7 +109,6 @@ define module debugger-manager
     interactor-deferred-id-table,
 
     ///// <DYLAN-NAME-CONTEXT>
-
     <dylan-name-context>,
     context-library, context-module,
     context-library-setter, context-module-setter,
@@ -125,13 +118,11 @@ define module debugger-manager
     mangle-in-context,		// This is absolutely the last one!
 
     ///// Transactions on dylan values
-
     read-dylan-value,
     write-dylan-value,
     read-instance-slot-element,
 
     ///// Print and Inspect
-
     print-dylan-object,
     describe-dylan-object,
     get-inspector-values,
@@ -171,7 +162,6 @@ define module debugger-manager
     classify-runtime-value,
 
     ///// Dylan Thread Inspections.
-
     remote-thread-information,
     thread-current-active-handlers,
     thread-current-local-variables,
@@ -186,12 +176,10 @@ define module debugger-manager
     application-selected-thread-setter,
 
     ///// Remote Walker Convenience Functions
-
     remote-instance-wrapper,
     wrapper-trace-information,
 
     ///// Debugger Transactions and Object Registration
-
     <remote-object>,
     <object-registration-error>,
     register-remote-object,
@@ -202,7 +190,6 @@ define module debugger-manager
     call-debugger-function,
 
     ///// Thread-local object history management.
-
     flush-thread-history,
     record-object-in-thread-history,
     retrieve-object-from-thread-history,
@@ -211,7 +198,6 @@ define module debugger-manager
     history-place-holder-index,
 
     ///// Registering regions of interactively allocated memory
-
     register-exact-roots,
     register-static-roots,
     register-ambiguous-roots,
@@ -223,7 +209,6 @@ define module debugger-manager
     select-thread-for-spy,
 
     ///// Stack Backtracing
-
     <application-stack-frame>,
     first-stack-frame,
     next-stack-frame,
@@ -248,7 +233,6 @@ define module debugger-manager
     thread-current-mv-vector,
 
     ///// Finding dylan components.
-
     application-dylan-library,
     application-dylan-runtime-library,
     dylan-application?,
@@ -259,26 +243,22 @@ define module debugger-manager
     invoke-dylan,
 
     ///// Tracking library initialization.
-
     <library-initialization-phase>,
     handle-library-initialization-phase,
 
     ///// Lexical Variables,
-
     number-of-lexical-variables,
     active-dylan-lexical-variables,
     number-of-active-dylan-variables,
     live-frame-lexical-variables,
 
     ///// Source Stepping
-
     instruct-thread-to-step-over,
     instruct-thread-to-step-out,
     instruct-thread-to-step-into,
     align-thread-to-source-location,
 
     ///// Restarts
-
     <remote-restart>,
     remote-restart-description,
     remote-restart-abort?,
@@ -297,11 +277,10 @@ define module debugger-manager
     source-locator-file,
     source-location-remote-address,
     remote-address-source-location,
-          
+
     /////
     ///// RUNTIME-CONTEXT
     /////
-
     <runtime-context>,
     runtime-context-debug-target,
     runtime-context-thread,
@@ -341,7 +320,6 @@ define module debugger-manager
     /////
     ///// EXTENSION-INTERFACES (Not 'arf!)
     /////
-
     load-runtime-component,
     \spy-function-definer,
     <c-spy-function-descriptor>,
