@@ -1180,6 +1180,35 @@ convenience.  (See `DEP-0004
 Miscellaneous Functions
 -----------------------
 
+.. generic-function:: find-any
+   :sealed:
+
+   Find the index of any character matching a predicate function.
+
+   :signature: find-any (string predicate #key start end from-end?)
+
+   :parameter string: The string to search.
+   :parameter predicate: An instance of :drm:`<function>` that accepts a
+                         :drm:`<character>` and returns a :drm:`<boolean>`.
+   :parameter #key start: An instance of :drm:`<integer>`. The index at which
+                          to begin the search. Defaults to 0.
+   :parameter #key end: An instance of :drm:`<integer>`. The index at which to
+                        end the search. Defaults to the end of the string.
+   :parameter #key from-end?: An instance of :drm:`<boolean>`. If ``#t``,
+                              search backward from ``end - 1``.
+   :value index: An instance of ``false-or(<integer>)``. The index of the first
+                 character for which the predicate returns ``#t``, or ``#f`` if
+                 no character matches.
+
+   :example:
+
+      .. code-block:: dylan
+
+        find-any("foo bar", whitespace?) => 3
+        find-any("foo bar", whitespace?, start: 4) => #f
+        find-any("foo bar", curry(\=, 'o'), from-end?: #t) => 2
+
+
 .. generic-function:: pad
    :sealed:
 
