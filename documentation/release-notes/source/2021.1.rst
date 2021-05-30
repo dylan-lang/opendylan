@@ -73,6 +73,8 @@ io Library
 system Library
 --------------
 
+* A segmentation fault when using ``list-locator`` was fixed (`bug 1372 <https://github.com/dylan-lang/opendylan/issues/1372>`_).
+
 c-ffi Library
 -------------
 
