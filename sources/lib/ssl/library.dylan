@@ -30,10 +30,10 @@ define module openssl-wrapper
 
   export ERR-get-error, ERR-error-string;
 
-  export SSLv2-method, SSLv2-server-method, SSLv2-client-method,
-    SSLv3-method, SSLv3-server-method, SSLv3-client-method,
-    SSLv23-method, SSLv23-server-method, SSLv23-client-method,
-    TLSv1-method, TLSv1-server-method, TLSv1-client-method;
+  export TLS-method, TLS-server-method, TLS-client-method,
+    TLSv1-method, TLSv1-server-method, TLSv1-client-method,
+    TLSv1-1-method, TLSv1-1-server-method, TLSv1-1-client-method,
+    TLSv1-2-method, TLSv1-2-server-method, TLSv1-2-client-method;
 
   export <SSL-CTX>, SSL-context-new, SSL-context-free, SSL-free,
     SSL-context-use-certificate-file, SSL-context-use-private-key-file;

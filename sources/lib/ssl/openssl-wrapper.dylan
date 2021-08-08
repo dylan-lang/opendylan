@@ -134,7 +134,7 @@ end;
 define class <err-error> (<ssl-failure>)
 end;
 
-define method initialize (sock :: <ssl-socket>, #rest rest, #key lower, requested-buffer-size, acc?, ssl-method = #"SSLv23", #all-keys)
+define method initialize (sock :: <ssl-socket>, #rest rest, #key lower, requested-buffer-size, acc?, ssl-method = #"TLS", #all-keys)
  => ()
   let keys = list(#"port", lower.remote-port,
                   #"host", lower.remote-host,
@@ -143,9 +143,10 @@ define method initialize (sock :: <ssl-socket>, #rest rest, #key lower, requeste
   unless (acc?) //not a server socket via accept
     //already setup a connection! do SSL handshake over this connection
     let con = select (ssl-method)
-                #"SSLv23" => SSLv23-client-method;
-                #"SSLv2" => SSLv2-client-method;
+                #"TLS" => TLS-client-method;
                 #"TLSv1" => TLSv1-client-method;
+                #"TLSv1.1" => TLSv1-1-client-method;
+                #"TLSv1.2" => TLSv1-2-client-method;
               end;
     let ctx = SSL-context-new(con());
     if (null-pointer?(ctx))
@@ -183,12 +184,13 @@ define class <unix-ssl-socket-accessor> (<unix-socket-accessor>)
 end;
 
 define method initialize (s :: <ssl-server-socket>, #rest rest,
-                          #key ssl-method = #"SSLv23", certificate, key, certificate-chain, #all-keys)
+                          #key ssl-method = #"TLS", certificate, key, certificate-chain, #all-keys)
  => ()
   let con = select (ssl-method)
-              #"SSLv23" => SSLv23-server-method;
-              #"SSLv2" => SSLv2-server-method;
+              #"TLS" => TLS-server-method;
               #"TLSv1" => TLSv1-server-method;
+              #"TLSv1.1" => TLSv1-1-server-method;
+              #"TLSv1.2" => TLSv1-2-server-method;
 	    end;
   let ctx = SSL-context-new(con());
   if (null-pointer?(ctx))
