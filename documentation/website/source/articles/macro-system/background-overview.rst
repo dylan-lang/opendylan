@@ -73,7 +73,7 @@ and the type of syntax associated with the macro (discussed further in
 :doc:`macro-types`).
 
 Let us examine `Function Macro`_. This macro might be called by the code
-`Original Code`_, but the actual call fragment `Call Fragment`_ is what the
+`Original Code`_, but the actual `Call Fragment`_ is what the
 parser will attempt to match. The macro's expansion will be `Expansion`_ and the
 original code will then become `Replacement Code`_.
 
@@ -82,10 +82,10 @@ Here are the parts of the macro:
 - The distinguishing word is ``table``. Whenever the compiler sees ``table(…)``,
   it will expand this macro rather than creating a call to a function named
   "table".
-- The main rules are in lines 2–4.
-- The macro has one set of auxiliary rules in lines 6–9. A set of auxiliary
+- The main rules are in lines 2–6.
+- The macro has one set of auxiliary rules in lines 8-13. A set of auxiliary
   rules has a title written as a symbol. This set of auxiliary rules is titled
-  ``table-contents:`` (or, alternatively, ``#"table-contents"``).
+  ``table-contents:``.
 - The pattern of the first main rule is in line 2.
 - The template of the first main rule is in line 3.
 - The patterns in this macro include the pattern variables ``?table-class``,
@@ -105,14 +105,18 @@ _`Function Macro`:
       :linenos:
 
       define macro table
-        { table(?table-class:expression, ?table-contents) }
-          => { let ht = make(?table-class); ?table-contents; ht; }
-        { table(?rest:*) } => { table(<table>, ?rest); }
+          { table(?table-class:expression, ?table-contents) }
+       => { let ht = make(?table-class); ?table-contents; ht }
 
-        table-contents:
-        { } => { }
-        { ?key:expression => ?value:expression, ... }
-          => { ht[?key] := ?value; ... }
+          { table(?rest:*) }
+       => { table(<table>, ?rest) }
+
+       table-contents:
+           { ?key:expression => ?value:expression, ... }
+        => { ht[?key] := ?value; ... }
+
+           { }
+        => { }
       end macro table
 
 _`Original Code`:
@@ -131,7 +135,7 @@ _`Expansion`:
 
    .. code-block:: dylan
 
-      let ht = make(<string-table>); ht["red"] := "stop"; ht["green"] := "go"; ht;
+      let ht = make(<string-table>); ht["red"] := "stop"; ht["green"] := "go"; ht
 
 _`Replacement Code`:
 
@@ -139,6 +143,7 @@ _`Replacement Code`:
 
       let lights = begin
         let ht = make(<string-table>);
-        ht["red"] := "stop"; ht["green"] := "go";
-        ht;
+        ht["red"] := "stop";
+        ht["green"] := "go";
+        ht
       end;
