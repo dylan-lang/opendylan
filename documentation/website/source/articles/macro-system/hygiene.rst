@@ -125,7 +125,7 @@ elsewhere in Box 1 unless Box 1 supplies the name to be defined.
 
 For example, given the macro in `Definition 2`_, one might expect the macro call
 in `Call 2`_ would print "Hello" twice, but the code does not compile. Because
-every macro expansion is implicitly surrounded by begin…end as described in
+every macro expansion is implicitly surrounded by begin...end as described in
 :doc:`background-overview`, the example expands into `Expansion 2`_. After the
 macro call, `foo` is no longer in scope.
 

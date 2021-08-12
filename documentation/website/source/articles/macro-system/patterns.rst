@@ -38,7 +38,7 @@ A main rule pattern has elements like `define` and `end` as described in
 pattern variables separated at the highest level by semicolons, then by commas.
 That is, a pattern has this syntax::
 
-        FRAGMENTS, FRAGMENTS, …; FRAGMENTS, FRAGMENTS, …; …
+        FRAGMENTS, FRAGMENTS, ...; FRAGMENTS, FRAGMENTS, ...; ...
 
 The parser matches each semicolon-separated sub-pattern individually, and only
 then matches the comma-separated sub-patterns within. This can have surprising
@@ -60,7 +60,7 @@ Any of them will match any of these code fragments::
         alpha;
         alpha,;
 
-You can use parentheses, curly brackets ("{…}"), and square brackets to nest
+You can use parentheses, curly brackets ("{...}"), and square brackets to nest
 comma- or semicolon-separated patterns inside of other patterns, as in this
 example::
 
@@ -129,7 +129,7 @@ Property lists
 The end of a comma-separated list of pattern fragments can include `#rest`,
 `#key`, and `#all-keys`, as in this example::
 
-        { …, #rest ?keys:token, #key ?alpha:token, ?beta:token, #all-keys }
+        { ..., #rest ?keys:token, #key ?alpha:token, ?beta:token, #all-keys }
 
 This syntax is *not* used to match a code fragment that contains literal
 `#rest`, `#key`, and `#all-keys` fragments. Instead, this syntax matches a code

@@ -19,20 +19,20 @@ Macro Types
 There are four types of macro.
 
 `Body-style definition macro`:dfn:
-      This kind of macro lets you create `define x … end` syntax. This is the
+      This kind of macro lets you create `define x ... end` syntax. This is the
       most popular kind of macro.
 
 `List-style definition macro`:dfn:
-      This kind of macro lets you create `define x …` syntax, such as `define
+      This kind of macro lets you create `define x ...` syntax, such as `define
       variable $pi`.
 
 `Statement macro`:dfn:
-      This kind of macro lets you create `do-something … end` syntax. Use this
+      This kind of macro lets you create `do-something ... end` syntax. Use this
       kind of syntax to simplify blocks or to create new kinds of loops. It is
       most commonly used to simplify resource management.
 
 `Function macro`:dfn:
-      This kind of macro lets you create `x(…)` syntax. Use this instead of a
+      This kind of macro lets you create `x(...)` syntax. Use this instead of a
       function call if the syntax you want in the parentheses is more
       complicated than a normal function call, or if there is additional setup
       needed around a normal function call.

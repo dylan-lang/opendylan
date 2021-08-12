@@ -79,7 +79,7 @@ original code will then become `Replacement Code`_.
 
 Here are the parts of the macro:
 
-- The distinguishing word is ``table``. Whenever the compiler sees ``table(…)``,
+- The distinguishing word is ``table``. Whenever the compiler sees ``table(...)``,
   it will expand this macro rather than creating a call to a function named
   "table".
 - The main rules are in lines 2–6.
@@ -93,7 +93,7 @@ Here are the parts of the macro:
 - The substitutions in this macro include those same names.
 
 Note that the expansion is surrounded by ``begin`` and ``end``. Macro expansions
-are always surrounded by a begin…end block. This helps with macro hygiene (i.e.
+are always surrounded by a begin...end block. This helps with macro hygiene (i.e.
 preventing bindings outside of a macro call from being affected by bindings used
 in a macro's expansion). I discuss hygiene :doc:`here <hygiene>`.
 

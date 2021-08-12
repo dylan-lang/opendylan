@@ -389,7 +389,7 @@ The patterns and templates will be evaluated as follows:
          `y := y + 1; x := x + 2`.
       #. The rule's expansion is therefore `x := x + 3; y := y + 1; x := x + 2`
 
-…and so on. The key ideas to note are:
+\...and so on. The key ideas to note are:
 
 - The rule set has to have a non-recursing rule (in this case, ``{ } => { }``)
 - Each rule's matching and expansion has its own `?token` and `?steps`

@@ -127,7 +127,7 @@ For example, this will not compile::
    vector(setter-names(alpha, beta, gamma, delta))
 
 It does not compile because the expansion of `setter-names` is wrapped in a
-begin…end, resulting in this invalid syntax::
+begin...end, resulting in this invalid syntax::
 
    vector(begin alpha-setter, beta-setter, gamma-setter, delta-setter end)
 

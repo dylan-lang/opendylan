@@ -56,7 +56,7 @@ Simple pattern variables
 
 `?{name}:expression`
         This matches any expression, including vector literals, function calls,
-        and begin…end blocks.
+        and begin...end blocks.
 
 `?{name}:variable`
         This matches a variable name and optional specialization, for example,
@@ -153,7 +153,7 @@ Property list pattern variables
         have any `{prop}:` properties, the substitution will be a sequence of
         only one code fragment — the default value code fragment.
 
-`#rest {…}, #key {…}`
+`#rest {...}, #key {...}`
         With these two syntaxes are combined, both match separately against the
         same property list.
 
@@ -234,11 +234,11 @@ Body and macro pattern variables
 
 `?{name}:macro`
         This matches any macro call. The substitution will be the expanded
-        macro, without the begin…end block that normally surrounds macro
+        macro, without the begin...end block that normally surrounds macro
         expansions.
 
         While you can use `?:expression` and `?:body` pattern variables to match
-        macro calls, their substitutions will include a called macro's begin…end
+        macro calls, their substitutions will include a called macro's begin...end
         wrapper, and `?:expression` can only match function macro calls.
 
 
