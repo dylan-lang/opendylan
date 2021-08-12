@@ -7,7 +7,7 @@
    :Next:   :doc:`hygiene`
    :Prev:   :doc:`substitutions`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -138,7 +138,7 @@ _`Definition 2`:
 _`Call 2`:
 
    .. code-block:: dylan
-   
+
       version("1.0", alpha, "1")
 
 ----------
@@ -353,17 +353,17 @@ The patterns and templates will be evaluated as follows:
       pattern-match operation is set to `east 3, south 1, east 2`.
    #. The contents of this rule's `?steps` variable is rewritten by the `steps:`
       auxiliary rule set.
-      
+
       i. The "north," "south," and "west" rules fail to match against
          `east 3, south 1, east 2`.
       #. The "east" rule matches and the `?steps` pattern variable of this
          pattern-match operation (different from any other `?steps` variable
          being dealt with) is set to `south 1, east 2`.
       #. `?steps` is rewritten by another pass through the `steps:` rule set.
-      
+
          1. The "south" rule matches and its `?steps` is set to `east 2`.
          #. `?steps` is again rewritten.
-         
+
             a. The "north," "south," and "west" rules fail to match.
             #. The "east" rule is matched against `east 2`. The word `east` and
                the token `2` match. The code fragment does not contain a comma,
@@ -372,19 +372,19 @@ The patterns and templates will be evaluated as follows:
                empty code fragment.
             #. Even though `?steps` contains an empty code fragment, it is still
                rewritten by the `steps:` auxiliary rule set.
-               
+
                i. The "north," "south," "west," and "east" rules fail to match
                   against an empty code fragment.
                #. The empty pattern matches. Its expansion is an empty fragment.
-               
+
             #. The `?steps` pattern variable of the "east" rule is set to the
                expansion of the auxiliary rule set, i.e., an empty fragment.
             #. The rule's expansion is therefore `x := x + 2`.
-            
+
          #. The `?steps` pattern variable of the "south" rule is set to
             `x := x + 2`.
          #. The rule's expansion is therefore `y := y + 1; x := x + 2`.
-         
+
       #. The `?steps` pattern variable of the "east" rule is set to
          `y := y + 1; x := x + 2`.
       #. The rule's expansion is therefore `x := x + 3; y := y + 1; x := x + 2`

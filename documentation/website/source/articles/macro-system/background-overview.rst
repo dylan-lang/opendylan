@@ -7,7 +7,7 @@
    :Next:   :doc:`macro-types`
    :Prev:   :doc:`index`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -31,7 +31,7 @@ fragments`. These combine to form the larger code fragments upon which macros
 operate.
 
 .. code-block:: none
-   
+
    'a'
    "end times"
    35.552
@@ -103,12 +103,12 @@ _`Function Macro`:
 
    .. code-block:: dylan
       :linenos:
-   
+
       define macro table
         { table(?table-class:expression, ?table-contents) }
           => { let ht = make(?table-class); ?table-contents; ht; }
         { table(?rest:*) } => { table(<table>, ?rest); }
-      
+
         table-contents:
         { } => { }
         { ?key:expression => ?value:expression, ... }
@@ -116,27 +116,27 @@ _`Function Macro`:
       end macro table
 
 _`Original Code`:
-   
+
    .. code-block:: dylan
-   
+
       let lights = table(<string-table>, "red" => "stop", "green" => "go");
 
 _`Call Fragment`:
 
    .. code-block:: dylan
-   
+
       table(<string-table>, "red" => "stop", "green" => "go")
 
 _`Expansion`:
 
    .. code-block:: dylan
-   
+
       let ht = make(<string-table>); ht["red"] := "stop"; ht["green"] := "go"; ht;
 
 _`Replacement Code`:
 
    .. code-block:: dylan
-   
+
       let lights = begin
         let ht = make(<string-table>);
         ht["red"] := "stop"; ht["green"] := "go";

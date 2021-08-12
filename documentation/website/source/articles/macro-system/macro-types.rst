@@ -7,7 +7,7 @@
    :Next:   :doc:`patterns`
    :Prev:   :doc:`background-overview`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -65,7 +65,7 @@ syntax, with optional parts in brackets::
       symbol) and one or more pattern/template pairs. The name may be written as
       `my-aux-ruleset:` or `#"my-aux-ruleset"`; both are the same.
 
-      
+
 .. _main-rules:
 
 Main rules
@@ -95,10 +95,10 @@ brackets::
 
 `{MODIFIERS}`
       One or more words or pattern variables.
-        
+
 `{NAME}`
       A name or a pattern variable with a name constraint.
-        
+
 `{BODY-PATTERNS}`
       One or more sets of code fragments and pattern variables separated by
       semicolons and/or commas.
@@ -123,7 +123,7 @@ brackets::
 
 `{MODIFIERS}`
       One or more words or pattern variables.
-        
+
 `{LIST-PATTERNS}`
       One or more sets of code fragments and pattern variables separated by
       commas.
@@ -174,4 +174,3 @@ As a special case, function macros can be called using operator, slot access, or
 element access syntax. The function macro has to accept expressions for its
 `{BODY-PATTERN}` arguments like a normal function call in order to be used with
 these syntaxes.
-

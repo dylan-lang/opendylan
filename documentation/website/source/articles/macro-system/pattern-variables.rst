@@ -7,7 +7,7 @@
    :Next:   :doc:`substitutions`
    :Prev:   :doc:`patterns`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -119,13 +119,13 @@ Property list pattern variables
         This matches a property list that contains `{prop}:`, but also matches
         if the property list contains other properties in addition to
         `{prop}:`.
-        
+
         For example, consider this code fragment::
 
                 my-key: alpha, another-key: beta
 
         This pattern would not match::
-        
+
                 { #key ?my-key:name }
 
         However, this pattern would::
@@ -144,7 +144,7 @@ Property list pattern variables
         valid even though `#f` is not a name::
 
                 { #key ?name:name = #f }
-                
+
 `#key ??{prop}:{constraint} = {default-value}`
         This matches a property list containing zero or more `{prop}:`
         properties. If `{prop}:` properties are present, the substitution for
@@ -289,7 +289,7 @@ Wildcard pattern variables
                 alpha
 
         In all cases, the wildcard constraint on `?first` will match up to the
-        first comma in the code fragment. `?first` will contain `alpha`. 
+        first comma in the code fragment. `?first` will contain `alpha`.
         `?second` will contain nothing, `beta`, or `beta, gamma`.
 
 
@@ -304,4 +304,3 @@ Auxiliary rule set pattern variables
 `...`
         This syntax can only be used within an auxiliary rule set. If the rule
         set is named `my-aux-rules`, `...` is equivalent to `?my-aux-rules:*`.
-

@@ -2,17 +2,17 @@
 .. highlight:: none
 .. sidebar:: Navigation
 
-   :Next:   
+   :Next:
    :Prev:   :doc:`hygiene`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
 
 ************
 FAQ and Tips
-************ 
+************
 
 General advice and troubleshooting
 ==================================
@@ -39,7 +39,7 @@ There is no real way to do this for names or symbols. The concatenating
 substitution forms do not scale, so this template will not work::
 
    { define ?name-1 ## "-" ## ?name-2 ## "-function" () }
-   
+
 However, you can easily combine multiple names into a string by taking advantage
 of adjacent string concatenation::
 
@@ -59,7 +59,7 @@ common BNF forms.
 `{x}?`
       An optional item can be handled by a wildcard pattern variable using an
       auxiliary rule with two patterns::
-   
+
          x-opt:
            { x }
            { }
@@ -79,7 +79,7 @@ common BNF forms.
 `{x}? | {x} (, {x})*`
       This is a list that may have 0–*n* items. Handle this by calling out to an
       auxiliary rule that calls itself recursively like so::
-      
+
          x-list:
            { ?x:*, ?x-list:* }
            { }
@@ -96,7 +96,7 @@ common BNF forms.
 
       The following does not work because `?{x}:*` allows an empty code
       fragment, which allows 0 items::
-      
+
          x-list:
            // Doesn't work
            { ?x:*, ?x-list:* }
@@ -133,11 +133,11 @@ Instead, do something with the list in the macro itself:
 
 .. code-block:: dylan
    :emphasize-lines: 2, 7
-   
+
    define macro setter-vector
      { setter-vector(?names) } => { vector(?names) }
    names:
      { ?:name, ... } => { ?name ## "-setter", ... }
    end macro;
-   
+
    setter-vector(alpha, beta, gamma, delta)

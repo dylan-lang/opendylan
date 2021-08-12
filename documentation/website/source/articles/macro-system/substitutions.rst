@@ -7,7 +7,7 @@
    :Next:   :doc:`auxiliary-rules`
    :Prev:   :doc:`pattern-variables`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -44,7 +44,7 @@ with any of the separators listed in `Separators`_ in place of the comma.
 _`Expansion 1`:
 
    .. code-block:: none
-   
+
       a,
 
 _`Expansion 2`:
@@ -56,7 +56,7 @@ _`Expansion 2`:
 _`Separators`:
 
    .. code-block:: none
-   
+
       , ; + - * / ^ = == ~= ~== < <= > >= & | :=
 
 ----------
@@ -90,7 +90,7 @@ Concatenation substitutions
         The prefix and suffix are added to the pattern variable's code fragment,
         which must be a simple name. The result is inserted into the expansion.
         Either the prefix or the suffix may be omitted.
-        
+
         For example, consider a pattern variable, `?name-part`, that contains
         the following code fragment::
 
@@ -109,14 +109,14 @@ Concatenation substitutions
         code fragment would be the following::
 
                 "alpha-function"
-                
+
 `"{prefix}" ## ?#"{name}" ## "{suffix}"`
         As above, but results in a symbol::
-        
+
                 #"alpha-function"
-                
+
         Or, equivalently::
-        
+
                 alpha-function:
 
 
@@ -132,16 +132,16 @@ List substitutions
 
         The pattern variable is referenced by the following template and
         substitution::
-        
+
                 { ??name-parts ... }
 
         The expansion will be the following code fragment::
-        
+
                 alpha beta gamma
 
 `??{name}, ...`
         As above, but the expansion would be the following::
-        
+
                 alpha,beta,gamma
 
         Consider if `??name-parts` contained the following code fragment::

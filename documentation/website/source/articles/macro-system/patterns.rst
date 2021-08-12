@@ -7,7 +7,7 @@
    :Next:   :doc:`pattern-variables`
    :Prev:   :doc:`macro-types`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -87,7 +87,7 @@ set the pattern variables as follows:
 Code Fragments  ?item-1  ?item-2  ?item-3
 ==============  =======  =======  =======================
 Line 1          `alpha`  `beta`   `gamma`
-Line 2          `alpha`  `beta`   
+Line 2          `alpha`  `beta`
 Line 3          `alpha`  `beta`   `gamma, delta, epsilon`
 ==============  =======  =======  =======================
 

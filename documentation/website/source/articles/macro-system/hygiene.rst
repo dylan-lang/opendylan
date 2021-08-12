@@ -7,7 +7,7 @@
    :Next:   :doc:`faq-tips`
    :Prev:   :doc:`auxiliary-rules`
    :Top:    :doc:`index`
-   
+
    .. contents::
       :local:
 
@@ -28,19 +28,19 @@ describes the scopes in more detail.
 
    <pre style="line-height: 1em; font-family: Andale Mono, Courier New">
    ╒═════════════════════════════════════╕
-   │ [1] Module or lexical scope of a    │    
-   │     call to macro A                 │    
-   │                                     │    
+   │ [1] Module or lexical scope of a    │
+   │     call to macro A                 │
+   │                                     │
    │  ┌───────────────────────────────┐  │
-   │  │ [2] Expansion of A            │  │    
-   │  │                               │  │     
-   │  │  ┌─────────────────────────┐  │  │     
-   │  │  │ [3] Expansion of B      │  │  │     
-   │  │  │                         │  │  │     
-   │  │  └─────────────────────────┘  │  │     
-   │  │                               │  │ 
-   │  └───────────────────────────────┘  │ 
-   │                                     │ 
+   │  │ [2] Expansion of A            │  │
+   │  │                               │  │
+   │  │  ┌─────────────────────────┐  │  │
+   │  │  │ [3] Expansion of B      │  │  │
+   │  │  │                         │  │  │
+   │  │  └─────────────────────────┘  │  │
+   │  │                               │  │
+   │  └───────────────────────────────┘  │
+   │                                     │
    ╘═════════════════════════════════════╛
 
    ╒═════════════════════════════════════╕
@@ -48,14 +48,14 @@ describes the scopes in more detail.
    │     macro A                         │
    │                                     │
    ╘═════════════════════════════════════╛
-   
+
    ╒═════════════════════════════════════╕
    │ [5] Module containing definition of │
    │     macro B                         │
    │                                     │
    ╘═════════════════════════════════════╛
    </pre>
-   
+
 In this table, each lexical scope is identified by its number as "Box 1"
 through "Box 5". The table describe which bindings defined in each column's
 lexical scope are visible in the lexical scope of each row. For example, the
@@ -136,7 +136,7 @@ _`Definition 1`:
    .. code-block:: dylan
       :linenos:
       :emphasize-lines: 3
-      
+
       define macro repeat
         { repeat ?:body end }
           => { block (?=stop!)
@@ -158,14 +158,14 @@ _`Definition 2`:
 _`Call 2`:
 
    .. code-block:: dylan
- 
+
       do-then-foo("Hello\n") format-out(foo) end;
       format-out(foo)
 
 _`Expansion 2`:
 
    .. code-block:: dylan
-   
+
       begin
         let foo = "Hello\n";
         format-out(foo)
