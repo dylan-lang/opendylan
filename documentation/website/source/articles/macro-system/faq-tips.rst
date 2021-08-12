@@ -30,6 +30,8 @@ General advice and troubleshooting
   the macro.
 - Ensure you haven't accidently given a pattern variable the same name as an
   auxiliary rule set.
+- In Open Dylan, use ``define traced macro`` to get additional debug output while
+  developing macros.
 
 
 How can I combine multiple names into one?
