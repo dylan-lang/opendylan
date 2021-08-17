@@ -46,7 +46,8 @@ define module openssl-wrapper
     $SSL-ERROR-WANT-WRITE, $SSL-ERROR-WANT-X509-LOOKUP, $SSL-ERROR-SYSCALL,
     $SSL-ERROR-ZERO-RETURN, $SSL-ERROR-WANT-CONNECT, $SSL-ERROR-WANT-ACCEPT;
 
-  export SSL-set-mode, PEM-read-X509, SSL-context-add-extra-chain-certificate;
+  export SSL-set-mode, PEM-read-X509,
+    SSL-context-add-extra-chain-certificate, SSL-set-tlsext-host-name;
 end;
 
 define module ssl-sockets

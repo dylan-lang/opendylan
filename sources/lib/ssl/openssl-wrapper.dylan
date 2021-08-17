@@ -157,6 +157,8 @@ define method initialize (sock :: <ssl-socket>, #rest rest, #key lower, requeste
     if (null-pointer?(ssl))
       ERR-error();
     end;
+    // always set SNI
+    SSL-set-tlsext-host-name(ssl, host-name(remote-host(sock)));
     sock.accessor.socket-descriptor := ssl;
     let r = SSL-set-fd(ssl, lower.accessor.socket-descriptor);
     if (r ~= 1)

@@ -26,3 +26,7 @@ X509* my_PEM_read_X509 (char* filename, X509** x, pem_password_cb* cb, void* u) 
 long my_SSL_CTX_add_extra_chain_cert (SSL_CTX* ctx, X509* x509) {
   return SSL_CTX_add_extra_chain_cert(ctx, x509);
 }
+
+int my_SSL_set_tlsext_host_name(SSL_CTX* ctx, char* name) {
+  return SSL_set_tlsext_host_name(ctx, name);
+}
