@@ -157,6 +157,9 @@ define method initialize
     // Ignore all of the other initializers, if any, use the
     // information from the network.  Nyah-nyah.
     accessor-get-host-by-name(new-address, initialization-name);
+    // Darwin's get-host-by-name could resolved h-name to CDN host name
+    // instead of just copied the initialization-name
+    new-address.%host-name := initialization-name;
   else
     error("make(<ipv4-address>: address: or name: keyword must be supplied.");
   end if;
