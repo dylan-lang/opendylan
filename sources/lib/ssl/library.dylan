@@ -30,10 +30,10 @@ define module openssl-wrapper
 
   export ERR-get-error, ERR-error-string;
 
-  export SSLv2-method, SSLv2-server-method, SSLv2-client-method,
-    SSLv3-method, SSLv3-server-method, SSLv3-client-method,
-    SSLv23-method, SSLv23-server-method, SSLv23-client-method,
-    TLSv1-method, TLSv1-server-method, TLSv1-client-method;
+  export TLS-method, TLS-server-method, TLS-client-method,
+    TLSv1-method, TLSv1-server-method, TLSv1-client-method,
+    TLSv1-1-method, TLSv1-1-server-method, TLSv1-1-client-method,
+    TLSv1-2-method, TLSv1-2-server-method, TLSv1-2-client-method;
 
   export <SSL-CTX>, SSL-context-new, SSL-context-free, SSL-free,
     SSL-context-use-certificate-file, SSL-context-use-private-key-file;
@@ -46,7 +46,8 @@ define module openssl-wrapper
     $SSL-ERROR-WANT-WRITE, $SSL-ERROR-WANT-X509-LOOKUP, $SSL-ERROR-SYSCALL,
     $SSL-ERROR-ZERO-RETURN, $SSL-ERROR-WANT-CONNECT, $SSL-ERROR-WANT-ACCEPT;
 
-  export SSL-set-mode, PEM-read-X509, SSL-context-add-extra-chain-certificate;
+  export SSL-set-mode, PEM-read-X509,
+    SSL-context-add-extra-chain-certificate, SSL-set-tlsext-host-name;
 end;
 
 define module ssl-sockets
