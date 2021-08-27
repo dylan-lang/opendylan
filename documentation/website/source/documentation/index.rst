@@ -128,7 +128,7 @@ IO, strings, logging, network, and many others.
 Articles
 ========
 
-`Dylan Macro System <../articles/macro-system/index.html>`_ by Dustin Voss.
+`Dylan Macro System <../articles/macro-system.html>`_ by Dustin Voss.
     This article holds hard-won knowledge about how the Dylan macro system works
     and how to work around some of the gotchas that may catch a macro writer.
 
