@@ -71,11 +71,11 @@ are valid.  You can run the link checker by::
 Site Maintenance
 ================
 
-New Binary Release
-------------------
+New Binary Release of Open Dylan
+--------------------------------
 
 #. Update the appropriate info on the download page.
-#. Add a recent news entry. (See below for notes on that.)
+
 
 Updating Documentation
 ----------------------
@@ -84,19 +84,3 @@ The `update-opendylan.org.sh` script is run by cron to update the
 documentation in various repositories by essentially doing a git pull
 and make html. These are the docs linked from the main Documentation
 page.
-
-New News Entry
---------------
-
-#. Create an article about it (even if very short) in the appropriate date
-   hierarchy in ``source/news``. The hierarchy should be ``year/month/day``.
-   This article must have 2 metadata fields in it::
-
-       :Author: Hannes Mehnert
-       :Date: 2001-08-11 09:00:00
-
-#. Add it to ``source/news/recent.rst.inc``
-#. If there are too many entries in that file, move some
-   to ``source/news/index.rst``.
-#. Confirm that the site's main page and news page both
-   look good / correct.
