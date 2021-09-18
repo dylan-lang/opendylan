@@ -5,7 +5,6 @@
       <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
         <li><a href="#contribute"><i class="icon-chevron-right"></i> How to Contribute</a></li>
         <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
-        <li><a href="#irc"><i class="icon-chevron-right"></i> IRC Channel</a></li>
         <li><a href="#gitter"><i class="icon-chevron-right"></i> Gitter Channel</a></li>
         <li><a href="#mailing-lists"><i class="icon-chevron-right"></i> Mailing Lists</a></li>
         <li><a href="#other-sites"><i class="icon-chevron-right"></i> Other sites</a></li>
@@ -23,62 +22,47 @@ community...
 .. _contribute:
 
 How to Contribute
-=================
-
-The `Hacker Guide <https://opendylan.org/documentation/hacker-guide/>`_ has
-details on how to contribute to the project.
+  The `Hacker Guide <https://opendylan.org/documentation/hacker-guide/>`_ has details on
+  how to contribute to the project.
 
 
 Report Bugs
-===========
+  Bugs may be reported against the `opendylan repository`_ on GitHub. If you know the bug
+  is in a specific library repository you can report it there instead. If unsure, use
+  `opendylan`_.
 
-Bugs may be reported against the `opendylan repository
-<https://github.com/dylan-lang/opendylan/issues>`_ on GitHub. If you
-know the bug is in a specific library repository you can report it
-there instead. If unsure, use `opendylan
-<https://github.com/dylan-lang/opendylan/issues>`_.
-
+.. _opendylan:
+.. _opendylan repository: https://github.com/dylan-lang/opendylan/issues
 
 .. _gitter:
 
-Chat
-====
+The Dylan Language room on Matrix
+  This is where day-to-day Dylan activity takes place. You may sign in with a
+  GitHub, GitLab, Google, etc. and any Matrix client. For example, the
+  Element web client link is:
 
-The `Dylan Language room on Matrix
-<https://app.element.io/#/room/#dylan-language:matrix.org>`_ is where
-day-to-day Dylan activity takes place. You may sign in with a GitHub, GitLab,
-Google, etc.  and any Matrix client.
+  https://app.element.io/#/room/#dylan-language:matrix.org
 
-
-.. _irc:
-
-The #dylan IRC Channel
-======================
-
-The IRC channel (``#dylan`` on Freenode) is no longer used. Some old logs may
-be found here: https://colabti.org/irclogger/irclogger_logs/dylan
-
+  To discuss coding issues you can use https://play.opendylan.org to share an example, or
+  `create a gist on GitHub <https://gist.github.com>`_ and paste a link to it.
 
 .. _mailing-lists:
 
 Mailing List
-============
+  dylan-lang@googlegroups.com, also `browsable on the web
+  <https://groups.google.com/forum/#!forum/dylan-lang>`_, is dedicated to discussion of
+  Dylan.  If you have a question that's more detailed or doesn't required the quick
+  back-and-forth of IRC, this is the preferred place for it.
 
-dylan-lang@googlegroups.com, also `browsable on the web
-<https://groups.google.com/forum/#!forum/dylan-lang>`_, is dedicated
-to discussion of Dylan.  If you have a question that's more detailed
-or doesn't required the quick back-and-forth of IRC, this is the
-preferred place for it.
+  `comp.lang.dylan
+  <http://groups.google.com/forum/#!forum/comp.lang.dylan>`_ also exists,
+  but dylan-lang@ is the preferred forum.
 
-`comp.lang.dylan
-<http://groups.google.com/forum/#!forum/comp.lang.dylan>`_ also exists,
-but dylan-lang@ is the preferred forum.
-
-Other Sites
-===========
-
-- `Fosstodon (a Mastodon instance) <https://fosstodon.org/@DylanLang>`_
-- `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
+Dylan on Other Sites
+  - `Fosstodon <https://fosstodon.org/@DylanLang>`_
+  - `Reddit <https://www.reddit.com/r/dylanlang/>`_
+  - `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
+  - `Twitter <https://twitter.com/DylanLanguage>`_
 
 .. raw:: html
 
