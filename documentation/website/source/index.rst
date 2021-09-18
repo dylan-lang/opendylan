@@ -3,14 +3,19 @@
    <div class="row-fluid">
      <div class="span4">
        <div class="well">
-	 <p>Dylan is a multi-paradigm functional and object-oriented programming language.
-	 It is dynamic while providing a programming model designed to support efficient
-	 machine code generation, including fine-grained control over dynamic and static
-	 behaviors.</p>
+
+Dylan is an `object-functional`_ language `created by Apple`_. Dylan has gradual typing
+and provides a programming model designed to support efficient machine code generation,
+including fine-grained control over dynamic and static behaviors.
+
+.. _object-functional: about/examples/generic_functions.html
+.. _created by Apple: history/
+
+.. raw:: html
+
        </div>
      </div>
      <div class="span8">
-.. raw:: html
 
      <div id="code-carousel" class="carousel slide">
        <ol class="carousel-indicators">
