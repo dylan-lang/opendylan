@@ -32,27 +32,6 @@ a.headerlink {
   color: silver;
   opacity: 0.3;
 }
-#code-carousel {
-  margin: 10px 0;
-}
-#code-carousel .carousel-inner {
-  margin: 0 70px;
-  width: auto;
-}
-#code-carousel .carousel-indicators {
-  margin-right: 70px;
-}
-#code-carousel .carousel-indicators li {
-  background-color: #EFEFEF;
-}
-#code-carousel .carousel-indicators li.active {
-  background-color: #D0D0D0;
-}
-#code-carousel pre {
-  height: 29em;
-  padding-top: 20px;
-}
-
 blockquote div p {
   font-size: 14px;
   line-height: 20px;
@@ -65,10 +44,6 @@ blockquote div p {
   /* Reduce padding above body */
   body {
     padding-top: 30px;
-  }
-  /* Make code font smaller */
-  #code-carousel pre {
-      font-size: smaller;
   }
 }
 
