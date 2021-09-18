@@ -17,14 +17,15 @@
 History
 *******
 
-Dylan is alive and well today, but it has a long history.
+Dylan has a long history. It was originally created in the early 1990s as a project
+within Apple Computer, but was expanded to a partnership between Apple, Harlequin and
+Carnegie Mellon University (CMU).
 
-Dylan was created in the early 1990s. It was originally a project within
-Apple Computer, but was expanded to a partnership between Apple, Harlequin
-and Carnegie Mellon University (CMU).
+See also, the Wikipedia `history of the Dylan programming language
+<https://en.wikipedia.org/wiki/History_of_the_Dylan_programming_language>`_ page, which
+may have additional information.
 
-The original Dylan is now referred to as "Prefix Dylan" and used a
-traditional Lisp-style syntax::
+The original Dylan is now referred to as "Prefix Dylan" and used a Lisp-style syntax::
 
    (define-method sum ((numbers <sequence>))
      (reduce1 + numbers))
@@ -33,23 +34,19 @@ traditional Lisp-style syntax::
      (map square coords)
    (define distance (compose sqrt sum square-all))
 
-Wikipedia also provides a `history of the Dylan programming language
-<https://en.wikipedia.org/wiki/History_of_the_Dylan_programming_language>`_
-which provides additional information not included here.
-
 Apple Dylan
 ===========
 
-At this time, the primary implementation of Dylan was **Apple Dylan**.
-While Dylan was originally intended for use on the Apple Newton platform,
-that didn't work out and their focus shifted to Dylan on the desktop
-on classic Mac OS.
+The first implementation was `Apple Dylan`_.  While Dylan was originally intended for use
+on the Apple Newton platform, that didn't work out and their focus shifted to Dylan on
+the desktop on classic Mac OS.
 
-Some years ago, Paul R Potts wrote about his experiences with
-`Apple Dylan <apple-dylan/index>`_, including some screenshots. Apple
-distributed a `brochure at WWDC in 1994 <../_static/dylanwwdc94brochure.pdf>`_
-(PDF) that described Dylan and the features that it was going to bring to
-the developer experience.
+Some years ago, Paul R Potts wrote about his experiences with `Apple Dylan`_, including
+some screenshots. Apple distributed a `brochure at WWDC in 1994
+<../_static/dylanwwdc94brochure.pdf>`_ (PDF) that described Dylan and the features that
+it was going to bring to the developer experience.
+
+.. _Apple Dylan: apple-dylan/
 
 Change in Syntax
 ================
