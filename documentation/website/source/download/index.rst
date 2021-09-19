@@ -1,14 +1,36 @@
-********************
-Open Dylan Downloads
-********************
+.. raw:: html
 
-Current Version
-===============
+  <div class="row-fluid">
+    <div class="span3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
+        <li><a href="#unix-platforms"><i class="icon-chevron-right"></i> Unix Platforms</a></li>
+        <li><a href="#windows"><i class="icon-chevron-right"></i> Windows</a></li>
+        <li><a href="#get-started"><i class="icon-chevron-right"></i> Get Started</a></li>
+      </ul>
+    </div>
+    <div class="span9">
 
-The current version is 2022.1, released 28 November 2022:
+******************
+Install Open Dylan
+******************
+
+The current version of Open Dylan is 2020.1, released October 10, 2020.  Previous
+releases can be found `on GitHub <https://github.com/dylan-lang/opendylan/releases>`_ or
+in the `download directories`_.
+
+See the `release notes <https://opendylan.org/documentation/release-notes/index.html>`_
+for information about what changed since the previous version.
+
+The `source code <https://github.com/dylan-lang/opendylan/tree/v2020.1.0>`_ is
+available under an open source license in the `"dylan-lang" organization on
+GitHub`_.
+
+Unix Platforms
+==============
 
 .. table::
    :class: table-striped
+   :align: left
 
    +---------------------------+----------------------------------------------+---------------+
    | Platform                  | File                                         | Size (bytes)  |
@@ -23,7 +45,7 @@ The current version is 2022.1, released 28 November 2022:
    +---------------------------+----------------------------------------------+---------------+
    | macOS (Intel)             | `opendylan-2022.1-x86_64-darwin.tar.bz2`_    | 119395771     |
    +---------------------------+----------------------------------------------+---------------+
-   | Windows (32 bit)          | `opendylan-2022.1-win32.exe`_                | 106234106     |
+   | Mac OS X (Intel)          | `opendylan-2020.1-x86_64-darwin.tar.bz2`_    | 108361174     |
    +---------------------------+----------------------------------------------+---------------+
 
 .. raw:: html
@@ -31,19 +53,8 @@ The current version is 2022.1, released 28 November 2022:
    <br/>
    <br/>
 
-See the `release notes
-<https://opendylan.org/documentation/release-notes/index.html>`_ for
-information about what changed since the previous version.
-
-The `source code <https://github.com/dylan-lang/opendylan/tree/v2022.1.0>`_ is
-available under an open source license in the `"dylan-lang" organization on
-GitHub`_.
-
-
-Installation on Unix
-====================
-
-Note that Unix versions only have a command-line compiler and no IDE.
+Note that Unix versions only have a command-line compiler and not the full IDE that is
+available on Windows, although there is some integration with VSCode and Emacs.
 
 All required dependencies (llvm, libgc, libunwind) are included; just unpack
 the tarball and add the ``bin`` directory to your ``PATH``::
@@ -53,8 +64,13 @@ the tarball and add the ``bin`` directory to your ``PATH``::
 You may wish to ``sudo apt install lldb-15``, for debugging.
 
 
-Installation on Windows
-=======================
+Windows
+=======
+
+Open Dylan for Windows is currently a 32-bit application that runs under the WOW64 x86
+emulator on Windows 10 64-bit machines.
+
+Download the installer: `opendylan-2020.1-win32.exe`_ (101563388 bytes).
 
 For installation, double-click on the installer, and follow instructions.  You
 need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
@@ -136,3 +152,9 @@ For 2019.1 and earlier releases:
 .. _opendylan-2022.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-freebsd.tar.bz2
 .. _download directories: https://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
+
+
+.. raw:: html
+
+      </div>
+    </div>
