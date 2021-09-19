@@ -5,9 +5,9 @@
     :copyright: Copyright 2020 by the Dylan Hackers.
     :license: MIT.
 #}
-{% extends "basic/layout.html" %}
+{% extends "agogo/layout.html" %}
 {% block doctype %}
-<!DOCTYPE html>
+<!doctype html>
 {% endblock %}
 {% set navigation_bar = [
     ('download/index', 'Install'),
@@ -21,9 +21,10 @@
 <title>{% if title == "&lt;no title&gt;" %}Open Dylan{% else %}{{ title|striptags|e }}{% endif %}{{ titlesuffix }}</title>
 {%- endblock %}
 {% block extrahead %}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" type="text/css" />
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <!--[if lt IE 9]>
       <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
     <![endif]-->
@@ -39,27 +40,27 @@
 {% endblock %}
 
 {% block header %}
-   <div class="navbar navbar-fixed-top">
-     <div class="navbar-inner">
-       <div class="container">
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-         </a>
-         <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
-         <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
-         <div class="nav-collapse">
-           <ul class="nav">
-           {% for page, caption in navigation_bar -%}
-             <li {% if page == active_page %} class="active" {% endif %} >
-               <a href="{% if page[:4] == 'http' %} {{page}} {% else %} {{ pathto(page) }} {% endif %}">{{ caption|e }}</a>
-           {% endfor -%}
-           </ul>
-         </div>
-       </div>
-     </div>
-    </div>
+    <!-- See examples at https://getbootstrap.com/docs/5.0/components/navbar/ -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
+        <a class="navbar-brand" href="{{ pathto('index') }}"> Open Dylan</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% for page, caption in navigation_bar -%}
+              <li class="nav-item">
+                <a class="nav-link {% if page == active_page %} active {% endif %}"
+                   href="{% if page[:4] == 'http' %} {{page}} {% else %} {{ pathto(page) }} {% endif %}">{{ caption|e }}</a>
+              </li>
+            {% endfor -%}
+          </ul>
+        </div>
+      </div>
+    </nav>
 {% endblock %}
 
 {% block content %}
@@ -104,3 +105,7 @@
 
 {% block relbar1 %}{% endblock %}
 {% block relbar2 %}{% endblock %}
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+           integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+           crossorigin="anonymous"></script>

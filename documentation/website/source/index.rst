@@ -1,50 +1,66 @@
-.. raw:: html
+Open Dylan
+**********
 
-   <div class="row-fluid">
-     <div class="span4">
-       <div class="well">
-
-Dylan is an `object-functional`_ language `created by Apple`_. Dylan has gradual typing
-and provides a programming model designed to support efficient machine code generation,
-including fine-grained control over dynamic and static behaviors.
-
-.. _object-functional: about/examples/generic_functions.html
-.. _created by Apple: history/
+An open source implementation of the `Dylan`_ programming language.
 
 .. raw:: html
 
-       </div>
-     </div>
+   <div class="dylan-top-quote">
+
+..
+   TODO: either reference
+   https://blog.codecentric.de/en/2015/08/essence-of-object-functional-programming-practical-potential-of-scala/
+   or better, write up our own description of object functional.
+
+Dylan is an `object-functional`_ language originally `created by Apple`_ for the
+Newton. Dylan provides a programming model designed to support efficient machine code
+generation, including fine-grained control over dynamic and static behaviors.
+
+.. raw:: html
+
    </div>
-   <div class="row-fluid">
-     <div class="span6">
-       <h2>Get Started</h2>
 
-`Installing Dylan </install/index.html>`_  is easy.
-Once downloaded, we recommend reading through `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_ and exploring `some examples <https://github.com/dylan-lang/opendylan/tree/master/sources/examples>`_.
+.. _Dylan: /books/drm/Title
+.. _object-functional: /about/examples/generic_functions.html
+.. _created by Apple: /history/
 
-.. raw:: html
 
-     <h2>Learn Dylan</h2>
+* *Gradual typing* - specify types only where necessary for clarity or performance.
+* *Generic functions* - dispatch on all positional arguments, for a powerful form of OO.
+* *Multiple inheritance* - use mix-ins to add behavior.
+* *Sealed domains* - for high performance method dispatch.
+* *Garbage collection* - you know you want it.
+* *Macros* - to extend the syntax.
+* *Exception handling* - doesn't unwind the stack, advanced recovery protocols.
+* *Regular and simple syntax*.
+* *Everything returns values* - including conditionals like ``if`` and ``select``.
 
-Dylan has a large amount of documentation available:
 
-* `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`__:
-   A tutorial written for those with solid programming
-   experience in C++ or another object-oriented, static language. It
-   provides a gentler introduction to Dylan than does the Dylan
-   Reference Manual (DRM).
-* `Dylan Programming Guide <https://opendylan.org/books/dpg/>`_:
-   A book length Dylan tutorial.
-* `Dylan Reference Manual <https://opendylan.org/books/drm/>`_:
-   The official definition of the Dylan language and standard library.
-* `Open Dylan Documentation <https://opendylan.org/documentation/>`_:
-   All of the Open Dylan documentation.
+Get Started
+===========
 
 .. raw:: html
 
-     </div>
-   </div>
+   <a href="/download" class="button">Install Dylan...</a>
+
+How do you like to learn?
+-------------------------
+
+* The `Tour of Dylan </about/>`_ is great if you like to learn by example.
+* If you want to play around without having to install anything, try the `Playground`_.
+* `Introduction to Dylan`_ provides a high-level overview of language features.
+* The `Dylan Programming Guide`_ is a book length Dylan tutorial.
+* Like to jump in the deep end?  The `Dylan Reference Manual`_ might be for you.
+* If you have questions, give us a shout on `Gitter`_!
+
+Or explore `all the docs </documentation/>`_, including cheat sheets, articles, and all
+the library docs. Happy hacking!
+
+.. _Playground: https://play.opendylan.org
+.. _Introduction to Dylan: https://opendylan.org/documentation/intro-dylan/
+.. _Dylan Programming Guide: https://opendylan.org/books/dpg/
+.. _Dylan Reference Manual: https://opendylan.org/books/drm/
+.. _Gitter: https://gitter.im/dylan-lang/general
 
 .. toctree::
    :maxdepth: 1

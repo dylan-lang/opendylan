@@ -84,3 +84,11 @@ The `update-opendylan.org.sh` script is run by cron to update the
 documentation in various repositories by essentially doing a git pull
 and make html. These are the docs linked from the main Documentation
 page.
+
+Updating the "opendylan" Sphinx Theme
+-------------------------------------
+
+The "opendylan" Sphinx theme relies heavily on the `Bootstrap library
+<https://getbootstrap.com/>`_, for both the navbar and for styles.
+
+*TODO:* more info here.

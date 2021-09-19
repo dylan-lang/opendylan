@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-#
+
+# Documentation for this file:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
 # Open Dylan documentation build configuration file, created by
 # sphinx-quickstart on Fri Nov  4 12:00:34 2011.
 #
