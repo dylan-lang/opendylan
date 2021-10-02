@@ -38,6 +38,26 @@ blockquote div p {
   margin: 0 0 10px;
 }
 
+.button,a.button {
+    background-color: #006600;
+    /* border-radius: 5px; */
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    color: white;
+    margin: 4px 2px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.bi {
+  vertical-align: -.125em;
+  pointer-events: none;
+  fill: currentColor;
+}
+
 /* Responsive Docs
 -------------------------------------------------- */
 @media (max-width: 480px) {

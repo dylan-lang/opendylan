@@ -1,14 +1,30 @@
 .. raw:: html
 
-  <div class="row-fluid">
-    <div class="span3 bs-docs-sidebar">
-      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
-        <li><a href="#unix-platforms"><i class="icon-chevron-right"></i> Unix Platforms</a></li>
-        <li><a href="#windows"><i class="icon-chevron-right"></i> Windows</a></li>
-        <li><a href="#get-started"><i class="icon-chevron-right"></i> Get Started</a></li>
-      </ul>
-    </div>
-    <div class="span9">
+   <div class="container">
+     <div class="row">
+       <div class="col-3">
+
+         <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+           <ul class="nav nav-pills flex-column mb-auto">
+             <li class="nav-item">
+               <a class="nav-link" href="#unix-platforms">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Unix Platforms</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#windows">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Windows</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#get-started">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Get Started</a>
+             </li>
+           </ul>
+         </div>
+       </div>
+       <div class="col-9">
 
 ******************
 Install Open Dylan
@@ -156,5 +172,6 @@ For 2019.1 and earlier releases:
 
 .. raw:: html
 
-      </div>
-    </div>
+       </div>
+     </div>
+   </div>

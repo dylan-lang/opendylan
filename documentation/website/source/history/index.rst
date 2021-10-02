@@ -1,17 +1,40 @@
 .. raw:: html
 
-  <div class="row-fluid">
-    <div class="span3 bs-docs-sidebar">
-      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
-        <li><a href="#apple-dylan"><i class="icon-chevron-right"></i> Apple Dylan</a></li>
-        <li><a href="#change-in-syntax"><i class="icon-chevron-right"></i> Change in Syntax</a></li>
-        <li><a href="#harlequin-dylan"><i class="icon-chevron-right"></i> Harlequin Dylan</a></li>
-        <li><a href="#gwydion-dylan"><i class="icon-chevron-right"></i> Gwydion Dylan</a></li>
-        <li><a href="#open-source"><i class="icon-chevron-right"></i> Open Source</a></li>
-        <li><a href="#other-implementations"><i class="icon-chevron-right"></i> Other Implementations</a></li>
-      </ul>
-    </div>
-    <div class="span9">
+   <div class="container">
+     <div class="row">
+       <div class="col-3">
+
+         <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+           <ul class="nav nav-pills flex-column mb-auto">
+             <li class="nav-item">
+               <a class="nav-link" href="#apple-dylan">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Apple Dylan</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#change-in-syntax">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Change in Syntax</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#gwydion-dylan">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Gwydion Dylan</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#open-source">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Open Source</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#other-implementations">
+                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
+                 Other Implementations</a>
+             </li>
+           </ul>
+         </div>
+       </div>
+       <div class="col-9">
 
 *******
 History
@@ -259,5 +282,6 @@ Over the years, there have been a variety of other Dylan implementations.
 
 .. raw:: html
 
+       </div>
      </div>
    </div>

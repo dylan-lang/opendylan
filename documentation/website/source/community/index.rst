@@ -1,17 +1,3 @@
-.. raw:: html
-
-  <div class="row-fluid">
-    <div class="span3 bs-docs-sidebar">
-      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
-        <li><a href="#contribute"><i class="icon-chevron-right"></i> How to Contribute</a></li>
-        <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
-        <li><a href="#gitter"><i class="icon-chevron-right"></i> Gitter Channel</a></li>
-        <li><a href="#mailing-lists"><i class="icon-chevron-right"></i> Mailing Lists</a></li>
-        <li><a href="#other-sites"><i class="icon-chevron-right"></i> Other sites</a></li>
-      </ul>
-    </div>
-    <div class="span9">
-
 ***********
 Participate
 ***********
@@ -63,8 +49,3 @@ Dylan on Other Sites
   - `Reddit <https://www.reddit.com/r/dylanlang/>`_
   - `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
   - `Twitter <https://twitter.com/DylanLanguage>`_
-
-.. raw:: html
-
-    </div>
-  </div>
