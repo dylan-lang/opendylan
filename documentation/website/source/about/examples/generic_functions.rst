@@ -25,8 +25,8 @@ If you try to define a method on ``add`` that breaks any of the above rules, you
 get a warning from the compiler.
 
 Note that the ``define generic`` form doesn't contain any actual code; it merely
-defines an API to which all other methods with the same name must conform.  To
-define a very general method on ``add`` we write this:
+defines an API to which all other methods with the same name must conform.  We
+could define a very general method on :drm:`add` this way:
 
 .. code-block:: dylan
 
@@ -51,7 +51,7 @@ even though the default will do the right thing.  You could write this:
 
 Now, if you use ``add(#[1, 2, 3], 4)`` the method for :drm:`<vector>` will be called
 because the first argument is a ``<vector>``, and if you use ``add(#(1, 2, 3), 4)``
-then the first method will be called because the first argument is a :drm:`<list>`, 
+then the first method will be called because the first argument is a :drm:`<list>`,
 which is a :drm:`<sequence>` but is not a :drm:`<vector>`.
 
 Very often, the compiler can figure out which method to call and so no run-time

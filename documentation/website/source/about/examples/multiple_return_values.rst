@@ -43,7 +43,7 @@ or like this if you don't need the second value:
 Note that if you don't declare that the function returns multiple
 values then the compiler may not generate code to return them.  (One
 hopes to receive a nice warning in that case.)  Also, if you declare
-multiple return values but don't return that many, #f will be returned
+multiple return values but don't return that many, ``#f`` will be returned
 in place of the missing values.
 
 ----
@@ -78,19 +78,3 @@ Extra values are ignored and missing values are bound to #f:
 
   let (x, y, z) = values(1, 2);
   // x = 1, y = 2, z = #f
-
-----
-
-**Notes:**
-
-* Multiple value returns can be more efficient than returning a tuple,
-  as some other languages do, because the values can be returned on
-  the stack without the need to allocate memory for a tuple.
-* There are implementation-defined limits on the number of values that
-  may be returned from a function.
-* If you find yourself returning a large number of values (e.g. more
-  than 2 or 3) you may want to consider returning a single object with
-  slots instead.  A rule of thumb is to think about whether it will be
-  common for the caller to only use the first value.  But as always
-  there may be some cases where it's valid to ignore this rule.
-

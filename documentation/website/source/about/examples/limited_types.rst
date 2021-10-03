@@ -10,7 +10,7 @@ there is no built-in ``<byte>`` type, but it could be defined as follows:
 
     define constant <byte> = limited(<integer>, min: 0, max: 255);
 
-Dylan compilers can often provide improved error checking and
+Open Dylan can often provide improved error checking and
 optimizations for limited types.  For example, this code could
 generate a compile time error:
 
@@ -31,7 +31,7 @@ element:
 Open Dylan will optimize accesses into an ``<int-vector>`` defined
 as above.
 
-A Dylan compiler can avoid doing bounds checking or
+Open Dylan can avoid doing bounds checking or
 type checking, and can use an efficient representation of the
 vectors of floating point numbers for this code:
 

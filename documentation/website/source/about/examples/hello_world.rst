@@ -11,10 +11,12 @@ File library.dylan:
   Module: dylan-user
 
   define library hello
+    use dylan;
     use io, import: { format-out };
   end;
 
   define module hello
+    use dylan;
     use format-out;
   end;
 
@@ -32,10 +34,8 @@ File hello.dylan:
 1. Every Dylan program defines a library and at least one module in
    that library, and the simple Hello World program is no exception.
 
-#. Every source file must have a "Module" header to say which module
-   its definitions should be in.   The library is defined in the pre-existing
-   "dylan-user" module.
+#. Every source file must have a ``Module`` header to say which module its definitions
+   should be in. The library is defined in the pre-existing ``dylan-user`` module.
 
-#. The top level expressions in each source file are executed in order
-   when the library is loaded, so there is no need for a "main" method
-   here.
+#. The top level expressions in each source file are executed in order when the library
+   is loaded, so there is no need for a ``main`` method here.

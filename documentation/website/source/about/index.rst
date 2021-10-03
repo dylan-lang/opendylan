@@ -1,36 +1,30 @@
-*****
-About
-*****
+*********************
+A Quick Tour of Dylan
+*********************
 
-From `Wikipedia <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_:
+Before starting the tour, a little more background on Dylan's history and goals may be
+helpful....
 
-    Dylan is a multi-paradigm programming language that includes support for
-    functional and object-oriented programming, and is dynamic while providing
-    a programming model designed to support efficient machine code generation,
-    including fine-grained control over dynamic and static behaviors. It was
-    created in the early 1990s by a group led by Apple Computer.
+Scheme and Common Lisp had a strong influence on Dylan. Like Scheme, Dylan is a "LISP-1",
+meaning it has a single namespace for variables and functions. Dylan's object system is
+derived from the Common Lisp Object System (CLOS), but simplified to allow for better
+compiler optimizations.
 
-    Dylan derives from Scheme and Common Lisp and adds an integrated object
-    system derived from the Common Lisp Object System (CLOS). In Dylan, all
-    values (including numbers, characters, functions, and classes) are
-    first-class objects. Dylan supports multiple inheritance, polymorphism,
-    multiple dispatch, keyword arguments, object introspection, pattern-based
-    syntax extension macros, and many other advanced features. Programs can
-    express fine-grained control over dynamism, admitting programs that
-    occupy a continuum between dynamic and static programming and supporting
-    evolutionary development (allowing for rapid prototyping followed by
-    incremental refinement and optimization).
+Dylan's main design goal is to be a dynamic language well-suited for developing
+commercial software. It attempts to address potential performance issues by introducing
+"natural" limits to the full flexibility of Lisp systems, allowing the compiler to
+clearly understand compilable units (i.e., libraries).
 
-    Dylan's main design goal is to be a dynamic language well-suited for
-    developing commercial software. Dylan attempts to address potential
-    performance issues by introducing "natural" limits to the full
-    flexibility of Lisp systems, allowing the compiler to clearly understand
-    compilable units (i.e., libraries).
+In Dylan, all values (numbers, functions, classes, etc.) are first-class objects. Dylan
+supports multiple inheritance, polymorphism, multiple dispatch, keyword arguments, object
+introspection, pattern-based syntax extension macros, and many other features.
 
-    Although deriving much of its semantics from Scheme and other Lisps —
-    some implementations were in fact initially built within existing
-    Lisp systems—Dylan has an ALGOL-like syntax rather than a
-    Scheme-like prefix syntax.
+Dylan programs have fine-grained control over dynamism, for applications that occupy a
+continuum between dynamic and static programming and supporting evolutionary development
+(allowing for rapid prototyping followed by incremental refinement and optimization). The
+Open Dylan compiler provides both "production" and "rapid development" modes. In
+development mode many of the static restrictions are removed from the generated code, for
+increased flexibility.
 
 Examples:
 

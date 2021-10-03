@@ -2,13 +2,13 @@
 Getters & Setters are functions
 *******************************
 
-Many object-oriented languages encourage you to define a get_foo and
-set_foo function for each member variable foo. These allow you to
+Many object-oriented languages encourage you to define a ``get_foo`` and
+``set_foo`` function for each member variable foo. These allow you to
 control access to the variables and provide for future extensibility.
-For example, set_foo could be modified to keep a table of values of foo.
+For example, ``set_foo`` could be modified to keep a table of values of foo.
 
 Dylan provides for this extensibility without having to write the
-accessor functions up front. Consider a simple Dylan class:
+accessor functions yourself. Consider a simple Dylan class:
 
 .. code-block:: dylan
 
@@ -28,7 +28,7 @@ like members of a C structure:
 
     let car = make(<vehicle>, driver: "Frank");
 
-    // These two expressions return the same value.
+    // These two expressions are semantically identical and return the same value.
     car.driver;
     driver(car);
 

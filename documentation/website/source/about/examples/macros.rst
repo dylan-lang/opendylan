@@ -31,8 +31,7 @@ You can't just write ``iff`` as a function because then both ``f(x)`` and ``g(x)
 
 See also:
 
-* `uncommon-dylan.dylan <https://github.com/dylan-lang/uncommon-dylan/blob/master/uncommon-dylan.dylan>`_ has a version of the ``iff`` macro that also accepts the syntax ``iff(test(), f(x))``.  Other macro examples in that file are ``inc!``, ``dec!``,  and ``ignore-errors``.
 * The `define table macro <https://github.com/dylan-lang/opendylan/blob/master/sources/common-dylan/macros.dylan>`_ in common-dylan is a simple example of making a new top-level "define" form.
 * :drm:`Built-in macros <Built-In_Macros_and_Special_Definitions>` -- Many of the basic features of Dylan are implemented as macros.
+* The `Dylan Macro System </articles/macro-system.html>`_ article by Dustin Voss.
 * The :drm:`Macros` chapter in the :drm:`DRM <Index>`.
-
