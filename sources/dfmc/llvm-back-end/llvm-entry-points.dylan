@@ -467,9 +467,16 @@ define function op--invalid-keyword-trap
      mepargs :: <llvm-value>, disphdr :: <llvm-value>,
      engine-node :: <llvm-value>, key :: <llvm-value>,
      keyvec :: <llvm-value>, implicit? :: <llvm-value>)
- => ();
-  op--call-error-iep(back-end, #"invalid-keyword-trap",
-                     mepargs, disphdr, engine-node, key, keyvec, implicit?)
+ => (call :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
+
+  let ikt-iep = dylan-value(#"invalid-keyword-trap").^iep;
+  let ikt-name = emit-name(back-end, module, ikt-iep);
+  let ikt-global = llvm-builder-global(back-end, ikt-name);
+  op--call-iep(back-end, ikt-global,
+               vector(mepargs, disphdr, engine-node, key, keyvec, implicit?),
+               function-type: llvm-lambda-type(back-end, ikt-iep),
+               calling-convention: llvm-calling-convention(back-end, ikt-iep))
 end function;
 
 define function op--type-check-lambda-arguments
