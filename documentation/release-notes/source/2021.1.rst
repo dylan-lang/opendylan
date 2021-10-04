@@ -20,8 +20,15 @@ Compiler
 * Fixed a crash in the optimizer that ocurred when compiling certain
   C-FFI primitive functions.
 
+* Improved support for code generation of ``apply`` calls to known
+  methods.
+
 Run-time
 ========
+
+* Fixed a problem that prevented treating invalid keyword arguments as
+  run-time warnings (`bug 1386
+  <https://github.com/dylan-lang/opendylan/issues/1386>`_)
 
 Platform Support
 ================
