@@ -550,11 +550,10 @@ define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-
 
     // Chain to the MEP
     let parameter-types
-      = make(<simple-object-vector>, size: count + 3);
-    parameter-types[0] := $llvm-object-pointer-type; // next
-    parameter-types[1] := $llvm-object-pointer-type; // function
-    parameter-types[2] := be.%type-table["iWord"]; // argument count
-    fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+      = make(<simple-object-vector>, size: count + 2);
+    parameter-types[0] := $llvm-object-pointer-type; // function
+    parameter-types[1] := $llvm-object-pointer-type; // next
+    fill!(parameter-types, $llvm-object-pointer-type, start: 2);
     let mep-type
       = make(<llvm-function-type>,
              return-type: llvm-reference-type(be, be.%mv-struct-type),
@@ -564,7 +563,7 @@ define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-
     let result
       = ins--tail-call
           (be, mep-cast,
-           concatenate(vector(next-methods, meth, count), parameter-values),
+           concatenate(vector(meth, next-methods), parameter-values),
            calling-convention: $llvm-calling-convention-c);
 
     add!(result-phi-arguments, result);

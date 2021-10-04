@@ -115,7 +115,8 @@ define module environment-project-wizard
   use locators;
   use file-system;
   use operating-system;
-  use table-extensions, exclude: { table };
+  use table-extensions, exclude: { tabling };
+
     // for case-insensitive-equal
 
   use environment-manager;
