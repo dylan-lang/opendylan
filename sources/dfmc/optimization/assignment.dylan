@@ -171,21 +171,23 @@ define method maybe-rename-temporaries-in-conditional
       values(#t, gen-arg0, type-minus-false(type-estimate(gen-arg0)))
     end;
   if (rename?) // So we need to introduce a new temporary
-    let (tt-c, tt-t) =
-      make-with-temporary
-        (c.environment, <constrain-type>,
-         value: to-be-renamed, type: constraint);
-    let then-f = c.consequent;
-    let changed? = #f;
-    rename-temporary!(to-be-renamed, tt-t);
-    for-computations(tc from then-f before c.next-computation)
-      let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
-      changed? := (changed? | now-changed?);
+    with-parent-computation (c)
+      let (tt-c, tt-t) =
+        make-with-temporary
+          (c.environment, <constrain-type>,
+           value: to-be-renamed, type: constraint);
+      let then-f = c.consequent;
+      let changed? = #f;
+      rename-temporary!(to-be-renamed, tt-t);
+      for-computations(tc from then-f before c.next-computation)
+        let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
+        changed? := (changed? | now-changed?);
+      end;
+      if (changed?)
+        insert-computation-before!(then-f, tt-c);
+      else // It's not used in the consequent, so get rid of it.
+        remove-user!(to-be-renamed, tt-c);
+      end;
     end;
-    if (changed?)
-      insert-computation-before!(then-f, tt-c);
-    else // It's not used in the consequent, so get rid of it.
-      remove-user!(to-be-renamed, tt-c);
-    end
   end;
 end method;
