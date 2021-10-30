@@ -237,18 +237,6 @@ define method maybe-collect-and-dump-call-sites-from
   maybe-dump-call-sites(ld, call-sites);
 end method;
 
-define function lambda-source-location (object :: <&lambda>) => (loc)
-  let body-spec = body-spec(object);
-  let body      = body(object);
-  if (body-spec)
-    body-spec.fragment-source-location
-  elseif (body)
-    computation-source-location(body)
-  else
-    #f
-  end if;
-end function;
-
 define function find-a-source-location(o :: <&lambda>) => (res)
   if (model-has-definition?(o))
     o.model-source-location

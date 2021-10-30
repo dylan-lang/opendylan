@@ -3220,8 +3220,6 @@ define function convert-method-to-model-as
   let (sig-spec, body) = parse-method-signature(name, form);
   let signature
     = compute-signature(#f, sig-spec);
-  let body
-    = as-body(body);
   let model
     = compute-method-explicitly
         (class, #f, name, sig-spec, body);

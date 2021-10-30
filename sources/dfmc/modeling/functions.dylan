@@ -289,6 +289,8 @@ define primary &class <lambda> (<method>)
     init-keyword: compiler-debug-name:;
   // Compile-time slots.
   slot function-properties :: <integer> = 0;
+  lazy slot lambda-source-location :: false-or(<source-location>) = #f,
+    init-keyword: source-location:;
   // definition slots
   lazy slot signature-spec :: <signature-spec>,
     required-init-keyword: signature-spec:;

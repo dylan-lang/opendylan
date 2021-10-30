@@ -209,6 +209,7 @@ define module-with-models dfmc-modeling
       ^function-specializers,
     <&lambda-or-code>,
     <&lambda>,
+      slot lambda-source-location,
       slot lambda-body,
       slot body-spec,
 //      slot data,

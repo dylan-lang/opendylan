@@ -160,10 +160,15 @@ define method compute-method-explicitly
     (method-class :: <class>,
      form, name, signature-spec, body-spec,
      #rest options, #key, #all-keys)
-      => (model :: <&method>)
+ => (model :: <&method>);
+  let source-location
+    = (form & form.form-source-location)
+    | (body-spec & body-spec.fragment-source-location)
+    | parent-source-location();
   apply(^make,
         method-class,
         definition: form,
+        source-location: source-location,
         body-spec: body-spec,
         // debug-name:
         //   ~form & name & mapped-model(as-lowercase(as(<string>, name))),
@@ -367,7 +372,7 @@ end method;
 
 define method compute-and-install-method-dfm
     (method-object :: <&lambda>) => ()
-  with-parent-source-location (model-source-location(method-object))
+  with-parent-source-location (lambda-source-location(method-object))
     let body = compute-method-body(method-object);
     if (body)
       convert-lambda-into*($top-level-environment, method-object, body);
