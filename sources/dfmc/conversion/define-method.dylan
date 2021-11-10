@@ -273,7 +273,9 @@ define method maybe-compute-and-install-method-dfm (m :: <&lambda>) => ()
       ("Skip generating DFM for this method",
        "Retry generating DFM for this method")
       with-dependent-context($compilation of model-creator(m))
-        compute-and-install-method-dfm(m);
+        with-parent-source-location (lambda-source-location(m))
+          compute-and-install-method-dfm(m);
+        end;
       end;
     end;
   end unless;
