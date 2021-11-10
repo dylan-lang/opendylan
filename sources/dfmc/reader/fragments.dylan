@@ -1420,9 +1420,14 @@ end macro;
 
 define inline function do-with-parent-fragment
     (f :: <function>, fragment :: <fragment>)
-  dynamic-bind (*parent-source-location* = fragment-source-location(fragment))
+  let loc = fragment-source-location(fragment);
+  if (loc)
+    dynamic-bind (*parent-source-location* = loc)
+      f()
+    end
+  else
     f()
-  end;
+  end if
 end function;
 
 define macro with-parent-fragment
