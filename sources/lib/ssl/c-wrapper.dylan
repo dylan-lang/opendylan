@@ -8,12 +8,12 @@ Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 define C-function SSL-library-init
   result success :: <C-int>;
-  c-name: "SSL_library_init"
+  c-name: "my_SSL_library_init"
 end;
 
 define C-function SSL-load-error-strings
   result res :: <C-void*>;
-  c-name: "SSL_load_error_strings"
+  c-name: "my_SSL_load_error_strings"
 end;
 
 define C-function ERR-load-BIO-strings
