@@ -47,8 +47,61 @@ define test test-print-to-string ()
   test-print-variables();
 end test;
 
+
+//// printing-object
+
+define class <printing-object-test-class> (<object>) end;
+
+define method print-object
+    (object :: <printing-object-test-class>, stream :: <stream>) => ()
+  printing-object (object, stream, type?: *print-escape?*, identity?: *print-escape?*)
+    write(stream, "xyz")
+  end;
+end method;
+
 define test test-printing-object ()
-  //---*** Fill this in...
+  let object = make(<printing-object-test-class>);
+  let output = print-to-string(object);
+  assert-true(starts-with?(output, "{<printing-object-test-class> xyz #x"),
+              "bad printing-object default output: %=", output);
+  assert-true(ends-with?(output, "}"));
+  assert-equal(print-to-string(object, escape?: #f), "{xyz}");
+
+  assert-equal(print-to-string(object), print-to-string(object),
+               "identical object was assigned a different id");
+end test;
+
+// Verify that when multiple threads call object-id no object=>id mapping is skipped.
+// TBH I'm not sure this test is worth it. The object-id code is pretty simple.
+define test test-object-id-locking ()
+  let origin = *next-object-id*;
+  let n-threads = 5;
+  let per-thread = 100_000;
+  let n-objects = n-threads * per-thread;
+  let threads = make(<stretchy-vector>);
+  let objects = make(<vector>, size: n-objects); // save, and thwart GC
+  for (i from 0 below n-objects)
+    objects[i] := make(<printing-object-test-class>);
+  end;
+  assert-equal(origin, *next-object-id*);
+  local method run (start-index)
+          for (i from start-index below start-index + per-thread)
+            object-id(objects[i]);
+          end;
+        end method;
+  for (i from 0 below n-threads)
+    add!(threads, make(<thread>, function: curry(run, i * per-thread)));
+  end;
+  for (thread in threads)
+    join-thread(thread);
+  end;
+  assert-equal(*next-object-id*, origin + n-objects);
+  let v = make(<vector>, size: n-objects, fill: #f);
+  for (i from 0 below n-objects)
+    let id = object-id(objects[i]);
+    v[id - origin] := #t;
+  end;
+  assert-true(every?(identity, v));
 end test;
 
 
@@ -295,5 +348,6 @@ define suite print-test-suite ()
   test test-print-object;
   test test-print-to-string;
   test test-printing-object;
+  test test-object-id-locking;
   test test-locator-print-object-includes-path;
 end;

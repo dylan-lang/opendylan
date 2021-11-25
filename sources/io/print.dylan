@@ -362,8 +362,8 @@ define method print-object (object :: <object>, stream :: <stream>) => ()
       write(stream, " ");
       write(stream, oname);
     else
-      write(stream, " ");
-      write(stream, machine-word-to-string(address-of(object)));
+      write(stream, " #x");
+      write(stream, integer-to-string(object-id(object), base: 16));
     end if;
   end;
 end method;
@@ -1326,18 +1326,43 @@ define method do-printing-object
         write(stream, as-lowercase(as(<byte-string>, class.debug-name)));
         write(stream, " ");
         continuation(stream);
-        //--- write(stream, " ");
-        //--- write(stream, integer-to-string(object-address(object), base: 16));
+        write(stream, " #x");
+        write(stream, integer-to-string(object-id(object), base: 16));
       type? =>
         write(stream, as-lowercase(as(<byte-string>, class.debug-name)));
         write(stream, " ");
         continuation(stream);
       identity? =>
         continuation(stream);
-        //--- write(stream, " ");
-        //--- write(stream, integer-to-string(object-address(object), base: 16));
+        write(stream, " #x");
+        write(stream, integer-to-string(object-id(object), base: 16));
       otherwise =>
         continuation(stream);
     end
   end
 end method do-printing-object;
+
+// Cache of integer IDs we use instead of the object address when printing, in case we're
+// using a moving GC. <object> => <integer>
+define constant $object-id-cache :: <table> = make(<table>, weak: #"key");
+
+define variable *next-object-id* :: <integer> = 1;
+
+// Lock must be held around changes to the cache and the counter.
+define constant $object-id-lock :: <lock> = make(<lock>);
+
+// Return the object ID for `object`. If this is the first time the ID for this object
+// has been requested, allocate a new ID and add the mapping to the cache.
+define function object-id (object) => (id :: <integer>)
+  element($object-id-cache, object, default: #f)
+    | with-lock ($object-id-lock)
+        // Check again with lock held
+        element($object-id-cache, object, default: #f)
+          | begin
+              let id = *next-object-id*;
+              $object-id-cache[object] := id;
+              *next-object-id* := *next-object-id* + 1;
+              id
+            end
+      end
+end function;

@@ -325,6 +325,11 @@ define module print-internals
          *default-pretty?*,
          *default-escape?*,
          *print-depth*;
+
+  // test suite
+  export
+    object-id,
+    *next-object-id*;
 end module print-internals;
 
 define module standard-io
