@@ -10,6 +10,7 @@ define library io-test-suite
   use common-dylan,
     import: { byte-vector, common-dylan, machine-words, simple-random, threads };
   use io;
+  use strings;
   use system;
   use testworks;
 
@@ -30,6 +31,7 @@ define module io-test-suite
   use file-system;
   use locators;
   use machine-words;
+  use strings;
 
   use streams;
   use streams-internals;
