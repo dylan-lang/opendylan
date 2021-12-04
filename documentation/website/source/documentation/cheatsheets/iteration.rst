@@ -41,8 +41,8 @@ Read more in the DRM: :drm:`while` and :drm:`until`.
 The ``for`` loop
 ================
 
-The :drm:`for` loop can be used in many different ways, but we'll
-demonstrate a couple possibilities here:
+The :drm:`for` loop can be used in many different ways. We demonstrate some of the
+most commonly used features here:
 
 Iterating over a collection
 ---------------------------
@@ -96,8 +96,6 @@ If you want to directly access the keys of the table, you can use
       // do work
     end;
 
-Read more in the DRM: :drm:`for`.
-
 Breaking out of a loop
 ======================
 
@@ -106,17 +104,19 @@ Combine any loop with a :drm:`block` expression:
 
 .. code-block:: dylan
 
-    block (break)
-      while (condition?)
-        if (want-out?)
-          break();
-        end;
-      end;
-    end;
+   let result = block (exit-block)
+                  while (~done())
+                    if (got-error?())
+                      exit-block(1);
+                    end;
+                  end;
+                  2
+                end;
 
-A value can be passed to the exit function (``break`` in this case)
-and that will be the value of the ``block`` expression. This shouldn't
-be confused with :drm:`break`.
+In the example, if the loop ends naturally because ``done()`` returns true,
+then the result is ``2`` because the :drm:`while` exits naturally and ``2``
+is the last expression in the block. If ``got-error?`` returns true, the
+result is ``1`` because that was the value passed to ``exit-block``.
 
 Collection Functions
 ====================
@@ -139,7 +139,10 @@ In all of these, the function passed in can be any of:
 
 .. code-block:: dylan
 
-    do(method (x) format-out("%s\n", x) end, #[1, 2, 3])
+    do(method (x)
+         format-out("%s\n", x)
+       end,
+       #[1, 2, 3])
 
 ``map``, ``map-as``, ``map-into``
 ---------------------------------
@@ -184,3 +187,29 @@ the collection is used as the seed value.
 .. code-block:: dylan
 
     reduce(\+, 0, map(size, qqs))
+
+Iteration with Tail Recursion
+=============================
+
+The ``iterate`` macro in the ``common-dylan`` library is another powerful way to do
+iteration. It relies on the fact that Dylan implementations are required to optimize
+tail recursion.
+
+.. code-block:: dylan
+
+   let x = 7;
+   let factorial = iterate loop (n = x, total = 1)
+                     if (n < 2)
+                       total
+                     else
+                       loop(n - 1, n * total)   // tail call = iteration
+                     end
+                   end;
+
+Here ``iterate`` creates a local method, ``loop``, with two parameters ``n`` and
+``total`` which calls itself recursively until ``n < 2`` is true and then it returns the
+value of ``total``. It then calls the method with the parameter default values, ``x`` and
+``1``.
+
+You could of course do the same thing with a local method yourself but the ``iterate``
+macro makes it more concise.
