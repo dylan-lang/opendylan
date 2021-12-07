@@ -62,5 +62,6 @@ extensions are available to applications in the ``dylan`` library's
    macro-system-extensions
    parser-expansions
    alternative-curry-syntax
+   numeric-literals
 
 All the other language extensions are described in :doc:`../common-dylan/index`.
