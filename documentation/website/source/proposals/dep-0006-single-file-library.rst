@@ -8,9 +8,9 @@ Type:           Standards Track
 Author:         Carl Gay
 Status:         Draft
 Created:        12-Feb-2013 (Darwin's birthday)
-Last-Modified:  17-Feb-2013
-Post-History:   17-Feb-2013 hackers@lists.opendylan.org
-Dylan-Version:  2012.1
+Last-Modified:  04-Dec-2021
+Post-History:   04-Dec-2021 https://gitter.im/dylan-lang/general
+Dylan-Version:  2020.1
 ==============  =============================================
 
 .. contents:: Contents
@@ -31,7 +31,7 @@ define a simple library like hello-world:
 #. A project file (i.e., .lid file) to describe source files to
    include, link options, etc.
 
-#. A library definition source file, often named library.dylan.
+#. A library and module definition source file, often named library.dylan.
 
 #. At least one source file for main program logic, in a module
    defined by the library definition.
@@ -58,7 +58,7 @@ skeleton project with three files (and a registry), this does not
 remove the need to jump back and forth between the library definition
 file and the main source file as you figure out which modules you need
 to use.  There is also the issue of new users figuring out that
-``make-dylan-app`` exists in the first place.
+``make-dylan-app`` exists in the first place, and what LID files are.
 
 There are plenty of libraries that are small enough to comfortably fit
 in a single file.  Of the existing libraries in `the dylan-lang github
@@ -133,9 +133,9 @@ this:
 
     Module: hello-world
 
-    format-out("Hello, world!\n");
+    format-out("Hello, world!\n")
 
-Therefore a way to encode their information into a regular dylan
+A way to encode the same information into a regular dylan
 source file is needed.  After the implementation of this DEP, the
 above library can be defined in a single source file, as follows:
 
@@ -144,10 +144,18 @@ above library can be defined in a single source file, as follows:
 .. code-block:: dylan
 
     Module: hello-world
-    Use-Libraries: common-dylan; io
-    Use-Modules: common-dylan; format-out
 
-    format-out("Hello, world!\n");
+    define libary hello-world
+      use common-dylan;
+      use io;
+    end;
+
+    define module hello-world
+      use common-dylan;
+      use format-out;
+    end;
+
+    format-out("Hello, world!\n")
 
 This continues to use the standard `Dylan Interchange Format
 <https://opendylan.org/books/drm/Dylan_Interchange_Format>`_ as defined
@@ -170,148 +178,121 @@ between the keywords used in LID files and those used in Dylan source
 files.  See https://opendylan.org/documentation/library-reference/lid.html
 for existing Open Dylan LID file keywords.
 
+Module Header
+~~~~~~~~~~~~~
+
+The ``Module`` header is required in a single-source library.
+
 Library Header
 ~~~~~~~~~~~~~~
 
-The ``Library`` header is optional in a single-source library.  If
-present, it defines the name of the library.  If missing, the library
-name is the same as the module name specified by the ``Module``
-header.
+The ``Library`` header is optional. If missing, the library name is the same as
+the module name specified by the ``Module`` header.
+
+.. note:: This decision could have gone the other way, with ``Library``
+          required and ``Module`` optional. The rationale for this choice is
+          that it is normal for each .dylan file to have a ``Module`` header
+          already, so this is consistent with current practice.
 
 Files Header
 ~~~~~~~~~~~~
 
 The ``Files`` header should not appear in a single-file library.  If
-it does, it may be ignored.
+present, the behavior is undefined.
 
+.. note:: Rationale: an implementation could choose to point to a Dylan source
+          file instead of a LID file in its build system. For example, in Open
+          Dylan a "registry" file could point to a .dylan file instead of a
+          .lid file and there's no reason to prevent the .dylan file from
+          including other Dylan source files. However, that is not part of this
+          proposal.
 
 Replacing library.dylan
 -----------------------
 
-When a compiler or interpreter is given a .dylan file to compile or
-execute, these new headers should be respected:
+A single-file Dylan library is divided into three logical sections:
 
-Use-Libraries Header
-~~~~~~~~~~~~~~~~~~~~
+1.  Dylan Interchange Format headers, including all headers that are allowed in
+    Dylan source files or in LID files.
 
-The ``Use-Libraries`` header names libraries used by the library being
-defined.
+2.  Library and module definitions (see below).
 
-The format of this header is::
+3.  Main Dylan code
 
-  Use-Libraries: libspec1 ; libspec2 ; ...
+In the library and module definitions section of the source file normal Dylan
+code comments are allowed and there must be:
 
-In brief, each *libspec* has the exact same syntax as a *use-clause*
-in `define library
-<https://opendylan.org/books/drm/Definition_Macros#define_library>`_,
-but with the leading token ``use`` removed.  Examples::
+* *Exactly one* ``define library`` expression and its name must match the name
+  specified in the ``Library`` header (or the ``Module`` header if there is no
+  ``Library`` header).
 
-  Use-Libraries: system; io { import: streams, format-out}; common-dylan
-  Use-Libraries:
-    system;
-    io { import: streams, format-out};
-    common-dylan
+* *At least* one ``define module`` expression whose name matches the ``Module``
+  header.
 
-Note that Dylan source code comments are allowed in this header, and
-must be ignored.
+* *No* other Dylan code.
 
-Use-Modules Header
-~~~~~~~~~~~~~~~~~~
+The library and module definitions section ends when the first expression that
+is not a ``define library`` or ``define module`` is encountered.
 
-The ``Use-Modules`` header names modules used by the library being
-defined.
+The library and module definitions section is implicitly in the ``dylan-user``
+module.
 
-The format of this header is::
-
-  Use-Modules: modspec1 ; modspec2 ; ...
-
-Again, each *modspec* has the exact same syntax as a *use-clause* in
-`define module
-<https://opendylan.org/books/drm/Definition_Macros#define_module>`_,
-but with the leading token ``use`` removed.  Examples::
-
-  Use-Modules: operating-system; common-dylan; format-out
-  Use-Modules:
-    operating-system,  // from system
-      prefix: "os/",
-      export: all;
-    common-dylan;
-    format-out         // from io
-
-Note that Dylan source code comments are allowed in this header, and
-must be ignored.
-
-Export-Names Header
-~~~~~~~~~~~~~~~~~~~
-
-The ``Export-Names`` header specifies a list of names exported from
-the module named in the ``Module`` header.  The syntax matches the
-syntax in the ``exports`` clause of `define module
-<https://opendylan.org/books/drm/Definition_Macros#define_module>`_,
-but with the token ``exports`` replaced by the ``Export-Names:``
-header keyword.  Examples::
-
-  Export-Names: foo, bar, baz
-
-Because it is only possible to define one module in a single-file
-library there is no need for a way to specify which modules are
-exported from the library.  If the ``Export-Names`` header is
-missing then no modules are exported from the library.  If the
-``Export-Names`` header is present then the module named in the
-``Module`` header is the sole module exported from the library.
+This construction allows the full power of Dylan's module system to be used,
+for example defining both implementation and interface modules, exporting the
+implementation module for use by a (possibly also single-file) test library,
+etc.
 
 Model Implementation
 ====================
 
-A simple (but not recommended) way to implement this proposal
-would be via the following source transformations.  This example is
-provided primarily to demonstrate that a single-file library has the
-same semantics as a multi-file library and to make it clear that the
-new headers defined in this proposal have the same syntax as that of
-``define library`` and ``define module``.
+A simple way to implement this proposal would be via the following source
+transformations. (Such a simplistic implementation is not recommended because
+it would cause problems mapping error messages back to the original source
+files, among other issues.  This example is provided primarily to demonstrate
+that a single-file library has the same semantics as a multi-file library.)
 
-#. Generate a ``library.dylan`` file::
+1.  Generate a ``library.dylan`` file containing the entire library and module
+    definitions section, verbatim, but in the ``dylan-user`` module. Using the
+    hello-world example from above, we generate::
 
-     Module: dylan-user
+      ------- file: library.dylan -------
+      Module: dylan-user
 
-     define library <Library-or-Module-header-value-here>
-       use libspec1;
-       use libspec2;
-       ...
-       export  <Library-or-Module-header-value-here>;
-     end;
+      define libary hello-world
+        use common-dylan;
+        use io;
+      end;
 
-     define module <Module-header-value-here>
-       use modspec1
-       use modspec2
-       ...
-       export <Export-Names-header-value-here>;
-     end;
+      define module hello-world
+        use common-dylan;
+        use format-out;
+      end;
 
-   Note the addition of semicolons where necessary.
+2.  Generate a "main.dylan" file containing the entire headers section and the
+    entire main Dylan code section::
 
-#. Generate a LID file that includes all the headers except for
-   ``Module`` and add a ``Files`` header listing ``library.dylan`` and
-   ``the-given-file.dylan``.
+      ------- file: main.dylan -------
+      Module: hello-world
 
-#. Compile the generated LID file as usual.
+      format-out("Hello, world!\n")
 
-Cost to Implementors
-====================
+#. Generate a LID file that includes the entire headers section. Add a
+   ``Library`` header matching the ``Module`` header if none was provided, and
+   add "library.dylan" and "main.dylan" to the ``Files`` header::
 
-[Someone needs to correct this.  I (cgay) am not familiar with the
-compiler internals.]
+     ------- file: hello-world.lid -------
+     Library: hello-world
+     Module: hello-world
+     Files: library.dylan
+            main.dylan
 
-For the current Open Dylan command-line tools the cost of this
-proposal is likely fairly low.  It should involve some code to handle
-the case where a ".dylan" file is passed on the command line.  It will
-need to parse the file headers and create a "project" object in memory
-with generated source records for the library and module definitions
-and a LID file representation.  Ideally the compiler will be able to
-pinpoint errors in the library and module definitions to the
-appropriate header lines.
+#. Compile the generated LID file in the normal way.
 
-The Open Dylan IDE can leverage the work done on the command-line
-tools, but no doubt it makes some assumptions about projects always
-having LID files.  There will be substantial work involved if anyone
-wants to support this feature in the IDE.
+Alternatives Considered
+=======================
+
+The initial version of this DEP considered adding special Dylan Interchange
+Format headers (``Use-library``, ``Use-module``, etc.) in which the library and
+module imports would be specified. That version was rejected because it did not
+allow the full power of Dylan's module system to be used. See older revisions
+of this file for more detail.
