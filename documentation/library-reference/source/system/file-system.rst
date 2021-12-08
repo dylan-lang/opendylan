@@ -44,6 +44,7 @@ perform file management tasks at any position in the file system.
 
 - :func:`create-directory`
 - :func:`delete-directory`
+- :func:`directory-contents`
 - :func:`ensure-directories-exist`
 - :func:`do-directory`
 - :func:`working-directory-setter`
@@ -74,6 +75,7 @@ properties of the file.
 - :func:`file-properties`
 - :func:`file-property`
 - :func:`file-type`
+- :func:`link-target`
 
 The FILE-SYSTEM module
 ----------------------
@@ -185,6 +187,21 @@ File-System module.
      Deletes the file system entity specified by *file*. If *file*
      refers to a link, the link is removed, but the actual file that the
      link points to is not removed.
+
+.. function:: directory-contents
+
+   Returns a sequence of files and subdirectories contained in a directory.
+
+   :signature: directory-contents *directory* => *locators*
+
+   :parameter directory: An instance of :type:`<pathname>`.
+   :value locators: A :drm:`<sequence>` of :class:`<locator>`.
+
+   :description:
+
+      In the result, each file is represented by a :class:`<file-locator>` and
+      each directory is represented by a :class:`<directory-locator>`. The "."
+      and ".." directories are not included in the result.
 
 .. function:: do-directory
 
@@ -487,6 +504,18 @@ File-System module.
      of this function can be used with concatenate to create pathnames
      of entities in the home directory.
 
+.. function:: link-target
+
+   Returns the target of a symbolic link.
+
+   :signature: link-target *file* => *target*
+   :parameter file: An instance of type :type:`<pathname>`.
+   :value target: An instance of type :type:`<pathname>`.
+   :description:
+
+      Repeatedly follows symbolic links starting with *file* until it finds a
+      non-link file or directory, or a non-existent link target.
+
 .. type:: <pathname>
 
    The type representing a file system entity.
@@ -512,6 +541,7 @@ File-System module.
      - :func:`file-property-setter`
      - :func:`file-type`
      - :func:`home-directory`
+     - :func:`link-target`
      - :func:`rename-file`
 
 .. function:: rename-file
