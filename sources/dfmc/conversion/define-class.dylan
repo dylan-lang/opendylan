@@ -522,7 +522,9 @@ define method compute-method-body
       ^class-constructor(class) := m;
       let allocation
         = if (^repeated-slot-descriptor(class))
-            #{ allocate-instance(class, init-args) }
+            with-expansion-source-form (model-definition(class))
+              #{ allocate-instance(class, init-args) }
+            end
           else
             // #{ system-allocate-simple-instance(?class) }
             let instance-size = ^instance-storage-size(class);
@@ -532,36 +534,43 @@ define method compute-method-body
             let wrapper           = ^class-mm-wrapper(class);
             let raw-instance-size = make-raw-literal(instance-size);
             let raw-zero          = make-raw-literal(0);
-            #{ primitive-object-allocate-filled
-                 (?raw-total-size, ?wrapper, ?raw-instance-size,
+            with-expansion-source-form (model-definition(class))
+              #{ primitive-object-allocate-filled
+                   (?raw-total-size, ?wrapper, ?raw-instance-size,
                     %unbound, ?raw-zero, ?raw-zero, %unbound) }
+            end
           end;
       if (no-defaults?)
-        #{ begin
-             let class = ?class;
-             let object :: ?class = ?allocation;
-             begin ??set-specs; ... end;
-             apply(initialize, object, init-args);
-             object
-           end }
-      else
-        #{ begin
-             local method defaulted-initialize
-                 (object :: ?class,
-                    #rest init-args, #key ??key-specs, ..., #all-keys)
+        with-expansion-source-form (model-definition(class))
+          #{ begin
+               let class = ?class;
+               let object :: ?class = ?allocation;
                begin ??set-specs; ... end;
                apply(initialize, object, init-args);
-             end method;
-             let class = ?class;
-             let init-args
-               = concatenate-2
-                   (init-args, class.defaulted-initialization-arguments);
-             let object :: ?class = ?allocation;
-             apply(defaulted-initialize, object, init-args);
-             object
-           end }
-      end;
-    end;
+               object
+             end }
+        end
+      else
+        with-expansion-source-form (model-definition(class))
+          #{ begin
+               local
+                 method defaulted-initialize
+                     (object :: ?class,
+                      #rest init-args, #key ??key-specs, ..., #all-keys)
+                   begin ??set-specs; ... end;
+                   apply(initialize, object, init-args);
+                 end method;
+               let class = ?class;
+               let init-args
+                 = concatenate-2
+                     (init-args, class.defaulted-initialization-arguments);
+               let object :: ?class = ?allocation;
+               apply(defaulted-initialize, object, init-args);
+               object
+             end }
+        end
+      end
+    end
   else
     ^class-constructor(class) := dylan-value(#"default-class-constructor");
     #{ error("Punt complex class constructor for %= called.", ?class) }
@@ -618,30 +627,40 @@ define method compute-slot-initialization-code
               // unbound yet keyword initializable that often, but we'll
               // have to see...
               if (^init-keyword-required?(slotd) | ^init-supplied?(initd))
-                #{ let ?name :: ?type-expression = ?name; }
+                with-expansion-source-form (model-definition(slotd))
+                  #{ let ?name :: ?type-expression = ?name; }
+                end
               else
-                #{ let ?name
-                     = if (?name == ?$unbound)
-                         ?name
-                       else
-                         let ?name :: ?type-expression = ?name;
-                         ?name
-                       end; }
-              end;
+                with-expansion-source-form (model-definition(slotd))
+                  #{ let ?name
+                       = if (?name == ?$unbound)
+                           ?name
+                         else
+                           let ?name :: ?type-expression = ?name;
+                           ?name
+                         end; }
+                end
+              end
             end;
-        #{ ?type-check %slot-value-setter(?name, object, ?slotd, ?offset) }
+        with-expansion-source-form (model-definition(slotd))
+          #{ ?type-check %slot-value-setter(?name, object, ?slotd, ?offset) }
+        end
       else
         if (^init-supplied?(initd))
           let init
             = compute-slot-initialization-code-for-default-value
                 (class, slotd);
-          #{ %slot-value-setter(?init, object, ?slotd, ?offset) }
+          with-expansion-source-form (model-definition(slotd))
+            #{ %slot-value-setter(?init, object, ?slotd, ?offset) }
+          end
         elseif (^slot-type(slotd) == dylan-value(#"<raw-machine-word>"))
           let raw-zero = make-raw-literal(0);
           #{ %slot-value-setter(?raw-zero, object, ?slotd, ?offset) }
         else
           // Is this necessary, or does allocation fill in unbound?
-          #{ %slot-value-setter(?$unbound, object, ?slotd, ?offset) }
+          with-expansion-source-form (model-definition(slotd))
+            #{ %slot-value-setter(?$unbound, object, ?slotd, ?offset) }
+          end
         end
       end;
   values(key-spec, set-spec)

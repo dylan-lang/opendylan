@@ -39,7 +39,7 @@ define method llvm-lambda-dbg-function
         let sig-spec = signature-spec(fun);
 
         // Compute the source location
-        let loc = fun.model-source-location;
+        let loc = fun.lambda-source-location;
         let (dbg-file, dbg-line, dbg-column)
           = if (instance?(loc, <source-location>))
               source-location-dbg-loc(back-end, loc)
@@ -108,7 +108,7 @@ define method emit-lambda-dbg-function
   let dbg-function = llvm-lambda-dbg-function(back-end, fun);
 
   // Compute the source location
-  let loc = fun.model-source-location;
+  let loc = fun.lambda-source-location;
   let (dbg-file, dbg-line, dbg-column)
     = if (instance?(loc, <source-location>))
         source-location-dbg-loc(back-end, loc)

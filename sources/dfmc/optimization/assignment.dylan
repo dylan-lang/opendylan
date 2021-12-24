@@ -65,19 +65,32 @@ end method cell-assigned-temporaries;
 define method convert-make-cell
     (env :: <lambda-lexical-environment>, t :: <temporary>)
  => (first-c :: <computation>, last-c :: <computation>, t :: <cell>);
-   with-parent-computation (t.generator)
-     let type
+  local
+    method make-cell
+        (env :: <lambda-lexical-environment>, t :: <temporary>)
+     => (first-c :: <computation>, last-c :: <computation>, t :: <cell>);
+      let type
         = as(<&type>, type-estimate(t));
-     let (unboxer-c, unboxed-t)
-       = maybe-convert-unbox(env, t, type);
-     let (c, tmp)
-       = make-with-temporary
-           (env, <make-cell>, value: unboxed-t, temporary-class: <cell>);
-     let cell = c.temporary;
-     cell-type(cell) := type;
-     rename-temporary!(t, cell);
-     join-1x1-t!(unboxer-c, c, tmp);
-   end;
+      let (unboxer-c, unboxed-t)
+        = maybe-convert-unbox(env, t, type);
+      let (c, tmp)
+        = make-with-temporary
+            (env, <make-cell>, value: unboxed-t, temporary-class: <cell>);
+      let cell = c.temporary;
+      cell-type(cell) := type;
+      rename-temporary!(t, cell);
+      join-1x1-t!(unboxer-c, c, tmp)
+    end method;
+  if (t.generator)
+    with-parent-computation (t.generator)
+      make-cell(env, t)
+    end
+  else
+    // No geneator, probably an argument
+    with-parent-source-location (env.lambda.lambda-source-location)
+      make-cell(env, t)
+    end
+  end if;
 end method convert-make-cell;
 
 define method convert-get-cell-value
@@ -171,21 +184,23 @@ define method maybe-rename-temporaries-in-conditional
       values(#t, gen-arg0, type-minus-false(type-estimate(gen-arg0)))
     end;
   if (rename?) // So we need to introduce a new temporary
-    let (tt-c, tt-t) =
-      make-with-temporary
-        (c.environment, <constrain-type>,
-         value: to-be-renamed, type: constraint);
-    let then-f = c.consequent;
-    let changed? = #f;
-    rename-temporary!(to-be-renamed, tt-t);
-    for-computations(tc from then-f before c.next-computation)
-      let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
-      changed? := (changed? | now-changed?);
+    with-parent-computation (c)
+      let (tt-c, tt-t) =
+        make-with-temporary
+          (c.environment, <constrain-type>,
+           value: to-be-renamed, type: constraint);
+      let then-f = c.consequent;
+      let changed? = #f;
+      rename-temporary!(to-be-renamed, tt-t);
+      for-computations(tc from then-f before c.next-computation)
+        let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
+        changed? := (changed? | now-changed?);
+      end;
+      if (changed?)
+        insert-computation-before!(then-f, tt-c);
+      else // It's not used in the consequent, so get rid of it.
+        remove-user!(to-be-renamed, tt-c);
+      end;
     end;
-    if (changed?)
-      insert-computation-before!(then-f, tt-c);
-    else // It's not used in the consequent, so get rid of it.
-      remove-user!(to-be-renamed, tt-c);
-    end
   end;
 end method;

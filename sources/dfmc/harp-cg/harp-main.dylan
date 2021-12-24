@@ -178,13 +178,12 @@ define sideways method dummy-harp-source-locator?(locator :: <compiler-range-sou
 end method;
 
 define function find-a-source-location(o :: <&iep>)
-
   if (o.function.model-has-definition?)
     o.function.model-source-location
   else
-    make-dummy-source-locator(model-compilation-record(o));
-  end if;
-
+    o.function.lambda-source-location
+      | make-dummy-source-locator(model-compilation-record(o))
+  end if
 end function;
 
 /// EMIT
