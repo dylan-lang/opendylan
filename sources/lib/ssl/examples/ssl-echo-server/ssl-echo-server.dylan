@@ -9,40 +9,42 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method echo-server () => ();
   start-sockets();
-  let the-server = make(<TCP-server-socket>, port: 4007, ssl?: #t, certificate: "certificate.pem", key: "key.pem");
+  let server-socket = make(<TCP-server-socket>,
+                           port: 4007, ssl?: #t,
+                           certificate: "certificate.pem",
+                           key: "key.pem");
   block ()
     while (#t)
-      let reply-socket = accept(the-server);
-      make(<thread>,
-	   function:
-	     method ()
-	       block ()
-		 format-out("Responding to client at %s port: %d\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);      
-
-		 let stuff-to-echo = 
-		   read-line(reply-socket, on-end-of-stream: #"eoi");
-		 until (stuff-to-echo == #"eoi")
-                   format-out("Echoing: %s\n", stuff-to-echo);
-		   write-line(reply-socket, stuff-to-echo);
-		   stuff-to-echo :=
-		     read-line(reply-socket, on-end-of-stream: #"eoi");
-		 end until;
-		 close(reply-socket);
-		 format-out("Connection to %s port: %d closed\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);      
-	       exception (condition :: <recoverable-socket-condition>)
-		 close(reply-socket, abort?: #t);
-		 format-out("Connection to %s port: %d aborted\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);
-	       end block;
-	     end method);
-    end while;
+      let reply-socket = accept(server-socket);
+      make(<thread>, function: method ()
+                                 handle-request(reply-socket)
+                               end)
+    end;
   cleanup
-    close(the-server);
+    close(server-socket);
+  end;
+end method;
+
+define method handle-request (socket)
+  block ()
+    format-out("Responding to client at %s port: %d\n",
+               socket.remote-host.host-name,
+               socket.remote-port);
+    let input = read-line(socket, on-end-of-stream: #"eoi");
+    until (input == #"eoi")
+      format-out("Echoing: %s\n", input);
+      write-line(socket, input);
+      input := read-line(socket, on-end-of-stream: #"eoi");
+    end;
+    close(socket);
+    format-out("Connection to %s port: %d closed\n",
+               socket.remote-host.host-name,
+               socket.remote-port);
+  exception (condition :: <recoverable-socket-condition>)
+    close(socket, abort?: #t);
+    format-out("Connection to %s port: %d aborted\n",
+               socket.remote-host.host-name,
+               socket.remote-port);
   end block;
 end method;
 
