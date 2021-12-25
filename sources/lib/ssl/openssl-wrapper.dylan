@@ -338,9 +338,8 @@ define method accessor-read-into!
 	      count));
   if (r < 0)
     SSL-error(accessor.socket-descriptor, r);
-  else
-    r
-  end
+  end;
+  r
 end;
 
 define method accessor-write-from
@@ -352,9 +351,8 @@ define method accessor-write-from
     (SSL-write(accessor.socket-descriptor, byte-storage-offset-address(buffer, offset), count));
   if (nwritten < 0)
     SSL-error(accessor.socket-descriptor, nwritten);
-  else
-    values(nwritten, buffer)
-  end
+  end;
+  values(nwritten, buffer)
 end;
 
 define method accessor-close
