@@ -234,7 +234,7 @@ define method initialize (s :: <ssl-server-socket>, #rest rest,
   s.socket-descriptor := s.underlying-socket.socket-descriptor;
 end;
 
-define method accept 
+define method accept
     (server-socket :: <ssl-server-socket>, #rest args, #key element-type = #f, #all-keys)
  => (connected-socket :: <socket>);
   let manager = current-socket-manager();
@@ -243,7 +243,7 @@ define method accept
   let result =
     with-lock (socket-manager-lock(manager))
       let lower = apply(make,
-			client-class-for-server(lower-socket), 
+			client-class-for-server(lower-socket),
 			descriptor: descriptor,
 			element-type: element-type | lower-socket.default-element-type,
 			args);
@@ -319,7 +319,7 @@ end;
 
 define method close
     (the-socket :: <ssl-server-socket>,
-     #rest keys, 
+     #rest keys,
      #key abort? = #f, wait? = #t, synchronize? = #f,
      already-unregistered? = #f) => ()
   SSL-context-free(the-socket.ssl-context);
@@ -356,7 +356,7 @@ define method accessor-write-from
 end;
 
 define method accessor-close
-    (accessor :: <unix-ssl-socket-accessor>, #key abort?, wait?) 
+    (accessor :: <unix-ssl-socket-accessor>, #key abort?, wait?)
  => (closed? :: <boolean>)
   let ssl* = accessor.socket-descriptor;
   let s = SSL-shutdown(ssl*);
@@ -365,7 +365,7 @@ define method accessor-close
      but, calling ssl-shutdown again sends data; and when
      the other side has quit (eg openssl s_client with ctrl+c)
      this results in bus errors... */
-//  if (s == 0) 
+//  if (s == 0)
 //    let s = SSL-shutdown(ssl*);
 //    if (s ~= 1)
 //      SSL-error(ssl*, s);
