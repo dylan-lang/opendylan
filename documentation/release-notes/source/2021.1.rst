@@ -57,6 +57,17 @@ Debugging
 Documentation
 =============
 
+* The `Developing Component Software with CORBA
+  <http://opendylan.org/documentation/opendylan/corba-guide/index.htm>`_
+  guide has been updated.
+
+* Documentation for the DOOD library has been added to `the library reference
+  <https://opendylan.org/documentation/library-reference/index.html>`_.
+
+* Documentation for the internal ``access-path`` and ``debugger-manager``
+  libraries is now available in the `Open Dylan Hacker's Guide
+  <https://opendylan.org/documentation/hacker-guide/index.html>`_.
+
 Build System
 ============
 
@@ -71,6 +82,8 @@ common-dylan Library
 
 * ``integer-to-string`` has a new *lowercase?* keyword argument. When true,
   lowercase characters are used when *base* is above 10.
+
+* ``string-to-integer`` performance has been improved.
 
 io Library
 ----------
@@ -90,6 +103,11 @@ c-ffi Library
 
 network library
 ---------------
+
+SSL Library
+-----------
+
+The ``ssl-network`` library has been updated for compatibility with OpenSSL 1.1.x.
 
 testworks Library
 -----------------
