@@ -1,27 +1,27 @@
 [submodule "documentation/sphinx-extensions"]
 	path = documentation/sphinx-extensions
-	url = git://github.com/dylan-lang/sphinx-extensions.git
+	url = https://github.com/dylan-lang/sphinx-extensions.git
 [submodule "sources/lib/collection-extensions"]
 	path = sources/lib/collection-extensions
-	url = git://github.com/dylan-lang/collection-extensions.git
+	url = https://github.com/dylan-lang/collection-extensions.git
 [submodule "sources/lib/command-line-parser"]
 	path = sources/lib/command-line-parser
-	url = git://github.com/dylan-lang/command-line-parser.git
+	url = https://github.com/dylan-lang/command-line-parser.git
 [submodule "sources/lib/regular-expressions"]
 	path = sources/lib/regular-expressions
-	url = git://github.com/dylan-lang/regular-expressions.git
+	url = https://github.com/dylan-lang/regular-expressions.git
 [submodule "sources/lib/strings"]
 	path = sources/lib/strings
-	url = git://github.com/dylan-lang/strings.git
+	url = https://github.com/dylan-lang/strings.git
 [submodule "sources/lib/logging"]
 	path = sources/lib/logging
-	url = git://github.com/dylan-lang/logging.git
+	url = https://github.com/dylan-lang/logging.git
 [submodule "sources/lib/hash-algorithms"]
 	path = sources/lib/hash-algorithms
-	url = git://github.com/dylan-lang/hash-algorithms.git
+	url = https://github.com/dylan-lang/hash-algorithms.git
 [submodule "sources/lib/testworks"]
 	path = sources/lib/testworks
-	url = git://github.com/dylan-lang/testworks.git
+	url = https://github.com/dylan-lang/testworks.git
 [submodule "sources/lib/json"]
 	path = sources/lib/json
 	url = https://github.com/dylan-lang/json.git
