@@ -320,6 +320,8 @@ define test test-locator-name ()
   assert-equal("example.txt", locator-name(as(<file-locator>, "example.txt")));
   assert-equal("example", locator-name(as(<file-locator>, "example")));
   assert-equal("example.dylan", locator-name(as(<file-locator>, "/home/andrewa/example.dylan")));
+  assert-equal("d", locator-name(as(<directory-locator>, "/a/b/c/d")));
+  assert-equal(".", locator-name(as(<directory-locator>, ".")));
 end test;
 
 /// Coercion protocols

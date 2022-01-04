@@ -144,7 +144,12 @@ define sealed method locator-name
  => (name :: false-or(<string>))
   let path = locator.locator-path;
   unless (empty?(path))
-    path[size(path) - 1]
+    let name = path[size(path) - 1];
+    if (name == #"self")
+      "."
+    else
+      name
+    end
   end
 end method locator-name;
 
