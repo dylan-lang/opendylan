@@ -424,7 +424,7 @@ These are organized based on the "Standard Procedures" section of R4RS.
 | *[Most of the standard Scheme numeric functions (e.g.  max, remainder) are     |
 | defined similarly in Dylan.  No need  to list them all here.]*                 |
 +--------------------------------+-----------------------------------------------+
-| ** Characters**                                                                |
+| **Characters**                                                                 |
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
