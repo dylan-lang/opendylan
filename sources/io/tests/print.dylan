@@ -62,7 +62,7 @@ end method;
 define test test-printing-object ()
   let object = make(<printing-object-test-class>);
   let output = print-to-string(object);
-  assert-true(starts-with?(output, "{<printing-object-test-class> xyz #x"),
+  assert-true(starts-with?(output, "{<printing-object-test-class> xyz "),
               "bad printing-object default output: %=", output);
   assert-true(ends-with?(output, "}"));
   assert-equal(print-to-string(object, escape?: #f), "{xyz}");
