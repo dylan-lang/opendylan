@@ -358,12 +358,11 @@ define method print-object (object :: <object>, stream :: <stream>) => ()
   printing-logical-block (stream, prefix: "{", suffix: "}")
     write-class-name(object.object-class, stream);
     let oname = object.debug-name;
+    write(stream, " ");
     if (oname)
-      write(stream, " ");
       write(stream, oname);
     else
-      write(stream, " #x");
-      write(stream, integer-to-string(object-id(object), base: 16));
+      write(stream, integer-to-string(object-id(object)));
     end if;
   end;
 end method;
@@ -1326,16 +1325,16 @@ define method do-printing-object
         write(stream, as-lowercase(as(<byte-string>, class.debug-name)));
         write(stream, " ");
         continuation(stream);
-        write(stream, " #x");
-        write(stream, integer-to-string(object-id(object), base: 16));
+        write(stream, " ");
+        write(stream, integer-to-string(object-id(object)));
       type? =>
         write(stream, as-lowercase(as(<byte-string>, class.debug-name)));
         write(stream, " ");
         continuation(stream);
       identity? =>
         continuation(stream);
-        write(stream, " #x");
-        write(stream, integer-to-string(object-id(object), base: 16));
+        write(stream, " ");
+        write(stream, integer-to-string(object-id(object)));
       otherwise =>
         continuation(stream);
     end
