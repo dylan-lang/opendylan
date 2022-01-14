@@ -107,13 +107,21 @@ define method output-computation
     do-used-value-references
       (method (t)
          unless (member?(t, seen))
-           indentd-format(stream, depth, "| %s :: %s\n", t, type-estimate(t));
+           block ()
+             indentd-format(stream, depth, "| %s :: %s\n", t, type-estimate(t));
+           exception (<error>)
+             // Ignore
+           end block;
            add!(seen, t)
          end unless;
        end, c);
     if (c.temporary & c.temporary.used?)
       let t = c.temporary;
-      indentd-format(stream, depth, "\\ %s :: %s\n", t, type-estimate(t));
+      block ()
+        indentd-format(stream, depth, "\\ %s :: %s\n", t, type-estimate(t));
+      exception (<error>)
+        // Ignore
+      end block;
       add!(seen, t)
     end if;
   end if;
