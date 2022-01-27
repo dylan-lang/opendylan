@@ -26,6 +26,12 @@ Compiler
 * Improved source line tracking in the generated code, reducing the
   occurence of code marked as being at line 0 by the debugger.
 
+* Added support for linking executable Dylan libraries and all of
+  their dependencies into a single unified executable using the
+  ``-unify`` build option. The unified executable will be stored in
+  the :file:`sbin` (static executables binary) directory of the
+  personal-root.
+
 Run-time
 ========
 
