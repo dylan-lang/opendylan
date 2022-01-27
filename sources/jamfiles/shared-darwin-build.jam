@@ -34,3 +34,9 @@ actions LinkEXE bind NEEDLIBS {
   $(DSYMUTIL) $(<:Q) &&
   $(STRIP) -S $(<:Q)
 }
+
+actions UnifyEXE bind NEEDLIBS {
+  $(UNIFYLINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) &&
+  $(DSYMUTIL) $(<:Q) &&
+  $(STRIP) -S $(<:Q)
+}
