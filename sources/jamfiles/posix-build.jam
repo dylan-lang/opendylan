@@ -4,6 +4,7 @@
 {
   local _lib = lib ;
   local _bin = bin ;
+  local _sbin = sbin ;
   local _inc = include ;
 
   # SYSTEM_ROOT is set by the build-system
@@ -18,6 +19,7 @@
   # . is set by the build system
   LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
   BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+  SBINDIR ?= $(_sbin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
   HDRS ?= $(SYSTEM_INCDIR) ;
 }
 
@@ -53,6 +55,7 @@ STRIP     ?= strip ;
 CCFLAGS   += -fPIC ;
 
 LINK      ?= $(CC) ;
+UNIFYLINK ?= $(CC) -Bstatic ;
 LINKFLAGS ?= $(CCFLAGS) ;
 
 #
@@ -122,26 +125,30 @@ rule DylanLibrary image : version {
   # Link a Dylan library as a shared library or executable image.
 
   local _dll = [ FDLLName $(image) ] ;
-  local _lib = [ FLIBName $(image) ] ;
+  local _ulib = [ FULIBName $(image) ] ;
+  local _lflag = [ FLIBFlag $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
+  local _uexe = $(_exe:G=unify) ;
 
   # Here we save the name and search directory of the DLL for this library.
 
   _dll_$(image[1]:L) = $(_dll) ;
-  _lib_$(image[1]:L) = $(_lib) ;
+  _ulib_$(image[1]:L) = $(_ulib) ;
+  _lflag_$(image[1]:L) = $(_lflag) ;
   if ! $(SYSTEM) && ! $(PERSONAL_ROOT) {
     _dir_$(image[1]:L) = $(LIBDIR) ;
   }
 
   # Shared libraries and executable images
 
-  MakeLocate $(_dll) : $(LIBDIR) ;
+  MakeLocate $(_dll) $(_ulib) : $(LIBDIR) ;
   MakeLocate $(_exe) : $(BINDIR) ;
+  MakeLocate $(_uexe) : $(SBINDIR) ;
 
   # Initial library search path
 
   LIBPATH on $(_dll) = $(PERSONAL_LIBDIR) ;
-  LIBPATH on $(_exe) = $(PERSONAL_LIBDIR:E=$(LIBDIR)) ;
+  LIBPATH on $(_exe) $(_uexe) = $(PERSONAL_LIBDIR:E=$(LIBDIR)) ;
 
   # Install needed runtime libraries locally
   if $(image[1]:L) = dylan {
@@ -182,9 +189,15 @@ rule DylanLibrary image : version {
   SEARCH on $(_obj) $(_asm) = $(SEARCH_SOURCE) ;
 
   Depends $(_exe) : $(_dll) ;
-  LINKLIBS on $(_exe) += $(_lib) ;
-  LINKFLAGS on $(_exe) = $(LINKFLAGS) $(LINKFLAGSEXE) ;
+  LINKLIBS on $(_exe) += $(_lflag) ;
+  LINKFLAGS on $(_exe) $(_uexe) = $(LINKFLAGS) $(LINKFLAGSEXE) ;
   LinkEXE $(_exe) : $(_obj) ;
+
+  # Dylan glue must appear first in the statically-linked executable
+  # so that the system initializations are performed in the right
+  # order
+  local _glue = _glue$(SUFOUT) ;
+  UnifyEXE $(_uexe) : $(_glue:G=dylan) $(_obj) $(_ulib) ;
 
   if $(COMPILER_BACK_END) = c {
     LINKFLAGS on $(_exe) += [ on $(_exe) FIncludes $(HDRS) ] ;
@@ -196,10 +209,11 @@ rule DylanLibrary image : version {
   if ! $(PARENT) {
     Depends dll : $(_dll) ;
     Depends exe : $(_exe) ;
+    Depends unify-exe : $(_uexe) ;
 
-    Clean clean : $(_dll) $(_exe) $(_mkf) $(_obj) $(_asm) ;
+    Clean clean : $(_dll) $(_exe) $(_uexe) $(_mkf) $(_obj) $(_asm) ;
   }
-  Clean clean-all : $(_dll) $(_exe) $(_mkf) $(_obj) $(_asm) ;
+  Clean clean-all : $(_dll) $(_exe) $(_uexe) $(_mkf) $(_obj) $(_asm) ;
 
   # Mark the library version
 
@@ -214,6 +228,7 @@ rule DylanLibraryFiles image : files {
   # Link Dylan-derived object files into the resulting shared library.
   if ! $(SYSTEM) {
     local _dll = [ FDLLName $(image) ] ;
+    local _ulib = [ FULIBName $(image) ] ;
 
     local _out = [ FGristFiles _glue$(SUFOUT) $(files:S=$(SUFOUT)) ] ;
     local _asm = [ FGristFiles _glue$(SUFASM) $(files:S=$(SUFASM)) ] ;
@@ -234,6 +249,7 @@ rule DylanLibraryFiles image : files {
           Cc $(_mobj) : $(_i) ;
         }
         LinkDLL $(_dll) : $(_mobj) ;
+        UnifyArchive $(_ulib) : $(_mobj) ;
       }
     } else {
       LinkDLL $(_dll) : $(_out) ;
@@ -254,9 +270,10 @@ rule DylanLibraryLinkerOptions image : options {
 
   local _dll = [ FDLLName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
+  local _uexe = $(_exe:G=unify) ;
 
-  LINKLIBS on $(_dll) += $(options) ;
-  LINKLIBS on $(_exe) += $(options) ;
+  LINKLIBS on $(_dll) $(_exe) $(_uexe) += $(options) ;
+  _uopt_$(image[1]:L) += $(options) ;
 }
 
 rule DylanLibraryBaseAddress image : address {
@@ -305,8 +322,10 @@ rule DylanLibraryCObjects image : objects {
   # Link C (or other externally-derived) object files into the shared library.
     if ! $(SYSTEM) {
       local _dll = [ FDLLName $(image) ] ;
+      local _ulib = [ FULIBName $(image) ] ;
       SEARCH on $(objects) = $(SEARCH_SOURCE) ;
       LinkDLL $(_dll) : $(objects) ;
+      UnifyArchive $(_ulib) : $(objects) ;
     }
 }
 
@@ -317,6 +336,7 @@ rule DylanLibraryCSources image : sources {
   # Link C source files into the shared library.
   if ! $(SYSTEM) {
     local _dll = [ FDLLName $(image) ] ;
+    local _ulib = [ FULIBName $(image) ] ;
     local _exe = [ FEXEName $(image) ] ;
 
     local _i ;
@@ -328,6 +348,7 @@ rule DylanLibraryCSources image : sources {
       Cc $(_obj) : $(_i) ;
 
       LinkDLL $(_dll) : $(_obj) ;
+      UnifyArchive $(_ulib) : $(_obj) ;
     }
   }
 }
@@ -426,9 +447,18 @@ rule DylanLibraryUses image : library : dir {
   }
 
   DylanLibraryClosure $(image) : $(library:L) ;
+
+  local _exe = [ FEXEName $(image) ] ;
+  local _uexe = $(_exe:G=unify) ;
+  for _i in $(_use_$(image[1]:L)) {
+    Depends $(_uexe) : $(_ulib_$(_i)) ;
+    NEEDLIBS on $(_uexe) += $(_ulib_$(_i)) ;
+    LINKLIBS on $(_uexe) += $(_clib_$(_i)) $(_uopt_$(_i)) ;
+  }
 }
 
 rule DylanLibraryClosure image : libraries {
+  #Echo DylanLibraryClosure $(image) ":" $(libraries) ;
   local _dll = [ FDLLName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
@@ -436,8 +466,9 @@ rule DylanLibraryClosure image : libraries {
   for _i in $(libraries) {
     if ! $(_i) in $(_use_$(image[1]:L)) {
       _use_$(image[1]:L) += $(_i) ;
+
       Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
-      LINKLIBS on $(_dll) $(_exe) += $(_lib_$(_i)) $(_clib_$(_i)) ;
+      LINKLIBS on $(_dll) $(_exe) += $(_lflag_$(_i)) $(_clib_$(_i)) ;
       LIBPATH on $(_dll) $(_exe) += $(_dir_$(_i)) ;
 
       DylanLibraryClosure $(image) : $(_use_$(_i)) ;
@@ -460,6 +491,15 @@ actions together LinkDLL bind NEEDLIBS {
   $(STRIP) -s $(<:Q)
 }
 
+rule UnifyArchive {
+  #Echo UnifyArchive $(<) ":" $(>) ;
+  Depends $(<) : $(>) ;
+}
+
+actions together UnifyArchive {
+  $(AR) $(<:Q) $(>:Q)
+}
+
 rule LinkEXE {
   #Echo LinkEXE $(<) ":" $(>) ;
   Depends $(<) : $(>) ;
@@ -467,6 +507,18 @@ rule LinkEXE {
 
 actions LinkEXE bind NEEDLIBS {
   $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
+  $(OBJCOPY) $(<:Q) $(<:Q).dbg
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
+  $(STRIP) -s $(<:Q)
+}
+
+rule UnifyEXE {
+  #Echo UnifyEXE $(<) ":" $(>) ;
+  Depends $(<) : $(>) ;
+}
+
+actions UnifyEXE bind NEEDLIBS {
+  $(UNIFYLINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" -Wl,--start-group $(NEEDLIBS:Q) $(LINKLIBS) -Wl,--end-group
   $(OBJCOPY) $(<:Q) $(<:Q).dbg
   $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
   $(STRIP) -s $(<:Q)
@@ -485,6 +537,18 @@ rule FDLLName {
 }
 
 rule FLIBName {
+  if $(<[2]) {
+    return lib$(<[2]:LS=$(SUFLIB)) ;
+  } else {
+    return lib$(<[1]:LS=$(SUFLIB)) ;
+  }
+}
+
+rule FULIBName {
+  return [ FLIBName $(<),unify ] ;
+}
+
+rule FLIBFlag {
   if $(<[2]) {
     return -l$(<[2]:L) ;
   } else {

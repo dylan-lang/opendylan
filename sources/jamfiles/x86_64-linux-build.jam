@@ -24,4 +24,4 @@ include $(SYSTEM_BUILD_SCRIPTS)/posix-build.jam ;
 #
 # Overrides/redefinitions
 #
-rtclibs += -lpthread -lrt ;
+rtclibs += -lpthread -ldl -lrt ;
