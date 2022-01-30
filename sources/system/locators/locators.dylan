@@ -17,12 +17,13 @@ define open generic locator-directory
 define open generic locator-relative?
     (locator :: <locator>) => (relative? :: <boolean>);
 
-// For locator /a/b/c.d this will return #("a", "b").
+// For file locator /a/b/c this returns #["a", "b"].
+// For directory locator /a/b/c/ this returns #["a", "b", "c"].
 define open generic locator-path
     (locator :: <locator>) => (path :: <sequence>);
 
-// The locator name, e.g. for locator /a/b/c.d
-// this will return "c.d"
+// For file locator /a/b/c this returns "c".
+// For directory locator /a/b/c/ this returns "c".
 define open generic locator-name
   (locator :: <locator>) => (name :: false-or(<string>));
 
@@ -237,6 +238,31 @@ define method subdirectory-locator
        path:      new-path,
        relative?: locator.locator-relative?)
 end method subdirectory-locator;
+
+
+/// File locator
+
+// Make a <file-locator> that is a child of `directory`. If more than one name
+// is supplied, the last name is the name of the file and earlier names are
+// subdirectories.
+define open generic file-locator
+    (directory :: <directory-locator>, name, #rest more-names)
+ => (file :: <file-locator>);
+
+define method file-locator
+    (directory :: <directory-locator>, name :: <string>, #rest more-names)
+ => (file :: <file-locator>)
+  let length = more-names.size;
+  if (length == 0)
+    make(<file-locator>, directory: directory, name: name)
+  else
+    make(<file-locator>,
+         directory: apply(subdirectory-locator, directory, name,
+                          copy-sequence(more-names, end: length - 1)),
+         name: last(more-names))
+  end
+end method;
+
 
 
 /// Relative locator

@@ -443,6 +443,36 @@ define test test-subdirectory-locator ()
      $microsoft-subdirectory-tests)
 end test;
 
+define test test-file-locator ()
+  // file-locator calls make(<file-locator>) which calls
+  // make(<native-file-locator>) passing `dir` (below) as the directory, which
+  // crashes if passed a locator for another platform. That's why this code
+  // doesn't attempt to test both Microsoft locators and POSIX locators on all
+  // platforms and instead branches based on $os-name. This could be fixed if
+  // we want to but I don't think it's a goal of the locators code be able to
+  // use all platform-specific locator types on all platforms, even if it does
+  // work for some of the other locators tests. --cgay
+  let posix-args
+    = #[#["/a/b/", #["c"], "/a/b/c"],
+        #["/a/b/", #["c", "d"], "/a/b/c/d"],
+        #["/a/b/", #["c", "d", "e"], "/a/b/c/d/e"]];
+  let windows-args
+    = #[#["c:\\a\\b\\", #["c"], "c:\\a\\b\\c"],
+        #["c:\\a\\b\\", #["c", "d"], "c:\\a\\b\\c\\d"],
+        #["\\\\a\\b\\", #["c", "d", "e"], "\\\\a\\b\\c\\d\\e"]];
+  for (args in if ($os-name == #"win32")
+                 windows-args
+               else
+                 posix-args
+               end)
+    let dir = as(<directory-locator>, args[0]);
+    let names = args[1];
+    let want = as(<file-locator>, args[2]);
+    check-equal(format-to-string("file-locator(%=, %=) = %=", dir, names, want),
+                want, apply(file-locator, dir, names));
+  end;
+end test;
+
 define constant $relative-tests
   = #[#["a",         "a",         "a"],
       #["a",         "b",         "a"],
@@ -603,6 +633,7 @@ define suite more-locators-test-suite ()
   test test-string-as-locator;
   test test-simplify-locator;
   test test-subdirectory-locator;
+  test test-file-locator;
   test test-relative-locator;
   test test-merge-locators;
   test test-resolve-locator;

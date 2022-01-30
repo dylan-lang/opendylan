@@ -453,6 +453,25 @@ The locators Module
 
        let build-dir = subdirectory-locator(working-directory(), "_build");
 
+.. generic-function:: file-locator
+   :open:
+
+   Returns a file locator for a file in a subdirectory of the given directory.
+
+   :signature: file-locator (directory, name, #rest more-names) => (file)
+
+   :parameter directory: An instance of :class:`<directory-locator>`.
+   :parameter name: An instance of :drm:`<string>`.
+   :parameter #rest more-names: Instances of :drm:`<string>`.
+   :value file: An instance of :class:`<file-locator>`.
+
+   :example:
+
+     .. code-block:: dylan
+
+       let temp = file-locator(temp-directory(), "my-subdir", "my-test.json");
+       ensure-directories-exist(temp);  // Create "my-subdir" directory.
+
 .. generic-function:: supports-list-locator?
    :open:
 
