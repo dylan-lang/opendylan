@@ -142,6 +142,7 @@ define module locators
 
   // Utilities
   create
+    file-locator,
     merge-locators,
     relative-locator,
     resolve-locator,

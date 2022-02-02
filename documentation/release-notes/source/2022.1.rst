@@ -104,6 +104,9 @@ system Library
 
 * A segmentation fault when using ``list-locator`` was fixed (`bug 1372 <https://github.com/dylan-lang/opendylan/issues/1372>`_).
 
+* Function ``file-locator``, to create a file locator as a child of a directory
+  locator, is now exported from the locators module.
+
 c-ffi Library
 -------------
 
