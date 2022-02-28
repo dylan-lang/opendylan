@@ -1,0 +1,31 @@
+name: libraries-test-suite
+
+on:
+  push:
+    # all branches
+  pull_request:
+    branches:
+      - main
+      - master
+
+  # This enables the Run Workflow button on the Actions tab.
+  workflow_dispatch:
+
+jobs:
+  libraries-test-suite-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: dylan-lang/install-opendylan@v1
+
+      - name: Build libraries-test-suite-app
+        run: |
+          # TODO: make the install-opendylan action create an "opendylan" link
+          # to the version-specific installation directory.
+          cd opendylan-2020.1/sources
+          ../../dylan-compiler -build -jobs 3 libraries-test-suite-app
+
+      - name: Run libraries-test-suite-app
+        run: |
+          cd opendylan-2020.1/sources
+          _build/bin/libraries-test-suite-app
