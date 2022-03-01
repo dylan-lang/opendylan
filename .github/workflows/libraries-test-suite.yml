@@ -20,12 +20,10 @@ jobs:
 
       - name: Build libraries-test-suite-app
         run: |
-          # TODO: make the install-opendylan action create an "opendylan" link
-          # to the version-specific installation directory.
-          cd opendylan-2020.1/sources
+          # We want to use the registry in the sources directory...
+          cd opendylan/sources
           ../../dylan-compiler -build -jobs 3 libraries-test-suite-app
 
       - name: Run libraries-test-suite-app
         run: |
-          cd opendylan-2020.1/sources
-          _build/bin/libraries-test-suite-app
+          opendylan/sources/_build/bin/libraries-test-suite-app
