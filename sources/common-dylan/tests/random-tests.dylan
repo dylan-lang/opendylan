@@ -24,6 +24,7 @@ end test;
 
 define test test-<random> ()
   //---*** Fill this in...
+  assert-true(#f);              // temporary
 end test;
 
 define suite simple-random-test-suite ()
