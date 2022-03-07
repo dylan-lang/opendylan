@@ -210,7 +210,7 @@ Reference
    :parameter #key anchored: A :drm:`<boolean>`, default ``#f``.  Whether or
      not the search should be anchored at the start position.  This is
      useful because "^..." will only match at the beginning of a string,
-     or after \n if the regex was compiled with multi-line = #t.
+     or after \\n if the regex was compiled with multi-line = #t.
    :parameter #key start: An :drm:`<integer>`, default ``0``.  The index in *text*
      at which to start searching.
    :parameter #key end: An :drm:`<integer>`, default ``*text*.size``.  The index
