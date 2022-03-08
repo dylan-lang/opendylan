@@ -24,9 +24,9 @@ Learning Dylan
 ==============
 
 Just getting started with Open Dylan?  We recommend that
-you read the <a href="intro-dylan/">Introduction to Dylan</a>
+you read the `Introduction to Dylan <intro-dylan/index.html>`_
 to get a feel for the language. After that, you can broaden
-your knowledge with the <a href="../books/dpg/">Dylan Programming</a>
+your knowledge with the `Dylan Programming <https://opendylan.org/books/dpg/>`_
 book.
 
 `An Introduction to Dylan <intro-dylan/index.html>`_ [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__] [`epub <intro-dylan/AnIntroductiontoDylan.epub>`__]
