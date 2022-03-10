@@ -218,6 +218,9 @@ define test test-run-application-input-stream ()
         otherwise =>
           environment-variable("SHELL");
       end;
+  if (~shell & environment-variable("GITHUB_ACTIONS"))
+    shell := "/usr/bin/bash"
+  end;
   let (exit-code, signal, child, stream)
     = run-application(shell, asynchronous?: #t, input: #"stream");
 
