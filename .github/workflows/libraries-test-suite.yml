@@ -15,15 +15,19 @@ jobs:
   libraries-test-suite-ubuntu:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          path: od
+          submodules: recursive
 
       - uses: dylan-lang/install-opendylan@v1
 
       - name: Build libraries-test-suite-app
         run: |
           # We want to use the registry in the sources directory...
-          cd opendylan/sources
+          cd od/sources
           ../../dylan-compiler -build -jobs 3 libraries-test-suite-app
 
       - name: Run libraries-test-suite-app
         run: |
-          opendylan/sources/_build/bin/libraries-test-suite-app
+          od/sources/_build/bin/libraries-test-suite-app --tag=-benchmark

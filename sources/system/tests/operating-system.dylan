@@ -60,268 +60,258 @@ define test test-<application-process> ()
   //---*** Fill this in...
 end test;
 
-define test test-run-application ()
-  // Synchronous true exit
-  with-test-unit ("run-application synchronous true exit")
-    let (exit-code, signal, child)
-      = run-application("exit 0", under-shell?: #t);
-    check-equal("true exit 0", 0, exit-code);
-    check-equal("true no signal", #f, signal);
-    check-false("no child for synchronous run-application", child);
-  end;
+define test test-run-application-synchronous-true-exit ()
+  let (exit-code, signal, child)
+    = run-application("exit 0", under-shell?: #t);
+  check-equal("true exit 0", 0, exit-code);
+  check-equal("true no signal", #f, signal);
+  check-false("no child for synchronous run-application", child);
+end test;
 
-  // Synchronous false exit
-  with-test-unit ("run-application synchronous false exit")
-    let (exit-code, signal, child)
-      = run-application("exit 1", under-shell?: #t);
-    check-equal("false exit 1", 1, exit-code);
-    check-equal("false no signal", #f, signal);
-    check-false("no child for synchronous run-application", child);
-  end;
+define test test-run-application-synchronous-false-exit ()
+  let (exit-code, signal, child)
+    = run-application("exit 1", under-shell?: #t);
+  check-equal("false exit 1", 1, exit-code);
+  check-equal("false no signal", #f, signal);
+  check-false("no child for synchronous run-application", child);
+end test;
 
-  // Asynchronous true exit
-  with-test-unit ("run-application asynchronous true exit")
-    let (exit-code, signal, child)
-      = run-application("exit 0", asynchronous?: #t, under-shell?: #t);
-    check-equal("asynchronous exit 0", 0, exit-code);
-    check-equal("asynchronous no signal", #f, signal);
-    check-instance?("child returned for asynchronous run-application",
-                    <application-process>, child);
+define test test-run-application-asynchronous-true-exit ()
+  let (exit-code, signal, child)
+    = run-application("exit 0", asynchronous?: #t, under-shell?: #t);
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
 
-    let (exit-code, signal) = wait-for-application-process(child);
-    check-equal("wait true exit 0", 0, exit-code);
-    check-equal("wait true no signal", #f, signal);
-  end;
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait true exit 0", 0, exit-code);
+  check-equal("wait true no signal", #f, signal);
+end test;
 
-  // Asynchronous false exit
-  with-test-unit ("run-application asynchronous false exit")
-    let (exit-code, signal, child)
-      = run-application("exit 8", asynchronous?: #t, under-shell?: #t);
-    check-equal("asynchronous exit 0", 0, exit-code);
-    check-equal("asynchronous no signal", #f, signal);
-    check-instance?("child returned for asynchronous run-application",
-                    <application-process>, child);
+define test test-run-application-asynchronous-false-exit ()
+  let (exit-code, signal, child)
+    = run-application("exit 8", asynchronous?: #t, under-shell?: #t);
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
 
-    let (exit-code, signal) = wait-for-application-process(child);
-    check-equal("wait false exit 8", 8, exit-code);
-    check-equal("wait false no signal", #f, signal);
-  end;
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait false exit 8", 8, exit-code);
+  check-equal("wait false no signal", #f, signal);
+end test;
 
-  // Output stream
-  with-test-unit ("run-application output stream")
-    let (exit-code, signal, child, stream)
-      = run-application("echo hello, world",
-                        asynchronous?: #t, output: #"stream",
-                        under-shell?: #t);
-    check-equal("asynchronous exit 0", 0, exit-code);
-    check-equal("asynchronous no signal", #f, signal);
-    check-instance?("child returned for asynchronous run-application",
-                    <application-process>, child);
-    check-instance?("stream returned for run-application w/output stream",
-                    <stream>, stream);
+define test test-run-application-output-stream ()
+  let (exit-code, signal, child, stream)
+    = run-application("echo hello, world",
+                      asynchronous?: #t, output: #"stream",
+                      under-shell?: #t);
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
+  check-instance?("stream returned for run-application w/output stream",
+                  <stream>, stream);
 
-    let contents = read-to-end(stream);
-    check-equal("echo results read from stream",
-                concatenate("hello, world", $line-end), contents);
+  let contents = read-to-end(stream);
+  check-equal("echo results read from stream",
+              concatenate("hello, world", $line-end), contents);
 
-    let (exit-code, signal) = wait-for-application-process(child);
-    check-equal("wait echo exit 0", 0, exit-code);
-    check-equal("wait echo no signal", #f, signal);
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait echo exit 0", 0, exit-code);
+  check-equal("wait echo no signal", #f, signal);
 
-    close(stream);
-  end;
+  close(stream);
+end test;
 
-  // Error stream
-  with-test-unit ("run-application error stream")
-    let (exit-code, signal, child, stream)
-      = run-application("echo hello, world>&2",
-                        asynchronous?: #t, error: #"stream",
-                        under-shell?: #t);
-    check-equal("asynchronous exit 0", 0, exit-code);
-    check-equal("asynchronous no signal", #f, signal);
-    check-instance?("child returned for asynchronous run-application",
-                    <application-process>, child);
-    check-instance?("stream returned for run-application w/error stream",
-                    <stream>, stream);
+define test test-run-application-error-stream ()
+  let (exit-code, signal, child, stream)
+    = run-application("echo hello, world>&2",
+                      asynchronous?: #t, error: #"stream",
+                      under-shell?: #t);
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
+  check-instance?("stream returned for run-application w/error stream",
+                  <stream>, stream);
 
-    let contents = read-to-end(stream);
-    check-equal("echo results read from stream",
-                concatenate("hello, world", $line-end), contents);
+  let contents = read-to-end(stream);
+  check-equal("echo results read from stream",
+              concatenate("hello, world", $line-end), contents);
 
-    let (exit-code, signal) = wait-for-application-process(child);
-    check-equal("wait echo exit 0", 0, exit-code);
-    check-equal("wait echo no signal", #f, signal);
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait echo exit 0", 0, exit-code);
+  check-equal("wait echo no signal", #f, signal);
 
-    close(stream);
-  end;
+  close(stream);
+end test;
 
-  // Output/error common stream
-  with-test-unit ("run-application output/error common stream")
-    let command
-      = select ($os-name)
-          #"win32" =>
-            "echo hello, world&echo DANGER WILL ROBINSON!>&2&echo ok";
-          otherwise =>
-            "echo hello, world;echo DANGER WILL ROBINSON!>&2;echo ok";
-        end;
-    let (exit-code, signal, child, stream)
-      = run-application(command,
-                        asynchronous?: #t, output: #"stream", error: #"output",
-                        under-shell?: #t);
-    check-equal("asynchronous exit 0", 0, exit-code);
-    check-equal("asynchronous no signal", #f, signal);
-    check-instance?("child returned for asynchronous run-application",
-                    <application-process>, child);
-    check-instance?("stream returned for run-application w/error stream",
-                    <stream>, stream);
+define test test-run-application-output/error-common-stream ()
+  let command
+    = select ($os-name)
+        #"win32" =>
+          "echo hello, world&echo DANGER WILL ROBINSON!>&2&echo ok";
+        otherwise =>
+          "echo hello, world;echo DANGER WILL ROBINSON!>&2;echo ok";
+      end;
+  let (exit-code, signal, child, stream)
+    = run-application(command,
+                      asynchronous?: #t, output: #"stream", error: #"output",
+                      under-shell?: #t);
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
+  check-instance?("stream returned for run-application w/error stream",
+                  <stream>, stream);
 
-    let contents = read-to-end(stream);
-    check-equal("echo results read from stream",
-                concatenate("hello, world", $line-end,
-                            "DANGER WILL ROBINSON!", $line-end,
-                            "ok", $line-end),
-                contents);
+  let contents = read-to-end(stream);
+  check-equal("echo results read from stream",
+              concatenate("hello, world", $line-end,
+                          "DANGER WILL ROBINSON!", $line-end,
+                          "ok", $line-end),
+              contents);
 
-    let (exit-code, signal) = wait-for-application-process(child);
-    check-equal("wait echo exit 0", 0, exit-code);
-    check-equal("wait echo no signal", #f, signal);
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait echo exit 0", 0, exit-code);
+  check-equal("wait echo no signal", #f, signal);
 
-    close(stream);
-  end;
+  close(stream);
+end test;
 
-  // Outputter
-  with-test-unit ("run-application outputter")
-    let command
-      = select ($os-name)
-          #"win32" =>
-            "echo hello, world&echo DANGER WILL ROBINSON!>&2&echo ok";
-          otherwise =>
-            "echo hello, world;echo DANGER WILL ROBINSON!>&2;echo ok";
-        end;
-
-    let contents = "";
-    local
-      method outputter (msg :: <byte-string>, #key end: _end)
-        contents := concatenate(contents, copy-sequence(msg, end: _end));
+define test test-run-application-outputter ()
+  let command
+    = select ($os-name)
+        #"win32" =>
+          "echo hello, world&echo DANGER WILL ROBINSON!>&2&echo ok";
+        otherwise =>
+          "echo hello, world;echo DANGER WILL ROBINSON!>&2;echo ok";
       end;
 
-    let (exit-code, signal, child, #rest streams)
-      = run-application(command, under-shell?: #t, outputter: outputter);
-    check-equal("echo exit 0", 0, exit-code);
-    check-equal("echo no signal", #f, signal);
-    check-false("no child for synchronous run-application", child);
-    check("no streams returned", empty?, streams);
+  let contents = "";
+  local
+    method outputter (msg :: <byte-string>, #key end: _end)
+      contents := concatenate(contents, copy-sequence(msg, end: _end));
+    end;
 
-    check-equal("echo results read from stream",
-                concatenate("hello, world", $line-end,
-                            "DANGER WILL ROBINSON!", $line-end,
-                            "ok", $line-end),
-                contents);
+  let (exit-code, signal, child, #rest streams)
+    = run-application(command, under-shell?: #t, outputter: outputter);
+  check-equal("echo exit 0", 0, exit-code);
+  check-equal("echo no signal", #f, signal);
+  check-false("no child for synchronous run-application", child);
+  check("no streams returned", empty?, streams);
+
+  check-equal("echo results read from stream",
+              concatenate("hello, world", $line-end,
+                          "DANGER WILL ROBINSON!", $line-end,
+                          "ok", $line-end),
+              contents);
+end test;
+
+define test test-run-application-input-stream ()
+  let shell
+    = select ($os-name)
+        #"win32" =>
+          "cmd.exe /q/k";
+        otherwise =>
+          environment-variable("SHELL");
+      end;
+  if (~shell & environment-variable("GITHUB_ACTIONS"))
+    shell := "/usr/bin/bash"
   end;
+  let (exit-code, signal, child, stream)
+    = run-application(shell, asynchronous?: #t, input: #"stream");
 
-  // Input stream
-  with-test-unit ("run-application input stream")
-    let shell
-      = select ($os-name)
-          #"win32" =>
-            "cmd.exe /q/k";
-          otherwise =>
-            environment-variable("SHELL");
-        end;
-    let (exit-code, signal, child, stream)
-      = run-application(shell, asynchronous?: #t, input: #"stream");
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
+  check-instance?("stream returned for run-application w/input stream",
+                  <stream>, stream);
 
-    check-equal("asynchronous exit 0", 0, exit-code);
-    check-equal("asynchronous no signal", #f, signal);
-    check-instance?("child returned for asynchronous run-application",
-                    <application-process>, child);
-    check-instance?("stream returned for run-application w/input stream",
-                    <stream>, stream);
+  write(stream, "exit 8");
+  new-line(stream);
+  close(stream);
 
-    write(stream, "exit 8");
-    new-line(stream);
-    close(stream);
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait cmd exit 8", 8, exit-code);
+  check-equal("wait cmd no signal", #f, signal);
+end test;
 
-    let (exit-code, signal) = wait-for-application-process(child);
-    check-equal("wait cmd exit 8", 8, exit-code);
-    check-equal("wait cmd no signal", #f, signal);
-  end;
+define test test-run-application-input-and-output-streams ()
+  let (exit-code, signal, child, input-stream, output-stream)
+    = run-application("sort", asynchronous?: #t,
+                      input: #"stream", output: #"stream");
 
-   // Input and output streams
-   with-test-unit ("run-application input/output streams")
-     let (exit-code, signal, child, input-stream, output-stream)
-       = run-application("sort", asynchronous?: #t,
-                         input: #"stream", output: #"stream");
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
+  check-instance?("input stream returned for run-application",
+                  <stream>, input-stream);
+  check-instance?("output stream returned for run-application",
+                  <stream>, output-stream);
 
-     check-equal("asynchronous exit 0", 0, exit-code);
-     check-equal("asynchronous no signal", #f, signal);
-     check-instance?("child returned for asynchronous run-application",
-                     <application-process>, child);
-     check-instance?("input stream returned for run-application",
-                     <stream>, input-stream);
-     check-instance?("output stream returned for run-application",
-                     <stream>, output-stream);
+  write(input-stream, "Dylan");
+  new-line(input-stream);
+  write(input-stream, "programming");
+  new-line(input-stream);
+  write(input-stream, "language");
+  new-line(input-stream);
+  close(input-stream);
 
-     write(input-stream, "Dylan");
-     new-line(input-stream);
-     write(input-stream, "programming");
-     new-line(input-stream);
-     write(input-stream, "language");
-     new-line(input-stream);
-     close(input-stream);
+  let contents = read-to-end(output-stream);
+  check-equal("sort results read from stream",
+              concatenate("Dylan", $line-end,
+                          "language", $line-end,
+                          "programming", $line-end),
+              contents);
 
-     let contents = read-to-end(output-stream);
-     check-equal("sort results read from stream",
-                 concatenate("Dylan", $line-end,
-                             "language", $line-end,
-                             "programming", $line-end),
-                 contents);
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait sort exit 0", 0, exit-code);
+  check-equal("wait sort no signal", #f, signal);
 
-     let (exit-code, signal) = wait-for-application-process(child);
-     check-equal("wait sort exit 0", 0, exit-code);
-     check-equal("wait sort no signal", #f, signal);
+  close(output-stream);
+end test;
 
-     close(output-stream);
-   end;
+define test test-run-application-environment-variable-setting ()
+  check-false("test preconditions: OS_TEST_RUN_APPLICATION not set",
+              environment-variable("OS_TEST_RUN_APPLICATION"));
 
-   // Environment variable setting
-   with-test-unit ("run-application environment variable setting")
-     check-false("test preconditions: OS_TEST_RUN_APPLICATION not set",
-                 environment-variable("OS_TEST_RUN_APPLICATION"));
+  let env = make(<string-table>);
+  env["OS_TEST_RUN_APPLICATION"] := "Dylan programming language";
 
-     let env = make(<string-table>);
-     env["OS_TEST_RUN_APPLICATION"] := "Dylan programming language";
+  let command
+   = select ($os-name)
+       #"win32" =>
+         "echo %OS_TEST_RUN_APPLICATION%&echo %PATH%";
+       otherwise =>
+         "echo $OS_TEST_RUN_APPLICATION; echo $PATH";
+     end;
+  let (exit-code, signal, child, stream)
+  = run-application(command, under-shell?: #t,
+                    asynchronous?: #t, output: #"stream",
+                    environment: env);
+  check-equal("asynchronous exit 0", 0, exit-code);
+  check-equal("asynchronous no signal", #f, signal);
+  check-instance?("child returned for asynchronous run-application",
+                  <application-process>, child);
+  check-instance?("stream returned for run-application w/output stream",
+                  <stream>, stream);
 
-     let command
-      = select ($os-name)
-          #"win32" =>
-            "echo %OS_TEST_RUN_APPLICATION%&echo %PATH%";
-          otherwise =>
-            "echo $OS_TEST_RUN_APPLICATION; echo $PATH";
-        end;
-     let (exit-code, signal, child, stream)
-     = run-application(command, under-shell?: #t,
-                       asynchronous?: #t, output: #"stream",
-                       environment: env);
-     check-equal("asynchronous exit 0", 0, exit-code);
-     check-equal("asynchronous no signal", #f, signal);
-     check-instance?("child returned for asynchronous run-application",
-                     <application-process>, child);
-     check-instance?("stream returned for run-application w/output stream",
-                     <stream>, stream);
+  let contents = read-to-end(stream);
+  check-equal("echo w/environment variable results read from stream",
+              concatenate("Dylan programming language", $line-end,
+                          environment-variable("PATH"), $line-end),
+              contents);
 
-     let contents = read-to-end(stream);
-     check-equal("echo w/environment variable results read from stream",
-                 concatenate("Dylan programming language", $line-end,
-                             environment-variable("PATH"), $line-end),
-                 contents);
+  let (exit-code, signal) = wait-for-application-process(child);
+  check-equal("wait echo exit 0", 0, exit-code);
+  check-equal("wait echo no signal", #f, signal);
 
-     let (exit-code, signal) = wait-for-application-process(child);
-     check-equal("wait echo exit 0", 0, exit-code);
-     check-equal("wait echo no signal", #f, signal);
-
-     close(stream);
-   end;
+  close(stream);
 end test;
 
 define test test-wait-for-application-process ()
@@ -404,7 +394,17 @@ define suite operating-system-test-suite ()
   test test-owner-name;
   test test-owner-organization;
   test test-<application-process>;
-  test test-run-application;
+  test test-run-application-synchronous-true-exit;
+  test test-run-application-synchronous-false-exit;
+  test test-run-application-asynchronous-true-exit;
+  test test-run-application-asynchronous-false-exit;
+  test test-run-application-output-stream;
+  test test-run-application-error-stream;
+  test test-run-application-output/error-common-stream;
+  test test-run-application-outputter;
+  test test-run-application-input-stream;
+  test test-run-application-input-and-output-streams;
+  test test-run-application-environment-variable-setting;
   test test-wait-for-application-process;
   test test-load-library;
   test test-current-process-id;
@@ -415,4 +415,4 @@ define suite operating-system-test-suite ()
   test test-environment-variable-setter;
   test test-tokenize-environment-variable;
   test test-with-application-output;
-end;
+end suite;
