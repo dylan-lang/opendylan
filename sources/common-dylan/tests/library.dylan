@@ -11,7 +11,7 @@ define library common-dylan-test-suite
     import: { dylan, dylan-extensions, simple-debugging };
   use common-dylan;
   use system,
-    import: { file-system };
+    import: { file-system, operating-system };
   use testworks;
 
   export common-dylan-test-suite;
@@ -40,6 +40,8 @@ define module common-dylan-test-suite
   use simple-profiling;
   use file-system,
     import: { file-exists? };
+  use operating-system,
+    import: { $os-name };
   use transcendentals;
   use byte-vector;
   use machine-words;
