@@ -11,13 +11,26 @@ now here is a manual check-list.
    branch; people can just be careful what they commit until the release is
    out.
 
+#. Update submodules to the latest stable version tags and document the version
+   number changes in the release notes.
+
+   What "stable" means isn't well-defined; use your discretion. The important
+   point is that libraries are bundled with the release so people may use them
+   without explicitly requesting a specific version. Therefore they shouldn't
+   be allowed to get too stale.
+
 #. Test on supported platforms.
 
-   * Do a 3-stage boostrap.
-   * Run test suites and try to figure out if anything serious is broken.
-     (This is an art, currently, and we should make all our tests pass.)
-   * Do some ad-hoc testing.  (Anything specific to mention here?)
+   * Do a 3-stage boostrap: make distclean, autogen.sh, configure, make, make
+     install.
 
+   * Run ``make check`` and if anything fails that is not marked ``EXPECTED TO
+     FAIL``, fix the problem or discuss with others how to proceed.
+
+   * As a smoke test, verify that the "hello world" instructions at the top of
+     `README.rst
+     <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_ work on
+     each platform.
 
 #. Update the version number in the sources
 
