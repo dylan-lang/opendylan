@@ -130,7 +130,7 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 }
 
 #if defined OPEN_DYLAN_PLATFORM_LINUX \
-  && (defined OPEN_DYLAN_ARCH_X86 || defined OPEN_DYLAN_ARCH_X86_64)
+  && (defined OPEN_DYLAN_ARCH_X86)
 #define INT_OPCODE  0xCD        /* x86 INT instruction */
 #define INTO_OPCODE 0xCE        /* x86 INTO instruction */
 
@@ -182,7 +182,7 @@ void EstablishDylanExceptionHandlers(void)
   sigaction(SIGFPE, &fpehandler, &oldfpehandler);
 
 #if defined OPEN_DYLAN_PLATFORM_LINUX \
-  && (defined OPEN_DYLAN_ARCH_X86 || defined OPEN_DYLAN_ARCH_X86_64)
+  && (defined OPEN_DYLAN_ARCH_X86)
   struct sigaction segvhandler;
   sigemptyset(&segvhandler.sa_mask);
   segvhandler.sa_sigaction = DylanSEGVHandler;
