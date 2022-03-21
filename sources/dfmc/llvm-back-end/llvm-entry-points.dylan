@@ -841,7 +841,39 @@ define entry-point-descriptor apply-mep
         let count = jump-table[i];
         ins--block(be, jump-table[i + 1]);
 
-        let new-arguments = shift-arguments(count);
+        let new-arguments
+          = if (count < 0)
+              // Extract needed arguments from the optionals vector
+              let optionals-cast
+                = op--object-pointer-cast(be, arguments.last, sov-class);
+              let optionals-size
+                = call-primitive(be, primitive-vector-size-descriptor,
+                                 optionals-cast);
+              let cmp = ins--icmp-ne(be, optionals-size, -count);
+              ins--if (be, op--unlikely(be, cmp))
+                op--argument-count-error(be, meth, optionals-size);
+              end ins--if;
+
+              map(method (i)
+                    call-primitive(be, primitive-vector-element-descriptor,
+                                   optionals-cast,
+                                   llvm-back-end-value-function(be, i))
+                  end,
+                  range(below: -count))
+            else
+              // Ensure the optionals vector is empty
+              let optionals-cast
+                = op--object-pointer-cast(be, arguments.last, sov-class);
+              let optionals-size
+                = call-primitive(be, primitive-vector-size-descriptor,
+                                 optionals-cast);
+              let cmp = ins--icmp-ne(be, optionals-size, 0);
+              ins--if (be, op--unlikely(be, cmp))
+                op--argument-count-error(be, meth, optionals-size);
+              end ins--if;
+
+              copy-sequence(arguments, end: num - 1 - count)
+            end if;
 
         // Call the method; for <simple-method> it is the IEP that is
         // stored in the mep slot

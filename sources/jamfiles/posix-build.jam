@@ -487,8 +487,8 @@ rule LinkDLL {
 actions together LinkDLL bind NEEDLIBS {
   $(LINK) -shared -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
   $(OBJCOPY) $(<:Q) $(<:Q).dbg
-  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
   $(STRIP) -s $(<:Q)
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
 }
 
 rule UnifyArchive {
@@ -508,8 +508,8 @@ rule LinkEXE {
 actions LinkEXE bind NEEDLIBS {
   $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
   $(OBJCOPY) $(<:Q) $(<:Q).dbg
-  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
   $(STRIP) -s $(<:Q)
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
 }
 
 rule UnifyEXE {
@@ -520,8 +520,8 @@ rule UnifyEXE {
 actions UnifyEXE bind NEEDLIBS {
   $(UNIFYLINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" -Wl,--start-group $(NEEDLIBS:Q) $(LINKLIBS) -Wl,--end-group
   $(OBJCOPY) $(<:Q) $(<:Q).dbg
-  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
   $(STRIP) -s $(<:Q)
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
 }
 
 #
