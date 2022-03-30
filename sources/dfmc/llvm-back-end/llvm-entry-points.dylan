@@ -812,88 +812,144 @@ define entry-point-descriptor apply-mep
       ins--block(be, return-bb);
       ins--phi(be, result-phi-arguments)
     ins--else
-      // Determine if there are extra arguments
-      let excess = ins--sub(be, num - 1, nreq);
+      let rest-masked
+        = ins--and(be, raw-properties, $signature-rest-p-mask);
+      let rest-cmp = ins--icmp-ne(be, rest-masked, 0);
+      ins--if (be, rest-cmp)
+        // Determine if there are extra arguments
+        let excess = ins--sub(be, num - 1, nreq);
 
-      // Create a basic block for each case
-      let min-count
-        = if (num = 1) -$entry-point-argument-count else 0 end if;
-      let jump-table = make(<stretchy-object-vector>);
-      for (count from min-count below num)
-        let name
-          = if (count < 0)
-              format-to-string("bb.simple.deficit%d", -count)
-            else
-              format-to-string("bb.simple.surplus%d", count)
-            end if;
-        add!(jump-table, count);
-        add!(jump-table, make(<llvm-basic-block>, name: name));
-      end;
-      let default-bb = make(<llvm-basic-block>, name: "bb.simple.default");
-      let return-bb = make(<llvm-basic-block>, name: "bb.simple.return");
+        // Create a basic block for each case
+        let min-count
+          = if (num = 1) -$entry-point-argument-count else 0 end if;
+        let jump-table = make(<stretchy-object-vector>);
+        for (count from min-count below num)
+          let name
+            = if (count < 0)
+                format-to-string("bb.simple.rest.deficit%d", -count)
+              else
+                format-to-string("bb.simple.rest.surplus%d", count)
+              end if;
+          add!(jump-table, count);
+          add!(jump-table, make(<llvm-basic-block>, name: name));
+        end;
+        let default-bb = make(<llvm-basic-block>, name: "bb.simple.rest.default");
+        let return-bb = make(<llvm-basic-block>, name: "bb.simple.rest.return");
 
-      // Branch to the appropriate case
-      ins--switch(be, excess, default-bb, jump-table);
+        // Branch to the appropriate case
+        ins--switch(be, excess, default-bb, jump-table);
 
-      // Generate all of the cases
-      let result-phi-arguments = make(<stretchy-object-vector>);
-      for (i from 0 below jump-table.size by 2)
-        let count = jump-table[i];
-        ins--block(be, jump-table[i + 1]);
+        // Generate all of the cases
+        let result-phi-arguments = make(<stretchy-object-vector>);
+        for (i from 0 below jump-table.size by 2)
+          let count = jump-table[i];
+          ins--block(be, jump-table[i + 1]);
 
-        let new-arguments
-          = if (count < 0)
-              // Extract needed arguments from the optionals vector
-              let optionals-cast
-                = op--object-pointer-cast(be, arguments.last, sov-class);
-              let optionals-size
-                = call-primitive(be, primitive-vector-size-descriptor,
-                                 optionals-cast);
-              let cmp = ins--icmp-ne(be, optionals-size, -count);
-              ins--if (be, op--unlikely(be, cmp))
-                op--argument-count-error(be, meth, optionals-size);
-              end ins--if;
+          let new-arguments = shift-arguments(count);
 
-              map(method (i)
-                    call-primitive(be, primitive-vector-element-descriptor,
-                                   optionals-cast,
-                                   llvm-back-end-value-function(be, i))
-                  end,
-                  range(below: -count))
-            else
-              // Ensure the optionals vector is empty
-              let optionals-cast
-                = op--object-pointer-cast(be, arguments.last, sov-class);
-              let optionals-size
-                = call-primitive(be, primitive-vector-size-descriptor,
-                                 optionals-cast);
-              let cmp = ins--icmp-ne(be, optionals-size, 0);
-              ins--if (be, op--unlikely(be, cmp))
-                op--argument-count-error(be, meth, optionals-size);
-              end ins--if;
+          // Call the method; for <simple-method> it is the IEP that is
+          // stored in the mep slot
+          let result
+            = op--call-iep(be, mep, new-arguments,
+                           next: next,
+                           function: meth);
+          add!(result-phi-arguments, result);
+          add!(result-phi-arguments, be.llvm-builder-basic-block);
+          ins--br(be, return-bb);
+        end for;
 
-              copy-sequence(arguments, end: num - 1 - count)
-            end if;
+        // Unhandled case
+        ins--block(be, default-bb);
+        ins--call-intrinsic(be, "llvm.trap", vector());
+        ins--unreachable(be);
 
-        // Call the method; for <simple-method> it is the IEP that is
-        // stored in the mep slot
-        let result
-          = op--call-iep(be, mep, new-arguments,
-                         next: next,
-                         function: meth);
-        add!(result-phi-arguments, result);
-        add!(result-phi-arguments, be.llvm-builder-basic-block);
-        ins--br(be, return-bb);
-      end for;
+        // Return
+        ins--block(be, return-bb);
+        ins--phi(be, result-phi-arguments)
+      ins--else
+        // Determine if there are extra arguments
+        let excess = ins--sub(be, num - 1, nreq);
 
-      // Unhandled case
-      ins--block(be, default-bb);
-      ins--call-intrinsic(be, "llvm.trap", vector());
-      ins--unreachable(be);
+        // Create a basic block for each case
+        let min-count
+          = if (num = 1) -$entry-point-argument-count else 0 end if;
+        let jump-table = make(<stretchy-object-vector>);
+        for (count from min-count below num)
+          let name
+            = if (count < 0)
+                format-to-string("bb.simple.deficit%d", -count)
+              else
+                format-to-string("bb.simple.surplus%d", count)
+              end if;
+          add!(jump-table, count);
+          add!(jump-table, make(<llvm-basic-block>, name: name));
+        end;
+        let default-bb = make(<llvm-basic-block>, name: "bb.simple.default");
+        let return-bb = make(<llvm-basic-block>, name: "bb.simple.return");
 
-      // Return
-      ins--block(be, return-bb);
-      ins--phi(be, result-phi-arguments)
+        // Branch to the appropriate case
+        ins--switch(be, excess, default-bb, jump-table);
+
+        // Generate all of the cases
+        let result-phi-arguments = make(<stretchy-object-vector>);
+        for (i from 0 below jump-table.size by 2)
+          let count = jump-table[i];
+          ins--block(be, jump-table[i + 1]);
+
+          let new-arguments
+            = if (count < 0)
+                // Extract needed arguments from the optionals vector
+                let optionals-cast
+                  = op--object-pointer-cast(be, arguments.last, sov-class);
+                let optionals-size
+                  = call-primitive(be, primitive-vector-size-descriptor,
+                                   optionals-cast);
+                let cmp = ins--icmp-ne(be, optionals-size, -count);
+                ins--if (be, op--unlikely(be, cmp))
+                  op--argument-count-error(be, meth, optionals-size);
+                end ins--if;
+
+                map(method (i)
+                      call-primitive(be, primitive-vector-element-descriptor,
+                                     optionals-cast,
+                                     llvm-back-end-value-function(be, i))
+                    end,
+                    range(below: -count))
+              else
+                // Ensure the optionals vector is empty
+                let optionals-cast
+                  = op--object-pointer-cast(be, arguments.last, sov-class);
+                let optionals-size
+                  = call-primitive(be, primitive-vector-size-descriptor,
+                                   optionals-cast);
+                let cmp = ins--icmp-ne(be, optionals-size, 0);
+                ins--if (be, op--unlikely(be, cmp))
+                  op--argument-count-error(be, meth, optionals-size);
+                end ins--if;
+
+                copy-sequence(arguments, end: num - 1 - count)
+              end if;
+
+          // Call the method; for <simple-method> it is the IEP that is
+          // stored in the mep slot
+          let result
+            = op--call-iep(be, mep, new-arguments,
+                           next: next,
+                           function: meth);
+          add!(result-phi-arguments, result);
+          add!(result-phi-arguments, be.llvm-builder-basic-block);
+          ins--br(be, return-bb);
+        end for;
+
+        // Unhandled case
+        ins--block(be, default-bb);
+        ins--call-intrinsic(be, "llvm.trap", vector());
+        ins--unreachable(be);
+
+        // Return
+        ins--block(be, return-bb);
+        ins--phi(be, result-phi-arguments)
+      end ins--if
     end ins--if
   end if
 end entry-point-descriptor;
