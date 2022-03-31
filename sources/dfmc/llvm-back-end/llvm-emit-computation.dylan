@@ -888,39 +888,46 @@ define method emit-call
  => (call :: <llvm-value>);
   let word-size = back-end-word-size(back-end);
 
+  // Shift required arguments into or out of the optionals vector as
+  // needed
+  let stacksave = ins--call-intrinsic(back-end, "llvm.stacksave", #[]);
+  let argument-refs
+    = map(curry(emit-reference, back-end, m), c.arguments);
   let nreq = spec-argument-number-required(f.signature-spec);
-  if (size(c.arguments) = nreq + 1)
-    let fn = emit-reference(back-end, m, c.function);
-    let fn-cast = op--object-pointer-cast(back-end, fn, #"<keyword-method>");
-    let mep-slot-ptr
-      = op--getslotptr(back-end, fn-cast, #"<keyword-method>", #"mep");
-    let mep = ins--load(back-end, mep-slot-ptr, alignment: word-size);
+  let fn = emit-reference(back-end, m, c.function);
+  let shift-count = (size(c.arguments) - 1) - nreq;
+  let shifted-argument-refs
+    = op--shift-rest-arguments(back-end, fn, argument-refs, shift-count);
 
-    let next = emit-reference(back-end, m, c.next-methods);
+  // Retrieve the MEP entry point
+  let fn-cast = op--object-pointer-cast(back-end, fn, #"<keyword-method>");
+  let mep-slot-ptr
+    = op--getslotptr(back-end, fn-cast, #"<keyword-method>", #"mep");
+  let mep = ins--load(back-end, mep-slot-ptr, alignment: word-size);
 
-    // Cast to the appropriate MEP type
-    let parameter-types
-      = make(<simple-object-vector>,
-             size: c.arguments.size + 2,
-             fill: $llvm-object-pointer-type);
-    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
-    let mep-type
-      = make(<llvm-function-type>,
-             return-type: return-type,
-             parameter-types: parameter-types,
-             varargs?: #f);
-    let mep-cast
-      = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
+  // Cast it to the appropriate MEP type
+  let parameter-types
+    = make(<simple-object-vector>,
+           size: 2,
+           fill: $llvm-object-pointer-type);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let mep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #t);
+  let mep-cast
+    = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
 
-    op--call(back-end, mep-cast,
-             concatenate(vector(fn, next),
-                         map(curry(emit-reference, back-end, m),
-                             c.arguments)),
-             type: return-type,
-             calling-convention: $llvm-calling-convention-c)
-  else
-    next-method()
-  end if
+  let next = emit-reference(back-end, m, c.next-methods);
+
+  let call
+    = op--call(back-end, mep-cast,
+               concatenate(vector(fn, next), shifted-argument-refs),
+               type: return-type,
+               calling-convention: $llvm-calling-convention-c);
+  ins--call-intrinsic(back-end, "llvm.stackrestore", vector(stacksave));
+  call
 end method;
 
 define method emit-slot-ptr

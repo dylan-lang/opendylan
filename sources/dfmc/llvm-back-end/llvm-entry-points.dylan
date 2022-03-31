@@ -643,89 +643,92 @@ define entry-point-descriptor apply-xep
   end if
 end entry-point-descriptor;
 
+define method op--shift-rest-arguments
+    (be :: <llvm-back-end>, meth :: <llvm-value>,
+     arguments :: <sequence>, shift-count :: <integer>)
+ => (new-arguments :: <sequence>);
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  if (shift-count < 0)
+    // Allocate a new (reduced) optionals vector
+    let optionals-cast
+      = op--object-pointer-cast(be, arguments.last, sov-class);
+    let optionals-size
+      = call-primitive(be, primitive-vector-size-descriptor,
+                       optionals-cast);
+    let cmp = ins--icmp-slt(be, optionals-size, -shift-count);
+    ins--if (be, op--unlikely(be, cmp))
+      op--argument-count-error(be, meth, optionals-size);
+    end ins--if;
+
+    let new-optionals-size = ins--add(be, shift-count, optionals-size);
+    let new-optionals
+          = op--stack-allocate-vector(be, new-optionals-size);
+
+    // Copy the contents of the original vector into the new one
+    let zero = llvm-back-end-value-function(be, 0);
+    let src = op--getslotptr(be, optionals-cast, sov-class,
+                             #"vector-element", -shift-count);
+    let new-optionals-cast
+      = op--object-pointer-cast(be, new-optionals, sov-class);
+    let dst = op--getslotptr(be, new-optionals-cast, sov-class,
+                             #"vector-element", 0);
+    call-primitive(be, primitive-replace!-descriptor,
+                   dst, zero, zero,
+                   src, zero, zero,
+                   new-optionals-size);
+
+    // Extract needed arguments from the optionals vector
+    let extracted-arguments
+      = map(method (i)
+              call-primitive(be, primitive-vector-element-descriptor,
+                             optionals-cast,
+                             llvm-back-end-value-function(be, i))
+            end, range(below: -shift-count));
+        concatenate(extracted-arguments, vector(new-optionals))
+  elseif (zero?(shift-count))
+    arguments
+  else
+    // Allocate a new (expanded) optionals vector
+    let optionals-cast
+      = op--object-pointer-cast(be, arguments.last, sov-class);
+    let optionals-size
+      = call-primitive(be, primitive-vector-size-descriptor,
+                       optionals-cast);
+
+    let new-optionals-size = ins--add(be, shift-count, optionals-size);
+    let new-optionals
+      = op--stack-allocate-vector(be, new-optionals-size);
+
+    // Store the excess arguments at the beginning of the new vector
+    for (i from 0 below shift-count)
+      call-primitive(be, primitive-vector-element-setter-descriptor,
+                     arguments[arguments.size - 1 - shift-count + i], new-optionals,
+                     llvm-back-end-value-function(be, i));
+    end for;
+
+    // Copy the contents of the original vector into the new one
+    let zero = llvm-back-end-value-function(be, 0);
+    let src = op--getslotptr(be, optionals-cast, sov-class,
+                           #"vector-element", 0);
+    let new-optionals-cast
+      = op--object-pointer-cast(be, new-optionals, sov-class);
+    let dst = op--getslotptr(be, new-optionals-cast, sov-class,
+                             #"vector-element", shift-count);
+    call-primitive(be, primitive-replace!-descriptor,
+                   dst, zero, zero,
+                   src, zero, zero,
+                   optionals-size);
+
+    concatenate(copy-sequence(arguments, end: arguments.size - 1 - shift-count),
+                    vector(new-optionals))
+  end if
+end method;
+
 define entry-point-descriptor apply-mep
     (next :: <list>, meth :: <lambda>, #rest arguments) => (#rest values);
   let word-size = back-end-word-size(be);
   let return-type = llvm-reference-type(be, be.%mv-struct-type);
   let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
-
-  local
-    method shift-arguments (count :: <integer>) => (new-arguments :: <sequence>);
-      if (count < 0)
-        // Allocate a new (reduced) optionals vector
-        let optionals-cast
-          = op--object-pointer-cast(be, arguments.last, sov-class);
-        let optionals-size
-          = call-primitive(be, primitive-vector-size-descriptor,
-                           optionals-cast);
-        let cmp = ins--icmp-slt(be, optionals-size, -count);
-        ins--if (be, op--unlikely(be, cmp))
-          op--argument-count-error(be, meth, optionals-size);
-        end ins--if;
-
-        let new-optionals-size = ins--add(be, count, optionals-size);
-        let new-optionals
-          = op--stack-allocate-vector(be, new-optionals-size);
-
-        // Copy the contents of the original vector into the new one
-        let zero = llvm-back-end-value-function(be, 0);
-        let src = op--getslotptr(be, optionals-cast, sov-class,
-                                 #"vector-element", -count);
-        let new-optionals-cast
-          = op--object-pointer-cast(be, new-optionals, sov-class);
-        let dst = op--getslotptr(be, new-optionals-cast, sov-class,
-                                 #"vector-element", 0);
-        call-primitive(be, primitive-replace!-descriptor,
-                       dst, zero, zero,
-                       src, zero, zero,
-                       new-optionals-size);
-
-        // Extract needed arguments from the optionals vector
-        let extracted-arguments
-          = map(method (i)
-                  call-primitive(be, primitive-vector-element-descriptor,
-                                 optionals-cast,
-                                 llvm-back-end-value-function(be, i))
-                end, range(below: -count));
-        concatenate(extracted-arguments, vector(new-optionals))
-      elseif (zero?(count))
-        arguments
-      else
-        // Allocate a new (expanded) optionals vector
-        let optionals-cast
-          = op--object-pointer-cast(be, arguments.last, sov-class);
-        let optionals-size
-          = call-primitive(be, primitive-vector-size-descriptor,
-                           optionals-cast);
-
-        let new-optionals-size = ins--add(be, count, optionals-size);
-        let new-optionals
-          = op--stack-allocate-vector(be, new-optionals-size);
-
-        // Store the excess arguments at the beginning of the new vector
-        for (i from 0 below count)
-          call-primitive(be, primitive-vector-element-setter-descriptor,
-                         arguments[num - 1 - count + i], new-optionals,
-                         llvm-back-end-value-function(be, i));
-        end for;
-
-        // Copy the contents of the original vector into the new one
-        let zero = llvm-back-end-value-function(be, 0);
-        let src = op--getslotptr(be, optionals-cast, sov-class,
-                                 #"vector-element", 0);
-        let new-optionals-cast
-          = op--object-pointer-cast(be, new-optionals, sov-class);
-        let dst = op--getslotptr(be, new-optionals-cast, sov-class,
-                                 #"vector-element", count);
-        call-primitive(be, primitive-replace!-descriptor,
-                       dst, zero, zero,
-                       src, zero, zero,
-                       optionals-size);
-
-        concatenate(copy-sequence(arguments, end: num - 1 - count),
-                    vector(new-optionals))
-      end if;
-    end method;
 
   if (empty?(arguments))
     // The 0-argument apply-mep will never be called
@@ -777,7 +780,7 @@ define entry-point-descriptor apply-mep
         let count = jump-table[i];
         ins--block(be, jump-table[i + 1]);
 
-        let new-arguments = shift-arguments(count);
+        let new-arguments = op--shift-rest-arguments(be, meth, arguments, count);
 
         // Cast to the appropriate MEP type
         let parameter-types
@@ -845,7 +848,7 @@ define entry-point-descriptor apply-mep
           let count = jump-table[i];
           ins--block(be, jump-table[i + 1]);
 
-          let new-arguments = shift-arguments(count);
+          let new-arguments = op--shift-rest-arguments(be, meth, arguments, count);
 
           // Call the method; for <simple-method> it is the IEP that is
           // stored in the mep slot
