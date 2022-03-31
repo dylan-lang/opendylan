@@ -550,15 +550,13 @@ define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-
 
     // Chain to the MEP
     let parameter-types
-      = make(<simple-object-vector>, size: count + 2);
-    parameter-types[0] := $llvm-object-pointer-type; // function
-    parameter-types[1] := $llvm-object-pointer-type; // next
-    fill!(parameter-types, $llvm-object-pointer-type, start: 2);
+      = vector($llvm-object-pointer-type,  // method
+               $llvm-object-pointer-type); // next-methods
     let mep-type
       = make(<llvm-function-type>,
              return-type: llvm-reference-type(be, be.%mv-struct-type),
              parameter-types: parameter-types,
-             varargs?: #f);
+             varargs?: #t);
     let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
     let result
       = ins--tail-call

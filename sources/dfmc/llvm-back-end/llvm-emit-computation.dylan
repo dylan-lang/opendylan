@@ -907,9 +907,8 @@ define method emit-call
 
   // Cast it to the appropriate MEP type
   let parameter-types
-    = make(<simple-object-vector>,
-           size: 2,
-           fill: $llvm-object-pointer-type);
+    = vector($llvm-object-pointer-type,  // method
+             $llvm-object-pointer-type); // next-methods
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let mep-type
     = make(<llvm-function-type>,

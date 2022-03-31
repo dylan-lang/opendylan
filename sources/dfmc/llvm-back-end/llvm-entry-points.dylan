@@ -784,14 +784,13 @@ define entry-point-descriptor apply-mep
 
         // Cast to the appropriate MEP type
         let parameter-types
-          = make(<simple-object-vector>,
-                 size: 2 + num - count,
-                 fill: $llvm-object-pointer-type);
+          = vector($llvm-object-pointer-type,  // method
+                   $llvm-object-pointer-type); // next-methods
         let mep-type
           = make(<llvm-function-type>,
                  return-type: return-type,
                  parameter-types: parameter-types,
-                 varargs?: #f);
+                 varargs?: #t);
         let mep-cast
           = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
 
@@ -2016,14 +2015,13 @@ define single-method outer entry-point-descriptor implicit-keyed-single-method
 
         // Chain to the method's MEP
         let parameter-types
-          = make(<simple-object-vector>,
-                 size: num + 2,
-                 fill: $llvm-object-pointer-type);
+          = vector($llvm-object-pointer-type,  // method
+                   $llvm-object-pointer-type); // next-methods
         let mep-type
           = make(<llvm-function-type>,
                  return-type: llvm-reference-type(be, be.%mv-struct-type),
                  parameter-types: parameter-types,
-                 varargs?: #f);
+                 varargs?: #t);
         let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
         ins--call
           (be, mep-cast,
@@ -2105,14 +2103,13 @@ define single-method outer entry-point-descriptor explicit-keyed-single-method
 
         // Chain to the method's MEP
         let parameter-types
-          = make(<simple-object-vector>,
-                 size: num + 2,
-                 fill: $llvm-object-pointer-type);
+          = vector($llvm-object-pointer-type,  // method
+                   $llvm-object-pointer-type); // next-methods
         let mep-type
           = make(<llvm-function-type>,
                  return-type: llvm-reference-type(be, be.%mv-struct-type),
                  parameter-types: parameter-types,
-                 varargs?: #f);
+                 varargs?: #t);
         let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
         ins--call
           (be, mep-cast,
@@ -2208,14 +2205,13 @@ define single-method outer entry-point-descriptor unrestricted-keyed-single-meth
 
       // Chain to the method's MEP
       let parameter-types
-        = make(<simple-object-vector>,
-               size: num + 2,
-               fill: $llvm-object-pointer-type);
+        = vector($llvm-object-pointer-type,  // method
+                 $llvm-object-pointer-type); // next-methods
       let mep-type
         = make(<llvm-function-type>,
                return-type: llvm-reference-type(be, be.%mv-struct-type),
                parameter-types: parameter-types,
-               varargs?: #f);
+               varargs?: #t);
       let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
       ins--tail-call
         (be, mep-cast,
