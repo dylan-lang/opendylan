@@ -164,7 +164,8 @@ There are four types of macro.
 
 `Body-style definition macro`:dfn:
       This kind of macro lets you create `define x ... end` syntax. This is the
-      most popular kind of macro. Example: :drm:`define function`
+      most popular kind of macro. Example: `define function`
+      (see `DEP-002 <https://opendylan.org/proposals/dep-0002-define-function.html>`_).
 
 `List-style definition macro`:dfn:
       This kind of macro lets you create `define x ...` syntax, such as `define
@@ -201,8 +202,8 @@ syntax, with optional parts in brackets::
 
 `{MAIN-RULE-SET}`
       One or more pattern/template pairs. The syntax that the patterns all
-      follow determine the type of the macro, and are described `below
-      <main-rules>`_. The patterns are matched in order; see `Patterns`_.
+      follow determine the type of the macro, and are described :ref:`below
+      <main-rules>`. The patterns are matched in order; see `Patterns`_.
 
 `{AUXILIARY-RULE-SETS}`
       One or more auxiliary rule sets, described in more detail in

@@ -239,7 +239,7 @@ Archived Documentation
         material.</p>
       </div>
 
-`OLE, COM, ActiveX and DBMS library reference <http://opendylan.org/documentation/opendylan/interop2/index.htm>`_
+`OLE, COM, ActiveX and DBMS library reference <http://web.archive.org/web/20170402235507/http://opendylan.org/documentation/opendylan/interop2/index.htm>`_
     Describes high and low level interfaces to COM, OLE, and
     ActiveX component technology, and generic DBMS support, through
     SQL with an ODBC backend.

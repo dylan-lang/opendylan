@@ -71,7 +71,7 @@ Publications about Dylan
     `network night vision
     <https://github.com/dylan-hackers/network-night-vision>`__.
 
-**Efficient Compression of Generic Function Dispatch Tables** (by Eric Kidd  - Technical Report Dartmouth College 2001 `pdf <https://www.cs.dartmouth.edu/~trdata/reports/TR2001-404.pdf>`__ `bib <../_static/documentation/kidd2001.bib>`__)
+**Efficient Compression of Generic Function Dispatch Tables** (by Eric Kidd  - Technical Report Dartmouth College 2001 `pdf <https://digitalcommons.dartmouth.edu/cgi/viewcontent.cgi?article=1018&context=senior_theses>`__ `bib <../_static/documentation/kidd2001.bib>`__)
     A generic function is similar to an overloaded operator, but
     provides a way to select an appropriate behavior at run-time
     instead of compile-time. Dujardin and colleagues have proposed an

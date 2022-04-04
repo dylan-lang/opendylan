@@ -159,7 +159,7 @@ Scott McKay also worked on the Deuce editor that was used in the DylanWorks
 IDE. He wrote about it briefly in a `newsgroup posting
 <https://groups.google.com/forum/#!msg/comp.lang.dylan/3uuUb3Z9pAc/6NbE9gYpeAIJ>`_.
 Bruce Mitchener also wrote briefly about the architecture of Deuce on the
-`Atom editor discussion forums <https://discuss.atom.io/t/the-deuce-editor-architecture/2218>`_.
+`Atom editor discussion forums <http://web.archive.org/web/20210407151341/https://discuss.atom.io/t/the-deuce-editor-architecture/2218>`_.
 
 Memory Pool System
 ------------------

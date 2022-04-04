@@ -103,8 +103,8 @@ Examples of uses of underscore that are **not** allowed include::
 Reference Implementation
 ========================
 
-A work-in-progress implementation can be found here:
-https://github.com/dylan-lang/opendylan/compare/master...cgay:integer-literals?expand=1
+This was incorporated into Open Dylan 2020.1 in this commit
+`<https://github.com/dylan-lang/opendylan/commit/0b3c60e279c21b137c05051153738bc4034072e4>`_.
 
 
 Backward Compatibility
