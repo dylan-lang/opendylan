@@ -378,6 +378,7 @@ define constant $code-extern-names
   = #[#"%resolve-symbol",
       #"unbound-instance-slot",
       #"type-check-error",
+      #"argument-count-error",
       #"machine-word-overflow"];
 
 define method emit-code-externs
