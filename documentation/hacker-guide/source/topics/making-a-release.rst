@@ -114,3 +114,7 @@ now here is a manual check-list.
 
    * dylan-lang@googlegroups.com
    * Tweet from @DylanLanguage (cgay)
+
+#. Update `the Wikipedia page <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_
+   with the latest release version and date.
+
