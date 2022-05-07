@@ -61,7 +61,7 @@ done
 # Update library docs.
 # For now these are one-offs, until we decide on a standard.
 
-libraries="binary-data concurrency http melange objc-dylan statistics testworks tracing"
+libraries="binary-data concurrency dylan-tool http melange objc-dylan statistics testworks tracing"
 
 for lib in ${libraries}; do
     echo

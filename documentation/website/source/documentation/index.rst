@@ -106,8 +106,12 @@ IO, strings, logging, network, and many others.
 `Concurrency </documentation/concurrency/>`_ [`pdf </documentation/concurrency/ConcurrencyUserGuide.pdf>`__] [`epub </documentation/concurrency/ConcurrencyUserGuide.epub>`__]
     The concurrency utility library.
 
+`dylan-tool </documentation/dylan-tool/>`_ [`epub </documentation/dylan-tool/dylan-tool.epub>`__]
+    Provides the ``dylan`` command to manage workspaces and package
+    dependencies, and create the registry.
+
 `HTTP </documentation/http/>`_ [`pdf </documentation/http/HTTPLibraries.pdf>`__] [`epub </documentation/http/HTTPLibraries.epub>`__]
-    Dylan provides libraries for writing HTTP clients and servers.
+    Libraries for writing HTTP clients and servers.
 
 `Melange </documentation/melange/>`_ [`pdf </documentation/melange/MelangeUserGuide.pdf>`__] [`epub </documentation/melange/MelangeUserGuide.epub>`__]
     Generates Dylan code to wrap C libraries.
@@ -120,7 +124,7 @@ IO, strings, logging, network, and many others.
     A collection of libraries for performing statistical analysis.
 
 `Testworks </documentation/testworks/>`_ [`pdf </documentation/testworks/TestworksUserGuide.pdf>`__] [`epub </documentation/testworks/TestworksUserGuide.epub>`__]
-    Testworks is Dylan's unit testing framework.
+    Unit testing framework.
 
 `Tracing </documentation/tracing/>`_ [`pdf </documentation/tracing/TracingUserGuide.pdf>`__] [`epub </documentation/tracing/TracingUserGuide.epub>`__]
     Tracing is an alternative to traditional logging and performance measurements.
