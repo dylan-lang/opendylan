@@ -60,6 +60,7 @@ done
 
 # Update library docs.
 # For now these are one-offs, until we decide on a standard.
+# If you add a library to this list remember to clone it manually before the first run.
 
 libraries="binary-data concurrency dylan-tool http melange objc-dylan statistics testworks tracing"
 
