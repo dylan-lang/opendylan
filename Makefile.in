@@ -327,6 +327,10 @@ version = @VERSION@
 
 dist: 3-stage-bootstrap
 	mkdir -p release/opendylan-$(version)/bin
+
+	DYLAN=$$(realpath release/opendylan-$(version)) \
+	  make -C sources/app/dylan-tool test && \
+	  make -C sources/app/dylan-tool install
 	mkdir -p release/opendylan-$(version)/databases
 	mkdir -p release/opendylan-$(version)/include/opendylan
 	mkdir -p release/opendylan-$(version)/lib
