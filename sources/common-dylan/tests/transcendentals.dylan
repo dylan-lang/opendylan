@@ -98,7 +98,7 @@ define test test-atanh ()
 end test;
 
 define test test-hypot
-    (expected-to-fail?: method () $os-name == #"darwin" end,
+    (expected-to-fail-test: method () $os-name == #"darwin" end,
      expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   assert-equal(5.0s0, hypot(3.0s0, 4.0s0));
   assert-equal(5.0s0, hypot(3.0s0, 4.0d0));
@@ -156,7 +156,7 @@ end test;
 
 
 define test test-sqrt
-    (expected-to-fail?: method () $os-name == #"darwin" end,
+    (expected-to-fail-test: method () $os-name == #"darwin" end,
      expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   check-condition("sqrt(-1) errors",
                   <error>,
