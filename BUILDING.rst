@@ -1,50 +1,15 @@
-**********************
-Welcome to Open Dylan!
-**********************
-
-Open Dylan is a compiler and a set of libraries for the `Dylan
-programming language <http://opendylan.org/books/drm>`_.
-
-If you're reading this inside of a binary release that you just downloaded and
-unpacked, then this is all you need to do to get started::
-
-  $ export PATH=/path/to/opendylan-2020.1/bin:$PATH    # for bash
-
-Verify that the downloaded version is working correctly by building a
-hello-world binary::
-
-  make-dylan-app hello-world
-  cd hello-world
-  dylan-compiler -build hello-world
-  _build/bin/hello-world
-
-Note: If there is no ``_build`` directory already, dylan-compiler will create
-it and build all used libraries.  Subsequent builds will be much faster.
-
-If this is your first time trying Open Dylan, take a look at the `Getting
-Started guide <http://opendylan.org/documentation/getting-started-cli/>`_.
-
-
-Contributing
-============
-
-The rest of this document is for those interested in working on the compiler
-and core libraries.
-
-Open Dylan is written in Dylan, thus a Dylan compiler is needed to bootstrap
-it. Download a release from http://opendylan.org/download/ and test it as
-described above.
-
-
+*******************
 Building Open Dylan
-===================
+*******************
+
+This document describes how to build the Open Dylan compiler and IDE.
 
 Clone the git repository::
 
-  git clone git://github.com/dylan-lang/opendylan.git --recursive
+  git clone --recursive git://github.com/dylan-lang/opendylan.git
 
-It does not work to download a ZIP file of the repository from github
-because it doesn't include git submodules.
+.. note:: It does not work to download a ZIP file of the repository from github
+   because it doesn't include git submodules.
 
 
 UNIX
@@ -148,10 +113,7 @@ complete::
   make check
 
 This runs the tests for the core language implementation as well as for many
-bundled libraries.  However, there are currently many test failures which
-need to be fixed. Most of the test failures are minor issues or are due to
-unimplemented tests rather than major bugs. Help is welcome in improving
-our test suites.
+bundled libraries.
 
 Windows
 =======
@@ -184,3 +146,4 @@ IDE in <target-dir>.
   * Go to packages\\win32-nsis, read Build.txt and follow the
     instructions. Make sure you are using the same command shell as
     used for building Open Dylan (to retain environment variables).
+
