@@ -1,21 +1,11 @@
 *******************************
-How to contribute to Open Dylan
+How to Contribute to Open Dylan
 *******************************
 
-The first thing you'll need is a source checkout of the Git
-repository.  The `Open Dylan sources
-<https://github.com/dylan-lang/opendylan>`_ are hosted on GitHub,
-along with sources for the `opendylan.org web site
-<https://github.com/dylan-lang/website>`_ and many other repositories.
-If you don't yet have a GitHub account and ssh keys, now is a good
-time to get them.
-
-To checkout the main "opendylan" repository::
-
-    git clone --recursive git@github.com:dylan-lang/opendylan
-
-You'll want to fork this repository so you can push changes to your
-fork and then submit pull requests.
+This document only discusses how to make changes to the ``opendylan``
+repository. For external libraries (including ones that are pulled into
+``opendylan`` as submodules) just make your changes, run the test suite, and
+submit a pull request to the appropriate repository.
 
 Aside from `dylan-lang <https://github.com/dylan-lang>`_ there are two
 other GitHub organizations that may be of interest:
@@ -42,11 +32,28 @@ something in mind that isn't there, feel free to `talk with us
 Making Changes
 ==============
 
-* Fork the repository. You will need to have a GitHub account to do
-  this.
-* Create a topic branch with ``git checkout -t -b your-contribution``.
-* Commit your changes to your branch, putting each distinct fix in
-  a separate commit.
+The `Open Dylan sources <https://github.com/dylan-lang/opendylan>`_ are hosted
+on GitHub, along with sources for the `opendylan.org web site
+<https://github.com/dylan-lang/website>`_ and many other repositories.  If you
+don't yet have a GitHub account and ssh keys, now is a good time to get them.
+
+To checkout the main "opendylan" repository::
+
+    git clone --recursive https://github.com/dylan-lang/opendylan
+
+You'll want to fork this repository so you can push changes to your
+fork and then submit pull requests.
+
+In general, when making changes to the compiler and core libraries you'll use
+the ``Makefile`` to build and test your changes. See ``BUILDING.rst`` in the
+top-level directory of your checkout for details on how to install required
+software and build the compiler.
+
+* Fork the repository. You will need to have a GitHub account to do this.
+* Create a topic branch with ``git checkout -t -b my-branch``.
+* Build and test with ``make`` and ``make check``.
+* Commit changes to your branch, putting each distinct fix in a separate
+  commit.
 * Push your changes to your fork on GitHub.
 * Submit a pull request with your changes.
 
@@ -66,14 +73,6 @@ Guidelines
 * Use 2 spaces for indentation, **never** tabs.  If you use emacs,
   `dylan-mode <https://github.com/dylan-lang/dylan-mode>`_ does a
   decent job of indenting code.
-
-Testing
-=======
-
-In the near future, we will have our test suites working more
-reliably. We will also document the processes involved with updating
-and running tests. In the meantime, each library usually has a "tests"
-subdirectory with a test suite library named "\*-tests".
 
 Licensing
 =========

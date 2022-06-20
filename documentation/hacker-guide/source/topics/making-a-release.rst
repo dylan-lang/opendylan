@@ -28,9 +28,9 @@ now here is a manual check-list.
      FAIL``, fix the problem or discuss with others how to proceed.
 
    * As a smoke test, verify that the "hello world" instructions at the top of
-     `README.rst
-     <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_ work on
-     each platform.
+     `BUILDING.rst
+     <https://github.com/dylan-lang/opendylan/blob/master/BUILDING.rst>`_ work
+     on each platform.
 
 #. Update the version number in the sources
 
@@ -74,7 +74,7 @@ now here is a manual check-list.
      $ ./build/unix/release-with-batteries.sh
 
    Use the previous release as the bootstrap compiler so that we can be sure
-   that works.  If it doesn't work, then opendylan/README.rst must be updated
+   that works.  If it doesn't work, then opendylan/BUILDING.rst must be updated
    to indicate which version **can** be used to bootstrap the compiler.
 
    Ask Peter Housel to build the Windows release. :-)
