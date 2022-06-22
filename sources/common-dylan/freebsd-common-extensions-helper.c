@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 uint application_filename_length () {
   int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, -1 };
