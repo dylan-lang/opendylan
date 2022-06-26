@@ -1,31 +1,3 @@
-.. raw:: html
-
-   <div class="container">
-     <div class="row">
-       <div class="col-3">
-
-         <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
-           <ul class="nav nav-pills flex-column mb-auto">
-             <li class="nav-item">
-               <a class="nav-link" href="#unix-platforms">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Unix Platforms</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="#windows">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Windows</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="#get-started">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Get Started</a>
-             </li>
-           </ul>
-         </div>
-       </div>
-       <div class="col-9">
-
 ******************
 Install Open Dylan
 ******************
@@ -63,11 +35,6 @@ Unix Platforms
    +---------------------------+----------------------------------------------+---------------+
    | Mac OS X (Intel)          | `opendylan-2020.1-x86_64-darwin.tar.bz2`_    | 108361174     |
    +---------------------------+----------------------------------------------+---------------+
-
-.. raw:: html
-
-   <br/>
-   <br/>
 
 Note that Unix versions only have a command-line compiler and not the full IDE that is
 available on Windows, although there is some integration with VSCode and Emacs.
@@ -168,10 +135,3 @@ For 2019.1 and earlier releases:
 .. _opendylan-2022.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-freebsd.tar.bz2
 .. _download directories: https://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
-
-
-.. raw:: html
-
-       </div>
-     </div>
-   </div>

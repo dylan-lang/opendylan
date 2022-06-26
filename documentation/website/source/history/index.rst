@@ -1,41 +1,3 @@
-.. raw:: html
-
-   <div class="container">
-     <div class="row">
-       <div class="col-3">
-
-         <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
-           <ul class="nav nav-pills flex-column mb-auto">
-             <li class="nav-item">
-               <a class="nav-link" href="#apple-dylan">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Apple Dylan</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="#change-in-syntax">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Change in Syntax</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="#gwydion-dylan">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Gwydion Dylan</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="#open-source">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Open Source</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="#other-implementations">
-                 <svg width="16" height="16"><use xlink:href="#chevron-right"/></svg>
-                 Other Implementations</a>
-             </li>
-           </ul>
-         </div>
-       </div>
-       <div class="col-9">
-
 *******
 History
 *******
@@ -279,9 +241,3 @@ Over the years, there have been a variety of other Dylan implementations.
    :hidden:
 
    apple-dylan/index
-
-.. raw:: html
-
-       </div>
-     </div>
-   </div>

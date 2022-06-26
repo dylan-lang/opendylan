@@ -1,20 +1,3 @@
-.. raw:: html
-
-  <div class="row-fluid">
-    <div class="span3 bs-docs-sidebar">
-      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
-        <li><a href="#cheat-sheets"><i class="icon-chevron-right"></i> Cheat Sheets</a></li>
-        <li><a href="#learning-dylan"><i class="icon-chevron-right"></i> Learn Dylan</a></li>
-        <li><a href="#references"><i class="icon-chevron-right"></i> References</a></li>
-        <li><a href="#advanced-guides"><i class="icon-chevron-right"></i> Advanced Guides</a></li>
-        <li><a href="#external-libraries-and-tools"><i class="icon-chevron-right"></i> External Libraries and Tools</a></li>
-        <li><a href="#articles"><i class="icon-chevron-right"></i> Articles</a></li>
-        <li><a href="#publications"><i class="icon-chevron-right"></i> Publications</a></li>
-        <li><a href="#for-open-dylan-developers"><i class="icon-chevron-right"></i> For Open Dylan Developers</a></li>
-      </ul>
-    </div>
-    <div class="span9">
-
 *************
 Documentation
 *************
@@ -194,13 +177,8 @@ few highlighted publications.
 For Open Dylan Developers
 =========================
 
-.. raw:: html
-
-     <div class="alert alert-block alert-info">
-       <p>Notes and materials useful to those working on
-       Open Dylan itself or those who have an interest in the low
-       level details.</p>
-     </div>
+.. note:: Notes and materials useful to those working on Open Dylan itself or
+          those who have an interest in the low level details.
 
 `Open Dylan Hacker's Guide <hacker-guide/index.html>`_ [`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__] [`epub <hacker-guide/OpenDylanHackersGuide.epub>`__]
     A work in progress to help out people who are hacking on Open Dylan itself.
@@ -230,8 +208,3 @@ For Open Dylan Developers
 .. _Introduction to Dylan: intro-dylan/index.html
 .. _Library Reference: library-reference/index.html
 .. _Tour of Dylan: /about/
-
-.. raw:: html
-
-     </div>
-   </div>
