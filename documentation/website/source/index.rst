@@ -62,15 +62,4 @@ the library docs. Happy hacking!
 .. _Dylan Reference Manual: https://opendylan.org/books/drm/
 .. _Gitter: https://gitter.im/dylan-lang/general
 
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-   :glob:
-
-   */*
-   articles/*/*
-   documentation/cheatsheets/*
-   news/*/*/*/*
-   community/gsoc/*
-
 .. -*- tab-width: 4 -*-
