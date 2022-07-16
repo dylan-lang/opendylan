@@ -190,6 +190,8 @@ BOOTSTRAP_3_ROOT = $(abs_builddir)/Bootstrap.3
 
 BOOTSTRAP_3_LIBRARIES = \
 	dylan-compiler dylan-environment parser-compiler dswank make-dylan-app
+BOOTSTRAP_3_STATICS = \
+	dylan-tool
 
 BOOTSTRAP_3_COMPILER = \
         $(BOOTSTRAP_2_ROOT)/bin/dylan-compiler \
@@ -204,6 +206,7 @@ BOOTSTRAP_3_ENV = \
 
 bootstrap-stage-3: bootstrap-stage-3-dirs \
                    bootstrap-stage-3-libraries \
+                   bootstrap-stage-3-statics \
                    bootstrap-stage-3-runtime \
                    bootstrap-stage-3-jamfiles
 
@@ -214,6 +217,11 @@ bootstrap-stage-3-libraries:
 	@echo Building Open Dylan bootstrap stage 3...
 	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
           $(BOOTSTRAP_3_LIBRARIES)
+
+bootstrap-stage-3-statics:
+	@echo Building Open Dylan unified executables...
+	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
+          --unify $(BOOTSTRAP_3_STATICS)
 
 BOOTSTRAP_3_LLVM_RTGVARSyes = \
         OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_3_ROOT)/bin/$(RTG)
@@ -328,10 +336,6 @@ version = @VERSION@
 
 dist: 3-stage-bootstrap
 	mkdir -p release/opendylan-$(version)/bin
-
-	DYLAN=$$(realpath release/opendylan-$(version)) \
-	  make -C sources/app/dylan-tool test && \
-	  make -C sources/app/dylan-tool install
 	mkdir -p release/opendylan-$(version)/databases
 	mkdir -p release/opendylan-$(version)/include/opendylan
 	mkdir -p release/opendylan-$(version)/lib
@@ -343,6 +347,8 @@ dist: 3-stage-bootstrap
 	find release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
 	rm -rf release/opendylan-$(version)/sources/bootstrap1-registry
 	cp -R Bootstrap.3/bin release/opendylan-$(version)/
+	cp -R Bootstrap.3/sbin/* release/opendylan-$(version)/bin
+	ln -s dylan-tool release/opendylan-$(version)/bin/dylan
 	cp -R Bootstrap.3/databases release/opendylan-$(version)/
 	-cp -R Bootstrap.3/include/opendylan release/opendylan-$(version)/include
 	cp -R Bootstrap.3/lib release/opendylan-$(version)/
