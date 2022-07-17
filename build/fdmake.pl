@@ -20,11 +20,13 @@ my $verbose;
 my $debugger;
 my $gdb;
 my $lldb;
+my $unify;
 my $compiler = 'dylan-compiler';
 &GetOptions('verbose' => \$verbose,
             'debugger' => \$debugger,
             'gdb' => \$gdb,
             'lldb' => \$lldb,
+            'unify'=> \$unify,
             'compiler=s' => \$compiler);
 
 # Names of libraries we already built successfully.
@@ -153,6 +155,9 @@ sub build_library {
     }
 
     my $command = $compiler;
+    if ($unify) {
+        $command .= " -unify";
+    }
     if ($debugger) {
         $command .= " -debugger";
     } 
@@ -300,12 +305,25 @@ sub library_products {
     else {
         my $so = ($platform_name =~ /-darwin$/) ? 'dylib' : 'so';
         $executable = lc($executable);
-        push(@products,
-             File::Spec->catfile($user_root, 'lib', "lib${executable}.${so}"));
+        if ($unify) {
+            push(@products,
+                 File::Spec->catfile($user_root, 'lib', "lib${executable},unify.a"));
+        }
+        else {
+            push(@products,
+                 File::Spec->catfile($user_root, 'lib', "lib${executable}.${so}"));
+        }
 
         if (!defined $header->{'target-type'}
             || lc($header->{'target-type'}) eq 'executable') {
-            push @products, File::Spec->catfile($user_root, 'bin', $executable);
+            if ($unify) {
+                push @products, File::Spec->catfile($user_root, 'sbin',
+                                                    $executable);
+            }
+            else {
+                push @products, File::Spec->catfile($user_root, 'bin',
+                                                    $executable);
+            }
         }
     }
 
