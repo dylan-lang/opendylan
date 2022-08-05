@@ -1095,15 +1095,14 @@ define method parameter-type-name
 end method parameter-type-name;
 
 define method parse-next-argument
-    (context :: <server-context>, type == $keyword-list-type,
-     text :: <string>,
+    (context :: <server-context>, type == $keyword-list-type, text :: <string>,
      #key start :: <integer> = 0, end: stop = #f)
  => (value :: <sequence>, next-index :: <integer>)
-  let (keyword, next-index)
+  let (word, next-index)
     = parse-next-word(text, start: start, end: stop);
-  if (keyword)
+  if (word)
     let options
-      = tokenize-string(text, $option-separator, start: start, end: stop);
+      = tokenize-string(text, $option-separator, start: start, end: next-index);
     values(map(curry(as, <symbol>), options), next-index)
   else
     parse-error("Missing keyword argument")
