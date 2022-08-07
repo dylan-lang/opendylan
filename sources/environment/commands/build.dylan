@@ -205,7 +205,7 @@ end command-line build;
 
 define method do-execute-command
     (context :: <environment-context>, command :: <build-project-command>)
- => ()
+ => (exit-code :: <integer>)
   let project = command.%project | context.context-project;
   let messages = if (command.%verbose?) #"internal" else #"external" end;
   let stream = context.context-server.server-output-stream;
@@ -217,7 +217,14 @@ define method do-execute-command
       else
         curry(note-build-progress, context, #f)
       end;
+  let serious-warnings? = #f;
   block ()
+    local method warning-callback (warning)
+            note-compiler-warning(context, warning);
+            if (instance?(warning, <serious-compiler-warning-object>))
+              serious-warnings? := #t;
+            end;
+          end;
     if (build-project
           (project,
            process-subprojects?: command.%subprojects?,
@@ -228,7 +235,7 @@ define method do-execute-command
            output:               command.%output,
            dispatch-coloring:    command.%dispatch-coloring,
            progress-callback:    progress-callback,
-           warning-callback:     curry(note-compiler-warning, context),
+           warning-callback:     warning-callback,
            error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
         let project-context = context.context-project-context;
@@ -247,10 +254,16 @@ define method do-execute-command
            progress-callback:    progress-callback,
            error-handler:        curry(compiler-condition-handler, context))
       end;
-      message(context, "Build of '%s' completed", project.project-name)
+      message(context, "Build of '%s' completed", project.project-name);
+      if (serious-warnings?)
+        $error-exit-code
+      else
+        $success-exit-code
+      end
     else
-      message(context, "Build of '%s' aborted",   project.project-name)
-    end;
+      message(context, "Build of '%s' aborted",   project.project-name);
+      $error-exit-code
+    end
   exception (error :: <file-system-error>)
     command-error("%s", error)
   end

@@ -8,6 +8,9 @@ Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Useful constants
 
+define constant $success-exit-code = 0;
+define constant $error-exit-code   = -1;
+
 define constant $whitespace                 = #[' ', '\t', '\n'];
 define constant $quote-characters           = #['\'', '"'];
 

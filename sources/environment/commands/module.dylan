@@ -86,7 +86,9 @@ define module command-lines
          command-line-loop,
          display-command-prompt,
          execute-command-line,
-         execute-server-command;
+         execute-server-command,
+         $error-exit-code,
+         $success-exit-code;
 
   // Command line user interface
   export command-line-choose-file,

@@ -6,8 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $success-exit-code = 0;
-define constant $error-exit-code   = -1;
 
 define function main
     (arguments :: <string>)
