@@ -73,20 +73,26 @@ define test test-conditionals ()
 	      #(9, 8, 7));
 end test;
 
-define function no-param-function () 1 end;
-define function one-param-function (x) x end;
-
 define test test-required-calls (expected-failure?: #t)
   check-equal("no param call",
               (method () 1 end)(), 1);
   check-equal("one param call one arg",
               (method (x) x end)(1), 1);
+
+  // Defeat compiler warnings. We want to check runtime errors.
+  local method fun0 () 1 end;
+  let no-param-function = list(fun0)[0];
   check-condition("no param call one arg", <error>,
                   apply(no-param-function, #[1]));
+
+  // Defeat compiler warnings. We want to check runtime errors.
+  local method fun1 (x) x end;
+  let one-param-function = list(fun1)[0];
   check-condition("one param call no args", <error>,
                   apply(one-param-function, #[]));
   check-condition("one param call two args", <error>,
                   apply(one-param-function, #[1, 2]));
+
   check-equal("two args call",
               (method (x, y) x + y end)(1, 2), 3);
   check-equal("lots args call",
