@@ -12,16 +12,15 @@ the common case, it is not necessary to set any of these variables.
     Controls where to look for registry entries to
     find libraries. See :doc:`source-registries`.
 
-    Defaults to looking for a directory named
-    ``registry`` in the current directory.
+    Defaults to looking for a directory named ``registry`` in the current
+    directory, plus in the Open Dylan internal registry.
 
 ``OPEN_DYLAN_USER_ROOT``:
     The directory where build output is placed.
     This is the 'user root'.
 
     On Windows, see :doc:`windows`. On all other
-    platforms, this defaults to the directory ``_build``
-    in the current directory.
+    platforms, this defaults to ``./_build``.
 
 ``OPEN_DYLAN_USER_BUILD``:
     The directory within the 'user root' where

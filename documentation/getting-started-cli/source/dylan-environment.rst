@@ -3,11 +3,11 @@ An example of dylan-environment interactive functionality
 
 .. index:: dylan-environment
 
-**Note:** ``dylan-environment`` is currently only supported on
-Windows.  Unix users may wish to skip this section.
+.. note:: ``dylan-environment`` is currently only supported on Windows.  Unix
+          users may wish to skip this section.
 
-The dylan-environment has a few more options and command groups, which
-will be presented briefly here:
+The ``dylan-environment`` has a few more options and command groups, which will
+be presented briefly here:
 
 +----------------------------+---------------------------------------------+
 | Options                    | Description                                 |
@@ -40,17 +40,13 @@ will be presented briefly here:
 +--------------------+----------------------------+
 
 The following example demonstrates the console environment's interactive
-functionality. In the example, the user starts dylan-environment in
+functionality. In the example, the user starts ``dylan-environment`` in
 interactive mode, opens the playground project, performs some
 arithmetic, defines a method, and then traces it::
 
     $ dylan-environment
-    Welcome to Open Dylan, Version 2020.1pre.
+    Welcome to Open Dylan, Version 2020.1.
 
-    For documentation on Open Dylan, see http://opendylan.org/documentation/.
-    See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
-
-    Type "help" for more information.
     > play
     Opened project gui-dylan-playground
     Starting: gui-dylan-playground
@@ -78,7 +74,6 @@ arithmetic, defines a method, and then traces it::
       $2 = 720
     ? :exit
 
-The commands described in this appendix can also be used in the Command
-Line window within the regular Open Dylan development environment.
-Choose **File > Command Line...** from the main window and use commands at
-the *?* prompt.
+The commands described in this appendix can also be used in the Command Line
+window within the Open Dylan IDE on Windows.  Choose **File > Command Line...**
+from the main window and use commands at the *?* prompt.

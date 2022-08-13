@@ -5,6 +5,10 @@ A Few More Quick Tips
 
      dylan-compiler -build -clean /my/project.lid
 
+   However, note that there are `bugs
+   <https://github.com/dylan-lang/opendylan/issues/1270>`_ related to the
+   ``-clean`` flag so deleting the ``_build`` directory may be preferable.
+
 2. Use ``dylan-compiler -help`` to see all the options.  Options that
    don't take an argument may be negated by adding "no".  e.g. -nologo
 

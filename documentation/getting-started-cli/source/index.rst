@@ -2,19 +2,18 @@
 Getting Started with the Open Dylan Command Line Tools
 ******************************************************
 
-In Open Dylan, you can develop Dylan applications using the IDE (on
-Windows) or command-line tools.
+This guide explains how to use the Open Dylan command-line tools to develop and
+deliver Dylan applications.
+
+For help getting started with the IDE (Windows only), see `Getting Started with
+the Open Dylan IDE
+<https://opendylan.org/documentation/getting-started-ide/>`_.
 
 The compiler executable is called ``dylan-compiler``.  There is a helper
-application called ``make-dylan-app``, which can be used to generate
-some boilerplate for a new project, and finally there's ``dswank``
-which is a back-end for interactive development in Emacs.  This
-document describes these command-line tools.
-
-For help getting started with the IDE on Windows, see
-the `Getting Started with the Open Dylan IDE
-<https://opendylan.org/documentation/getting-started-ide/>`_
-guide.
+application called ``make-dylan-app``, which can be used to generate some
+boilerplate for a new project, and finally there's ``DIME`` and ``dswank``, a
+pair of tools for interactive development in Emacs.  This document describes
+these tools.
 
 .. toctree::
    :maxdepth: 2

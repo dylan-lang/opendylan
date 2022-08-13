@@ -10,12 +10,6 @@ Atom
 
 See the `language-dylan`_ package.
 
-Code Mirror
------------
-
-Support for Dylan will be available out of the box in
-the near future.
-
 Emacs
 -----
 
@@ -25,11 +19,6 @@ IntelliJ
 --------
 
 See the `DeftIDEA`_ plugin.
-
-Light Table
------------
-
-Support will be forthcoming.
 
 Sublime Text
 ------------
