@@ -5,7 +5,7 @@ DIME and its back-end, dswank, create a link between the Dylan
 compiler and emacs so that editor commands can leverage everything the
 compiler knows about your source code.  It allows you to view cross
 references, locate definitions, view argument lists, compile your
-code, browse class hierarchies, and more.  This section will give a
+code, browse class hierarchies, and more.  This section gives a
 brief introduction to using DIME.
 
 The first thing you need to use DIME is the emacs Lisp code for
@@ -14,7 +14,7 @@ repository <https://github.com/dylan-lang/dylan-mode>`_.  If you don't
 have ready access to git there is a link on that page to download as a
 .zip file.
 
-Next set up your .emacs file as follows.   Adjust the pathnames to
+Next set up your .emacs file as follows.  Adjust the pathnames to
 match your Open Dylan installation location and the directory where
 you put dylan-mode.  ::
 
@@ -104,7 +104,7 @@ the standard emacs tools such as ``C-h b`` and ``M-x apropos``.
     +-------------------+------------------------------------------+
     | M-.               | jump to definition                       |
     +-------------------+------------------------------------------+
-    | M-,               | jump backwards                           |
+    | M-,               | jump backwards (return from definition)  |
     +-------------------+------------------------------------------+
     | C-c C-k           | compile project                          |
     +-------------------+------------------------------------------+

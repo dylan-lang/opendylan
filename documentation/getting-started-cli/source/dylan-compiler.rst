@@ -8,7 +8,7 @@ environment in interactive mode, enter ``dylan-compiler`` without any
 arguments at a shell. For example::
 
     $ dylan-compiler
-    Welcome to Open Dylan, Version 2020.1pre.
+    Welcome to Open Dylan, Version 2020.1.
 
     For documentation on Open Dylan, see http://opendylan.org/documentation/.
     See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
@@ -72,20 +72,20 @@ Therefore, to find out what commands exist within the *PROJECT* command
 group, type::
 
     > help -group project
-    
+
     PROJECT:
-    
+
     Commands applying to projects.
-    
+
     Commands:
       CLOSE   closes the specified project
       IMPORT  imports a LID file
       OPEN    opens the specified project
-    
+
     Properties:
       PROJECT   Current project
       PROJECTS  Open projects
-    
+
     For documentation on a group, use:    HELP -GROUP group.
     For documentation on a command, use:  HELP command
     For a complete list of commands, use: SHOW COMMANDS
@@ -94,9 +94,9 @@ Then, to examine the ``OPEN`` command, type::
 
     > help open
     Usage: OPEN file
-    
+
     Opens the specified project.
-    
+
     Arguments:
 
       FILE - the filename of the project
@@ -105,4 +105,4 @@ Properties can be displayed via the ``show`` command.  For example to
 see the value of the "projects" property listed previously, use ``show
 projects``.
 
-To exit the console environment, use the command ``exit``.
+To exit the console environment, use the ``exit`` command.

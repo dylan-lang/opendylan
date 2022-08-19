@@ -20,11 +20,12 @@ Build Products Location
 -----------------------
 
 Instead of placing build products within a ``_build`` directory,
-they are stored in a single location by default::
+they are stored in a single, shared location by default::
 
     %APPDATA%\Open-Dylan\
 
-The ``APPDATA`` defaults to ``C:\Users\...\AppData\Roaming\``.
+The ``APPDATA`` environment variable defaults to
+``C:\Users\<you>\AppData\Roaming\``.
 
 This can be modified by setting the ``OPEN_DYLAN_USER_ROOT``
 environment variable.
@@ -40,4 +41,3 @@ For modifying an environment variable from the command line,
 use this syntax::
 
     set variable=value
-

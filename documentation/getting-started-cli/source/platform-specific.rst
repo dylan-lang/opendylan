@@ -4,7 +4,7 @@ Platform Specific Projects
 .. index:: Platform Specific Projects
 
 When a project involves platform-specific code, some consideration needs
-to be made to the lid file and registry, as well as the layout of code.
+to be made to the LID file and registry, as well as the layout of code.
 As an example, consider the ``io`` and system libraries, found in
 https://github.com/dylan-lang/opendylan/tree/master/sources/io/ and
 https://github.com/dylan-lang/opendylan/tree/master/sources/system/.
@@ -38,7 +38,7 @@ For further details of the LID file format, see :doc:`library-reference:lid`.
    Files:          buffered-format           buffered-format
    ..              format-condition          format-condition
    ..              unix-interface            win32-interface
-   ..              unix-file-accessor        win-file-accessor
+   ..              unix-file-accessor        win32-file-accessor
    ..              unix-standard-io          win32-standard-io
    ..              format-out                format-out
    ..              *(etc)*                   *(etc)*
@@ -57,7 +57,6 @@ For further details of the LID file format, see :doc:`library-reference:lid`.
    C-Libraries:    -ldl                      advapi32.lib
    ..              ..                        shell32.lib
    =============== ========================= =========================
-
 
    .. note:: An example from the ``system`` library was used as the
       ``io`` library doesn't link directly against any C libraries.
@@ -79,11 +78,11 @@ Registry
 --------
 
 For further details of setting up the registry entries, see
-:doc:`source-registries`.  
+:doc:`source-registries`.
 
-Normally, when a reference to a (platform independent) project is placed
-in the registry, it is put into the generic directory. Platform dependent
-projects are placed in the platform-labelled subdirectories. *e.g.*
+Normally, when a reference to a platform independent project is placed in the
+registry, it is put into the "generic" directory. Platform dependent projects
+are placed in subdirectories named for the platform. *e.g.*
 
 opendylan/sources/registry/x86_64-linux/io
   ``abstract://dylan/io/unix-io.lid``
