@@ -5,108 +5,54 @@ The streams Module
 .. current-library:: io
 .. current-module:: streams
 
+.. TODO: I notice that with-*-to-string and stream-limit aren't documented.
+   Need to do a comprehensive check of what's in the module exports.
+
 This document describes the Streams module, which allows you to establish
 and control input to and output from aggregates of data, such as files
 on disk, or sequences. This module, together with the Standard-IO
 module, provides similar functionality to the *java.io* package in Java.
 See :doc:`standard-io`, for details about the Standard-IO module in Dylan.
 
-`Concepts`_ discusses the basic concepts involved in streaming over data.
-`Stream classes`_ describes the different classes of stream available, and
-how to create them, and `Reading from and writing to streams`_ describes
-how to read from and write to them.
+`Concepts`_ discusses the basic concepts and terminology involved in streaming
+over data.  `Stream classes`_ describes the different classes of stream
+available, and how to create them, and `Reading from and writing to streams`_
+describes how to read from and write to them.
 
 More specialized subjects are covered next: `Locking streams`_ discusses
 locking streams while they are in use; `Using buffered streams`_ describes
 using buffered streams; `Wrapper streams`_ describes wrapper streams;
 `Conditions`_ the different stream-specific error conditions that can be
-raised.For the most part, you do not have to worry about the information
-in these later sections when using streams.
+raised. For the most part, you do not have to worry about the information in
+these later sections when using streams.
 
 Finally, `The streams Module Reference`_ gives complete details on all
-interfaces in the Streams module. Each entry in this section is
-arranged in alphabetical order.
+interfaces in the Streams module, in alphabetical order.
 
-Error conditions
-----------------
+Goals of this module
+--------------------
 
-This document uses two special terms in discussions of error conditions.
-
-When it notes that something *is an error*, this means that the result
-is undefined. In particular, it does not*necessarily* mean that an error
-condition will be signalled. So, for instance, the following example
-text means only that the result of using *pull-stream-element* in the
-case described is undefined:
-
-    It is an error to apply *pull-stream-element* to an element that has
-    already been read from the stream.
-
-A given function is only guaranteed to raise an exception in response to
-an error if the documentation for that function specifically states that
-it will signal an error. Note that the specific error condition that is
-signaled may depend on the program state; in such situations, the
-specific error condition is not stated in the documentation. Consider
-the following hypothetical example, which states that an implementation
-must signal an error, but does not say what error must be signaled:
-
-    When *index* is a ``<stream-index>``, if it is invalid for some reason,
-    this function signals an error.
-
-By contrast, the following example names the class of which the
-condition signaled is guaranteed to be a general instance:
-
-    If the end of the stream is encountered and no value was supplied for
-    *on-end-of-stream*, *read-last-element* signals an
-    :class:`<end-of-stream-error>` condition.
-
-If the name of the condition class is given, applications are permitted
-to specialize error handlers on that class.
-
-Goals of the module
--------------------
-
-The Streams module provides:
-
-- A generic, easy-to-use interface for streaming over sequences and
-  files. The same high-level interface for consuming or producing is
-  available irrespective of the type of stream, or the types of the
-  elements being streamed over.
-- Efficiency, especially for the common case of file I/O.
+- A generic, easy-to-use interface for streaming over aggregates of data. The
+  same high-level interface for consuming or producing is available
+  irrespective of the type of stream, or the types of the elements being
+  streamed over.
+- Efficiency, such that it may be used as a basis for the common cases of file
+  and network I/O.
 - Access to an underlying buffer management protocol.
 
-The Streams module does not address a number of related issues,
-including:
-
-- A standard object-printing package such as Smalltalk's *printOn:* or
-  Lisp's *print-object*, or a formatted printing facility such as
-  Lisp's *format*. These facilities are provided by the
-  :doc:`Print <print>`, :doc:`Format <format>`,
-  and :doc:`Format-out <format-out>` libraries. For convenience,
-  the :doc:`Common Dylan <../common-dylan/index>` library also
-  provides simple formatting capabilities.
-- General object dumping and loading.
-- A comprehensive range of I/O facilities for using memory-mapped
-  files, network connections, and so on.
-- An interface for naming files. The :doc:`Locators <../system/locators>`
-  module provides such an interface.
-- An interface to operating system functionality, such as file renaming
-  or deleting operations. The :doc:`File-System <../system/file-system>`
-  module provides such an interface.
 
 Concepts
 --------
 
-A *stream* provides sequential access to an aggregate of data, such as a
-Dylan sequence or a disk file. Streams grant this access according to a
-metaphor of *reading* and *writing*: elements can be read from streams
-or written to them.
+A *stream* provides sequential access to an aggregate of data, such as a Dylan
+:class:`<sequence>` or a disk file. Streams grant this access according to a
+metaphor of *reading* and *writing*: elements can be read from streams or
+written to them.
 
-Streams are represented as Dylan objects, and all are general instances
-of the class :class:`<stream>`, which the Streams module defines.
-
+Streams are represented as general instances of the class :class:`<stream>`.
 It is usual to say that a stream is established *over* the data
-aggregate. Hence, a stream providing access to the string ``"hello
-world"`` is said to be a stream over the string ``"hello world"``.
+aggregate. Hence, a stream providing access to the string ``"hello world"`` is
+said to be a stream over the string ``"hello world"``.
 
 Streams permitting reading operations are called *input* streams. Input
 streams allow elements from the underlying data aggregate to be
@@ -114,6 +60,9 @@ consumed. Conversely, streams permitting writing operations are called
 *output* streams. Output streams allow elements to be written to the
 underlying data aggregate. Streams permitting both kinds of operations
 are called *input-output* streams.
+
+Input Streams
+^^^^^^^^^^^^^
 
 The Streams module provides a set of functions for reading elements from
 an input stream. These functions hide the details of indexing,
@@ -142,20 +91,19 @@ to all elements of the sequence:
     end;
 
 When all elements of a stream have been read, further calls to
-:gf:`read-element` result in the :class:`<end-of-stream-error>`
-condition being signaled. An alternative end-of-stream behavior is to
-have a distinguished end-of-stream value returned. You can supply such
-an end-of-stream value as a keyword argument to the various read
-functions; the value can be any object. Supplying an end-of-stream value
-to a read function is more concise than asking whether a stream is at
-its end on every iteration of a loop.
+:gf:`read-element` result in an :class:`<end-of-stream-error>` condition being
+signaled. Optionally, you may provide a distinguished value to return instead,
+with the ``on-end-of-stream:`` parameter. This is often more concise and most
+reading functions support it.
 
-The Streams module also provides a set of functions for writing data
-elements to an output stream. Like the functions that operate upon input
-streams, these functions hide the details of indexing, growing an
-underlying sequence, buffering for a file, and so on. For instance, the
-function :gf:`write-element` writes a single data element to an output
-stream.
+Output Streams
+^^^^^^^^^^^^^^
+
+The Streams module also provides a set of functions for writing data elements
+to an output stream. Like the functions that operate upon input streams, these
+functions hide the details of indexing, growing an underlying buffer, and so
+on. For instance, the function :gf:`write-element` writes a single data element
+to an output stream.
 
 The following forms bind *stream* to an output stream over an empty
 string and create the string "I see!", using the function
@@ -163,13 +111,16 @@ string and create the string "I see!", using the function
 
 .. code-block:: dylan
 
-    let stream = make(<byte-string-stream>, direction: #"output");
+    let stream = make(<string-stream>, direction: #"output");
     write(stream, "I see!");
     stream-contents(stream);
 
 Calling :gf:`write` on a sequence has the same effect as calling
 :gf:`write-element` on all the elements of the sequence. For more
 information about writing to streams, see `Writing to streams`_.
+
+Positionable Streams
+^^^^^^^^^^^^^^^^^^^^
 
 Some streams are *positionable*; that is, any element of the stream can
 be accessed at any time. Positionable streams allow you to set the
@@ -212,9 +163,9 @@ example:
 .. code-block:: dylan
 
     read-to-end(make(<string-stream>,
-               contents: "hello there, world",
-               start: 6,
-               end: 11));
+                     contents: "hello there, world",
+                     start: 6,
+                     end: 11));
 
 This example evaluates to ``"there"``. The interval (*start*, *end*)
 includes the index *start* but excludes the index *end*. This is
@@ -224,113 +175,42 @@ of convenient utility functions for operating on streams and returns all
 the elements up to the end of the stream from the stream's current
 position.
 
-Streams, growing sequences, and object identity
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-When writing to output streams over sequences, Dylan may from time to
-time need to grow the underlying sequence that it is using to represent
-the stream data.
-
-Consider the example of an output stream instantiated over an empty
-string. As soon as a write operation is performed on the stream, it is
-necessary to replace the string object used in the representation of the
-string stream. As well as incurring the cost of creating a new string,
-references to the string within the program after the replacement
-operation has occurred will still refer to the *original* string, and
-this may not be what the user intended.
-
-To guarantee that other references to a sequence used in an output
-:class:`<sequence-stream>` will have access to any elements written to
-the sequence via the stream, supply a stretchy collection (such as a
-:drm:`<stretchy-vector>`) to :drm:`make`. A stream over a stretchy vector
-will use the same stretchy vector throughout the stream's existence.
-
-For example:
-
-.. code-block:: dylan
-
-    let sv = make(<stretchy-vector>);
-    let stream = make(<sequence-stream>,
-                      contents: sv,
-                      direction: #"output");
-    write(stream, #(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    write(stream, "ABCDEF");
-    values(sv, stream-contents(stream));
-
-The example returns two values. Each value is the same (``==``) stretchy
-vector:
-
-.. code-block:: dylan
-
-    (1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F')
-
-If a stretchy vector is not supplied, the result is different:
-
-.. code-block:: dylan
-
-    let v = make(<vector>, size: 5);
-    let stream = make(<sequence-stream>,
-                      contents: v,
-                      direction: #"output");
-    write(stream, #(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    write(stream, "ABCDEF");
-    values(v, stream-contents(stream));
-
-This example returns as its first value the original vector, whose
-contents are unchanged, but the second value is a new vector:
-
-.. code-block:: dylan
-
-    (1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F')
-
-This difference arises because the output stream in the second example
-does not use a stretchy vector to hold the stream data. A vector of at
-least 15 elements is necessary to accommodate the elements written to
-the stream, but the vector supplied, *v*, can hold only 5. Since the
-stream cannot change *v* 's size, it must allocate a new vector each
-time it grows.
-
 Stream classes
 --------------
 
 The exported streams class heterarchy includes the classes shown in
-`Streams module classes`_. Classes shown in bold are all instantiable.
+the image below. Classes shown in bold are all instantiable.
+
+.. Original drawing:
+   https://docs.google.com/drawings/d/1HGgJc2Ee-qFAPJqsYNGLhHTk8CmfxyWQdazuntLhcy4/
+   There should be a link to request edit permission.
 
 .. figure:: ../images/streams.png
    :align: center
 
-* s - sealed  | o - open
-* p - primary | f - free
-* c - concrete | a - abstract
-* u - uninstantiable | i - instantiable
-
-Streams module classes
-^^^^^^^^^^^^^^^^^^^^^^
+.. note:: :class:`<file-stream>` is included for completeness but is actually
+   exported from the :doc:`file-system </system/file-system>` module.
 
 - :class:`<stream>`
 - :class:`<positionable-stream>`
 - :class:`<buffered-stream>`
 - :class:`<file-stream>`
 - :class:`<sequence-stream>`
+- :class:`<string-stream>`
+- :class:`<byte-string-stream>`
+- :class:`<unicode-string-stream>`
 - :class:`<wrapper-stream>`
 - :class:`<indenting-stream>`
-
-Creating streams
-^^^^^^^^^^^^^^^^
-
-This section describes how to create and manage different types of file
-stream and sequence stream.
 
 File streams
 ^^^^^^^^^^^^
 
 File streams are intended only for accessing the contents of files. More
-general file handling facilities, such as renaming, deleting, moving,
-and parsing directory names, are provided by the File-System module: see
-:doc:`/system/file-system` for details. The make method on
-:class:`<file-stream>` does not create direct instances of
-:class:`<file-stream>`, but instead an instance of a subclass determined
-by :gf:`type-for-file-stream`.
+general file handling facilities, such as renaming, deleting, moving, and
+parsing directory names, are provided by the :doc:`file-system
+</system/file-system>` module. The :drm:`make` method on :class:`<file-stream>`
+does not create direct instances of :class:`<file-stream>`, but instead an
+instance of a subclass determined by :gf:`type-for-file-stream`.
 
 make *file-stream-class*
 
@@ -346,24 +226,24 @@ contents of the file referenced by *filename*. To determine the concrete
 subclass to be instantiated, this method calls the generic function
 :gf:`type-for-file-stream`.
 
-The *locator:* init-keyword should be a string naming a file. If the
+The ``locator:`` init-keyword should be a string naming a file. If the
 :doc:`Locators <../system/locators>` library is in use, *filename*
 should be an instance of :class:`<locator>` or a string that can be
 coerced to one.
 
-The *direction:* init-keyword specifies the direction of the stream.
+The ``direction:`` init-keyword specifies the direction of the stream.
 This can be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
 The default is ``#"input"``.
 
-The *if-exists:* and *if-does-not-exist:* init-keywords specify actions
+The ``if-exists:`` and ``if-does-not-exist:`` init-keywords specify actions
 to take if the file named by *filename* does or does not already exist
 when the stream is created. These init-keywords are discussed in more
 detail in `Options when creating file streams`_.
 
-The *buffer-size:* init-keyword can be used to suggest the size of a
+The ``buffer-size:`` init-keyword can be used to suggest the size of a
 stream's buffer. See :class:`<buffered-stream>`.
 
-The *element-type:* init-keyword specifies the type of the elements in
+The ``element-type:`` init-keyword specifies the type of the elements in
 the file named by *filename*. See `Options when creating file
 streams`_ for more details.
 
@@ -373,14 +253,14 @@ Options when creating file streams
 When creating file streams, you can supply the following init-keywords
 to *make* in addition to those described in `File streams`_:
 
-- *if-exists:* An action to take if the file already exists.
-- *if-does-not-exist*: An action to take if the file does not already exist.
-- *element-type:* How the elements of the underlying file are accessed.
-- *asynchronous?:* Allows asynchronous writing of stream data to disk.
-- *share-mode:* How the file can be accessed while the stream is
+- ``if-exists:`` An action to take if the file already exists.
+- ``if-does-not-exist:`` An action to take if the file does not already exist.
+- ``element-type:`` How the elements of the underlying file are accessed.
+- ``asynchronous?:`` Allows asynchronous writing of stream data to disk.
+- ``share-mode:`` How the file can be accessed while the stream is
   operating on it.
 
-The *if-exists:* init-keyword allows you to specify an action to take if
+The ``if-exists:`` init-keyword allows you to specify an action to take if
 the file named by *filename* already exists. The options are:
 
 - ``#f`` The file is opened with the stream position at the beginning.
@@ -403,7 +283,7 @@ the file named by *filename* already exists. The options are:
   of the file to 0. If the file does not exist, create a new file.
 - ``#"signal"`` Signal a :class:`<file-exists-error>` condition.
 
-The *if-does-not-exist:* init-keyword allows you to specify an action to
+The ``if-does-not-exist:`` init-keyword allows you to specify an action to
 take if the file named by *filename* does not exist. The options are:
 
 - ``#f`` No action.
@@ -422,7 +302,7 @@ permission, or to open a file for output, and has no write permission,
 then an :class:`<invalid-file-permissions-error>`
 condition is signalled at the time the file stream is created.
 
-The *element-type:* init-keyword controls how the elements of the
+The ``element-type:`` init-keyword controls how the elements of the
 underlying file are accessed. The three possible element types
 are:
 
@@ -435,10 +315,10 @@ are:
 - :type:`<byte>`
   The file is accessed as a sequence of unsigned 8-bit integers.
 
-The *asynchronous?:* init-keyword allows asynchronous writing of stream
+The ``asynchronous?:`` init-keyword allows asynchronous writing of stream
 data to disk. If ``#f``, whenever the stream has to write a buffer to
 disk, the thread which triggered the write must wait for the write to
-complete. If *asynchronous?* is ``#t``, the write proceeds in parallel
+complete. If ``asynchronous?`` is ``#t``, the write proceeds in parallel
 with the subsequent actions of the thread.
 
 Note that asynchronous writes complicate error handling a bit. Any write
@@ -447,10 +327,10 @@ write. If this happens, the error is stored in a queue, and the next
 operation on that stream signals the error. If you *close* the stream
 with the *wait?* flag ``#f``, the close happens asynchronously (after all
 queued writes complete) and errors may occur after *close* has returned.
-A method *wait-for-io-completion* is provided to catch any errors that
+A method :gf:`wait-for-io-completion` is provided to catch any errors that
 may occur after *close* is called.
 
-The *share-mode:* keyword determines how a file can be accessed by other
+The ``share-mode:`` keyword determines how a file can be accessed by other
 streams while the stream has it open. The possible values are:
 
 - ``#"share-read"`` Allow other streams to be opened to the file for
@@ -464,22 +344,98 @@ streams while the stream has it open. The possible values are:
 Sequence streams
 ^^^^^^^^^^^^^^^^
 
-There are *make* methods on the following stream classes:
+Dylan provides various functions for manipulating sequences, such as
+:drm:`concatenate` and :drm:`copy-sequence`, but sometimes it can be useful to
+use the streams model to create or consume sequences. For example, if you're
+writing a library that reads bytes from a network socket you might write tests
+that use a :class:`<sequence-stream>` over a :class:`<byte-vector>` to mock the
+network stream.
 
-- :class:`<sequence-stream>`
-- :class:`<string-stream>`
-- :class:`<byte-string-stream>`
-- :class:`<unicode-string-stream>`
+String streams are the most commonly used type of sequence stream so there are
+several features to make using them easier.
 
-Rather than creating direct instances of :class:`<sequence-stream>` or
-:class:`<string-stream>`, the :drm:`make` methods for those classes
-might create an instance of a subclass determined by
-:gf:`type-for-sequence-stream`.
+1. Calling ``make(<sequence-stream>, contents: "a string", direction: #"input")``
+   returns a :class:`<string-stream>`.
 
-- :meth:`make(<sequence-stream>)`
-- :meth:`make(<string-stream>)`
-- :meth:`make(<byte-string-stream>)`
-- :meth:`make(<unicode-string-stream>)`
+2. :macro:`with-output-to-string` provides a convenient way to create a string
+   using multiple calls to :gf:`format`.
+
+3. :macro:`with-input-from-string` can be used to read the contents of a string.
+
+4. :gf:`format-to-string` is implemented by making an output
+   :class:`<string-stream>`, calling :gf:`format` on it, and then returning the
+   stream contents.
+
+
+Sequence streams and object identity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When writing to output streams over sequences, Dylan may from time to
+time need to grow the underlying sequence that it is using to represent
+the stream data.
+
+Consider the example of an output stream instantiated over an empty
+string. As soon as a write operation is performed on the stream, it is
+necessary to replace the string object used in the representation of the
+string stream. As well as incurring the cost of creating a new string,
+references to the string within the program after the replacement
+operation has occurred will still refer to the *original* string, and
+this may not be what the user intended.
+
+To guarantee that other references to a sequence used in an output
+:class:`<sequence-stream>` will have access to any elements written to the
+sequence via the stream, supply a stretchy collection (such as a
+:drm:`<stretchy-vector>`) to :drm:`make` when creating the stream. A stream
+over a stretchy vector will use the same stretchy vector throughout the
+stream's existence.
+
+For example:
+
+.. code-block:: dylan
+
+    let v = make(<stretchy-vector>);
+    let stream = make(<sequence-stream>,
+                      contents: v,
+                      direction: #"output");
+    write(stream, #(1, 2, 3));
+    write(stream, "ABC");
+    values(v, stream-contents(stream));
+
+The example returns two values. Each value is the same (``==``) stretchy
+vector:
+
+.. code-block:: dylan
+
+    #[1, 2, 3, 'A', 'B', 'C']
+    #[1, 2, 3, 'A', 'B', 'C']
+
+If a stretchy vector is not supplied, the result is different:
+
+.. code-block:: dylan
+
+    let v = make(<vector>, size: 5);
+    let stream = make(<sequence-stream>,
+                      contents: v,
+                      direction: #"output");
+    write(stream, #(1, 2, 3));
+    write(stream, "ABC");
+    values(v, stream-contents(stream));
+
+This example returns as its first value the original vector, which was
+initially filled with all ``#f`` and then with the values from the first call
+to :gf:`write`, but the second value is a new vector that had to be allocated
+on the second call to :gf:`write`:
+
+.. code-block:: dylan
+
+   #[1, 2, 3, #f, #f]
+   #[1, 2, 3, 'A', 'B', 'C']
+
+This difference arises because the output stream in the second example does not
+use a stretchy vector to hold the stream data. A vector of at least 6 elements
+is necessary to accommodate the elements written to the stream, but ``v`` can
+hold only 5. Since the stream cannot change ``v``'s size, it must allocate a new
+vector each time it grows.
 
 Closing streams
 ^^^^^^^^^^^^^^^
@@ -487,49 +443,62 @@ Closing streams
 It is important to call :gf:`close` on streams when you have finished with
 them. Typically, external streams such as :class:`<file-stream>` and
 :class:`<console-stream>` allocate underlying system resources when they are
-created, and these resources are not recovered until the stream is
-closed. The total number of such streams that can be open at one time
-may be system dependent. It may be possible to add reasonable
-finalization methods to close streams when they are no longer referenced
-but these are not added by default. See the
-:doc:`../dylan/finalization` for full details about finalization.
+created, and these resources are not recovered until the stream is closed.
+
+A common way to ensure that :gf:`close` is called is to use the ``cleanup``
+clause of the :drm:`block` macro. For example:
+
+.. code-block:: dylan
+
+   let stream = open-my-stream(...);
+   block ()
+     ...read or write to stream...
+   cleanup
+     close(stream);
+   end
+
+To make this easier, and so you're less likely to forget to call :gf:`close`,
+most libraries that provide stream classes provide a macro. For example,
+:macro:`with-open-file` for file streams, ensures that :gf:`close` is called:
+
+.. code-block:: dylan
+
+   with-open-file (stream = "/my/file")
+     ...read or write to stream...
+     // close(stream) is called automatically
+   end
+
 
 Locking streams
 ^^^^^^^^^^^^^^^
 
-In an application where more than one control thread may access a common
-stream, it is important to match the granularity of locking to the
-transaction model of the application. Ideally, an application should
-lock a stream which is potentially accessed by multiple threads, only
-once per transaction. Repeated and unnecessary locking and unlocking can
-seriously degrade the performance of the Streams module. Thus an
-application which wishes to write a complex message to a stream that
-needs to be thread safe should lock the stream, write the message and
-then unlock the stream after the entire message is written. Locking and
-unlocking the stream for each character in the message would be a poor
-match of locking to transaction model. The time required for the lock
-manipulation would dominate the time required for the stream
-transactions. Unfortunately this means that there is no way for the
-Streams module to choose a default locking scheme without the likelihood
-of seriously degrading streams performance for all applications whose
-transaction models are different from the model implied by the chosen
-default locking scheme. Instead, the Streams module provides the user
-with a single, per instance slot, *stream-lock:*, which is inherited by
-all subclasses of :class:`<stream>`. You should use the generic functions
-:gf:`lock-stream` and :gf:`unlock-stream` or the macro
-:macro:`with-stream-locked`, together with other appropriate functions
-and macros from the Threads library, to implement a locking strategy
-appropriate to your application and its stream transaction model. The
-functions in the Streams module are not of themselves thread safe,
-and make no guarantees about the atomicity of read and write operations.
+In an application where more than one thread may access a shared stream, it is
+important to match the granularity of locking to the transaction model of the
+application. Ideally, an application should lock a stream only once per
+transaction, to minimize the performance penalty. Since the streams module
+cannot know the transaction model of your code, it does not provide any
+default locking scheme.
+
+Instead, the streams module provides the user with a single, per-instance slot,
+:gf:`stream-lock`, which is inherited by all subclasses of :class:`<stream>`.
+You may provide a lock via the ``stream-lock:`` init keyword when creating the
+stream, or set it with :gf:`lock-stream-setter`. Thereafter use
+:gf:`lock-stream` and :gf:`unlock-stream` or the :macro:`with-stream-locked`
+macro, together with other appropriate functions and macros from the
+:doc:`threads <../dylan/threads>` module, to implement a locking strategy
+appropriate to your application.
+
+The functions in the streams module are not of themselves thread safe, and make
+no guarantees about the atomicity of read and write operations.
+
 
 Reading from and writing to streams
 -----------------------------------
 
-This section describes how you can read from or write to a stream. Note
-that it is an error to call any of these functions on a buffered stream
-while its buffer is held by another thread; see `Using buffered
-streams`_ for details about buffered streams.
+This section describes how you can read from or write to a stream. Note that
+the result is undefined if you call any of these functions on a buffered stream
+while its buffer is held by another thread; see `Using buffered streams`_ for
+details about buffered streams.
 
 Reading from streams
 ^^^^^^^^^^^^^^^^^^^^
@@ -638,9 +607,9 @@ writing should begin, and an index that is the end of input to be read,
 or the end of space available for writing.
 
 Buffered streams also maintain a *held* state, indicating whether the
-application has taken the buffer for a stream and has not released it
-yet. When a thread already holds the buffer for a stream, it is an error
-to get the buffer again (or any other buffer for the same stream).
+application has taken the buffer for a stream and has not released it yet. When
+a thread already holds the buffer for a stream, any attempt to get the buffer
+again (or any other buffer for the same stream) has undefined results.
 
 Useful types when using buffers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -806,8 +775,8 @@ condition that takes an init-keyword has a slot accessor for the value
 supplied. The name of this accessor function takes the form *class* *-*
 *key*, where *class* is the name of the condition class (without the
 angle brackets) and *key* is the name of the init-keyword. For example,
-the accessor function for the *locator:* init-keyword for
-:class:`<file-error>` is *file-error-locator*.
+the accessor function for the ``locator:`` init-keyword for
+:class:`<file-error>` is :gf:`file-error-locator`.
 
 For more information, please refer to the reference entry for the
 individual conditions.
@@ -987,16 +956,16 @@ are exported from the *streams* module.
 
      A subclass of :drm:`<vector>` whose *element-type* is :type:`<byte>`.
 
-     Instances of ``<buffer>`` contain a data vector and two indices:
+     Instances of :class:`<buffer>` contain a data vector and two indices:
      the inclusive start and the exclusive end of valid data in the
      buffer. The accessors for these indexes are called ``buffer-next``
      and ``buffer-end``.
 
-     Note that *size:* is not taken as a suggestion of the size the user
-     would like, as with the value passed with *buffer-size:* to *make*
-     on :class:`<buffered-stream>`; if you supply a value with the
-     *size:* init-keyword, that size is allocated, or, if that is not
-     possible, an error is signalled, as with making any vector.
+     Note that ``size:`` is not taken as a suggestion of the size the user
+     would like, as with the value passed with ``buffer-size:`` to :drm:`make`
+     on :class:`<buffered-stream>`; if you supply a value with the ``size:``
+     init-keyword, that size is allocated, or, if that is not possible, an
+     error is signalled, as when making any vector.
 
 .. class:: <buffered-stream>
    :open:
@@ -1015,16 +984,16 @@ are exported from the *streams* module.
      A subclass of :class:`<stream>` supporting the Stream Extension
      Protocol and the Buffer Access Protocol. It is not instantiable.
 
-     Streams of this class support the *buffer-size:* init-keyword,
+     Streams of this class support the ``buffer-size:`` init-keyword,
      which can be used to suggest the size of the stream's buffer.
      However, the instantiated stream might not use this value: it is
      taken purely as a suggested value. For example, a stream that uses
      a specific device's hardware buffer might use a fixed buffer size
-     regardless of the value passed with the *buffer-size:*
+     regardless of the value passed with the ``buffer-size:``
      init-keyword.
 
      In general, it should not be necessary to supply a value for the
-     *buffer-size:* init-keyword.
+     ``buffer-size:`` init-keyword.
 
 .. type:: <byte>
 
@@ -1089,10 +1058,10 @@ are exported from the *streams* module.
      Default value: ``#"input"``.
    :keyword start: An instance of :drm:`<integer>`. This specifies the
      start position of the sequence to be streamed over. Only valid when
-     *direction:* is ``#"input"``. Default value: 0.
+     ``direction:`` is ``#"input"``. Default value: 0.
    :keyword end: An instance of :drm:`<integer>`. This specifies the
      sequence position immediately after the portion of the sequence to
-     stream over. Only valid when *direction:* is ``#"input"``. Default
+     stream over. Only valid when ``direction:`` is ``#"input"``. Default
      value: *contents.size*.
 
    :description:
@@ -1103,12 +1072,12 @@ are exported from the *streams* module.
      The class supports the same init-keywords as
      :class:`<sequence-stream>`.
 
-     The *contents:* init-keyword is used as the input for an input
+     The ``contents:`` init-keyword is used as the input for an input
      stream, and as the initial storage for an output stream.
 
-     The *start:* and *end:* init-keywords specify the portion of the
-     byte string to create the stream over: *start:* is inclusive and
-     *end:* is exclusive. The default is to stream over the entire byte
+     The ``start:`` and ``end:`` init-keywords specify the portion of the
+     byte string to create the stream over: ``start:`` is inclusive and
+     ``end:`` is exclusive. The default is to stream over the entire byte
      string.
 
    :operations:
@@ -1232,9 +1201,8 @@ are exported from the *streams* module.
      Signalled when one of the read functions reaches the end of an
      input stream. It is a subclass of :drm:`<error>`.
 
-     The *stream:* init-keyword has the value of the stream that caused
-     the error to be signaled. Its accessor is
-     ``end-of-stream-error-stream``.
+     The ``stream:`` init-keyword has the value of the stream that caused the
+     error to be signaled. Its accessor is :gf:`stream-error-stream`.
 
    :seealso:
 
@@ -1265,6 +1233,7 @@ are exported from the *streams* module.
      - :class:`<file-exists-error>`
      - :class:`<incomplete-read-error>`
      - :class:`<invalid-file-permissions-error>`
+     - :gf:`file-error-locator`
 
 .. class:: <file-error>
 
@@ -1279,9 +1248,8 @@ are exported from the *streams* module.
      The base class for all errors related to file I/O. It is a subclass
      of :drm:`<error>`.
 
-     The *locator:* init-keyword indicates the locator of the file that
-     caused the error to be signalled. Its accessor is
-     ``file-error-locator``.
+     The ``locator:`` init-keyword indicates the locator of the file that caused
+     the error to be signalled. Its accessor is :gf:`file-error-locator`.
 
    :seealso:
 
@@ -1290,6 +1258,18 @@ are exported from the *streams* module.
      - :class:`<file-exists-error>`
      - :class:`<incomplete-read-error>`
      - :class:`<invalid-file-permissions-error>`
+     - :gf:`file-error-locator`
+
+.. generic-function:: file-error-locator
+   :sealed:
+
+   Returns the :class:`<file-locator>` of the file associated with a
+   :class:`<file-error>`.
+
+   :signature: file-error-locator *error* => *locator*
+
+   :parameter error: An instance of :class:`<file-error>`.
+   :value locator: An instance of :class:`<file-locator>`.
 
 .. class:: <file-exists-error>
 
@@ -1312,6 +1292,7 @@ are exported from the *streams* module.
      - :class:`<file-error>`
      - :class:`<incomplete-read-error>`
      - :class:`<invalid-file-permissions-error>`
+     - :gf:`file-error-locator`
 
 .. class:: <file-stream>
    :open:
@@ -1331,7 +1312,7 @@ are exported from the *streams* module.
      ``#"overwrite"``, ``#"replace"``, ``#"append"``, ``#"truncate"``,
      ``#"signal"``. Default value: ``#f``.
    :keyword if-does-not-exist: One of ``#f``, ``#"signal"``, or
-     ``#"create"``. Default value: depends on the value of *direction:*.
+     ``#"create"``. Default value: depends on the value of ``direction:``.
    :keyword asynchronous?: If ``#t``, all writes on this stream are
      performed asynchronously. Default value:``#f``.
 
@@ -1345,8 +1326,8 @@ are exported from the *streams* module.
      created. The file being streamed over is opened immediately upon
      creating the stream.
 
-     The class supports several init-keywords: *locator:*, *direction:*,
-     *if-exists:*, and *if-does-not-exist:*.
+     The class supports several init-keywords: ``locator:``, ``direction:``,
+     ``if-exists:``, and ``if-does-not-exist:``.
 
    :operations:
 
@@ -1396,11 +1377,11 @@ are exported from the *streams* module.
      number of elements, but the end of the stream is read before
      completing the required read.
 
-     The *sequence:* init-keyword contains the input that was read
+     The ``sequence:`` init-keyword contains the input that was read
      before reaching the end of the stream. Its accessor is
      ``incomplete-read-error-sequence``.
 
-     The *count:* init-keyword contains the number of elements that were
+     The ``count:`` init-keyword contains the number of elements that were
      requested to be read. Its accessor is
      ``incomplete-read-error-count``.
 
@@ -2230,10 +2211,10 @@ are exported from the *streams* module.
      Default value: ``#"input"``.
    :keyword start: An instance of :drm:`<integer>`. This specifies the
      start position of the sequence to be streamed over. Only valid when
-     *direction:* is ``#"input"``. Default value: 0.
+     ``direction:`` is ``#"input"``. Default value: 0.
    :keyword end: An instance of :drm:`<integer>`. This specifies the
      sequence position immediately after the portion of the sequence to
-     stream over. Only valid when *direction:* is ``#"input"``. Default
+     stream over. Only valid when ``direction:`` is ``#"input"``. Default
      value: *contents.size*.
 
    :description:
@@ -2241,18 +2222,17 @@ are exported from the *streams* module.
      The class of streams over sequences. It is a subclass of
      :class:`<positionable-stream>`.
 
-     If *contents:* is a stretchy vector, then it is the only storage
+     If ``contents:`` is a stretchy vector, then it is the only storage
      used by the stream.
 
-     The ``<sequence-stream>`` class can be used for streaming over all
+     The :class:`<sequence-stream>` class can be used for streaming over all
      sequences, but there are also subclasses :class:`<string-stream>`,
-     :class:`<byte-string-stream>`, and
-     :class:`<unicode-string-stream>`, which are specialized for
-     streaming over strings.
+     :class:`<byte-string-stream>`, and :class:`<unicode-string-stream>`, which
+     are specialized for streaming over strings.
 
-     The *start:* and *end:* init-keywords specify the portion of the
-     sequence to create the stream over: *start:* is inclusive and
-     *end:* is exclusive. The default is to stream over the entire
+     The ``start:`` and ``end:`` init-keywords specify the portion of the
+     sequence to create the stream over: ``start:`` is inclusive and
+     ``end:`` is exclusive. The default is to stream over the entire
      sequence.
 
    :operations:
@@ -2307,7 +2287,7 @@ are exported from the *streams* module.
      The superclass of all stream classes and a direct subclass of
      :drm:`<object>`. It is not instantiable.
 
-     The *outer-stream:* init-keyword should be used to delegate a task
+     The ``outer-stream:`` init-keyword should be used to delegate a task
      to its wrapper stream. See `Wrapper streams and delegation`_ for
      more information.
 
@@ -2618,7 +2598,7 @@ are exported from the *streams* module.
      compression will have some state associated with each position in
      the stream that a single integer is not sufficient to represent.
 
-     The ``<stream-position>`` class is disjoint from the class
+     The :class:`<stream-position>` class is disjoint from the class
      :drm:`<integer>`.
 
    :operations:
@@ -2717,26 +2697,26 @@ are exported from the *streams* module.
      be one of ``#"input"``, ``#"output"``, or ``#"input-output"``;
      Default value: ``#"input"``.
    :keyword start: An instance of :drm:`<integer>`. Only valid when
-     *direction:* is ``#"input"``. Default value: 0.
+     ``direction:`` is ``#"input"``. Default value: 0.
    :keyword end: An instance of :drm:`<integer>`. This specifies the string
      position immediately after the portion of the string to stream over.
-     Only valid when *direction:* is ``#"input"``. Default value:
+     Only valid when ``direction:`` is ``#"input"``. Default value:
      *contents.size*.
 
    :description:
 
      The class of streams over strings.
 
-     The *contents:* init-keyword is used as the input for an input
+     The ``contents:`` init-keyword is used as the input for an input
      stream, and as the initial storage for an output stream.
 
-     The *start:* init-keyword specifies the start position of the
+     The ``start:`` init-keyword specifies the start position of the
      string to be streamed over.
 
      The class supports the same init-keywords as :class:`<sequence-stream>`.
 
-     The *start:* and *end:* init-keywords specify the portion of the
-     string to create the stream over: *start:* is inclusive and *end:*
+     The ``start:`` and ``end:`` init-keywords specify the portion of the
+     string to create the stream over: ``start:`` is inclusive and ``end:``
      is exclusive. The default is to stream over the entire string.
 
    :operations:
@@ -2800,8 +2780,8 @@ are exported from the *streams* module.
 .. generic-function:: type-for-sequence-stream
    :open:
 
-   Finds the type of sequence-stream class that needs to be instantiated
-   for a given sequence.
+   Determines the :class:`<sequence-stream>` subclass to instantiate to create
+   a stream over the given sequence.
 
    :signature: type-for-sequence-stream *sequence* => *sequence-stream-type*
 
@@ -2810,19 +2790,22 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns the sequence-stream class to instantiate over a given
-     sequence object. The method for :meth:`make(<sequence-stream>)`
+     Returns the :class:`<sequence-stream>` subclass to instantiate to create a
+     stream over *sequence*. The method for :meth:`make(<sequence-stream>)`
      calls this function to determine the concrete subclass of
      :class:`<sequence-stream>` that it should instantiate.
 
-     There are ``type-for-sequence-stream`` methods for each of the
-     string object classes. These methods return a stream class object
-     that the Streams module considers appropriate.
+     There are :gf:`type-for-sequence-stream` methods for each of the string
+     classes. These methods return a stream class that the Streams module
+     considers appropriate.
 
    :seealso:
 
      - :meth:`make(<sequence-stream>)`
      - :class:`<sequence-stream>`
+     - :class:`<string-stream>`
+     - :class:`<byte-string-stream>`
+     - :class:`<unicode-string-stream>`
 
 .. type:: <unicode-character>
 
@@ -2853,10 +2836,10 @@ are exported from the *streams* module.
      Default value: ``#"input"``.
    :keyword start: An instance of :drm:`<integer>`. This specifies the
      start position of the sequence to be streamed over. Only valid when
-     *direction:* is ``#"input"``. Default value: 0.
+     ``direction:`` is ``#"input"``. Default value: 0.
    :keyword end: An instance of :drm:`<integer>`. This specifies the
      sequence position immediately after the portion of the sequence to
-     stream over. Only valid when *direction:* is ``#"input"``. Default
+     stream over. Only valid when ``direction:`` is ``#"input"``. Default
      value: *contents.size*.
 
    :description:
@@ -2864,16 +2847,16 @@ are exported from the *streams* module.
      The class of streams over Unicode strings. It is a subclass of
      :class:`<string-stream>`.
 
-     The *contents:* init-keyword is used as the input for an input
+     The ``contents:`` init-keyword is used as the input for an input
      stream, and as the initial storage for an output stream. If it is a
      stretchy vector, then it is the only storage used by the stream.
 
      The class supports the same init-keywords as
      :class:`<sequence-stream>`.
 
-     The *start:* and *end:* init-keywords specify the portion of the
-     Unicode string to create the stream over: *start:* is inclusive and
-     *end:* is exclusive. The default is to stream over the entire
+     The ``start:`` and ``end:`` init-keywords specify the portion of the
+     Unicode string to create the stream over: ``start:`` is inclusive and
+     ``end:`` is exclusive. The default is to stream over the entire
      Unicode string.
 
    :operations:
@@ -2928,13 +2911,13 @@ are exported from the *streams* module.
      :gf:`read-element` will return *element*. The stream must be a
      :class:`<positionable-stream>`.
 
-     It is an error to do any of the following:
+     The results of the following actions are undefined:
 
-     - To apply ``unread-element`` to an element that is not the element
+     - Applying :gf:`unread-element` to an element that is not the element
        most recently read from the stream.
-     - To call ``unread-element`` twice in succession.
-     - To unread an element if the stream is at its initial position.
-     - To unread an element after explicitly setting the stream's position.
+     - Calling :gf:`unread-element` twice in succession.
+     - Unreading an element if the stream is at its initial position.
+     - Unreading an element after explicitly setting the stream's position.
 
    :seealso:
 
@@ -3104,12 +3087,12 @@ are exported from the *streams* module.
 
      The class that implements the basic wrapper-stream functionality.
 
-     It takes a required init-keyword *inner-stream:*, which is used to
+     It takes a required init-keyword ``inner-stream:``, which is used to
      specify the wrapped stream.
 
-     The ``<wrapper-stream>`` class implements default methods for all
+     The :class:`<wrapper-stream>` class implements default methods for all
      of the stream protocol functions described in this document. Each
-     default method on ``<wrapper-stream>`` simply "trampolines" to its
+     default method on :class:`<wrapper-stream>` simply "trampolines" to its
      inner stream.
 
    :operations:
@@ -3121,7 +3104,7 @@ are exported from the *streams* module.
    :example:
 
      In the example below, ``<io-wrapper-stream>``, a subclass of
-     ``<wrapper-stream>``, "passes on" functions such as
+     :class:`<wrapper-stream>`, "passes on" functions such as
      :gf:`read-element` and :gf:`write-element` by simply delegating these
      operations to the inner stream:
 
@@ -3206,19 +3189,19 @@ are exported from the *streams* module.
            end, sequence);
        sequence;
 
-     If supplied, *start* and *end* delimit the portion of *sequence* to
-     write to the stream. The value of *start* is inclusive and that of
-     *end* is exclusive.
+     If supplied, ``start:`` and ``end:`` delimit the portion of *sequence* to
+     write to the stream. The value of ``start:`` is inclusive and that of
+     ``end:`` is exclusive.
 
      If the stream is positionable, and it is not positioned at its end,
      ``write`` overwrites elements in the stream and then advances the
      stream's position to be beyond the last element written.
 
-     *Implementation Note:* Buffered streams are intended to provide a
-     very efficient implementation of ``write``, particularly when
-     sequence is an instance of :drm:`<byte-string>`, :drm:`<unicode-string>`,
-     :class:`<byte-vector>`, or :class:`<buffer>`, and the stream's element type is
-     the same as the element type of sequence.
+     *Implementation Note:* Buffered streams are intended to provide a very
+     efficient implementation of ``write``, particularly when sequence is an
+     instance of :drm:`<byte-string>`, :drm:`<unicode-string>`,
+     :class:`<byte-vector>`, or :class:`<buffer>`, and the stream's element
+     type is the same as the element type of sequence.
 
    :example:
 
@@ -3255,25 +3238,24 @@ are exported from the *streams* module.
 
    :description:
 
-     Writes *element* to *output-stream* at the stream's current
-     position. The output-stream must be either ``#"output"`` or
-     ``#"input-output"``. It is an error if the type of *element* is
-     inappropriate for the stream's underlying aggregate.
+     Writes *element* to *output-stream* at the stream's current position. The
+     stream's direction must be either ``#"output"`` or
+     ``#"input-output"``. The results are undefined if the type of *element* is
+     inappropriate for the stream's underlying :gf:`stream-element-type`.
 
      If the stream is positionable, and it is not positioned at its end,
-     ``write-element`` overwrites the element at the current position and
+     :gf:`write-element` overwrites the element at the current position and
      then advances the stream position.
 
    :example:
 
-     The following forms bind *stream* to an output stream over an empty
-     string and create the string "I do", using the function :gf:`stream-contents` to access all of the stream's
-     elements.
+     The following forms bind *stream* to an output stream over an empty string
+     and create the string "I do", using the function :gf:`stream-contents` to
+     access all of the stream's elements.
 
      .. code-block:: dylan
 
-       let stream = make(<byte-string-stream>,
-                         direction: #"output");
+       let stream = make(<string-stream>, direction: #"output");
        write-element(stream, 'I');
        write-element(stream, ' ');
        write-element(stream, 'd');
