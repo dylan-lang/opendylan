@@ -125,7 +125,7 @@ end method;
 define method tagged-remote-value-as-character (x :: <remote-value>)
     => (c :: <character>)
   let int-bit = %shift-right(x, 2);
-  as(<character>, int-bit);
+  as(<character>, as(<integer>, int-bit));
 end method;
 
 
