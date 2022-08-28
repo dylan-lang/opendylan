@@ -119,8 +119,8 @@ AC_SUBST(DYLANCOMPILER)
 bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
-AC_PROG_CC([clang-12 clang12 clang-11 clang11 clang-10 clang10 clang-9 clang90 clang-8 clang80 clang-7 clang70 clang gcc cc])
-AC_PROG_CXX([clang++-12 clang++12 clang++-11 clang++11 clang++-10 clang++10 clang++-9 clang++90 clang++-8 clang++80 clang++-7 clang++70 clang++ g++ c++])
+AC_PROG_CC([clang-14 clang14 clang-12 clang12 clang-11 clang11 clang-10 clang10 clang-9 clang90 clang-8 clang80 clang-7 clang70 clang gcc cc])
+AC_PROG_CXX([clang++-14 clang++14 clang++-12 clang++12 clang++-11 clang++11 clang++-10 clang++10 clang++-9 clang++90 clang++-8 clang++80 clang++-7 clang++70 clang++ g++ c++])
 
 AS_IF([test -n "$SUPPORT_LLVM"],
       [AC_MSG_CHECKING([if LLVM bitcode can be compiled])
