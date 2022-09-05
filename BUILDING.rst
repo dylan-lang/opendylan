@@ -123,8 +123,12 @@ Windows
   that you have the older 1.108 release and **not** the newer 1.114
   release.
 
-* Make sure to have required tools installed: namely Debugging tools for
-  Windows, a C compiler (PellesC or VC6) and Microsoft Platform SDK.
+* Make sure to have required tools installed:
+
+  - Debugging tools for Windows
+  - Microsoft Visual C++ 6.0 -- Note that newer versions do not work, nor does
+    Pelles C.
+  - Microsoft Platform SDK
 
 * Open a shell (windows command processor) and set the environment
   variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>.
