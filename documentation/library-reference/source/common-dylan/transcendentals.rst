@@ -180,7 +180,7 @@ This section contains a reference entry for each item exported from the
      the angle falls in.
 
      The floating point precision of the result is given by the precision of
-     ``x``/``y``.
+     ``x / y``.
 
 .. generic-function:: atanh
 
@@ -333,8 +333,8 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the integer square root of ``x``, that is the greatest integer
-     less than or equal to the exact positive square root of ``x``. If ``x`` <
-     ``0``, an error is signalled.
+     less than or equal to the exact positive square root of ``x``. If ``x <
+     0``, an error is signalled.
 
    :seealso:
 
@@ -352,9 +352,9 @@ This section contains a reference entry for each item exported from the
 
    :description:
 
-     Returns the natural logarithm of ``x`` to the base e. If x <= 0 <= 1, an
-     error is signalled. The floating point precision of the result is given
-     by the precision of ``x``.
+     Returns the natural logarithm of ``x`` to the base e. If ``x <= 0`` an
+     error is signalled. The floating point precision of the result is given by
+     the precision of ``x``.
 
    :seealso:
 
@@ -367,17 +367,17 @@ This section contains a reference entry for each item exported from the
    :summary:
      Returns the logarithm of its argument to the given base.
 
-   :signature: logn x b => y
+   :signature: logn x base => y
 
    :parameter x: An instance of :drm:`<number>`
-   :parameter b: The base. An instance of :drm:`<number>`.
+   :parameter base: The base. An instance of :drm:`<number>`.
    :value y: An instance of :drm:`<number>`.
 
    :description:
 
-     Returns the logarithm of ``x`` to the base ``b``. If x <= 0 <= 1,
-     an error is signalled. The floating point precision of the result is
-     given by the precision of ``x``.
+     Returns the logarithm of ``x`` to the base ``base``. If ``x <= 0`` or
+     ``base <= 1``, an error is signalled. The floating point precision of the
+     result is given by the precision of ``x``.
 
    :seealso:
 
@@ -388,8 +388,7 @@ This section contains a reference entry for each item exported from the
 .. function:: ilog2
 
    :summary:
-     Returns the base two logarithm of its argument, truncated to an
-     integer.
+     Returns the base 2 logarithm of its argument, truncated to an integer.
 
    :signature: ilog2 x => y
 
