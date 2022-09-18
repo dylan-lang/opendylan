@@ -21,7 +21,7 @@ define function main
         parse-command-line(server, arguments, class: class)
       exception (error :: <parse-error>)
         format(output-stream, "%s\n", error);
-        exit-application($error-exit-code)
+        exit-application($usage-error-exit-code)
       end;
   let status-code :: <integer> = execute-command(command);
   exit-application(status-code)

@@ -160,8 +160,9 @@ define method do-execute-command
             next-handler()
           else
             display-condition(context, condition);
-            message(context, "Exiting with return code %d", $error-exit-code);
-            return($error-exit-code)
+            message(context, "Exiting with return code %d",
+                    $unexpected-error-exit-code);
+            return($unexpected-error-exit-code)
           end
         end;
     local method run

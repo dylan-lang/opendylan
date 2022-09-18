@@ -265,13 +265,13 @@ define method do-execute-command
       end;
       message(context, "Build of '%s' completed", project.project-name);
       if (serious-warnings? & ~command.%allow-serious-warnings?)
-        $error-exit-code
+        $serious-warnings-exit-code
       else
         $success-exit-code
       end
     else
       message(context, "Build of '%s' aborted",   project.project-name);
-      $error-exit-code
+      $unexpected-error-exit-code
     end
   exception (error :: <file-system-error>)
     command-error("%s", error)
