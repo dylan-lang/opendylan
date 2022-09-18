@@ -132,4 +132,6 @@ define command-line main => <main-command>
   flag harp             = "generate HARP output";
   flag assemble         = "generate assembly-language output";
   flag dfm              = "generate Dylan Flow Machine output";
+  flag allow-serious-warnings
+    = "exit with success status if there are serious warnings [off by default]";
 end command-line main;

@@ -66,6 +66,10 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: dfm?:;
   constant slot %dispatch-coloring :: false-or(<symbol>) = #f,
     init-keyword: dispatch-coloring:;
+  // When #t serious warnings DO NOT cause an error exit status to be returned
+  // to the shell.
+  constant slot %allow-serious-warnings? :: <boolean> = #f,
+    init-keyword: allow-serious-warnings?:;
 /*---*** fill this in later.
   constant slot %exports?       :: <boolean> = #f,
     init-keyword: exports?:;
@@ -98,8 +102,9 @@ define method execute-main-command
   let build? = command.%build?;
   let exit-code = #f;
   if (build? | command.%compile?)
-    // The build command returns an error status for serious warnings. This
-    // makes it possible for scripting to abort on serious warnings.
+    // By default the build command returns an error status for serious
+    // warnings. This makes it possible for scripting to abort on serious
+    // warnings.
     exit-code
       := run(<build-project-command>,
              clean?:      command.%clean?,
@@ -114,7 +119,8 @@ define method execute-main-command
                             if (command.%harp?) add!(output, #"harp") end;
                             output
                           end,
-             dispatch-coloring: command.%dispatch-coloring);
+             dispatch-coloring: command.%dispatch-coloring,
+             allow-serious-warnings?: command.%allow-serious-warnings?);
   end;
   if (build? | command.%link?)
     let target = command.%target;

@@ -32,9 +32,10 @@ Compiler
   the :file:`sbin` (static executables binary) directory of the
   personal-root.
 
-* To aid in scripting tasks the ``dylan-compiler`` and ``dylan-environment``
-  executables now return an error exit status if any serious warnings are
-  generated.
+* To aid with automation tasks the ``dylan-compiler`` and ``dylan-environment``
+  executables now return exit code ``3`` if any serious warnings are
+  generated. Use the new ``-allow-serious-warnings`` flag to return to the old
+  behavior of returning exit code ``0``.
 
 Tooling
 =======

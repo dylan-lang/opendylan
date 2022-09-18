@@ -182,7 +182,16 @@ define class <build-project-command> (<abstract-link-command>)
     init-keyword: dispatch-coloring:;
   constant slot %release? :: <boolean> = #f,
     init-keyword: release?:;
+  // When #t serious warnings DO NOT cause an error exit status to be returned
+  // to the shell.
+  constant slot %allow-serious-warnings? :: <boolean> = #f,
+    init-keyword: allow-serious-warnings?:;
 end class <build-project-command>;
+
+// This defines the interactive version of the "build" command.  See also
+// sources/environment/console/compiler-command-line.dylan for the
+// <main-command>, which duplicates some of these options so that the command
+// can also be invoked non-interactively.
 
 define command-line build => <build-project-command>
     (summary:       "builds a project's executable",
@@ -255,7 +264,7 @@ define method do-execute-command
            error-handler:        curry(compiler-condition-handler, context))
       end;
       message(context, "Build of '%s' completed", project.project-name);
-      if (serious-warnings?)
+      if (serious-warnings? & ~command.%allow-serious-warnings?)
         $error-exit-code
       else
         $success-exit-code
