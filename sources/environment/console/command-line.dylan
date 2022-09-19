@@ -66,6 +66,10 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: dfm?:;
   constant slot %dispatch-coloring :: false-or(<symbol>) = #f,
     init-keyword: dispatch-coloring:;
+  // When #t serious warnings DO NOT cause an error exit status to be returned
+  // to the shell.
+  constant slot %allow-serious-warnings? :: <boolean> = #f,
+    init-keyword: allow-serious-warnings?:;
 /*---*** fill this in later.
   constant slot %exports?       :: <boolean> = #f,
     init-keyword: exports?:;
@@ -77,9 +81,9 @@ end class <basic-main-command>;
 
 define method execute-main-command
     (context :: <server-context>, command :: <basic-main-command>)
- => (status-code :: <integer>)
-  local method run
-            (class :: subclass(<command>), #rest arguments) => ()
+ => (exit-code :: <integer>)
+  local method run (class :: subclass(<command>), #rest arguments)
+                => (#rest values)
           let command = apply(make, class, server: context, arguments);
           execute-command(command)
         end method run;
@@ -96,21 +100,27 @@ define method execute-main-command
     run(<open-project-command>, file: filename)
   end;
   let build? = command.%build?;
+  let exit-code = #f;
   if (build? | command.%compile?)
-    run(<build-project-command>,
-        clean?:      command.%clean?,
-        link?:       #f,
-        release?:    command.%release?,
-        verbose?:    command.%verbose?,
-        subprojects: command.%subprojects?,
-        output:      begin
-                       let output = make(<stretchy-object-vector>);
-                       if (command.%assemble?) add!(output, #"assembler") end;
-                       if (command.%dfm?) add!(output, #"dfm") end;
-                       if (command.%harp?) add!(output, #"harp") end;
-                       output
-                     end,
-        dispatch-coloring: command.%dispatch-coloring)
+    // By default the build command returns an error status for serious
+    // warnings. This makes it possible for scripting to abort on serious
+    // warnings.
+    exit-code
+      := run(<build-project-command>,
+             clean?:      command.%clean?,
+             link?:       #f,
+             release?:    command.%release?,
+             verbose?:    command.%verbose?,
+             subprojects: command.%subprojects?,
+             output:      begin
+                            let output = make(<stretchy-object-vector>);
+                            if (command.%assemble?) add!(output, #"assembler") end;
+                            if (command.%dfm?) add!(output, #"dfm") end;
+                            if (command.%harp?) add!(output, #"harp") end;
+                            output
+                          end,
+             dispatch-coloring: command.%dispatch-coloring,
+             allow-serious-warnings?: command.%allow-serious-warnings?);
   end;
   if (build? | command.%link?)
     let target = command.%target;
@@ -123,7 +133,7 @@ define method execute-main-command
         subprojects: command.%subprojects?,
         unify?:      command.%unify?)
   end;
-  $success-exit-code;
+  exit-code | $success-exit-code
 end method execute-main-command;
 
 define method execute-main-loop
@@ -150,8 +160,9 @@ define method do-execute-command
             next-handler()
           else
             display-condition(context, condition);
-            message(context, "Exiting with return code %d", $error-exit-code);
-            return($error-exit-code)
+            message(context, "Exiting with return code %d",
+                    $unexpected-error-exit-code);
+            return($unexpected-error-exit-code)
           end
         end;
     local method run

@@ -8,6 +8,14 @@ Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Useful constants
 
+// These are sorted by severity so that Windows scripts can use IF ERRORLEVEL.
+// https://devblogs.microsoft.com/oldnewthing/20080926-00/?p=20743
+define constant $success-exit-code          = 0;
+define constant $usage-error-exit-code      = 1;
+// space for potential $warnings-exit-code  = 2;
+define constant $serious-warnings-exit-code = 3;
+define constant $unexpected-error-exit-code = 9;
+
 define constant $whitespace                 = #[' ', '\t', '\n'];
 define constant $quote-characters           = #['\'', '"'];
 

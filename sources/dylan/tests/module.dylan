@@ -16,6 +16,7 @@ define module dylan-test-suite
               limited-integer-max };
   use common-dylan;
   use format;
+  use simple-random;
   use table-extensions,
     import: { case-insensitive-equal };
   use testworks;

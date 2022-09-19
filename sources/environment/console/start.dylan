@@ -6,8 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $success-exit-code = 0;
-define constant $error-exit-code   = -1;
 
 define function main
     (arguments :: <string>)
@@ -23,7 +21,7 @@ define function main
         parse-command-line(server, arguments, class: class)
       exception (error :: <parse-error>)
         format(output-stream, "%s\n", error);
-        exit-application($error-exit-code)
+        exit-application($usage-error-exit-code)
       end;
   let status-code :: <integer> = execute-command(command);
   exit-application(status-code)

@@ -182,7 +182,16 @@ define class <build-project-command> (<abstract-link-command>)
     init-keyword: dispatch-coloring:;
   constant slot %release? :: <boolean> = #f,
     init-keyword: release?:;
+  // When #t serious warnings DO NOT cause an error exit status to be returned
+  // to the shell.
+  constant slot %allow-serious-warnings? :: <boolean> = #f,
+    init-keyword: allow-serious-warnings?:;
 end class <build-project-command>;
+
+// This defines the interactive version of the "build" command.  See also
+// sources/environment/console/compiler-command-line.dylan for the
+// <main-command>, which duplicates some of these options so that the command
+// can also be invoked non-interactively.
 
 define command-line build => <build-project-command>
     (summary:       "builds a project's executable",
@@ -205,7 +214,7 @@ end command-line build;
 
 define method do-execute-command
     (context :: <environment-context>, command :: <build-project-command>)
- => ()
+ => (exit-code :: <integer>)
   let project = command.%project | context.context-project;
   let messages = if (command.%verbose?) #"internal" else #"external" end;
   let stream = context.context-server.server-output-stream;
@@ -217,7 +226,14 @@ define method do-execute-command
       else
         curry(note-build-progress, context, #f)
       end;
+  let serious-warnings? = #f;
   block ()
+    local method warning-callback (warning)
+            note-compiler-warning(context, warning);
+            if (instance?(warning, <serious-compiler-warning-object>))
+              serious-warnings? := #t;
+            end;
+          end;
     if (build-project
           (project,
            process-subprojects?: command.%subprojects?,
@@ -228,7 +244,7 @@ define method do-execute-command
            output:               command.%output,
            dispatch-coloring:    command.%dispatch-coloring,
            progress-callback:    progress-callback,
-           warning-callback:     curry(note-compiler-warning, context),
+           warning-callback:     warning-callback,
            error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
         let project-context = context.context-project-context;
@@ -247,10 +263,16 @@ define method do-execute-command
            progress-callback:    progress-callback,
            error-handler:        curry(compiler-condition-handler, context))
       end;
-      message(context, "Build of '%s' completed", project.project-name)
+      message(context, "Build of '%s' completed", project.project-name);
+      if (serious-warnings? & ~command.%allow-serious-warnings?)
+        $serious-warnings-exit-code
+      else
+        $success-exit-code
+      end
     else
-      message(context, "Build of '%s' aborted",   project.project-name)
-    end;
+      message(context, "Build of '%s' aborted",   project.project-name);
+      $unexpected-error-exit-code
+    end
   exception (error :: <file-system-error>)
     command-error("%s", error)
   end
