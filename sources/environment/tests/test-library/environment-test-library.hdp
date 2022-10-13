@@ -8,7 +8,6 @@ Minor-Version:    1
 Files:  library
         module
         classes
-Linker-Options:   $(guilflags)
 Compilation-Mode: loose
 Start-Function:   start-project
 Target-Type:      dll

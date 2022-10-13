@@ -9,7 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module environment-test-library
   use common-dylan;
   use threads;
-  use duim;
 
   export <test-object>;
 
