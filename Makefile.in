@@ -385,6 +385,14 @@ check: bootstrap-stage-3
 	  --report-file $(BOOTSTRAP_3_ROOT)/logs/make-check.json \
 	  $(TEST_LOADS)
 
+check-environment: bootstrap-stage-3
+	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
+	  dfmc-environment-test-suite-app
+	@OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_3_REGISTRY) \
+         OPEN_DYLAN_USER_SOURCES=$(srcdir)/sources \
+         OPEN_DYLAN_USER_ROOT=$(abs_builddir)/_testbuild \
+	  $(BOOTSTRAP_3_ROOT)/bin/dfmc-environment-test-suite-app
+
 installcheck:
 
 installdirs:
