@@ -12,7 +12,8 @@ define module dfmc-environment-test-suite
   use locators;
 
   use source-records;
-  use operating-system;
+  use operating-system,
+    exclude: { run-application };
 
   use testworks;
 

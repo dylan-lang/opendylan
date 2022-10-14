@@ -19,5 +19,8 @@ define library dfmc-environment-test-suite
   use environment-application-commands;
   use environment-test-suite;
 
+  // Back-ends
+  use dfmc-back-end-implementations;
+
   export dfmc-environment-test-suite;
 end library dfmc-environment-test-suite;

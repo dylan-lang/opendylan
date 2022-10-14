@@ -41,12 +41,8 @@ define variable *test-library* :: false-or(<project-object>) = #f;
 
 define function root-directory
     () => (directory :: false-or(<string>))
-  // FIXME.
-  // The original version was trying to do something clever.
-  // Since that didn't work I've replaced it with the simplest
-  // thing that works for me. --tc
   environment-variable("OPEN_DYLAN_USER_SOURCES")
-    | "C:\\fundev\\sources";
+    | error("Environment variable OPEN_DYLAN_USER_SOURCES is not set")
 end function root-directory;
 
 define function test-project-location
@@ -70,18 +66,30 @@ define function open-test-projects () => ()
   open-project-compiler-database
     (library, error-handler: project-condition-handler);
   let application = open-project(test-project-location($test-application));
-  open-project-compiler-database(application);
+  open-project-compiler-database
+    (application, error-handler: project-condition-handler);
+
   format-out("Building %s",
              environment-object-primitive-name(application, application));
   build-project(application,
-                clean?: #t,
+                link?: #f,
+                save-databases?: #t,
                 error-handler: project-condition-handler,
                 progress-callback: method (#rest args)
                                      ignore(args);
                                      format-out(".")
                                    end);
   format-out("\n");
-  *test-library*     := library;
+
+  unless (open-project-compiler-database
+            (library, error-handler: project-condition-handler))
+    parse-project-source(library);
+  end unless;
+  *test-library* := library;
+  unless (open-project-compiler-database
+            (application, error-handler: project-condition-handler))
+    parse-project-source(application);
+  end unless;
   *test-application* := application;
 end function open-test-projects;
 
@@ -99,8 +107,8 @@ end function project-condition-handler;
 /// Project tests
 
 define test open-projects-test ()
-  check-true("Application project open",
-             instance?(*test-application*, <project-object>));
+  check-instance?("Application project open",
+                  <project-object>, *test-application*);
   check-equal("Application project target type",
               project-target-type(*test-application*),
               #"executable");
@@ -111,8 +119,8 @@ define test open-projects-test ()
               environment-object-primitive-name
                 (*test-application*, *test-application*),
               $test-application);
-  check-true("Library project open",
-             instance?(*test-library*, <project-object>));
+  check-instance?("Library project open",
+                  <project-object>, *test-library*);
   check-equal("Library project target type",
               project-target-type(*test-library*),
               #"dll");
