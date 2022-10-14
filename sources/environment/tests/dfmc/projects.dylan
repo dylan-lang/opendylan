@@ -69,17 +69,24 @@ define function open-test-projects () => ()
   open-project-compiler-database
     (application, error-handler: project-condition-handler);
 
-  format-out("Building %s",
-             environment-object-primitive-name(application, application));
+  let progress
+    = make(<progress-stream>, inner-stream: *standard-output*);
   build-project(application,
                 link?: #f,
                 save-databases?: #t,
                 error-handler: project-condition-handler,
-                progress-callback: method (#rest args)
-                                     ignore(args);
-                                     format-out(".")
-                                   end);
-  format-out("\n");
+                progress-callback:
+                  method (position :: <integer>, range :: <integer>,
+                          #key heading-label, item-label)
+                    let label
+                      = if (empty?(item-label))
+                            heading-label
+                          else
+                            item-label
+                          end if;
+                    show-progress(progress, position, range, label: label);
+                  end);
+  new-line(progress);
 
   unless (open-project-compiler-database
             (library, error-handler: project-condition-handler))
