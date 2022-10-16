@@ -8,7 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-environment-test-suite
   use common-dylan;
+  use io;
   use system;
+  use progress-stream;
 
   use source-records;
 
@@ -18,6 +20,9 @@ define library dfmc-environment-test-suite
   use environment-commands;
   use environment-application-commands;
   use environment-test-suite;
+
+  // Back-ends
+  use dfmc-back-end-implementations;
 
   export dfmc-environment-test-suite;
 end library dfmc-environment-test-suite;

@@ -9,10 +9,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module dfmc-environment-test-suite
   use common-dylan;
   use simple-format;
+  use streams;
+  use standard-io;
+  use progress-stream;
   use locators;
 
   use source-records;
-  use operating-system;
+  use operating-system,
+    exclude: { run-application };
 
   use testworks;
 

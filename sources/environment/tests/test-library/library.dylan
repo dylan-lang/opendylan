@@ -8,7 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-test-library
   use common-dylan;
-  use duim;
 
   export environment-test-library;
 
