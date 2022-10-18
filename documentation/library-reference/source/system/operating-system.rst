@@ -50,28 +50,23 @@ the current machine, where available.
 - :func:`owner-name`
 - :func:`owner-organization`
 
-Running Applications
---------------------
+Running and Introspecting Applications
+--------------------------------------
 
 - :func:`run-application`
-
-Manipulating application information
-------------------------------------
-
-The operating-system module contains a number of functions for
-manipulating information specific to a given application, rather than
-the environment as a whole. You can run or quit any application, and
-interrogate the running application for application-specific
-information.
-
-- :func:`exit-application`
-- :func:`register-application-exit-function`
-- :func:`application-arguments`
-- :func:`application-name`
-- :func:`application-filename`
-- :func:`tokenize-command-string`
 - :func:`current-process-id`
 - :func:`parent-process-id`
+
+The following functions are defined in the :doc:`common-dylan
+<../common-dylan/index>` library and re-exported from the operating-system
+module:
+
+- :func:`application-arguments`
+- :func:`application-filename`
+- :func:`application-name`
+- :func:`exit-application`
+- :func:`register-application-exit-function`
+- :func:`tokenize-command-line`
 
 Working with shared libraries
 -----------------------------
@@ -83,79 +78,6 @@ The operating-system module
 
 This section contains a reference entry for each item exported from the
 System library's operating-system module.
-
-.. function:: application-arguments
-
-   Returns the arguments passed to the running application.
-
-   :signature: application-arguments => *arguments*
-
-   :value arguments: An instance of :drm:`<simple-object-vector>`.
-
-   :description:
-
-     Returns the arguments passed to the running application as a vector
-     of instances of :drm:`<byte-string>`.
-
-   :seealso:
-
-     - :func:`application-filename`
-     - :func:`application-name`
-     - :func:`tokenize-command-string`
-
-.. function:: application-filename
-
-   Returns the full filename of the running application.
-
-   :signature: application-filename => *false-or-filename*
-
-   :value false-or-filename: An instance of ``false-or(<byte-string>)``.
-
-   :description:
-
-     Returns the full filename (that is, the absolute pathname) of the
-     running application, or ``#f`` if the filename cannot be
-     determined.
-
-   :example:
-
-     The following is an example of an absolute pathname naming an
-     application::
-
-       "C:\\Program Files\\foo\\bar.exe"
-
-   :seealso:
-
-     - :func:`application-arguments`
-     - :func:`application-name`
-     - :func:`tokenize-command-string`
-
-.. function:: application-name
-
-   Returns the name of the running application.
-
-   :signature: application-name => *name*
-
-   :value name: An instance of :drm:`<byte-string>`.
-
-   :description:
-
-     Returns the name of the running application. This is normally the
-     command name as typed on the command line and may be a non-absolute
-     pathname.
-
-   :example:
-
-     The following is an example of a non-absolute pathname used to refer to
-     the application name::
-
-       "foo\\bar.exe"
-
-   :seealso:
-
-     - :func:`application-arguments`
-     - :func:`application-filename`
-     - :func:`tokenize-command-string`
 
 .. constant:: $architecture-little-endian?
 
@@ -241,28 +163,6 @@ System library's operating-system module.
    :seealso:
 
      - :func:`environment-variable`
-
-.. function:: exit-application
-
-   Terminates execution of the running application.
-
-   :signature: exit-application *status* => ()
-
-   :parameter status: An instance of :drm:`<integer>`.
-
-   :description:
-
-     Terminates execution of the running application, returning the
-     value of *status* to whatever launched the application, for example
-     an MS-DOS window or Windows 95/NT shell.
-
-     .. note:: This function is also available from the ``dylan-extensions``
-        module in the ``dylan`` library and the ``common-extensions`` module
-        of the ``common-dylan`` library.
-
-   :seealso:
-
-     - :func:`register-application-exit-function`
 
 .. function:: load-library
 
@@ -497,36 +397,6 @@ System library's operating-system module.
       processor cores currently online, and may vary over the lifetime
       of the program.
 
-.. function:: register-application-exit-function
-
-   Register a function to be executed when the application is about to exit.
-
-   :signature: register-application-exit-function *function* => ()
-
-   :parameter function: An instance of :drm:`<function>`.
-
-   :description:
-
-     Register a function to be executed when the application is about to
-     exit. The Dylan runtime will make sure that these functions are executed.
-
-     The *function* should not expect any arguments, nor expect that any return
-     values be used.
-
-     .. note:: Currently, the registered functions will be invoked in the reverse
-        order in which they were added. This is **not** currently a contractual
-        guarantee and may be subject to change.
-
-     .. note:: This function is also available from the ``dylan-extensions``
-        module in the ``dylan`` library and the ``common-extensions`` module
-        of the ``common-dylan`` library.
-
-   :example:
-
-   :seealso:
-
-     - :func:`exit-application`
-
 .. function:: run-application
 
    Launches an application using the specified name and arguments.
@@ -566,24 +436,3 @@ System library's operating-system module.
 
      - :func:`exit-application`
 
-.. function:: tokenize-command-string
-
-   Parses a command line into a command name and arguments.
-
-   :signature: tokenize-command-string *line* => *command* #rest *arguments*
-
-   :parameter line: An instance of :drm:`<byte-string>`.
-   :value command: An instance of :drm:`<byte-string>`.
-   :value #rest arguments: Instances of :drm:`<byte-string>`.
-
-   :description:
-
-     Parses the command specified in *line* into a command name and
-     arguments. The rules used to tokenize the string are given in
-     Microsoft's C/C++ reference in the section `"Parsing C Command-Line
-     Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
-
-   :seealso:
-
-     - :func:`application-arguments`
-     - :func:`application-name`

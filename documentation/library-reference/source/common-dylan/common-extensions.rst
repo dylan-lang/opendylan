@@ -14,12 +14,12 @@ The extensions are:
 
 - Collection model extensions: :class:`<stretchy-sequence>`,
   :class:`<string-table>`, :gf:`difference`, :func:`fill-table!`,
-  :gf:`find-element`, :gf:`position`, :gf:`remove-all-keys!`, 
+  :gf:`find-element`, :gf:`position`, :gf:`remove-all-keys!`,
   :macro:`define table`, :gf:`split`, and :gf:`join`.
 - Condition system extensions: :class:`<format-string-condition>`,
   :class:`<simple-condition>`, and :gf:`condition-to-string`.
-- Program constructs: :macro:`iterate` and :macro:`when`.
-- Application development conveniences:
+- Flow control constructs: :macro:`iterate` and :macro:`when`.
+- Development conveniences:
 
   - :func:`debug-message`
   - :func:`ignore`, :func:`ignorable`
@@ -27,6 +27,17 @@ The extensions are:
     :func:`supplied?`
   - :const:`$unfound` :func:`unfound?`, :func:`found?`, :func:`unfound`
   - :func:`one-of`
+
+- Handling application startup and shutdown:
+
+  - :func:`application-arguments`
+  - :func:`application-filename`
+  - :func:`application-name`
+  - :func:`exit-application`
+  - :func:`register-application-exit-function`
+  - :func:`tokenize-command-line`
+
+  See also: :doc:`../command-line-parser/index`
 
 - Performance analysis: :macro:`timing`, :macro:`profiling`.
 - Type conversion functions: :func:`integer-to-string`,
@@ -1414,3 +1425,148 @@ The extensions are:
 
      - :gf:`join`
      - :func:`split`
+
+.. function:: application-arguments
+
+   Returns the arguments passed to the running application.
+
+   :signature: application-arguments => *arguments*
+
+   :value arguments: An instance of :drm:`<simple-object-vector>`.
+
+   :description:
+
+     Returns the arguments passed to the running application as a vector
+     of instances of :drm:`<byte-string>`.
+
+   :seealso:
+
+     - :func:`application-filename`
+     - :func:`application-name`
+     - :func:`tokenize-command-line`
+
+.. function:: application-filename
+
+   Returns the full filename of the running application.
+
+   :signature: application-filename => *false-or-filename*
+
+   :value false-or-filename: An instance of ``false-or(<byte-string>)``.
+
+   :description:
+
+     Returns the full filename (that is, the absolute pathname) of the
+     running application, or ``#f`` if the filename cannot be
+     determined.
+
+   :example:
+
+     The following is an example of an absolute pathname naming an
+     application::
+
+       "C:\\Program Files\\foo\\bar.exe"
+
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-name`
+     - :func:`tokenize-command-line`
+
+.. function:: application-name
+
+   Returns the name of the running application.
+
+   :signature: application-name => *name*
+
+   :value name: An instance of :drm:`<byte-string>`.
+
+   :description:
+
+     Returns the name of the running application. This is normally the
+     command name as typed on the command line and may be a non-absolute
+     pathname.
+
+   :example:
+
+     The following is an example of a non-absolute pathname used to refer to
+     the application name::
+
+       "foo\\bar.exe"
+
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-filename`
+     - :func:`tokenize-command-line`
+
+.. function:: exit-application
+
+   Terminates execution of the running application.
+
+   :signature: exit-application *status* => ()
+
+   :parameter status: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Terminates execution of the running application, returning the
+     value of *status* to whatever launched the application, for example
+     an MS-DOS window or Windows 95/NT shell.
+
+     .. note:: This function is also available from the :doc:`operating-system
+               <../system/operating-system>` module.
+
+   :seealso:
+
+     - :func:`register-application-exit-function`
+
+.. function:: register-application-exit-function
+
+   Register a function to be executed when the application is about to exit.
+
+   :signature: register-application-exit-function *function* => ()
+
+   :parameter function: An instance of :drm:`<function>`.
+
+   :description:
+
+     Register a function to be executed when the application is about to
+     exit. The Dylan runtime will make sure that these functions are executed.
+
+     The *function* should not expect any arguments, nor expect that any return
+     values be used.
+
+     .. note:: Currently, the registered functions will be invoked in the reverse
+        order in which they were added. This is **not** currently a contractual
+        guarantee and may be subject to change.
+
+     .. note:: This function is also available from the :doc:`operating-system
+               <../system/operating-system>` module.
+
+   :example:
+
+   :seealso:
+
+     - :func:`exit-application`
+
+.. function:: tokenize-command-line
+
+   Parses a command line into a command name and arguments.
+
+   :signature: tokenize-command-line *line* => *command* #rest *arguments*
+
+   :parameter line: An instance of :drm:`<byte-string>`.
+   :value command: An instance of :drm:`<byte-string>`.
+   :value #rest arguments: Instances of :drm:`<byte-string>`.
+
+   :description:
+
+     Parses the command specified in *line* into a command name and
+     arguments. The rules used to tokenize the string are given in
+     Microsoft's C/C++ reference in the section `"Parsing C Command-Line
+     Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
+
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-name`
