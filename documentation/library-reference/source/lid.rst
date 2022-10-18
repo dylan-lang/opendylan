@@ -7,10 +7,10 @@ The DRM defines an :drm:`interchange format for Dylan source files
 Dylan libraries.  Without such an agreed format, it would be difficult to
 import and build libraries developed using another Dylan implementation.
 
-Library Interchange Description (LID) format solves this problem. It allows you
-to describe Dylan library sources in a form that any Dylan environment should
-be able to understand.  Open Dylan adopted LID format to make it easier to port
-applications from one environment to another.
+The Library Interchange Description (LID) format solves this problem. It allows
+you to describe Dylan library sources in a form that any Dylan environment
+should be able to understand.  Open Dylan adopted the LID format to make it
+easier to port applications from one environment to another.
 
 .. note:: LID is a convention, and not an extension to the Dylan language.
 
@@ -37,6 +37,8 @@ LID files have the file extension ``.lid``.
 
 A LID file consists of a series of keyword/value statements, just like
 the Dylan :drm:`source file interchange format <Dylan_Interchange_Format>`.
+
+Note that LID keywords are not case-sensitive.
 
 Standard LID Keywords
 =====================
@@ -311,8 +313,8 @@ LID keyword
 Specifies the name of a LID file to process and includes the settings
 contained in that file into the current LID file.
 
-This is commonly used to share definitions and settings between
-platform or OS specific LID files.
+This is commonly used to share definitions and settings between platform- or
+OS-specific LID files.
 
 .. _lid-jam-includes:
 
@@ -339,6 +341,20 @@ An example JAM (for a library, not an executable) file might look like::
 
 The use of backticks ```...``` will execute the command enclosed
 within and return the output of that command.
+
+Target-Type:
+^^^^^^^^^^^^
+
+.. code-block:: dylan
+
+    Target-Type: *dll or executable*
+
+Specifies whether to generate a shared library (a.k.a, dynamic-link library) or
+an executable binary. Possible values are ``dll`` or ``executable``.
+
+If no target type is specified, Open Dylan builds an executable when the
+library is specified directly on the compiler command line, or a shared library
+if the library is only pulled in as a dependency.
 
 Executable:
 ^^^^^^^^^^^
