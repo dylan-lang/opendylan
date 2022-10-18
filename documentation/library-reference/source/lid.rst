@@ -2,17 +2,15 @@
 LID File Format
 ***************
 
-The DRM defines an :drm:`interchange format for Dylan source files <Dylan_Interchange_Format>`,
-but does not define an interchange format for Dylan libraries.
-Without such an agreed format, different Dylan development environments
-would find it difficult to import and build libraries developed using
-another Dylan vendor's environment. It would also be impossible to
-automate the process of importing a library into another environment.
+The DRM defines an :drm:`interchange format for Dylan source files
+<Dylan_Interchange_Format>`, but does not define an interchange format for
+Dylan libraries.  Without such an agreed format, it would be difficult to
+import and build libraries developed using another Dylan implementation.
 
-LID solves this problem. It allows you to describe Dylan library sources
-in a form that any Dylan environment should be able to understand.
-Harlequin and other Dylan vendors have adopted LID to make it easier to
-port applications from one environment to another.
+Library Interchange Description (LID) format solves this problem. It allows you
+to describe Dylan library sources in a form that any Dylan environment should
+be able to understand.  Open Dylan adopted LID format to make it easier to port
+applications from one environment to another.
 
 .. note:: LID is a convention, and not an extension to the Dylan language.
 
@@ -26,9 +24,9 @@ LID files
 
 LID works by supplementing each set of library sources with a LID file.
 A *LID file* describes a Dylan library using a set of keyword
-statements. Together, these statements provide enough information for
-specifying and locating the information necessary to build a library
-from its source. This means all Dylan libraries designed for interchange
+statements. Together, these statements provide enough information to
+specify and locate the information necessary to build a library
+from its sources. This means all Dylan libraries designed for interchange
 consist of at least two files: a LID file, and one or more files
 containing the library source code.
 
@@ -37,14 +35,12 @@ some C and C++ development environments.
 
 LID files have the file extension ``.lid``.
 
-Every file referred to by a LID file must reside in the same folder
-(directory) as the LID file.
-
-LID keyword statements
-======================
-
 A LID file consists of a series of keyword/value statements, just like
 the Dylan :drm:`source file interchange format <Dylan_Interchange_Format>`.
+
+Standard LID Keywords
+=====================
+
 In this section, we describe the standard LID keywords.
 
 Library:
@@ -315,7 +311,7 @@ LID keyword
 Specifies the name of a LID file to process and includes the settings
 contained in that file into the current LID file.
 
-This is commonly used to share common definitions and settings between
+This is commonly used to share definitions and settings between
 platform or OS specific LID files.
 
 .. _lid-jam-includes:
@@ -353,11 +349,11 @@ LID keyword
 
     Executable: *name*
 
-Specifies the name of the executable (that is, *.DLL* or *.EXE*) file
+Specifies the name of the binary (that is, shared library or executable) file
 to be generated for this library.
 
-The suffix (*.DLL*, *.EXE*) should not be included in the *name* as
-the appropriate suffix will be added automatically.
+The suffix (*.DLL*, *.EXE*, *.so*) should not be included in the *name* since
+the appropriate suffix is determined based on the platform.
 
 If this keyword is not specified, the compiler generates a default name
 for the executable from the name of the library. With some library
@@ -373,6 +369,9 @@ LID keyword
 .. code-block:: dylan
 
     Base-Address: *address*
+
+.. note:: This keyword is only used on Windows and is ignored on other
+   platforms.
 
 Specifies the base address of the DLL built from this Dylan library. The
 *address* must be a hexadecimal value. For convenience, you can use
@@ -391,9 +390,6 @@ footprint, and slows down load time. In such circumstances, you may want
 to give one or more libraries an explicit base address using this
 keyword.
 
-.. note:: This keyword is only used on Windows and is ignored on other
-   platforms.
-
 Linker-Options:
 ^^^^^^^^^^^^^^^
 
@@ -404,7 +400,7 @@ LID keyword
     Linker-Options: *options*
 
 Specifies additional options and libraries to be passed to the linker
-when building this DLL or EXE. Unlike the C-Libraries: keyword, the
+when building this binary. Unlike the *C-Libraries:* keyword, the
 options and libraries specified here apply only to this Dylan library;
 they are not propagated to any libraries which use this library.
 
@@ -493,11 +489,11 @@ File: *fact.dylan*. Defines the method for calculating a factorial.
     define generic fact(n);
 
     define method fact(n == 0)
-      1;
+      1
     end;
 
     define method fact(n)
-      n * fact(n - 1);
+      n * fact(n - 1)
     end;
 
 File: *app.lid*. LID file describing the components of the
@@ -536,7 +532,7 @@ File: *app.dylan*. Defines a routine that calls the factorial routine.
     Module: factorial-application
 
     define method main (#rest ignore)
-      fact(100);
+      fact(100)
     end method;
 
 The following example demonstrates how files of foreign source code and
