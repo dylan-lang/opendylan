@@ -12,14 +12,13 @@ re-exports everything from the *common-extensions* and *dylan* modules.
 
 The extensions are:
 
-- Collection model extensions: :class:`<stretchy-sequence>`,
-  :class:`<string-table>`, :gf:`difference`, :func:`fill-table!`,
-  :gf:`find-element`, :gf:`position`, :gf:`remove-all-keys!`, 
-  :macro:`define table`, :gf:`split`, and :gf:`join`.
-- Condition system extensions: :class:`<format-string-condition>`,
+- Collection model: :class:`<stretchy-sequence>`, :class:`<string-table>`,
+  :gf:`difference`, :func:`fill-table!`, :gf:`find-element`, :gf:`position`,
+  :gf:`remove-all-keys!`, :macro:`define table`, :gf:`split`, and :gf:`join`.
+- Condition system: :class:`<format-string-condition>`,
   :class:`<simple-condition>`, and :gf:`condition-to-string`.
-- Program constructs: :macro:`iterate` and :macro:`when`.
-- Application development conveniences:
+- Control flow: :macro:`iterate` and :macro:`when`.
+- Development conveniences:
 
   - :func:`debug-message`
   - :func:`ignore`, :func:`ignorable`
@@ -27,6 +26,17 @@ The extensions are:
     :func:`supplied?`
   - :const:`$unfound` :func:`unfound?`, :func:`found?`, :func:`unfound`
   - :func:`one-of`
+
+- Handling application startup and shutdown:
+
+  - :func:`application-arguments`
+  - :func:`application-filename`
+  - :func:`application-name`
+  - :func:`exit-application`
+  - :func:`register-application-exit-function`
+  - :func:`tokenize-command-line`
+
+  See also: :doc:`../command-line-parser/index`
 
 - Performance analysis: :macro:`timing`, :macro:`profiling`.
 - Type conversion functions: :func:`integer-to-string`,
@@ -414,7 +424,7 @@ The extensions are:
 
    :parameter sequence-1: An instance of :drm:`<sequence>`.
    :parameter sequence-2: An instance of :drm:`<sequence>`.
-   :parameter test: An instance of :drm:`<function>`. Default value: ``\==``.
+   :parameter test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :value result-sequence: An instance of :drm:`<sequence>`.
 
    :description:
@@ -735,7 +745,7 @@ The extensions are:
 
    :parameter sequence: An instance of :drm:`<sequence>`.
    :parameter target: An instance of :drm:`<object>`.
-   :parameter #key test: An instance of :drm:`<function>`. Default value: ``\==``.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
    :parameter #key end: An instance of :drm:`<object>`. Default value: ``#f``.
    :parameter #key skip: An instance of :drm:`<integer>`. Default value: 0.
@@ -749,7 +759,7 @@ The extensions are:
      If *test* is supplied, *position* uses it as an equivalence
      predicate for comparing *sequence* 's elements to *target*. It should
      take two objects and return a boolean. The default predicate used is
-     ``\==``.
+     :drm:`==`.
 
      The *skip* argument is interpreted as it is by Dylan's :drm:`find-key`
      function: *position* ignores the first *skip* elements that match
@@ -1276,7 +1286,8 @@ The extensions are:
          ~ x;
        end;
 
-.. function:: split
+.. generic-function:: split
+   :open:
 
    Split a sequence (e.g., a string) into subsequences delineated by a
    given separator.
@@ -1302,59 +1313,118 @@ The extensions are:
      If *remove-if-empty?* is true, the result will not contain any
      subsequences that are empty.
 
-     There are methods specialized on various types of *separator*.
-     The most basic *separator* type is :drm:`<function>`, with which all
-     of the others may be implemented.
+   :seealso:
+     - :meth:`split(<sequence>, <function>)`
+     - :meth:`split(<sequence>, <sequence>)`
+     - :meth:`split(<sequence>, <object>)`
 
-     ``split(seq :: <sequence>, separator :: <function>, ...)``
-       This is in some sense the most basic method, since others can be implemented
-       in terms of it.  The 'separator' function must accept three arguments:
+.. method:: split
+   :specializer: <sequence>, <function>
 
-       1. the sequence in which to search for a separator,
-       2. the start index in that sequence at which to begin searching, and
-       3. the index at which to stop searching (exclusive).
+   Split a sequence (e.g., a string) into subsequences delineated by a
+   given separator.
 
-       The 'separator' function must return #f to indicate that no separator was
-       found, or two values:
+   :signature: split *sequence* *separator* #key *start* *end* *count* *remove-if-empty?* => *parts*
 
-       1. the start index of the separator in the sequence and
-       2. the index of the first element after the end of the separator.
+   :parameter sequence: An instance of :drm:`<sequence>`.
+   :parameter separator: An instance of :drm:`<function>`.
+   :parameter #key start: An instance of :drm:`<integer>`.  Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`.  Default value: ``sequence.size``.
+   :parameter #key count: An instance of :drm:`<integer>`.  Default value: no limit.
+   :parameter #key remove-if-empty?: An instance of :drm:`<boolean>`.  Default value: #f.
+   :value parts: An instance of :drm:`<sequence>`.
 
-       It is an error for the returned start and end indices to be equal since this
-       is equivalent to splitting on an empty separator, which is undefined.  It is
-       undefined what happens if the return values are outside the [start, end)
-       range passed to the separator function.
+   This is in some sense the most basic method, since others can be implemented
+   in terms of it.  The *separator* function must accept three arguments:
 
-       The initial start and end indices passed to the separator function are the
-       same as the 'start' and 'end' arguments passed to this method.  The
-       'separator' function should stay within the given bounds whenever possible.
-       (In particular it may not always be possible when the separator is a regex.)
+   1. The sequence in which to search for a separator,
+   2. the start index in that sequence at which to begin searching, and
+   3. the index at which to stop searching (exclusive).
 
-     ``split(seq :: <sequence>, separator :: <object>, #key test = \==, ...)``
-        Splits 'seq' around occurrences of 'separator' using 'test' to check
-        for equality.  This method handles the relatively common case where
-        'seq' is a string and 'separator' is a character.
+   The *separator* function must return ``#f`` to indicate that no separator was
+   found, or two values:
 
-     ``split(seq :: <sequence>, separator :: <sequence>, #key test = \==, ...)``
-        Splits 'seq' around occurrences of the 'separator'
-        subsequence.  This handles the relatively common case where
-        'seq' and 'separator' are both strings.
+   1. The start index of the separator in the sequence and
+   2. the index of the first element after the end of the separator.
 
-        Note that if you want to use 'split' to find a sequence which
-        is a single element of another sequence it won't work because
-        this method is more specific than the previous one.  That is
-        considered to be an uncommon case and can be handled by using
-        the method on :drm:`<function>`.
+   It is an error for the returned start and end indices to be equal since this
+   is equivalent to splitting on an empty separator, which is undefined.  It is
+   undefined what happens if the return values are outside the ``[start, end)``
+   range passed to the *separator* function.
+
+   The initial start and end indices passed to the separator function are the
+   same as the *start* and *end* arguments passed to this method.  The
+   separator function should stay within the given bounds whenever possible.
+   (In particular it may not always be possible when the separator is a regular
+   expression.)
+
+   See `the source code
+   <https://github.com/dylan-lang/opendylan/blob/6ef338a6b3b09d7715b5b1a51634c9c1a85d29c4/sources/common-dylan/common-extensions.dylan#L312>`_
+   for :meth:`split(<sequence>, <object>)` for an example of using this method.
+
+.. method:: split
+   :specializer: <sequence>, <object>
+
+   Split a sequence (e.g., a string) into subsequences separated by a specific
+   object.
+
+   :signature: split *sequence* *separator* #key *start* *end* *count* *remove-if-empty?* => *parts*
+
+   :parameter sequence: An instance of :drm:`<sequence>`.
+   :parameter separator: An instance of :drm:`<object>`.
+   :parameter #key start: An instance of :drm:`<integer>`.  Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`.  Default value: ``sequence.size``.
+   :parameter #key count: An instance of :drm:`<integer>`.  Default value: no limit.
+   :parameter #key remove-if-empty?: An instance of :drm:`<boolean>`.  Default value: #f.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
+   :value parts: An instance of :drm:`<sequence>`.
+
+   Splits *sequence* around each occurrence of *separator*, which is compared
+   to each element with the *test* function.
+
+   This method handles the relatively common case where *sequence* is a string
+   and *separator* is a :drm:`<character>`.
 
    :example:
 
      .. code-block:: dylan
 
-       split("a.b.c", '.') => #("a", "b", "c")
+       split("a.b.c", '.')     => #("a", "b", "c")
+       split(#[1, 2, 3, 4], 2) => #(#[1], #[3, 4])
 
-   :seealso:
+.. method:: split
+   :specializer: <sequence>, <sequence>
 
-     - :gf:`join`
+   Split a sequence (e.g., a string) into subsequences separated by another
+   sequence.
+
+   :signature: split *sequence* *separator* #key *start* *end* *count* *remove-if-empty?* => *parts*
+
+   :parameter sequence: An instance of :drm:`<sequence>`.
+   :parameter separator: An instance of :drm:`<sequence>`.
+   :parameter #key start: An instance of :drm:`<integer>`.  Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`.  Default value: ``sequence.size``.
+   :parameter #key count: An instance of :drm:`<integer>`.  Default value: no limit.
+   :parameter #key remove-if-empty?: An instance of :drm:`<boolean>`.  Default value: #f.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
+   :value parts: An instance of :drm:`<sequence>`.
+
+    Splits *sequence* around occurrences of the *separator* subsequence.  This
+    handles the relatively common case where *sequence* and *separator* are
+    both instances of :drm:`<string>`.
+
+    :example:
+
+       .. code-block:: dylan
+
+          split("aabbccdd", "bb")) => #("aa", "ccdd")
+
+    .. note:: If you want to use :gf:`split` to find a :drm:`<sequence>` which
+              is a single element of another sequence it may not do what you
+              expect because this method is more specific than
+              :meth:`split(<sequence>, <object>)`.  This is expected to be a
+              rare case that can be handled by using :meth:`split(<sequence>,
+              <function>)` if necessary.
 
 .. generic-function:: join
    :open:
@@ -1365,7 +1435,8 @@ The extensions are:
    :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
    :parameter sequences: An instance of :drm:`<sequence>`.
    :parameter separator: An instance of :drm:`<sequence>`.
-   :parameter #key key: Transformation to apply to each item. Default value: ``identity``.
+   :parameter #key key: Transformation to apply to each item. Default value:
+                        :drm:`identity`.
    :parameter #key conjunction: Last separator. Default value: #f
    :value joined: An instance of :drm:`<sequence>`.
 
@@ -1394,8 +1465,8 @@ The extensions are:
 
    :seealso:
 
-     - :meth:`join <join(<sequence>, <sequence>)>`
-     - :func:`split`
+     - :meth:`join(<sequence>, <sequence>)`
+     - :gf:`split`
 
 .. method:: join
    :specializer: <sequence>, <sequence>
@@ -1413,4 +1484,149 @@ The extensions are:
    :seealso:
 
      - :gf:`join`
-     - :func:`split`
+     - :gf:`split`
+
+.. function:: application-arguments
+
+   Returns the arguments passed to the running application.
+
+   :signature: application-arguments => *arguments*
+
+   :value arguments: An instance of :drm:`<simple-object-vector>`.
+
+   :description:
+
+     Returns the arguments passed to the running application as a vector
+     of instances of :drm:`<byte-string>`.
+
+   :seealso:
+
+     - :func:`application-filename`
+     - :func:`application-name`
+     - :func:`tokenize-command-line`
+
+.. function:: application-filename
+
+   Returns the full filename of the running application.
+
+   :signature: application-filename => *false-or-filename*
+
+   :value false-or-filename: An instance of ``false-or(<byte-string>)``.
+
+   :description:
+
+     Returns the full filename (that is, the absolute pathname) of the
+     running application, or ``#f`` if the filename cannot be
+     determined.
+
+   :example:
+
+     The following is an example of an absolute pathname naming an
+     application::
+
+       "C:\\Program Files\\foo\\bar.exe"
+
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-name`
+     - :func:`tokenize-command-line`
+
+.. function:: application-name
+
+   Returns the name of the running application.
+
+   :signature: application-name => *name*
+
+   :value name: An instance of :drm:`<byte-string>`.
+
+   :description:
+
+     Returns the name of the running application. This is normally the
+     command name as typed on the command line and may be a non-absolute
+     pathname.
+
+   :example:
+
+     The following is an example of a non-absolute pathname used to refer to
+     the application name::
+
+       "foo\\bar.exe"
+
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-filename`
+     - :func:`tokenize-command-line`
+
+.. function:: exit-application
+
+   Terminates execution of the running application.
+
+   :signature: exit-application *status* => ()
+
+   :parameter status: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Terminates execution of the running application, returning the
+     value of *status* to whatever launched the application, for example
+     an MS-DOS window or Windows 95/NT shell.
+
+     .. note:: This function is also available from the :doc:`operating-system
+               <../system/operating-system>` module.
+
+   :seealso:
+
+     - :func:`register-application-exit-function`
+
+.. function:: register-application-exit-function
+
+   Register a function to be executed when the application is about to exit.
+
+   :signature: register-application-exit-function *function* => ()
+
+   :parameter function: An instance of :drm:`<function>`.
+
+   :description:
+
+     Register a function to be executed when the application is about to
+     exit. The Dylan runtime will make sure that these functions are executed.
+
+     The *function* should not expect any arguments, nor expect that any return
+     values be used.
+
+     .. note:: Currently, the registered functions will be invoked in the reverse
+        order in which they were added. This is **not** currently a contractual
+        guarantee and may be subject to change.
+
+     .. note:: This function is also available from the :doc:`operating-system
+               <../system/operating-system>` module.
+
+   :example:
+
+   :seealso:
+
+     - :func:`exit-application`
+
+.. function:: tokenize-command-line
+
+   Parses a command line into a command name and arguments.
+
+   :signature: tokenize-command-line *line* => *command* #rest *arguments*
+
+   :parameter line: An instance of :drm:`<byte-string>`.
+   :value command: An instance of :drm:`<byte-string>`.
+   :value #rest arguments: Instances of :drm:`<byte-string>`.
+
+   :description:
+
+     Parses the command specified in *line* into a command name and
+     arguments. The rules used to tokenize the string are given in
+     Microsoft's C/C++ reference in the section `"Parsing C Command-Line
+     Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
+
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-name`
