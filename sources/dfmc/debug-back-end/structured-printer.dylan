@@ -129,6 +129,11 @@ define method get-structured-output (c :: <variable-reference>)
   format-to-string("^%=", c.referenced-binding);
 end method;
 
+define method get-structured-output (c :: <interactor-binding-reference>)
+ => (res :: <string>)
+  format-to-string("^%=", c.referenced-binding);
+end method;
+
 define method get-structured-output (c :: <function-call>)
  => (res :: <string>)
   "unknown-call"
