@@ -47,6 +47,10 @@ end class;
 //    coff files.
 
 define class <interactive-transaction> (<object>)
+  // The runtime context
+  constant slot transaction-runtime-context :: false-or(<runtime-context>),
+    required-init-keyword: runtime-context:;
+
   // A pointer to the <downloader-target> that describes all of the
   // interactive memory regions.
   constant slot transaction-downloader-target :: <downloader-target>,
@@ -102,9 +106,8 @@ end class;
 
 define method open-interactive-transaction
      (application :: <debug-target>, coff-files :: <sequence>,
-      #key dll-name = "dylan", thread = #f)
+      #key runtime-context = #f, dll-name = "dylan", thread = #f)
          => (transaction :: <interactive-transaction>)
-
   // NAME-INFORMATION-FROM-COFF-FILENAME
   // Splits up an arbitrary filename into path, name, extension. This
   // will break if the filename is illegal.
@@ -179,10 +182,11 @@ define method open-interactive-transaction
 
   // Allocate the <interactive-transaction> itself, storing in the
   // debug target, and the sequence of COFF file descriptors.
-  let transaction =
-     make(<interactive-transaction>,
-          downloader-target: dt, coff-file-sequence: coff-files, 
-          dll: dll, dylan-dll: dylan-dll, thread: thread);
+  let transaction
+    = make(<interactive-transaction>,
+           runtime-context: runtime-context, downloader-target: dt,
+           coff-file-sequence: coff-files, dll: dll, dylan-dll: dylan-dll,
+           thread: thread);
 
   // Define a <remote-object-file> to hold the static symbols of
   // each coff file.
