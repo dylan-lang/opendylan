@@ -12,10 +12,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    purpose, but potentially made up of may low-level <static-block>s.
 
 define sealed class <interactive-region> (<object>)
-
   // This is the <static-block> currently being used for
   // downloading in this region. 
-
   slot region-current-static-block :: false-or(<static-block>),
     init-value: #f;
 
@@ -24,26 +22,22 @@ define sealed class <interactive-region> (<object>)
   // room in a block for a segment, it gets tacked onto the
   // end of this vector. However, there may be an opportunity
   // to use any remaining space in one of these blocks later.
-
   constant slot region-allocated-static-blocks :: <stretchy-vector>
     = make(<stretchy-vector>);
 
   // The allocator entry point points to a C-callable routine
   // that is used to allocate each static block.
-
   slot region-allocator-entry-point :: false-or(<remote-value>),
     init-value: #f;
 
   // This slot names the allocator routine. When it is first needed,
   // this name will be resolved to the entry point by an access-path
   // symbolic search.
-
   constant slot region-allocator-name :: <string>,
     required-init-keyword: allocator:;
 
   // The following slot is used to classify what kind of memory is
   // allocated for this region, eg: #"compiled-code".
-
   constant slot region-classification :: <symbol>,
     required-init-keyword: classification:;
 
@@ -51,10 +45,8 @@ define sealed class <interactive-region> (<object>)
   // resolved to an address. If this value becomes #t without
   // the entry point being assigned, it will be impossible to use
   // this region, and an error will occur.
-
   slot region-searched-for-allocator? :: <boolean>,
     init-value: #f;
-
 end class;
 
 
@@ -68,9 +60,7 @@ define constant $illegal-address = as-remote-value(0);
 ///// <DOWNLOADER-TARGET>
 //    Delegates to (rather than subclasses) <debug-target>. Manages
 //    access to regions of interactive memory in the application.
-
 define sealed class <downloader-target> (<object>)
-
   constant slot interactive-application :: <debug-target>,
     required-init-keyword: target:;
 
@@ -117,7 +107,6 @@ define sealed class <downloader-target> (<object>)
   constant slot miscellaneous-section :: <interactive-region>
       = make(<interactive-region>, allocator: "dylan__malloc__misc",
              classification: #"misc");
-
 end class;
 
 
@@ -134,11 +123,9 @@ define variable *known-targets* = make(<table>, weak: #"key");
 
 define method find-downloader-target
     (application :: <debug-target>) => (dt :: <downloader-target>)
-
   // If we already have this application in our table, then just return
   // the existing descriptor for it. Otherwise, create a new descriptor,
   // and add this application to the table.
-
   let got-it-already = element(*known-targets*, application, 
                                default: #f);
   if (got-it-already)
@@ -149,4 +136,3 @@ define method find-downloader-target
     *known-targets*[application]
   end if
 end method;
-

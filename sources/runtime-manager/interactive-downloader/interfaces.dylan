@@ -34,7 +34,6 @@ define sideways method download-for-interactive-execution
 
   // Unpick the execution context to get the debug target, and the
   // required thread.
-
   let application = context.runtime-context-debug-target;
   let thread = context.runtime-context-thread;
 
@@ -42,7 +41,6 @@ define sideways method download-for-interactive-execution
 			 download-for-interactive-execution-internal,
 			 application, thread, coff-files, 
 			 library, entry-point);
-
 end method;
 
 
@@ -55,15 +53,12 @@ define method download-for-interactive-execution-internal
      coff-files :: <sequence>, library :: <byte-string>, 
      entry-point :: <byte-string>)
         => (transaction-id)
-
   // If we've been given a thread suitable for interactivity, we know
   // we can use that same thread for any spy activity during the download.
-
   use-thread-for-spy-functions(application, thread);
 
   // Now open the interactive transaction, and perform all of the COFF
   // object file processing.
-
   let transaction = 
      open-interactive-transaction
        (application, coff-files, dll-name: library, thread: thread);
@@ -75,9 +70,7 @@ define method download-for-interactive-execution-internal
   // Call the appropriate DM functionality to begin executing interactive
   // Dylan code. This will return a (pre-registered) breakpoint, which we
   // can use as our transaction ID.
-
   setup-interactor(application, thread, entry-point, library,
                    #"multiple-value");
-
 end method;
 

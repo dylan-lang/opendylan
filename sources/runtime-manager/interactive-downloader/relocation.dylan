@@ -124,7 +124,6 @@ define method perform-coff-relocation-in-section
   //           Allocates (and returns the address of) a value cell, into
   //           which an interactively-referenced dylan object (the
   //           "actual value" has been placed).
-
   local method create-cell-for-interactive-reference
                  (actual-value :: <remote-value>) => (addr :: <remote-value>)
           let i-region = target.dylan-interactive-reference-value-cells;
