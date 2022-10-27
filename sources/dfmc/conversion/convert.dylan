@@ -586,9 +586,11 @@ define method convert-reference
     (env :: <environment>, context :: <value-context>,
      binding :: <interactor-binding>, #key fragment)
  => (first :: false-or(<computation>), last :: false-or(<computation>), temp :: false-or(<value-reference>))
-  let reference = make(<interactor-binding-reference>, value: binding);
+  let (computation, temporary)
+    = make-with-temporary(env, <interactor-binding-reference>, value: binding);
+  add-user!(binding, computation);
   match-values-with-context
-    (env, context, #f, #f, reference);
+    (env, context, computation, computation, temporary)
 end method;
 
 define method convert-reference

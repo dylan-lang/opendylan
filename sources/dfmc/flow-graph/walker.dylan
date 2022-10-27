@@ -130,6 +130,12 @@ define method walk-computation-references
 end method;
 
 define method walk-computation-references
+    (walk :: <function>, c :: <interactor-binding-reference>) => ()
+  next-method();
+  walk(c, #f, c.referenced-binding);
+end method;
+
+define method walk-computation-references
     (walk :: <function>, c :: <make-closure>) => ()
   next-method();
   walk(c, #f, function(c.computation-closure-method));

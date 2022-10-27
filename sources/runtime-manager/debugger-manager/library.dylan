@@ -193,9 +193,6 @@ define module debugger-manager
     flush-thread-history,
     record-object-in-thread-history,
     retrieve-object-from-thread-history,
-    <history-place-holder>,
-    history-place-holder-thread,
-    history-place-holder-index,
 
     ///// Registering regions of interactively allocated memory
     register-exact-roots,
@@ -286,6 +283,7 @@ define module debugger-manager
     runtime-context-thread,
     runtime-context-frame,
     current-runtime-context,
+    runtime-context-lexical-variable-value,
 
     /////
     ///// PROFILING

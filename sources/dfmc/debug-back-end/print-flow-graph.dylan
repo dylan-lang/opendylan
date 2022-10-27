@@ -170,6 +170,10 @@ define method print-computation (s :: <stream>, c :: <variable-reference>)
   format(s, "^%=", c.referenced-binding);
 end method;
 
+define method print-computation (s :: <stream>, c :: <interactor-binding-reference>)
+  format(s, "^%=", c.referenced-binding);
+end method;
+
 define method print-computation (s :: <stream>, c :: <temporary-transfer>)
   format(s, "%=", c.computation-value);
 end method;

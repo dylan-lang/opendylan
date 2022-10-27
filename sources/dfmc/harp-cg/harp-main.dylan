@@ -1079,6 +1079,13 @@ define method emit-computation
   end if;
 end method emit-computation;
 
+define method emit-computation
+    (back-end :: <harp-back-end>, c :: <interactor-binding-reference>)  => ()
+  emit-assignment(back-end,
+                  c.temporary,
+                  emit-reference(back-end, #f, c.referenced-binding));
+end method emit-computation;
+
 define method emit-computation (back-end :: <harp-back-end>, c :: <exit>) => ()
   if (c.entry-state.local-entry-state?)
     let me-block :: <bind-exit> = c.entry-state.me-block;

@@ -50,10 +50,8 @@ end method;
 define method get-section-base-address
     (trans :: <interactive-transaction>, section :: <coff-symbol-locator>)
        => (base :: false-or(<remote-value>))
-  //
   // We are trying to find the address of a symbol defined outside of this
   // coff file (since it is not defined directly in a <coff-section>). 
-  //
   #f
 end method;
 
@@ -72,11 +70,9 @@ define method define-this-symbol
      static-file :: <remote-object-file>,
      public-table :: <interactive-symbol-table>,
      symbol :: <coff-symbol-record>) => ()
-  //
   // Do nothing in this case.
   // We are only interested in symbols that are specific <coff-symbol>
   // instances.
-  //
 end method;
 
 define method define-this-symbol
@@ -116,7 +112,6 @@ define method define-this-symbol
 
   ///// CREATE-AND-DEFINE-IMPORT
   //    An object file is referencing a symbol of type __imp_.
-
   local method create-and-define-import (name :: <string>) => ()
     unless(imp-region.region-searched-for-allocator?)
       initialize-interactive-region(dt, imp-region)
@@ -168,10 +163,8 @@ define method define-this-symbol
   // do not enter this symbol into the interactive table.
 
   if (section-base-address & ~non-data-symbol?(symbol.symbol-name.string-data))
-
     // We are going to define the symbol, as long as its storage class
     // makes it "interesting".
-
     select (symbol.storage-class)
       $sym-external =>
         let symbolic-name = symbol.symbol-name.string-data;

@@ -21,13 +21,11 @@ define method download-sections-into-region
        => (base-addresses :: <sequence>,
            lowest-address :: <remote-value>,
            highest-address :: <remote-value>)
-
   // SECTION-NAMES-EQUIVALENT?
   // While the actual names of coff-file sections might contain "$" extensions
   // (such as ".dyobj$M" or ".debug$T"), we are not interested in these.
   // This utility allows us to compare section names regardless of such
   // extensions.
-
   local method section-names-equivalent?
                   (actual-name :: <byte-string>, basic-name :: <byte-string>)
                      => (answer :: <boolean>)
@@ -82,19 +80,16 @@ define method download-sections-into-region
 
   // The size for the block is the sum of the section sizes, plus the
   // largest potential number of bytes needed for alignment padding.
-
   let conservative-block-size = 
     sum-of-section-sizes + sum-of-alignments;
 
   // If the interactive region is being used for the first time, then we
   // need to initialize it.
-
   unless (region.region-searched-for-allocator?)
     initialize-interactive-region(application, region);
   end unless;
 
   // Find a block large enough to hold the request.
-
   let target-block =
     find-block-in-region(trans, region, conservative-block-size,
                          library: trans.transaction-library);
@@ -112,7 +107,6 @@ define method download-sections-into-region
 
       // Some special case code for when this is the very first, or the very
       // last section.
-
       if (section-i == 0)
         lowest-address := base-addresses[section-i]
       end if;
@@ -129,60 +123,6 @@ define method download-sections-into-region
          lowest-address,
          highest-address);
 end method;
-
-/*
-///// DOWNLOAD-INTO-REGION (Obsolete)
-//    Allocates enough memory to hold the data in a byte vector, downloads
-//    the vector, and returns an address.
-
-define method download-into-region
-    (application :: <debug-target>, region :: <interactive-region>,
-     bytes :: <byte-vector>, 
-        #key alignment = 1,
-             from-index = 0,
-             to-index = #f)
-       => (base-address :: <remote-value>)
-
-  let object-address = #f;
-
-  // The size we need for the block is the size of the byte vector, even
-  // if we actually only want to download a segment of it. Also add the
-  // requested alignment.
-
-  let conservative-block-size = size(bytes) + alignment;
-
-  // If the interactive region is being used for the first time, then
-  // initialize it.
-
-  unless (region.region-searched-for-allocator?)
-    initialize-interactive-region(application, region)
-  end unless;
-
-  // Find a block large enough to hold the request.
-
-  let target-block = 
-    find-block-in-region(trans, region, conservative-block-size);
-
-  // If we found one, align it correctly, and download the bytes.
-
-  if (target-block)
-    block-align-n(target-block, alignment);
-    object-address := download-byte-vector-into
-                         (application.debug-target-access-path,
-                          target-block,
-                          bytes,
-                          from-index: from-index,
-                          to-index: to-index);
-  end if;
-
-  // Return the address.
-  if (object-address)
-    object-address
-  else
-    $illegal-address
-  end if
-end method;
-*/
 
 ///// INITIALIZE-INTERACTIVE-REGION
 //    If an interactive region is being used for the first time, it is
@@ -217,7 +157,6 @@ define method find-block-in-region
      request-size :: <integer>,
      #key library = #f)
        => (request-block :: false-or(<static-block>), fresh? :: <boolean>)
-
   let request-block = #f;
   let fresh? = #f;
   let application = 
@@ -234,10 +173,8 @@ define method find-block-in-region
   end method;
 
   block (exit)
-
     // If there is no allocator routine, we're screwed. We have no blocks,
     // and can't allocate any either.
-
     unless(region.region-allocator-entry-point)
       exit()
     end unless;
@@ -245,7 +182,6 @@ define method find-block-in-region
     // If there is no current static block, allocate it now, and make
     // it of sufficient size to hold the request. (This branch should be
     // taken for the very first downloading operation into this region).
-
     unless(region.region-current-static-block)
       request-block :=
         allocate-single-static-block
@@ -257,7 +193,6 @@ define method find-block-in-region
 
       // Register this block as an interactive extension of a particular
       // <remote-library>.
-
       if (request-block & library)
         symbol-table-register-region-for-library
            (application.debug-target-symbol-table,
@@ -275,7 +210,6 @@ define method find-block-in-region
 
     // If there is room for the request in the current static block, then
     // use it.
-
     let avail-size = 
       region.region-current-static-block.static-block-remaining-size;
 
@@ -286,7 +220,6 @@ define method find-block-in-region
 
     // Otherwise, search any blocks that have been previously allocated.
     // If we find one that still has enough room in it, then use it.
-
     for (existing-block in region.region-allocated-static-blocks)
       if (existing-block.static-block-remaining-size >= request-size)
         request-block := existing-block;
@@ -298,7 +231,6 @@ define method find-block-in-region
     // onto the list of allocated blocks, and allocate a new block of
     // sufficient size to hold the request, making that new block the
     // current block.
-
     request-block :=
       allocate-single-static-block
         (application.debug-target-access-path,
@@ -313,7 +245,6 @@ define method find-block-in-region
 
       // Register this block as an interactive extension of the appropriate
       // <remote-library> if necessary.
-
       if (library)
         symbol-table-register-region-for-library
            (application.debug-target-symbol-table,
@@ -341,13 +272,11 @@ end method;
 
 define method classify-coff-section (coff-section :: <coff-section>)
     => (classification :: <symbol>)
-
   // SECTION-NAMES-EQUIVALENT?
   // While the actual names of coff-file sections might contain "$" extensions
   // (such as ".dyobj$M" or ".debug$T"), we are not interested in these.
   // This utility allows us to compare section names regardless of such
   // extensions.
-
   local method section-names-equivalent?
                   (actual-name :: <byte-string>, basic-name :: <byte-string>)
                      => (answer :: <boolean>)

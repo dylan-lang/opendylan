@@ -2285,26 +2285,47 @@ Runtime Context
    :keyword required target: An instance of :class:`<debug-target>`.
    :keyword required thread: An instance of :class:`<remote-thread>`.
 
+   The DM is capable of allocating this object for any specified
+   thread during a debugger transaction. Only the DM and the
+   interactive downloader need to unpick this object.
+
 .. generic-function:: runtime-context-debug-target
 
-   :signature: runtime-context-debug-target (object) => (value)
+   :signature: runtime-context-debug-target (context) => (value)
 
-   :parameter object: An instance of :class:`<runtime-context>`.
+   :parameter context: An instance of :class:`<runtime-context>`.
    :value value: An instance of :class:`<debug-target>`.
 
 .. generic-function:: runtime-context-frame
 
-   :signature: runtime-context-frame (object) => (value)
+   :signature: runtime-context-frame (context) => (value)
 
-   :parameter object: An instance of :class:`<runtime-context>`.
+   :parameter context: An instance of :class:`<runtime-context>`.
    :value value: An instance of :class:`<application-stack-frame>`, or ``#f``.
 
 .. generic-function:: runtime-context-thread
 
-   :signature: runtime-context-thread (object) => (value)
+   :signature: runtime-context-thread (context) => (value)
 
-   :parameter object: An instance of :class:`<runtime-context>`.
+   :parameter context: An instance of :class:`<runtime-context>`.
    :value value: An instance of :class:`<remote-thread>`.
+
+.. method:: active-lexical-variables
+   :specializer: <runtime-context>
+
+   A method on the open GF exported by :mod:`dfmc-interactive-execution` in the
+   :lib:`dfmc-browser-support` library.
+
+.. generic-function:: runtime-context-lexical-variable-value
+
+   :signature: runtime-context-lexical-variable-value (context, index) => (value)
+
+   :parameter context: An instance of :class:`<runtime-context>`.
+   :parameter index: An instance of :drm:`<integer>`.
+   :value value: An instance of :class:`<remote-value>`.
+
+   Returns the actual value of a lexical variable whose index was
+   provided by active-lexical-variables.
 
 .. generic-function:: current-runtime-context
 
@@ -2312,8 +2333,10 @@ Runtime Context
 
    :parameter application: An instance of :class:`<debug-target>`.
    :parameter thread: An instance of :class:`<remote-thread>`.
-   :parameter #key stack-frame: An instance of :drm:`<object>`.
+   :parameter #key stack-frame: An instance of :class:`<call-frame>`, or ``#f``.
    :value context: An instance of :class:`<runtime-context>`.
+
+   Creates and returns the runtime-context for a thread in an application.
 
 
 Profiling

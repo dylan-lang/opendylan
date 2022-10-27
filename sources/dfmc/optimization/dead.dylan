@@ -136,6 +136,10 @@ define method side-effect-free? (c :: <variable-reference>)
   #t
 end method;
 
+define method side-effect-free? (c :: <interactor-binding-reference>)
+  #t
+end method;
+
 define method side-effect-free? (c :: <keyword-default>)
   #t
 end method;

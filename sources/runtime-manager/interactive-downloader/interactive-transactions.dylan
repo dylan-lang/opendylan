@@ -6,8 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-
 ///// Types of memory registration.
 //    Exact        - A portion of memory known to be a contiguous array of
 //                   root references to dylan objects.
@@ -29,7 +27,6 @@ define constant $registration-style-code      = 6;
 //    with the memory manager.
 
 define class <memory-registration> (<object>)
-
   constant slot memory-registration-lower-address :: <remote-value>,
     required-init-keyword: lower-bound:;
 
@@ -39,7 +36,6 @@ define class <memory-registration> (<object>)
   constant slot memory-registration-style :: <integer>,
     init-value: $registration-style-ambiguous,
     init-keyword: style:;
-
 end class;
 
 
@@ -51,21 +47,21 @@ end class;
 //    coff files.
 
 define class <interactive-transaction> (<object>)
+  // The runtime context
+  constant slot transaction-runtime-context :: false-or(<runtime-context>),
+    required-init-keyword: runtime-context:;
 
   // A pointer to the <downloader-target> that describes all of the
   // interactive memory regions.
-
   constant slot transaction-downloader-target :: <downloader-target>,
     required-init-keyword: downloader-target:;
 
   // A sequence of <coff-file> objects that need to be downloaded for this
   // transaction.
-
   constant slot transaction-coff-file-sequence :: <sequence>,
     required-init-keyword: coff-file-sequence:;
 
   // A <remote-library> to lookup symbols in.
-
   constant slot transaction-library :: false-or(<remote-library>),
     init-value: #f,
     init-keyword: dll:;
@@ -77,19 +73,16 @@ define class <interactive-transaction> (<object>)
   // Each <coff-file> needs its own <remote-object-file>, exclusively
   // used to scope the _static_ symbols that it defines.
   // This table, keyed on <coff-file>, stores those object files.
-
   constant slot transaction-object-files :: <table> = make(<table>);
 
   // We will be downloading raw data for a number of <coff-section>s.
   // This table, keyed on <coff-section>, stores the base address at
   // which its data was downloaded. This address will be a 
   // <remote-value>.
-
   constant slot transaction-section-addresses :: <table> = make(<table>);
 
   // This table, keyed on <coff-section>, stores a symbol that abstractly
   // describes the section, based on its name.
-
   constant slot transaction-section-types :: <table> = make(<table>);
 
   // While downloading raw data, it will be necessary to remember how to
@@ -97,16 +90,13 @@ define class <interactive-transaction> (<object>)
   // to happen, after all of the relocations have been processed).
   // This sequence of <memory-registration> descriptors will be the means
   // for recording these deferred registrations.
-
   constant slot transaction-deferred-registrations :: <sequence>
      = make(<stretchy-vector>, size: 0);
 
   // Record the thread which we will use for all spy functions, and
   // also for running the interactive code itself.
-
   constant slot transaction-thread :: <remote-thread>,
     required-init-keyword: thread:;
-
 end class;
 
 
@@ -116,13 +106,11 @@ end class;
 
 define method open-interactive-transaction
      (application :: <debug-target>, coff-files :: <sequence>,
-      #key dll-name = "dylan", thread = #f)
+      #key runtime-context = #f, dll-name = "dylan", thread = #f)
          => (transaction :: <interactive-transaction>)
-
   // NAME-INFORMATION-FROM-COFF-FILENAME
   // Splits up an arbitrary filename into path, name, extension. This
   // will break if the filename is illegal.
-
   local method name-information-from-coff-filename (n :: <byte-string>)
            => (name :: <byte-string>, path :: <byte-string>,
                source-ext :: <byte-string>, obj-ext :: <byte-string>)
@@ -161,7 +149,6 @@ define method open-interactive-transaction
         end method;
 
   // NAME-INFORMATION-FROM-COFF-FILE
-
   local method name-information-from-coff-file (f :: <coff-file>)
            => (name :: <byte-string>, path :: <byte-string>,
                source-ext :: <byte-string>, obj-ext :: <byte-string>)
@@ -182,7 +169,6 @@ define method open-interactive-transaction
 
   // Find (or create) a <downloader-target> to correspond to the
   // <debug-target>.
-
   let dt = find-downloader-target(application);
   let dll = find-library-called(application, dll-name);
   let dylan-dll = find-library-called(application, "dylan");
@@ -196,11 +182,11 @@ define method open-interactive-transaction
 
   // Allocate the <interactive-transaction> itself, storing in the
   // debug target, and the sequence of COFF file descriptors.
-
-  let transaction =
-     make(<interactive-transaction>,
-          downloader-target: dt, coff-file-sequence: coff-files, 
-          dll: dll, dylan-dll: dylan-dll, thread: thread);
+  let transaction
+    = make(<interactive-transaction>,
+           runtime-context: runtime-context, downloader-target: dt,
+           coff-file-sequence: coff-files, dll: dll, dylan-dll: dylan-dll,
+           thread: thread);
 
   // Define a <remote-object-file> to hold the static symbols of
   // each coff file.
@@ -252,6 +238,3 @@ define method transaction-find-symbol
                            library: trans.transaction-dylan-library) |
   symbol-table-find-symbol(global-table, name)
 end method;
-
-
-

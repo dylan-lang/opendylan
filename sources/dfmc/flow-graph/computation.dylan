@@ -251,8 +251,7 @@ define class <defined-constant-reference>
     (<value-reference>, <module-binding-reference>)
 end class;
 
-define class <interactor-binding-reference>
-    (<value-reference>, <binding-reference>)
+define class <interactor-binding-reference> (<computation>, <binding-reference>)
   constant slot referenced-binding :: <interactor-binding>,
     required-init-keyword: value:;
 end class;

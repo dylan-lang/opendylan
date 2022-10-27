@@ -42,20 +42,6 @@ define sealed method make
 end method;
 
 
-///// <HISTORY-PLACE-HOLDER>
-//    Since ACTIVE-LEXICAL-VARIABLES is a compiler callback, we cannot
-//    be sure of the application state when it is called. Therefore, we
-//    must not try to obtain the values of history variables. Instead
-//    we create one of these objects as a place-holder.
-
-define class <history-place-holder> (<object>)
-  constant slot history-place-holder-thread :: <remote-thread>,
-    required-init-keyword: thread:;
-  constant slot history-place-holder-index :: <integer>,
-    required-init-keyword: index:;
-end class;
-
-
 ///// ACTIVE-LEXICAL-VARIABLES
 //    A method on the open GF exported by DFMC-INTERACTIVE-EXECUTION in the
 //    DFMC-BROWSER-SUPPORT library.
@@ -67,20 +53,35 @@ define method active-lexical-variables (context :: <runtime-context>)
   let application = context.runtime-context-debug-target;
   let dm-thread = find-thread(application, thread);
 
-  local method place-holder-for (hist-index :: <integer>)
-                    => (place-holder :: <history-place-holder>)
-          make(<history-place-holder>,
-               thread: thread, index: hist-index)
-        end method;
-
-  for (entry in context.runtime-context-scoped-variables)
-    vars := pair(as(<symbol>, entry.head), pair(entry.tail, vars))
+  // Local variables (represented with nonnegative indices)
+  for (entry in context.runtime-context-scoped-variables, i from 0)
+    vars := pair(as(<symbol>, entry.head), pair(i, vars))
   end for;
+  // Interactor history values (represented with negative indices)
   for (i from 0 below dm-thread.thread-registered-history.size)
     let name = format-to-string("$%d", i);
-    vars := pair(as(<symbol>, name), pair(place-holder-for(i), vars));
+    vars := pair(as(<symbol>, name), pair(-1 - i, vars));
   end for;
   vars;
+end method;
+
+///// RUNTIME-CONTEXT-LEXICAL-VARIABLE-VALUE
+//    Returns the actual value of a lexical variable whose index was
+//    provided by active-lexical-variables.
+
+define method runtime-context-lexical-variable-value
+    (context :: <runtime-context>, index :: <integer>)
+ => (value :: <remote-value>);
+  if (index < 0)
+    // Interactor history value
+    let i = -1 - index;
+    retrieve-object-from-thread-history
+      (context.runtime-context-debug-target,
+       context.runtime-context-thread, i)
+  else
+    // Local variable
+    context.runtime-context-scoped-variables[index].tail
+  end if
 end method;
 
 

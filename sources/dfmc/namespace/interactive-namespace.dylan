@@ -1109,8 +1109,7 @@ end;
 // current stack frame.
 
 define class <interactor-binding> (<named-object>, <binding>)
-  // This slot contains whatever we get from the runtime manager - we
-  // just hand it back later.
-  constant slot binding-interactor-id,
+  // Index assigned by the runtime-manager
+  constant slot binding-interactor-id :: <integer>,
     required-init-keyword: interactor-id:;
 end class;

@@ -119,12 +119,12 @@ define method perform-coff-relocation-in-section
   let access-path = target.interactive-application.debug-target-access-path;
   let application = target.interactive-application;
   let thread = trans.transaction-thread;
+  let context = trans.transaction-runtime-context;
 
   ///// LOCAL: CREATE-CELL-FOR-INTERACTIVE-REFERENCE
   //           Allocates (and returns the address of) a value cell, into
   //           which an interactively-referenced dylan object (the
   //           "actual value" has been placed).
-
   local method create-cell-for-interactive-reference
                  (actual-value :: <remote-value>) => (addr :: <remote-value>)
           let i-region = target.dylan-interactive-reference-value-cells;
@@ -164,14 +164,8 @@ define method perform-coff-relocation-in-section
         end method;
 
   let interactor-id = relocation.interactor-handle;
-  let actual-value =
-    if (instance?(interactor-id, <history-place-holder>))
-      retrieve-object-from-thread-history
-        (application, interactor-id.history-place-holder-thread,
-         interactor-id.history-place-holder-index)
-    else
-      interactor-id;
-    end if;
+  let actual-value
+    = runtime-context-lexical-variable-value(context, interactor-id);
   let indirection-address =
     create-cell-for-interactive-reference(actual-value);
   let relocation-address =
