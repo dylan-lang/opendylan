@@ -1019,14 +1019,14 @@ define method write-type-record
     (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
      type :: <llvm-primitive-type>)
  => ();
-  write-record(stream, type.llvm-primitive-type-kind);
+  write-record*(stream, type.llvm-primitive-type-kind);
 end method;
 
 define method write-type-record
     (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
      type :: <llvm-integer-type>)
  => ();
-  write-record(stream, #"INTEGER", type.llvm-integer-type-width);
+  write-record*(stream, #"INTEGER", type.llvm-integer-type-width);
 end method;
 
 define method write-type-record
@@ -1034,9 +1034,9 @@ define method write-type-record
      type :: <llvm-pointer-type>)
  => ();
   let pointee = type-forward(type.llvm-pointer-type-pointee);
-  write-record(stream, #"POINTER",
-               type-partition-table[pointee],
-               type.llvm-pointer-type-address-space);
+  write-record*(stream, #"POINTER",
+                type-partition-table[pointee],
+                type.llvm-pointer-type-address-space);
 end method;
 
 define method write-type-record
@@ -1089,9 +1089,9 @@ define method write-type-record
      type :: <llvm-array-type>)
  => ();
   let element-type = type-forward(type.llvm-array-type-element-type);
-  write-record(stream, #"ARRAY",
-               type.llvm-array-type-size,
-               type-partition-table[element-type]);
+  write-record*(stream, #"ARRAY",
+                type.llvm-array-type-size,
+                type-partition-table[element-type]);
 end method;
 
 define method write-type-record
@@ -1099,9 +1099,9 @@ define method write-type-record
      type :: <llvm-vector-type>)
  => ();
   let element-type = type-forward(type.llvm-vector-type-element-type);
-  write-record(stream, #"VECTOR",
-               type.llvm-vector-type-size,
-               type-partition-table[element-type]);
+  write-record*(stream, #"VECTOR",
+                type.llvm-vector-type-size,
+                type-partition-table[element-type]);
 end method;
 
 define method write-type-record
@@ -1110,9 +1110,9 @@ define method write-type-record
  => ();
   if (type.llvm-opaque-type-name)
     if (instance?(type.llvm-opaque-type-name, <string>))
-      write-record(stream, #"STRUCT_NAME", type.llvm-opaque-type-name);
+      write-record*(stream, #"STRUCT_NAME", type.llvm-opaque-type-name);
     end if;
-    write-record(stream, #"OPAQUE", 0);
+    write-record*(stream, #"OPAQUE", 0);
   else
     error("Reference to non-identified opaque type");
   end if;
@@ -1127,7 +1127,7 @@ define method write-constant-record
      value-partition-table :: <explicit-key-collection>,
      value :: <llvm-null-constant>)
  => ();
-  write-record(stream, #"NULL");
+  write-record*(stream, #"NULL");
 end method;
 
 define method write-constant-record
@@ -1136,7 +1136,7 @@ define method write-constant-record
      value-partition-table :: <explicit-key-collection>,
      value :: <llvm-undef-constant>)
  => ();
-  write-record(stream, #"UNDEF");
+  write-record*(stream, #"UNDEF");
 end method;
 
 define method write-constant-record
@@ -1153,7 +1153,7 @@ define method write-constant-record
       else
         integer
       end if;
-  write-record(stream, #"INTEGER", as-signed-vbr(signed-integer));
+  write-record*(stream, #"INTEGER", as-signed-vbr(signed-integer));
 end method;
 
 define method write-constant-record
@@ -1166,22 +1166,22 @@ define method write-constant-record
   select (type.llvm-primitive-type-kind)
     #"FLOAT" =>
       let single-float = as(<single-float>, value.llvm-float-constant-float);
-      write-record(stream, #"FLOAT", decode-single-float(single-float));
-    
+      write-record*(stream, #"FLOAT", decode-single-float(single-float));
+
     #"DOUBLE" =>
       let double-float
         = as(<double-float>, value.llvm-float-constant-float);
       let (low :: <machine-word>, high :: <machine-word>)
         = decode-double-float(double-float);
-      write-record(stream, #"FLOAT",
-                   if ($machine-word-size = 32)
-                     make(<double-machine-word>, low: low, high: high)
-                   elseif ($machine-word-size = 64)
-                     %logior(low, %shift-left(high, 32))
-                   else
-                     error("float-constant $machine-word-size = %d",
-                           $machine-word-size);
-                   end if);
+      write-record*(stream, #"FLOAT",
+                    if ($machine-word-size = 32)
+                      make(<double-machine-word>, low: low, high: high)
+                    elseif ($machine-word-size = 64)
+                      %logior(low, %shift-left(high, 32))
+                    else
+                      error("float-constant $machine-word-size = %d",
+                            $machine-word-size);
+                    end if);
 
     #"X86_FP80", #"FP128", #"PPC_FP128" =>
       error("Can't write %s floating point", type.llvm-primitive-type-kind);
@@ -1211,12 +1211,12 @@ define method write-constant-record
      value :: <llvm-aggregate-constant>)
  => ();
   if (empty?(value.llvm-aggregate-constant-values))
-    write-record(stream, #"NULL");
+    write-record*(stream, #"NULL");
   elseif (aggregate-string?(value))
     let contents = map(llvm-integer-constant-integer,
                        value.llvm-aggregate-constant-values);
     if (every?(zero?, contents))
-      write-record(stream, #"NULL");
+      write-record*(stream, #"NULL");
     elseif (zero?(contents.last))
       write-abbrev-record(stream, #"cstring",
                           copy-sequence(contents, end: contents.size - 1));
@@ -1320,10 +1320,10 @@ define method write-constant-record
      value :: <llvm-cast-constant>)
  => ();
   let opval = value-forward(value.llvm-expression-constant-operands[0]);
-  write-record(stream, #"CE_CAST",
-               cast-operator-encoding(value.llvm-cast-constant-operator),
-               type-partition-table[type-forward(llvm-value-type(opval))],
-               value-partition-table[opval]);
+  write-record*(stream, #"CE_CAST",
+                cast-operator-encoding(value.llvm-cast-constant-operator),
+                type-partition-table[type-forward(llvm-value-type(opval))],
+                value-partition-table[opval]);
 end method;
 
 define method write-constant-record
@@ -1358,11 +1358,11 @@ define method write-constant-record
  => ();
   let op0val = value-forward(value.llvm-expression-constant-operands[0]);
   let op1val = value-forward(value.llvm-expression-constant-operands[1]);
-  write-record(stream, #"CE_CMP",
-               type-partition-table[type-forward(llvm-value-type(op0val))],
-               value-partition-table[op0val],
-               value-partition-table[op1val],
-               encode-predicate(value));
+  write-record*(stream, #"CE_CMP",
+                type-partition-table[type-forward(llvm-value-type(op0val))],
+                value-partition-table[op0val],
+                value-partition-table[op1val],
+                encode-predicate(value));
 end method;
 
 define method encode-predicate
@@ -1432,7 +1432,7 @@ define function write-constant-table
         let type-partition
           = type-partition-table[type-forward(llvm-value-type(constant))];
         if (type-partition ~= current-type-partition)
-          write-record(stream, #"SETTYPE", type-partition);
+          write-record*(stream, #"SETTYPE", type-partition);
           current-type-partition := type-partition;
         end if;
         write-constant-record(stream,
@@ -1506,27 +1506,27 @@ define method write-metadata-record
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
   assert(metadata.llvm-metadata-distinct?);
-  write-record(stream, #"COMPILE_UNIT",
-               1,               // distinct
-               metadata.llvm-DICompileUnit-metadata-language,
-               moni(metadata.llvm-DICompileUnit-metadata-file),
-               moni(metadata.llvm-DICompileUnit-metadata-producer),
-               if (metadata.llvm-DICompileUnit-metadata-optimized?) 1 else 0 end,
-               moni(metadata.llvm-DICompileUnit-metadata-flags),
-               metadata.llvm-DICompileUnit-metadata-runtime-version,
-               0,               // splitDebugFilename
-               encode-emission-kind
-                 (metadata.llvm-DICompileUnit-metadata-emission-kind),
-               moni(metadata.llvm-DICompileUnit-metadata-enums),
-               moni(metadata.llvm-DICompileUnit-retained-types),
-               0,               // subprograms
-               0,               // FIXME globals
-               0,               // FIXME imports
-               0,               // FIXME dwoId
-               0,               // FIXME macros
-               if (metadata.llvm-DICompileUnit-metadata-split-debug-inlining?) 1 else 0 end,
-               0,               // FIXME debugInfoForProfiling
-               0);              // FIXME gnuPubnames
+  write-record*(stream, #"COMPILE_UNIT",
+                1,               // distinct
+                metadata.llvm-DICompileUnit-metadata-language,
+                moni(metadata.llvm-DICompileUnit-metadata-file),
+                moni(metadata.llvm-DICompileUnit-metadata-producer),
+                if (metadata.llvm-DICompileUnit-metadata-optimized?) 1 else 0 end,
+                moni(metadata.llvm-DICompileUnit-metadata-flags),
+                metadata.llvm-DICompileUnit-metadata-runtime-version,
+                0,               // splitDebugFilename
+                encode-emission-kind
+                  (metadata.llvm-DICompileUnit-metadata-emission-kind),
+                moni(metadata.llvm-DICompileUnit-metadata-enums),
+                moni(metadata.llvm-DICompileUnit-retained-types),
+                0,               // subprograms
+                0,               // FIXME globals
+                0,               // FIXME imports
+                0,               // FIXME dwoId
+                0,               // FIXME macros
+                if (metadata.llvm-DICompileUnit-metadata-split-debug-inlining?) 1 else 0 end,
+                0,               // FIXME debugInfoForProfiling
+                0);              // FIXME gnuPubnames
 end method;
 
 define method write-metadata-record
@@ -1541,12 +1541,12 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"FILE",
-               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
-               moni(metadata.llvm-DIFile-metadata-filename),
-               moni(metadata.llvm-DIFile-metadata-directory),
-               0,               // checksumkind
-               0);              // checksum
+  write-record*(stream, #"FILE",
+                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+                moni(metadata.llvm-DIFile-metadata-filename),
+                moni(metadata.llvm-DIFile-metadata-directory),
+                0,               // checksumkind
+                0);              // checksum
 end method;
 
 define method write-metadata-record
@@ -1561,13 +1561,13 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"BASIC_TYPE",
-               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
-               metadata.llvm-DIBasicType-metadata-tag,
-               moni(metadata.llvm-DIBasicType-metadata-name),
-               metadata.llvm-DIBasicType-metadata-size,
-               0,               // align
-               metadata.llvm-DIBasicType-metadata-encoding);
+  write-record*(stream, #"BASIC_TYPE",
+                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+                metadata.llvm-DIBasicType-metadata-tag,
+                moni(metadata.llvm-DIBasicType-metadata-name),
+                metadata.llvm-DIBasicType-metadata-size,
+                0,               // align
+                metadata.llvm-DIBasicType-metadata-encoding);
 end method;
 
 define method write-metadata-record
@@ -1582,25 +1582,25 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"COMPOSITE_TYPE",
-               // logior of distinct flag with not-used-in-old-typeref flag
-               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
-               metadata.llvm-DICompositeType-metadata-tag,
-               moni(metadata.llvm-DICompositeType-metadata-name),
-               moni(metadata.llvm-DICompositeType-metadata-file),
-               metadata.llvm-DICompositeType-metadata-line,
-               moni(metadata.llvm-DICompositeType-metadata-scope),
-               moni(metadata.llvm-DICompositeType-metadata-base-type),
-               metadata.llvm-DICompositeType-metadata-size,
-               0,               // align
-               0,               // offset
-               0,               // flags
-               moni(metadata.llvm-DICompositeType-metadata-elements),
-               0,               // runtimeLang
-               0,               // vtableHolder
-               0,               // templateParams
-               0,               // identifier
-               0);              // discriminator
+  write-record*(stream, #"COMPOSITE_TYPE",
+                // logior of distinct flag with not-used-in-old-typeref flag
+                if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+                metadata.llvm-DICompositeType-metadata-tag,
+                moni(metadata.llvm-DICompositeType-metadata-name),
+                moni(metadata.llvm-DICompositeType-metadata-file),
+                metadata.llvm-DICompositeType-metadata-line,
+                moni(metadata.llvm-DICompositeType-metadata-scope),
+                moni(metadata.llvm-DICompositeType-metadata-base-type),
+                metadata.llvm-DICompositeType-metadata-size,
+                0,              // align
+                0,              // offset
+                0,              // flags
+                moni(metadata.llvm-DICompositeType-metadata-elements),
+                0,              // runtimeLang
+                0,              // vtableHolder
+                0,              // templateParams
+                0,              // identifier
+                0);             // discriminator
 end method;
 
 define method write-metadata-record
@@ -1615,20 +1615,20 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"DERIVED_TYPE",
-               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
-               metadata.llvm-DIDerivedType-metadata-tag,
-               moni(metadata.llvm-DIDerivedType-metadata-name),
-               moni(metadata.llvm-DIDerivedType-metadata-file),
-               metadata.llvm-DIDerivedType-metadata-line,
-               moni(metadata.llvm-DIDerivedType-metadata-scope),
-               moni(metadata.llvm-DIDerivedType-metadata-base-type),
-               metadata.llvm-DIDerivedType-metadata-size,
-               metadata.llvm-DIDerivedType-metadata-align,
-               metadata.llvm-DIDerivedType-metadata-offset,
-               metadata.llvm-DIDerivedType-metadata-flags,
-               moni(metadata.llvm-DIDerivedType-metadata-extra-data),
-               0);              // dwarfAddressSpace
+  write-record*(stream, #"DERIVED_TYPE",
+                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+                metadata.llvm-DIDerivedType-metadata-tag,
+                moni(metadata.llvm-DIDerivedType-metadata-name),
+                moni(metadata.llvm-DIDerivedType-metadata-file),
+                metadata.llvm-DIDerivedType-metadata-line,
+                moni(metadata.llvm-DIDerivedType-metadata-scope),
+                moni(metadata.llvm-DIDerivedType-metadata-base-type),
+                metadata.llvm-DIDerivedType-metadata-size,
+                metadata.llvm-DIDerivedType-metadata-align,
+                metadata.llvm-DIDerivedType-metadata-offset,
+                metadata.llvm-DIDerivedType-metadata-flags,
+                moni(metadata.llvm-DIDerivedType-metadata-extra-data),
+                0);             // dwarfAddressSpace
 end method;
 
 define method write-metadata-record
@@ -1643,12 +1643,12 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"LEXICAL_BLOCK",
-               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
-               moni(metadata.llvm-DILexicalBlock-metadata-scope),
-               moni(metadata.llvm-DILexicalBlock-metadata-file),
-               metadata.llvm-DILexicalBlock-metadata-line,
-               metadata.llvm-DILexicalBlock-metadata-column);
+  write-record*(stream, #"LEXICAL_BLOCK",
+                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+                moni(metadata.llvm-DILexicalBlock-metadata-scope),
+                moni(metadata.llvm-DILexicalBlock-metadata-file),
+                metadata.llvm-DILexicalBlock-metadata-line,
+                metadata.llvm-DILexicalBlock-metadata-column);
 end method;
 
 define method write-metadata-record
@@ -1663,17 +1663,17 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"LOCAL_VAR",
-               // logior of distinct flag and has-alignment-flag
-               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
-               moni(metadata.llvm-DILocalVariable-metadata-scope),
-               moni(metadata.llvm-DILocalVariable-metadata-name),
-               moni(metadata.llvm-DILocalVariable-metadata-file),
-               metadata.llvm-DILocalVariable-metadata-line,
-               moni(metadata.llvm-DILocalVariable-metadata-type),
-               metadata.llvm-DILocalVariable-metadata-arg,
-               metadata.llvm-DILocalVariable-metadata-flags,
-               metadata.llvm-DILocalVariable-metadata-align);
+  write-record*(stream, #"LOCAL_VAR",
+                // logior of distinct flag and has-alignment-flag
+                if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+                moni(metadata.llvm-DILocalVariable-metadata-scope),
+                moni(metadata.llvm-DILocalVariable-metadata-name),
+                moni(metadata.llvm-DILocalVariable-metadata-file),
+                metadata.llvm-DILocalVariable-metadata-line,
+                moni(metadata.llvm-DILocalVariable-metadata-type),
+                metadata.llvm-DILocalVariable-metadata-arg,
+                metadata.llvm-DILocalVariable-metadata-flags,
+                metadata.llvm-DILocalVariable-metadata-align);
 end method;
 
 define method write-metadata-record
@@ -1682,9 +1682,9 @@ define method write-metadata-record
      value-partition-table :: <explicit-key-collection>,
      metadata :: <llvm-DIExpression-metadata>)
   => ();
-  write-record(stream, #"EXPRESSION",
-               // logior of distinct flag and version 3
-               if (metadata.llvm-metadata-distinct?) 7 else 6 end);
+  write-record*(stream, #"EXPRESSION",
+                // logior of distinct flag and version 3
+                if (metadata.llvm-metadata-distinct?) 7 else 6 end);
   // FIXME operands
 end method;
 
@@ -1701,13 +1701,13 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"LOCATION",
-               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
-               metadata.llvm-DILocation-metadata-line,
-               metadata.llvm-DILocation-metadata-column,
-               value-partition-table
-                 [llvm-metadata-forward(metadata.llvm-DILocation-metadata-scope)],
-               moni(metadata.llvm-DILocation-metadata-inlined-at));
+  write-record*(stream, #"LOCATION",
+                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+                metadata.llvm-DILocation-metadata-line,
+                metadata.llvm-DILocation-metadata-column,
+                value-partition-table
+                  [llvm-metadata-forward(metadata.llvm-DILocation-metadata-scope)],
+                moni(metadata.llvm-DILocation-metadata-inlined-at));
 end method;
 
 define method write-metadata-record
@@ -1722,29 +1722,29 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"SUBPROGRAM",
-               // logior of distinct flag and has-unit-flag
-               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
-               moni(metadata.llvm-DISubprogram-metadata-scope),
-               moni(metadata.llvm-DISubprogram-metadata-name),
-               moni(metadata.llvm-DISubprogram-metadata-linkage-name),
-               moni(metadata.llvm-DISubprogram-metadata-file),
-               metadata.llvm-DISubprogram-metadata-line,
-               moni(metadata.llvm-DISubprogram-metadata-type),
-               if (metadata.llvm-DISubprogram-metadata-local?) 1 else 0 end,
-               if (metadata.llvm-DISubprogram-metadata-definition?) 1 else 0 end,
-               metadata.llvm-DISubprogram-metadata-scope-line,
-               0,               // containingType
-               0,               // virtuality
-               0,               // virtualIndex
-               metadata.llvm-DISubprogram-metadata-flags,
-               if (metadata.llvm-DISubprogram-metadata-optimized?) 1 else 0 end,
-               moni(metadata.llvm-DISubprogram-metadata-unit),
-               0,               // templateParams
-               0,               // declaration
-               moni(metadata.llvm-DISubprogram-metadata-retained-nodes),
-               0,               // thisAdjustment
-               0);              // thrownTypes
+  write-record*(stream, #"SUBPROGRAM",
+                // logior of distinct flag and has-unit-flag
+                if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+                moni(metadata.llvm-DISubprogram-metadata-scope),
+                moni(metadata.llvm-DISubprogram-metadata-name),
+                moni(metadata.llvm-DISubprogram-metadata-linkage-name),
+                moni(metadata.llvm-DISubprogram-metadata-file),
+                metadata.llvm-DISubprogram-metadata-line,
+                moni(metadata.llvm-DISubprogram-metadata-type),
+                if (metadata.llvm-DISubprogram-metadata-local?) 1 else 0 end,
+                if (metadata.llvm-DISubprogram-metadata-definition?) 1 else 0 end,
+                metadata.llvm-DISubprogram-metadata-scope-line,
+                0,              // containingType
+                0,              // virtuality
+                0,              // virtualIndex
+                metadata.llvm-DISubprogram-metadata-flags,
+                if (metadata.llvm-DISubprogram-metadata-optimized?) 1 else 0 end,
+                moni(metadata.llvm-DISubprogram-metadata-unit),
+                0,              // templateParams
+                0,              // declaration
+                moni(metadata.llvm-DISubprogram-metadata-retained-nodes),
+                0,              // thisAdjustment
+                0);             // thrownTypes
 end method;
 
 define method write-metadata-record
@@ -1759,11 +1759,11 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"SUBRANGE",
-               // logior of distinct flag with version=1
-               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
-               moni(metadata.llvm-DISubrange-metadata-count),
-               as-signed-vbr(metadata.llvm-DISubrange-metadata-lower-bound));
+  write-record*(stream, #"SUBRANGE",
+                // logior of distinct flag with version=1
+                if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+                moni(metadata.llvm-DISubrange-metadata-count),
+                as-signed-vbr(metadata.llvm-DISubrange-metadata-lower-bound));
 end method;
 
 define method write-metadata-record
@@ -1778,12 +1778,12 @@ define method write-metadata-record
       => (id :: <integer>);
       if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
     end method;
-  write-record(stream, #"SUBROUTINE_TYPE",
-               // logior of distinct flag with has-no-old-typerefs flag
-               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
-               metadata.llvm-DISubroutineType-metadata-flags,
-               moni(metadata.llvm-DISubroutineType-metadata-types),
-               0);              // CC
+  write-record*(stream, #"SUBROUTINE_TYPE",
+                // logior of distinct flag with has-no-old-typerefs flag
+                if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+                metadata.llvm-DISubroutineType-metadata-flags,
+                moni(metadata.llvm-DISubroutineType-metadata-types),
+                0);             // CC
 end method;
 
 define method write-metadata-record
@@ -1794,9 +1794,9 @@ define method write-metadata-record
   => ();
   let value = value-forward(metadata.llvm-metadata-value);
   let type = type-forward(value.llvm-value-type);
-  write-record(stream, #"VALUE",
-               type-partition-table[type],
-               value-partition-table[value]);
+  write-record*(stream, #"VALUE",
+                type-partition-table[type],
+                value-partition-table[value]);
 end method;
 
 
@@ -2259,15 +2259,15 @@ define method write-instruction-record
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-alloca-instruction>)
  => ();
-  write-record(stream, #"INST_ALLOCA",
-               type-partition-table
-                 [type-forward(value.llvm-alloca-allocated-type)],
-               type-partition-table
-                 [type-forward(llvm-value-type(value.llvm-instruction-operands[0]))],
-               value-partition-table[value.llvm-instruction-operands[0]],
-               logior(alignment-encoding
-                        (value.llvm-alloca-instruction-alignment),
-                      64 /* explicit type flag */));
+  write-record*(stream, #"INST_ALLOCA",
+                type-partition-table
+                  [type-forward(value.llvm-alloca-allocated-type)],
+                type-partition-table
+                  [type-forward(llvm-value-type(value.llvm-instruction-operands[0]))],
+                value-partition-table[value.llvm-instruction-operands[0]],
+                logior(alignment-encoding
+                         (value.llvm-alloca-instruction-alignment),
+                       64 /* explicit type flag */));
 end method;
 
 define method write-instruction-record
@@ -2381,9 +2381,9 @@ define method write-instruction-record
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-fence-instruction>)
  => ();
-  write-record(stream, #"INST_FENCE",
-               atomic-ordering-encoding(value.llvm-atomic-instruction-ordering),
-               atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+  write-record*(stream, #"INST_FENCE",
+                atomic-ordering-encoding(value.llvm-atomic-instruction-ordering),
+                atomic-scope-encoding(value.llvm-atomic-instruction-scope));
 end method;
 
 define function atomicrmw-operation-encoding
@@ -2573,8 +2573,8 @@ define function write-function
 
     with-block-output (stream, $FUNCTION_BLOCK, 3)
       // Tell the reader how many basic blocks there will be
-      write-record(stream, #"DECLAREBLOCKS",
-                   size(function.llvm-function-basic-blocks));
+      write-record*(stream, #"DECLAREBLOCKS",
+                    size(function.llvm-function-basic-blocks));
 
       // Write the function constant table
       write-constant-table(stream,
@@ -2729,12 +2729,12 @@ define function write-module
     // Write the module info:
     begin
       // Version
-      write-record(stream, #"VERSION", $llvm-bitcode-module-version);
+      write-record*(stream, #"VERSION", $llvm-bitcode-module-version);
 
       // Write the blockinfo
       with-block-output (stream, $BLOCKINFO_BLOCK, 2)
         // Value symbol table abbreviations
-        write-record(stream, #"SETBID", $VALUE_SYMTAB_BLOCK.block-id);
+        write-record*(stream, #"SETBID", $VALUE_SYMTAB_BLOCK.block-id);
         write-blockinfo-abbrev-definition
           (stream, $VALUE_SYMTAB_BLOCK, #"entry-8",
            op-fixed(2),
@@ -2759,7 +2759,7 @@ define function write-module
       // Write the type table
       unless (empty?(type-partition-exemplars))
         with-block-output (stream, $TYPE_BLOCK, 3)
-          write-record(stream, #"NUMENTRY", type-partition-exemplars.size);
+          write-record*(stream, #"NUMENTRY", type-partition-exemplars.size);
 
           let type-bits = integer-length(type-partition-exemplars.size);
           write-abbrev-definition(stream, #"function",
@@ -2838,33 +2838,33 @@ define function write-module
       for (global :: <llvm-global-variable> in m.llvm-module-globals)
         let global-type = type-forward(llvm-value-type(global));
         let name = global.llvm-global-name;
-        write-record(stream, #"GLOBALVAR",
-                     add-string(strtab-builder, name), name.size,
-                     type-partition-table[global-type],
-                     if (global.llvm-global-variable-constant?) 1 else 0 end,
-                     if (global.llvm-global-variable-initializer)
-                       let value
-                         = global.llvm-global-variable-initializer;
-                       value-partition-table[value-forward(value)] + 1
-                     else
-                       0
-                     end,
-                     linkage-encoding(global.llvm-global-linkage-kind),
-                     alignment-encoding(global.llvm-global-alignment),
-                     if (global.llvm-global-section)
-                       section-index-table[global.llvm-global-section]
-                     else
-                       0
-                     end,
-                     visibility-encoding(global.llvm-global-visibility-kind),
-                     thread-local-encoding(global.llvm-global-variable-thread-local),
-                     unnamed-address-encoding(global.llvm-global-unnamed-address)
-                     // externally_initialized
-                     // dllstorageclass
-                     // comdat
-                     // attributes
-                     // preemption specifier
-                     );
+        write-record*(stream, #"GLOBALVAR",
+                      add-string(strtab-builder, name), name.size,
+                      type-partition-table[global-type],
+                      if (global.llvm-global-variable-constant?) 1 else 0 end,
+                      if (global.llvm-global-variable-initializer)
+                        let value
+                          = global.llvm-global-variable-initializer;
+                        value-partition-table[value-forward(value)] + 1
+                      else
+                        0
+                      end,
+                      linkage-encoding(global.llvm-global-linkage-kind),
+                      alignment-encoding(global.llvm-global-alignment),
+                      if (global.llvm-global-section)
+                        section-index-table[global.llvm-global-section]
+                      else
+                        0
+                      end,
+                      visibility-encoding(global.llvm-global-visibility-kind),
+                      thread-local-encoding(global.llvm-global-variable-thread-local),
+                      unnamed-address-encoding(global.llvm-global-unnamed-address)
+                      // externally_initialized
+                      // dllstorageclass
+                      // comdat
+                      // attributes
+                      // preemption specifier
+                      );
       end for;
 
       // Functions
@@ -2876,41 +2876,41 @@ define function write-module
     //             linkage, paramattrs, alignment, section, visibility, gc,
     //             unnamed_addr, prologuedata, dllstorageclass, comdat,
     //             prefixdata, personalityfn, DSO_Local]
-        write-record(stream, #"FUNCTION",
-                     add-string(strtab-builder, name), name.size,
-                     type-partition-table[llvm-value-type(function)],
-                     function.llvm-function-calling-convention,
-                     if (empty?(function.llvm-function-basic-blocks))
-                       1
-                     else
-                       0
-                     end,
-                     linkage-encoding(function.llvm-global-linkage-kind),
-                     attributes-index-table[attribute-list-encoding],
-                     alignment-encoding(function.llvm-global-alignment),
-                     if (function.llvm-global-section)
-                       section-index-table[function.llvm-global-section]
-                     else
-                       0
-                     end,
-                     visibility-encoding(function.llvm-global-visibility-kind),
-                     if (function.llvm-function-garbage-collector)
-                       gc-index-table[function.llvm-function-garbage-collector]
-                     else
-                       0
-                     end if,
-                     unnamed-address-encoding(function.llvm-global-unnamed-address),
-                     0,      // prologuedata
-                     0,      // dllstorageclass
-                     0,      // comdat
-                     0,      // prefixdata
-                     if (function.llvm-function-personality)
-                       value-partition-table
-                         [value-forward(function.llvm-function-personality)] + 1
-                     else
-                       0
-                     end,       // personalityfn
-                     0);        // DSO_Local
+        write-record*(stream, #"FUNCTION",
+                      add-string(strtab-builder, name), name.size,
+                      type-partition-table[llvm-value-type(function)],
+                      function.llvm-function-calling-convention,
+                      if (empty?(function.llvm-function-basic-blocks))
+                        1
+                      else
+                        0
+                      end,
+                      linkage-encoding(function.llvm-global-linkage-kind),
+                      attributes-index-table[attribute-list-encoding],
+                      alignment-encoding(function.llvm-global-alignment),
+                      if (function.llvm-global-section)
+                        section-index-table[function.llvm-global-section]
+                      else
+                        0
+                      end,
+                      visibility-encoding(function.llvm-global-visibility-kind),
+                      if (function.llvm-function-garbage-collector)
+                        gc-index-table[function.llvm-function-garbage-collector]
+                      else
+                        0
+                      end if,
+                      unnamed-address-encoding(function.llvm-global-unnamed-address),
+                      0,        // prologuedata
+                      0,        // dllstorageclass
+                      0,        // comdat
+                      0,        // prefixdata
+                      if (function.llvm-function-personality)
+                        value-partition-table
+                          [value-forward(function.llvm-function-personality)] + 1
+                      else
+                        0
+                      end,      // personalityfn
+                      0);       // DSO_Local
       end for;
 
       // Aliases
@@ -2918,12 +2918,12 @@ define function write-module
         let name = alias.llvm-global-name;
         let alias-type = type-forward(llvm-value-type(alias));
         let aliasee = value-forward(alias.llvm-global-alias-aliasee);
-        write-record(stream, #"ALIAS",
-                     add-string(strtab-builder, name), name.size,
-                     type-partition-table[alias-type],
-                     value-partition-table[aliasee],
-                     linkage-encoding(alias.llvm-global-linkage-kind),
-                     visibility-encoding(alias.llvm-global-visibility-kind));
+        write-record*(stream, #"ALIAS",
+                      add-string(strtab-builder, name), name.size,
+                      type-partition-table[alias-type],
+                      value-partition-table[aliasee],
+                      linkage-encoding(alias.llvm-global-linkage-kind),
+                      visibility-encoding(alias.llvm-global-visibility-kind));
       end for;
     end;
 
