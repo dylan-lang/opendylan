@@ -1813,49 +1813,64 @@ define method do-emit-return-temporary
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      temp :: <multiple-value-temporary>, mv :: <llvm-local-mv>)
  => ();
-  let undef-struct
-    = make(<llvm-undef-constant>,
-           type: llvm-reference-type(back-end, back-end.%mv-struct-type));
-  if (mv.llvm-mv-fixed.empty?)
-    let result
-      = op--global-mv-struct(back-end,
-                             emit-reference(back-end, m, &false),
-                             i8(0));
-    ins--ret(back-end, result);
-  else
-    // Store values beyond the first in the MV area
-    let fixed-count = mv.llvm-mv-fixed.size;
-    for (i from 1 below fixed-count)
-      let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", i);
-      ins--store(back-end, mv.llvm-mv-fixed[i], ptr);
-    end for;
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let word-size = back-end-word-size(back-end);
 
-    let count
-      = if (mv.llvm-mv-rest)
-          // Copy a rest vector into the MV area
-          let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
-          let rest-cast
-            = op--object-pointer-cast(back-end, mv.llvm-mv-rest, sov-class);
-          let rest-count
-            = call-primitive(back-end, primitive-vector-size-descriptor,
-                             rest-cast);
-          let src-ptr
+  // Primary value, returned via the MV struct
+  let fixed = mv.llvm-mv-fixed;
+  let primary
+    = if (~fixed.empty?)
+        fixed.first
+      elseif (mv.llvm-mv-rest)
+        // Read the vector size
+        let rest-cast
+          = op--object-pointer-cast(back-end, mv.llvm-mv-rest, sov-class);
+        let vector-size
+          = call-primitive(back-end, primitive-vector-size-descriptor,
+                           rest-cast);
+        // Is it empty?
+        let cmp = ins--icmp-eq(back-end, vector-size, 0);
+        ins--if (back-end, cmp)
+          emit-reference(back-end, m, &false)
+        ins--else
+          let slot-ptr
             = op--getslotptr(back-end, rest-cast, sov-class,
                              #"vector-element", 0);
-          op--copy-into-mv-area(back-end, fixed-count, src-ptr, rest-count);
+          ins--load(back-end, slot-ptr, alignment: word-size)
+        end ins--if
+      else
+        emit-reference(back-end, m, &false)
+      end if;
 
-          // Add the count of values from the rest vector into the MV count
-          let total-count = ins--add(back-end, fixed-count, rest-count);
-          ins--trunc(back-end, total-count, $llvm-i8-type)
-        else
-          i8(fixed-count)
-        end;
+  // Store values beyond the first in the MV area
+  let fixed-count = mv.llvm-mv-fixed.size;
+  for (i from 1 below fixed-count)
+    let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", i);
+    ins--store(back-end, mv.llvm-mv-fixed[i], ptr);
+  end for;
 
-    // Return the primary value in the MV struct
-    let result
-      = op--global-mv-struct(back-end, mv.llvm-mv-fixed.first, count);
-    ins--ret(back-end, result);
-  end if;
+  let count
+    = if (mv.llvm-mv-rest)
+        // Copy a rest vector into the MV area
+        let rest-cast
+          = op--object-pointer-cast(back-end, mv.llvm-mv-rest, sov-class);
+        let rest-count
+          = call-primitive(back-end, primitive-vector-size-descriptor,
+                           rest-cast);
+        let src-ptr
+          = op--getslotptr(back-end, rest-cast, sov-class,
+                           #"vector-element", 0);
+        op--copy-into-mv-area(back-end, fixed-count, src-ptr, rest-count);
+
+        // Add the count of values from the rest vector into the MV count
+        let total-count = ins--add(back-end, fixed-count, rest-count);
+        ins--trunc(back-end, total-count, $llvm-i8-type)
+      else
+        i8(fixed-count)
+      end;
+
+  // Return the primary value in the MV struct
+  ins--ret(back-end, op--global-mv-struct(back-end, primary, count));
 end method;
 
 define method do-emit-return-temporary

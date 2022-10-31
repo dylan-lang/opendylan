@@ -258,6 +258,24 @@ define test issue-1095 ()
               map-into(col, identity, #(1, 2, 3, 4)));
 end;
 
+// Issue 1455: Multiple values not returned correctly for apply(values, ...) (https://github.com/dylan-lang/opendylan/issues/1455)
+
+define not-inline function issue-1455-r2v () => (a :: <integer>, b)
+  values(100, "abc")
+end;
+
+define not-inline function issue-1455-r2v2 () => (a :: <integer>, b)
+  let (#rest x) = issue-1455-r2v();
+  apply(values, x)
+end;
+
+define test issue-1455 ()
+  let (a, b, #rest more) = issue-1455-r2v2();
+  check-equal("primary value properly returned", a, 100);
+  check-equal("secondary value properly returned", b, "abc");
+  check-true("no other values were returned", empty?(more));
+end;
+
 define suite dylan-regressions-test-suite ()
   test bug-2766;
   test bug-5800;
@@ -280,4 +298,5 @@ define suite dylan-regressions-test-suite ()
   test issue-440;
   test issue-1091;
   test issue-1095;
+  test issue-1455;
 end suite;
