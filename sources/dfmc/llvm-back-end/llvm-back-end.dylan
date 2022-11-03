@@ -92,31 +92,33 @@ define sealed method initialize
     (back-end :: <llvm-back-end>, #key, #all-keys) => ()
   next-method();
 
-  // Initialize MV return value structure
-  back-end.%mv-struct-type
-    := make(<&raw-struct-type>,
-            debug-name: "dylan-mv",
-            options: #[],
-            members:
-              vector(make(<raw-aggregate-ordinary-member>,
-                          raw-type: dylan-value(#"<raw-pointer>")),
-                     make(<raw-aggregate-ordinary-member>,
-                          raw-type: dylan-value(#"<raw-byte>"))));
+  without-dependency-tracking
+    // Initialize MV return value structure
+    back-end.%mv-struct-type
+      := make(<&raw-struct-type>,
+              debug-name: "dylan-mv",
+              options: #[],
+              members:
+                vector(make(<raw-aggregate-ordinary-member>,
+                            raw-type: dylan-value(#"<raw-pointer>")),
+                       make(<raw-aggregate-ordinary-member>,
+                            raw-type: dylan-value(#"<raw-byte>"))));
 
-  // Initialize TEB structure
-  initialize-teb-struct-type(back-end);
+    // Initialize TEB structure
+    initialize-teb-struct-type(back-end);
 
-  // Initialize NLX bind exit frame structure
-  initialize-bef-struct-type(back-end);
+    // Initialize NLX bind exit frame structure
+    initialize-bef-struct-type(back-end);
 
-  // Initialize predefined/raw LLVM types
-  initialize-type-table(back-end);
+    // Initialize predefined/raw LLVM types
+    initialize-type-table(back-end);
 
-  // Create canonical instances of the 256 i8 constants
-  for (i from 0 below 256)
-    back-end.%byte-character-constants[i]
-      := make(<llvm-integer-constant>, type: $llvm-i8-type, integer: i);
-  end for;
+    // Create canonical instances of the 256 i8 constants
+    for (i from 0 below 256)
+      back-end.%byte-character-constants[i]
+        := make(<llvm-integer-constant>, type: $llvm-i8-type, integer: i);
+    end for;
+  end;
 end method;
 
 define thread variable *loose-mode?* = #f;
