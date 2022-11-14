@@ -27,55 +27,53 @@ end method;
 
 define constant $unique-header-keywords =  #(#"module", #"language");
 
-define method read-header-from-stream (s :: <stream>)
+define method read-header-from-stream (stream :: <stream>)
  => (keys :: <table>, lines :: <integer>, chars :: <integer>)
   let keys = make(<table>);
-  local method loop (s, nlines)
-          let (key, strings, lines, eoh?) = read-file-header-component(s);
-          if (key)
-            let old-strings = element(keys, key, default: #());
-            if (~empty?(old-strings) & member?(key, $unique-header-keywords))
-              signal(make(<bad-header>,
-                          message: format-to-string("Duplicate keyword %s", key)))
-            end;
-            keys[key] := concatenate!(old-strings, strings);
-          end;
-          let nlines = nlines + lines;
-          if (eoh?)
-            values(keys, nlines, stream-position(s))
-          else
-            loop(s, nlines)
-          end;
-        end;
-  loop(s, 0);
+  iterate loop (nlines = 0)
+    let (key, strings, lines, eoh?) = read-file-header-component(stream);
+    if (key)
+      let old-strings = element(keys, key, default: #());
+      if (~empty?(old-strings) & member?(key, $unique-header-keywords))
+        signal(make(<bad-header>,
+                    message: format-to-string("Duplicate keyword %s", key)))
+      end;
+      keys[key] := concatenate!(old-strings, strings);
+    end;
+    let nlines = nlines + lines;
+    if (eoh?)
+      values(keys, nlines, stream-position(stream))
+    else
+      loop(nlines)
+    end
+  end
 end method;
 
-define method read-file-header-component (s :: <stream>)
-  let (key-line, nl?) = read-line(s, on-end-of-stream: "");
+define method read-file-header-component (stream :: <stream>)
+ => (key, strings, nlines, end-of-header?)
+  let (key-line, nl?) = read-line(stream, on-end-of-stream: "");
   let nlines = if (nl?) 1 else 0 end;
   if (header-end-marker-line?(key-line))
     values(#f, #f, nlines, #t)
   else
-    local method loop (text-strings, nlines)
-            let char = read-element(s, on-end-of-stream: #f);
-            if (char == ' ' | char == '\t')
-              let (continuation-line, nl?) = read-line(s, on-end-of-stream: "");
-              let nlines = if (nl?) nlines + 1 else nlines end;
-              if (header-end-marker-line?(continuation-line))
-                values(text-strings, nlines, #t);
-              else
-                let text = parse-header-continuation-line(continuation-line);
-                loop(pair(text, text-strings), nlines)
-              end;
-            else
-              if (char) unread-element(s, char) end;
-              values(text-strings, nlines, #f)
-            end;
-          end method;
     let (key, text) = parse-header-keyword-line(key-line);
-    let (text-strings, nlines, past-eoh?) = loop(list(text), nlines);
-    values(key, reverse!(text-strings), nlines, past-eoh?)
-  end;
+    iterate loop (text-strings = list(text), nlines = nlines)
+      let char = read-element(stream, on-end-of-stream: #f);
+      if (char & header-whitespace?(char))
+        let (continuation-line, nl?) = read-line(stream, on-end-of-stream: "");
+        let nlines = if (nl?) nlines + 1 else nlines end;
+        if (header-end-marker-line?(continuation-line))
+          values(key, reverse!(text-strings), nlines, #t)
+        else
+          let text = parse-header-continuation-line(continuation-line);
+          loop(pair(text, text-strings), nlines)
+        end
+      else
+        char & unread-element(stream, char);
+        values(key, reverse!(text-strings), nlines, #f)
+      end
+    end iterate
+  end
 end method;
 
 define method parse-header-keyword-line (line :: <string>)
@@ -85,41 +83,18 @@ define method parse-header-keyword-line (line :: <string>)
                 message: format-to-string("Syntax error on line: %=", line)))
   end;
   values(as(<symbol>, copy-sequence(line, end: colon)),
-         trim-whitespace(line, colon + 1))
+         strip(line, start: colon + 1, test: header-whitespace?))
 end method;
 
+// Dylan Interchange Format explicitly defines whitespace as space and tab.
+define inline function header-whitespace? (c :: <character>) => (white? :: <boolean>)
+  c == ' ' | c == '\t'
+end;
+
 define method parse-header-continuation-line (line :: <string>)
-  trim-whitespace(line, 0)
+  strip(line, test: header-whitespace?)
 end method;
 
 define function header-end-marker-line? (line :: <string>)
-  every?(method (c) c == ' ' | c == '\t' end, line)
+  every?(header-whitespace?, line)
 end function;
-
-define function trim-whitespace (line :: <string>, start)
-  local method bwd (line, start, len)
-          let last = len - 1;
-          let c = line[last];
-          if (c == ' ' | c == '\t') bwd(line, start, last)
-          else copy-sequence(line, start: start, end: len) end;
-        end method;
-  local method fwd (line, start, len)
-          if (start == len) ""
-          else
-            let c = line[start];
-            if (c == ' ' | c == '\t') fwd(line, start + 1, len)
-            else bwd(line, start, len) end;
-          end;
-        end method;
-  fwd(line, start, size(line))
-end function;
-
-
-
-
-
-
-
-
-
-
