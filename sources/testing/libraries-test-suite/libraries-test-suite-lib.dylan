@@ -9,11 +9,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library libraries-test-suite
   use common-dylan;
   use testworks;
-  use dylan-test-suite;
-  use common-dylan-test-suite;
+
   use collections-test-suite;
-  use system-test-suite;
+  use common-dylan-test-suite;
+  use dylan-test-suite;
+  use file-source-records-test-suite;
   use io-test-suite;
+  use system-test-suite;
   use testworks-test-suite;
 
   export libraries-test-suite
@@ -22,11 +24,13 @@ end library libraries-test-suite;
 define module libraries-test-suite
   use common-dylan;
   use testworks;
-  use dylan-test-suite;
-  use common-dylan-test-suite;
+
   use collections-test-suite;
-  use system-test-suite;
+  use common-dylan-test-suite;
+  use dylan-test-suite;
+  use file-source-records-test-suite;
   use io-test-suite;
+  use system-test-suite;
   use testworks-test-suite;
 
   export libraries-test-suite

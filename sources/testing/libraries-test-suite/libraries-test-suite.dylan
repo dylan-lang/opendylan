@@ -9,6 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define suite libraries-test-suite ()
   suite dylan-test-suite;
+  suite file-source-records-test-suite;
   suite common-dylan-test-suite;
   suite collections-test-suite;
   suite system-test-suite;

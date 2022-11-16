@@ -9,6 +9,7 @@ define library file-source-records
   use common-dylan;
   use collections;
   use io;
+  use strings;
   use system;
 
   use source-records;
@@ -38,6 +39,7 @@ define module file-source-records-implementation
   use byte-vector;
   use set;
   use streams;
+  use strings;
   use format;
   use print;
   use standard-io;
