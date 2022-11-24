@@ -5,9 +5,11 @@ Open Dylan 2022.1
 This document describes the 2022.1 release of Open Dylan, released XX MMM, 2022.
 This release contains many enhancements and bug fixes, highlights
 of which are listed below.  For complete details see `the opendylan commit logs
-<https://github.com/dylan-lang/opendylan/compare/v2020.1.0...v2022.1.0>`_. (Note
-that some commit logs, for example for testworks and other libraries that are
-included in Open Dylan as git submodules, may be in other repositories.)
+<https://github.com/dylan-lang/opendylan/compare/v2020.1.0...v2022.1.0>`_.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
 
 * Download the release: http://opendylan.org/download
 * Read documentation: http://opendylan.org/documentation
@@ -137,6 +139,13 @@ The ``ssl-network`` library has been updated for compatibility with OpenSSL 1.1.
 
 testworks Library
 -----------------
+
+* The new function ``write-test-file`` simplifies the creation of test files.
+
+* ``test-temp-directory`` now handles test names containing ``/``.  This is
+  important for tests using the naming convention ``test-foo/subtest1``,
+  ``test-foo/subtest2``.
+
 
 collections Library
 -------------------
