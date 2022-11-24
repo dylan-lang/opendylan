@@ -42,11 +42,12 @@ Tooling
 
 * The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command is a new tool
   to manage Dylan packages and workspaces. It provides a centralized catalog of
-  Dylan repositories and a way to manage dependencies without resorting to Git
+  Dylan packages and a way to manage dependencies without resorting to Git
   submodules or needing to manually create registry files. See the `dylan-tool
   documentation <https://opendylan.org/documentation/dylan-tool>`_ for
-  details. (*This tool is still in the relatively early stages of
-  development.*)
+  details.
+
+  .. note:: This tool is still in the relatively early stages of development.
 
 Run-time
 ========
