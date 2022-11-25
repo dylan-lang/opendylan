@@ -386,6 +386,10 @@ define method upgrade-self-call
       replace-temporary-in-users!
         (parameter, check-temp,
          exclude: method (e) e == merge | e == loop end);
+      if (merge.loop-merge-argument == parameter)
+        add-user!(check-temp, merge);
+        merge.loop-merge-argument := check-temp;
+      end if;
       first-m := _first-m;
       last-m  := _last-m;
     end if;
