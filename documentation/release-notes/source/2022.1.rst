@@ -34,6 +34,16 @@ Compiler
   the :file:`sbin` (static executables binary) directory of the
   personal-root, normally ``./_build/sbin/``.
 
+* Fixed a build script problem that caused separate debug information
+  to be lost on FreeBSD platforms (or others using ``llvm-strip`` as
+  the default ``strip`` program).
+
+* Fixed a problem with certain types of multiple-value return (`bug 1455
+  <https://github.com/dylan-lang/opendylan/issues/1455>`_).
+
+* Fixed a problem with the optimization of functions that tail-call
+  themselves.
+
 * To aid with automation tasks the ``dylan-compiler`` and ``dylan-environment``
   executables now return exit code ``3`` if any serious warnings are
   generated. Use the new ``-allow-serious-warnings`` flag to return to the old
@@ -58,10 +68,18 @@ Run-time
   run-time warnings (`bug 1386
   <https://github.com/dylan-lang/opendylan/issues/1386>`_)
 
+* Changed the run-time on x86_64 Linux to stop catching the SIGSEGV signal.
+
 Platform Support
 ================
 
 * The 64-bit RISC-V architecture (rv64gc ISA) is now supported on Linux.
+
+IDE
+===
+
+* A bug that caused error pop-up dialogs whenever the cursor was moved
+  in an interactor window has been fixed.
 
 Documentation
 =============
