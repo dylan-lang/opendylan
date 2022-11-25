@@ -40,7 +40,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Developing Component Software with CORBA'
-copyright = u'2011-2020, Dylan Hackers'
+copyright = u'2011-2022, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
