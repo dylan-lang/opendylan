@@ -32,7 +32,7 @@ Compiler
   their dependencies into a single unified executable using the
   ``-unify`` build option. The unified executable will be stored in
   the :file:`sbin` (static executables binary) directory of the
-  personal-root.
+  personal-root, normally ``./_build/sbin/``.
 
 * To aid with automation tasks the ``dylan-compiler`` and ``dylan-environment``
   executables now return exit code ``3`` if any serious warnings are
@@ -121,18 +121,13 @@ io Library
 system Library
 --------------
 
-* A segmentation fault when using ``list-locator`` was fixed (`bug 1372 <https://github.com/dylan-lang/opendylan/issues/1372>`_).
+* A segmentation fault when using ``list-locator`` was fixed (`bug 1372
+  <https://github.com/dylan-lang/opendylan/issues/1372>`_).
 
 * Function ``file-locator``, to create a file locator as a child of a directory
   locator, is now exported from the locators module.
 
-c-ffi Library
--------------
-
-network library
----------------
-
-SSL Library
+ssl Library
 -----------
 
 The ``ssl-network`` library has been updated for compatibility with OpenSSL 1.1.x.
@@ -156,15 +151,6 @@ collections Library
   confusing compiler warning for references to that name that aren't in the
   correct form.
 
-big-integers library
---------------------
-
-progress-stream library
------------------------
-
-gabriel-benchmarks library
---------------------------
-
 Contributors
 ============
 
@@ -172,3 +158,10 @@ We'd like to thank all the people that made contributions to this release and
 to surrounding libraries in the Dylan ecosystem. This list is probably
 incomplete...
 
+* Peter S. Housel
+* Carl Gay
+* Peter Hull
+* phongphan
+* Fernando Raya
+* Pierre De Pascale
+* kryptine
