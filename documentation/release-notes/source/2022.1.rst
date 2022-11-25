@@ -61,23 +61,7 @@ Run-time
 Platform Support
 ================
 
-* The 64-bit RISC-V architecture (rv64gc ISA) is now supported on
-  Linux.
-
-IDE
-===
-
-CORBA
-=====
-
-DUIM
-====
-
-GTK
-===
-
-Debugging
-=========
+* The 64-bit RISC-V architecture (rv64gc ISA) is now supported on Linux.
 
 Documentation
 =============
@@ -93,14 +77,8 @@ Documentation
   libraries is now available in the `Open Dylan Hacker's Guide
   <https://opendylan.org/documentation/hacker-guide/index.html>`_.
 
-Build System
-============
-
 Library Changes
 ===============
-
-dylan Library
--------------
 
 common-dylan Library
 --------------------
