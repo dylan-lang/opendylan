@@ -27,10 +27,9 @@ now here is a manual check-list.
    * Run ``make check`` and if anything fails that is not marked ``EXPECTED TO
      FAIL``, fix the problem or discuss with others how to proceed.
 
-   * As a smoke test, verify that the "hello world" instructions at the top of
-     `BUILDING.rst
-     <https://github.com/dylan-lang/opendylan/blob/master/BUILDING.rst>`_ work
-     on each platform.
+   * As a smoke test, verify that the "hello world" instructions in `README.md
+     <https://github.com/dylan-lang/opendylan/blob/master/README.md>`_ work on
+     each platform.
 
 #. Update the version number in the sources
 
