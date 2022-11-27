@@ -2,9 +2,10 @@
 Open Dylan 2022.1
 *****************
 
-This document describes the 2022.1 release of Open Dylan, released XX MMM, 2022.
-This release contains many enhancements and bug fixes, highlights
-of which are listed below.  For complete details see `the opendylan commit logs
+This document describes the 2022.1 release of Open Dylan, released 28
+November, 2022.  This release contains many enhancements and bug fixes,
+highlights of which are listed below.  For complete details see `the opendylan
+commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2020.1.0...v2022.1.0>`_.
 
 .. note:: Some commit logs, for example for testworks and other libraries that
