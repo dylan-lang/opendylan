@@ -66,8 +66,14 @@ now here is a manual check-list.
 
 #. Build the binaries for supported platforms
 
+   It's best to build the release from a clean checkout to be sure that no
+   uncommitted files become part of the release tarball. In particular, the
+   entire "sources" directory is copied into the release, so any uncommitted
+   files or a "_build" directory could be copied.
+
    On un\*x platforms::
 
+     $ git clone --recursive https://github.com/dylan-lang/opendylan
      $ cd opendylan
      $ git co v2019.1.0      # the tag you created above
      $ ./build/unix/release-with-batteries.sh
@@ -83,6 +89,11 @@ now here is a manual check-list.
    Edit the release created previously and upload the binaries.  After the last
    binary has been uploaded, uncheck the "This is a pre-release" checkbox and
    save/publish the release.
+
+#. Test the tarballs
+
+   At least install and build hello-world to make sure they're not obviously
+   broken. Ideally, get someone who didn't build the release to do it.
 
 #. Upload binaries to opendylan.org
 
@@ -109,10 +120,13 @@ now here is a manual check-list.
    included in the RSS feed.
    https://github.com/dylan-lang/website/tree/master/source/news
 
-#. Announce the release
+#. Announce the release. Probably a good idea to link to the above news item on
+   the website and just say a few brief words about the release in these
+   postings....
 
    * dylan-lang@googlegroups.com
-   * Tweet from @DylanLanguage (cgay)
+   * Tweet from @DylanLanguage
+   * https://www.reddit.com/r/dylanlang/
 
 #. Update `the Wikipedia page <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_
    with the latest release version and date.
