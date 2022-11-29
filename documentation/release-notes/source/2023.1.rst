@@ -1,0 +1,64 @@
+*****************
+Open Dylan 2023.1
+*****************
+
+This document describes the 2023.1 release of Open Dylan, released DD
+Month, 2023.  This release contains many enhancements and bug fixes,
+highlights of which are listed below.  For complete details see `the opendylan
+commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2022.1.0...v2023.1.0>`_.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+Tooling
+=======
+
+Run-time
+========
+
+Platform Support
+================
+
+IDE
+===
+
+Documentation
+=============
+
+Library Changes
+===============
+
+common-dylan Library
+--------------------
+
+io Library
+----------
+
+system Library
+--------------
+
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete...
+
+* Peter S. Housel
+* Carl Gay
+* Peter Hull
+* phongphan
+* Fernando Raya
+* Pierre De Pascale
+* kryptine
