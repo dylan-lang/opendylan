@@ -52,7 +52,7 @@ now here is a manual check-list.
 
      git log --format=short --no-merges v2019.1.0..origin/master | grep '^Author: ' | sort | uniq -c | sort -n
 
-#. Create a draft release
+#. Create a draft release on GitHub
 
    This step is primarily to create the release tag in the git repo.
 
@@ -71,7 +71,7 @@ now here is a manual check-list.
    entire "sources" directory is copied into the release, so any uncommitted
    files or a "_build" directory could be copied.
 
-   On un\*x platforms::
+   On unix platforms::
 
      $ git clone --recursive https://github.com/dylan-lang/opendylan
      $ cd opendylan
@@ -84,30 +84,24 @@ now here is a manual check-list.
 
    Ask Peter Housel to build the Windows release. :-)
 
-#. Upload the binaries to GitHub
-
-   Edit the release created previously and upload the binaries.  After the last
-   binary has been uploaded, uncheck the "This is a pre-release" checkbox and
-   save/publish the release.
-
 #. Test the tarballs
 
-   At least install and build hello-world to make sure they're not obviously
-   broken. Ideally, get someone who didn't build the release to do it.
+   Before uploading to GitHub or opendylan.org, at least install and build
+   hello-world to make sure the release isn't obviously broken.
+
+#. Upload the binaries to GitHub
+
+   Edit the release created previously and upload the binaries. Do **not**
+   uncheck the "This is a pre-release" checkbox yet.
+
+   **Before finishing the steps below, make sure some core Dylan hackers use
+   the new release for a few days or a week.** With a small user base it's not
+   hard to miss critical problems.
 
 #. Upload binaries to opendylan.org
 
    The binaries go in ``/var/www/opendylan.org/downloads/opendylan/YYYY.n/``.
    abeaumont, cgay, and housel have access currently.
-
-#. Update other packages
-
-   * archlinux -- https://aur.archlinux.org/packages/opendylan/
-   * debian
-   * homebrew
-
-   .. TODO: Add detail on how to make each package, either here or in a
-      separate document.
 
 #. Update the `Downloads
    <https://github.com/dylan-lang/website/blob/master/source/download/index.rst>`_
@@ -128,6 +122,37 @@ now here is a manual check-list.
    * Tweet from @DylanLanguage
    * https://www.reddit.com/r/dylanlang/
 
-#. Update `the Wikipedia page <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_
-   with the latest release version and date.
+#. Some post-release tasks that aren't urgent but should be done soon...
+
+   #. Bump the OD version to something plausible, like 2023.1pre. `Example pull
+      request <https://github.com/dylan-lang/opendylan/pull/1465>`_.
+
+   #. Create a file in which to put the release notes for the next version. See
+      the above example pull request.
+
+   #. Update other packages
+
+      * archlinux -- https://aur.archlinux.org/packages/opendylan/
+      * debian
+      * homebrew
+
+      .. TODO: Add detail on how to make each package, either here or in a
+         separate document.
+
+   #. Update play.opendylan.org to the new version. Requires cgay for now, but
+      basically change the opendylan link to point to the new release, restart
+      the playground, and compile an example so the next build goes fast.
+
+   #. Update the `install-opendylan GitHub Action
+      <https://github.com/dylan-lang/install-opendylan/>`_ to use the new
+      release by default. Normally this just involves changed the default
+      values for the "version" and "tag" inputs.
+
+      **Setting the new version as the default too quickly may be a bad idea.
+      People can explicitly upgrade to it whenever they want by changing their
+      CI to explicitly specify the new release.**
+
+   #. Update `the Wikipedia page
+      <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_ with the
+      latest release version and date.
 
