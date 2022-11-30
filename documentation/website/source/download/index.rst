@@ -15,13 +15,11 @@ The current version is 2022.1, released 28 November 2022:
    +===========================+==============================================+===============+
    | FreeBSD (x86_64)          | `opendylan-2022.1-x86_64-freebsd.tar.bz2`_   | 135071639     |
    +---------------------------+----------------------------------------------+---------------+
-   | FreeBSD (x86)             | `opendylan-2022.1-x86-freebsd.tar.bz2`_      | (coming soon) |
-   +---------------------------+----------------------------------------------+---------------+
    | Linux (AArch64)           | `opendylan-2022.1-aarch64-linux.tar.bz2`_    | 132067362     |
    +---------------------------+----------------------------------------------+---------------+
    | Linux (x86_64)            | `opendylan-2022.1-x86_64-linux.tar.bz2`_     | 150425752     |
    +---------------------------+----------------------------------------------+---------------+
-   | Linux (x86)               | `opendylan-2022.1-x86-linux.tar.bz2`_        | (coming soon) |
+   | RISC-V RV64gc             | opendylan-2022.1-riscv64-linux.tar.bz2       | (coming soon) |
    +---------------------------+----------------------------------------------+---------------+
    | Mac OS X (Intel)          | `opendylan-2022.1-x86_64-darwin.tar.bz2`_    | 119395771     |
    +---------------------------+----------------------------------------------+---------------+
@@ -135,8 +133,6 @@ For 2019.1 and earlier releases:
 .. _opendylan-2022.1-win32.exe: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-win32.exe
 .. _opendylan-2022.1-x86_64-darwin.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-darwin.tar.bz2
 .. _opendylan-2022.1-x86_64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-linux.tar.bz2
-.. _opendylan-2022.1-x86-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86-linux.tar.bz2
 .. _opendylan-2022.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-freebsd.tar.bz2
-.. _opendylan-2022.1-x86-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86-freebsd.tar.bz2
 .. _download directories: https://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
