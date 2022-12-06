@@ -156,7 +156,7 @@ rule DylanLibrary image : version {
       local _rtlib = $(_i:D=) ;
       MakeLocate $(_rtlib) : $(LIBDIR) ;
       File $(_rtlib) : $(_i) ;
-      Depends $(_dll) : $(_rtlib) ;
+      Depends $(_dll) $(_ulib) : $(_rtlib) ;
     }
   }
 
