@@ -27,6 +27,7 @@ mkdir -p ${DISTDIR}
 MAKE=make
 TAR=tar
 NEED_LIBUNWIND=:
+NEED_INSTALL_NAME=false
 SYSROOT=
 USE_LLD="-fuse-ld=lld"
 BUILD_SRC=false
@@ -57,6 +58,7 @@ case ${MACHINE}-${SYSTEM} in
     x86_64-Darwin)
         TRIPLE=x86_64-apple-darwin
         NEED_LIBUNWIND=false
+        NEED_INSTALL_NAME=:
         SYSROOT=" -isysroot $(xcrun --show-sdk-path)"
         USE_LLD=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
@@ -149,6 +151,9 @@ echo Building BDWGC in ${BDWGC_DIST}
 
 for i in ${DISTDIR}/lib/libgc*; do
     RTLIBS_INSTALL="$RTLIBS_INSTALL $i"
+    if $NEED_INSTALL_NAME; then
+        install_name_tool -id @rpath/$(basename $i) $i || true
+    fi
 done
 
 echo Building Open Dylan
