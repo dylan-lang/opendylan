@@ -160,6 +160,24 @@ Publications
 See the `publications page <publications.html>`_ for a full list. Below are a
 few highlighted publications.
 
+**LLVM Code Generation for Open Dylan** (by Peter Housel at ELS 2020 `pdf <https://zenodo.org/record/3742567/files/els2020-opendylan.pdf?download=1>`__ `bib <../_static/documentation/housel_peter_s_2020_3742567.bib>`__ `slides <https://european-lisp-symposium.org/static/2020/housel-slides.pdf>`__ `video <https://www.youtube.com/watch?v=6dcrXBzw4H4>`__)
+  The Open Dylan compiler, DFMC, was originally designed in the 1990s
+  to compile Dylan language code targeting the 32-bit Intel x86
+  platform, or other platforms via portable C. As platforms have
+  evolved since, this approach has been unable to provide efficient
+  code generation for a broader range of target platforms, or to
+  adequately support tools such as debuggers, profilers, and code
+  coverage analyzers.
+
+  Developing a code generator for Open Dylan that uses the LLVM
+  compiler infrastructure is enabling us to support these goals and
+  modernize our implementation. This work describes the design
+  decisions and engineering trade-offs that have influenced the
+  implementation of the LLVM back-end and its associated run-time
+  support.
+
+  https://doi.org/10.5281/zenodo.3742567
+
 **Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
@@ -179,22 +197,6 @@ few highlighted publications.
     undiscovered errors in the Dylan library were revealed.
 
     https://dl.acm.org/doi/10.1145/1869643.1869645
-
-**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** [`pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__] [`bib <../_static/documentation/bachrach2000.bib>`__]
-    We presented an approach to gaining back complete class hierarchy
-    information by delaying the construction of dispatch caches until
-    the whole class hierarchy is available at run- time. Run-time
-    call-site caches can then be constructed as specialized decision
-    trees built from disjointness and concrete- subtype operations on
-    actual arguments combined with compile-time inferred types
-    injected into the run-time. Unnecessary decision steps can be
-    avoided and often run-time dispatch can be completely
-    eliminated. We consider this to be a nice half-way house between
-    full static compilation and dynamic compilation which mitigates
-    the runtime expense of separately compiled components while
-    satisfying our implementation constraints of code shareable
-    components, multi-threaded runtime, incremental development, “pay
-    as you go philosophy”, and interoperability with standard tools.
 
 **D-Expressions: Lisp Power, Dylan Style** [`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib <../_static/documentation/bachrach1999.bib>`__]
     This paper aims to demonstrate that it is possible for a language
