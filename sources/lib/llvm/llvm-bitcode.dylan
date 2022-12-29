@@ -1008,7 +1008,7 @@ define function encode-attribute-list
   let function-attributes
     = attribute-list.llvm-attribute-list-function-attributes;
   unless (zero?(function-attributes))
-    add!(encoding, $maximum-unsigned-machine-word);
+    add!(encoding, u%-(u%shift-left(1, 32), 1));
     add!(encoding, encode-attributes(function-attributes));
   end unless;
 
