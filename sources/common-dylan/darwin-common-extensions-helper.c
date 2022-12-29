@@ -1,6 +1,7 @@
 #include <limits.h>
 #include <mach-o/dyld.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern void *MMAllocMisc(size_t size);
 extern void MMFreeMisc(void *p, size_t size);
