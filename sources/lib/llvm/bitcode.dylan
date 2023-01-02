@@ -454,21 +454,14 @@ end method;
 define method write-record
     (stream :: <bitcode-stream>, record :: <symbol>, #rest operands)
  => ();
-  // Output the unabbreviated record code
-  write-abbrev-id(stream, $ABBREV-UNABBREV-RECORD);
-
-  // Output the record code
-  write-vbr(stream, 6, stream-record-id(stream, record));
-
-  // Output the total number of arguments
-  let operand-count
+  let operand-count :: <integer>
     = operands.size
     + if (~empty?(operands) & instance?(operands.last, <sequence>))
         operands.last.size - 1
       else
         0
       end if;
-  write-vbr(stream, 6, operand-count);
+  write-record-head(stream, record, operand-count);
 
   // Output the arguments
   for (operand in operands)
@@ -480,6 +473,19 @@ define method write-record
       write-vbr(stream, 6, operand)
     end if;
   end for;
+end method;
+
+define method write-record-head
+    (stream :: <bitcode-stream>, record :: <symbol>, count :: <integer>)
+ => ();
+  // Output the unabbreviated record code
+  write-abbrev-id(stream, $ABBREV-UNABBREV-RECORD);
+
+  // Output the record code
+  write-vbr(stream, 6, stream-record-id(stream, record));
+
+  // Output the total number of arguments
+  write-vbr(stream, 6, count);
 end method;
 
 define method write-abbrev-record
@@ -525,3 +531,26 @@ define method write-abbrev-record
               end)
   end for;
 end method;
+
+define macro write-record*
+  { write-record*(?stream:expression, ?record:expression, ?operands:*) }
+    => { let stream = ?stream;
+         write-record-head(stream, ?record, %count-operands(?operands));
+         %write-operands(stream, ?operands); }
+end macro;
+
+define macro %count-operands
+  { %count-operands() }
+    => { 0 }
+  { %count-operands(?operand:*, ?rest:*) }
+    => { 1 + %count-operands(?rest) }
+end macro;
+
+define macro %write-operands
+  { %write-operands(?stream:expression) }
+    => { }
+  { %write-operands(?stream:expression, ?operand:expression, ?rest:*) }
+    => { write-vbr(?stream, 6, ?operand);
+         %write-operands(?stream, ?rest); }
+end macro;
+
