@@ -594,6 +594,11 @@ define test test-resolve-locator ()
   end;
 end test;
 
+define test test-parse-path ()
+  assert-equal(#["x"], parse-path("x"));
+  assert-equal(#["x", "y"], parse-path("x/y"));
+end test;
+
 // non-file-system-locators-test-suite?
 define suite more-locators-test-suite ()
   test test-<server-locator>;
@@ -637,4 +642,5 @@ define suite more-locators-test-suite ()
   test test-relative-locator;
   test test-merge-locators;
   test test-resolve-locator;
+  test test-parse-path;
 end suite;

@@ -35,6 +35,7 @@ define module system-test-suite
   use operating-system;
   use file-system;
   use locators;
+  use locators-internals;
   use settings;
   use settings-internals;
   use simple-xml;
