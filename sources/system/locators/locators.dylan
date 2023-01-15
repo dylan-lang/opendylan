@@ -149,11 +149,15 @@ end method current-directory-locator?;
 define method locator-directory
     (locator :: <directory-locator>) => (parent :: false-or(<directory-locator>))
   let path = locator.locator-path;
-  unless (empty?(path))
+  let relative? = locator.locator-relative?;
+  // It is meaningless for a relative locator to have an empty path, whereas
+  // for an absolute locator an empty path indicates the root directory.
+  let min-path-size = if (relative?) 1 else 0 end;
+  when (path.size > min-path-size)
     make(object-class(locator),
          server:    locator.locator-server,
          path:      copy-sequence(path, end: path.size - 1),
-         relative?: locator.locator-relative?)
+         relative?: relative?)
   end
 end method locator-directory;
 

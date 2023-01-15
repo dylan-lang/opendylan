@@ -47,6 +47,9 @@ io Library
 system Library
 --------------
 
+* A [bug](https://github.com/dylan-lang/opendylan/issues/1470) in
+  ``locator-directory`` for relative directory locators was fixed.
+
 
 Contributors
 ============
