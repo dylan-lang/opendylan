@@ -399,40 +399,151 @@ System library's operating-system module.
 
 .. function:: run-application
 
-   Launches an application using the specified name and arguments.
+   Launches an application in a new process, using the specified name and
+   arguments.
 
-   :signature: run-application *command* #key *minimize?* *activate?* *under-shell?* *inherit-console?* => *status*
+   :signature: run-application *command* #key *minimize?* *activate?*
+      *under-shell?* *inherit-console?* *outputter* *asynchronous?*
+      *environment* *working-directory* *input* *if-input-does-not-exist*
+      *output* *if-output-exists* *error* *if-error-exists* *hide?*
+      => *status* *signal* *process* #rest *streams*
 
-   :parameter command: An instance of :drm:`<string>`.
-   :parameter #key minimize?: An instance of :drm:`<boolean>`.
-   :parameter #key activate?: An instance of :drm:`<boolean>`.
-   :parameter #key under-shell?: An instance of :drm:`<boolean>`.
-   :parameter #key inherit-console?: An instance of :drm:`<boolean>`.
-   :value status: An instance of :drm:`<integer>`.
+   :parameter command: An instance of :drm:`<sequence>`. Either a string
+      containing the entire command or a sequence of strings representing the
+      command as parsed by the shell. Example: ``"/bin/ls -l"`` or
+      ``#["/bin/ls", "-l"]``
+
+   :parameter #key under-shell?: An instance of :drm:`<boolean>`. If true (the
+      default), use a shell to invoke the *command*. On Unix systems this is
+      equivalent to ``/bin/sh -c '...command...'``. On Windows the
+      :envvar:`COMSPEC` environment variable specifies
+
+   :parameter #key inherit-console?: An instance of :drm:`<boolean>`. Whether
+      to run in the same session and process group as the calling process and
+      therefore retain the same controlling TTY. Essentially, whether or not to
+      call ``setsid()``. If you want the subprocess to be a daemon process, pass
+      ``#f``. The default is ``#t``.
+
+   :parameter #key outputter: An instance of :drm:`<function>`. A function with
+      signature ``(buffer :: <string>, #key end)`` which will receive all output
+      (both stdout and stderr) from the command.
+
+   :parameter #key asynchronous?: An instance of :drm:`<boolean>`. If true,
+      return immediately after creating the process. Otherwise, block until the
+      command completes or is terminated by signal.
+
+   :parameter #key environment: ``#f`` or an instance of
+      :drm:`<explicit-key-collection>`.  A table mapping environment variable
+      names (strings) to values (also strings). These values *augment* the
+      environment in the current process. (There is currently no way to specify
+      via this API that *environment* should be the only environment variables
+      set in the subprocess.)
+
+   :parameter #key working-directory: ``#f`` or an instance of
+      :class:`<pathname>`. If not #f, the working directory of the subprocess
+      is set to this directory.
+
+   :parameter #key input: An instance of :class:`<pathname>` or one of the
+      following symbols:
+
+      * ``#"inherit"``: Inherit standard input from the calling process. Write
+        to :var:`*standard-input*` to send input to the subprocess.
+      * ``#"null"``: Use a null stream as standard input.
+      * ``#"stream"``: Create and return a stream connected to the subprocess's
+        standard input.
+      * A :class:`<pathname>`: Open the specified file for reading and connect
+        it to the subprocess's standard input.
+
+   :parameter #key if-input-does-not-exist: Either ``#"signal"`` or
+      ``#"create"``. The default is ``#signal``.
+
+      * ``#"signal"``: Signal a :class:`<file-does-not-exist-error>` if
+        ``input`` is a pathname that names a non-existent file.
+      * ``#"create"``: Create an empty input file and connect it to standard
+        input of the subprocess.
+
+   :parameter #key output: An instance of :class:`<pathname>` or one of the
+      following symbols:
+
+      * ``#"inherit"``: Inherit standard output from the calling process.
+      * ``#"null"``: Send standard output to a null stream.
+      * ``#"stream"``: Create and return a stream connected to the subprocess's
+        standard output.
+      * A :class:`<pathname>`: Open the specified file for writing and connect
+        it to the subprocess's standard output.
+
+   :parameter #key if-output-exists: As for the ``if-exists`` option when
+      creating an output :class:`<file-stream>` except that ``#f`` is not
+      allowed.
+
+   :parameter #key error: Possible values are the same as for the ``output``
+      parameter except that they apply to :var:`*standard-error*`.
+
+   :parameter #key if-error-exists: As for the ``if-exists`` option when
+      creating an output :class:`<file-stream>` except that ``#f`` is not
+      allowed.
+
+   :parameter #key activate?: An instance of :drm:`<boolean>`.  If the
+      *activate?* argument is ``#t``, the shell window becomes the active
+      window. The default is ``#t``. (**Ignored on Unix platforms.**)
+
+   :parameter #key minimize?: An instance of :drm:`<boolean>`. If ``#t``, the
+      command's shell window will appear minimized. The default is
+      ``#f``. (**Ignored on Unix platforms.**)
+
+   :parameter #key hide?: An instance of :drm:`<boolean>`.  If ``#t``, the
+      window associated with this process will be hidden. The default is
+      ``#f``. (**Ignored on Unix platforms.**)
+
+   :value status: An instance of :drm:`<integer>`. The exit status returned by
+      ``waitpid`` (Unix) or ``WaitForSingleObject`` (Windows).
+
+   :value signal: ``#f`` or an instance of :drm:`<integer>`. If the process
+      was terminated by a signal this value is the signal number.
+
+   :value process: ``#f`` or an instance of :class:`<application-process>`.  If
+      ``asynchronous?`` is true, :func:`run-application` returns immediately
+      and this value identifies the running process. See
+      :func:`wait-for-application-process`, which may be used to wait for this
+      process to terminate.
+
+   :value #rest streams: Instances of :class:`<stream>`. Up to three streams
+      are returned, always in the order stdin, stdout, stderr.  For example, if
+      the arguments were ``input: #"null", output: #"stream", error: #"stream"``
+      then two streams are returned: output and error.
 
    :description:
 
-     Launches an application using the name and arguments specified in
-     command. Using this function is equivalent to typing the command in
-     a MS-DOS window. The return value is the exit status returned by
-     the application.
+     Launches an application in a new process, using the name and arguments
+     specified in *command*.
 
-     If the *minimize?* keyword is ``#t``, the command's shell will
-     appear minimized. It is ``#f`` by default.
+     Perhaps the simplest example is to run a command synchronously, with all
+     input/output inherited from the parent shell and only looking at the exit
+     status return value:
 
-     If the *activate?* keyword is ``#t``, the shell window becomes the
-     active window. It is ``#t`` by default.
+     .. code-block:: dylan
 
-     If the *under-shell?* keyword is ``#t``, an MS-DOS shell is created
-     to run the application; otherwise, the application is run directly.
-     It is ``#f`` by default.
-
-     If the *inherit-console?* keyword is ``#t``, the new application
-     uses the same console window as the current application; otherwise,
-     the new application is created with a separate console window. It
-     is ``#t`` by default.
+        let exit-status = run-application("/bin/ls foo");
+        if (~zero?(exit-status))
+          error("/bin/ls failed with status %d", exit-status);
+        end;
 
    :seealso:
 
      - :func:`exit-application`
+     - :func:`wait-for-application-process`
+
+.. function:: wait-for-application-process
+
+   Waits for a process to terminate.
+
+   :signature: wait-format-application-process *process* => *status* *signal*
+
+   :parameter process: An instance of :class:`<application-process>`.
+
+   :value status: An instance of :drm:`<integer>`. The exit status returned by
+      ``waitpid`` (Unix) or ``WaitForSingleObject`` (Windows).
+
+   :value signal: ``#f`` or an instance of :drm:`<integer>`. If the process
+      was terminated by a signal this value is the signal number.
 
