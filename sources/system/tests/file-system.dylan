@@ -151,8 +151,17 @@ define test test-fs/temp-directory ()
 end;
 
 define test test-root-directories ()
-  //---*** Fill this in.
-end;
+  select ($os-name)
+    #"win32" =>
+      #f; // TODO
+    otherwise =>
+      let root = as(<directory-locator>, "/");
+      assert-false(root.locator-directory);
+      assert-false(root.locator-relative?);
+      assert-equal(#[], root.locator-path);
+      assert-equal("/", as(<string>, root));
+  end;
+end test;
 
 
 /// Macro tests

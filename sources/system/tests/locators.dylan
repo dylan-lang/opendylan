@@ -290,6 +290,14 @@ define test test-locator-directory ()
   let locator = as(<file-locator>, "/etc/fstab");
   let directory = as(<directory-locator>, "/etc/");
   assert-equal(directory, locator-directory(locator));
+
+  // Relative directories
+  let dir = as(<directory-locator>, "foo");
+  assert-equal(#["foo"], dir.locator-path);
+  assert-false(dir.locator-directory);
+  let file = as(<file-locator>, "foo/bar");
+  assert-equal(dir, file.locator-directory);
+  assert-false(file.locator-directory.locator-directory);
 end test;
 
 define test test-locator-relative? ()
@@ -594,6 +602,11 @@ define test test-resolve-locator ()
   end;
 end test;
 
+define test test-parse-path ()
+  assert-equal(#["x"], parse-path("x"));
+  assert-equal(#["x", "y"], parse-path("x/y"));
+end test;
+
 // non-file-system-locators-test-suite?
 define suite more-locators-test-suite ()
   test test-<server-locator>;
@@ -637,4 +650,5 @@ define suite more-locators-test-suite ()
   test test-relative-locator;
   test test-merge-locators;
   test test-resolve-locator;
+  test test-parse-path;
 end suite;
