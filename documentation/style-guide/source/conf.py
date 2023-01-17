@@ -40,7 +40,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Style Guide'
-copyright = u'2011-2022, Dylan Hackers'
+copyright = u'2011-2023, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -250,7 +250,7 @@ texinfo_documents = [
 epub_title = u'Style Guide'
 epub_author = u'Dylan Hackers'
 epub_publisher = u'Dylan Hackers'
-epub_copyright = u'2011-2022, Dylan Hackers'
+epub_copyright = u'2011-2023, Dylan Hackers'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
