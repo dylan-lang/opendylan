@@ -47,8 +47,10 @@ io Library
 system Library
 --------------
 
-* A [bug](https://github.com/dylan-lang/opendylan/issues/1470) in
-  ``locator-directory`` for relative directory locators was fixed.
+* A `bug <https://github.com/dylan-lang/opendylan/issues/1470>`_ in
+  :func:`locator-directory` for relative directory locators was fixed.
+
+* The :func:`run-application` function is now fully documented.
 
 
 Contributors
