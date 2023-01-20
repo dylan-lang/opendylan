@@ -98,8 +98,7 @@ define test test-atanh ()
 end test;
 
 define test test-hypot
-    (expected-to-fail-test: method () $os-name == #"darwin" end,
-     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
+    ()
   assert-equal(5.0s0, hypot(3.0s0, 4.0s0));
   assert-equal(5.0s0, hypot(3.0s0, 4.0d0));
   assert-equal(5.0d0, hypot(3.0d0, 4.0d0));
