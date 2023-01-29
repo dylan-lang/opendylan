@@ -587,7 +587,7 @@ OLE_COCLASS_TEST = $(INSTALL_BIN_DIRECTORY)\ole-coclass-test.exe
 OLE_MACRO_TEST = $(INSTALL_BIN_DIRECTORY)\ole-macro-test.exe
 SQL_ODBC_TEST = $(INSTALL_BIN_DIRECTORY)\sql-odbc-test.exe
 
-CHANNELS_TESTS = $(INSTALL_BIN_DIRECTORY)\channels-tests.dll
+CHANNELS_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\channels-test-suite.dll
 DFMC_ENVIRONMENT_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\dfmc-environment-test-suite.dll
 DFMC_ENVIRONMENT_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\dfmc-environment-test-suite-app.exe
 WARNINGS_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\warnings-test-suite.dll
@@ -833,7 +833,7 @@ ole-coclass-test: $(OLE_COCLASS_TEST)
 ole-macro-test: $(OLE_MACRO_TEST)
 sql-odbc-test: $(SQL_ODBC_TEST)
 
-channels-tests: $(CHANNELS_TESTS)
+channels-test-suite: $(CHANNELS_TEST_SUITE)
 dfmc-environment-test-suite: $(DFMC_ENVIRONMENT_TEST_SUITE)
 dfmc-environment-test-suite-app: $(DFMC_ENVIRONMENT_TEST_SUITE_APP)
 
@@ -843,7 +843,7 @@ test-suites: libraries-test-suite-app duim-test-suites
 pentium-test-suites: pentium-test-suite-app
 ole-test-suites: ole-test ole-coclass-test ole-macro-test
 database-test-suites: sql-odbc-test
-environment-test-suites: channels-tests dfmc-environment-test-suite-app
+environment-test-suites: channels-test-suite dfmc-environment-test-suite-app
 
 console-scepter-tests: $(CONSOLE_SCEPTER_TESTS)
 corba-tests-client-app: $(CORBA_TESTS_CLIENT_APP)
@@ -2237,11 +2237,11 @@ test-corba: test-scepter test-orb
 
 # Compiler/Environment testing
 
-$(CHANNELS_TESTS):
+$(CHANNELS_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(CHANNELS_DLL) channels
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
-  $(ENSURE_SOURCES) channels-tests $(CHANNELS_TESTS_SOURCE)
-  $(BUILD_APPLICATION) channels-tests
+  $(ENSURE_SOURCES) channels-test-suite $(CHANNELS_TESTS_SOURCE)
+  $(BUILD_LIBRARY) channels-test-suite
 
 $(DFMC_ENVIRONMENT_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
@@ -2265,8 +2265,6 @@ test-compiler: warnings-test-suite
 test-environment: test-environment-test-suites test-environment-scripts
 
 test-environment-test-suites:
-  $(ENSURE_APPLICATION) channels-tests
-  $(TEST_APP) channels-tests
   $(ENSURE_APPLICATION) dfmc-environment-test-suite-app
   $(TEST_APP) dfmc-environment-test-suite-app dfmc-environment-test-suite
 

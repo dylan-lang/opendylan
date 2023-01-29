@@ -368,7 +368,7 @@ TEST_LIBS = \
 	duim-test-suite \
 	deuce-test-suite \
 	jam-test-suite \
-	channels-tests \
+	channels-test-suite \
 	variable-search-tests \
 	command-line-parser-test-suite \
 	logging-test-suite \

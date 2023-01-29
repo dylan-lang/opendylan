@@ -1,4 +1,4 @@
-Module: channels-tests
+Module: channels-test-suite
 Author: Jason Trenouth
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
