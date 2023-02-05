@@ -2,11 +2,11 @@
 Multiple Dispatch
 *****************
 
-:term:`Multiple dispatch` is one of the most powerful
+"Multiple dispatch" is one of the most powerful
 and elegant features of Dylan. As explained in the section on
 :ref:`generic functions and objects <generic-functions-objects>`,
 Dylan methods are declared separately from the classes upon which they
-act.  :term:`Polymorphism`, the specialization of methods
+act.  Polymorphism, the specialization of methods
 for use with particular classes, can be implemented by declaring several
 methods with different parameters and attaching them to one generic
 function:
@@ -53,7 +53,7 @@ with these arguments performs three separate tasks:
 ``<car>`` and ``<state-inspector>`` -- is invoked first
 and calls :drm:`next-method` to invoke the less-specific methods in turn.
 
-For an exact definition of "specific", see the DRM.
+For an exact definition of "specific", see :drm:`method dispatch` in the DRM.
 
 Dispatching on Specific Objects
 ===============================
@@ -61,7 +61,7 @@ Dispatching on Specific Objects
 Dylan also allows functions to dispatch on specific objects. For
 example, state inspectors might pass the governor's car without
 actually looking at it. Dylan expresses this situation using
-:term:`singletons`, objects which are treated as
+:drm:`singletons`, objects which are treated as
 though they were in a class of their own. For example:
 
 .. code-block:: dylan
@@ -73,5 +73,7 @@ though they were in a class of their own. For example:
       wave-through(car);
     end;
 
-(In this example, none of the usual inspection methods will be
-invoked since the above code doesn't call :drm:`next-method`.)
+The ``car`` parameter is specialized via ``== $governors-car``, meaning "the
+object identical to $governors-car".  (In this example, none of the usual
+inspection methods are invoked since the above code doesn't call
+:drm:`next-method`.)

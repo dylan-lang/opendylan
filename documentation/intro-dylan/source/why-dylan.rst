@@ -17,12 +17,12 @@ inheritance and exceptions, implements :doc:`multiple dispatch
 Dynamic vs. Static Languages
 ============================
 
-:term:`Static` languages need to know the type of every variable at
+Static languages need to know the type of every variable at
 compile time. Examples of static languages include C++, Java, and Go.
 Code written in static languages typically compiles efficiently, and
 strong type-checking at compile-time reduces the risk of errors.
 
-:term:`Dynamic` languages allow the programmer to create variables
+Dynamic languages allow the programmer to create variables
 without explicitly specifying the type of information they
 contain. This simplifies prototyping and cleans up certain kinds of
 object oriented code. Typical dynamic languages include Common Lisp,
@@ -40,7 +40,7 @@ the flexibility of a dynamic language.
 Functional Languages
 ====================
 
-:term:`Functional` languages, such as Common Lisp,
+Functional languages, such as Common Lisp,
 Scheme and to a large extent TCL, view an entire program as one large
 function to be evaluated. Expressions, statements and even control
 structures all return values, which may in turn be used as arguments
@@ -67,7 +67,7 @@ returns 11. Since no other statements follow the ``if``, its return
 value is used as the return value of the entire function.
 
 The same function could also have been written as follows, in a
-more :term:`imperative` idiom:
+more imperative idiom:
 
 .. code-block:: dylan
 
@@ -83,7 +83,7 @@ Algebraic Infix Syntax
 ======================
 
 Languages based on LISP typically use a notation called
-:term:`fully-parenthesized prefix syntax` (also known as
+fully-parenthesized prefix syntax (also known as
 s-expressions). This consists of nested parentheses, as seen in the
 following Scheme version of the ``shoe-size`` function:
 
@@ -108,19 +108,19 @@ functions and classes themselves.
 Dylan's design makes this reasonably efficient. Compile-time analysis
 and explicit :ref:`type declarations <type-declarations>` allow the
 compiler to optimize away most of the overhead. Other language features
-permit the programmer to mark certain classes as :term:`sealed`, that is,
+permit the programmer to mark certain classes as :drm:`sealed <sealing>`, that is,
 ineligible for further subclassing.  This allows for further compile-time
 optimizations.
 
 Dylan's object model, detailed in the following sections of this
 tutorial, differs from that of C++ in several important respects.
 Multiple inheritance may be used freely, without concern for
-:term:`object slicing`, erroneous down-casting or a
+"object slicing", erroneous down-casting or a
 whole host of other gotchas familiar to C++ programmers. Methods are
 separate from class declarations, allowing a programmer to write new
 polymorphic functions without editing the relevant base class.  Methods
 may also dispatch polymorphically on more than one parameter, a
-powerful technique known as :term:`multiple dispatch`.
+powerful technique known as :doc:`multiple dispatch <multiple-dispatch>`.
 All of these features will be explained in greater detail later on.
 
 .. _garbage-collection:
@@ -128,7 +128,7 @@ All of these features will be explained in greater detail later on.
 Garbage Collection
 ==================
 
-Languages with :term:`garbage collection` have no need of a ``free`` or
+Languages with garbage collection have no need of a ``free`` or
 ``delete`` operator, because unused heap memory gets reclaimed automatically
 by the language runtime. This reduces the complexity of source code,
 eliminates the need of keeping reference counts for shared objects,

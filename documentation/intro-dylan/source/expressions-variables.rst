@@ -10,8 +10,6 @@ symbols ``- + ~ ? /``, although identifiers may begin
 with numbers, provided they contain at least two alphabetic characters
 in a row. Variable names are not case sensitive.
 
-.. todo:: Need DRM footnote here.
-
 This means that ``(a - b)`` subtracts one variable from another,
 whereas ``(a-b)`` simply returns the value of the hyphenated variable
 named ``a-b``.  Because of this, infix operators, such as addition,
@@ -65,8 +63,8 @@ desires.
 
 Furthermore, there's only one of any given numeric value in a
 Dylan program, at least from the programmer's point of view. All
-variables which refer to the integer 2 -- or, in Dylan-speak, are
-:term:`bound` to the integer 2 -- point to the
+variables which refer to the integer 2 -- or, in Dylan terminology, are
+:drm:`bound <bindings>` to the integer 2 -- point to the
 exact same thing.
 
 .. code-block:: dylan
@@ -88,9 +86,9 @@ structure, the results may surprise C and Pascal programmers.
 
 As long as one or more variables refer to an object, it
 continues to exist. However, as soon as the last reference either
-goes out of scope or gets rebound, the object becomes :term:`garbage`.
+goes out of scope or gets rebound, the object becomes garbage.
 Since there's no way that the program could ever refer to the object
-again, the :term:`garbage collector` feels free to reuse the memory
+again, the garbage collector is free to reuse the memory
 which once held it.
 
 Note that Dylan variables *must* be bound to a
@@ -110,11 +108,10 @@ language constructs such as :drm:`let`. (Two Dylan objects
 are equal, generally, if they belong to the same class and have equal
 substructure.)
 
-The C++ equality operator, :drm:`==`, acts as the
-:term:`identity` operator in Dylan. Two variables are
-:term:`identical` if and only if they are bound to the
-exact same object. For example, the following three expressions mean
-roughly the same thing::
+The :drm:`==` operator determines whether two objects are identical in
+Dylan. Two objects are identical if and only if they are the exact same
+object. For example, the following two expressions mean roughly the same
+thing::
 
     (a == b)   // in Dylan or Java
     (&a == &b) // in C or C++
@@ -190,19 +187,18 @@ compile time. To take advantage of this feature, use the ``::`` operator:
 As seen in the example, a variable may be bound to values of its
 declared type or to values of subclasses of its declared type. Type
 mismatch errors should be caught at compile time. In general, the
-compiler may infer the types of variables at when generating machine
-code. If a local variable never gets rebound to anything other than an
+compiler may infer the types of variables when generating machine
+code. If a local variable is never rebound to anything other than an
 integer, for example, the compiler can rely on this fact to optimize
 the resulting code.
 
 Module Variables and Constants
 ==============================
 
-Dylan supports :term:`module-level` variables,
-which serve roughly the same purpose as C's global variables. Although
-the :drm:`let` function may only be used within :term:`methods`
-(Dylan-speak for regular functions), the forms :drm:`define variable` and
-:drm:`define constant` may be used at module top level.
+Dylan supports module-level variables, which serve roughly the same purpose as
+C's global variables. The forms :drm:`define variable` and :drm:`define
+constant`
+may be used at module top level.
 
 .. code-block:: dylan
 
@@ -211,5 +207,5 @@ the :drm:`let` function may only be used within :term:`methods`
     define constant $hi = "Hi!";
 
 Note that there's not much point in declaring types for
-constants. Any remotely decent compiler will be able to figure that
+constants. Any decent compiler will be able to figure that
 information out on its own.

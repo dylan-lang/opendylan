@@ -133,11 +133,10 @@ example, could belong to the ``vehicle-application`` library.
 Sealing
 =======
 
-Classes and generic functions may be :term:`sealed`
-using a number of Dylan forms. This prevents code in other libraries
-from subclassing objects or adding methods to generic functions, and
-lets the compiler optimize more effectively. Both classes and generic
-functions are sealed by default.
+Classes and generic functions may be :drm:`sealed <sealing>`, preventing code
+in other libraries from subclassing objects or adding methods to generic
+functions. This allows the compiler optimize more effectively. Both classes and
+generic functions are sealed by default.
 
 To allow code in other libraries to subclass a given class,
 declare it as ``open``:
@@ -157,5 +156,4 @@ A third form, :drm:`define sealed domain`, partially
 seals a generic function, disallowing only some additions from outside
 a library.
 
-For more information on sealing, see the chapter
-"Controlling Dynamism" in the DRM.
+For more information on sealing, see :drm:`"Sealing" in the DRM <sealing>`.

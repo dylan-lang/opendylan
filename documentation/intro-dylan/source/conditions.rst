@@ -7,8 +7,8 @@ to recover smoothly from error conditions. Like C++, Dylan represents
 errors with objects. Dylan also supports advisory warnings and
 potentially correctable errors.
 
-When something unusual happens, a program can :term:`signal` a
-:term:`condition`. :term:`Handlers` specify how to react to various
+When something unusual happens, a program can :drm:`signal` a
+:drm:`condition`. :drm:`Handlers` specify how to react to various
 sorts of conditions.
 
 Signaling
@@ -42,7 +42,7 @@ conditions for you to examine.
 Handlers
 ========
 
-A function :term:`establishes a handler` with the :drm:`let handler`
+A function establishes a handler with the :drm:`let handler`
 statement. The handler remains in effect until the function exits. Other
 functions called by the first can establish new handlers. When the
 :drm:`signal` function looks for a handler, it looks for the most recently
@@ -61,7 +61,7 @@ The code to establish the handlers may have looked like this:
 .. code-block:: dylan
 
    let handler <key-not-found-error> = handle-no-pet-found;
-   
+
 A handler can be a normal function, but it can also be a local method or bare
 method, complete with access to local variables.
 
@@ -94,7 +94,7 @@ much encapsulation or allow for complicated recovery information, and the
 recovery information has to be processed locally.
 
 Another way to return recovery information is through the use of a
-:term:`restart`. A restart is a condition that includes recovery information.
+:drm:`restart`. A restart is a condition that includes recovery information.
 But unlike most conditions, this condition provides a solution instead of
 indicating a problem. A restart handler — which may be established anywhere
 useful — can use the information included in the restart to work around the
@@ -117,7 +117,7 @@ Dylan offers blocks.
 Blocks
 ======
 
-A :term:`block` is a group of statements. As with
+A :drm:`block` is a group of statements. As with
 other control structures, it may return a value. A simple block
 might appear as follows:
 
@@ -125,14 +125,15 @@ might appear as follows:
 
     block ()
       1 + 1
-    end; // returns 2
+    end
+    // => 2
 
-But in addition to returning a value normally, a :drm:`block` can use a :term:`nonlocal
+But in addition to returning a value normally, a :drm:`block` can use a :drm:`nonlocal
 exit`. This allows the :drm:`block` to exit at any time, optionally returning a value.
-In some ways, it is similar to the ``goto`` statement, the ``break`` statement,
+In some ways it is similar to the C++ ``goto`` statement, the ``break`` statement,
 or the POSIX ``longjmp`` function. To use a nonlocal exit,
 specify a name in the parentheses following a :drm:`block` statement. Dylan
-binds this name to an :term:`exit function` which can be
+binds this name to an :drm:`exit variable` which can be
 called from anywhere within the block or the functions it calls. The
 following block returns either ``"Weird!"`` or ``"All's well."``,
 depending on the color of the sky.
@@ -144,7 +145,7 @@ depending on the color of the sky.
         finished("Weird!");
       end;
       "All's well."
-    end block;
+    end block
 
 Many programs need to dispose of resources or perform other cleanup work when
 exiting a block. The block may contain optional :drm:`afterwards` and ``cleanup``
@@ -193,7 +194,7 @@ Java:
     exception (error :: <file-error>)
       report-problem(error);
     end;
-   
+
 You can use a block with a restart to abort some work entirely and fall back to
 the data supplied by the restart object, neatly circumventing the problem mentioned
 at the end of the `Restart handlers`_ section above:
