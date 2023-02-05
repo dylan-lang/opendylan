@@ -4,7 +4,7 @@ Objects
 
 The features of Dylan's object system don't map directly onto the
 features found in C++. Dylan handles access control using
-:term:`modules`, not ``private`` declarations within
+:drm:`modules`, not ``private`` declarations within
 individual classes. Standard Dylan has no destructors, but instead relies
 upon the garbage collector to recover memory and on :drm:`block`/cleanup
 to recover lexically scoped resources. Dylan objects don't even have real
@@ -12,7 +12,7 @@ member functions.
 
 Dylan's object system is at least as powerful as that of C++. Multiple
 inheritance works smoothly, constructors are rarely needed and there's
-no such thing as object slicing. Alternate constructs replace the
+no such thing as object slicing. Alternative constructs replace the
 missing C++ features. Quick and dirty classes can be turned into clean
 classes with little editing of existing code.
 
@@ -59,13 +59,12 @@ also standardizes strings and byte-strings.
 Not all the built-in classes may be subclassed. This allows the
 compiler to heavily optimize code dealing with basic numeric types and
 certain common collections. The programmer may also mark classes as
-:term:`sealed`, restricting how and where they may be subclassed. See
-`Sealing <https://opendylan.org/books/drm/Sealing>`_ for details.
+:drm:`sealed <sealing>`, restricting how and where they may be subclassed.
 
 Slots
 =====
 
-Objects have :term:`slots`, which resemble the data
+Objects have :drm:`slots`, which resemble data
 members in C++ or fields in Java. Like
 variables, slots are bound to values; they don't actually contain
 their data. A simple Dylan class shows how slots are declared:
@@ -112,14 +111,14 @@ with the specified serial number and the default owner. In the second
 example, :drm:`make` sets both slots using the keyword
 arguments.
 
-Only one of ``required-init-keyword``, ``init-value`` and
+Only one of ``required-init-keyword``, ``init-value``, or
 ``init-function`` may be specified. However, ``init-keyword``
 may be paired with either of the latter two if desired. More
 than one slot may be initialized by a given keyword.
 
 Dylan also provides for the equivalent of C++ ``static``
 members, plus several other useful allocation schemes. See
-the DRM for the full details.
+the `DRM <https://opendylan.org/books/drm/>`_ for the full details.
 
 Getters and Setters
 ===================
@@ -141,10 +140,11 @@ for these two functions. They may also be written as:
 
     sample-vehicle.owner;  // returns owner
     sample-vehicle.owner := "Faisal";
+    owner(sample-vehicle) := "Faisal";
 
 .. _generic-functions-objects:
 
-Generic functions and Objects
+Generic Functions and Objects
 =============================
 
 Generic functions, introduced in :doc:`Methods and Generic functions
@@ -241,14 +241,16 @@ example, if vehicle serial numbers must be at least seven digits:
       end if;
     end method;
 
-:drm:`initialize` methods get called after regular
+:drm:`initialize` methods are called after regular
 slot initialization. They typically perform error checking or calculate
-derived slot values. Initialize methods must specify ``#key`` in their
+derived slot values. :drm:`initialize` methods must specify ``#key`` in their
 parameter lists.
 
-It's possible to access the values of slot keywords from
-:drm:`initialize` methods, and even to specify additional
-keywords in the class declaration. See the DRM for further details.
+It's possible to access the values of slot keywords from :drm:`initialize`
+methods, and even to specify additional keywords in the class declaration. See
+the `Instance Creation and Initialization
+<https://opendylan.org/books/drm/Instance_Creation_and_Initialization>`_ in the
+DRM for further details.
 
 Abstract Classes and Overriding Make
 ====================================
@@ -266,12 +268,12 @@ be defined as follows:
       // ...as before
     end;
 
-The above modification prevents the creation of direct instances
+The addition of :drm:`abstract` above prevents the creation of direct instances
 of ``<vehicle>``. At the moment, calling
 :drm:`make` on this class would result in an error.
-However, a programmer could add a method to make which allowed the
+However, a programmer may add a method to :drm:`make` which allows the
 intelligent creation of vehicles based on some criteria, thus making
-``<vehicle>`` an :term:`instantiable abstract class`:
+``<vehicle>`` an :drm:`instantiable` :drm:`abstract` class":
 
 .. code-block:: dylan
 
@@ -279,14 +281,14 @@ intelligent creation of vehicles based on some criteria, thus making
         (class == <vehicle>, #rest keys, #key big?)
      => (vehicle :: <vehicle>)
       if (big?)
-        make(<truck>, keys, tons: 2)
+        apply(make, <truck>, tons: 2, keys)
       else
-        make(<car>, keys)
+        apply(make, <car>, keys)
       end
     end method make;
 
 A number of new features appear in the parameter list. The expression
-"``class == <vehicle>``" specifies a :term:`singleton` dispatch,
+``class == <vehicle>`` specifies a :drm:`singleton <singletons>` dispatch,
 meaning this method will be called only if ``class`` is exactly
 ``<vehicle>``, not a subclass such as ``<car>``.  Singleton dispatch
 is discussed in the chapter on :doc:`Multiple Dispatch

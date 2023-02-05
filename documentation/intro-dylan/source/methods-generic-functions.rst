@@ -2,7 +2,7 @@
 Methods & Generic Functions
 ***************************
 
-Dylan :term:`methods` correspond roughly to the
+Dylan :drm:`methods` correspond roughly to the
 functions found in C++. They take zero or more named parameters,
 but also return zero or more named return values. A minimal Dylan method
 might look like the following:
@@ -11,7 +11,7 @@ might look like the following:
 
     define method hello-world ()
       format-out("Hello, world!");
-    end;
+    end
 
 This method has no parameters and an unspecified return value. It
 could return any number of values of any type. In order to make the
@@ -33,8 +33,8 @@ follow an end statement.
 Parameters & Parameter Lists
 ============================
 
-Dylan methods declare parameters in fashion similar to that of
-conventional languages, except for the fact that parameters may
+Dylan methods declare parameters in a fashion similar to that of
+many languages, except for the fact that parameters may
 optionally be untyped. Both of the following methods are legal:
 
 .. code-block:: dylan
@@ -48,10 +48,9 @@ return value (or actually does anything). As in C, each typed parameter
 must have its own type declaration; there's no syntax for saying
 "the last three parameters are all integers".
 
-Functions with variable numbers of parameters include the
-``#rest`` keyword in their parameter lists.
-Thus, the declaration for C's ``printf`` function
-would appear something like the following in Dylan:
+Functions with the ``#rest`` keyword in their parameter list accept a variable
+number of arguments.  Thus, the declaration for C's ``printf`` function would
+appear something like the following in Dylan:
 
 .. code-block:: dylan
 
@@ -60,7 +59,7 @@ would appear something like the following in Dylan:
       // Note that Dylan actually allows us to verify the types of variables,
       // preventing those nasty printf errors, such as using %d instead of %ld.
       // ...
-    end method printf;
+    end method printf
 
 Note that Dylan makes no provision for passing variables by
 reference in the Pascal sense, or for passing pointers to variables.
@@ -68,7 +67,7 @@ parameter names are simply bound to whatever values are passed, and may
 be rebound like regular variables. This means that there's no way to
 write a ``swap`` function in Dylan.  (It may be done using
 macros). However, the following function works just fine, because it
-modifies the :term:`internal state` of another
+modifies the internal state of another
 object:
 
 .. code-block:: dylan
@@ -114,13 +113,13 @@ the value of the last expression in its body.
     end;
 
     define method baz () => ()
-      let (x,y) = moby();  // assign both
+      let (x, y) = moby();  // assign both
     end;
 
 Bare Methods
 ============
 
-Nameless methods may be declared inline. Such :term:`bare methods` are
+Nameless methods may be declared inline. Such :drm:`bare methods` are
 typically used as parameters to other methods.  For example, the
 following code fragment squares each element of a list using the built
 in :drm:`map` function and a bare method:
@@ -128,8 +127,8 @@ in :drm:`map` function and a bare method:
 .. code-block:: dylan
 
     define method square-list (numbers :: <list>) => (out :: <list>)
-      map(method(x) x * x end, numbers);
-    end;
+      map(method(x) x * x end, numbers)
+    end
 
 The :drm:`map` function takes each element of
 the list ``numbers`` and applies the anonymous method. It
@@ -137,12 +136,10 @@ then builds a new list using the resulting values and returns it.
 The method ``square-list`` might be invoked as
 follows:
 
-.. todo:: Must distinguish return values from code.
-
 .. code-block:: dylan
 
-    square-list(#(1, 2, 3, 4));
-    => #(1, 4, 9, 16)
+    square-list(#(1, 2, 3, 4))
+    // => #(1, 4, 9, 16)
 
 Local Methods
 =============
@@ -182,7 +179,7 @@ bound in a local method, allowing some interesting techniques:
 
 Local functions which contain references to local variables that are
 outside of the local function's own scope are known as
-:term:`closures`.  In the above example, ``string-putter`` "closes
+:drm:`closures`.  In the above example, ``string-putter`` "closes
 over" (or captures the binding of) the variable named ``string``.
 
 .. _generic-functions:
@@ -190,31 +187,31 @@ over" (or captures the binding of) the variable named ``string``.
 Generic Functions
 =================
 
-A :term:`generic function` represents zero or more
+A :drm:`generic function` represents zero or more
 similar methods. Every method created by means of
-:drm:`define method` is automatically :term:`contained`
-within the generic function of the same name. For example, a 
+:drm:`define method` is automatically contained
+within the generic function of the same name. For example, a
 programmer could define three methods named ``display``,
 each of which acted on a different data type:
 
 .. code-block:: dylan
 
     define method display (i :: <integer>)
-      do-display-integer(i);
+      write(*standard-output*, integer-to-string(i));
     end;
 
     define method display (s :: <string>)
-      do-display-string(s);
+      write(*standard-output*, s);
     end;
 
     define method display (f :: <float>)
-      do-display-float(f);
+      write(*standard-output*, float-to-string(f));
     end;
 
 When a program calls ``display``, Dylan examines
 all three methods. Depending on the type of the argument to
 ``display``, Dylan invokes one of the above methods.
-If no methods match the actual parameters, an error occurs.
+If no method matches the actual parameters, an error occurs.
 
 In C++, this process occurs only at compile time. (It's called
 operator overloading.) In Dylan, calls to ``display``
@@ -238,9 +235,9 @@ runtime. If no applicable method can be found, the Dylan runtime
 environment throws an exception.
 
 Generic functions may also be declared explicitly, allowing the
-programmer to exercise control over what sort of methods get added.
+programmer to exercise control over what sort of methods are added.
 For example, the following declaration limits all ``display``
-methods to single parameter and no return values:
+methods to a single parameter and no return values:
 
 .. code-block:: dylan
 
@@ -252,10 +249,10 @@ Generic functions are explained in greater detail in the chapter on
 Keyword Arguments
 =================
 
-Functions may accept :term:`keyword arguments`,
+Functions may accept keyword arguments,
 extra parameters which are identified by a label rather than by their
 position in the argument list. Keyword arguments are often used in a
-fashion similar to :term:`default parameter values`
+fashion similar to default parameter values
 in C++, and they are always optional.
 
 The following hypothetical method might print records to an output device:
@@ -267,7 +264,7 @@ The following hypothetical method might print records to an output device:
      => ()
       send-init-codes(init-codes)
       // ...print the records
-    end method;
+    end method
 
 The arguments following ``#key`` are keyword arguments. You could call this
 method in several ways:
@@ -285,7 +282,7 @@ that the order of the keyword arguments does not matter.
 With all three calls, the ``init-codes`` and ``lines-per-page`` variables are
 available in the body of the method, even though keyword arguments are omitted
 in two of the calls. When a keyword argument is omitted, it is given the default
-value specified in the method definition. Therefore, in the first call, the 
+value specified in the method definition. Therefore, in the first call, the
 ``lines-per-page`` variable has the value ``66``, and in the first and second
 calls, the ``init-codes`` variable has the value ``""``.
 
@@ -340,7 +337,7 @@ were called like so:
 .. code-block:: dylan
 
    format("Today will be %s with a high of %d.", "cloudy", 52);
-   
+
 The ``format-parameters`` variable in the body of the method would have the
 value ``#["cloudy", 52]``.
 
@@ -382,7 +379,7 @@ methods that it contains.
    +-----------------------------------+-----------+---------------+---------------+-----------+
    | ``(x, #rest r)``                  | Forbidden | Forbidden     | Forbidden     | Required  |
    +-----------------------------------+-----------+---------------+---------------+-----------+
-   
+
    Required:
       Each method must have this element in its parameter list.
    Allowed:
@@ -402,16 +399,16 @@ does not permit.
    ======================================  =================  =========================  ======================
    Method's parameter list                 Contents of ``r``  Permits ``a:`` and ``b:``  Permits other keywords
    ======================================  =================  =========================  ======================
-   ``(x)``                                 —                  No                         No            
+   ``(x)``                                 —                  No                         No
    ``(x, #key)``                           —                  If next method permits     If next method permits
    ``(x, #key a, b)``                      —                  Yes                        If next method permits
-   ``(x, #key, #all-keys)``                —                  Yes                        Yes           
-   ``(x, #key a, b, #all-keys)``           —                  Yes                        Yes           
-   ``(x, #rest r)``                        Extra arguments    No                         No            
+   ``(x, #key, #all-keys)``                —                  Yes                        Yes
+   ``(x, #key a, b, #all-keys)``           —                  Yes                        Yes
+   ``(x, #rest r)``                        Extra arguments    No                         No
    ``(x, #rest r, #key)``                  Keywords/values    If next method permits     If next method permits
    ``(x, #rest r, #key a, b)``             Keywords/values    Yes                        If next method permits
-   ``(x, #rest r, #key, #all-keys)``       Keywords/values    Yes                        Yes           
-   ``(x, #rest r, #key a, b, #all-keys)``  Keywords/values    Yes                        Yes           
+   ``(x, #rest r, #key, #all-keys)``       Keywords/values    Yes                        Yes
+   ``(x, #rest r, #key a, b, #all-keys)``  Keywords/values    Yes                        Yes
    ======================================  =================  =========================  ======================
 
    Extra arguments:
@@ -433,10 +430,10 @@ does not permit.
 To illustrate the "next method" rule, say we have the following definitions:
 
 .. code-block:: dylan
-   
+
    define class <shape> (<object>) ... end;
    define generic draw (s :: <shape>, #key);
-   
+
    define class <polygon> (<shape>) ... end;
    define class <triangle> (<polygon>) ... end;
 
@@ -445,7 +442,7 @@ To illustrate the "next method" rule, say we have the following definitions:
 
    define method draw (s :: <polygon>, #key sides) ... end;
    define method draw (s :: <triangle>, #key) ... end;
-   
+
    define method draw (s :: <ellipse>, #key) ... end;
    define method draw (s :: <circle>, #key radius) ... end;
 
