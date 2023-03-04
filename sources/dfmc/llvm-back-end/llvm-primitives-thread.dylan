@@ -94,7 +94,13 @@ define method op--teb-getelementptr
   apply(ins--gep-inbounds, be, teb, 0, index, indices)
 end method;
 
+define c-callable auxiliary &runtime-primitive-descriptor dylan-teb
+  () => (teb :: <raw-pointer>);
+  let raw-pointer-type = llvm-reference-type(be, dylan-value(#"<raw-pointer>"));
+  ins--bitcast(be, op--teb(be), raw-pointer-type)
+end;
 
+
 /// Thread-local variables
 
 define runtime-variable %tlv-initializations :: <simple-object-vector> = #[],
