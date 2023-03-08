@@ -78,24 +78,9 @@ void report_runtime_error (char* header, char* message)
 
 /* Thread creation & deletion code */
 
-static int num_threads = 0;
-
-static define_CRITICAL_SECTION(reservoir_limit_set_lock);
-
-STATIC_INLINE
-void update_runtime_thread_count(int increment)
-{
-  enter_CRITICAL_SECTION(&reservoir_limit_set_lock);
-    num_threads = num_threads + increment;
-  leave_CRITICAL_SECTION(&reservoir_limit_set_lock);
-}
-
-
 MMError dylan_mm_register_thread(void *stackBot)
 {
   gc_teb_t gc_teb = current_gc_teb();
-
-  update_runtime_thread_count(1);
 
   zero_allocation_counter(gc_teb);
 
@@ -107,7 +92,6 @@ MMError dylan_mm_register_thread(void *stackBot)
 
 MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
 {
-  update_runtime_thread_count(-1);
   unused(gc_teb);
   return 0;
 }
@@ -1101,7 +1085,6 @@ MMError dylan_init_memory_manager(void)
   /* Call this to enable incrementality. This doesn't work with the MM GC. */
   /* GC_enable_incremental(); */
 
-  initialize_CRITICAL_SECTION(&reservoir_limit_set_lock);
   initialize_CRITICAL_SECTION(&polling_threads_lock);
 
   if (Prunning_under_dylan_debuggerQ) {
