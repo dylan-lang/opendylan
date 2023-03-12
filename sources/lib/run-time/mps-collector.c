@@ -1,5 +1,5 @@
 #include "mps.h"        /* MPS Interface */
-#include "mpscmv.h"     /* MPS pool class MV */
+#include "mpscmvff.h"   /* MPS pool class MVFF */
 #include "mpscamc.h"    /* MPS pool class AMC */
 #include "mpsavm.h"     /* MPS arena class */
 #ifndef OPEN_DYLAN_PLATFORM_UNIX
@@ -1571,9 +1571,9 @@ MMError dylan_init_memory_manager(void)
                         dylan_fmt_weak_s, dylan_weak_dependent);
   if (res) { init_error("create weak pool"); return(res); }
 
-  /* Create the MV pool for miscellaneous objects. */
+  /* Create the MVFF pool for miscellaneous objects. */
   /* This is also used for wrappers. */
-  res = mps_pool_create(&misc_pool, arena, mps_class_mv(),
+  res = mps_pool_create(&misc_pool, arena, mps_class_mvff(),
                         MISCEXTENDBY, MISCAVGSIZE, MISCMAXSIZE);
   if (res) { init_error("create misc pool"); return(res); }
 
