@@ -17,7 +17,7 @@ jobs:
   libraries-test-suite-ubuntu:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: od
           submodules: recursive
@@ -40,7 +40,7 @@ jobs:
   libraries-test-suite-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: od
           submodules: recursive
