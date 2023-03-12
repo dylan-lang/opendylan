@@ -41,7 +41,7 @@ book.
 `Getting Started with the Open Dylan Command Line Tools <getting-started-cli/index.html>`_ [`pdf <getting-started-cli/GettingStartedWithTheOpenDylanCLI.pdf>`__] [`epub <getting-started-cli/GettingStartedWithTheOpenDylanCLI.epub>`__]
     Describes development using the Open Dylan command line tools
     and editor integration (like emacs). This is mainly useful for
-    people using Open Dylan on Linux, FreeBSD and Mac OS X.
+    people using Open Dylan on Linux, FreeBSD and macOS.
 
 `Getting Started with the Open Dylan IDE <getting-started-ide/index.html>`_ [`pdf <getting-started-ide/GettingStartedWithTheOpenDylanIDE.pdf>`__] [`epub <getting-started-ide/GettingStartedWithTheOpenDylanIDE.epub>`__] [`old HTML <http://web.archive.org/web/20170102232752/http://opendylan.org/documentation/opendylan/env/index.htm>`__]
     Describes Open Dylan's integrated development environment which
