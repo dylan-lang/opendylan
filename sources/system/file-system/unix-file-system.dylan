@@ -102,18 +102,28 @@ define function %resolve-locator
 end function;
 
 define function %file-exists?
-    (file :: <posix-file-system-locator>) => (exists? :: <boolean>)
+    (file :: <posix-file-system-locator>, follow-links? :: <boolean>)
+ => (exists? :: <boolean>)
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
-    ~primitive-raw-as-boolean
-       (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-         => (failed? :: <raw-c-signed-int>)
-          (primitive-string-as-raw(as(<byte-string>, file)),
-           primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+    ~primitive-raw-as-boolean(
+      if (follow-links?)
+        (%call-c-function ("system_stat")
+              (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+           => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, file)),
+            primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
         end)
+      else
+        (%call-c-function ("system_lstat")
+              (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+           => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, file)),
+            primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+        end)
+      end)
   end
-end function %file-exists?;
-
+end function;
 
 ///
 define function %file-type
@@ -583,7 +593,7 @@ end function %delete-directory;
 ///---*** Is there an easier way?  (Look into it ...)
 define function %directory-empty?
     (directory :: <posix-directory-locator>) => (empty? :: <boolean>)
-  ~%file-exists?(directory)
+  ~%file-exists?(directory, #t)
     | block (return)
         %do-directory
           (method (directory :: <posix-directory-locator>, name :: <string>, type :: <file-type>)

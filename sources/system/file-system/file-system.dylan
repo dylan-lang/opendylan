@@ -109,15 +109,20 @@ end method shorten-pathname;
 
 
 ///
-define generic file-exists? (file :: <pathname>) => (exists? :: <boolean>);
+define generic file-exists? (file :: <pathname>, #key follow-links?)
+ => (exists? :: <boolean>);
 
-define method file-exists? (file :: <file-system-locator>) => (exists? :: <boolean>);
-  %file-exists?(file)
-end method file-exists?;
+define method file-exists?
+    (file :: <file-system-locator>, #key follow-links? = #t)
+ => (exists? :: <boolean>)
+  %file-exists?(file, follow-links?)
+end method;
 
-define method file-exists? (file :: <string>) => (exists? :: <boolean>);
-  file-exists?(as(<file-system-locator>, file))
-end method file-exists?;
+define method file-exists?
+    (file :: <string>, #key follow-links? = #t)
+ => (exists? :: <boolean>)
+  file-exists?(as(<file-system-locator>, file), follow-links?: follow-links?)
+end method;
 
 
 ///
