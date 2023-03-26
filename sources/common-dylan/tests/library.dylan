@@ -10,6 +10,7 @@ define library common-dylan-test-suite
   use dylan,
     import: { dylan, dylan-extensions, simple-debugging };
   use common-dylan;
+  use common-dylan-test-utilities;
   use system,
     import: { file-system, operating-system };
   use testworks;
@@ -24,6 +25,7 @@ define module common-dylan-test-suite
               encode-double-float,
               <abstract-integer> };
   use common-dylan-internals;
+  use common-dylan-test-utilities;
   use common-extensions;
   use streams-protocol;
   use locators-protocol;
@@ -49,33 +51,5 @@ define module common-dylan-test-suite
 
   use testworks;
 
-  // Common Dylan test suite
   export common-dylan-test-suite;
-
-  // Stream testing protocol
-  export <stream-test-info>,
-         make-stream-tests-of-size,
-         info-test-name,
-         info-class-info,
-         info-contents,
-         info-direction,
-         info-make-function,
-         info-destroy-function,
-         register-stream-test,
-         stream-class-info,
-         test-stream-class;
-
-  // Stream class info
-  export <stream-class-info>,
-         info-class-name,
-         info-class,
-         info-input-stream?,
-         info-output-stream?,
-         info-element-type,
-         register-stream-class-info,
-         registered-stream-classes;
-
-  // Test streams
-  export <test-input-stream>,
-         <test-output-stream>;
 end module common-dylan-test-suite;

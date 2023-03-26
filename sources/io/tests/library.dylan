@@ -9,13 +9,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library io-test-suite
   use common-dylan,
     import: { byte-vector, common-dylan, machine-words, simple-random, threads };
+  use common-dylan-test-utilities;  // For stream testing protocol
   use io;
   use strings;
   use system;
   use testworks;
-
-  // TODO(cgay): https://github.com/dylan-lang/opendylan/issues/1237
-  use common-dylan-test-suite;  // For stream testing protocol
 
   export io-test-suite;
 end library;
@@ -42,7 +40,7 @@ define module io-test-suite
 
   use testworks;
 
-  use common-dylan-test-suite,  // For stream testing protocol
+  use common-dylan-test-utilities,
     exclude: { make-test-instance };
 
   // IO test suite
