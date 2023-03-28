@@ -7,7 +7,7 @@ DEP #:           8
 Type:            Standards Track
 Affects-DRM:     Yes
 Author:          Carl Gay
-Status:          Draft
+Status:          Withdrawn (superseded by DEP 12)
 Created:         16-Feb-2015
 Last-Modified:   16-Feb-2015
 Post-History:    16-Feb-2015 hackers@lists.opendylan.org
