@@ -889,62 +889,53 @@ define method hex-escape-character
   end;
 end method hex-escape-character;
 
-// Like extract-string, except process escape characters.  Also, we
-// default to starting one character in from either end, under the
-// assumption that the string will be surrounded by quotes.
-//
+// Like extract-string, except process escape characters.
 define method decode-string
-    (source-location :: <lexer-source-location>,
-     #key start :: <integer> = source-location.start-posn + 1,
-     end: finish :: <integer> = source-location.end-posn - 1)
- => (res :: <byte-string>)
+    (source-location :: <lexer-source-location>, bpos :: <integer>, epos :: <integer>)
+ => (string :: <byte-string>)
   let contents = source-location.source-location-record.contents;
-  local method skip-hex-escape (contents, posn)
-    if (contents[posn] == as(<integer>, '>'))
-      posn + 1
+  local method skip-hex-escape (contents, pos)
+    if (contents[pos] == as(<integer>, '>'))
+      pos + 1
     else
-      skip-hex-escape(contents, posn + 1)
-    end;
+      skip-hex-escape(contents, pos + 1)
+    end
   end method;
-  let length
-    = begin
-        local method repeat (posn, result)
-          if (posn < finish)
-            if (contents[posn] == as(<integer>, '\\'))
-              if (contents[posn + 1] == as(<integer>, '<'))
-                repeat (skip-hex-escape(contents, posn), result + 1);
-              else
-                repeat (posn + 2, result + 1);
-              end;
-            else
-              repeat (posn + 1, result + 1);
-            end if;
-          else
-            result;
-          end if;
-        end method repeat;
-        repeat(start, 0);
-      end;
-  let result = make(<string>, size: length);
-  local method repeat (src, dst)
-          if (dst < length)
-            if (contents[src] == as(<integer>, '\\'))
-              let next = contents[src + 1];
-              if (next == as(<integer>, '<'))
-                result[dst] := hex-escape-character(source-location, src + 2);
-                repeat(skip-hex-escape(contents, src), dst + 1);
-              else
-                result[dst] := escape-character(as(<character>, next));
-                repeat(src + 2, dst + 1);
-              end;
-            else
-              result[dst] := as(<character>, contents[src]);
-              repeat(src + 1, dst + 1);
-            end if;
-          end if;
-        end method repeat;
-  repeat(start, 0);
-  result;
+  let length = iterate loop (pos = bpos, len = 0)
+                 if (pos >= epos)
+                   len
+                 else
+                   if (contents[pos] == as(<integer>, '\\'))
+                     loop(if (contents[pos + 1] == as(<integer>, '<'))
+                            skip-hex-escape(contents, pos + 2)
+                          else
+                            pos + 2
+                          end,
+                          len + 1)
+                   else
+                     loop(pos + 1, len + 1)
+                   end
+                 end
+               end iterate;
+  iterate copy (src = bpos, dst = 0, string = make(<string>, size: length))
+    if (dst >= length)
+      string
+    else
+      if (contents[src] == as(<integer>, '\\'))
+        let next = contents[src + 1];
+        if (next == as(<integer>, '<'))
+          string[dst] := hex-escape-character(source-location, src + 2);
+          copy(skip-hex-escape(contents, src), dst + 1, string);
+        else
+          string[dst] := escape-character(as(<character>, next));
+          copy(src + 2, dst + 1, string);
+        end
+      else
+        string[dst] := as(<character>, contents[src]);
+        copy(src + 1, dst + 1, string);
+      end if
+    end if
+  end iterate
 end method decode-string;
 
 // Make a <literal-token> when confronted with the #"foo" syntax.
@@ -954,7 +945,8 @@ define method make-quoted-symbol
  => (res :: <symbol-syntax-symbol-fragment>)
   let sym = as(<symbol>,
                decode-string(source-location,
-                             start: source-location.start-posn + 2));
+                             source-location.start-posn + 2,
+                             source-location.end-posn - 1));
   make(<symbol-syntax-symbol-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -1129,7 +1121,9 @@ define method make-string-literal
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        // kind: $string-token,
-       value: as-fragment-value(decode-string(source-location)));
+       value: as-fragment-value(decode-string(source-location,
+                                              source-location.start-posn + 1,
+                                              source-location.end-posn - 1)));
 end method make-string-literal;
 
 define method parse-ratio-literal
