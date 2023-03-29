@@ -44,9 +44,9 @@ convenient "dialect" of Dylan, exported from the module ``common-dylan``:
       use common-extensions, export: all;
     end module;
 
-This section describes the common language extensions, that is,
-extensions made to the Dylan library as it is defined in DRM. These
-extensions are available to applications in the ``dylan`` library's
+This section describes Dylan language extensions, that is, extensions made to
+the Dylan library, and to the base language syntax, as they are defined in the
+DRM. These extensions are available to applications in the ``dylan`` library's
 ``dylan`` module.
 
 .. toctree::
@@ -63,5 +63,6 @@ extensions are available to applications in the ``dylan`` library's
    parser-expansions
    alternative-curry-syntax
    numeric-literals
+   string-literals
 
 All the other language extensions are described in :doc:`../common-dylan/index`.
