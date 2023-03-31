@@ -368,12 +368,49 @@ define method get-token
   //
   let contents :: <byte-vector> = lexer.source.contents;
   let length :: <integer> = contents.size;
+  let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?, current-line, current-line-start)
+    = get-token-1($initial-state, contents, lexer.posn, length, lexer.line, lexer.line-start);
+
+  //
+  // Save the current token's end position so that the next token
+  // starts here.
+  //
+  lexer.posn := epos;
+  lexer.line := current-line;
+  lexer.line-start := current-line-start;
+
+  let source-location = make-lexer-source-location
+    (lexer, lexer.source, bpos, bline, bcol, epos, eline, ecol);
+  //
+  // And finally, make and return the actual token.
+  //
+  if (kind)
+    do-process-token(kind, lexer, source-location)
+  elseif (unexpected-eof?)
+    invalid-end-of-input(source-location);
+  else
+    invalid-token(source-location);
+  end if
+end method get-token;
+
+// This is separated out from get-token so as to be testable without
+// having to make a <lexer>, which in turn requires having to pull in
+// compilation records et al.  It would be nice to have the lexer only
+// require a simple "source reader" interface of some kind that is
+// less tied to the compiler internals.
+define function get-token-1
+    (state :: <state>, contents :: <byte-vector>, start :: <integer>,
+     length :: <integer>, line :: <integer>, lstart :: <integer>)
+ => (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>, current-line, line-start)
   let unexpected-eof :: <boolean> = #f;
   let saved-line :: false-or(<integer>) = #f;
   let saved-line-start :: false-or(<integer>) = #f;
 
+  let current-line :: <integer> = line;
+  let line-start :: <integer> = lstart;
+
   let result-kind = #f;
-  let result-start = lexer.posn;
+  let result-start = start;
   let result-end = #f;
 
   without-bounds-checks
@@ -425,22 +462,22 @@ define method get-token
                 #"whitespace" =>
                   #f;
                 #"newline" =>
-                  let lstart :: <integer> = result-end;
-                  lexer.line := lexer.line + 1;
-                  lexer.line-start := lstart;
+                  current-line := current-line + 1;
+                  line-start := result-end;
                 #"end-of-line-comment" =>
                   for (i :: <integer> from result-end below length,
-                       until: (contents[i] == as(<integer>, '\n')))
+                       until: (contents[i] == $newline-code))
                   finally
                     result-end := i;
                   end for;
                 #"multi-line-comment" =>
-                  saved-line := lexer.line;
-                  saved-line-start := lexer.line-start;
-                  let (epos, nskipped, lstart) = skip-multi-line-comment(contents, length, result-end);
+                  saved-line := current-line;
+                  saved-line-start := line-start;
+                  let (epos, nskipped, lstart)
+                    = skip-multi-line-comment(contents, length, result-end);
                   result-end := epos;
-                  lexer.line := lexer.line + nskipped;
-                  lexer.line-start := lstart | lexer.line-start;
+                  current-line := current-line + nskipped;
+                  line-start := lstart | line-start;
                   if (result-end)
                     saved-line := #f;
                     saved-line-start := #f;
@@ -485,20 +522,20 @@ define method get-token
               #"whitespace" =>
                 #f;
               #"newline" =>
-                let result-end :: <integer> = result-end;
-                lexer.line := lexer.line + 1;
-                lexer.line-start := result-end;
+                current-line := current-line + 1;
+                line-start := result-end;
               #"end-of-line-comment" =>
                 for (i :: <integer> from result-end below length,
-                     until: (contents[i] == as(<integer>, '\n')))
+                     until: (contents[i] == $newline-code))
                 finally
                   result-end := i;
                 end for;
               #"multi-line-comment" =>
-                let (epos, nskipped, lstart) = skip-multi-line-comment(contents, length, result-end);
+                let (epos, nskipped, lstart)
+                  = skip-multi-line-comment(contents, length, result-end);
                 result-end := epos;
-                lexer.line := lexer.line + nskipped;
-                lexer.line-start := lstart | lexer.line-start;
+                current-line := current-line + nskipped;
+                line-start := lstart | line-start;
                 if (~result-end)
                   unexpected-eof := #t
                 end;
@@ -520,7 +557,7 @@ define method get-token
         end if
       end method repeat;
     let (posn, result-kind, result-start, result-end)
-      = repeat($initial-state, lexer.posn);
+      = repeat($initial-state, start);
     if (~result-kind)
       //
       // If result-kind is #f, that means we didn't find an accepting
@@ -539,37 +576,34 @@ define method get-token
         result-end := result-start + 1;
       end if;
     end if;
+    if (result-kind == make-multi-line-string-literal)
+      // multi-line string literals are the only tokens with embedded newlines
+      // so they require special treatment.  Increment current-line by the
+      // number of newlines in the string to keep source locations correct.
+      current-line := current-line + iterate loop (i :: <integer> = result-start, n :: <integer> = 0)
+                                       case
+                                         i == result-end => n;
+                                         contents[i] == $newline-code => loop(i + 1, n + 1);
+                                         otherwise => loop(i + 1, n);
+                                       end
+                                     end iterate;
+    end if;
+
     //
-    // Save the current token's end position so that the next token
-    // starts here.
+    // Return enough information to make a source location for the current token.
     //
-    let result-end :: <integer> = result-end;
-    lexer.posn := result-end;
-    //
-    // Make a source location for the current token.
-    //
-    let effective-line :: <integer> = saved-line | lexer.line;
-    let effective-line-start :: <integer> = saved-line-start | lexer.line-start;
-    let source-location
-      = make-lexer-source-location
-          (lexer, lexer.source,
-           result-start, effective-line,
-           result-start - effective-line-start,
-           result-end, lexer.line, result-end - lexer.line-start);
-    //
-    // And finally, make and return the actual token.
-    //
-    if (result-kind)
-      do-process-token(result-kind, lexer, source-location)
-    else
-      if (unexpected-eof)
-        invalid-end-of-input(source-location);
-      else
-        invalid-token(source-location);
-      end;
-    end if
+    let effective-line :: <integer> = saved-line | current-line;
+    let effective-line-start :: <integer> = saved-line-start | line-start;
+    let bpos = result-start;
+    let bline = effective-line;
+    let bcol = result-start - effective-line-start;
+    let eline = current-line;
+    let epos :: <integer> = result-end;
+    let ecol = epos - line-start;
+    values(result-kind, bpos, bline, bcol, epos, eline, ecol,
+           unexpected-eof, current-line, line-start)
   end without-bounds-checks
-end method get-token;
+end function get-token-1;
 
 // This indirection is only here for profiling purposes.
 
@@ -868,13 +902,10 @@ end method escape-character;
 
 define method hex-escape-character
     (source-location :: <lexer-source-location>, start :: <integer>)
- => (char :: <character>)
-  let code
-    = parse-integer
-        (source-location,
-           start:              start,
-           stop-at-non-digit?: #t,
-           radix:               16);
+ => (char :: <character>, end-pos :: <integer>)
+  let (code, epos)
+    = parse-integer(source-location, radix: 16, start: start,
+                    stop-at-non-digit?: #t);
   if (code > $max-lexer-code)
     note(<character-code-too-large>,
          source-location:
@@ -883,62 +914,87 @@ define method hex-escape-character
                source-location.source-location-source-position),
          token-string: extract-string(source-location));
     // If forced, continue with nul...
-    as(<character>, 0);
+    values(as(<character>, 0), epos)
   else
-    as(<character>, code);
-  end;
+    values(as(<character>, code), epos)
+  end
 end method hex-escape-character;
 
-// Like extract-string, except process escape characters.
+// Convert a string literal to its internal representation by processing escape
+// codes and line endings. Canonicalize CRLF and CR to a single LF.  Works for
+// both one-line and multi-line strings because the lexer state transitions
+// disallow CR and LF in one-line strings in the first place. If escapes? is
+// true, process escape codes.
 define method decode-string
-    (source-location :: <lexer-source-location>, bpos :: <integer>, epos :: <integer>)
+    (source-location :: <lexer-source-location>, bpos :: <integer>,
+     epos :: <integer>, escapes? :: <boolean>)
  => (string :: <byte-string>)
   let contents = source-location.source-location-record.contents;
-  local method skip-hex-escape (contents, pos)
-    if (contents[pos] == as(<integer>, '>'))
-      pos + 1
-    else
-      skip-hex-escape(contents, pos + 1)
-    end
-  end method;
-  let length = iterate loop (pos = bpos, len = 0)
-                 if (pos >= epos)
-                   len
-                 else
-                   if (contents[pos] == as(<integer>, '\\'))
-                     loop(if (contents[pos + 1] == as(<integer>, '<'))
-                            skip-hex-escape(contents, pos + 2)
-                          else
-                            pos + 2
-                          end,
-                          len + 1)
-                   else
-                     loop(pos + 1, len + 1)
-                   end
-                 end
-               end iterate;
-  iterate copy (src = bpos, dst = 0, string = make(<string>, size: length))
-    if (dst >= length)
-      string
-    else
-      if (contents[src] == as(<integer>, '\\'))
-        let next = contents[src + 1];
-        if (next == as(<integer>, '<'))
-          string[dst] := hex-escape-character(source-location, src + 2);
-          copy(skip-hex-escape(contents, src), dst + 1, string);
-        else
-          string[dst] := escape-character(as(<character>, next));
-          copy(src + 2, dst + 1, string);
-        end
+  format-out("\ncontents: %=\n", contents); force-out();
+  local
+    method skip-hex-escape (pos)
+      // TODO(cgay): signal better error if '>' not found.
+      if (contents[pos] == as(<integer>, '>'))
+        pos + 1
       else
-        string[dst] := as(<character>, contents[src]);
-        copy(src + 1, dst + 1, string);
+        skip-hex-escape(pos + 1)
+      end
+    end method,
+    method loop (pos :: <integer>, len :: <integer>, prev-was-cr? :: <boolean>,
+                 string :: false-or(<string>))
+             => (len :: <integer>)
+      format-out("loop(%d, %d, %=, %=)\n", pos, len, prev-was-cr?, string);
+      force-out();
+      if (pos >= epos)
+        len
+      else
+        let code = contents[pos];
+        select (code)
+          as(<integer>, '\\') =>
+            let escape-char = as(<character>, contents[pos + 1]);
+            let new-position
+              = if (escape-char == '<')
+                  if (string)
+                    let (char, epos)
+                      = hex-escape-character(source-location, pos + 2);
+                    format-out("hex escape char = %= '%s', epos = %=\n",
+                               char, char, epos);
+                    force-out();
+                    string[len] := char;
+                    epos + 1
+                  else
+                    skip-hex-escape(pos + 2)
+                  end
+                else
+                  string & (string[len] := escape-character(escape-char));
+                  pos + 2
+                end;
+            loop(new-position, len + 1, #f, string);
+          as(<integer>, '\r') =>
+            string & (string[len] := '\n');
+            loop(pos + 1, len + 1, #t, string);
+          as(<integer>, '\n') =>
+            let increment = if (prev-was-cr?)
+                              0 // already stored a LF
+                            else
+                              string & (string[len] := '\n');
+                              1
+                            end;
+            loop(pos + 1, len + increment, #f, string);
+          otherwise =>
+            string & (string[len] := as(<character>, code));
+            loop(pos + 1, len + 1, #f, string);
+        end select
       end if
-    end if
-  end iterate
+    end method;
+  let length = loop(bpos, 0, #f, #f);
+  let string = make(<string>, size: length);
+  loop(bpos, 0, #f, string);
+  string
 end method decode-string;
 
 // Make a <literal-token> when confronted with the #"foo" syntax.
+// These are referred to as "unique strings" in the DRM Lexical Syntax.
 //
 define method make-quoted-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
@@ -946,7 +1002,8 @@ define method make-quoted-symbol
   let sym = as(<symbol>,
                decode-string(source-location,
                              source-location.start-posn + 2,
-                             source-location.end-posn - 1));
+                             source-location.end-posn - 1,
+                             #t));
   make(<symbol-syntax-symbol-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -984,13 +1041,13 @@ define method parse-integer
           start :: <integer> = source-location.start-posn,
           end: finish :: <integer> = source-location.end-posn,
           stop-at-non-digit? = #f)
- => (res :: <abstract-integer>)
+ => (res :: <abstract-integer>, end-pos :: <integer>)
   let contents :: <byte-vector>
     = source-location.source-location-record.contents;
   // We do our working in negative integers to avoid representation
   // overflow until absolutely necessary.
   local method repeat (posn :: <integer>, result :: <abstract-integer>)
-                   => (final-result :: <abstract-integer>)
+                   => (final-result :: <abstract-integer>, end-pos :: <integer>)
           if (posn < finish)
             let digit :: <integer> = contents[posn];
             if ($zero-code <= digit & digit <= $nine-code)
@@ -1006,7 +1063,7 @@ define method parse-integer
                      generic-(generic*(result, radix),
                               10 + digit - $lower-a-code));
             elseif (stop-at-non-digit?)
-              result
+              values(result, posn)
             elseif (digit == $underscore_code) // Must follow stop-at-non-digit? check.
               // skip underscores
               repeat(posn + 1, result)
@@ -1014,18 +1071,20 @@ define method parse-integer
               error("Bogus digit in integer: %=", as(<character>, digit));
             end if;
           else
-            result;
-          end if;
+            values(result, posn)
+          end if
         end method repeat;
   let first = as(<character>, contents[start]);
   block ()
     if (first == '-')
-      repeat(start + 1, 0);
+      repeat(start + 1, 0)
     elseif (first == '+')
-      genericnegative(repeat(start + 1, 0));
+      let (int, epos) = repeat(start + 1, 0);
+      values(genericnegative(int), epos)
     else
-      genericnegative(repeat(start, 0));
-    end if;
+      let (int, epos) = repeat(start, 0);
+      values(genericnegative(int), epos)
+    end if
   exception (overflow :: <error>)
     note(<integer-too-large>,
          source-location:
@@ -1123,8 +1182,22 @@ define method make-string-literal
        // kind: $string-token,
        value: as-fragment-value(decode-string(source-location,
                                               source-location.start-posn + 1,
-                                              source-location.end-posn - 1)));
+                                              source-location.end-posn - 1,
+                                              #t)));
 end method make-string-literal;
+
+// TODO(cgay): <multi-line-string-fragment>
+define method make-multi-line-string-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (res :: <string-fragment>)
+  let bpos = source-location.start-posn + 3;  // 3 double quotes
+  let epos = source-location.end-posn - 3;    // 3 double quotes
+  make(<string-fragment>,
+       record: source-location.source-location-record,
+       source-position: source-location.source-location-source-position,
+       // kind: $string-token,
+       value: as-fragment-value(decode-string(source-location, bpos, epos, #t)))
+end method make-multi-line-string-literal;
 
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)

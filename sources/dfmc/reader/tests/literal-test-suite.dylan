@@ -195,15 +195,75 @@ define test ratio-literal-test ()
   assert-signals(<ratios-not-supported>, read-fragment("1/2"));
 end test ratio-literal-test;
 
+define function string-parser (s) s end;
+
 define test string-literal-test ()
-  let f = read-fragment("\"abc\"");
-  verify-literal(f, "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{""}), "", <string-fragment>);
+  verify-literal(read-fragment(#:string:{"abc"}), "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{"a\nc"}), "a\nc", <string-fragment>);
 
-  let f = read-fragment("\"a\\nc\"");
-  verify-literal(f, "a\nc", <string-fragment>);
+  let char = curry(as, <character>);
+  // One of every escape sequence. "\a\b\e\f\n\r\t\0\'\"\\"
+  verify-literal(read-fragment(#:string:{"\a\b\e\f\n\r\t\0\'\"\\"}),
+                 map-as(<string>, char, #('\a', '\b', '\e', '\f', '\n', '\r',
+                                          '\t', '\0', '\'', '\"', '\\')),
+                 <string-fragment>);
+  // Basic hex escaping.
+  verify-literal(read-fragment(#:string:{"z\<9f>z"}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+  // We can't handle character codes > 255 yet, but the leading zeros shouldn't
+  // confuse the reader.
+  verify-literal(read-fragment(#:string:{"z\<009f>z"}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+  // A one line string literal can't contain a literal Newline.
+  assert-signals(<invalid-token>, read-fragment("\"\n\""));
+  assert-signals(<invalid-token>, read-fragment(#:string:{"\1<b>"}));
+end test;
 
-  assert-signals(<invalid-token>, read-fragment("\"\\1<b>\""));
-end test string-literal-test;
+define test string-literal-multi-line-test ()
+  let f = read-fragment(#:string:{""""""});
+  verify-literal(f, "", <string-fragment>);
+  // Make sure the reader didn't stop at the first pair of double quotes...
+  let source = source-location-string(fragment-source-location(f));
+  assert-equal(#:string:{""""""}, source);
+
+  verify-literal(read-fragment(#:string:{"""abc"""}),  "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{"""a\nc"""}), "a\nc", <string-fragment>);
+
+  // EOL canonicalization
+  verify-literal(read-fragment("\"\"\"a\nc\"\"\""),   "a\nc", <string-fragment>);
+  verify-literal(read-fragment("\"\"\"a\r\nc\"\"\""), "a\nc", <string-fragment>);
+  verify-literal(read-fragment("\"\"\"a\rc\"\"\""),   "a\nc", <string-fragment>);
+  verify-literal(read-fragment("\"\"\"a\n\rc\"\"\""), "a\n\nc", <string-fragment>);
+
+  let char = curry(as, <character>);
+  // One of every escape sequence. "\a\b\e\f\n\r\t\0\'\"\\"
+  verify-literal(read-fragment(#:string:{"""\a\b\e\f\n\r\t\0\'\"\\"""}),
+                 map-as(<string>, char, #('\a', '\b', '\e', '\f', '\n', '\r',
+                                          '\t', '\0', '\'', '\"', '\\')),
+                 <string-fragment>);
+  // Basic hex escaping.
+  verify-literal(read-fragment(#:string:{"""z\<9f>z"""}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+  // We can't handle character codes > 255 yet, but the leading zeros shouldn't
+  // confuse the reader.
+  verify-literal(read-fragment(#:string:{"""z\<009f>z"""}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+
+  assert-signals(<invalid-token>, read-fragment(#:string:{"""\1<b>"""}));
+end test;
+
+define test string-literal-raw-test ()
+  // TODO
+end test;
+
+define test string-literal-raw-multi-line-test ()
+  // TODO
+end test;
 
 define test symbol-literal-test ()
   let kw = read-fragment("test:");
@@ -248,6 +308,9 @@ define suite literal-test-suite ()
   test octal-integer-literal-test;
   test pair-literal-test;
   test ratio-literal-test;
+  test string-literal-multi-line-test;
+  test string-literal-raw-multi-line-test;
+  test string-literal-raw-test;
   test string-literal-test;
   test symbol-literal-test;
   test vector-literal-test;

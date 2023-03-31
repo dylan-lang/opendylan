@@ -244,6 +244,7 @@ define module dfmc-reader
 
   //// For test suite only.
   export
+    $initial-state,
+    get-token-1,
     skip-multi-line-comment;
-
 end module dfmc-reader;

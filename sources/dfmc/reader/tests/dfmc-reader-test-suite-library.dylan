@@ -20,7 +20,7 @@ define module dfmc-reader-test-suite
     import: { <compilation-record>,
               <interactive-compilation-record> };
   use source-records,
-    import: { <interactive-source-record> };
+    import: { <interactive-source-record>, source-location-string };
   use streams,
     import: { <string-stream>,
               stream-contents };
