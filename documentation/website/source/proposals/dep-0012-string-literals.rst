@@ -15,9 +15,6 @@ Post-History:    `28-Mar-2023 <https://groups.google.com/g/dylan-lang/c/xhofah0K
 Target-Version:  2023.1
 ===============  =============================================
 
-.. contents:: Contents
-   :local:
-
 
 Abstract
 ========
@@ -38,8 +35,8 @@ Summary: Literal syntax to address both of these deficiencies would be nice to
 have and is something that people expect to exist in modern programming
 languages.
 
-Multi-line Strings
-------------------
+Multi-line String Literals
+--------------------------
 
 While it should be noted that encoding long string literals into source code is
 not good practice when internationalization is desired, it is convenient to
@@ -105,9 +102,26 @@ Specification
 =============
 
 Multi-line string literals are delimited by three double quote characters on
-each end: ``"""``. Any string literal, whether one line or multi-line, may be
+each end: ``"""``. Any string literal, whether one-line or multi-line, may be
 prefixed with ``#r`` or ``#R`` to disable backslash escape processing, i.e., to
 make it a raw string literal.
+
+Literal end-of-line sequences are always interpreted as a single LF character,
+in both raw and escaped string literals, regardless of operating system
+platform. Specifically,
+
+#. CR (character code 13) by itself is converted to a single LF (character code
+   10).
+
+#. CRLF (character codes 13 10, when occurring consecutively) are converted to
+   a single LF (character code 10).
+
+An implication of this design is that the only way to include a CR character in
+a string literal is with the escape sequence ``\r`` in a non-raw string.
+
+All string literals, whether escaped, raw, one-line, or multi-line, continue to
+adhere to the rule that consecutive string literals separated by only
+whitespace are automatically concatenated.
 
 In the Dylan Reference Manual, in the section `Tokens
 <https://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-3>`_, ``#r`` is
@@ -182,9 +196,6 @@ is shown below.
         one of \ ' " a b e f n r t 0
 
         < hex-digits >
-
-Literal end-of-line sequences (\\n and \\r\\n) are always interpreted as a
-single Newline character, regardless of operating system platform.
 
 Examples
 --------
