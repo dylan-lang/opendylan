@@ -234,9 +234,8 @@ Equivalent to ``"foo\nbar\\[A-Z]+"``::
 Reference Implementation
 ========================
 
-A reference implementation can be found `on github
-<https://github.com/cgay/opendylan/commits/multi-line-strings>`_.  As of this
-writing, the implementation is functional but needs a few internal cleanups.
+A reference implementation is underway `on github
+<https://github.com/cgay/opendylan/commits/dep12>`_.
 
 
 Revision History
