@@ -71,7 +71,7 @@ define constant $initial-state :: <state>
              #("tT" . #"true"),
              #("fF" . #"false"),
              #("nN" . #"sharp-n"), // #next
-             #("rR" . #"sharp-r"), // #rest
+             #("rR" . #"sharp-r"), // #rest, #r"...", #r"""..."""
              #("kK" . #"sharp-k"), // #key
              #("aA" . #"sharp-a")  // #all-keys
              /* CMU
@@ -104,7 +104,9 @@ define constant $initial-state :: <state>
        state(#"sharp-ne", #f, #("xX" . #"sharp-nex")),
        state(#"sharp-nex", #f, #("tT" . #"sharp-next")),
        state(#"sharp-next", fragment-builder(<hash-next-fragment>)),
-       state(#"sharp-r", #f, #("eE" . #"sharp-re")),
+       state(#"sharp-r", #f,
+             #("eE" . #"sharp-re"),
+             #('"' . #"raw-string-start")),
        state(#"sharp-re", #f, #("sS" . #"sharp-res")),
        state(#"sharp-res", #f, #("tT" . #"sharp-rest")),
        state(#"sharp-rest", fragment-builder(<hash-rest-fragment>)),
@@ -490,7 +492,8 @@ define constant $initial-state :: <state>
        state(#"end-simple-string", make-string-literal),
        state(#"two-double-quotes", make-string-literal,
              #('"' . #"3string")),
-       state(#"3string", #f,
+
+       state(#"3string", #f, // seen """
              #('"' . #"close-double-quote"),
              #('\\' . #"3string-escape"),
              #(" !#-[]-~\r\n" . #"3string"),
@@ -512,6 +515,37 @@ define constant $initial-state :: <state>
              #(" !#-[]-~\r\n" . #"3string"),
              pair($ascii-8-bit-extensions, #"3string")),
        state(#"multi-line-string", make-multi-line-string-literal),
+
+       // Raw strings
+       state(#"raw-string-start", #f,          // seen #r"
+             #('"' . #"sharp-r-2-double-quotes"),
+             #(" !#-~" . #"raw-1string"),
+             pair($ascii-8-bit-extensions, #"raw-1string")),
+       state(#"sharp-r-2-double-quotes", make-one-line-raw-string-literal,
+             #('"' . #"raw-3string-start")),
+       state(#"raw-1string", #f,       // seen #r" plus one non-" char
+             #('"' . #"raw-1string-end"),
+             #(" !#-~" . #"raw-1string"),
+             pair($ascii-8-bit-extensions, #"raw-1string")),
+       state(#"raw-1string-end", make-one-line-raw-string-literal),
+       state(#"raw-3string-start", #f, // seen #r"""
+             #('"' . #"raw-3string-double-quote"),
+             #(" !#-~\r\n" . #"raw-3string"),
+             pair($ascii-8-bit-extensions, #"raw-3string")),
+       state(#"raw-3string", #f,
+             #('"' . #"raw-3string-double-quote"),
+             #(" !#-~\r\n" . #"raw-3string"),
+             pair($ascii-8-bit-extensions, #"raw-3string")),
+       state(#"raw-3string-double-quote", #f,
+             #('"' . #"raw-3string-2-double-quotes"),
+             #(" !#-~\r\n" . #"raw-3string"),
+             pair($ascii-8-bit-extensions, #"raw-3string")),
+       state(#"raw-3string-2-double-quotes", #f,
+             #('"' . #"raw-3string-end"),
+             #(" !#-~\r\n" . #"raw-3string"),
+             pair($ascii-8-bit-extensions, #"raw-3string")),
+       state(#"raw-3string-end", make-multi-line-raw-string-literal),
+
        state(#"string-escape", #f,
              #("\\'\"abefnrt0" . #"double-quote"),
              #('<' . #"string-escape-less")),

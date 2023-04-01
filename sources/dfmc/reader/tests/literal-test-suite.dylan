@@ -257,12 +257,43 @@ define test string-literal-multi-line-test ()
   assert-signals(<invalid-token>, read-fragment(#:string:{"""\1<b>"""}));
 end test;
 
-define test string-literal-raw-test ()
-  // TODO
+define test string-literal-raw-one-line-test ()
+  let f = read-fragment(#:string:{#r""});
+  verify-literal(f, "", <string-fragment>);
+  let source = source-location-string(fragment-source-location(f));
+  assert-equal(#:string:{#r""}, source);
+
+  verify-literal(read-fragment(#:string:{#r"abc"}), "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{#r"a\c"}), "a\\c", <string-fragment>);
+
+  // All escape codes ignored?  \ precedes the terminating double quote to
+  // ensure that it is ignored. We replace the X after the fact, to avoid
+  // confusing Emacs.
+  let s = #:string:{#r"\a\b\e\f\n\r\t\0\'\\\<X"};
+  s[s.size - 2] := '\\';
+  verify-literal(read-fragment(s),
+                 concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
+                 <string-fragment>);
 end test;
 
 define test string-literal-raw-multi-line-test ()
-  // TODO
+  let f = read-fragment(#:string:{#r""""""});
+  verify-literal(f, "", <string-fragment>);
+  let source = source-location-string(fragment-source-location(f));
+  assert-equal(#:string:{#r""""""}, source);
+
+  verify-literal(read-fragment(#:string:{#r"""abc"""}), "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{#r"""a\c"""}), "a\\c", <string-fragment>);
+  verify-literal(read-fragment(#:string:{#r"""a""c"""}), "a\"\"c", <string-fragment>);
+
+  // All escape codes ignored?  \ precedes the terminating double quotes to
+  // ensure that it is ignored. We replace the X after the fact, to avoid
+  // confusing Emacs.
+  let s = #:string:{#r"""\a\b\e\f\n\r\t\0\'\\\<X"""};
+  s[s.size - 4] := '\\';
+  verify-literal(read-fragment(s),
+                 concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
+                 <string-fragment>);
 end test;
 
 define test symbol-literal-test ()
@@ -310,7 +341,7 @@ define suite literal-test-suite ()
   test ratio-literal-test;
   test string-literal-multi-line-test;
   test string-literal-raw-multi-line-test;
-  test string-literal-raw-test;
+  test string-literal-raw-one-line-test;
   test string-literal-test;
   test symbol-literal-test;
   test vector-literal-test;

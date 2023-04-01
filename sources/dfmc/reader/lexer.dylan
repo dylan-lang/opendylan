@@ -930,7 +930,6 @@ define method decode-string
      epos :: <integer>, escapes? :: <boolean>)
  => (string :: <byte-string>)
   let contents = source-location.source-location-record.contents;
-  format-out("\ncontents: %=\n", contents); force-out();
   local
     method skip-hex-escape (pos)
       // TODO(cgay): signal better error if '>' not found.
@@ -943,33 +942,33 @@ define method decode-string
     method loop (pos :: <integer>, len :: <integer>, prev-was-cr? :: <boolean>,
                  string :: false-or(<string>))
              => (len :: <integer>)
-      format-out("loop(%d, %d, %=, %=)\n", pos, len, prev-was-cr?, string);
-      force-out();
       if (pos >= epos)
         len
       else
         let code = contents[pos];
         select (code)
           as(<integer>, '\\') =>
-            let escape-char = as(<character>, contents[pos + 1]);
-            let new-position
-              = if (escape-char == '<')
-                  if (string)
-                    let (char, epos)
-                      = hex-escape-character(source-location, pos + 2);
-                    format-out("hex escape char = %= '%s', epos = %=\n",
-                               char, char, epos);
-                    force-out();
-                    string[len] := char;
-                    epos + 1
+            if (~escapes?)
+              string & (string[len] := '\\');
+              loop(pos + 1, len + 1, #f, string)
+            else
+              let escape-char = as(<character>, contents[pos + 1]);
+              let new-position
+                = if (escape-char == '<')
+                    if (string)
+                      let (char, epos)
+                        = hex-escape-character(source-location, pos + 2);
+                      string[len] := char;
+                      epos + 1
+                    else
+                      skip-hex-escape(pos + 2)
+                    end
                   else
-                    skip-hex-escape(pos + 2)
-                  end
-                else
-                  string & (string[len] := escape-character(escape-char));
-                  pos + 2
-                end;
-            loop(new-position, len + 1, #f, string);
+                    string & (string[len] := escape-character(escape-char));
+                    pos + 2
+                  end;
+              loop(new-position, len + 1, #f, string);
+            end if;
           as(<integer>, '\r') =>
             string & (string[len] := '\n');
             loop(pos + 1, len + 1, #t, string);
@@ -1186,18 +1185,41 @@ define method make-string-literal
                                               #t)));
 end method make-string-literal;
 
-// TODO(cgay): <multi-line-string-fragment>
 define method make-multi-line-string-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
  => (res :: <string-fragment>)
-  let bpos = source-location.start-posn + 3;  // 3 double quotes
-  let epos = source-location.end-posn - 3;    // 3 double quotes
+  let bpos = source-location.start-posn + 3;  // """
+  let epos = source-location.end-posn - 3;    // """
   make(<string-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        // kind: $string-token,
        value: as-fragment-value(decode-string(source-location, bpos, epos, #t)))
 end method make-multi-line-string-literal;
+
+define method make-multi-line-raw-string-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (res :: <string-fragment>)
+  let bpos = source-location.start-posn + 5;  // #r"""
+  let epos = source-location.end-posn - 3;    // """
+  make(<string-fragment>,
+       record: source-location.source-location-record,
+       source-position: source-location.source-location-source-position,
+       // kind: $string-token,
+       value: as-fragment-value(decode-string(source-location, bpos, epos, #f)))
+end method;
+
+define method make-one-line-raw-string-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (res :: <string-fragment>)
+  let bpos = source-location.start-posn + 3;  // #r"
+  let epos = source-location.end-posn - 1;    // "
+  make(<string-fragment>,
+       record: source-location.source-location-record,
+       source-position: source-location.source-location-source-position,
+       // kind: $string-token,
+       value: as-fragment-value(decode-string(source-location, bpos, epos, #f)))
+end method;
 
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
