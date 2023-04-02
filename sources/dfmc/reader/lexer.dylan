@@ -1368,18 +1368,28 @@ define method make-hash-literal
       let start-delimiter = delimiter;
       let end-delimiter
         = as(<integer>, $hash-data-end-delimiters[delimiter-index]);
-      let i :: <integer> = data-start + 1;
-      let char :: <integer> = 0;
-      while (((char := contents[i]) ~== end-delimiter)
-               | (char == end-delimiter & contents[i - 1] == $escape-code))
-        if (char == $newline-code)
-          lexer.line := lexer.line + 1;
-          lexer.line-start := i;
+      iterate loop (i = data-start + 1, prev-char = 0)
+        if (i >= length)
+          note(<unterminated-parser-expansion>,
+               source-location:
+                 record-position-as-location
+                 (source-location.source-location-record,
+                  source-location.source-location-source-position),
+               token-string: extract-string(source-location));
+        else
+          let char :: <integer> = contents[i];
+          if (char == end-delimiter & (prev-char ~== $escape-code))
+            data := extract-string(source-location, start: data-start + 1, end: i);
+            lexer.posn := i + 1;
+          else
+            if (char == $newline-code)
+              lexer.line := lexer.line + 1;
+              lexer.line-start := i;
+            end;
+            loop(i + 1, char);
+          end;
         end;
-        i := i + 1;
-      end;
-      data := extract-string(source-location, start: data-start + 1, end: i);
-      lexer.posn := i + 1;
+      end iterate;
     else
       // Read until whitespace or EOF
       let i :: <integer> = data-start;

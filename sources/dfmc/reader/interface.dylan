@@ -109,6 +109,11 @@ define serious-program-warning <ratios-not-supported> (<invalid-token>)
   format-arguments token-string;
 end serious-program-warning;
 
+define serious-program-warning <unterminated-parser-expansion>
+  format-string "Unterminated parser expansion %s";
+  format-arguments token-string;
+end serious-program-warning;
+
 define serious-program-warning <invalid-end-of-input> (<reader-error>)
   format-string
     "Unexpected end of input encountered while reading form.";
