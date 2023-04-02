@@ -289,17 +289,21 @@ File-System module.
 
 .. function:: file-exists?
 
-   Returns ``#t`` if the specified file exists.
+   Returns :drm:`#t` if the specified file exists.
 
-   :signature: file-exists? *file* => *exists?*
+   :signature: file-exists? *file* #key *follow-links?* => *exists?*
 
    :parameter file: An instance of :type:`<pathname>`.
+   :parameter follow-links?: An instance of :drm:`<boolean>`. Defaults to
+      :drm:`#t`.
    :value exists?: An instance of :drm:`<boolean>`.
 
    :description:
 
-     Returns ``#t`` if *file* exists. If it refers to a link, the target
-     of the link is checked.
+     Returns :drm:`#t` if *file* exists. If the file refers to a symbolic link,
+     the behavior depends on the value of *follow-links?*. If *follow-links?*
+     is true (the default) the target of the link is checked; otherwise the
+     link itself is checked.
 
 .. function:: file-properties
 

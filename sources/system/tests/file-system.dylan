@@ -62,8 +62,22 @@ end;
 /// File-system function test cases
 
 define test test-file-exists? ()
-  //---*** Fill this in.
-end;
+  let dir = test-temp-directory();
+  let file = file-locator(dir, "file");
+  assert-false(file-exists?(file));
+  write-test-file(file);
+  assert-true(file-exists?(file));
+  assert-true(file-exists?(dir));
+
+  // TODO: Create a symbolic link and test the follow-symlinks? parameter. We
+  // don't currently have a function to create symlinks.
+  // I created symlinks by hand and ran this to test once:
+  //   $ ln -s /tmp/nothing /tmp/symlink-bad
+  //   $ ln -s /usr /tmp/symlink-good
+  // assert-true(file-exists?("/tmp/symlink-good"));
+  // assert-false(file-exists?("/tmp/symlink-bad"));
+  // assert-true(file-exists?("/tmp/symlink-bad", follow-links?: #f));
+end test;
 
 define test test-file-type ()
   //---*** Fill this in.
