@@ -2,19 +2,21 @@ Module: dfmc-reader-test-suite
 License: See License.txt in this distribution for details.
 
 define function verify-literal
-    (f :: <fragment>, value, required-class)
- => ()
-  assert-equal(f.fragment-value, value);
-  assert-true(instance?(f, required-class));
-end function verify-literal;
+    (fragment, value, required-class) => ()
+  assert-instance?(required-class, fragment,
+                   format-to-string("verify-literal for value %=", value));
+  if (instance?(fragment, required-class))
+    assert-equal(fragment.fragment-value, value);
+  end;
+end function;
 
 define function verify-presentation
-    (f :: <fragment>, presentation :: <string>)
- => ()
+    (f :: <fragment>, presentation :: <string>) => ()
   let stream = make(<string-stream>, direction: #"output");
   present-fragments(list(f), stream);
-  assert-equal(stream.stream-contents, presentation);
-end function verify-presentation;
+  assert-equal(stream.stream-contents, presentation,
+               format-to-string("verify-presentation for %=", presentation));
+end function;
 
 define test binary-integer-literal-test ()
   verify-literal(read-fragment("#b10"), 2, <integer-fragment>);
@@ -304,6 +306,26 @@ define test symbol-literal-test ()
   let sym = read-fragment("#\"hello world\"");
   verify-literal(sym, #"hello world", <symbol-syntax-symbol-fragment>);
   verify-presentation(sym, "#\"hello world\"");
+
+  // Basic multi-line syntax
+  let sym = read-fragment(#:string:{#"""a"""});
+  verify-literal(sym, #"a", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, #:string:{#"a"});
+
+  // Literal Newline accepted and preserved?
+  let sym = read-fragment("#\"\"\"a\nb\"\"\"");
+  verify-literal(sym, #"a\nb", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, "#\"a\nb\"");
+
+  // CRLF -> LF?
+  let sym = read-fragment("#\"\"\"c\r\nd\"\"\"");
+  verify-literal(sym, #"c\nd", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, "#\"c\nd\"");
+
+  // CR -> LF?
+  let sym = read-fragment("#\"\"\"e\rf\"\"\"");
+  verify-literal(sym, #"e\nf", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, "#\"e\nf\"");
 end test symbol-literal-test;
 
 define test vector-literal-test ()

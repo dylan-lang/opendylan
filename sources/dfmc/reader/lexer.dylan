@@ -996,12 +996,13 @@ end method decode-string;
 // These are referred to as "unique strings" in the DRM Lexical Syntax.
 //
 define method make-quoted-symbol
-    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+    (lexer :: <lexer>, source-location :: <lexer-source-location>,
+     start-offset :: <integer>, end-offset :: <integer>)
  => (res :: <symbol-syntax-symbol-fragment>)
   let sym = as(<symbol>,
                decode-string(source-location,
-                             source-location.start-posn + 2,
-                             source-location.end-posn - 1,
+                             source-location.start-posn + start-offset,
+                             source-location.end-posn - end-offset,
                              #t));
   make(<symbol-syntax-symbol-fragment>,
        record: source-location.source-location-record,
