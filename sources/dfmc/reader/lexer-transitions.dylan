@@ -548,13 +548,13 @@ define constant $initial-state :: <state>
              #('"' . #"sharp-r-2-double-quotes"),
              #(" !#-~" . #"raw-1string"),
              pair($ascii-8-bit-extensions, #"raw-1string")),
-       state(#"sharp-r-2-double-quotes", make-one-line-raw-string-literal,
+       state(#"sharp-r-2-double-quotes", make-raw-string-literal,
              #('"' . #"raw-3string-start")),
        state(#"raw-1string", #f,       // seen #r" plus one non-" char
              #('"' . #"raw-1string-end"),
              #(" !#-~" . #"raw-1string"),
              pair($ascii-8-bit-extensions, #"raw-1string")),
-       state(#"raw-1string-end", make-one-line-raw-string-literal),
+       state(#"raw-1string-end", make-raw-string-literal),
        state(#"raw-3string-start", #f, // seen #r"""
              #('"' . #"raw-3string-double-quote"),
              #(" !#-~\r\n" . #"raw-3string"),

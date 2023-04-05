@@ -1173,54 +1173,32 @@ define method make-character-literal
             end));
 end method make-character-literal;
 
-define method make-string-literal
-    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+define method %make-string-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>,
+     start-offset :: <integer>, end-offset :: <integer>,
+     allow-escapes? :: <boolean>)
  => (res :: <string-fragment>)
+  let bpos = source-location.start-posn + start-offset;
+  let epos = source-location.end-posn - end-offset;
+  let string = decode-string(source-location, bpos, epos, allow-escapes?);
   make(<string-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        // kind: $string-token,
-       value: as-fragment-value(decode-string(source-location,
-                                              source-location.start-posn + 1,
-                                              source-location.end-posn - 1,
-                                              #t)));
-end method make-string-literal;
-
-define method make-multi-line-string-literal
-    (lexer :: <lexer>, source-location :: <lexer-source-location>)
- => (res :: <string-fragment>)
-  let bpos = source-location.start-posn + 3;  // """
-  let epos = source-location.end-posn - 3;    // """
-  make(<string-fragment>,
-       record: source-location.source-location-record,
-       source-position: source-location.source-location-source-position,
-       // kind: $string-token,
-       value: as-fragment-value(decode-string(source-location, bpos, epos, #t)))
-end method make-multi-line-string-literal;
-
-define method make-multi-line-raw-string-literal
-    (lexer :: <lexer>, source-location :: <lexer-source-location>)
- => (res :: <string-fragment>)
-  let bpos = source-location.start-posn + 5;  // #r"""
-  let epos = source-location.end-posn - 3;    // """
-  make(<string-fragment>,
-       record: source-location.source-location-record,
-       source-position: source-location.source-location-source-position,
-       // kind: $string-token,
-       value: as-fragment-value(decode-string(source-location, bpos, epos, #f)))
+       value: as-fragment-value(string))
 end method;
 
-define method make-one-line-raw-string-literal
-    (lexer :: <lexer>, source-location :: <lexer-source-location>)
- => (res :: <string-fragment>)
-  let bpos = source-location.start-posn + 3;  // #r"
-  let epos = source-location.end-posn - 1;    // "
-  make(<string-fragment>,
-       record: source-location.source-location-record,
-       source-position: source-location.source-location-source-position,
-       // kind: $string-token,
-       value: as-fragment-value(decode-string(source-location, bpos, epos, #f)))
-end method;
+define constant make-string-literal                // "..."
+  = rcurry(%make-string-literal, 1, 1, #t);
+
+define constant make-multi-line-string-literal     // """..."""
+  = rcurry(%make-string-literal, 3, 3, #t);
+
+define constant make-raw-string-literal            // #r"..."
+  = rcurry(%make-string-literal, 3, 1, #f);
+
+define constant make-multi-line-raw-string-literal // #r"""..."""
+  = rcurry(%make-string-literal, 5, 3, #f);
 
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
