@@ -24,8 +24,8 @@ programming languages, most notably the inability to encode multi-line strings
 into a single source token that crosses multiple source lines and no fully
 supported way to represent unescaped ("raw") strings. This DEP proposes a
 literal syntax for both of these cases. Briefly, it proposes syntax for
-one-line raw strings delimited by ``#r"`` and for multi-line strings delimited
-by ``"""`` and ``#r"""``
+one-line raw strings delimited by ``#r"``, multi-line strings delimited by
+``"""`` and ``#r"""``, and quoted symbols delimited by ``#"""``.
 
 
 Rationale
@@ -122,6 +122,11 @@ a string literal is with the escape sequence ``\r`` in a non-raw string.
 All string literals, whether escaped, raw, one-line, or multi-line, continue to
 adhere to the rule that consecutive string literals separated by only
 whitespace are automatically concatenated.
+
+Because Dylan's quoted symbol syntax (also known as "unique string" syntax) is
+just `#` followed by any standard string, we also allow ``#"""`` to indicate a
+multi-line quoted symbol, to be consistent. No new syntax is provided to create
+a "raw" quoted symbols, i.e., quoted symbols without escape processing.
 
 In the Dylan Reference Manual, in the section `Tokens
 <https://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-3>`_, ``#r`` is
