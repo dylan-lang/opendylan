@@ -18,7 +18,7 @@ gets transformed, setter-like, into::
 
 The ``<text>`` part can be either *delimited* or *undelimited*. Undelimited
 text can contain anything but commas, semicolons, brackets of any kind, and
-whitespace. There is no ``\`` escape processing. All the following are valid::
+whitespace. All the following are valid::
 
     #:http://opendylan.org/
     #:time:12:30am
@@ -51,3 +51,9 @@ An example parser:
 
 If an appropriate function isn't defined, you get a standard unbound variable
 reference message indicating the # literal.
+
+Note that there is no escape processing except that the end delimiter may be
+escaped with a backslash and *the escape character itself is not removed*. For
+example, ``#:file:"C:\foo\"`` is an error because the end delimiter is escaped
+and therefore the hash literal is unterminated. ``#:file:"C:\foo\""`` results
+in the literal string ``C:\foo\"`` being passed to the parser.

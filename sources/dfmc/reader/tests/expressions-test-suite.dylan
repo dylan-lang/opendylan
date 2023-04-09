@@ -112,7 +112,7 @@ define function verify-hash-literal-function-call
   assert-equal(arg1.fragment-value, arg);
 end function;
 
-define test hash-literal-test ()
+define test hash-literal-ast-test ()
   verify-hash-literal-function-call("#:foo:bar", #"foo-parser", "bar");
   verify-hash-literal-function-call("#:foo:{\nbar\n}", #"foo-parser", "\nbar\n");
 end test;
@@ -136,5 +136,5 @@ define suite expressions-test-suite ()
   test binary->=-test;
   // This doesn't test &, | and := yet.
   test escaped-name-test;
-  test hash-literal-test;
+  test hash-literal-ast-test;
 end suite expressions-test-suite;

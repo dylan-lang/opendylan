@@ -229,6 +229,14 @@ define test vector-literal-test ()
   verify-presentation(f, "#[\"a\", b:]");
 end test vector-literal-test;
 
+define test hash-literal-test ()
+  // End delimiter is escaped so the hash literal is not terminated. This used
+  // to crash the compiler, unless '}' appeared somewhere later in the source
+  // record.
+  let source = "#:foo:{\\}";
+  assert-false(read-fragment(source));
+end test;
+
 define suite literal-test-suite ()
   test binary-integer-literal-test;
   test boolean-literal-test;
@@ -243,4 +251,5 @@ define suite literal-test-suite ()
   test string-literal-test;
   test symbol-literal-test;
   test vector-literal-test;
+  test hash-literal-test;
 end suite literal-test-suite;
