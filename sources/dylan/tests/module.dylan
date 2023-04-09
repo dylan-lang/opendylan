@@ -15,17 +15,12 @@ define module dylan-test-suite
               limited-integer-min,
               limited-integer-max };
   use common-dylan;
+  use common-dylan-test-utilities;
   use format;
   use simple-random;
   use table-extensions,
     import: { case-insensitive-equal };
   use testworks;
 
-  // Suites
   export dylan-test-suite;
-
-  // Protocol
-  export test-collection-class,
-         test-condition-class,
-         test-number-class;
-end module dylan-test-suite;
+end module;

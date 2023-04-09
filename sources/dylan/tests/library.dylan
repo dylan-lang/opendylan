@@ -10,6 +10,7 @@ define library dylan-test-suite
   use dylan,
     import: { dylan-extensions };
   use common-dylan;
+  use common-dylan-test-utilities;
   use collections,
     import: { table-extensions };
   use io;
