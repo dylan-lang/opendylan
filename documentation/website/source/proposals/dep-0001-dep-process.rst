@@ -6,7 +6,7 @@ DEP Purpose and Guidelines
 DEP Number:     1
 Type:           Process
 Author:         Carl Gay
-Status:         Draft
+Status:         Active
 Created:        07-Jan-2012
 Last-Modified:  16-Jan-2012
 Post-History:   16-Jan-2012, 10-Jan-2012
@@ -145,7 +145,7 @@ As updates are necessary, the DEP author may commit new versions.
 Wait for at least ten days to receive feedback on each draft.
 
 **Reach consensus** -- We rely on reaching consensus on the
-dylan-lang@googlegroups.com mailing list.  Consensus _must_ be
+dylan-lang@googlegroups.com mailing list.  Consensus *must* be
 reached for the DEP to be approved.  Exactly what "consensus" means
 here is left undefined, as we expect most cases to be obvious and we
 wish to keep the process informal for now.  At such time as this
@@ -441,7 +441,7 @@ A DEP author must subscribe to the <dylan-lang@googlegroups.com>
 list.  Before submitting a (new revision of a DEP) the author must do
 the following:
 
-* Read the DEP to check if it is ready: sound and complete.  The ideas
+* Read the DEP to check if it is ready, sound, and complete.  The ideas
   must make technical sense, even if they don't seem likely to be
   accepted.
 
@@ -461,9 +461,7 @@ Once the DEP is ready for the repository, the DEP author will:
   <https://github.com/dylan-lang/website>`_.  The command to check
   it out is::
 
-
-
-    git clone git@github.com:dylan-lang/website.git
+    git clone https://github.com/dylan-lang/website
 
   Commit your changes, push them to your fork of the repository and
   submit a pull request.
