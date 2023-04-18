@@ -20,6 +20,10 @@ commit logs
 Compiler
 ========
 
+* `Dylan Enhancement Proposal (DEP) 12
+  <https://opendylan.org/proposals/dep-0012-string-literals.html>`_ was
+  implemented, adding multi-line and "raw" string literals.
+
 Tooling
 =======
 

@@ -2,19 +2,21 @@ Module: dfmc-reader-test-suite
 License: See License.txt in this distribution for details.
 
 define function verify-literal
-    (f :: <fragment>, value, required-class)
- => ()
-  assert-equal(f.fragment-value, value);
-  assert-true(instance?(f, required-class));
-end function verify-literal;
+    (fragment, value, required-class) => ()
+  assert-instance?(required-class, fragment,
+                   format-to-string("verify-literal for value %=", value));
+  if (instance?(fragment, required-class))
+    assert-equal(fragment.fragment-value, value);
+  end;
+end function;
 
 define function verify-presentation
-    (f :: <fragment>, presentation :: <string>)
- => ()
+    (f :: <fragment>, presentation :: <string>) => ()
   let stream = make(<string-stream>, direction: #"output");
   present-fragments(list(f), stream);
-  assert-equal(stream.stream-contents, presentation);
-end function verify-presentation;
+  assert-equal(stream.stream-contents, presentation,
+               format-to-string("verify-presentation for %=", presentation));
+end function;
 
 define test binary-integer-literal-test ()
   verify-literal(read-fragment("#b10"), 2, <integer-fragment>);
@@ -195,15 +197,106 @@ define test ratio-literal-test ()
   assert-signals(<ratios-not-supported>, read-fragment("1/2"));
 end test ratio-literal-test;
 
+define function string-parser (s) s end;
+
 define test string-literal-test ()
-  let f = read-fragment("\"abc\"");
-  verify-literal(f, "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{""}), "", <string-fragment>);
+  verify-literal(read-fragment(#:string:{"abc"}), "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{"a\nc"}), "a\nc", <string-fragment>);
 
-  let f = read-fragment("\"a\\nc\"");
-  verify-literal(f, "a\nc", <string-fragment>);
+  let char = curry(as, <character>);
+  // One of every escape sequence. "\a\b\e\f\n\r\t\0\'\"\\"
+  verify-literal(read-fragment(#:string:{"\a\b\e\f\n\r\t\0\'\"\\"}),
+                 map-as(<string>, char, #('\a', '\b', '\e', '\f', '\n', '\r',
+                                          '\t', '\0', '\'', '\"', '\\')),
+                 <string-fragment>);
+  // Basic hex escaping.
+  verify-literal(read-fragment(#:string:{"z\<9f>z"}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+  // We can't handle character codes > 255 yet, but the leading zeros shouldn't
+  // confuse the reader.
+  verify-literal(read-fragment(#:string:{"z\<009f>z"}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+  // A one line string literal can't contain a literal Newline.
+  assert-signals(<invalid-token>, read-fragment("\"\n\""));
+  assert-signals(<invalid-token>, read-fragment(#:string:{"\1<b>"}));
+end test;
 
-  assert-signals(<invalid-token>, read-fragment("\"\\1<b>\""));
-end test string-literal-test;
+define test string-literal-multi-line-test ()
+  let f = read-fragment(#:string:{""""""});
+  verify-literal(f, "", <string-fragment>);
+  // Make sure the reader didn't stop at the first pair of double quotes...
+  let source = source-location-string(fragment-source-location(f));
+  assert-equal(#:string:{""""""}, source);
+
+  verify-literal(read-fragment(#:string:{"""abc"""}),  "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{"""a\nc"""}), "a\nc", <string-fragment>);
+
+  // EOL canonicalization
+  verify-literal(read-fragment("\"\"\"a\nc\"\"\""),   "a\nc", <string-fragment>);
+  verify-literal(read-fragment("\"\"\"a\r\nc\"\"\""), "a\nc", <string-fragment>);
+  verify-literal(read-fragment("\"\"\"a\rc\"\"\""),   "a\nc", <string-fragment>);
+  verify-literal(read-fragment("\"\"\"a\n\rc\"\"\""), "a\n\nc", <string-fragment>);
+
+  let char = curry(as, <character>);
+  // One of every escape sequence. "\a\b\e\f\n\r\t\0\'\"\\"
+  verify-literal(read-fragment(#:string:{"""\a\b\e\f\n\r\t\0\'\"\\"""}),
+                 map-as(<string>, char, #('\a', '\b', '\e', '\f', '\n', '\r',
+                                          '\t', '\0', '\'', '\"', '\\')),
+                 <string-fragment>);
+  // Basic hex escaping.
+  verify-literal(read-fragment(#:string:{"""z\<9f>z"""}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+  // We can't handle character codes > 255 yet, but the leading zeros shouldn't
+  // confuse the reader.
+  verify-literal(read-fragment(#:string:{"""z\<009f>z"""}),
+                 map-as(<string>, char, #('z', #x9f, 'z')),
+                 <string-fragment>);
+
+  assert-signals(<invalid-token>, read-fragment(#:string:{"""\1<b>"""}));
+end test;
+
+define test string-literal-raw-one-line-test ()
+  let f = read-fragment(#:string:{#r""});
+  verify-literal(f, "", <string-fragment>);
+  let source = source-location-string(fragment-source-location(f));
+  assert-equal(#:string:{#r""}, source);
+
+  verify-literal(read-fragment(#:string:{#r"abc"}), "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{#r"a\c"}), "a\\c", <string-fragment>);
+
+  // All escape codes ignored?  \ precedes the terminating double quote to
+  // ensure that it is ignored. We replace the X after the fact, to avoid
+  // confusing Emacs.
+  let s = #:string:{#r"\a\b\e\f\n\r\t\0\'\\\<X"};
+  s[s.size - 2] := '\\';
+  verify-literal(read-fragment(s),
+                 concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
+                 <string-fragment>);
+end test;
+
+define test string-literal-raw-multi-line-test ()
+  let f = read-fragment(#:string:{#r""""""});
+  verify-literal(f, "", <string-fragment>);
+  let source = source-location-string(fragment-source-location(f));
+  assert-equal(#:string:{#r""""""}, source);
+
+  verify-literal(read-fragment(#:string:{#r"""abc"""}), "abc", <string-fragment>);
+  verify-literal(read-fragment(#:string:{#r"""a\c"""}), "a\\c", <string-fragment>);
+  verify-literal(read-fragment(#:string:{#r"""a""c"""}), "a\"\"c", <string-fragment>);
+
+  // All escape codes ignored?  \ precedes the terminating double quotes to
+  // ensure that it is ignored. We replace the X after the fact, to avoid
+  // confusing Emacs.
+  let s = #:string:{#r"""\a\b\e\f\n\r\t\0\'\\\<X"""};
+  s[s.size - 4] := '\\';
+  verify-literal(read-fragment(s),
+                 concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
+                 <string-fragment>);
+end test;
 
 define test symbol-literal-test ()
   let kw = read-fragment("test:");
@@ -213,6 +306,26 @@ define test symbol-literal-test ()
   let sym = read-fragment("#\"hello world\"");
   verify-literal(sym, #"hello world", <symbol-syntax-symbol-fragment>);
   verify-presentation(sym, "#\"hello world\"");
+
+  // Basic multi-line syntax
+  let sym = read-fragment(#:string:{#"""a"""});
+  verify-literal(sym, #"a", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, #:string:{#"a"});
+
+  // Literal Newline accepted and preserved?
+  let sym = read-fragment("#\"\"\"a\nb\"\"\"");
+  verify-literal(sym, #"a\nb", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, "#\"a\nb\"");
+
+  // CRLF -> LF?
+  let sym = read-fragment("#\"\"\"c\r\nd\"\"\"");
+  verify-literal(sym, #"c\nd", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, "#\"c\nd\"");
+
+  // CR -> LF?
+  let sym = read-fragment("#\"\"\"e\rf\"\"\"");
+  verify-literal(sym, #"e\nf", <symbol-syntax-symbol-fragment>);
+  verify-presentation(sym, "#\"e\nf\"");
 end test symbol-literal-test;
 
 define test vector-literal-test ()
@@ -248,6 +361,9 @@ define suite literal-test-suite ()
   test octal-integer-literal-test;
   test pair-literal-test;
   test ratio-literal-test;
+  test string-literal-multi-line-test;
+  test string-literal-raw-multi-line-test;
+  test string-literal-raw-one-line-test;
   test string-literal-test;
   test symbol-literal-test;
   test vector-literal-test;
