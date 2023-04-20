@@ -353,8 +353,6 @@ define macro fragment-builder
          end }
 end macro fragment-builder;
 
-// TODO: Lose the hand inlining of maybe-done when the compiler's smarter.
-
 define method get-token
     (lexer :: <lexer>) => (res :: <fragment>)
   //
@@ -401,7 +399,8 @@ end method get-token;
 define function get-token-1
     (state :: <state>, contents :: <byte-vector>, start :: <integer>,
      length :: <integer>, line :: <integer>, lstart :: <integer>)
- => (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>, current-line, line-start)
+ => (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>,
+     current-line, line-start)
   let unexpected-eof :: <boolean> = #f;
   let saved-line :: false-or(<integer>) = #f;
   let saved-line-start :: false-or(<integer>) = #f;
@@ -414,21 +413,67 @@ define function get-token-1
   let result-end = #f;
 
   without-bounds-checks
-
     local
+      // maybe-done is called when the state machine cannot be advanced any
+      // further.  It just checks to see if we really are done or not.
+      method maybe-done () => (posn, result-kind, result-start, result-end)
+        if (~instance?(result-kind, <symbol>))
+          values(posn, result-kind, result-start, result-end)
+        else
+          // result-kind is a symbol if this is one of the magic accepting
+          // states.  Instead of returning some token, we do some special
+          // processing depending on exactly what symbol it is, and then start
+          // the state machine over at the initial state.
+          select (result-kind)
+            #"whitespace" =>
+              #f;
+            #"newline" =>
+              current-line := current-line + 1;
+              line-start := result-end;
+            #"end-of-line-comment" =>
+              for (i :: <integer> from result-end below length,
+                   until: (contents[i] == $newline-code))
+              finally
+                result-end := i;
+              end for;
+            #"multi-line-comment" =>
+              saved-line := current-line;
+              saved-line-start := line-start;
+              let (epos, nskipped, lstart)
+                = skip-multi-line-comment(contents, length, result-end);
+              result-end := epos;
+              current-line := current-line + nskipped;
+              line-start := lstart | line-start;
+              if (result-end)
+                saved-line := #f;
+                saved-line-start := #f;
+              else
+                unexpected-eof := #t;
+              end;
+          end select;
+          result-kind := #f;
+          if (result-end)
+            result-start := result-end;
+            result-end := #f;
+            let result-start :: <integer> = result-start;
+            repeat($initial-state, result-start)
+          else
+            values(posn, result-kind, result-start, result-end)
+          end if
+        end if
+      end method maybe-done,
+
       method repeat (state :: <state>, posn :: <integer>)
+                 => (posn, result-kind, result-start, result-end)
         if (state.result)
-          //
-          // It is an accepting state, so record the result and where
-          // it ended.
-          //
+          // An accepting state; record the result and where it ended.
           result-kind := state.result;
           result-end := posn;
         end if;
-        //
-        // Try advancing the state machine once more if possible.
-        //
-        if (posn < length)
+        if (posn >= length)
+          maybe-done()
+        else
+          // Try advancing the state machine once more if possible.
           let table = state.transitions;
           let new-state
             = if (table /* & char < $max-lexer-code + 1 */)
@@ -440,158 +485,46 @@ define function get-token-1
             let new-state :: <state> = new-state;
             repeat(new-state, posn + 1)
           else
-            /*
-            maybe-done
-              (contents, length, result-kind, result-start, result-end);
-            */
-
-            //
-            // maybe-done is called when the state machine cannot be
-            // advanced any further.  It just checks to see if we really
-            // are done or not.
-            //
-            if (instance?(result-kind, <symbol>))
-              //
-              // The result-kind is a symbol if this is one of the magic
-              // accepting states.  Instead of returning some token, we do
-              // some special processing depending on exactly what symbol
-              // it is, and then start the state machine over at the
-              // initial state.
-              //
-              select (result-kind)
-                #"whitespace" =>
-                  #f;
-                #"newline" =>
-                  current-line := current-line + 1;
-                  line-start := result-end;
-                #"end-of-line-comment" =>
-                  for (i :: <integer> from result-end below length,
-                       until: (contents[i] == $newline-code))
-                  finally
-                    result-end := i;
-                  end for;
-                #"multi-line-comment" =>
-                  saved-line := current-line;
-                  saved-line-start := line-start;
-                  let (epos, nskipped, lstart)
-                    = skip-multi-line-comment(contents, length, result-end);
-                  result-end := epos;
-                  current-line := current-line + nskipped;
-                  line-start := lstart | line-start;
-                  if (result-end)
-                    saved-line := #f;
-                    saved-line-start := #f;
-                  else
-                    unexpected-eof := #t;
-                  end;
-              end select;
-              result-kind := #f;
-              if (result-end)
-                // let result-start :: <integer> = result-end;
-                // let result-end = #f;
-                result-start := result-end;
-                result-end := #f;
-                let result-start :: <integer> = result-start;
-                repeat($initial-state, result-start)
-              else
-                values(posn, result-kind, result-start, result-end)
-              end if
-            else
-              values(posn, result-kind, result-start, result-end)
-            end if
-          end if
-        else
-          /*
-          maybe-done
-            (contents, length, result-kind, result-start, result-end);
-          */
-          //
-          // maybe-done is called when the state machine cannot be
-          // advanced any further.  It just checks to see if we really
-          // are done or not.
-          //
-          if (instance?(result-kind, <symbol>))
-            //
-            // The result-kind is a symbol if this is one of the magic
-            // accepting states.  Instead of returning some token, we do
-            // some special processing depending on exactly what symbol
-            // it is, and then start the state machine over at the
-            // initial state.
-            //
-            select (result-kind)
-              #"whitespace" =>
-                #f;
-              #"newline" =>
-                current-line := current-line + 1;
-                line-start := result-end;
-              #"end-of-line-comment" =>
-                for (i :: <integer> from result-end below length,
-                     until: (contents[i] == $newline-code))
-                finally
-                  result-end := i;
-                end for;
-              #"multi-line-comment" =>
-                let (epos, nskipped, lstart)
-                  = skip-multi-line-comment(contents, length, result-end);
-                result-end := epos;
-                current-line := current-line + nskipped;
-                line-start := lstart | line-start;
-                if (~result-end)
-                  unexpected-eof := #t
-                end;
-            end select;
-            result-kind := #f;
-            if (result-end)
-              // let result-start :: <integer> = result-end;
-              // let result-end = #f;
-              result-start := result-end;
-              result-end := #f;
-              let result-start :: <integer> = result-start;
-              repeat($initial-state, result-start)
-            else
-              values(posn, result-kind, result-start, result-end)
-            end if
-          else
-            values(posn, result-kind, result-start, result-end)
+            maybe-done()
           end if
         end if
-      end method repeat;
+      end method repeat,
+
+      method count-newlines (bpos :: <integer>, epos :: <integer>)
+        iterate loop (i :: <integer> = bpos, n :: <integer> = 0)
+          case
+            i == epos => n;
+            contents[i] == $newline-code => loop(i + 1, n + 1);
+            otherwise => loop(i + 1, n);
+          end
+        end iterate
+      end method count-newlines;
+
     let (posn, result-kind, result-start, result-end)
       = repeat($initial-state, start);
     if (~result-kind)
-      //
-      // If result-kind is #f, that means we didn't find an accepting
-      // state.  Check to see if that means we are at the end or hit
-      // an error.
-      //
+      // If result-kind is #f, no accepting state was found.  Check to see if
+      // that means we are at the end or hit an error.
       if (result-start == length)
         result-kind := fragment-builder(<eof-marker>);
         result-end := result-start;
       elseif (unexpected-eof | posn == length)
-        result-kind := #f;
         result-end := length;
         unexpected-eof := #t;
       else
-        result-kind := #f;
         result-end := result-start + 1;
       end if;
     end if;
+    // TODO(cgay): This now needs to handle raw multi-line string literals and
+    // multi-line quoted symbols.
     if (result-kind == make-multi-line-string-literal)
       // multi-line string literals are the only tokens with embedded newlines
       // so they require special treatment.  Increment current-line by the
       // number of newlines in the string to keep source locations correct.
-      current-line := current-line + iterate loop (i :: <integer> = result-start, n :: <integer> = 0)
-                                       case
-                                         i == result-end => n;
-                                         contents[i] == $newline-code => loop(i + 1, n + 1);
-                                         otherwise => loop(i + 1, n);
-                                       end
-                                     end iterate;
+      current-line := current-line + count-newlines(result-start, result-end);
     end if;
 
-    //
     // Return enough information to make a source location for the current token.
-    //
     let effective-line :: <integer> = saved-line | current-line;
     let effective-line-start :: <integer> = saved-line-start | line-start;
     let bpos = result-start;
