@@ -515,9 +515,9 @@ define function get-token-1
         result-end := result-start + 1;
       end if;
     end if;
-    // TODO(cgay): This now needs to handle raw multi-line string literals and
-    // multi-line quoted symbols.
-    if (result-kind == make-multi-line-string-literal)
+    if (result-kind == make-multi-line-string-literal
+          | result-kind == make-multi-line-raw-string-literal
+          | result-kind == make-multi-line-quoted-symbol)
       // multi-line string literals are the only tokens with embedded newlines
       // so they require special treatment.  Increment current-line by the
       // number of newlines in the string to keep source locations correct.
@@ -928,7 +928,7 @@ end method decode-string;
 // Make a <literal-token> when confronted with the #"foo" syntax.
 // These are referred to as "unique strings" in the DRM Lexical Syntax.
 //
-define method make-quoted-symbol
+define method %make-quoted-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>,
      start-offset :: <integer>, end-offset :: <integer>)
  => (res :: <symbol-syntax-symbol-fragment>)
@@ -941,7 +941,13 @@ define method make-quoted-symbol
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        value: as-fragment-value(sym));
-end method make-quoted-symbol;
+end method;
+
+define constant make-quoted-symbol
+  = rcurry(%make-quoted-symbol, 2, 1);
+
+define constant make-multi-line-quoted-symbol
+  = rcurry(%make-quoted-symbol, 4, 3);
 
 // Make a <literal-token> when confronted with the foo: syntax.
 //
