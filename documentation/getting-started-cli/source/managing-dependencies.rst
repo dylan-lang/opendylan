@@ -1,20 +1,25 @@
-Adding New Libraries
-====================
+Managing Dependencies
+=====================
 
-.. note:: There is a new package system and ``dylan`` tool packaged with the
-          Open Dylan release which provides an alternative to using Git
-          submodules. It automatically downloads dependencies, creates registry
-          files for you, and uses Semantic Versioning to specify
-          dependencies. See the `dylan-tool`_ docs for more information.
+We recommend managing inter-library dependencies by use of the Dylan package
+manager and the :program:`dylan` tool. When using the :program:`dylan` tool
+dependencies are added to the "dylan-package.json" file in your project. Each
+dependency includes a `semantic version <https://semver.org>`_ and `dependency
+resolution
+<https://docs.opendylan.org/packages/dylan-tool/documentation/source/pacman.html#dependency-resolution>`_
+is done with "minimal version selection".  See the `dylan-tool`_ documentation
+for details.
+
+The second way to manage dependencies is to use Git submodules. The remainder
+of this document explains how to do that.
 
 Adding a Git Submodule
 ----------------------
 
-One way of handling inter-library dependencies is to use git submodules. This
-allows you to specify a precise version that you rely upon, but assumes that
-we're all using git.
+Git submodules allow you to specify a precise version that you rely upon, but
+they assume that everyone is using Git.
 
-We tend to keep all git submodules in a top level directory
+We tend to keep all Git submodules in a top level directory
 within the repository named ``ext``. To add a new submodule::
 
   git submodule add <repository URL> ext/<name>
@@ -64,8 +69,9 @@ that you're using.
 Transitive Dependencies
 -----------------------
 
-The Dylan compiler won't find transitive dependencies, so you
-will need to create registry entries for them as well.
+The Dylan compiler won't find transitive dependencies automatically (unless you
+are using `dylan-tool`_), so you will need to create registry entries for them
+as well.
 
 Sometimes, you will want to create git submodules for them as
 well, but other times you can just reference them from the
@@ -74,8 +80,6 @@ version that was pulled in with the existing submodule.
 As an example, if you pull in the HTTP library, it has
 a number of submodules, so you don't need to pull each
 of those in directly, but can reference them through
-the ``ext/http/`` directory. (Note in this case that
-the ``http`` library uses a non-standard name for the
-directory holding its submodules.)
+the ``ext/http/`` directory.
 
 .. _dylan-tool: https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html

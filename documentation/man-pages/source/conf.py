@@ -218,7 +218,7 @@ latex_documents = [
 man_pages = [
     ('dylan-compiler', 'dylan-compiler', u'Dylan Compiler',
      [u'Dylan Hackers'], 1),
-    ('make-dylan-app', 'make-dylan-app', u'Simple Dylan project generator',
+    ('dylan', 'dylan', u'Dylan workspace/package management tool',
      [u'Dylan Hackers'], 1)
 ]
 

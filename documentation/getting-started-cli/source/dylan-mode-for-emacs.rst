@@ -27,8 +27,8 @@ you put dylan-mode.  ::
 Setting ``OPEN_DYLAN_USER_REGISTRIES`` is important because that's how
 DIME finds your projects.
 
-For this tutorial let's use a "dime-test" project created with
-``make-dylan-app``.  See the section :doc:`hello-world` to create the
+For this tutorial let's use a "dime-test" project created with the
+:program:`dylan` tool.  See the section :doc:`hello-world` to create the
 project, and also make sure you have a registry entry for it.  See
 :doc:`source-registries` if you're not sure how to set that up.
 
@@ -37,7 +37,7 @@ project, and also make sure you have a registry entry for it.  See
     $ export PATH=/opt/opendylan/bin:$PATH
     $ cd ...dir containing registry...
     $ echo abstract://dylan/dime-test/dime-test.lid > registry/generic/dime-test
-    $ make-dylan-app dime-test
+    $ dylan new application --simple dime-test
     $ cd dime-test
     $ emacs dime-test.dylan
     M-x dime <Enter>

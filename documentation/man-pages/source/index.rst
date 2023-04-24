@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    dylan-compiler
-   make-dylan-app
+   dylan
 
 
 Indices and tables
