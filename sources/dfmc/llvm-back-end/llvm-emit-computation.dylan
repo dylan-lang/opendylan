@@ -115,7 +115,12 @@ end function;
 define method emit-reference
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <stack-vector-temporary>)
  => (reference :: <llvm-value>);
-  ins--bitcast(back-end, temporary-value(o), $llvm-object-pointer-type)
+  if (o.number-values ~= 0)
+    ins--bitcast(back-end, temporary-value(o), $llvm-object-pointer-type)
+  else
+    // Return the canonical empty vector
+    emit-reference(back-end, m, dylan-value(#"%empty-vector"))
+  end if
 end method;
 
 // Local temporary definitions
@@ -1080,14 +1085,16 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <stack-vector>) => ()
-  let word-size = back-end-word-size(back-end);
-  let class :: <&class> = dylan-value(#"<simple-object-vector>");
-  let tmp = temporary-value(c.temporary);
-  for (argument in c.arguments, i from 0)
-    let ptr = op--getslotptr(back-end, tmp, class, #"vector-element", i);
-    ins--store(back-end, emit-reference(back-end, m, argument), ptr,
-               alignment: word-size);
-  end for;
+  unless (c.arguments.empty?)
+    let word-size = back-end-word-size(back-end);
+    let class :: <&class> = dylan-value(#"<simple-object-vector>");
+    let tmp = temporary-value(c.temporary);
+    for (argument in c.arguments, i from 0)
+      let ptr = op--getslotptr(back-end, tmp, class, #"vector-element", i);
+      ins--store(back-end, emit-reference(back-end, m, argument), ptr,
+                 alignment: word-size);
+    end for;
+  end unless;
 end method;
 
 define method repeated-slot-type-alignment
