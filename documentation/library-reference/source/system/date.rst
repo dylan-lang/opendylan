@@ -674,7 +674,7 @@ Date module.
    :superclasses: :drm:`<number>`
 
    :keyword iso8601-string: An instance of ``false-or(<string>)``.
-     Default value: ``#f``.
+     Default value: :drm:`#f`.
    :keyword year: An instance of ``limited(<integer>, min: 1800, max:
      2199)``.
    :keyword month: An instance of ``limited(<integer>, min: 1, max:
@@ -1179,7 +1179,7 @@ Date module.
    :superclasses: :drm:`<number>`
 
    :keyword iso8601-string: An instance of ``false-or(<string>)``.
-     Default value: ``#f``.
+     Default value: :drm:`#f`.
    :keyword year: An instance of ``limited(<integer>, min: 1800, max:
      2199)``.
    :keyword month: An instance of ``limited(<integer>, min: 1, max:
@@ -1340,8 +1340,8 @@ Date module.
 
    :description:
 
-     Returns ``#t`` if the local machine is using Daylight Savings Time,
-     and ``#f`` otherwise.
+     Returns :drm:`#t` if the local machine is using Daylight Savings Time,
+     and :drm:`#f` otherwise.
 
 .. function:: local-time-zone-name
 
@@ -1385,7 +1385,7 @@ Date module.
 
    :parameter date-class: The class :class:`<date>`.
    :parameter #key iso8601-string: An instance of
-     ``false-or(<string>)``. Default value: ``#f``.
+     ``false-or(<string>)``. Default value: :drm:`#f`.
    :parameter #key year: An instance of ``limited(<integer>, min: 1800,
      max: 2199)``.
    :parameter #key month: An instance of ``limited(<integer>, min: 1,
@@ -1456,7 +1456,7 @@ Date module.
    :signature: parse-iso8601-string *string* #key *strict?* => *date*
 
    :parameter string: An instance of :drm:`<string>`.
-   :parameter #key strict?: An instance of :drm:`<boolean>`, default ``#t``.
+   :parameter #key strict?: An instance of :drm:`<boolean>`, default :drm:`#t`.
    :value date: An instance of :class:`<date>`.
 
    :description:

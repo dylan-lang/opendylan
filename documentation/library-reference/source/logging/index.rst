@@ -242,13 +242,13 @@ Logs
    :keyword additive?:
       A :drm:`<boolean>` specifying whether log messages sent to this
       log should be passed along to its parent log.  The default
-      is ``#t``.
+      is :drm:`#t`.
    :keyword children:
       A :drm:`<sequence>` of :class:`<log>` objects.
    :keyword enabled?:
       :drm:`<boolean>` specifying whether this log is enabled.
       Note that the value of *additive?* will be respected even if the
-      log is disabled.  The default is ``#t``.
+      log is disabled.  The default is :drm:`#t`.
    :keyword parent:
       The parent of this log.
 
@@ -273,7 +273,7 @@ Logs
       An instance of :drm:`<string>`.  This is normally a
       dotted path name like "http.server.queries".
    :value log:
-      An instance of :class:`<abstract-log>` or ``#f``.
+      An instance of :class:`<abstract-log>` or :drm:`#f`.
 
 .. generic-function:: get-root-log
 

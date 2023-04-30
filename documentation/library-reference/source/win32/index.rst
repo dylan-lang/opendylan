@@ -199,7 +199,7 @@ for frequently used types, such as ``$NULL-HANDLE``, ``NULL-RECT``, and
 by the expression :func:`null-pointer(<FOO>) <null-pointer>`. Use the function
 :func:`null-pointer?` to test whether a value is null. Do not use the
 expression ``if(ptr)...`` as is often done in C, since a null pointer is
-not the same as ``#f``. There are also functions :func:`null-handle` and
+not the same as :drm:`#f`. There are also functions :func:`null-handle` and
 :func:`null-handle?` for creating and testing handles, since conceptually they
 are not necessarily pointers.
 
@@ -225,7 +225,7 @@ they refer to the FFI designation of the C value representation, not to
 a Dylan data type.
 
 The C types ``BOOL`` and ``BOOLEAN`` are both mapped to :drm:`<boolean>` in
-Dylan. Use ``#t`` and ``#f`` instead of ``TRUE`` and ``FALSE``.
+Dylan. Use :drm:`#t` and :drm:`#f` instead of ``TRUE`` and ``FALSE``.
 
 .. note:: Beware that some functions, such as *TranslateAccelerator*,
    though documented to return ``TRUE`` or ``FALSE``, actually return ``int``
@@ -441,7 +441,7 @@ The Win32-Kernel library provides the following utility functions.
      functions).
 
      The function returns a text message (in a string) corresponding to
-     the error code, ``#f`` if the code is not recognized. The returned
+     the error code, :drm:`#f` if the code is not recognized. The returned
      string might have more than one line but does not have a newline at
      the end.
 
@@ -469,7 +469,7 @@ The Win32-Kernel library provides the following utility functions.
 
    :description:
 
-     Many Windows functions return ``#f`` or ``NULL`` to mean failure.
+     Many Windows functions return :drm:`#f` or ``NULL`` to mean failure.
      The function ``check-win32-result`` checks the result to see if it
      indicates failure, and if so it calls :func:`report-win32-error`.
 

@@ -140,7 +140,7 @@ The following specific constructors are available for use with the class
 Equality comparisons
 --------------------
 
-The ``=`` function compares two objects and returns ``#t`` if the values of
+The :drm:`=` function compares two objects and returns :drm:`#t` if the values of
 the two objects are equal to each other, that is of the same magnitude.
 
 .. generic-function:: =

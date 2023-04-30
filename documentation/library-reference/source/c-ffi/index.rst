@@ -1240,7 +1240,7 @@ these classes.
 
    :description:
 
-     Returns ``#t`` if a pointer is null and ``#f`` otherwise.
+     Returns :drm:`#t` if a pointer is null and :drm:`#f` otherwise.
 
 .. index::
    single: <C-void*> class
@@ -1543,7 +1543,7 @@ these classes.
 .. method:: =
    :specializer: <C-pointer>
 
-   Returns ``#t`` if two pointers are equal.
+   Returns :drm:`#t` if two pointers are equal.
 
    :signature: = *C-pointer-1* *C-pointer-2* => *boolean*
 
@@ -1556,7 +1556,7 @@ these classes.
 
    :description:
 
-     Returns ``#t`` if two pointers are equal. This is equivalent to:
+     Returns :drm:`#t` if two pointers are equal. This is equivalent to:
 
      .. code-block:: dylan
 
@@ -1578,7 +1578,7 @@ these classes.
 .. method:: <
    :specializer: <C-pointer>
 
-   Returns ``#t`` if the second argument is less than the first.
+   Returns :drm:`#t` if the second argument is less than the first.
 
    :signature: < *C-pointer-1* *C-pointer-2* => *boolean*
 
@@ -1588,7 +1588,7 @@ these classes.
 
    :description:
 
-     Returns ``#t`` if the second argument is less than the first. This
+     Returns :drm:`#t` if the second argument is less than the first. This
      allows pointer comparison operations to be performed on instances
      of :class:`<C-pointer>`.
 
@@ -2722,7 +2722,7 @@ Describing structure types
      The optional setter keyword specifies the generic function to which
      the setter method for the structure slot will be added. It defaults
      to getter-name*-setter*. No setter method is defined if the
-     *setter* option is ``#f``. If the *constant* keyword is supplied, no
+     *setter* option is :drm:`#f`. If the *constant* keyword is supplied, no
      *setter* option should be supplied.
 
      .. index::
@@ -3007,7 +3007,7 @@ Describing C functions to Dylan
      *generic-function-method:* option.
 
      Either the *c-name:* function option must be supplied, or the
-     *indirect:* option must be supplied with a value other than ``#f``,
+     *indirect:* option must be supplied with a value other than :drm:`#f`,
      but not both.
 
      A parameter-spec has the following syntax::
@@ -3066,12 +3066,12 @@ Describing C functions to Dylan
      Dylan function corresponding to each *input* *output* parameter of
      the C function that is specialized as the union of the export type
      of the referenced type of the type given for the parameter in
-     ``define c-function``, and ``#f``. When the C function returns, the
+     ``define c-function``, and :drm:`#f`. When the C function returns, the
      value in the location is accessed and returned as an extra result
      from the Dylan function. If an *input* *output* parameter is passed
-     as ``#f`` from Dylan then a ``NULL`` pointer is passed to the C
+     as :drm:`#f` from Dylan then a ``NULL`` pointer is passed to the C
      function, and the extra value returned by the Dylan function will
-     be ``#f``.
+     be :drm:`#f`.
 
      Example of *input* *output* parameter definition:
 
@@ -3110,10 +3110,10 @@ Describing C functions to Dylan
 	single: define C-function definition macro
 
      Each *function-option* is a keyword–value pair. The
-     *generic-function-method:* option may be either ``#t`` or ``#f``,
+     *generic-function-method:* option may be either :drm:`#t` or :drm:`#f`,
      indicating whether to add a method to the generic function name or
      to bind a bare constant method directly to name. The default value
-     for *generic-function-method:* is ``#f``. The option *C-modifiers:*
+     for *generic-function-method:* is :drm:`#f`. The option *C-modifiers:*
      can be used to specify platform dependent modifiers for the C
      function being called. For example, on Windows, use *C-modifiers:*
      ``"__stdcall"`` if the C function to be called is defined to be a
@@ -3127,13 +3127,13 @@ Describing C functions to Dylan
 	single: <C-function-pointer> class
 	single: classes; <C-function-pointer>
 
-     The *indirect:* ``#t`` option defines a function that accepts a C
+     The *indirect:* :drm:`#t` option defines a function that accepts a C
      function pointer as its first argument and calls the function given
      with the signature described by the parameters and result given. In
      this case the Dylan function defined accepts one more argument than
      if *c-name* was given. The type specified for the first parameter
      of the Dylan function is :class:`<c-function-pointer>`. One of
-     *c-name* or *indirect:* ``#t`` must be supplied, but not both.
+     *c-name* or *indirect:* :drm:`#t` must be supplied, but not both.
 
      Example C declarations:
 
@@ -3282,10 +3282,10 @@ Describing Dylan functions for use by C
      name is made visible to C as the name of the generated *C-callable
      wrapper* function. Given a compatible ``extern`` declaration, this
      allows C code to call Dylan code simply by invoking a named
-     function. The *export:* option takes the values ``#t`` or ``#f``
+     function. The *export:* option takes the values :drm:`#t` or :drm:`#f`
      and indicates whether the c-name for the generated
      *C-callable-wrapper* function is to be exported from the library's
-     *.dll*. ``#t`` means it is exported, ``#f`` means it is not. The
+     *.dll*. :drm:`#t` means it is exported, :drm:`#f` means it is not. The
      default is #f. The *c-modifiers:* option is the same as in the
      *c-function* macro, except that the modifiers apply to the C
      function wrapper which is generated. See :macro:`define C-function`.
@@ -3323,7 +3323,7 @@ Describing Dylan functions for use by C
      an extra value which is placed into the location specified by the
      pointer passed to the C function. If the pointer passed to the C
      function is ``NULL``, then the value passed to the Dylan function
-     will be ``#f``, and the extra value returned will be ignored.
+     will be :drm:`#f`, and the extra value returned will be ignored.
 
      There is currently no way to define a C-callable function that
      accepts a variable number of arguments.
@@ -3532,9 +3532,9 @@ This section covers describing and accessing C variables.
 
    :parameter getter-name: A Dylan variable name.
    :parameter c-type: A Dylan name.
-   :parameter setter: ``#f`` or a Dylan variable name.
+   :parameter setter: :drm:`#f` or a Dylan variable name.
    :parameter c-name: A string constant.
-   :parameter import: ``#f`` or ``#t``.
+   :parameter import: :drm:`#f` or :drm:`#t`.
 
    :description:
      .. index::
@@ -3547,19 +3547,19 @@ This section covers describing and accessing C variables.
      argument is required and gives the C name of the variable to be
      accessed. The *setter* keyword allows you to specify the name of
      the setter function, or if a setter function is to be defined at
-     all. If *setter* is ``#f``, no setter function will be defined.
+     all. If *setter* is :drm:`#f`, no setter function will be defined.
 
      The *import:* option indicates if the C variable must be imported
-     from another *.dll* or not. ``#t`` indicates it is in another
-     *.dll* and must be imported, ``#f`` means that it is not to be
+     from another *.dll* or not. :drm:`#t` indicates it is in another
+     *.dll* and must be imported, :drm:`#f` means that it is not to be
      imported. Whether the variable has to be imported from another
      *.dll* or not is determined by which Dylan project the C source
      files are part of. If they are in the same project as the
      *C-variable* definition then the value of "import:" should be
-     ``#f`` as the definition and variable will be linked into the same
+     :drm:`#f` as the definition and variable will be linked into the same
      *.dll*. If the definition is in a different project from the C
      source files then they will be in separate *.dll* s and *import:*
-     needs to be ``#t``. The default value is ``#f``.
+     needs to be :drm:`#t`. The default value is :drm:`#f`.
 
      .. index::
 	single: <C-pointer> class
@@ -3621,7 +3621,7 @@ This section covers describing and accessing C variables.
    :parameter name: A Dylan variable name.
    :parameter pointer-designator-type:
    :parameter c-name: A string constant.
-   :parameter import: ``#f`` or ``#t``.
+   :parameter import: :drm:`#f` or :drm:`#t`.
 
    :description:
 
@@ -3633,16 +3633,16 @@ This section covers describing and accessing C variables.
      defined, and a subtype of ``<C-pointer>``.
 
      The *import:* option indicates if the C address must be imported
-     from another *.dll* or not. ``#t`` indicates it is in another
-     *.dll* and must be imported, ``#f`` means that it is not to be
+     from another *.dll* or not. :drm:`#t` indicates it is in another
+     *.dll* and must be imported, :drm:`#f` means that it is not to be
      imported. Whether the variable has to be imported from another
      *.dll* or not is determined by which Dylan project the C source
      files are part of. If they are in the same project as the
-     *C-address* definition then the value of "import:" should be ``#f``
+     *C-address* definition then the value of "import:" should be :drm:`#f`
      as the definition and variable will be linked into the same *.dll*.
      If the definition is in a different project from the C source files
      then they will be in separate *.dll* s and *import:* needs to be
-     ``#t``. The default value is ``#f``.
+     :drm:`#t`. The default value is :drm:`#f`.
 
 .. index::
    single: allocation; C storage
@@ -3857,8 +3857,8 @@ using :macro:`define c-mapped-subtype`.
      A mapped subclass of ``<C-int>`` that provides an analogue to
      Dylan's :drm:`<boolean>` class. The Dylan type for both import and
      export is :drm:`<boolean>`, and the C type is ``int``. The C integer
-     ``0`` is mapped to ``#f`` in Dylan, and all other values are mapped
-     to ``#t``.
+     ``0`` is mapped to :drm:`#f` in Dylan, and all other values are mapped
+     to :drm:`#t`.
 
 .. index::
    single: <C-character> class
@@ -3987,7 +3987,7 @@ using :macro:`define c-mapped-subtype`.
 
 .. function:: equal-memory?
 
-   Returns ``#t`` if the size of the two designated memory spaces have
+   Returns :drm:`#t` if the size of the two designated memory spaces have
    the same contents.
 
    :signature: equal-memory? *ptr1*, *ptr2*, *size* => <boolean>
@@ -3998,9 +3998,9 @@ using :macro:`define c-mapped-subtype`.
 
    :description:
 
-     Returns ``#t`` if the *size* bytes of memory starting at pointer
+     Returns :drm:`#t` if the *size* bytes of memory starting at pointer
      *ptr1* have the same contents as the memory starting at *ptr2*,
-     else ``#f``. The space is assumed to be a whole number of words and
+     else :drm:`#f`. The space is assumed to be a whole number of words and
      word-aligned.
 
 .. index::

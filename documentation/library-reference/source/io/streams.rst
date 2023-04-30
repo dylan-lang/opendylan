@@ -263,7 +263,7 @@ to *make* in addition to those described in `File streams`_:
 The ``if-exists:`` init-keyword allows you to specify an action to take if
 the file named by *filename* already exists. The options are:
 
-- ``#f`` The file is opened with the stream position at the beginning.
+- :drm:`#f` The file is opened with the stream position at the beginning.
   This is the default when the stream's direction is ``#"input"`` or
   ``#"input-output"``.
 - ``#"new-version"`` If the underlying file system supports file versioning,
@@ -286,7 +286,7 @@ the file named by *filename* already exists. The options are:
 The ``if-does-not-exist:`` init-keyword allows you to specify an action to
 take if the file named by *filename* does not exist. The options are:
 
-- ``#f`` No action.
+- :drm:`#f` No action.
 - ``#"signal"`` Signal a :class:`<file-does-not-exist-error>` condition. This is
   the default when the stream's direction is ``#"input"``.
 - ``#"create"`` Create a new zero-length file. This is the default when
@@ -316,16 +316,16 @@ are:
   The file is accessed as a sequence of unsigned 8-bit integers.
 
 The ``asynchronous?:`` init-keyword allows asynchronous writing of stream
-data to disk. If ``#f``, whenever the stream has to write a buffer to
+data to disk. If :drm:`#f`, whenever the stream has to write a buffer to
 disk, the thread which triggered the write must wait for the write to
-complete. If ``asynchronous?`` is ``#t``, the write proceeds in parallel
+complete. If ``asynchronous?`` is :drm:`#t`, the write proceeds in parallel
 with the subsequent actions of the thread.
 
 Note that asynchronous writes complicate error handling a bit. Any write
 error which occurs most likely occurs after the call which triggered the
 write. If this happens, the error is stored in a queue, and the next
 operation on that stream signals the error. If you *close* the stream
-with the *wait?* flag ``#f``, the close happens asynchronously (after all
+with the *wait?* flag :drm:`#f`, the close happens asynchronously (after all
 queued writes complete) and errors may occur after *close* has returned.
 A method :gf:`wait-for-io-completion` is provided to catch any errors that
 may occur after *close* is called.
@@ -422,7 +422,7 @@ If a stretchy vector is not supplied, the result is different:
     values(v, stream-contents(stream));
 
 This example returns as its first value the original vector, which was
-initially filled with all ``#f`` and then with the values from the first call
+initially filled with all :drm:`#f` and then with the values from the first call
 to :gf:`write`, but the second value is a new vector that had to be allocated
 on the second call to :gf:`write`:
 
@@ -1127,7 +1127,7 @@ are exported from the *streams* module.
    :signature: close *file-stream* #key *abort?* *wait?* => ()
 
    :parameter file-stream: An instance of :class:`<file-stream>`.
-   :parameter #key abort?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key abort?: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :parameter #key wait?: An instance of :drm:`<boolean>`.
 
    :description:
@@ -1308,13 +1308,13 @@ are exported from the *streams* module.
    :keyword direction: Specifies the direction of the stream. It must be one of
      ``#"input"``, ``#"output"``, or ``#"input-output"``. Default value:
      ``#"input"``.
-   :keyword if-exists: One of ``#f``, ``#"new-version"``,
+   :keyword if-exists: One of :drm:`#f`, ``#"new-version"``,
      ``#"overwrite"``, ``#"replace"``, ``#"append"``, ``#"truncate"``,
-     ``#"signal"``. Default value: ``#f``.
-   :keyword if-does-not-exist: One of ``#f``, ``#"signal"``, or
+     ``#"signal"``. Default value: :drm:`#f`.
+   :keyword if-does-not-exist: One of :drm:`#f`, ``#"signal"``, or
      ``#"create"``. Default value: depends on the value of ``direction:``.
-   :keyword asynchronous?: If ``#t``, all writes on this stream are
-     performed asynchronously. Default value:``#f``.
+   :keyword asynchronous?: If :drm:`#t`, all writes on this stream are
+     performed asynchronously. Default value::drm:`#f`.
 
    :description:
 
@@ -1346,7 +1346,7 @@ are exported from the *streams* module.
    :signature: force-output *output-stream* #key *synchronize?* => ()
 
    :parameter output-stream: An instance of :class:`<stream>`.
-   :parameter #key synchronize?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key synchronize?: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
 
    :description:
 
@@ -1407,8 +1407,8 @@ are exported from the *streams* module.
      Default value is ``0``.
    :keyword input-tab-width: An instance of :drm:`<integer>`.
      Default value is ``8``.
-   :keyword output-tab-width: An instance of ``#f`` or :drm:`<integer>`.
-     Default value is ``#f``.
+   :keyword output-tab-width: An instance of :drm:`#f` or :drm:`<integer>`.
+     Default value is :drm:`#f`.
 
    :description:
 
@@ -1589,14 +1589,14 @@ are exported from the *streams* module.
    :parameter #key filename: An instance of :drm:`<object>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. The default is ``#"input"``.
-   :parameter #key if-exists: One of ``#f``, ``#"new-version"``,
+   :parameter #key if-exists: One of :drm:`#f`, ``#"new-version"``,
      ``#"overwrite"``, ``#"replace"``, ``#"append"``, ``#"truncate"``,
-     ``#"signal"``. Default value: ``#f``.
-   :parameter #key if-does-not-exist: One of ``#f``, ``#"signal"``, or
+     ``#"signal"``. Default value: :drm:`#f`.
+   :parameter #key if-does-not-exist: One of :drm:`#f`, ``#"signal"``, or
      ``#"create"``. Default value: depends on the value of *direction*.
    :parameter #key buffer-size: An instance of :drm:`<integer>`.
    :parameter #key element-type: One of :type:`<byte-character>`,
-     :type:`<unicode-character>`, or :type:`<byte>`, or ``#f``.
+     :type:`<unicode-character>`, or :type:`<byte>`, or :drm:`#f`.
    :value file-stream-instance: An instance of :class:`<file-stream>`.
 
    :description:
@@ -1828,7 +1828,7 @@ are exported from the *streams* module.
 
    :parameter input-stream: An instance of :class:`<stream>`.
    :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
-   :value element-or-eof: An instance of :drm:`<object>`, or ``#f``.
+   :value element-or-eof: An instance of :drm:`<object>`, or :drm:`#f`.
 
    :description:
 
@@ -2029,8 +2029,8 @@ are exported from the *streams* module.
      to the next newline sequence.
 
      The resulting string does not contain the newline sequence. The
-     second value returned is ``#t`` if the read terminated with a
-     newline or ``#f`` if the read terminated because it came to the end
+     second value returned is :drm:`#t` if the read terminated with a
+     newline or :drm:`#f` if the read terminated because it came to the end
      of the stream.
 
      The type of the result string is chosen so that the string can
@@ -2058,7 +2058,7 @@ are exported from the *streams* module.
    :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
    :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
-   :parameter #key grow?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key grow?: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :value string-or-eof: An instance of :drm:`<string>`, or an instance of
      :drm:`<object>` if the end of the stream is reached.
    :value newline?: An instance of :drm:`<boolean>`.
@@ -2072,22 +2072,22 @@ are exported from the *streams* module.
      The input is written into *string* starting at the position
      *start*. By default, *start* is the start of the stream.
 
-     The second return value is ``#t`` if the read terminated with a
-     newline, or ``#f`` if the read completed by getting to the end of
+     The second return value is :drm:`#t` if the read terminated with a
+     newline, or :drm:`#f` if the read completed by getting to the end of
      the input stream.
 
-     If *grow?* is ``#t``, and *string* is not large enough to hold all
+     If *grow?* is :drm:`#t`, and *string* is not large enough to hold all
      of the input, ``read-line-into!`` creates a new string which it
      writes to and returns instead. The resulting string holds all the
      original elements of *string*, except where ``read-line-into!``
      overwrites them with input from *input-stream*.
 
      In a manner consistent with the intended semantics of *grow?*, when
-     *grow?* is ``#t`` and *start* is greater than or equal to
+     *grow?* is :drm:`#t` and *start* is greater than or equal to
      *string.size*, ``read-line-into!`` grows *string* to accommodate
      the *start* index and the new input.
 
-     If *grow?* is ``#f`` and *string* is not large enough to hold the
+     If *grow?* is :drm:`#f` and *string* is not large enough to hold the
      input, the function signals an error.
 
      The end-of-stream behavior and the interpretation of
@@ -2145,8 +2145,8 @@ are exported from the *streams* module.
      from the stream's current position to the first occurrence of
      *element*. The result does not contain *element*.
 
-     The second return value is ``#t`` if the read terminated with
-     *element*, or ``#f`` if the read terminated by reaching the end of
+     The second return value is :drm:`#t` if the read terminated with
+     *element*, or :drm:`#f` if the read terminated by reaching the end of
      the stream's source. The "boundary" element is consumed, that is,
      the stream is left positioned after *element*.
 
@@ -2260,8 +2260,8 @@ are exported from the *streams* module.
    :description:
 
      Positions *input-stream* after the first occurrence of *element*,
-     starting from the stream's current position. Returns ``#t`` if the
-     element was found, or ``#f`` if the end of the stream was
+     starting from the stream's current position. Returns :drm:`#t` if the
+     element was found, or :drm:`#f` if the end of the stream was
      encountered. When ``skip-through`` does not find *element*, it
      leaves *input-stream* positioned at the end.
 
@@ -2335,15 +2335,15 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns ``#t`` if the stream is at its end and ``#f`` if it is not.
-     For input streams, it returns ``#t`` if a call to
+     Returns :drm:`#t` if the stream is at its end and :drm:`#f` if it is not.
+     For input streams, it returns :drm:`#t` if a call to
      :gf:`read-element` with no supplied keyword arguments would signal
      an :class:`<end-of-stream-error>`.
 
      This function differs from :gf:`stream-input-available?`, which
      tests whether the stream can be read.
 
-     For output-only streams, this function always returns ``#f``.
+     For output-only streams, this function always returns :drm:`#f`.
 
      For output streams, note that you can determine if a stream is one
      place past the last written element by comparing
@@ -2375,7 +2375,7 @@ are exported from the *streams* module.
    :signature: stream-contents *positionable-stream* #key *clear-contents?*  => *sequence*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :parameter #key clear-contents?: An instance of :drm:`<boolean>`. Default value: ``#t``.
+   :parameter #key clear-contents?: An instance of :drm:`<boolean>`. Default value: :drm:`#t`.
    :value sequence: An instance of :drm:`<sequence>`.
 
    :description:
@@ -2387,7 +2387,7 @@ are exported from the *streams* module.
      The *clear-contents?* argument is only applicable to writeable
      sequence streams, and is not defined for file-streams or any other
      external stream. It returns an error if applied to an input only
-     stream. If clear-contents? is ``#t`` (the default for cases where
+     stream. If clear-contents? is :drm:`#t` (the default for cases where
      the argument is defined), this function sets the size of the stream
      to zero, and the position to the stream's start. Thus the next call
      to ``stream-contents`` will return only the elements written after
@@ -2445,11 +2445,11 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns ``#t`` if *input-stream* would not block on
-     :gf:`read-element`, otherwise it returns ``#f``.
+     Returns :drm:`#t` if *input-stream* would not block on
+     :gf:`read-element`, otherwise it returns :drm:`#f`.
 
      This function differs from :gf:`stream-at-end?`. When
-     :gf:`stream-input-available?` returns ``#t``, :gf:`read-element`
+     :gf:`stream-input-available?` returns :drm:`#t`, :gf:`read-element`
      will not block, but it may detect that it is at the end of the
      stream's source, and consequently inspect the *on-end-of-stream*
      argument to determine how to handle the end of stream.
@@ -2471,7 +2471,7 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns ``#t`` if the stream is directed to the console and ``#f`` if it is not.
+     Returns :drm:`#t` if the stream is directed to the console and :drm:`#f` if it is not.
 
    :example:
 
@@ -2494,7 +2494,7 @@ are exported from the *streams* module.
    :signature: stream-lock *stream* => *lock*
 
    :parameter stream: An instance of :class:`<stream>`.
-   :value lock: An instance of :class:`<lock>`, or ``#f``.
+   :value lock: An instance of :class:`<lock>`, or :drm:`#f`.
 
    :description:
 
@@ -2514,12 +2514,12 @@ are exported from the *streams* module.
    :signature: stream-lock-setter *stream lock* => *lock*
 
    :parameter stream: An instance of :class:`<stream>`.
-   :parameter lock: An instance of :class:`<lock>`, or ``#f``.
-   :value lock: An instance of :class:`<lock>`, or ``#f``.
+   :parameter lock: An instance of :class:`<lock>`, or :drm:`#f`.
+   :value lock: An instance of :class:`<lock>`, or :drm:`#f`.
 
    :description:
 
-     Sets *lock* for the specified *stream*. If *lock* is ``#f``, then
+     Sets *lock* for the specified *stream*. If *lock* is :drm:`#f`, then
      the lock on *stream* is freed. You can use this function in
      conjunction with :gf:`stream-lock` to implement a basic stream
      locking facility.
@@ -2540,7 +2540,7 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns ``#t`` if *stream* is open and ``#f`` if it is not.
+     Returns :drm:`#t` if *stream* is open and :drm:`#f` if it is not.
 
    :seealso:
 
@@ -2659,7 +2659,7 @@ are exported from the *streams* module.
    :signature: stream-size *positionable-stream* => *size*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :value size: An instance of :drm:`<integer>`, or ``#f``.
+   :value size: An instance of :drm:`<integer>`, or :drm:`#f`.
 
    :description:
 
@@ -2763,7 +2763,7 @@ are exported from the *streams* module.
 
    :parameter filename: An instance of :drm:`<object>`.
    :parameter element-type: One of :type:`<byte-character>`,
-     :type:`<unicode-character>`, or :type:`<byte>`, or ``#f``.
+     :type:`<unicode-character>`, or :type:`<byte>`, or :drm:`#f`.
    :value file-stream-type: An instance of :drm:`<type>`.
 
    :description:

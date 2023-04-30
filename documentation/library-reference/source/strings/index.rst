@@ -41,7 +41,7 @@ Character Class Predicates
 .. generic-function:: alphabetic?
    :sealed:
 
-   Return ``#t`` if the argument is alphabetic, else ``#f``.
+   Return :drm:`#t` if the argument is alphabetic, else :drm:`#f`.
 
    :signature: alphabetic? (string-or-character, #key) => (alphabetic?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -51,8 +51,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the given character is a member of the set a-z or
-   A-Z.  Otherwise returns ``#f``.
+   Returns :drm:`#t` if the given character is a member of the set a-z or
+   A-Z.  Otherwise returns :drm:`#f`.
 
    :signature: alphabetic? (character) => (alphabetic?)
    :parameter character: An instance of :drm:`<character>`.
@@ -68,8 +68,8 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if every character in the string is a member of the
-   set a-z or A-Z.  Otherwise returns ``#f``.
+   Returns :drm:`#t` if every character in the string is a member of the
+   set a-z or A-Z.  Otherwise returns :drm:`#f`.
 
    :signature: alphabetic? (string, #key start, end) => (alphabetic?)
    :parameter string: An instance of :drm:`<string>`.
@@ -91,7 +91,7 @@ Character Class Predicates
 .. generic-function:: alphanumeric?
    :sealed:
 
-   Returns ``#t`` if the argument is alphanumeric, otherwise ``#f``.
+   Returns :drm:`#t` if the argument is alphanumeric, otherwise :drm:`#f`.
 
    :signature: alphanumeric? (string-or-character, #key) => (alphanumeric?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -101,8 +101,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the argument is a member of the set of characters
-   a-z, A-Z, or 0-9, otherwise ``#f``.
+   Returns :drm:`#t` if the argument is a member of the set of characters
+   a-z, A-Z, or 0-9, otherwise :drm:`#f`.
 
    :signature: alphanumeric? (character) => (alphanumeric?)
    :parameter character: An instance of :drm:`<character>`.
@@ -119,8 +119,8 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if every character in the string is a member of the
-   set a-z, A-Z, or 0-9, otherwise ``#f``.
+   Returns :drm:`#t` if every character in the string is a member of the
+   set a-z, A-Z, or 0-9, otherwise :drm:`#f`.
 
    :signature: alphanumeric? (string) => (alphanumeric?)
    :parameter string: An instance of :drm:`<string>`.
@@ -138,8 +138,8 @@ Character Class Predicates
 .. generic-function:: control?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of control
-   characters, otherwise ``#f``.
+   Returns :drm:`#t` if the argument is entirely composed of control
+   characters, otherwise :drm:`#f`.
 
    :signature: control? (string-or-character, #key) => (control?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -149,8 +149,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the argument is not a graphic or whitespace
-   character, otherwise ``#f``.
+   Returns :drm:`#t` if the argument is not a graphic or whitespace
+   character, otherwise :drm:`#f`.
 
    :signature: control? (character) => (control?)
    :parameter character: An instance of :drm:`<character>`.
@@ -166,7 +166,7 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of non-graphic,
+   Returns :drm:`#t` if the argument is entirely composed of non-graphic,
    non-whitespace characters.
 
    :signature: control? (string) => (control?)
@@ -189,7 +189,7 @@ Character Class Predicates
 .. generic-function:: graphic?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of
+   Returns :drm:`#t` if the argument is entirely composed of
    graphic characters.
 
    :signature: graphic? (string-or-character, #key) => (graphic?)
@@ -200,7 +200,7 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the argument is a graphic character, defined as
+   Returns :drm:`#t` if the argument is a graphic character, defined as
    those with character codes between 32 (Space) and 126 (~) in the US
    ASCII character set.
 
@@ -218,7 +218,7 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of graphic
+   Returns :drm:`#t` if the argument is entirely composed of graphic
    characters, defined as those with character codes between 32
    (Space) and 126 (~).
 
@@ -242,7 +242,7 @@ Character Class Predicates
 .. generic-function:: printable?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of printable
+   Returns :drm:`#t` if the argument is entirely composed of printable
    characters, defined as either a graphic or whitespace character.
 
    :signature: printable? (string-or-character, #key) => (printable?)
@@ -253,8 +253,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the argument is a printable character, defined as
-   either a graphic or whitespace character.  Otherwise ``#f`` is
+   Returns :drm:`#t` if the argument is a printable character, defined as
+   either a graphic or whitespace character.  Otherwise :drm:`#f` is
    returned.
 
    :signature: printable? (character, #key) => (printable?)
@@ -272,9 +272,9 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of printable
+   Returns :drm:`#t` if the argument is entirely composed of printable
    characters, defined as either a graphic or whitespace character.
-   Otherwise ``#f`` is returned.
+   Otherwise :drm:`#f` is returned.
 
    :signature: printable? (string, #key) => (printable?)
    :parameter string: An instance of :drm:`<string>`.
@@ -296,7 +296,7 @@ Character Class Predicates
 .. generic-function:: whitespace?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of whitespace
+   Returns :drm:`#t` if the argument is entirely composed of whitespace
    characters.
 
    :signature: whitespace? (string-or-character, #key) => (whitespace?)
@@ -307,8 +307,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the argument is ' ' (Space), '\\t' (Tab), '\\n'
-   (Newline), '\\f' (Formfeed), or '\\r' (Return).  Otherwise ``#f`` is
+   Returns :drm:`#t` if the argument is ' ' (Space), '\\t' (Tab), '\\n'
+   (Newline), '\\f' (Formfeed), or '\\r' (Return).  Otherwise :drm:`#f` is
    returned.
 
    :signature: whitespace? (character, #key) => (whitespace?)
@@ -326,9 +326,9 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of whitespace
+   Returns :drm:`#t` if the argument is entirely composed of whitespace
    characters, defined as ' ' (Space), '\\t' (Tab), '\\n' (Newline),
-   '\\f' (Formfeed), or '\\r' (Return).  Otherwise ``#f`` is returned.
+   '\\f' (Formfeed), or '\\r' (Return).  Otherwise :drm:`#f` is returned.
 
    :signature: whitespace? (string, #key) => (whitespace?)
    :parameter string: An instance of :drm:`<string>`.
@@ -349,7 +349,7 @@ Character Class Predicates
 .. generic-function:: decimal-digit?
    :sealed:
 
-   Returns ``#t`` if the argument is a decimal digit, otherwise ``#f``.
+   Returns :drm:`#t` if the argument is a decimal digit, otherwise :drm:`#f`.
 
    :signature: decimal-digit? (string-or-character, #key) => (decimal-digit?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -359,8 +359,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the character is a member of the set [0-9],
-   otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the character is a member of the set [0-9],
+   otherwise :drm:`#f` is returned.
 
    :signature: decimal-digit? (character, #key) => (decimal-digit?)
    :parameter character: An instance of :drm:`<character>`.
@@ -376,8 +376,8 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if every character in the string is a member of the
-   set [0-9], otherwise ``#f`` is returned.
+   Returns :drm:`#t` if every character in the string is a member of the
+   set [0-9], otherwise :drm:`#f` is returned.
 
    :signature: decimal-digit? (string, #key) => (decimal-digit?)
    :parameter string: An instance of :drm:`<string>`.
@@ -399,8 +399,8 @@ Character Class Predicates
 .. generic-function:: hexadecimal-digit?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of hexadecimal
-   digits, otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the argument is entirely composed of hexadecimal
+   digits, otherwise :drm:`#f` is returned.
 
    :signature: hexadecimal-digit? (string-or-character, #key) => (hexadecimal-digit?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -410,8 +410,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the character is a member of the set [0-9a-fA-F],
-   otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the character is a member of the set [0-9a-fA-F],
+   otherwise :drm:`#f` is returned.
 
    :signature: hexadecimal-digit? (character, #key) => (hexadecimal-digit?)
    :parameter character: An instance of :drm:`<character>`.
@@ -428,8 +428,8 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if every character in the string is a member of the
-   set [0-9a-fA-F], otherwise ``#f`` is returned.
+   Returns :drm:`#t` if every character in the string is a member of the
+   set [0-9a-fA-F], otherwise :drm:`#f` is returned.
 
    :signature: hexadecimal-digit? (string, #key) => (hexadecimal-digit?)
    :parameter string: An instance of :drm:`<string>`.
@@ -451,8 +451,8 @@ Character Class Predicates
 .. generic-function:: octal-digit?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of octal
-   digits, otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the argument is entirely composed of octal
+   digits, otherwise :drm:`#f` is returned.
 
    :signature: octal-digit? (string-or-character, #key) => (octal-digit?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -462,8 +462,8 @@ Character Class Predicates
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the character is a member of the set [0-9a-fA-F],
-   otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the character is a member of the set [0-9a-fA-F],
+   otherwise :drm:`#f` is returned.
 
    :signature: octal-digit? (character, #key) => (octal-digit?)
    :parameter character: An instance of :drm:`<character>`.
@@ -480,8 +480,8 @@ Character Class Predicates
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if every character in the string is a member of the
-   set [0-9a-fA-F], otherwise ``#f`` is returned.
+   Returns :drm:`#t` if every character in the string is a member of the
+   set [0-9a-fA-F], otherwise :drm:`#f` is returned.
 
    :signature: octal-digit? (string, #key) => (octal-digit?)
    :parameter string: An instance of :drm:`<string>`.
@@ -515,7 +515,7 @@ Substring Functions
      Where to stop searching.  Note that if ``pattern``
      is not completely between the bounds of ``start`` (inclusive) and
      ``end`` (exclusive) it will not be counted.
-   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default ``#f``.
+   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default :drm:`#f`.
    :value count: An instance of :drm:`<integer>`.
    :example:
 
@@ -529,7 +529,7 @@ Substring Functions
    :sealed:
 
    Find the index of a substring pattern in a larger string.  Returns
-   ``#f`` if not found.
+   :drm:`#f` if not found.
 
    :signature: find-substring (big pattern #key start end ignore-case?) => (index)
    :parameter big: An instance of :drm:`<string>`.  The string in which to search.
@@ -539,7 +539,7 @@ Substring Functions
      Where to stop searching.  Note that if ``pattern``
      is not completely between the bounds of ``start`` (inclusive) and
      ``end`` (exclusive) it will not match.
-   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default ``#f``.
+   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default :drm:`#f`.
    :value index: An instance of ``false-or(<integer>)``.
    :example:
 
@@ -562,7 +562,7 @@ Substring Functions
    :parameter replacement: An instance of :drm:`<string>`.  The string
      with which to replace ``pattern``.
    :parameter #key count: An instance of ``false-or(<integer>)``.  The
-     number of occurrences to replace.  The default is ``#f``, meaning to
+     number of occurrences to replace.  The default is :drm:`#f`, meaning to
      replace all.  Replacements are performed from left to right
      within ``big`` until ``count`` has been reached.
    :parameter #key start: An instance of :drm:`<integer>`, default 0.  Where to
@@ -571,7 +571,7 @@ Substring Functions
      ``big.size``.  Where to stop searching.  Note that if ``pattern``
      is not completely between the bounds of ``start`` (inclusive) and
      ``end`` (exclusive) it will not be replaced.
-   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default ``#f``.
+   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default :drm:`#f`.
    :value new-string: An instance of :drm:`<string>`.
    :example:
 
@@ -690,7 +690,7 @@ Case Conversion Functions
 .. generic-function:: lowercase?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of
+   Returns :drm:`#t` if the argument is entirely composed of
    non-uppercase characters.
 
    :signature: lowercase? (string-or-character) => (is-lowercase?)
@@ -701,8 +701,8 @@ Case Conversion Functions
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the given character is not an uppercase alphabetic.
-   Otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the given character is not an uppercase alphabetic.
+   Otherwise :drm:`#f` is returned.
 
    :signature: lowercase? (character) => (is-lowercase?)
    :parameter character: An instance of :drm:`<character>`.
@@ -719,8 +719,8 @@ Case Conversion Functions
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if the argument does not contain any uppercase
-   alphabetic characters.  Otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the argument does not contain any uppercase
+   alphabetic characters.  Otherwise :drm:`#f` is returned.
 
    :signature: lowercase? (string) => (is-lowercase?)
    :parameter string: An instance of :drm:`<string>`.
@@ -845,7 +845,7 @@ Case Conversion Functions
 .. generic-function:: uppercase?
    :sealed:
 
-   Returns ``#t`` if the argument is entirely composed of
+   Returns :drm:`#t` if the argument is entirely composed of
    non-lowercase characters.
 
    :signature: uppercase? (string-or-character) => (is-uppercase?)
@@ -856,8 +856,8 @@ Case Conversion Functions
    :specializer: <character>
    :sealed:
 
-   Returns ``#t`` if the given character is not a lowercase alphabetic.
-   Otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the given character is not a lowercase alphabetic.
+   Otherwise :drm:`#f` is returned.
 
    :signature: uppercase? (character) => (is-uppercase?)
    :parameter character: An instance of :drm:`<character>`.
@@ -874,8 +874,8 @@ Case Conversion Functions
    :specializer: <string>
    :sealed:
 
-   Returns ``#t`` if the argument does not contain any lowercase
-   alphabetic characters.  Otherwise ``#f`` is returned.
+   Returns :drm:`#t` if the argument does not contain any lowercase
+   alphabetic characters.  Otherwise :drm:`#f` is returned.
 
    :signature: uppercase? (string) => (is-uppercase?)
    :parameter string: An instance of :drm:`<string>`.
@@ -936,8 +936,8 @@ convenience.  (See `DEP-0004
 
 .. function:: char-equal-ic?
 
-   Returns ``#t`` if char1 and char2 are the same, *ignoring case*.
-   Otherwise ``#f`` is returned.
+   Returns :drm:`#t` if char1 and char2 are the same, *ignoring case*.
+   Otherwise :drm:`#f` is returned.
 
    :signature: char-equal-ic? (char1 char2) => (equal?)
    :parameter char1: An instance of :drm:`<character>`.
@@ -979,8 +979,8 @@ convenience.  (See `DEP-0004
 .. generic-function:: string-equal?
    :sealed:
 
-   Returns ``#t`` if string1 and string2 are of equal length and
-   contain the same sequence of characters.  Otherwise returns ``#f``.
+   Returns :drm:`#t` if string1 and string2 are of equal length and
+   contain the same sequence of characters.  Otherwise returns :drm:`#f`.
 
    :signature: string-equal? (string1 string2 #key start1 end1 start2 end2 test) => (equal?)
    :parameter string1: An instance of :drm:`<string>`.
@@ -1008,9 +1008,9 @@ convenience.  (See `DEP-0004
 .. generic-function:: string-equal-ic?
    :sealed:
 
-   Returns ``#t`` if string1 and string2 are of equal length and
+   Returns :drm:`#t` if string1 and string2 are of equal length and
    contain the same sequence of characters, ignoring case.  Otherwise
-   returns ``#f``.
+   returns :drm:`#f`.
 
    :signature: string-equal-ic? (string1 string2 #key start1 end1 start2 end2) => (equal?)
    :parameter string1: An instance of :drm:`<string>`.
@@ -1035,7 +1035,7 @@ convenience.  (See `DEP-0004
 .. generic-function:: string-greater?
    :sealed:
 
-   Return ``#t`` if ``string1`` is greater than ``string2``, using
+   Return :drm:`#t` if ``string1`` is greater than ``string2``, using
    *case sensitive* comparison.
 
    :signature: string-greater? (string1 string2 #key start1 end1 start2 end2 test) => (greater?)
@@ -1062,7 +1062,7 @@ convenience.  (See `DEP-0004
 .. generic-function:: string-greater-ic?
    :sealed:
 
-   Return ``#t`` if ``string1`` is greater than ``string2``, using
+   Return :drm:`#t` if ``string1`` is greater than ``string2``, using
    *case insensitive* comparison.
 
    :signature: string-greater-ic? (string1 string2 #key start1 end1 start2 end2) => (greater?)
@@ -1088,7 +1088,7 @@ convenience.  (See `DEP-0004
 .. generic-function:: string-less?
    :sealed:
 
-   Return ``#t`` if ``string1`` is less than ``string2``, using
+   Return :drm:`#t` if ``string1`` is less than ``string2``, using
    *case sensitive* comparison.
 
    :signature: string-less? (string1 string2 #key start1 end1 start2 end2 test) => (less?)
@@ -1115,7 +1115,7 @@ convenience.  (See `DEP-0004
 .. generic-function:: string-less-ic?
    :sealed:
 
-   Return ``#t`` if ``string1`` is less than ``string2``, using
+   Return :drm:`#t` if ``string1`` is less than ``string2``, using
    *case insensitive* comparison.
 
    :signature: string-less-ic? (string1 string2 #key start1 end1 start2 end2) => (less?)
@@ -1141,7 +1141,7 @@ convenience.  (See `DEP-0004
 .. generic-function:: starts-with?
    :sealed:
 
-   Return ``#t`` if ``string1`` is starts with ``string2``, using
+   Return :drm:`#t` if ``string1`` is starts with ``string2``, using
    *case sensitive* comparison.
 
    :signature: starts-with? (string pattern #key test) => (starts-with?)
@@ -1160,7 +1160,7 @@ convenience.  (See `DEP-0004
 .. generic-function:: ends-with?
    :sealed:
 
-   Return ``#t`` if ``string1`` is ends with ``string2``, using *case
+   Return :drm:`#t` if ``string1`` is ends with ``string2``, using *case
    sensitive* comparison.
 
    :signature: ends-with? (string pattern #key test) => (ends-with?)
@@ -1194,10 +1194,10 @@ Miscellaneous Functions
                           to begin the search. Defaults to 0.
    :parameter #key end: An instance of :drm:`<integer>`. The index at which to
                         end the search. Defaults to the end of the string.
-   :parameter #key from-end?: An instance of :drm:`<boolean>`. If ``#t``,
+   :parameter #key from-end?: An instance of :drm:`<boolean>`. If :drm:`#t`,
                               search backward from ``end - 1``.
    :value index: An instance of ``false-or(<integer>)``. The index of the first
-                 character for which the predicate returns ``#t``, or ``#f`` if
+                 character for which the predicate returns :drm:`#t`, or :drm:`#f` if
                  no character matches.
 
    :example:
@@ -1299,7 +1299,7 @@ Miscellaneous Functions
    :parameter string: An instance of :drm:`<string>`.  The string to strip.
    :parameter #key test: An instance of :drm:`<function>`.  A function that
      accepts a character and returns #t if the character should be
-     removed and ``#f`` otherwise.
+     removed and :drm:`#f` otherwise.
    :parameter #key start: An instance of :drm:`<integer>`, default 0.  The
      index in ``string`` at which to start stripping.
    :parameter #key end: An instance of :drm:`<integer>`, default ``string.size``.
@@ -1321,7 +1321,7 @@ Miscellaneous Functions
    :parameter string: An instance of :drm:`<string>`.  The string to strip.
    :parameter #key test: An instance of :drm:`<function>`.  A function that
      accepts a character and returns #t if the character should be
-     removed and ``#f`` otherwise.
+     removed and :drm:`#f` otherwise.
    :parameter #key start: An instance of :drm:`<integer>`, default 0.  The
      index in ``string`` at which to start stripping.
    :parameter #key end: An instance of :drm:`<integer>`, default ``string.size``.
@@ -1343,7 +1343,7 @@ Miscellaneous Functions
    :parameter string: An instance of :drm:`<string>`.  The string to strip.
    :parameter #key test: An instance of :drm:`<function>`.  A function that
      accepts a character and returns #t if the character should be
-     removed and ``#f`` otherwise.
+     removed and :drm:`#f` otherwise.
    :parameter #key start: An instance of :drm:`<integer>`, default 0.  The
      index in ``string`` at which to start stripping.
    :parameter #key end: An instance of :drm:`<integer>`, default ``string.size``.

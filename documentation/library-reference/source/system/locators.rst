@@ -207,7 +207,7 @@ The locators Module
    :value directory: An instance of :class:`false-or(<directory-locator>) <<directory-locator>`.
 
    :description:
-    Returns the enclosing directory of a locator, or ``#f`` if it
+    Returns the enclosing directory of a locator, or :drm:`#f` if it
     is not in a directory.
 
 .. function:: locator-error
@@ -229,7 +229,7 @@ The locators Module
    :description:
     Returns the extension part of the locator name. For example, if a file locator's
     path was ``a/b/c.txt``, the locator-extension would be ``txt``.
-    Returns ``#f`` if the locator does not have an extension.
+    Returns :drm:`#f` if the locator does not have an extension.
 
 .. generic-function:: locator-file
 

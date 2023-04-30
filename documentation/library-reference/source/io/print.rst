@@ -90,9 +90,9 @@ IO library's *print* module.
      :var:`*print-circle?*`.
    :parameter #key escape?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-escape?*`.
-   :parameter #key level: ``#f`` or an instance of :drm:`<integer>`.
+   :parameter #key level: :drm:`#f` or an instance of :drm:`<integer>`.
      Default value: :var:`*print-level*`.
-   :parameter #key length: ``#f`` or an instance of :drm:`<integer>`.
+   :parameter #key length: :drm:`#f` or an instance of :drm:`<integer>`.
      Default value: :var:`*print-length*`.
    :parameter #key pretty?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-pretty?*`.
@@ -113,7 +113,7 @@ IO library's *print* module.
      which is described in `Pretty printing`_.
 
      The *level* keyword controls how deep into a nested data structure
-     to print. The value ``#f`` indicates that there is no limit. The
+     to print. The value :drm:`#f` indicates that there is no limit. The
      default, :var:`*print-level*`, has no effect on recursive calls to
      :func:`print`. Recursive calls to :func:`print` may change the value of
      *print-level* explicitly, but :func:`print` always uses a value to
@@ -124,7 +124,7 @@ IO library's *print* module.
      not 4.
 
      The *length* keyword controls how many elements of a sequence to
-     print before printing ellipsis notation (*...*). The value ``#f``
+     print before printing ellipsis notation (*...*). The value :drm:`#f`
      indicates that there is no limit. The *print-length* control can be
      interpreted loosely by some :gf:`print-object` methods to control
      how many *elements* of any kind of object to print; for example,
@@ -141,13 +141,13 @@ IO library's *print* module.
      tags objects that occur more than once when they are first printed,
      and later occurrences are printed as a reference to the previously
      emitted tag. The default, :var:`*print-circle?*`, has no effect on
-     recursive calls to :func:`print`. If *print-circle?* is already ``#t``,
-     then it remains ``#t`` throughout all recursive calls. If
-     *print-circle?* is ``#f``, then recursive calls to :func:`print` can
-     change the value to ``#t`` ; however, when printing exits the
-     dynamic scope of the call that changed the value to ``#t``, the
-     value reverts back to ``#f``. If the original call to :func:`print`
-     specifies *circle?* as ``#f``, and dynamically distinct recursive
+     recursive calls to :func:`print`. If *print-circle?* is already :drm:`#t`,
+     then it remains :drm:`#t` throughout all recursive calls. If
+     *print-circle?* is :drm:`#f`, then recursive calls to :func:`print` can
+     change the value to :drm:`#t` ; however, when printing exits the
+     dynamic scope of the call that changed the value to :drm:`#t`, the
+     value reverts back to :drm:`#f`. If the original call to :func:`print`
+     specifies *circle?* as :drm:`#f`, and dynamically distinct recursive
      calls turn circular printing on and off, all output generated while
      circular printing was on shares the same tagging space; that is, if
      ``#1#`` is printed twice, once from each of two distinct recursive
@@ -158,11 +158,11 @@ IO library's *print* module.
      insert line breaks and indentation to format objects according to
      how programmers tend to find it easier to read data. The default,
      :var:`*print-pretty?*`, has no effect on recursive calls to
-     :func:`print`. If *print-pretty?* is already ``#t``, then it remains
-     ``#t`` throughout all recursive calls. If *print-pretty?* is
-     ``#f``, then recursive calls to :func:`print` can change the value to
-     ``#t`` ; however, when printing exits the dynamic scope of the call
-     that changed the value to ``#t``, the value reverts back to ``#f``.
+     :func:`print`. If *print-pretty?* is already :drm:`#t`, then it remains
+     :drm:`#t` throughout all recursive calls. If *print-pretty?* is
+     :drm:`#f`, then recursive calls to :func:`print` can change the value to
+     :drm:`#t` ; however, when printing exits the dynamic scope of the call
+     that changed the value to :drm:`#t`, the value reverts back to :drm:`#f`.
 
      The *escape?* keyword indicates whether printing should show escape
      codes in strings and, by extension, whether other objects should be
@@ -175,20 +175,20 @@ IO library's *print* module.
 
    :type: <boolean>
 
-   :value: ``#f``
+   :value: :drm:`#f`
 
    :description:
 
      :var:`*print-circle?*` holds the default value for whether or not to
-     detect circular structures when printing. When ``#t``, circularity
-     detection is enabled. The default is ``#f``.
+     detect circular structures when printing. When :drm:`#t`, circularity
+     detection is enabled. The default is :drm:`#f`.
 
      When calling :func:`print` directly, :var:`*print-circle?*` may be
      overridden by specifying a value for the ``circle?`` argument. It is
      dynamically bound by :func:`print` so that its value is inherited by
      recursive calls.
 
-     Note that when :var:`*print-circle?*` is ``#t`` attempts to print circular
+     Note that when :var:`*print-circle?*` is :drm:`#t` attempts to print circular
      structures may result in failure to terminate.
 
    :seealso:
@@ -202,7 +202,7 @@ IO library's *print* module.
 
    :type: <boolean>
 
-   :value: ``#t``
+   :value: :drm:`#t`
 
    :description:
 
@@ -228,12 +228,12 @@ IO library's *print* module.
 
    :type: false-or(<integer>)
 
-   :value: ``#f``
+   :value: :drm:`#f`
 
    :description:
 
      Controls how many elements to print at a given level of a nested
-     expression. The default is unlimited (``#f``).
+     expression. The default is unlimited (:drm:`#f`).
 
    :seealso:
 
@@ -246,7 +246,7 @@ IO library's *print* module.
 
    :type: false-or(<integer>)
 
-   :value: ``#f``
+   :value: :drm:`#f`
 
    :description:
 
@@ -263,7 +263,7 @@ IO library's *print* module.
 
    :type: <boolean>
 
-   :value: ``#f``
+   :value: :drm:`#f`
 
    :description:
 
@@ -308,9 +308,9 @@ IO library's *print* module.
    :signature: print-to-string *object* #key *circle? escape? level length pretty?* => *result*
 
    :parameter object: An instance of :drm:`<object>`.
-   :parameter #key level: ``#f`` or an instance of :drm:`<integer>`.
+   :parameter #key level: :drm:`#f` or an instance of :drm:`<integer>`.
      Default value: :var:`*print-level*`.
-   :parameter #key length: ``#f`` or an instance of :drm:`<integer>`.
+   :parameter #key length: :drm:`#f` or an instance of :drm:`<integer>`.
      Default value: :var:`*print-length*`.
    :parameter #key circle?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-circle?*`.
@@ -401,10 +401,10 @@ IO library's *pprint* module.
    :signature: pprint-logical-block *stream* #key *prefix per-line-prefix body suffix column* => ()
 
    :parameter stream: An instance of :class:`<stream>`.
-   :parameter #key prefix: ``#f`` or an instance of :drm:`<byte-string>`.
-   :parameter #key per-line-prefix: ``#f`` or an instance of :drm:`<byte-string>`.
+   :parameter #key prefix: :drm:`#f` or an instance of :drm:`<byte-string>`.
+   :parameter #key per-line-prefix: :drm:`#f` or an instance of :drm:`<byte-string>`.
    :parameter #key body: An instance of :drm:`<function>`.
-   :parameter #key suffix: ``#f`` or an instance of :drm:`<byte-string>`.
+   :parameter #key suffix: :drm:`#f` or an instance of :drm:`<byte-string>`.
    :parameter #key column: A *limited* instance of :drm:`<integer>`, minimum 0.
 
    :description:
@@ -417,7 +417,7 @@ IO library's *pprint* module.
      *prefix* ends. Alternatively, *per-line-prefix* is a string to
      print on every line of the logical block. This function signals an
      error if it is called with both *prefix* and *per-line-prefix*
-     supplied as non-``#f``. *Suffix* is a string to print at the end of
+     supplied as non-:drm:`#f`. *Suffix* is a string to print at the end of
      the logical block. *Column* advises the pretty printer as to the
      current column of the output stream (the default is zero). The
      *column* argument may be ignored entirely by some methods, and it
@@ -513,7 +513,7 @@ IO library's *pprint* module.
    Controls miser mode.
 
    :type: false-or(<integer>)
-   :value: ``#f``
+   :value: :drm:`#f`
 
    :description:
 
@@ -525,5 +525,5 @@ IO library's *pprint* module.
 
           *default-line-length* - *print-miser-width*
 
-     The value must be an integer or ``#f`` (the default); ``#f``
+     The value must be an integer or :drm:`#f` (the default); :drm:`#f`
      indicates that the pretty printer should never enter miser mode.

@@ -349,7 +349,7 @@ The command-line-parser Module
 
    :signature: print-synopsis (parser subcommand #key stream) => ()
    :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter subcommand: An instance of :class:`<subcommand>` or ``#f``.
+   :parameter subcommand: An instance of :class:`<subcommand>` or :drm:`#f`.
    :parameter #key stream: An instance of :class:`<stream>`.
 
    :description:
@@ -359,15 +359,15 @@ The command-line-parser Module
 
 .. function:: option-present?
 
-   Returns ``#t`` if this option was supplied on the command line.
+   Returns :drm:`#t` if this option was supplied on the command line.
 
    :signature: option-present? (option) => (present?)
    :parameter option: An instance of :class:`<option>`.
    :value present?: An instance of :drm:`<boolean>`.
    :description:
 
-     Returns ``#t`` if this option was supplied on the command line. Returns
-     ``#f`` if called before :func:`parse-command-line` has been called on the
+     Returns :drm:`#t` if this option was supplied on the command line. Returns
+     :drm:`#f` if called before :func:`parse-command-line` has been called on the
      associated parser, or if the option wasn't supplied on the command line.
 
 .. function:: option-value
@@ -382,7 +382,7 @@ The command-line-parser Module
      Returns the parsed value of the option supplied on the command line.  If
      no value was supplied on the command line it returns the value specified
      with ``default:`` when the option was created, which in turn defaults to
-     ``#f``.
+     :drm:`#f`.
 
      Note that the type of the return value is specified by the ``type:``
      keyword argument when the option was created and the string supplied on
@@ -517,7 +517,7 @@ Option Classes
 
      A default value for the option that will be used if the option isn't
      specified by the user. The default value should be a member of the type
-     specified with the ``type:`` keyword. ``#f`` is the default default value.
+     specified with the ``type:`` keyword. :drm:`#f` is the default default value.
 
 .. class:: <flag-option>
    :sealed:
@@ -532,7 +532,7 @@ Option Classes
 
    :description:
 
-     They default to ``#f`` and may exist in both positive and negative forms:
+     They default to :drm:`#f` and may exist in both positive and negative forms:
      ``--foo`` and ``--no-foo``.  In the case of conflicting options, the
      rightmost takes precedence to allow for abuse of the shell's "alias"
      command.
@@ -554,7 +554,7 @@ Option Classes
 
      If the option appears more than once, the rightmost value takes
      precedence. If the option never appears, these will default to
-     ``#f``.
+     :drm:`#f`.
 
      Examples::
 
@@ -572,8 +572,8 @@ Option Classes
    :description:
 
      The parameter must directly follow the option with no intervening
-     whitespace, or follow an "=" token. The value is ``#f`` if the option
-     never appears, ``#t`` if the option appears but the parameter does
+     whitespace, or follow an "=" token. The value is :drm:`#f` if the option
+     never appears, :drm:`#t` if the option appears but the parameter does
      not, and the value of the parameter otherwise.
 
      Examples::
@@ -651,7 +651,7 @@ Option Classes
      The final value is a :class:`<string-table>` containing each specified
      key, with one of the following values:
 
-     * ``#t``: The user specified "-Dkey"
+     * :drm:`#t`: The user specified "-Dkey"
      * a string: The user specified "-Dkey=value"
 
      You can read this with ``element(table, key, default: #f)`` to get a

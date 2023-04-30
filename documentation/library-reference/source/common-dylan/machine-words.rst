@@ -156,7 +156,7 @@ integer value.
    :signature: limited t == <machine-word> #key signed? min max => r
 
    :parameter #key signed?: An instance of :drm:`<boolean>`. Defaults to
-                            ``#t``
+                            :drm:`#t`.
    :parameter #key min: An instance of :class:`<machine-word>`
    :parameter #key max: An instance of :class:`<machine-word>`
    :value r: An instance of :class:`<type>`

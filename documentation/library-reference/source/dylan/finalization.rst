@@ -323,7 +323,7 @@ finalization interface. These items are exported from the
 
    :signature: automatic-finalization-enabled? () => *enabled?*
 
-   :value enabled?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :value enabled?: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
 
    :description:
 
@@ -348,11 +348,11 @@ finalization interface. These items are exported from the
 
      Sets the automatic finalization system state to *newval*.
 
-     The initial state is ``#f``. If the state changes from ``#f`` to
-     ``#t``, a new thread is created which regularly calls
+     The initial state is :drm:`#f`. If the state changes from :drm:`#f` to
+     :drm:`#t`, a new thread is created which regularly calls
      :func:`drain-finalization-queue` inside an empty dynamic
      environment (that is, no dynamic condition handlers). If the state
-     changes from ``#t`` to ``#f``, the thread exits.
+     changes from :drm:`#t` to :drm:`#f`, the thread exits.
 
    :seealso:
 

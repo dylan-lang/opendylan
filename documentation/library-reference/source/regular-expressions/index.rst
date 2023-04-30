@@ -115,11 +115,11 @@ Reference
    :signature: compile-regex *pattern* #key *case-sensitive* *verbose* *multi-line* *dot-matches-all* *use-cache* => *regex*
 
    :parameter pattern: A :drm:`<string>`.
-   :parameter #key case-sensitive: A :drm:`<boolean>`, default ``#t``.
-   :parameter #key verbose: A :drm:`<boolean>`, default ``#f``.
-   :parameter #key multi-line: A :drm:`<boolean>`, default ``#f``.
-   :parameter #key dot-matches-all: A :drm:`<boolean>`, default ``#f``.
-   :parameter #key use-cache: A :drm:`<boolean>`, default ``#t``.  If true,
+   :parameter #key case-sensitive: A :drm:`<boolean>`, default :drm:`#t`.
+   :parameter #key verbose: A :drm:`<boolean>`, default :drm:`#f`.
+   :parameter #key multi-line: A :drm:`<boolean>`, default :drm:`#f`.
+   :parameter #key dot-matches-all: A :drm:`<boolean>`, default :drm:`#f`.
+   :parameter #key use-cache: A :drm:`<boolean>`, default :drm:`#t`.  If true,
      the resulting regular expression will be cached and re-used the
      next time the same string is compiled.
    :value regex: A :class:`<regex>`.
@@ -162,7 +162,7 @@ Reference
      to start the search.
    :parameter #key end: An :drm:`<integer>`, default ``*text*.size``.  The index
      at which to end the search.
-   :parameter #key case-sensitive: A :drm:`<boolean>`, default ``#t``.
+   :parameter #key case-sensitive: A :drm:`<boolean>`, default :drm:`#t`.
    :value regex-start: An instance of ``false-or(<integer>)``.
    :value #rest marks: An instance of :drm:`<object>`.
 
@@ -190,9 +190,9 @@ Reference
      at which to start searching.
    :parameter #key end: An :drm:`<integer>`, default ``*big*.size``.  The index
      at which to end the search.
-   :parameter #key case-sensitive: A :drm:`<boolean>`, default ``#t``.
-   :parameter #key count: An instance of ``false-or(<integer>)``, default ``#f``.
-     The number of matches to replace.  ``#f`` means to replace all.
+   :parameter #key case-sensitive: A :drm:`<boolean>`, default :drm:`#t`.
+   :parameter #key count: An instance of ``false-or(<integer>)``, default :drm:`#f`.
+     The number of matches to replace.  :drm:`#f` means to replace all.
    :value new-string: An instance of :drm:`<string>`.
 
    A match will only be found if it fits entirely within the range
@@ -207,7 +207,7 @@ Reference
 
    :parameter pattern: The :class:`<regex>` to search for.
    :parameter text: The :drm:`<string>` in which to search.
-   :parameter #key anchored: A :drm:`<boolean>`, default ``#f``.  Whether or
+   :parameter #key anchored: A :drm:`<boolean>`, default :drm:`#f`.  Whether or
      not the search should be anchored at the start position.  This is
      useful because "^..." will only match at the beginning of a string,
      or after \\n if the regex was compiled with multi-line = #t.
@@ -215,8 +215,8 @@ Reference
      at which to start searching.
    :parameter #key end: An :drm:`<integer>`, default ``*text*.size``.  The index
      at which to end the search.
-   :parameter #key case-sensitive: A :drm:`<boolean>`, default ``#t``.
-   :value match: An instance of ``false-or(<regex-match>)``.  ``#f`` is returned
+   :parameter #key case-sensitive: A :drm:`<boolean>`, default :drm:`#t`.
+   :value match: An instance of ``false-or(<regex-match>)``.  :drm:`#f` is returned
      if no match was found.
 
    A match will only be found if it fits entirely within the range
@@ -236,7 +236,7 @@ Reference
      at which to start searching.
    :parameter #key end: An :drm:`<integer>`, default ``*text*.size``.  The index
      at which to end the search.
-   :parameter #key case-sensitive: A :drm:`<boolean>`, default ``#t``.
+   :parameter #key case-sensitive: A :drm:`<boolean>`, default :drm:`#t`.
    :value #rest strings: An instance of :drm:`<object>`.
 
    A match will only be found if it fits entirely within the range
@@ -264,6 +264,6 @@ Reference
 
    Group 0 is always the entire regular expression match.
 
-   It is possible for the group identifier to be valid and for ``#f``
+   It is possible for the group identifier to be valid and for :drm:`#f`
    to be returned.  This can happen, for example, if the group was in
    the part of an ``|`` (or) expression that didn't match.

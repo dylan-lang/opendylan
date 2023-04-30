@@ -161,7 +161,7 @@ File-System module.
 
    :parameter directory: An instance of :type:`<pathname>`.
    :parameter #key recursive?: An instance of :type:`<boolean>`.
-                               Default value: ``#f``
+                               Default value: :drm:`#f`
 
    :description:
 
@@ -377,11 +377,11 @@ File-System module.
 
      Not all platforms implement all of the above keys. Some platforms
      may support additional keys. The ``#"author"`` key is supported on
-     all platforms but may return ``#f`` if it is not meaningful on a
+     all platforms but may return :drm:`#f` if it is not meaningful on a
      given platform. Use of an unsupported key signals an error.
 
      All keys listed above are implemented by Win32, though note that
-     ``#"author"`` always returns ``#f``.
+     ``#"author"`` always returns :drm:`#f`.
 
    :seealso:
 
@@ -600,7 +600,7 @@ File-System module.
      Returns the pathname of the temporary directory in use. The return
      value of this function can be used with :drm:`concatenate` to
      create pathnames of entities in the temporary directory. If no
-     temporary directory is defined, ``temp-directory`` returns ``#f``.
+     temporary directory is defined, ``temp-directory`` returns :drm:`#f`.
      On Windows the temporary directory is specified by the ``TMP``
      environment variable.
 

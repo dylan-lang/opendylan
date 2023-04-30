@@ -73,7 +73,7 @@ init-keyword. The legal values for this keyword are:
 - ``#"value"`` Creates a table with weak values. When there are no longer
   any strong references to a value, the table entry of which it is a
   part becomes eligible for garbage collection.
-- ``#f`` Creates a table with strong keys and values. This is the default
+- :drm:`#f` Creates a table with strong keys and values. This is the default
   value.
 
 The table-extensions Module
@@ -147,7 +147,7 @@ from the module *table-extensions*.
    :parameter elt-hash-function: An instance of :drm:`<function>`.
    :parameter collection: An instance of :drm:`<collection>`.
    :parameter initial-state: An instance of ``<hash-state>``.
-   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :value hash-id: An instance of :drm:`<integer>`.
    :value result-state: An instance of ``<hash-state>``.
 
@@ -172,7 +172,7 @@ from the module *table-extensions*.
    :parameter elt-hash-function: An instance of :drm:`<function>`.
    :parameter sequence: An instance of :drm:`<sequence>`.
    :parameter initial-state: An instance of ``<hash-state>``.
-   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :value hash-id: An instance of :drm:`<integer>`.
    :value result-state: An instance of ``<hash-state>``.
 

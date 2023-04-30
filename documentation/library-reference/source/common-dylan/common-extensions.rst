@@ -64,11 +64,11 @@ The extensions are:
    :parameter format-string: A Dylan expression *bnf*.
    :parameter format-arg: A Dylan expression *bnf*.
 
-   :value false: ``#f``.
+   :value false: :drm:`#f`.
 
    :description:
 
-     Signals an error if *expression* evaluates to ``#f``.
+     Signals an error if *expression* evaluates to :drm:`#f`.
 
      An assertion or "assert" is a simple tool for testing that
      conditions hold in program code.
@@ -77,7 +77,7 @@ The extensions are:
      the DRM. If *format-string* is supplied, the error is formatted
      accordingly, along with any instances of *format-arg*.
 
-     If *expression* is not ``#f``, ``assert`` does not evaluate
+     If *expression* is not :drm:`#f`, ``assert`` does not evaluate
      *format-string* or any instances of *format-arg*.
 
    :seealso:
@@ -169,7 +169,7 @@ The extensions are:
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.
    :parameter format-arg: A Dylan expression *bnf*.
-   :value false: ``#f``.
+   :value false: :drm:`#f`.
 
    :description:
 
@@ -217,7 +217,7 @@ The extensions are:
    :signature: default-handler *warning* => *false*
 
    :parameter warning: An instance of :drm:`<warning>`.
-   :value false: ``#f``.
+   :value false: :drm:`#f`.
 
    :description:
 
@@ -507,7 +507,7 @@ The extensions are:
    :parameter collection: An instance of :drm:`<collection>`.
    :parameter predicate: An instance of :drm:`<function>`.
    :parameter #key skip: An instance of :drm:`<integer>`. Default value: 0.
-   :parameter #key failure: An instance of :drm:`<object>`. Default value: ``#f``.
+   :parameter #key failure: An instance of :drm:`<object>`. Default value: :drm:`#f`.
    :value element: An instance of :drm:`<object>`.
 
    :description:
@@ -663,7 +663,7 @@ The extensions are:
    :parameter base: An instance of :drm:`<integer>` (default 10).
    :parameter size: An instance of :drm:`<integer>` (default 0).
    :parameter fill: An instance of :drm:`<character>` (default 0).
-   :parameter lowercase?: An instance of :drm:`<boolean>` (default ``#f``).
+   :parameter lowercase?: An instance of :drm:`<boolean>` (default :drm:`#f`).
    :value string: An instance of :drm:`<byte-string>`.
 
    :description:
@@ -747,9 +747,9 @@ The extensions are:
    :parameter target: An instance of :drm:`<object>`.
    :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
-   :parameter #key end: An instance of :drm:`<object>`. Default value: ``#f``.
+   :parameter #key end: An instance of :drm:`<object>`. Default value: :drm:`#f`.
    :parameter #key skip: An instance of :drm:`<integer>`. Default value: 0.
-   :parameter #key count: An instance of :drm:`<object>`. Default value: ``#f``.
+   :parameter #key count: An instance of :drm:`<object>`. Default value: :drm:`#f`.
    :value position: An instance of ``false-or(<integer>)``.
 
    :description:
@@ -764,7 +764,7 @@ The extensions are:
      The *skip* argument is interpreted as it is by Dylan's :drm:`find-key`
      function: *position* ignores the first *skip* elements that match
      *target*, and if *skip* or fewer elements satisfy *test*, it
-     returns ``#f``.
+     returns :drm:`#f`.
 
      The *start* and *end* arguments indicate, if supplied, which subrange
      of the *sequence* is used for the search.
@@ -1341,7 +1341,7 @@ The extensions are:
    2. the start index in that sequence at which to begin searching, and
    3. the index at which to stop searching (exclusive).
 
-   The *separator* function must return ``#f`` to indicate that no separator was
+   The *separator* function must return :drm:`#f` to indicate that no separator was
    found, or two values:
 
    1. The start index of the separator in the sequence and
@@ -1516,7 +1516,7 @@ The extensions are:
    :description:
 
      Returns the full filename (that is, the absolute pathname) of the
-     running application, or ``#f`` if the filename cannot be
+     running application, or :drm:`#f` if the filename cannot be
      determined.
 
    :example:
