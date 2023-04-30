@@ -10,7 +10,7 @@ the Open Dylan IDE
 <https://opendylan.org/documentation/getting-started-ide/>`_.
 
 The compiler executable is called ``dylan-compiler``.  There is a helper
-application called ``make-dylan-app``, which can be used to generate some
+application called :program:`dylan`, which can be used to generate some
 boilerplate for a new project, and finally there's ``DIME`` and ``dswank``, a
 pair of tools for interactive development in Emacs.  This document describes
 these tools.
@@ -21,7 +21,7 @@ these tools.
    copyright
    hello-world
    source-registries
-   adding-new-libraries
+   managing-dependencies
    quick-tips
    dylan-compiler
    dylan-environment

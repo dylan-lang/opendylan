@@ -6,52 +6,58 @@ how do you write the canonical Hello World app?  This example assumes the
 ``bash`` shell is used.  You may need to adjust for your local shell.  ::
 
   $ export PATH=/opt/opendylan/bin:$PATH
-  $ make-dylan-app hello-world
+  $ dylan new application --simple hello-world
   $ cd hello-world
-  $ dylan-compiler -build hello-world.lid
+  $ dylan build --all
   ...lots of output...
   $ _build/bin/hello-world
   Hello, world!
 
-Ta da!  Now a quick review of the steps with a little bit of
-explanation.
+Ta da!  Now a quick review of the steps with a little bit of explanation.
 
-First you must set ``PATH`` so that ``make-dylan-app`` and
-``dylan-compiler`` will be found.  ``./_build/bin`` is where
-dylan-compiler puts the executables it builds.
+First you must set ``PATH`` so that the :program:`dylan` and
+:program:`dylan-compiler` commands will be found.  ``./_build/bin`` is where
+:program:`dylan-compiler` puts the executables it builds.
 
 .. note:: Some of these differ on Windows, so please be sure
    to read :doc:`windows` if you are on Windows.
    :class: alert alert-block alert-warning
 
-``make-dylan-app`` creates a directory with the same name as the
-project, and four files:
+``dylan new application --simple hello-world`` creates a directory named
+"hello-world", and several files. The ``--simple`` flag says to skip generating
+a test suite library.
 
-1. ``hello-world.lid`` -- This says what other files are part of the project.
-   The order in which the files are listed here determines the order in which
-   the code in them is executed.
+1. :file:`hello-world.lid` lists the files in the project.  The order in which
+   the files are listed here determines the order in which the code in them is
+   loaded. The library definition file should always be first.
 
-2. ``library.dylan`` contains the library and module definitions.  These can be
-   extended as your project grows more complex.
+2. :file:`library.dylan` contains the library and module definitions.  These
+   can be extended as your project grows in complexity.
 
-3. ``hello-world.dylan`` contains the main program. Note that the last
-   top-level definition is a call to the main function, which may have any
-   name; there is no predefined "main" function that is automatically called.
+3. :file:`hello-world.dylan` contains the main program code.
 
-4. ``registry/<platform>/hello-world`` is a "registry file", which contains the
-   path to the ``hello-world.lid`` file.
+4. The :file:`registry` directory is how :program:`dylan-compiler` locates each
+   used library. When using the :program:`dylan` tool, this directory is
+   generated for you. See :doc:`source-registries` for details on the registry
+   format.
 
-The first time you build ``hello-world`` it builds all used libraries, all the
-way down to the ``dylan`` library itself.  Subsequent compiles only need to
+5. :file:`dylan-package.json` describes the new "hello-world" package. This is
+   where you can specify dependencies, the package location, etc. See the
+   `dylan-tool documentation
+   <https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html>`_
+   for more on this. Note that the existence of this file turns the
+   "hello-world" directory into a :program:`dylan` workspace.
+
+The first time you build ``hello-world`` all used libraries are built, all the
+way down to the ``dylan`` library itself. Subsequent builds only need to
 recompile ``hello-world`` itself and are therefore much faster.
 
-``dylan-compiler`` has a batch mode and an interactive mode.  The ``-build``
-option says to build the project in batch mode.  When you pass a ".lid" file to
-the compiler it builds the library described by that file.  In the next section
-you'll see that you can also pass the name of the project (without ".lid") and
-it will use "registries" to find the project sources.
+.. note:: Don't confuse the ``dylan`` library with the :program:`dylan`
+          executable program. The ``dylan`` library contains the core Dylan
+          language features that are not implemented inside the compiler. The
+          ``dylan`` program is a tool to help manager Dylan projects and is
+          created from a library called ``dylan-tool``.
 
-The compiler places its output in the ``_build`` directory in the
-current working directory. This includes the libraries and executables
-that it builds.  You can run the executable as noted above from this
-location.
+The compiler places its output in the ``_build`` directory in the current
+working directory. This includes the libraries and executables that it builds.
+You can run the executable from this location, as noted above.

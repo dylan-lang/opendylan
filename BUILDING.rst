@@ -70,7 +70,7 @@ back-end.
 Building
 --------
 
-To build ``dylan-compiler``, ``make-dylan-app``, and several tools::
+To build :program:`dylan-compiler` and several tools::
 
   export PATH=$(dirname $(which dylan-compiler)):$PATH
   ./autogen.sh
@@ -98,11 +98,11 @@ can point it in the right direction by using ``--with-gc``::
 
   ./configure --prefix=/opt/opendylan-current --with-gc=/path/to/boehm
 
-By default, this will build a fully bootstrapped compiler with the
-first generation in ``Bootstrap.1/bin/dylan-compiler``, the second
-generation in ``Bootstrap.2/bin/dylan-compiler``, and the third in
-``Bootstrap.3/bin/dylan-compiler``. The third generation will then be
-installed as ``/opt/opendylan-current/bin/dylan-compiler``.
+By default, this will build a fully bootstrapped compiler with the first
+generation in :file:`Bootstrap.1/bin/dylan-compiler`, the second generation in
+:file:`Bootstrap.2/bin/dylan-compiler`, and the third in
+:file:`Bootstrap.3/bin/dylan-compiler`. The third generation will then be
+installed as :file:`/opt/opendylan-current/bin/dylan-compiler`.
 
 Running Tests
 -------------
@@ -113,7 +113,10 @@ complete::
   make check
 
 This runs the tests for the core language implementation as well as for many
-bundled libraries.
+bundled libraries. You may also want to run the
+``dfmc-environment-test-suite``, with ::
+
+  make check-environment
 
 Windows
 =======
@@ -135,7 +138,7 @@ Windows
 
 * Please keep in mind that paths with whitespaces are not well supported.
 
-* cd into build\\windows and run::
+* cd into :file:`build\\windows` and run::
 
     build-release.bat <target-dir> /sources <git-checkout>\sources /internal
 
@@ -147,7 +150,7 @@ IDE in <target-dir>.
   * Get NSIS from http://nsis.sf.net and the HTML help workshop (from
     Microsoft, to generate the chm).
 
-  * Go to packages\\win32-nsis, read Build.txt and follow the
-    instructions. Make sure you are using the same command shell as
-    used for building Open Dylan (to retain environment variables).
+  * Go to :file:`packages\\win32-nsis`, read :file:`Build.txt` and follow the
+    instructions. Make sure you are using the same command shell as used for
+    building Open Dylan (to retain environment variables).
 
