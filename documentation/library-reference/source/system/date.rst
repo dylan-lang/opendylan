@@ -348,11 +348,11 @@ Date module.
 
    :description:
 
-     A number of methods are defined for the ``+`` generic function to allow
+     A number of methods are defined for the :drm:`+` generic function to allow
      summing of various combinations of dates and durations. Note that there
      is not a method defined for every possible combination of date and
      duration. Specifically, you cannot sum two dates. The table below lists
-     the methods that are defined on ``+`` and :class:`<date>`.
+     the methods that are defined on :drm:`+` and :class:`<date>`.
 
      Methods defined for addition of dates and durations
 
@@ -386,11 +386,11 @@ Date module.
 
    :description:
 
-     A number of methods are defined for the ``+`` generic function to
+     A number of methods are defined for the :drm:`+` generic function to
      allow summing of durations. Note that there is not a method defined
      for every possible combination of duration. Specifically, you cannot
      sum different types of duration. The table below lists the methods
-     that are defined on ``+``.
+     that are defined on :drm:`+`.
 
      Methods defined for addition of durations
 
@@ -430,13 +430,13 @@ Date module.
 
    :description:
 
-     A number of methods are defined for the ``-`` generic function to allow
+     A number of methods are defined for the :drm:`-` generic function to allow
      subtraction of various combinations of dates and durations. Note that
      there is not a method defined for every possible combination of date and
      duration. Specifically, you cannot subtract a date from a duration, and
      you cannot subtract different types of duration. The return value can be
      either a date or a duration, depending on the arguments supplied. The
-     table below lists the methods that are defined on ``-``.
+     table below lists the methods that are defined on :drm:`-`.
 
      Methods defined for subtraction of dates and durations
                                                       
@@ -474,14 +474,14 @@ Date module.
 
    :description:
 
-     A number of methods are defined for the ``-`` generic function to allow
+     A number of methods are defined for the :drm:`-` generic function to allow
      subtraction of durations. Note that there is not a method defined for
      every possible combination of duration. Specifically, you cannot
      subtract different types of duration. The table below lists the
-     methods that are defined on ``-``.
+     methods that are defined on :drm:`-`.
 
      Methods defined for subtraction of dates and durations
-                                                      
+
      +--------------------------------+--------------------------------+--------------------------------+
      | arg1                           | arg2                           | difference                     |
      +================================+================================+================================+

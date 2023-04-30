@@ -110,7 +110,7 @@ a Table-extensions module, which you can read about in
    :description:
 
      Returns a hash code for *object* that corresponds to the
-     equivalence predicate ``==``.
+     equivalence predicate :drm:`==`.
 
      This function is a useful tool for writing hash functions in which
      the object identity of some component of a key is to be used in

@@ -357,8 +357,8 @@ simple example. Suppose we have a C ``extern`` function declaration
 
 This function is intended to return the sum of two ``double`` values.
 Instead of implementing the function in C, we can implement it in Dylan
-using Dylan's generic function ``+``. All we need to do is define a
-C-callable wrapper for ``+``, as follows:
+using Dylan's generic function :drm:`+`. All we need to do is define a
+C-callable wrapper for :drm:`+`, as follows:
 
 .. code-block:: dylan
 

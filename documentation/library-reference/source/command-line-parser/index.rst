@@ -617,12 +617,12 @@ Option Classes
      :class:`<usage-error>` is signaled.  If you supply a sequence of
      non-string choices you will also need to supply the ``test:``
      init keyword since all command-line arguments are strings and
-     won't compare equal with the default test, ``=``.
+     won't compare equal with the default test, :drm:`=`.
 
    :keyword test:
 
      A function to test whether the value supplied on the command line
-     is the same as one of the choices.  The default is ``=``.  Another
+     is the same as one of the choices.  The default is :drm:`=`.  Another
      commonly used value is ``string-equal-ic?``, to ignore case in the
      comparison.
 

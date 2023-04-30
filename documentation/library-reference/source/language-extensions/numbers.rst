@@ -1078,7 +1078,7 @@ not:
 
     5 ga/+ 4;
 
-The existing functions like ``+`` and ``-`` will only accept :drm:`<integer>`
+The existing functions like :drm:`+` and :drm:`-` will only accept :drm:`<integer>`
 instances and ``ga/<integer>`` instances small enough to be represented as
 :drm:`<integer>` instances.
 

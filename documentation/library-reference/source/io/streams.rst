@@ -401,7 +401,7 @@ For example:
     write(stream, "ABC");
     values(v, stream-contents(stream));
 
-The example returns two values. Each value is the same (``==``) stretchy
+The example returns two values. Each value is the same (:drm:`==`) stretchy
 vector:
 
 .. code-block:: dylan
@@ -2107,7 +2107,7 @@ are exported from the *streams* module.
    :parameter input-stream: An instance of :class:`<stream>`.
    :parameter element: An instance of :drm:`<object>`.
    :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
-   :parameter #key test: An instance of :drm:`<function>`. Default value: ``==``.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :value sequence-or-eof: An instance of :drm:`<sequence>`, or an instance of
      :drm:`<object>` if the end of the stream is reached.
    :value found?: An instance of :drm:`<boolean>`.
@@ -2134,7 +2134,7 @@ are exported from the *streams* module.
    :parameter input-stream: An instance of :class:`<stream>`.
    :parameter element: An instance of :drm:`<object>`.
    :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
-   :parameter #key test: An instance of :drm:`<function>`. Default value: ``==``.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :value sequence-or-eof: An instance of :drm:`<sequence>`, or an instance of
      :drm:`<object>` if the end of the stream is reached.
    :value found?: An instance of :drm:`<boolean>`.
@@ -2254,7 +2254,7 @@ are exported from the *streams* module.
 
    :parameter input-stream: An instance of :class:`<stream>`.
    :parameter element: An instance of :drm:`<object>`.
-   :parameter #key test: An instance of :drm:`<function>`. Default value: ``==``.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :value found?: An instance of :drm:`<boolean>`.
 
    :description:

@@ -152,7 +152,7 @@ IO library's *print* module.
      circular printing was on shares the same tagging space; that is, if
      ``#1#`` is printed twice, once from each of two distinct recursive
      calls to print, then each ``#1#`` is guaranteed to signify the same
-     ``==`` object.
+     :drm:`==` object.
 
      The *pretty?* keyword indicates whether printing should attempt to
      insert line breaks and indentation to format objects according to
