@@ -32,30 +32,30 @@ socket function that blocks.
      This function is necessary because the Win32 API library Winsock2,
      which the Network library calls to get native socket functionality,
      requires applications to call an initialization function before
-     calling any Winsock2 API functions. The call to ``start-sockets``
+     calling any Winsock2 API functions. The call to :func:`start-sockets`
      calls this underlying Winsock2 function.
 
-     Note that you must not call ``start-sockets`` from a top-level form
+     Note that you must not call :func:`start-sockets` from a top-level form
      in any DLL project. The combination of this, and the restriction
-     that you must call ``start-sockets`` before calling anything else,
+     that you must call :func:`start-sockets` before calling anything else,
      implies that no Network library function or variable can be called
      (directly or indirectly) from a top-level form in any DLL project.
      Instead, the DLL project should define a start function that calls
-     ``start-sockets`` (directly or indirectly) or re-export
-     ``start-sockets`` so that their clients can arrange to have it
+     :func:`start-sockets` (directly or indirectly) or re-export
+     :func:`start-sockets` so that their clients can arrange to have it
      called from a top-level form in an appropriate EXE project.
 
      Applications using the Network library must arrange for
-     ``start-sockets`` to be called (directly or indirectly) before
+     :func:`start-sockets` to be called (directly or indirectly) before
      *any* other sockets API functions. A good place to do this is at
-     the beginning of your start function (usually the ``main`` method).
+     the beginning of your startup function (usually called ``main``, or similar).
      For example:
 
      .. code-block:: dylan
 
-       define method main () => ();
+       define method main () => ()
          start-sockets();
-         let the-server = make(<TCP-server-socket>, port: 7);
+         let the-server = make(<tcp-server-socket>, port: 7);
          ...
        end;
 
@@ -63,25 +63,20 @@ socket function that blocks.
          main();
        end;
 
-     New start functions that call ``start-sockets`` and that are
+     New start functions that call :func:`start-sockets` and that are
      defined for DLL projects that use the Network library will inherit
-     all of the restrictions described above for ``start-sockets``.
+     all of the restrictions described above for :func:`start-sockets`.
 
-     Calling a Network library function before calling ``start-sockets``
+     Calling a Network library function before calling :func:`start-sockets`
      results in a :class:`<sockets-not-initialized>` error. Calling
-     ``start-sockets`` from a top-level form in a DLL project will
-     result in unpredictable failures—probably access violations during
+     :func:`start-sockets` from a top-level form in a DLL project will
+     result in unpredictable failures --- probably access violations during
      initialization.
 
 .. macro:: with-socket-thread
    :statement:
 
-   :macrocall:
-     .. code-block:: dylan
-
-       with-socket-thread (#key *server?*)
-         *body*
-       end;
+   :macrocall: with-socket-thread (#key *server?*) *body* end
 
    :description:
 
@@ -131,7 +126,7 @@ generic functions and constants.
      The class of objects representing Internet addresses used as
      endpoints for peer-to-peer socket connections.
 
-     To construct an ``<internet-address>`` object you must supply
+     To construct an :class:`<internet-address>` object you must supply
      either the ``name:`` or ``address:`` keyword. For example:
 
      .. code-block:: dylan
@@ -144,7 +139,7 @@ generic functions and constants.
 
        make (<internet-address>, address: "9.74.122.0")
 
-     :drm:`make` on ``<internet-address>`` returns an instance of
+     :drm:`make` on :class:`<internet-address>` returns an instance of
      :class:`<ipv4-address>`.
 
 .. generic-function:: host-name
@@ -249,7 +244,7 @@ protocols.
 
      Currently only ipv4 (32-bit) addresses are supported. Ipv6
      addresses will be added when they are supported by Winsock2. In
-     general ``<numeric-address>`` objects are accessed using the
+     general :class:`<numeric-address>` objects are accessed using the
      functions :gf:`host-order` or :gf:`network-order`, depending on the
      context in which they are employed.
 
@@ -263,7 +258,7 @@ protocols.
      Returns the value of the numeric address in network order. The argument
      is a general instance of :class:`<numeric-address>`. The class of the object
      returned depends upon the particular subclass of the argument; the
-     ``network-order`` method for :class:`<ipv4-numeric-address>` returns an instance
+     :gf:`network-order` method for :class:`<ipv4-numeric-address>` returns an instance
      of :class:`<machine-word>`.
 
      *Network order* is big-endian byte order.
@@ -277,7 +272,7 @@ protocols.
 
      Like :gf:`network-order` but returns the value in host order.
 
-     *Host order* is either big-endian byte order on a big-endian host
+     *Host order* is big-endian byte order on a big-endian host
      machine and little-endian on a little-endian host machine.
 
 IPV4 addresses
@@ -299,9 +294,9 @@ IPV4 addresses
      The single slot of this class contains a 32-bit value representing
      a ipv4 address. This slot is accessed by the generic functions
      :gf:`network-order` and :gf:`host-order` described above.
-     ``<ipv4-numeric-address>`` has two concrete subclasses
+     :class:`<ipv4-numeric-address>` has two concrete subclasses
      :class:`<ipv4-network-order-address>` and
-     :class:`<ipv4-host-order-address>`. Make ``<ipv4-numeric-address>``
+     :class:`<ipv4-host-order-address>`. Making a :class:`<ipv4-numeric-address>`
      returns one or the other of these depending upon the value of the
      ``order:`` keyword.
 
@@ -379,8 +374,8 @@ The <abstract-socket> class
 
    :superclasses: :drm:`<object>`
 
-   :keyword socket-descriptor: A Windows handle or UNIX fd (file
-     descriptor) for the socket. In general users of the sockets API
+   :keyword socket-descriptor: A Windows handle or UNIX file
+     descriptor for the socket. In general users of the sockets API
      should not need to use this keyword. Only implementors of new socket
      classes should be interested.
 
@@ -440,14 +435,14 @@ The <server-socket> class
      ``"daytime"``. Valid names depend on the configuration of the DNS.
      Required unless ``port:`` is supplied.
    :keyword port: An instance of :drm:`<integer>` identifying the port on
-     which the ``<server-socket>`` should listen for connection requests.
+     which the :class:`<server-socket>` should listen for connection requests.
      Required unless ``service:`` is supplied.
    :keyword protocol: An instance of :drm:`<string>` naming the protocol.
      Currently ``"tcp"`` is the only supported protocol. You can create
      instances of protocol-specific subclasses as an alternative to using
      the ``protocol:`` keyword. For example, ``make(<server-socket>,
-     protocol: "tcp", …)`` is equivalent to ``make(<tcp-server-socket>,
-     …)``.
+     protocol: "tcp", ...)`` is equivalent to ``make(<tcp-server-socket>,
+     ...)``.
 
    :description:
 
@@ -455,7 +450,7 @@ The <server-socket> class
      which come in over the network. Either the ``port:`` or
      ``service:`` keyword must be supplied.
 
-     :drm:`make` on ``(<server-socket>)`` returns an instance of
+     :drm:`make` on :class:`<server-socket>` returns an instance of
      :class:`<tcp-server-socket>` by default.
 
 .. generic-function:: accept
@@ -467,26 +462,23 @@ The <server-socket> class
 
      Blocks until a connect request is received, then it returns a
      connected instance of :class:`<socket>`. The particular subclass of
-     :class:`<socket>` returned depends on the actual class of the
+     :class:`<socket>` returned depends on the actual class of the *server-socket*
      argument, which must be a general instance of
      :class:`<server-socket>`. Calling accept on
      :class:`<tcp-server-socket>` returns a connected
      :class:`<tcp-socket>`. The keyword arguments are passed to the
-     creation of the :class:`<socket>` instance. For UDP sockets
+     creation of the :class:`<socket>` instance.
+
+     For UDP sockets
      *accept* returns immediately with an instance of
      :class:`<udp-socket>`. No blocking happens for UDP sockets because
      they are connectionless. After reading from a UDP socket returned
-     from ``accept`` the socket can be interrogated for the location of
+     from :gf:`accept` the socket can be interrogated for the location of
      the sender using :gf:`remote-host` and :gf:`remote-port`.
 
 .. macro:: with-server-socket
 
-   :macrocall:
-     .. code-block:: dylan
-
-       with-server-socket (*server-var* [:: *server-class* ], *keywords*)
-         *body*
-       end;
+   :macrocall: with-server-socket (*server-var* [:: *server-class* ], *keywords*) *body* end
 
    :description:
 
@@ -494,24 +486,18 @@ The <server-socket> class
      (optional) *server-class* argument and keyword arguments to make
      the :class:`<server-socket>`, and binds it to the local variable
      named by *server-var*. The *body* is evaluated in the context of
-     the binding and the ``<server-socket>`` is closed after the body is
+     the binding and the :class:`<server-socket>` is closed after the body is
      executed.
 
 .. macro:: start-server
 
-   :macrocall:
-     .. code-block:: dylan
-
-       start-server ([*server-var* = ]*socket-server-instance*,
-           *socket-var* [, *keywords* ])
-         *body*
-       end;
+   :macrocall: start-server ([*server-var* = ] *socket-server-instance*, *socket-var* [, *keywords* ]) *body* end
 
    :description:
 
      Enters an infinite ``while(#t) accept`` loop on the server socket.
-     Each time accept succeeds the :class:`<socket>` returned from
-     accept is bound to *socket-var* and the *body* is evaluated in the
+     Each time :gf:`accept` succeeds the :class:`<socket>` returned from
+     :gf:`accept` is bound to *socket-var* and *body* is evaluated in the
      context of the binding. When *body* exits, :gf:`accept` is called
      again producing a new binding for *socket-var*. The optional
      keywords are passed to the call to :gf:`accept`.
@@ -524,8 +510,8 @@ The <tcp-server-socket> class
    :superclasses: :class:`<server-socket>`
 
    :keyword element-type: Establishes a new default for the *element-type* of
-      :class:`<TCP-socket>` instances returned by calling :gf:`accept` with this
-      server socket as the argument to :gf:`accept`. This default
+      :class:`<tcp-socket>` instances returned by calling :gf:`accept` on this
+      server socket. This default
       *element-type* may be overridden for any particular call to :gf:`accept`
       by using the ``element-type:`` keyword to :gf:`accept`. If no
       ``element-type:`` is specified when the server socket is created,
@@ -534,7 +520,7 @@ The <tcp-server-socket> class
    :description:
 
      The class of TCP server sockets. A server socket is an object which
-     listens for requests for connections from the network. When accept is
+     listens for requests for connections from the network. When :gf:`accept` is
      called on the server socket and a request for connection is detected,
      accept returns a connected :class:`<socket>`.
 
@@ -546,7 +532,7 @@ The <tcp-server-socket> class
    :parameter server-socket: An instance of :class:`<tcp-server-socket>`.
    :parameter #key element-type: Controls the element type of the
      :class:`<tcp-socket>` (stream) returned. If not supplied, defaults
-     to ``#f``.
+     to :drm:`#f`.
    :value connected-socket: A connected instance of :class:`<tcp-socket>`.
 
    :description:
@@ -568,15 +554,13 @@ The <socket> class
    :superclasses: :class:`<abstract-socket>`, :class:`<external-stream>`
 
    :keyword direction: Specifies the direction of the stream. It must be
-     one of ``#"input"``, ``#"output"``, and ``"#input-output"``. This
-     keyword is an inherited streams class keyword. See the Streams
-     library documentation in the *System and I/O* library reference for a
-     full description.
+     one of ``#"input"``, ``#"output"``, and ``#"input-output"``. This
+     keyword is an inherited streams class keyword. See :doc:`io/streams`
+     for a full description.
    :keyword element-type: An instance of :drm:`<class>`. Useful values are
      :class:`<byte-character>` and ``<byte>``. This keyword is an
-     inherited streams class keyword. See the Streams library
-     documentation in the *System and I/O* library reference for a full
-     description.
+     inherited streams class keyword. See :doc:`io/streams`
+     for a full description.
 
 The <buffered-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -587,7 +571,7 @@ The <buffered-socket> class
 
 
    :keyword force-output-before-read?: An instance of :drm:`<boolean>`.
-     Defaults value: ``#t``. The methods which implement the stream
+     Defaults to :drm:`#t`. The methods which implement the stream
      reading protocols (:gf:`read`, :gf:`read-line`, :gf:`read-element`
      and so on) for instances of :class:`<socket>` call :gf:`force-output`
      by default before blocking. This is to ensure that any pending output
@@ -597,7 +581,7 @@ The <buffered-socket> class
      usual cases. Multi-threaded applications, particularly applications
      where one thread is reading and another thread is writing to the same
      socket, may wish to inhibit the default :gf:`force-output`. If the
-     socket is created with ``force-output-before-read?:`` as ``#f``,
+     socket is created with ``force-output-before-read?: #f``,
      :gf:`force-output` will not be called before the read functions
      block.
 
@@ -631,15 +615,15 @@ The class of TCP client sockets.
      Currently ``#"tcp"`` and ``#"udp"`` are the only supported protocols.
      You can create instances of protocol-specific subclasses as an
      alternative to using the ``protocol:`` keyword. For example
-     ``make(<socket>, protocol: #"tcp", …)`` is equivalent to
-     ``make(<TCP-socket>, …)``. :drm:`make` on :class:`<socket>` returns
-     an instance of ``<tcp-socket>`` by default.
+     ``make(<socket>, protocol: #"tcp", ...)`` is equivalent to
+     ``make(<tcp-socket>, ...)``. :drm:`make` on :class:`<socket>` returns
+     an instance of :class:`<tcp-socket>` by default.
    :keyword port: An instance of :drm:`<integer>` representing the remote
      port to connect to. Required unless ``service:`` is supplied.
    :keyword element-type: An instance of :drm:`<class>`. Useful values for
      :class:`<tcp-streams>` are :class:`<byte-character>` and ``<byte>``.
      This keyword is an inherited streams class keyword. See
-     :doc:`../io/streams` for a full description.
+     :doc:`io/streams` for a full description.
 
 .. generic-function:: remote-port
    :open:
@@ -684,14 +668,14 @@ The class of UDP client sockets.
      Currently ``#"tcp"`` and ``#"udp"`` are the only supported protocols.
      You can create instances of protocol-specific subclasses as an
      alternative to using the ``protocol:`` keyword. For example
-     ``make(<socket>, protocol: "udp", …)`` is equivalent to
-     ``make(<UDP-socket>, …)``. :drm:`make` on :class:`<socket>` returns
+     ``make(<socket>, protocol: "udp", ...)`` is equivalent to
+     ``make(<UDP-socket>, ...)``. :drm:`make` on :class:`<socket>` returns
      an instance of :class:`<tcp-socket>` by default.
    :keyword port: An instance of :drm:`<integer>` representing the remote
      port to connect to. Required unless ``service:`` is supplied.
    :keyword element-type: An instance of :drm:`<class>`. Useful values for
-     ``<udp-socket>`` s are ``<byte-character>`` and ``<byte>``. This
-     keyword is an inherited streams class keyword. See :doc:`../io/streams` for
+     :class:`<udp-socket>` s are ``<byte-character>`` and ``<byte>``. This
+     keyword is an inherited streams class keyword. See :doc:`io/streams` for
      a full description.
 
    :description:
@@ -730,7 +714,7 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <socket-condition>
 
-   All socket conditions are general instances of ``<socket-condition>``.
+   All socket conditions are general instances of :class:`<socket-condition>`.
    Some are recoverable and others are not.
 
    :superclasses: :class:`<simple-condition>`
@@ -745,20 +729,18 @@ This section lists the socket condition classes in the Network library.
 
      *socket-condition-details*
 
-     -  Most socket conditions originate in error return codes from Open
-        Dylan's Winsock2 library, an FFI interface to the native socket
-        library Winsock2.
+     -  Most socket conditions originate in error return codes from the
+        underlying host operating system's network library.
      -  The *socket-condition-details* slot provides information about the
         low-level failure which was the source for the condition. In most
         cases this slot will hold an instance of
-        ``<socket-accessor-condition>``, below.
-     -  When creating general instances of ``<socket-condition>``, you can use
+        :class:`<socket-accessor-condition>`.
+     -  When creating general instances of :class:`<socket-condition>`, you can use
         the *details:* keyword to set the value for this slot.
 
 .. class:: <socket-error>
 
-   The class ``<socket-error>`` is the superclass of all unrecoverable socket
-   conditions.
+   The superclass of all unrecoverable socket conditions.
 
    :superclasses: :class:`<socket-condition>`
 
@@ -766,24 +748,22 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <internal-socket-error>
 
-   The class ``<internal-socket-error>`` is the class of unexpected
-   socket errors.
+   The class of unexpected socket errors.
 
    :superclasses: :class:`<socket-error>`
 
    :description:
 
-     The class of unexpected errors from Open Dylan's Winsock2 library,
-     an FFI interface to the native socket library Winsock2.
+     The class of unexpected errors encountered while interacting with
+     the underlying host system's network library.
 
-     Inspect the contents of the ``socket-condition-details`` slot for
+     Inspect the contents of the :gf:`socket-condition-details` slot for
      more information.
 
 .. class:: <recoverable-socket-condition>
 
-   The ``<recoverable-socket-condition>`` class is the general class of
-   socket conditions for which an application may be able to take some
-   remedial action.
+   The class of socket conditions for which an application may be able to take
+   some remedial action.
 
    :superclasses: :class:`<socket-condition>`
 
@@ -802,14 +782,14 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <network-not-responding>
 
-   The network — probably a local network — is down. Try again later.
+   The network --- probably a local network --- is down. Try again later.
 
    :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <invalid-address>
 
    A badly formed address string has been passed to a function trying to
-   make an `<internet-address>`.
+   make an :class:`<internet-address>`.
 
    :superclasses: :class:`<recoverable-socket-condition>`
 
@@ -892,8 +872,7 @@ This section lists the socket condition classes in the Network library.
 
      The implementation-dependent limit on the number of open sockets
      has been reached. You must close some sockets before you can open
-     any more. The limits for Windows NT (non-server machines) and
-     Windows 95 are particularly small.
+     any more.
 
 .. class:: <socket-accessor-error>
 
@@ -902,8 +881,8 @@ This section lists the socket condition classes in the Network library.
    :description:
 
      An implementation-specific error from the C-FFI interface to the
-     native socket library. Usually instances of this class these appear
-     in the ``socket-condition-details`` slot of another
+     native socket library. Usually instances of this class appear
+     in the :gf:`socket-condition-details` slot of another
      :class:`<socket-condition>`.
 
 .. class:: <win32-socket-error>
