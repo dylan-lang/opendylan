@@ -185,7 +185,7 @@ evaluation of the initialization expression of the thread variable
 definition.
 
 See page :macro:`thread` for details of the ``thread`` adjective to
-``define variable``.
+:drm:`define variable`.
 
 Dynamic binding
 ---------------
@@ -199,7 +199,7 @@ a property of the dynamic environment.
 Thread variables can have new dynamic bindings created for them with the
 macro :macro:`dynamic-bind`. Thread variables inherently have
 thread-local bindings, so it is possible to re-bind a thread variable
-dynamically using the Dylan construct ``*block* … *cleanup*``. The
+dynamically using the Dylan construct ``*block* ... *cleanup*``. The
 :macro:`dynamic-bind` macro can be implemented in this way.
 
 The thread-local nature of dynamically bindable variables may not be
@@ -455,7 +455,7 @@ Operations on threads
      The class :class:`<thread>` provides the following
      operations:
 
-     - :func:`thread-name` Returns the name of a thread, or ``#f`` if no name was
+     - :func:`thread-name` Returns the name of a thread, or :drm:`#f` if no name was
        supplied.
      - :gf:`thread-id` Returns the ID of a thread.
      - :func:`join-thread` Blocks until one of the specified threads has terminated,
@@ -473,7 +473,7 @@ Operations on threads
    :description:
 
      Returns the name of *thread* as a string. If *thread* does not have
-     a name, this function returns ``#f``.
+     a name, this function returns :drm:`#f`.
 
 .. generic-function:: thread-id
 
@@ -515,7 +515,7 @@ Operations on threads
      An implementation of *join-thread* is permitted to signal the following
      condition:
 
-     ``<duplicate-join-error>``
+     :class:`<duplicate-join-error>`
        A condition of this class (a subclass of :drm:`<error>`) may be
        signalled when a thread is passed to *join-thread*, if that
        thread has already been joined by an earlier call to
@@ -619,7 +619,7 @@ Basic features
 
    :operations:
 
-     The class ``<synchronization>`` provides the following operations:
+     The class :class:`<synchronization>` provides the following operations:
 
      - :gf:`wait-for` Block until synchronization can be achieved.
      - :gf:`release` Release the object to make it available for
@@ -634,8 +634,8 @@ Basic features
 
    :signature: wait-for *object* #key *timeout* => *success*
 
-   :parameter object: An instance of :class:`<synchronization\>`.
-   :parameter timeout: Time-out interval. If the value is ``#f``
+   :parameter object: An instance of :class:`<synchronization>`.
+   :parameter timeout: Time-out interval. If the value is :drm:`#f`
       (the default), the time-out interval never elapses. Otherwise
       the value should be a :drm:`<real>`, corresponding to the desired
       interval in seconds.
@@ -651,8 +651,8 @@ Basic features
      non-blocking synchronization may be attempted by specifying a
      *timeout* of zero. Individual methods may adjust the state of the
      synchronization object on synchronization. The function returns
-     ``#t`` if synchronization is achieved before the timeout interval
-     elapses; otherwise it returns ``#f``.
+     :drm:`#t` if synchronization is achieved before the timeout interval
+     elapses; otherwise it returns :drm:`#f`.
 
 .. generic-function:: release
    :open:
@@ -685,7 +685,7 @@ Basic features
    :description:
 
      Returns the name of the synchronization object, *object*, if it was
-     created with the *name* init-keyword. Otherwise ``#f`` is returned.
+     created with the *name* init-keyword. Otherwise :drm:`#f` is returned.
 
 Locks
 -----
@@ -715,12 +715,12 @@ Locks
      a thread uses a lock for *mutual-exclusion* in this way, the thread
      is said to *own the lock*.
 
-     ``<lock>`` has no direct instances; calling *make* on ``<lock>``
+     :class:`<lock>` has no direct instances; calling *make* on :class:`<lock>`
      returns an instance of :class:`<simple-lock>`.
 
    :operations:
 
-     The class ``<lock>`` provides the following operations:
+     The class :class:`<lock>` provides the following operations:
 
      - :macro:`with-lock` Execute a body of code between :gf:`wait-for` and
        :gf:`release` operations.
@@ -748,7 +748,7 @@ Locks
      *with-lock* may signal a condition of the following class (a
      subclass of :drm:`<serious-condition>`):
 
-     ``<timeout-expired>``
+     :class:`<timeout-expired>`
        This is signalled when *with-lock* did not succeed in claiming
        the lock within the timeout period.
 
@@ -758,7 +758,7 @@ Locks
      supplied, then it will be evaluated and its values returned from
      *with-lock* if the lock cannot be claimed (because a timeout
      occurred). The default, if no *failure* clause is supplied, is
-     to signal an exception of class ``<timeout-expired>``. If there
+     to signal an exception of class :class:`<timeout-expired>`. If there
      is no failure, *with-lock* returns the results of evaluating the
      body.
 
@@ -803,8 +803,8 @@ Semaphores
 
    :description:
 
-     The ``<semaphore>`` class is a class representing a traditional
-     counting semaphore. An instance of ``<semaphore>`` contains a
+     The :class:`<semaphore>` class is a class representing a traditional
+     counting semaphore. An instance of :class:`<semaphore>` contains a
      counter in its internal state. Calling :meth:`release
      <release(<semaphore>)>` on a semaphore increments the internal
      count. Calling :meth:`wait-for <wait-for(<semaphore>)>` on a
@@ -830,7 +830,7 @@ Semaphores
 
    :parameter object: An instance of :class:`<semaphore>`. The
       semaphore object to wait for.
-   :parameter #key timeout: Time-out interval. If the value is ``#f``
+   :parameter #key timeout: Time-out interval. If the value is :drm:`#f`
       (the default), the time-out interval never elapses.
       Otherwise the value should be a :drm:`<real>`, corresponding
       to the desired interval in seconds.
@@ -843,7 +843,7 @@ Semaphores
 
    :seealso:
 
-     - :gf:`wait-for`.
+     - :gf:`wait-for`
 
 .. method:: release
    :specializer: <semaphore>
@@ -860,7 +860,7 @@ Semaphores
      condition of the following class, which is a subclass of
      :drm:`<error>`:
 
-     ``<count-exceeded-error>``
+     :class:`<count-exceeded-error>`
        This may be signalled when an attempt is made to release a
        :class:`<semaphore>` when the internal counter is already at its
        maximum count.
@@ -871,7 +871,7 @@ Semaphores
 
    :seealso:
 
-     - :gf:`release`.
+     - :gf:`release`
 
 Exclusive locks
 ---------------
@@ -892,20 +892,20 @@ Exclusive locks
      own the lock.
 
      The notion of ownership is directly supported by the class, and a
-     thread can test whether an ``<exclusive-lock>`` is currently owned.
-     An instance of ``<exclusive-lock>`` can only be owned by one thread
+     thread can test whether an :class:`<exclusive-lock>` is currently owned.
+     An instance of :class:`<exclusive-lock>` can only be owned by one thread
      at a time, by calling *wait-for* on the lock.
 
      Once owned, any attempt by any other thread to wait for the lock
      will cause that thread to block. It is an error for a thread to
-     release an ``<exclusive-lock>`` if another thread owns it.
+     release an :class:`<exclusive-lock>` if another thread owns it.
 
-     ``<exclusive-lock>`` has no direct instances; calling *make* on
-     ``<exclusive-lock>`` returns an instance of :class:`<simple-lock>`.
+     :class:`<exclusive-lock>` has no direct instances; calling *make* on
+     :class:`<exclusive-lock>` returns an instance of :class:`<simple-lock>`.
 
    :operations:
 
-     The class ``<exclusive-lock>`` provides the following operations:
+     The class :class:`<exclusive-lock>` provides the following operations:
 
      - :gf:`owned?` Tests to see if the lock has been claimed by the
        current thread.
@@ -926,7 +926,7 @@ Exclusive locks
      :class:`<exclusive-lock>` are permitted to signal a condition
      of the following class, which is a subclass of :drm:`<error>`:
 
-     ``<not-owned-error>``
+     :class:`<not-owned-error>`
        This may be signalled when an attempt is made to release an
        :class:`<exclusive-lock>` when the lock is not owned by the
        current thread.
@@ -970,7 +970,7 @@ Recursive locks
 
    :description:
 
-     A thread can lock a ``<recursive-lock>`` multiple times,
+     A thread can lock a :class:`<recursive-lock>` multiple times,
      recursively, but the lock must later be released the same number of
      times. The lock will be freed on the last of these releases.
 
@@ -983,7 +983,7 @@ Recursive locks
    :signature: wait-for *object* #key *timeout* => *success*
 
    :parameter object: An instance of :class:`<recursive-lock>`.
-   :parameter #key timeout: Time-out interval. If the value is ``#f``
+   :parameter #key timeout: Time-out interval. If the value is :drm:`#f`
       (the default), the time-out interval never elapses. Otherwise
       the value should be a :drm:`<real>`, corresponding to the desired
       interval in seconds.
@@ -995,7 +995,7 @@ Recursive locks
 
    :seealso:
 
-     - :gf:`wait-for`.
+     - :gf:`wait-for`
 
 .. method:: release
    :specializer: <recursive-lock>
@@ -1043,9 +1043,9 @@ Simple locks
 
    :description:
 
-     The ``<simple-lock>`` class represents the most simple and
+     The :class:`<simple-lock>` class represents the most simple and
      efficient mutual exclusion synchronization primitive. It is an
-     error to lock a ``<simple-lock>`` recursively. An attempt to do so
+     error to lock a :class:`<simple-lock>` recursively. An attempt to do so
      might result in an error being signalled, or deadlock occurring.
 
 .. method:: wait-for
@@ -1057,7 +1057,7 @@ Simple locks
    :signature: wait-for *object* #key *timeout* => *success*
 
    :parameter object: An instance of :class:`<simple-lock>`.
-   :parameter #key timeout: Time-out interval. If the value is ``#f``
+   :parameter #key timeout: Time-out interval. If the value is :drm:`#f`
      (the default), the time-out interval never elapses. Otherwise the
      value should be a :drm:`<real>`, corresponding to the desired interval
      in seconds.
@@ -1069,7 +1069,7 @@ Simple locks
 
    :seealso:
 
-     - :gf:`wait-for`.
+     - :gf:`wait-for`
 
 .. method:: release
    :specializer: <simple-lock>
@@ -1087,7 +1087,7 @@ Simple locks
 
    :seealso:
 
-     - :gf:`release`.
+     - :gf:`release`
 
 .. method:: owned?
    :specializer: <simple-lock>
@@ -1121,25 +1121,25 @@ Multiple reader / single writer locks
      The class of locks that can have multiple readers but only one
      writer.
 
-     The ``<read-write-lock>`` class can be locked in either of two
+     The :class:`<read-write-lock>` class can be locked in either of two
      modes, *read* and *write*. A write lock is exclusive, and implies
      ownership of the lock. However, a read lock is non-exclusive, and
      an instance can be locked multiple times in read mode, whether by
      multiple threads, recursively by a single thread, or a combination
      of both.
 
-     A ``<read-write-lock>`` can only be locked in write mode if the
+     A :class:`<read-write-lock>` can only be locked in write mode if the
      lock is free, and the operation will block if necessary. It can
      only be freed by the thread that owns it.
 
-     A ``<read-write-lock>`` can be locked in read mode provided that
+     A :class:`<read-write-lock>` can be locked in read mode provided that
      it is not owned with a write lock. The operation will block while
      the lock is owned. Each time it is locked in read mode, an internal
      counter is incremented. This counter is decremented each time a
      read-mode lock is released. The lock is freed when the counter
      becomes zero.
 
-     The ``<read-write-lock>`` class is less efficient than the other
+     The :class:`<read-write-lock>` class is less efficient than the other
      lock classes defined in the Threads module. However, it provides an
      efficient and convenient means to protect data that is frequently
      read and may occasionally be written by multiple concurrent
@@ -1154,7 +1154,7 @@ Multiple reader / single writer locks
    :signature: wait-for *object* #key *timeout* *mode*
 
    :parameter object: An instance of :class:`<read-write-lock>`.
-   :parameter #key timeout: Time-out interval. If the value is ``#f``
+   :parameter #key timeout: Time-out interval. If the value is :drm:`#f`
      (the default), the time-out interval never elapses. Otherwise the
      value should be a :drm:`<real>`, corresponding to the desired interval
      in seconds.
@@ -1196,7 +1196,7 @@ Multiple reader / single writer locks
      lock is locked in read mode, the count of the number of locks held
      is decremented; the lock is freed if the count becomes zero.
      Otherwise it is an error to release the lock, and an implementation
-     is permitted to signal a ``<not-owned-error>`` condition.
+     is permitted to signal a :class:`<not-owned-error>` condition.
 
 .. method:: owned?
    :specializer: <read-write-lock>
@@ -1236,7 +1236,7 @@ Notifications
      of state elsewhere in the program. Notifications are used in
      association with locks, and are sometimes called *condition
      variables*. They may be used to support the sharing of data between
-     threads using *monitors*. Each ``<notification>`` is permanently
+     threads using *monitors*. Each :class:`<notification>` is permanently
      associated with a :class:`<simple-lock>`, although the same lock
      may be associated with many notifications.
 
@@ -1251,7 +1251,7 @@ Notifications
 
    :operations:
 
-     The class ``<notification>`` provides the following operations:
+     The class :class:`<notification>` provides the following operations:
 
      - :func:`associated-lock` Returns the lock associated with the
        notification object.
@@ -1268,23 +1268,23 @@ Notifications
    :example:
 
      This example shows how to use a notification and an associated lock to
-     implement a queue. The variable *\*queue\** is the actual queue object
+     implement a queue. The variable ``*queue*`` is the actual queue object
      (a :drm:`<deque>`). Queue access is performed by interlocking pushes and
-     pops on the :drm:`<deque>`. The *\*queue\** variable can be a constant,
+     pops on the :drm:`<deque>`. The ``*queue*`` variable can be a constant,
      since it is the :drm:`<deque>` which is mutated and not the value of
-     *\*queue\**.
+     ``*queue*``.
 
      .. code-block:: dylan
 
        define constant *queue* = make(<deque>);
 
-     The variable *\*lock\** is used to isolate access to the queue
+     The variable ``*lock*`` is used to isolate access to the queue
 
      .. code-block:: dylan
 
        define constant *lock* = make(<lock>);
 
-     The variable *\*something-queued\** is a notification which is used to
+     The variable ``*something-queued*`` is a notification which is used to
      notify other threads that an object is being put onto an empty queue.
 
      .. code-block:: dylan
@@ -1346,7 +1346,7 @@ Notifications
    :signature: wait-for *notification* #key *timeout* => *success*
 
    :parameter notification: An instance of :class:`<notification>`.
-   :parameter #key timeout: Time-out interval. If the value is ``#f``
+   :parameter #key timeout: Time-out interval. If the value is :drm:`#f`
      (the default), the time-out interval never elapses. Otherwise the
      value should be a :drm:`<real>`, corresponding to the desired interval
      in seconds.
@@ -1368,14 +1368,14 @@ Notifications
      waiting for the release of the notification only. The *wait-for*
      function always waits for the lock with no timeout, and it is
      guaranteed that the lock will be owned on return. The *wait-for*
-     function returns ``#f`` if the notification wait times out.
+     function returns :drm:`#f` if the notification wait times out.
 
    :conditions:
 
      Implementations of this *wait-for* method are permitted to signal a
      condition of the following class, which is a subclass of :drm:`<error>`:
 
-     ``<not-owned-error>``
+     :class:`<not-owned-error>`
        Implementations can signal this error if the application attempts
        to wait for a notification when the associated lock is not owned by
        the current thread.
@@ -1397,7 +1397,7 @@ Notifications
      condition of the following class, which is a subclass of
      :drm:`<error>`:
 
-     ``<not-owned-error>``
+     :class:`<not-owned-error>`
        Implementations can signal this error if the application attempts
        to release a notification when the associated lock is not owned
        by the current thread.
@@ -1424,7 +1424,7 @@ Notifications
      Implementations of the *release-all* function are permitted to signal a
      condition of the following class, which is a subclass of :drm:`<error>`:
 
-     ``<not-owned-error>``
+     :class:`<not-owned-error>`
        This may be signalled when an attempt is made to release a
        notification when the associated lock is not owned by the current
        thread.
@@ -1467,12 +1467,12 @@ Thread variables
 
    :description:
 
-     An adjective to ``define variable``. The construct ``define thread
+     An adjective to :drm:`define variable`. The construct ``define thread
      variable`` defines module variables in the current module which
      have thread-local bindings. The initialization expression is
      evaluated once, and is used to provide the initial values for the
      variables in each thread. The value of a thread variable binding
-     may be changed with the normal assignment operator ``:=``. This
+     may be changed with the normal assignment operator :drm:`:=`. This
      assignment is not visible in other threads.
 
    :example:
@@ -1539,13 +1539,13 @@ An extended form of dynamic-bind
 --------------------------------
 
 Some implementations of the Threads module may provide an extended form
-of *dynamic-bind* for binding places other than variables. The
+of :macro:`dynamic-bind` for binding places other than variables. The
 implementation of this extended form requires the use of non-standard
 features in the Dylan macro system, and hence cannot be written as a
 portable macro. These non-standard extensions are subject to discussion
 amongst the Dylan language designers, and may eventually become standard
 features. Until such time as standardization occurs, implementations are
-not mandated to implement the extended form of *dynamic-bind*, and
+not mandated to implement the extended form of :macro:`dynamic-bind`, and
 portable code should not depend upon this feature.
 
 The extended form is described below.
@@ -1568,8 +1568,8 @@ The extended form is described below.
    :description:
 
      If *place* is not a name, then it may have the syntax of a call to a
-     function. This permits an extended form for ``dynamic-bind``, by analogy
-     with the extended form for ``:=``. In this case, if the place appears
+     function. This permits an extended form for :macro:`dynamic-bind`, by analogy
+     with the extended form for :drm:`:=`. In this case, if the place appears
      syntactically as ``name(arg1, ... argn)``, then the macro expands into
      a call to the function
 
@@ -1579,15 +1579,15 @@ The extended form is described below.
 
      where *init* is the initial value for the binding, and *body-method*
      is function with no parameters whose body is the body of the
-     ``dynamic-bind``. The extended form also permits the other ``.`` and
+     :macro:`dynamic-bind`. The extended form also permits the other ``.`` and
      ``[]`` syntaxes for function calls.
 
      There are no features in the current version of the Threads module
-     which make use of the extended form of ``dynamic-bind``.
+     which make use of the extended form of :macro:`dynamic-bind`.
 
    :example:
 
-     The following example shows the extended form of ``dynamic-bind``.
+     The following example shows the extended form of :macro:`dynamic-bind`.
 
      .. code-block:: dylan
 
@@ -1618,7 +1618,7 @@ Locked variables
 
    :description:
 
-     An adjective to ``define variable``. The construct ``define locked
+     An adjective to :drm:`define variable`. The construct ``define locked
      variable`` defines module variables in the current module that can
      be tested and updated with :macro:`conditional-update!`,
      :macro:`atomic-increment!`, or :macro:`atomic-decrement!`.
@@ -1680,20 +1680,20 @@ Conditional update
 
      #. The place is evaluated again, and a test is made to see if it has
         been updated since the initial evaluation. This may involve a
-        comparison with the old value using ``==``, though implementations
+        comparison with the old value using :drm:`==`, though implementations
         might use a more direct test for there having been an assignment to
         the place. It is undefined whether the test will succeed or fail in
         the case where the place was updated with a value that is identical
-        to the old value when compared using ``\\==``.
+        to the old value when compared using :drm:`==`.
      #. If the value was found not to have been updated since the initial
         evaluation, the new value is stored by assignment. Otherwise the
         conditional update fails.
 
-     If the update was successful, then ``conditional-update!`` returns the
+     If the update was successful, then :macro:`conditional-update!` returns the
      result of the *success* expression, or returns the new value of the
      place if no *success* clause was supplied.
 
-     If the update failed, then *conditional-update!* signals a condition,
+     If the update failed, then :macro:`conditional-update!` signals a condition,
      unless a *failure* clause was given, in which case the value is
      returned.
 
@@ -1702,11 +1702,11 @@ Conditional update
 
    :conditions:
 
-     ``conditional-update!`` may signal a condition of the following class
+     :macro:`conditional-update!` may signal a condition of the following class
      (which is a subclass of :drm:`<error>`), unless a *failure* clause is
      supplied.
 
-     ``<conditional-update-error>``
+     :class:`<conditional-update-error>`
 
    :example:
 
@@ -1746,7 +1746,7 @@ Conditional update
 
      The value of the *place* is evaluated one or more times to
      determine the initial value. A new value is computed from this
-     value and *by*, by applying ``+`` from the Dylan module. The new
+     value and *by*, by applying :drm:`+` from the Dylan module. The new
      value is atomically stored back into *place*.
 
      The macro returns the new value of *place*.
@@ -1799,14 +1799,14 @@ An extended form of conditional-update!
 ---------------------------------------
 
 Some implementations of the Threads module may provide an extended form
-of ``conditional-update!`` for updating places other than locked
+of :macro:`conditional-update!` for updating places other than locked
 variables. The implementation of this extended form requires the use of
 non-standard features in the Dylan macro system, and hence cannot be
 written as a portable macro. These non-standard extensions are subject
 to discussion amongst the Dylan language designers, and may eventually
 become features. Until such time as standardization occurs,
 implementations are not mandated to implement the extended form of
-``conditional-update!``, and portable code should not depend upon the
+:macro:`conditional-update!`, and portable code should not depend upon the
 feature.
 
 .. macro:: conditional-update! (extended)
@@ -1829,9 +1829,9 @@ feature.
 
    :description:
 
-     This extended form of *conditional-update!* additionally accepts a
+     This extended form of :macro:`conditional-update!` additionally accepts a
      *place* that has the syntax of a call to a function. This extended form
-     for *conditional-update!* is analogous to that for *:=*. In this case,
+     for :macro:`conditional-update!` is analogous to that for :drm:`:=`. In this case,
      if the *place* appears syntactically as
 
      .. code-block:: dylan
@@ -1844,5 +1844,5 @@ feature.
 
        *name* -conditional-updater(*new-value*, *local-name*, *arg* 1, ...  *arg* n)
 
-     If the result of this function call is ``#f``, the conditional update is
+     If the result of this function call is :drm:`#f`, the conditional update is
      deemed to have failed.
