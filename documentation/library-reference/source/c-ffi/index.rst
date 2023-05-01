@@ -1285,9 +1285,9 @@ these classes.
    designator class name.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-pointer-type *pointer-class-name* => *designator-class-name*
+        define C-pointer-type `pointer-class-name` => `designator-class-name`
 
    :parameter pointer-class-name: A Dylan variable name.
    :value designator-class: A Dylan name.
@@ -2263,17 +2263,17 @@ Defining specialized versions of designator classes
    existing designator class for that type.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define [*modifiers* *] C-subtype name (superclasses)
-         [*slot-spec* ; ...] [;]
-         [*type-options* ] [;]
-       end [C-subtype] [*name* ]
+        define [`modifiers`] C-subtype `name` (`superclasses`)
+          [`slot-spec` ; ...] [;]
+          [`type-options`] [;]
+        end [C-subtype] [`name`]
 
-   :parameter modifiers: The same as the modifiers allowed in :drm:`define class <class>`.
+   :parameter modifiers: The same as the modifiers allowed in :drm:`define class`.
    :parameter name: A Dylan variable name.
    :parameter superclasses: A list of Dylan names.
-   :parameter slot-spec: Same syntax as a slot definition in ``define class``.
+   :parameter slot-spec: Same syntax as a slot definition in :drm:`define class`.
    :parameter type-options: A property list.
 
    :description:
@@ -2281,9 +2281,9 @@ Defining specialized versions of designator classes
      Defines a specialized designator class for a C type based on an
      existing designator class for that type. It does this by defining a
      subclass of the original designator class, and is a simple wrapper
-     around :drm:`define class <class>` from which it takes its syntax. The
-     superclasses, slot-specs, and *modifiers* are passed on to ``define
-     class`` unchanged. In effect, it expands to:
+     around :drm:`define class` from which it takes its syntax. The
+     superclasses, slot-specs, and *modifiers* are passed on to :drm:`define
+     class` unchanged. In effect, it expands to:
 
      .. code-block:: dylan
 
@@ -2295,7 +2295,7 @@ Defining specialized versions of designator classes
 	single: define C-subtype definition macro
 	single: define C-subtype; define C-subtype
 
-     In terms of C, ``define C-subtype`` can be thought of as
+     In terms of C, :macro:`define C-subtype` can be thought of as
      implementing a strongly typed version of ``typedef`` because a new
      designator class is generated that Dylan's type system can
      distinguish from the designator class on which it was based. As
@@ -2427,20 +2427,20 @@ Defining specialized designator classes
    Allows you to define a name to which to bind a pointer designator.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define *modifiers* C-mapped-subtype *type-name* (*superclasses*)
-         [map *high-level-type*
-           [, import-function: *import-fun* ]
-           [, export-function: *export-fun* ];]
-         [import-map *high-level-type*,
-           import-function: *import-fun* ;]
-         [export-map *high-level-type*,
-           export-function: *export-fun* ;]
-         [type-options]
-       end
+        define [`modifier` ...] C-mapped-subtype `type-name` (`superclass` )
+          [map `high-level-type`
+            [, import-function: `import-fun` ]
+            [, export-function: `export-fun` ];]
+          [import-map `high-level-type`,
+            import-function: `import-fun` ;]
+          [export-map `high-level-type`,
+            export-function: `export-fun` ;]
+          [`type-options`]
+        end
 
-   :parameter modifiers: The same as the modifiers allowed in :drm:`define-class <class>`.
+   :parameter modifiers: The same as the modifiers allowed in :drm:`define-class`.
    :parameter type-name: A Dylan variable name.
    :parameter superclasses: A list of Dylan names.
    :parameter high-level-type: An instance of a Dylan :drm:`<type>`.
@@ -2653,12 +2653,12 @@ Describing structure types
    Describes C's aggregate structures.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-struct *name*
-         [*slot-spec* ; ...] [;]
-         [*type-options* ] [;]
-       end [C-struct] [*name* ]
+        define C-struct `name`
+          [`slot-spec` ; ...] [;]
+          [`type-options`] [;]
+        end [C-struct] [`name`]
 
    :parameter name: A Dylan variable name.
    :parameter slot-spec:
@@ -2831,12 +2831,12 @@ Describing union types
    Describes C union types to the *c-ffi*.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-union *name*
-         [*slot-spec* ; ...] [;]
-         [*type-options* ] [;]
-       end [C-union] [*name* ]
+        define C-union `name`
+          [`slot-spec` ; ...] [;]
+          [`type-options`] [;]
+        end [C-union] [`name`]
 
    :parameter name: A Dylan variable name.
    :parameter slot-spec:
@@ -2969,13 +2969,13 @@ Describing C functions to Dylan
    Describes a C function to the *c-ffi*.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-function *name*
-         [*parameter-spec*; ...]
-         [*result-spec*;]
-         [*function-option*, ...;]
-       end [C-function] [*name*]
+        define C-function `name`
+          [`parameter-spec`; ...]
+          [`result-spec`;]
+          [`function-option`, ...;]
+        end [C-function] [`name`]
 
    :parameter name: A Dylan variable name.
    :parameter parameter-spec:
@@ -2994,7 +2994,7 @@ Describing C functions to Dylan
      .. index::
 	single: definition macros; define C-function
 
-     The result of processing a ``define C-function`` definition is a
+     The result of processing a :macro:`define C-function` definition is a
      Dylan function which is bound to name. This function takes Dylan
      objects as arguments, converting them to their C representations
      according to the types declared for the parameters of the C
@@ -3066,7 +3066,7 @@ Describing C functions to Dylan
      Dylan function corresponding to each *input* *output* parameter of
      the C function that is specialized as the union of the export type
      of the referenced type of the type given for the parameter in
-     ``define c-function``, and :drm:`#f`. When the C function returns, the
+     :macro:`define c-function`, and :drm:`#f`. When the C function returns, the
      value in the location is accessed and returned as an extra result
      from the Dylan function. If an *input* *output* parameter is passed
      as :drm:`#f` from Dylan then a ``NULL`` pointer is passed to the C
@@ -3188,7 +3188,7 @@ Describing C functions to Dylan
      .. index::
 	single: define C-callable-wrapper definition macro
 
-     In effect, a ``define C-function`` such as:
+     In effect, a :macro:`define C-function` such as:
 
      .. code-block:: dylan
 
@@ -3235,14 +3235,13 @@ Describing Dylan functions for use by C
    the function.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-callable-wrapper [*dylan-rep-name* ]
-        of *dylan-function*
-         [*parameter-spec* ; ...] [;]
-         [*result-spec* ] [;]
-         [*function-options* ][;]
-       end [C-callable-wrapper]
+        define C-callable-wrapper [`dylan-rep-name`] of `dylan-function`
+          [`parameter-spec` ; ...] [;]
+          [`result-spec` ] [;]
+          [`function-options` ][;]
+        end [C-callable-wrapper]
 
    :parameter dylan-rep-name: A Dylan variable name.
    :parameter dylan-function: An instance of :drm:`<function>`.
@@ -3264,7 +3263,7 @@ Describing Dylan functions for use by C
 	single: define C-function definition macro
 	single: definition macros; define C-callable wrapper
 
-     The result of processing a ``define C-callable-wrapper`` definition
+     The result of processing a :macro:`define C-callable-wrapper` definition
      is a function with a C entry point with the contract described.
      This function takes C values as arguments, converting them to Dylan
      representations according to the types declared for the parameters
@@ -3405,7 +3404,7 @@ Describing Dylan functions for use by C
      .. index::
 	single: definition macros; define C-callable wrapper
 
-     In effect, a ``define C-callable-wrapper`` such as:
+     In effect, a :macro:`define C-callable-wrapper` such as:
 
      .. code-block:: dylan
 
@@ -3469,13 +3468,13 @@ of that bridge are implemented within this library.
    Describe Objective C selectors to the *c-ffi*.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define objc-selector *name*
-         [*parameter-spec*; ...]
-         [*result-spec*;]
-         [*function-option*, ...;]
-       end [C-function] [*name*]
+        define objc-selector `name`
+          [`parameter-spec`; ...]
+          [`result-spec`;]
+          [`function-option`, ...;]
+        end [C-function] [`name`]
 
    :parameter name: A Dylan variable name.
    :parameter parameter-spec:
@@ -3524,11 +3523,11 @@ This section covers describing and accessing C variables.
    Describes C variables to the *c-ffi*.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-variable *getter-name* :: *c-type*
-         #key *setter* *c-name* import: *boolean*
-       end [C-variable]
+        define C-variable `getter-name` :: `c-type`
+          #key `setter` `c-name` import: `boolean`
+        end [C-variable]
 
    :parameter getter-name: A Dylan variable name.
    :parameter c-type: A Dylan name.
@@ -3569,7 +3568,7 @@ This section covers describing and accessing C variables.
      translation is not so simple. A C union or struct has no direct
      representation in Dylan. You may only have a reference to the C
      object in Dylan through a :class:`<c-pointer>` object. For this
-     reason, ``define c-variable`` is not permitted for variables with C
+     reason, :macro:`define c-variable` is not permitted for variables with C
      aggregate types. Use :macro:`define C-address` for those variables.
 
    :example:
@@ -3612,11 +3611,11 @@ This section covers describing and accessing C variables.
    the location of a C global variable.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define C-address *name* :: *pointer-designator-type*
-         #key *c-name* import: *boolean*
-       end [C-address] [*name* ]
+        define C-address `name` :: `pointer-designator-type`
+          #key `c-name` import: `boolean`
+        end [C-address] [`name`]
 
    :parameter name: A Dylan variable name.
    :parameter pointer-designator-type:
@@ -3786,11 +3785,11 @@ function :func:`destroy`.
    Allocates an object within the scope of the body of the code.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-        with-stack-structure (*name* :: *wrapper-type*
-            #key *element-count* *extra-bytes*)
-          *body*
+        with-stack-structure (`name` :: `wrapper-type`
+            #key `element-count`, `extra-bytes`)
+          `body`
         end [with-stack-structure]
 
    :parameter name: A Dylan variable name.
@@ -3904,10 +3903,10 @@ using :macro:`define c-mapped-subtype`.
    Passes a C pointer to the contents of a :drm:`<byte-string>`.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-        with-c-string (*variable* = *string-valued-expression*)
-          *body*
+        with-c-string (`variable` = `string-valued-expression`)
+          `body`
         end
 
    :parameter variable: A Dylan variable name.

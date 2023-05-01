@@ -51,14 +51,11 @@ The extensions are:
    Signals an error if the expression passed to it evaluates to false.
 
    :macrocall:
+     .. parsed-literal:: 
+        assert `expression` `format-string` [`format-arg`] => `false`
 
-     .. code-block:: dylan
-
-       assert *expression* *format-string* [*format-arg* ]* => *false*
-
-     .. code-block:: dylan
-
-       assert *expression* => *false*
+     .. parsed-literal:: 
+        assert `expression` => `false`
 
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.
@@ -77,7 +74,7 @@ The extensions are:
      the DRM. If *format-string* is supplied, the error is formatted
      accordingly, along with any instances of *format-arg*.
 
-     If *expression* is not :drm:`#f`, ``assert`` does not evaluate
+     If *expression* is not :drm:`#f`, :macro:`assert` does not evaluate
      *format-string* or any instances of *format-arg*.
 
    :seealso:
@@ -158,13 +155,11 @@ The extensions are:
    but only when the code is compiled in interactive development mode.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
+        debug-assert `expression` `format-string` [`format-arg`] => `false`
 
-       debug-assert *expression* *format-string* [ *format-arg* ]* => *false*
-
-     .. code-block:: dylan
-
-       debug-assert *expression* => *false*
+     .. parsed-literal:: 
+        debug-assert `expression` => `false`
 
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.
@@ -317,14 +312,12 @@ The extensions are:
    before calling :drm:`default-handler`.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
+        define last-handler (`condition`, #key `test`, `init-args`) = `handler` ;
 
-       define last-handler (*condition*, #key *test*, *init-args*)
-         = *handler* ;
+        define last-handler `condition` = `handler`;
 
-       define last-handler condition = handler;
-
-       define last-handler;
+        define last-handler;
 
    :parameter condition: A Dylan expression *bnf*. The class of
      condition for which the handler should be invoked.
@@ -385,9 +378,8 @@ The extensions are:
    to a new table object.
 
    :macrocall:
-     .. code-block:: dylan
-
-       define table *name* [ :: *type* ] = { [ *key* => *element* ]* }
+     .. parsed-literal:: 
+        define table `name` [ :: `type` ] = { [ `key` => `element` ]* }
 
    :parameter name: A Dylan name *bnf*.
    :parameter type: A Dylan operand *bnf*. Default value: :drm:`<table>`.
@@ -680,11 +672,11 @@ The extensions are:
    Iterates over a body.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       iterate *name* ({*argument* = *init-value*}*)
-         [ *body* ]
-       end [ iterate ]
+        iterate `name` ({`argument` = `init-value`}*)
+          [ `body` ]
+        end [ iterate ]
 
    :parameter name: A Dylan variable-name *bnf*.
    :parameter argument: A Dylan variable-name *bnf*.
@@ -1261,9 +1253,8 @@ The extensions are:
    nothing if the test is false.
 
    :macrocall:
-     .. code-block:: dylan
-
-       when (*test*) [ *consequent* ] end [ when ]
+     .. parsed-literal:: 
+        when (`test`) [ `consequent` ] end [ when ]
 
    :parameter test: A Dylan expression *bnf*.
    :parameter consequent: A Dylan body *bnf*.

@@ -104,13 +104,13 @@ from the module *table-extensions*.
 
 .. class:: <case-insensitive-string-table>
    :sealed:
-   
+
    A table class that uses case-insensitive strings for keys.
-   
+
    :superclasses: :drm:`<table>`
-   
+
    :description:
-   
+
      The ``<string-table>`` class is the class of tables that use
      instances of :drm:`<string>` for their keys. It is an error to use a
      key that is not an instance of :drm:`<string>`.
@@ -346,26 +346,26 @@ from the module *table-extensions*.
 
 .. macro:: tabling
    :macro-type: Function
-   
+
    Creates a table and populates it with keys and values.
-   
+
    :macrocall:
-     .. parsed-literal::
-        tabling( { `class`, } `key` => `value`, ...)
-           
+     .. parsed-literal:: 
+        tabling( [ `class`, ] `key` => `value`, ...)
+
    :parameter class:  An instance of :drm:`<class>`. Optional.
    :parameter key:    An expression.
    :parameter value:  An expression.
    :value table:      A new instance of *class*.
-   
+
    :description:
-   
+
      Creates a table of type *class* and populates it with *key*/*value*
      pairs. If *class* is omitted, creates a table of type :drm:`<table>`.
 
    :example:
-   
+
      .. code-block:: dylan
 
-       let my-table = tabling("red"=>"stop", "green"=>"go");
-       let my-table = tabling(<string-table>, "red"=>"stop", "green"=>"go");
+       let my-table = tabling(#"red" => "stop", #"green" => "go");
+       let my-table = tabling(<string-table>, "red" => "stop", "green" => "go");

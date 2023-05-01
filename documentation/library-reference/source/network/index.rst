@@ -76,7 +76,8 @@ socket function that blocks.
 .. macro:: with-socket-thread
    :statement:
 
-   :macrocall: with-socket-thread (#key *server?*) *body* end
+   :macrocall:
+      .. parsed-literal:: with-socket-thread (#key `server?`) `body` end
 
    :description:
 
@@ -478,7 +479,11 @@ The <server-socket> class
 
 .. macro:: with-server-socket
 
-   :macrocall: with-server-socket (*server-var* [:: *server-class* ], *keywords*) *body* end
+   :macrocall:
+      .. parsed-literal:: 
+         with-server-socket (`server-var` [:: `server-class` ], `keywords`)
+           `body`
+         end
 
    :description:
 
@@ -491,7 +496,11 @@ The <server-socket> class
 
 .. macro:: start-server
 
-   :macrocall: start-server ([*server-var* = ] *socket-server-instance*, *socket-var* [, *keywords* ]) *body* end
+   :macrocall:
+      .. parsed-literal:: 
+         start-server ([`server-var` = ] `socket-server-instance`, `socket-var` [, `keywords` ])
+           `body`
+         end
 
    :description:
 

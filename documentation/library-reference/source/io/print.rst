@@ -331,12 +331,10 @@ IO library's *print* module.
    Wrapper around :macro:`printing-logical-block`.
 
    :macrocall:
-
-      .. code-block:: dylan
-
-         printing-object(*object*, *stream*, #key type? = #t)
-           *body*
-         end;
+      .. parsed-literal:: 
+         printing-object(`object`, `stream`, #key type? = #t)
+           `body`
+         end
 
    *printing-object* may be used within :gf:`print-object` to print Dylan
    objects in a standardized way while adding identifying information for your

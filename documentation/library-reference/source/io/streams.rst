@@ -2941,18 +2941,16 @@ are exported from the *streams* module.
    :statement:
 
    :macrocall:
+     .. parsed-literal:: 
+        with-indentation (`stream`)
+          `body`
+        end
 
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-        with-indentation (*stream*)
-          *body*
-        end;
-
-     .. code-block:: dylan
-
-        with-indentation (*stream*, 4)
-          *body*
-        end;
+        with-indentation (`stream`, 4)
+          `body`
+        end
 
    :parameter stream: A Dylan expression *bnf*. An instance of
      :class:`<indenting-stream>`.
@@ -2985,10 +2983,10 @@ are exported from the *streams* module.
    Runs a body of code within the context of a file stream.
 
    :macrocall:
-     .. code-block:: dylan
-
-       with-open-file (*stream-var* = *filename*, #rest *keys*)
-         *body* end => *values*
+     .. parsed-literal:: 
+        with-open-file (`stream-var` = `filename`, #rest `keys`)
+          `body`
+        end => `values`
 
    :parameter stream-var: An Dylan variable-name *bnf*.
    :parameter filename: An instance of :drm:`<string>`.
@@ -3047,11 +3045,10 @@ are exported from the *streams* module.
    Run a body of code while the stream is locked.
 
    :macrocall:
-     .. code-block:: dylan
-
-       with-stream-locked (*stream-var*)
-         *body*
-       end => *values*
+     .. parsed-literal:: 
+        with-stream-locked (`stream-var`)
+          `body`
+        end => `values`
 
    :parameter stream-var: An Dylan variable-name *bnf*.
    :parameter body: A Dylan body *bnf*.

@@ -731,12 +731,11 @@ Locks
    Holds a lock while executing a body of code.
 
    :macrocall:
-     .. code-block:: dylan
-
-       with-lock (*lock*, #key *keys*)
-         *body*
-       [failure *failure-expr* ]
-       end
+     .. parsed-literal:: 
+        with-lock (`lock`, #key `keys`)
+          `body`
+        [ failure `failure-expr` ]
+        end
 
    :param lock: An instance of :class:`<lock>`.
    :param keys: Zero or more of the keywords provided by :gf:`wait-for`.
@@ -1461,9 +1460,7 @@ Thread variables
    An adjective to *define variable* for defining thread variables.
 
    :macrocall:
-     .. code-block:: dylan
-
-       define thread variable *bindings* = *init* ;
+     .. parsed-literal:: define thread variable `bindings` = `init` ;
 
    :description:
 
@@ -1492,11 +1489,10 @@ Dynamic binding
    rebound.
 
    :macrocall:
-     .. code-block:: dylan
-
-       dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
-         *body*
-       end;
+     .. parsed-literal:: 
+        dynamic-bind (`place1` = `init1`, `place2` = `init2`, ...)
+          `body`
+        end
 
    :description:
 
@@ -1557,11 +1553,10 @@ The extended form is described below.
    are dynamically rebound.
 
    :macrocall:
-     .. code-block:: dylan
-
-        dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
-          *body*
-        end;
+     .. parsed-literal:: 
+        dynamic-bind (`place1` = `init1`, `place2` = `init2`, ...)
+          `body`
+        end
 
      (This is the same as the simple form.)
 
@@ -1612,9 +1607,7 @@ Locked variables
    Defines a locked variable.
 
    :macrocall:
-     .. code-block:: dylan
-
-       define locked variable *bindings* = *init* ;
+     .. parsed-literal:: define locked variable `bindings` = `init` ;
 
    :description:
 
@@ -1649,17 +1642,15 @@ Conditional update
    Performs an atomic test-and-set operation.
 
    :macrocall:
+     .. parsed-literal:: 
+        conditional-update!(`local-name` = `place`)
+          `body`
+          [success `success-expr` ]
+          [failure `failure-expr` ]
+        end
 
-     .. code-block:: dylan
-
-       conditional-update!(*local-name* = *place*)
-         *body*
-         [success *success-expr* ]
-         [failure *failure-expr* ]
-       end
-
-   :parameter local-name: A Dylan variable-name*bnf*.
-   :parameter place: A Dylan variable-namebnf,
+   :parameter local-name: A Dylan variable-name *bnf*.
+   :parameter place: A Dylan variable-name *bnf*,
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
@@ -1727,13 +1718,11 @@ Conditional update
    Atomically increments a place containing a numeric value.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: atomic-increment!(`place`)
 
-       atomic-increment!(*place*);
+     .. parsed-literal:: atomic-increment!(`place`, `by`)
 
-       atomic-increment!(*place*, *by*);
-
-   :parameter place: A Dylan variable-namebnf.
+   :parameter place: A Dylan variable-name *bnf*.
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
@@ -1776,13 +1765,11 @@ Conditional update
    Atomically decrements a place containing a numeric value.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: atomic-decrement!(`place`)
 
-       atomic-decrement!(*place*)
+     .. parsed-literal:: atomic-decrement!(`place`, `by`)
 
-       atomic-decrement!(*place*, *by*)
-
-   :parameter place: A Dylan variable-namebnf.
+   :parameter place: A Dylan variable-name *bnf*.
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
@@ -1815,13 +1802,12 @@ feature.
    Performs an atomic test-and-set operation.
 
    :macrocall:
-     .. code-block:: dylan
-
-       conditional-update!(*local-name* = *place*)
-         *body*
-         [success *success-expr* ]
-         [failure *failure-expr* ]
-       end
+     .. parsed-literal:: 
+        conditional-update!(`local-name` = `place`)
+          `body`
+          [success `success-expr` ]
+          [failure `failure-expr` ]
+        end
 
    :parameter local-name: A Dylan variable-name *bnf*.
    :parameter place: A Dylan variable-name *bnf* or a function call.
