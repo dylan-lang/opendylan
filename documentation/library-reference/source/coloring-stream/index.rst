@@ -98,7 +98,7 @@ The coloring-stream Module
      to determine whether or not the underlying stream supports
      color output.
 
-     When *force-ansi?* is ``#t``, then the usual checks are skipped
+     When *force-ansi?* is :drm:`#t`, then the usual checks are skipped
      and a coloring stream that generates ANSI output is created.
      This is useful when outputting to a string prior to writing the
      text to :var:`*standard-output*` or when writing a network server
@@ -163,7 +163,7 @@ The coloring-stream Module
      ANSI color output, assuming that the underlying stream
      supports color output at all.
 
-     On Unix, this will always return ``#t``.
+     On Unix, this will always return :drm:`#t`.
 
      On Windows, this attempts to detect situations where ANSI
      output would be permissible, such as running within an

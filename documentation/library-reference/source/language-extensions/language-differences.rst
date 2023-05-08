@@ -71,7 +71,7 @@ a Table-extensions module, which you can read about in
 
    :parameter id1: An instance of :drm:`<integer>`.
    :parameter id2: An instance of :drm:`<integer>`.
-   :parameter ordered: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter ordered: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :value merged-id: An instance of :drm:`<integer>`.
 
    :description:
@@ -110,7 +110,7 @@ a Table-extensions module, which you can read about in
    :description:
 
      Returns a hash code for *object* that corresponds to the
-     equivalence predicate ``==``.
+     equivalence predicate :drm:`==`.
 
      This function is a useful tool for writing hash functions in which
      the object identity of some component of a key is to be used in

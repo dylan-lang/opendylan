@@ -31,12 +31,10 @@ implementation.
    new function.
 
    :macrocall:
-
-     .. code-block:: dylan
-
-       define {*adjective* }* function *name* *parameter-list*
-         [ *body* ]
-       end [ function ] [ *name* ]
+     .. parsed-literal:: 
+        define { `adjective` }* function `name` `parameter-list`
+          [ `body` ]
+        end [ function ] [ `name` ]
 
    :parameter adjective: A Dylan unreserved-name *bnf*.
    :parameter name: A Dylan variable-name *bnf*.

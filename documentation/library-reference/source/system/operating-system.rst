@@ -91,7 +91,7 @@ System library's operating-system module.
      architecture is little-endian and false if it is big-endian. (A
      processor is little-endian if the rightmost bit in a word is the
      least-significant bit.) For processors implementing the Intel x86
-     architecture this value is ``#t``.
+     architecture this value is :drm:`#t`.
 
    :seealso:
 
@@ -125,12 +125,12 @@ System library's operating-system module.
    :signature: environment-variable *name* => *value*
 
    :parameter name: An instance of :drm:`<byte-string>`.
-   :value value: An instance of :drm:`<byte-string>`, or ``#f``.
+   :value value: An instance of :drm:`<byte-string>`, or :drm:`#f`.
 
    :description:
 
      Returns the value of the environment variable specified by *name*,
-     or ``#f`` if there is no such environment variable.
+     or :drm:`#f` if there is no such environment variable.
 
    :seealso:
 
@@ -142,14 +142,14 @@ System library's operating-system module.
 
    :signature: environment-variable-setter *new-value* *name* => *new-value*
 
-   :parameter new-value: An instance of :drm:`<byte-string>`, or ``#f``.
+   :parameter new-value: An instance of :drm:`<byte-string>`, or :drm:`#f`.
    :parameter name: An instance of :drm:`<byte-string>`.
-   :value new-value: An instance of :drm:`<byte-string>`, or ``#f``.
+   :value new-value: An instance of :drm:`<byte-string>`, or :drm:`#f`.
 
    :description:
 
      Changes the value of the environment variable specified by *name*
-     to *new-value*. If *new-value* is ``#f``, the environment variable
+     to *new-value*. If *new-value* is :drm:`#f`, the environment variable
      is undefined. If the environment variable does not already exist,
      *environment-variable-setter* creates it.
 
@@ -194,7 +194,7 @@ System library's operating-system module.
 .. function:: login-name
 
    Returns as an instance of :drm:`<string>` the name of the user logged on
-   to the current machine, or ``#f`` if unavailable.
+   to the current machine, or :drm:`#f` if unavailable.
 
    :signature: login-name () => *name-or-false*
 
@@ -203,7 +203,7 @@ System library's operating-system module.
    :description:
 
      Returns as an instance of :drm:`<string>` the name of the user logged
-     on to the current machine, or ``#f`` if unavailable.
+     on to the current machine, or :drm:`#f` if unavailable.
 
    :seealso:
 
@@ -219,7 +219,7 @@ System library's operating-system module.
 
      Returns as an instance of :drm:`<string>` the group (for example NT
      domain, or Windows Workgroup) of which the user logged on to the
-     current machine is a member, or ``#f`` if the group is unavailable.
+     current machine is a member, or :drm:`#f` if the group is unavailable.
 
    :seealso:
 
@@ -322,7 +322,7 @@ System library's operating-system module.
 
      Returns as an instance of :drm:`<string>` the name of the user who
      owns the current machine (that is, the name entered when the
-     machine was registered), or ``#f`` if the name is unavailable.
+     machine was registered), or :drm:`#f` if the name is unavailable.
 
 .. function:: owner-organization
 
@@ -336,7 +336,7 @@ System library's operating-system module.
    :description:
 
      Returns as an instance of :drm:`<string>` the organization to which
-     the user who owns the current machine belongs, or ``#f`` if the
+     the user who owns the current machine belongs, or :drm:`#f` if the
      name is unavailable.
 
 .. function:: parent-process-id
@@ -422,7 +422,7 @@ System library's operating-system module.
       to run in the same session and process group as the calling process and
       therefore retain the same controlling TTY. Essentially, whether or not to
       call ``setsid()``. If you want the subprocess to be a daemon process, pass
-      ``#f``. The default is ``#t``.
+      :drm:`#f`. The default is :drm:`#t`.
 
    :parameter #key outputter: An instance of :drm:`<function>`. A function with
       signature ``(buffer :: <string>, #key end)`` which will receive all output
@@ -432,14 +432,14 @@ System library's operating-system module.
       return immediately after creating the process. Otherwise, block until the
       command completes or is terminated by signal.
 
-   :parameter #key environment: ``#f`` or an instance of
+   :parameter #key environment: :drm:`#f` or an instance of
       :drm:`<explicit-key-collection>`.  A table mapping environment variable
       names (strings) to values (also strings). These values *augment* the
       environment in the current process. (There is currently no way to specify
       via this API that *environment* should be the only environment variables
       set in the subprocess.)
 
-   :parameter #key working-directory: ``#f`` or an instance of
+   :parameter #key working-directory: :drm:`#f` or an instance of
       :class:`<pathname>`. If not #f, the working directory of the subprocess
       is set to this directory.
 
@@ -473,35 +473,35 @@ System library's operating-system module.
         it to the subprocess's standard output.
 
    :parameter #key if-output-exists: As for the ``if-exists`` option when
-      creating an output :class:`<file-stream>` except that ``#f`` is not
+      creating an output :class:`<file-stream>` except that :drm:`#f` is not
       allowed.
 
    :parameter #key error: Possible values are the same as for the ``output``
       parameter except that they apply to :var:`*standard-error*`.
 
    :parameter #key if-error-exists: As for the ``if-exists`` option when
-      creating an output :class:`<file-stream>` except that ``#f`` is not
+      creating an output :class:`<file-stream>` except that :drm:`#f` is not
       allowed.
 
    :parameter #key activate?: An instance of :drm:`<boolean>`.  If the
-      *activate?* argument is ``#t``, the shell window becomes the active
-      window. The default is ``#t``. (**Ignored on Unix platforms.**)
+      *activate?* argument is :drm:`#t`, the shell window becomes the active
+      window. The default is :drm:`#t`. (**Ignored on Unix platforms.**)
 
-   :parameter #key minimize?: An instance of :drm:`<boolean>`. If ``#t``, the
+   :parameter #key minimize?: An instance of :drm:`<boolean>`. If :drm:`#t`, the
       command's shell window will appear minimized. The default is
-      ``#f``. (**Ignored on Unix platforms.**)
+      :drm:`#f`. (**Ignored on Unix platforms.**)
 
-   :parameter #key hide?: An instance of :drm:`<boolean>`.  If ``#t``, the
+   :parameter #key hide?: An instance of :drm:`<boolean>`.  If :drm:`#t`, the
       window associated with this process will be hidden. The default is
-      ``#f``. (**Ignored on Unix platforms.**)
+      :drm:`#f`. (**Ignored on Unix platforms.**)
 
    :value status: An instance of :drm:`<integer>`. The exit status returned by
       ``waitpid`` (Unix) or ``WaitForSingleObject`` (Windows).
 
-   :value signal: ``#f`` or an instance of :drm:`<integer>`. If the process
+   :value signal: :drm:`#f` or an instance of :drm:`<integer>`. If the process
       was terminated by a signal this value is the signal number.
 
-   :value process: ``#f`` or an instance of :class:`<application-process>`.  If
+   :value process: :drm:`#f` or an instance of :class:`<application-process>`.  If
       ``asynchronous?`` is true, :func:`run-application` returns immediately
       and this value identifies the running process. See
       :func:`wait-for-application-process`, which may be used to wait for this
@@ -544,6 +544,6 @@ System library's operating-system module.
    :value status: An instance of :drm:`<integer>`. The exit status returned by
       ``waitpid`` (Unix) or ``WaitForSingleObject`` (Windows).
 
-   :value signal: ``#f`` or an instance of :drm:`<integer>`. If the process
+   :value signal: :drm:`#f` or an instance of :drm:`<integer>`. If the process
       was terminated by a signal this value is the signal number.
 

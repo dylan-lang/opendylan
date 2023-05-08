@@ -13,7 +13,7 @@ The bit-set Module
    :keyword all-members-from: If this is a non-negative integer then the set
       created will be infinite. All integers greater than
       or equal to the one supplied will be members of the
-      set. The default is ``#f``.
+      set. The default is :drm:`#f`.
    :keyword member-vector:
    :keyword members: If supplied, this gives the initial elements of the
       set as a sequence of integers.
@@ -67,7 +67,7 @@ The bit-set Module
 
    :description:
 
-      Returns ``#t`` if the set is infinite, otherwise ``#f``.
+      Returns :drm:`#t` if the set is infinite, otherwise :drm:`#f`.
 
 .. generic-function:: member?
    :sealed:
@@ -80,7 +80,7 @@ The bit-set Module
 
    :description:
 
-     Returns ``#t`` if ``element`` is a member of the set, otherwise ``#f``.
+     Returns :drm:`#t` if ``element`` is a member of the set, otherwise :drm:`#f`.
      ``element`` must be a non-negative integer.
 
 .. generic-function:: set-add
@@ -260,11 +260,11 @@ The bit-set Module
    :signature: size *set* => *false-or-integer*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :value size: Either ``#f`` or an instance of :drm:`<integer>`.
+   :value size: Either :drm:`#f` or an instance of :drm:`<integer>`.
 
    :description:
 
-     Returns the cardinality of the set or ``#f`` if the set is
+     Returns the cardinality of the set or :drm:`#f` if the set is
      infinite. This operation may be relatively slow.
 
 .. function:: universal-bit-set!

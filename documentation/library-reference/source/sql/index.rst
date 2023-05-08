@@ -504,7 +504,7 @@ type of the result set is determined by the result-set policy object.
 The type of the record object is determined by the :gf:`coercion-policy`
 slot of :class:`<sql-statement>`.
 
-If ``result-set-policy.scrollable?`` is ``#t``, the result set will be an
+If ``result-set-policy.scrollable?`` is :drm:`#t`, the result set will be an
 instance of :class:`<scrollable-result-set>` otherwise it will be an instance
 of :class:`<forward-only-result-set>`. If ``statement.coercion-policy ~=
 $no-coercion`` then the record will be an instance of :class:`<coercion-record>`;
@@ -515,9 +515,9 @@ otherwise, it will be an instance of :class:`<record>`.
     +-------------+-----------------+------------------------------------+
     | Scrollable? | Coercion policy | Result set class                   |
     +=============+=================+====================================+
-    | ``#f``      | ``#f``          | :class:`<forward-only-result-set>` |
+    | :drm:`#f`   | :drm:`#f`       | :class:`<forward-only-result-set>` |
     +-------------+-----------------+------------------------------------+
-    | ``#t``      | -               | :class:`<scrollable-result-set>`   |
+    | :drm:`#t`   | -               | :class:`<scrollable-result-set>`   |
     +-------------+-----------------+------------------------------------+
 
 See also:
@@ -1524,7 +1524,7 @@ The SQL module
    :keyword asynchronous:
    :keyword rowset-size: An instance of ``type-union(<integer>, #"all")``.
    :keyword scroll-window: An instance of :drm:`<integer>`. A cache size hint.
-   :keyword scrollable: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :keyword scrollable: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
 
    Specifies the behavior and performance characteristics of a result set.
 

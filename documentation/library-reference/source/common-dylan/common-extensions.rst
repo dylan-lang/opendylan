@@ -51,24 +51,21 @@ The extensions are:
    Signals an error if the expression passed to it evaluates to false.
 
    :macrocall:
+     .. parsed-literal:: 
+        assert `expression` `format-string` [`format-arg`] => `false`
 
-     .. code-block:: dylan
-
-       assert *expression* *format-string* [*format-arg* ]* => *false*
-
-     .. code-block:: dylan
-
-       assert *expression* => *false*
+     .. parsed-literal:: 
+        assert `expression` => `false`
 
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.
    :parameter format-arg: A Dylan expression *bnf*.
 
-   :value false: ``#f``.
+   :value false: :drm:`#f`.
 
    :description:
 
-     Signals an error if *expression* evaluates to ``#f``.
+     Signals an error if *expression* evaluates to :drm:`#f`.
 
      An assertion or "assert" is a simple tool for testing that
      conditions hold in program code.
@@ -77,7 +74,7 @@ The extensions are:
      the DRM. If *format-string* is supplied, the error is formatted
      accordingly, along with any instances of *format-arg*.
 
-     If *expression* is not ``#f``, ``assert`` does not evaluate
+     If *expression* is not :drm:`#f`, :macro:`assert` does not evaluate
      *format-string* or any instances of *format-arg*.
 
    :seealso:
@@ -158,18 +155,16 @@ The extensions are:
    but only when the code is compiled in interactive development mode.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
+        debug-assert `expression` `format-string` [`format-arg`] => `false`
 
-       debug-assert *expression* *format-string* [ *format-arg* ]* => *false*
-
-     .. code-block:: dylan
-
-       debug-assert *expression* => *false*
+     .. parsed-literal:: 
+        debug-assert `expression` => `false`
 
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.
    :parameter format-arg: A Dylan expression *bnf*.
-   :value false: ``#f``.
+   :value false: :drm:`#f`.
 
    :description:
 
@@ -217,7 +212,7 @@ The extensions are:
    :signature: default-handler *warning* => *false*
 
    :parameter warning: An instance of :drm:`<warning>`.
-   :value false: ``#f``.
+   :value false: :drm:`#f`.
 
    :description:
 
@@ -317,14 +312,12 @@ The extensions are:
    before calling :drm:`default-handler`.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
+        define last-handler (`condition`, #key `test`, `init-args`) = `handler` ;
 
-       define last-handler (*condition*, #key *test*, *init-args*)
-         = *handler* ;
+        define last-handler `condition` = `handler`;
 
-       define last-handler condition = handler;
-
-       define last-handler;
+        define last-handler;
 
    :parameter condition: A Dylan expression *bnf*. The class of
      condition for which the handler should be invoked.
@@ -385,9 +378,8 @@ The extensions are:
    to a new table object.
 
    :macrocall:
-     .. code-block:: dylan
-
-       define table *name* [ :: *type* ] = { [ *key* => *element* ]* }
+     .. parsed-literal:: 
+        define table `name` [ :: `type` ] = { [ `key` => `element` ]* }
 
    :parameter name: A Dylan name *bnf*.
    :parameter type: A Dylan operand *bnf*. Default value: :drm:`<table>`.
@@ -507,7 +499,7 @@ The extensions are:
    :parameter collection: An instance of :drm:`<collection>`.
    :parameter predicate: An instance of :drm:`<function>`.
    :parameter #key skip: An instance of :drm:`<integer>`. Default value: 0.
-   :parameter #key failure: An instance of :drm:`<object>`. Default value: ``#f``.
+   :parameter #key failure: An instance of :drm:`<object>`. Default value: :drm:`#f`.
    :value element: An instance of :drm:`<object>`.
 
    :description:
@@ -663,7 +655,7 @@ The extensions are:
    :parameter base: An instance of :drm:`<integer>` (default 10).
    :parameter size: An instance of :drm:`<integer>` (default 0).
    :parameter fill: An instance of :drm:`<character>` (default 0).
-   :parameter lowercase?: An instance of :drm:`<boolean>` (default ``#f``).
+   :parameter lowercase?: An instance of :drm:`<boolean>` (default :drm:`#f`).
    :value string: An instance of :drm:`<byte-string>`.
 
    :description:
@@ -680,11 +672,11 @@ The extensions are:
    Iterates over a body.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       iterate *name* ({*argument* = *init-value*}*)
-         [ *body* ]
-       end [ iterate ]
+        iterate `name` ({`argument` = `init-value`}*)
+          [ `body` ]
+        end [ iterate ]
 
    :parameter name: A Dylan variable-name *bnf*.
    :parameter argument: A Dylan variable-name *bnf*.
@@ -747,9 +739,9 @@ The extensions are:
    :parameter target: An instance of :drm:`<object>`.
    :parameter #key test: An instance of :drm:`<function>`. Default value: :drm:`==`.
    :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
-   :parameter #key end: An instance of :drm:`<object>`. Default value: ``#f``.
+   :parameter #key end: An instance of :drm:`<object>`. Default value: :drm:`#f`.
    :parameter #key skip: An instance of :drm:`<integer>`. Default value: 0.
-   :parameter #key count: An instance of :drm:`<object>`. Default value: ``#f``.
+   :parameter #key count: An instance of :drm:`<object>`. Default value: :drm:`#f`.
    :value position: An instance of ``false-or(<integer>)``.
 
    :description:
@@ -764,7 +756,7 @@ The extensions are:
      The *skip* argument is interpreted as it is by Dylan's :drm:`find-key`
      function: *position* ignores the first *skip* elements that match
      *target*, and if *skip* or fewer elements satisfy *test*, it
-     returns ``#f``.
+     returns :drm:`#f`.
 
      The *start* and *end* arguments indicate, if supplied, which subrange
      of the *sequence* is used for the search.
@@ -1261,9 +1253,8 @@ The extensions are:
    nothing if the test is false.
 
    :macrocall:
-     .. code-block:: dylan
-
-       when (*test*) [ *consequent* ] end [ when ]
+     .. parsed-literal:: 
+        when (`test`) [ `consequent` ] end [ when ]
 
    :parameter test: A Dylan expression *bnf*.
    :parameter consequent: A Dylan body *bnf*.
@@ -1341,7 +1332,7 @@ The extensions are:
    2. the start index in that sequence at which to begin searching, and
    3. the index at which to stop searching (exclusive).
 
-   The *separator* function must return ``#f`` to indicate that no separator was
+   The *separator* function must return :drm:`#f` to indicate that no separator was
    found, or two values:
 
    1. The start index of the separator in the sequence and
@@ -1516,7 +1507,7 @@ The extensions are:
    :description:
 
      Returns the full filename (that is, the absolute pathname) of the
-     running application, or ``#f`` if the filename cannot be
+     running application, or :drm:`#f` if the filename cannot be
      determined.
 
    :example:

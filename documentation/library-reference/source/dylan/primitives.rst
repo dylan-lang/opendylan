@@ -153,7 +153,7 @@ Simple Locks
    :signature: (lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
    :parameter lock: An instance of :class:`<simple-lock>`.
-   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or ``#f``.
+   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or :drm:`#f`.
 
    :description:
 
@@ -229,7 +229,7 @@ Recursive Locks
    :signature: (lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
    :parameter lock: An instance of :class:`<recursive-lock>`.
-   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or ``#f``.
+   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or :drm:`#f`.
 
    :description:
 
@@ -310,7 +310,7 @@ Semaphores
    :signature: (lock :: <portable-container>, name :: false-or(<byte-string>), initial :: <integer>, max :: <integer>) => ()
 
    :parameter lock: An instance of :class:`<semaphore>`.
-   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or ``#f``.
+   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or :drm:`#f`.
    :parameter initial: The initial value for the semaphore count.
 
    :description:
@@ -378,7 +378,7 @@ Notifications
    :signature: (notification :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
    :parameter notification: An instance of :class:`<notification>`.
-   :parameter name: The name of the notification (as a :drm:`<byte-string>`) or ``#f``.
+   :parameter name: The name of the notification (as a :drm:`<byte-string>`) or :drm:`#f`.
 
    :description:
 
@@ -670,7 +670,7 @@ Entry Point Functions
     wrong. It then sets the calling convention for calling the internal
     entry point. This basically means that the function register is
     appropriately set, and the implementation 'mlist' parameter is set to
-    ``#f``.
+    :drm:`#f`.
 
 .. c:function:: D optional_xep (FN* function, int argument_count, ...)
 
@@ -818,8 +818,8 @@ This primitive returns Dylan true if *value* is non-zero, and false if
 
    :description:
 
-This is the complement of *primitive-true?*, returning ``#t`` if the
-value is 0, ``#f`` otherwise.
+This is the complement of *primitive-true?*, returning :drm:`#t` if the
+value is 0, :drm:`#f` otherwise.
 
 .. primitive:: primitive-equals?
 

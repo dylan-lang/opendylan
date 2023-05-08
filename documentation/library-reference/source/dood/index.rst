@@ -153,7 +153,7 @@ The DOOD module
    :value value: An instance of :class:`<object>`.
 
    Returns the one distinguished root of the specified dood. It is
-   defaulted to be ``#f`` when a new dood is created.
+   defaulted to be :drm:`#f` when a new dood is created.
 
 .. generic-function:: dood-root-setter
 

@@ -73,7 +73,7 @@ init-keyword. The legal values for this keyword are:
 - ``#"value"`` Creates a table with weak values. When there are no longer
   any strong references to a value, the table entry of which it is a
   part becomes eligible for garbage collection.
-- ``#f`` Creates a table with strong keys and values. This is the default
+- :drm:`#f` Creates a table with strong keys and values. This is the default
   value.
 
 The table-extensions Module
@@ -104,13 +104,13 @@ from the module *table-extensions*.
 
 .. class:: <case-insensitive-string-table>
    :sealed:
-   
+
    A table class that uses case-insensitive strings for keys.
-   
+
    :superclasses: :drm:`<table>`
-   
+
    :description:
-   
+
      The ``<string-table>`` class is the class of tables that use
      instances of :drm:`<string>` for their keys. It is an error to use a
      key that is not an instance of :drm:`<string>`.
@@ -147,7 +147,7 @@ from the module *table-extensions*.
    :parameter elt-hash-function: An instance of :drm:`<function>`.
    :parameter collection: An instance of :drm:`<collection>`.
    :parameter initial-state: An instance of ``<hash-state>``.
-   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :value hash-id: An instance of :drm:`<integer>`.
    :value result-state: An instance of ``<hash-state>``.
 
@@ -172,7 +172,7 @@ from the module *table-extensions*.
    :parameter elt-hash-function: An instance of :drm:`<function>`.
    :parameter sequence: An instance of :drm:`<sequence>`.
    :parameter initial-state: An instance of ``<hash-state>``.
-   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key ordered: An instance of :drm:`<boolean>`. Default value: :drm:`#f`.
    :value hash-id: An instance of :drm:`<integer>`.
    :value result-state: An instance of ``<hash-state>``.
 
@@ -346,26 +346,26 @@ from the module *table-extensions*.
 
 .. macro:: tabling
    :macro-type: Function
-   
+
    Creates a table and populates it with keys and values.
-   
+
    :macrocall:
-     .. parsed-literal::
-        tabling( { `class`, } `key` => `value`, ...)
-           
+     .. parsed-literal:: 
+        tabling( [ `class`, ] `key` => `value`, ...)
+
    :parameter class:  An instance of :drm:`<class>`. Optional.
    :parameter key:    An expression.
    :parameter value:  An expression.
    :value table:      A new instance of *class*.
-   
+
    :description:
-   
+
      Creates a table of type *class* and populates it with *key*/*value*
      pairs. If *class* is omitted, creates a table of type :drm:`<table>`.
 
    :example:
-   
+
      .. code-block:: dylan
 
-       let my-table = tabling("red"=>"stop", "green"=>"go");
-       let my-table = tabling(<string-table>, "red"=>"stop", "green"=>"go");
+       let my-table = tabling(#"red" => "stop", #"green" => "go");
+       let my-table = tabling(<string-table>, "red" => "stop", "green" => "go");

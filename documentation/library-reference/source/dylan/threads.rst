@@ -715,7 +715,7 @@ Locks
      a thread uses a lock for *mutual-exclusion* in this way, the thread
      is said to *own the lock*.
 
-     :class:`<lock>` has no direct instances; calling *make* on :class:`<lock>`
+     :class:`<lock>` has no direct instances; calling :drm:`make` on :class:`<lock>`
      returns an instance of :class:`<simple-lock>`.
 
    :operations:
@@ -731,12 +731,11 @@ Locks
    Holds a lock while executing a body of code.
 
    :macrocall:
-     .. code-block:: dylan
-
-       with-lock (*lock*, #key *keys*)
-         *body*
-       [failure *failure-expr* ]
-       end
+     .. parsed-literal:: 
+        with-lock (`lock`, #key `keys`)
+          `body`
+        [ failure `failure-expr` ]
+        end
 
    :param lock: An instance of :class:`<lock>`.
    :param keys: Zero or more of the keywords provided by :gf:`wait-for`.
@@ -745,21 +744,21 @@ Locks
 
    :conditions:
 
-     *with-lock* may signal a condition of the following class (a
+     :macro:`with-lock` may signal a condition of the following class (a
      subclass of :drm:`<serious-condition>`):
 
      :class:`<timeout-expired>`
-       This is signalled when *with-lock* did not succeed in claiming
+       This is signalled when :macro:`with-lock` did not succeed in claiming
        the lock within the timeout period.
 
    :description:
 
      Execute the *body* with *lock* held. If a *failure* clause is
      supplied, then it will be evaluated and its values returned from
-     *with-lock* if the lock cannot be claimed (because a timeout
+     :macro:`with-lock` if the lock cannot be claimed (because a timeout
      occurred). The default, if no *failure* clause is supplied, is
      to signal an exception of class :class:`<timeout-expired>`. If there
-     is no failure, *with-lock* returns the results of evaluating the
+     is no failure, :macro:`with-lock` returns the results of evaluating the
      body.
 
    :example:
@@ -856,7 +855,7 @@ Semaphores
 
    :conditions:
 
-     An implementation of this *release* method is permitted to signal a
+     An implementation of this :gf:`release` method is permitted to signal a
      condition of the following class, which is a subclass of
      :drm:`<error>`:
 
@@ -894,13 +893,13 @@ Exclusive locks
      The notion of ownership is directly supported by the class, and a
      thread can test whether an :class:`<exclusive-lock>` is currently owned.
      An instance of :class:`<exclusive-lock>` can only be owned by one thread
-     at a time, by calling *wait-for* on the lock.
+     at a time, by calling :gf:`wait-for` on the lock.
 
      Once owned, any attempt by any other thread to wait for the lock
      will cause that thread to block. It is an error for a thread to
      release an :class:`<exclusive-lock>` if another thread owns it.
 
-     :class:`<exclusive-lock>` has no direct instances; calling *make* on
+     :class:`<exclusive-lock>` has no direct instances; calling :drm:`make` on
      :class:`<exclusive-lock>` returns an instance of :class:`<simple-lock>`.
 
    :operations:
@@ -922,7 +921,7 @@ Exclusive locks
 
    :conditions:
 
-     Implementations of *release* methods for subclasses of
+     Implementations of :gf:`release` methods for subclasses of
      :class:`<exclusive-lock>` are permitted to signal a condition
      of the following class, which is a subclass of :drm:`<error>`:
 
@@ -936,7 +935,7 @@ Exclusive locks
      Releases a lock that is owned by the calling thread. It is an error
      if the lock is not owned.
 
-     The Threads module does not provide a method on *release* for
+     The Threads module does not provide a method on :gf:`release` for
      :class:`<exclusive-lock>`, which is an open abstract class. Each
      concrete subclass will have an applicable method which may signal
      errors according to the protocol described above.
@@ -1360,19 +1359,19 @@ Notifications
      for another thread to release the notification. The current thread
      reclaims the lock once it has received the notification.
 
-     Note that the state should be tested again once *wait-for* has
+     Note that the state should be tested again once :gf:`wait-for` has
      returned, because there may have been a delay between the
      :meth:`release <release(<notification>)>` of the notification and
      the claiming of the lock, and the state may have been changed
      during that time. If a timeout is supplied, then this is used for
-     waiting for the release of the notification only. The *wait-for*
+     waiting for the release of the notification only. The :gf:`wait-for`
      function always waits for the lock with no timeout, and it is
-     guaranteed that the lock will be owned on return. The *wait-for*
+     guaranteed that the lock will be owned on return. The :gf:`wait-for`
      function returns :drm:`#f` if the notification wait times out.
 
    :conditions:
 
-     Implementations of this *wait-for* method are permitted to signal a
+     Implementations of this :gf:`wait-for` method are permitted to signal a
      condition of the following class, which is a subclass of :drm:`<error>`:
 
      :class:`<not-owned-error>`
@@ -1393,7 +1392,7 @@ Notifications
 
    :conditions:
 
-     Implementations of this *release* method are permitted to signal a
+     Implementations of this :gf:`release` method are permitted to signal a
      condition of the following class, which is a subclass of
      :drm:`<error>`:
 
@@ -1421,7 +1420,7 @@ Notifications
 
    :conditions:
 
-     Implementations of the *release-all* function are permitted to signal a
+     Implementations of the :gf:`release-all` function are permitted to signal a
      condition of the following class, which is a subclass of :drm:`<error>`:
 
      :class:`<not-owned-error>`
@@ -1458,12 +1457,10 @@ Thread variables
 .. macro:: thread
    :macro-type: variable definition adjective
 
-   An adjective to *define variable* for defining thread variables.
+   An adjective to :drm:`define variable` for defining thread variables.
 
    :macrocall:
-     .. code-block:: dylan
-
-       define thread variable *bindings* = *init* ;
+     .. parsed-literal:: define thread variable `bindings` = `init` ;
 
    :description:
 
@@ -1492,11 +1489,10 @@ Dynamic binding
    rebound.
 
    :macrocall:
-     .. code-block:: dylan
-
-       dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
-         *body*
-       end;
+     .. parsed-literal:: 
+        dynamic-bind (`place1` = `init1`, `place2` = `init2`, ...)
+          `body`
+        end
 
    :description:
 
@@ -1557,11 +1553,10 @@ The extended form is described below.
    are dynamically rebound.
 
    :macrocall:
-     .. code-block:: dylan
-
-        dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
-          *body*
-        end;
+     .. parsed-literal:: 
+        dynamic-bind (`place1` = `init1`, `place2` = `init2`, ...)
+          `body`
+        end
 
      (This is the same as the simple form.)
 
@@ -1612,9 +1607,7 @@ Locked variables
    Defines a locked variable.
 
    :macrocall:
-     .. code-block:: dylan
-
-       define locked variable *bindings* = *init* ;
+     .. parsed-literal:: define locked variable `bindings` = `init` ;
 
    :description:
 
@@ -1649,17 +1642,15 @@ Conditional update
    Performs an atomic test-and-set operation.
 
    :macrocall:
+     .. parsed-literal:: 
+        conditional-update!(`local-name` = `place`)
+          `body`
+          [success `success-expr` ]
+          [failure `failure-expr` ]
+        end
 
-     .. code-block:: dylan
-
-       conditional-update!(*local-name* = *place*)
-         *body*
-         [success *success-expr* ]
-         [failure *failure-expr* ]
-       end
-
-   :parameter local-name: A Dylan variable-name*bnf*.
-   :parameter place: A Dylan variable-namebnf,
+   :parameter local-name: A Dylan variable-name *bnf*.
+   :parameter place: A Dylan variable-name *bnf*,
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
@@ -1727,13 +1718,11 @@ Conditional update
    Atomically increments a place containing a numeric value.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: atomic-increment!(`place`)
 
-       atomic-increment!(*place*);
+     .. parsed-literal:: atomic-increment!(`place`, `by`)
 
-       atomic-increment!(*place*, *by*);
-
-   :parameter place: A Dylan variable-namebnf.
+   :parameter place: A Dylan variable-name *bnf*.
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
@@ -1776,13 +1765,11 @@ Conditional update
    Atomically decrements a place containing a numeric value.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: atomic-decrement!(`place`)
 
-       atomic-decrement!(*place*)
+     .. parsed-literal:: atomic-decrement!(`place`, `by`)
 
-       atomic-decrement!(*place*, *by*)
-
-   :parameter place: A Dylan variable-namebnf.
+   :parameter place: A Dylan variable-name *bnf*.
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
@@ -1815,13 +1802,12 @@ feature.
    Performs an atomic test-and-set operation.
 
    :macrocall:
-     .. code-block:: dylan
-
-       conditional-update!(*local-name* = *place*)
-         *body*
-         [success *success-expr* ]
-         [failure *failure-expr* ]
-       end
+     .. parsed-literal:: 
+        conditional-update!(`local-name` = `place`)
+          `body`
+          [success `success-expr` ]
+          [failure `failure-expr` ]
+        end
 
    :parameter local-name: A Dylan variable-name *bnf*.
    :parameter place: A Dylan variable-name *bnf* or a function call.

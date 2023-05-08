@@ -140,7 +140,7 @@ The following specific constructors are available for use with the class
 Equality comparisons
 --------------------
 
-The ``=`` function compares two objects and returns ``#t`` if the values of
+The :drm:`=` function compares two objects and returns :drm:`#t` if the values of
 the two objects are equal to each other, that is of the same magnitude.
 
 .. generic-function:: =
@@ -1078,7 +1078,7 @@ not:
 
     5 ga/+ 4;
 
-The existing functions like ``+`` and ``-`` will only accept :drm:`<integer>`
+The existing functions like :drm:`+` and :drm:`-` will only accept :drm:`<integer>`
 instances and ``ga/<integer>`` instances small enough to be represented as
 :drm:`<integer>` instances.
 

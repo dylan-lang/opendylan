@@ -18,9 +18,9 @@ Simple Profiling
    of code it is wrapped around.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       timing () [ *body* ] end [ timing ]
+        timing () [ `body` ] end [ timing ]
 
    :parameter body: A Dylan body *bnf*
    :value seconds: An instance of :drm:`<integer>`.
@@ -53,12 +53,12 @@ Simple Profiling
    it is wrapped around.
 
    :macrocall:
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-        profiling ([*profiling-type*, ...])
-          *body*
+        profiling ([`profiling-type`, ...])
+          `body`
         results
-          *results*
+          `results`
         end
 
    :parameter profiling-type: Any of ``cpu-time-seconds``,

@@ -79,9 +79,8 @@ Reference
    Modify the *plist*, adding *indicator* with the given *value*.
 
    :macrocall:
-     .. code-block:: dylan
-
-       put-property!(*plist*, *indicator*, *value*)
+      .. parsed-literal:: 
+         put-property!(`plist`, `indicator`, `value`)
 
    :parameter plist: An instance of :drm:`<sequence>`.
    :parameter indicator: An instance of :drm:`<object>`.
@@ -120,9 +119,8 @@ Reference
    if any.
 
    :macrocall:
-     .. code-block:: dylan
-
-       remove-property!(*plist*, *indicator*)
+      .. parsed-literal:: 
+         remove-property!(`plist`, `indicator`)
 
    :parameter plist: An instance of :drm:`<sequence>`.
    :parameter indicator: An instance of :drm:`<object>`.
@@ -157,16 +155,13 @@ Reference
    :statement:
 
    :macrocall:
-     .. code-block:: dylan
+      .. parsed-literal:: 
+         with-keywords-removed(`var` = `plist`, `keywords`) `body` end
 
-       with-keywords-removed(*var* = *plist*, *keywords*)
-         *body*
-       end
-
-   :parameter var: A Dylan name *bnf*.
+   :parameter var: A Dylan name *BNF*.
    :parameter plist: An instance of :drm:`<sequence>`.
    :parameter keywords: An instance of :drm:`<sequence>`.
-   :parameter body: A Dylan body *bnf*.
+   :parameter body: A Dylan body *BNF*.
 
    :description:
 
