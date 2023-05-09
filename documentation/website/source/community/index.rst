@@ -41,34 +41,22 @@ there instead. If unsure, use `opendylan
 
 .. _gitter:
 
-The dylan-lang Community on Gitter
-==================================
+Chat
+====
 
-https://gitter.im/dylan-lang/general
+The `Dylan Language room on Matrix
+<https://app.element.io/#/room/#dylan-language:matrix.org>`_ is where
+day-to-day Dylan activity takes place. You may sign in with a GitHub, GitLab,
+Google, etc.  and any Matrix client.
 
-The dylan-lang community is where most of the day-to-day Dylan activity
-takes place. You may sign in with a GitHub, GitLab, or Twitter account.
-Or use a Matrix client, connected to the same Gitter channel. For example,
-`element.io <https://app.element.io/#/room/#dylan-lang_general:gitter.im>`_.
 
 .. _irc:
 
 The #dylan IRC Channel
 ======================
 
-There is usually someone available in the #dylan channel on
-Freenode.net to answer questions.  The channel is logged at
-https://colabti.org/irclogger/irclogger_logs/dylan so you can always
-ask a question and then check the logs for answers later.
-
-Freenode also offers `web-based chat`_ if you don't have an IRC client or
-just want easy and quick access.
-
-To discuss coding issues you can `create a gist on GitHub
-<https://gist.github.com/discover>`_ and paste a link to it in the #dylan
-channel.
-
-.. _web-based chat: https://webchat.freenode.net/
+The IRC channel (``#dylan`` on Freenode) is no longer used. Some old logs may
+be found here: https://colabti.org/irclogger/irclogger_logs/dylan
 
 
 .. _mailing-lists:
@@ -89,7 +77,7 @@ but dylan-lang@ is the preferred forum.
 Other Sites
 ===========
 
-- `Twitter <https://twitter.com/DylanLanguage>`_
+- `Fosstodon (a Mastodon instance) <https://fosstodon.org/@DylanLang>`_
 - `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
 
 .. raw:: html
