@@ -146,9 +146,11 @@ the two objects are equal to each other, that is of the same magnitude.
 .. generic-function:: =
    :open:
 
-   Tests its arguments to see if they are of the same magnitude.
-
    :signature: = *object1* *object2* => *boolean*
+
+   :description:
+
+      Tests its arguments to see if they are of the same magnitude.
 
 .. method:: =
    :sealed:
@@ -174,7 +176,7 @@ magnitude of two numbers:
 .. generic-function:: <
    :open:
 
-   Returns #t if its first argument is less than its second argument.
+   Returns :drm:`#t` if its first argument is less than its second argument.
 
    :signature: < *object1* *object2* => *boolean*
 
@@ -182,14 +184,14 @@ magnitude of two numbers:
    :sealed:
    :specializer: <complex>
 
-   Returns #t if its first argument is less than its second argument.
+   Returns :drm:`#t` if its first argument is less than its second argument.
 
    :signature: < *complex1* *complex2* => *boolean*
 
 .. method:: <
    :specializer: <machine-number>
 
-   Returns #t if its first argument is less than its second argument.
+   Returns :drm:`#t` if its first argument is less than its second argument.
 
    :signature: < *machine-number1* *machine-number2* => *boolean*
 
@@ -210,9 +212,11 @@ in the Dylan library:
    :sealed:
    :specializer: <complex>
 
-   Tests whether the argument supplied represents an odd value.
-
    :signature: odd? *complex* => *boolean*
+
+   :description:
+
+      Tests whether the argument supplied represents an odd value.
 
 .. method:: odd?
    :specializer: <integer>
@@ -274,16 +278,20 @@ in the Dylan library:
    :sealed:
    :specializer: <complex>
 
-   Tests whether the argument supplied represents a positive value.
-
    :signature: positive? *complex*
+
+   :description:
+
+      Tests whether the argument supplied represents a positive value.
 
 .. method:: positive?
    :specializer: <machine-number>
 
-   Tests whether the argument supplied represents a positive value.
-
    :signature: positive? *machine-number* => *boolean*
+
+   :description:
+
+      Tests whether the argument supplied represents a positive value.
 
 .. generic-function:: negative?
    :open:
@@ -334,394 +342,420 @@ Arithmetic operations
 
 The following arithmetic operations are available in the Dylan library:
 
-\+
+.. generic-function:: +
+   :open:
 
-Open generic function
+   Returns the sum of the two supplied arguments. The actual type of
+   the value is determined by the contagion rules when applied to the
+   arguments.
 
-\+ *object1* *object2* => #rest *object*
+   :signature: + *object1* *object2* => #rest *object*
 
-\+
+.. method:: +
+   :sealed:
+   :specializer: <complex>, <complex>
 
-Sealed domain
+   :signature: + *complex1* *complex2*
 
-\+ *complex1* *complex* 2
+.. method:: +
+   :specializer: <integer>, <complex>
 
-\+
+   :signature: + *integer1* *integer2* => *integer*
 
-G.f. method
+.. method:: +
+   :specializer: <machine-number>, <machine-number>
 
-\+ *integer1* *integer* 2 => *integer*
+   :signature: + *machine-number1* *machine-number2* => *machine-number*
 
-\+
 
-G.f. method
+.. generic-function:: -
+   :open:
 
-\+ *machine-number1* *machine-number2* => *machine-number*
+   Returns the result of subtracting the second argument from the
+   first.  The actual type of the value is determined by the contagion
+   rules when applied to the arguments.
 
-Returns the sum of the two supplied arguments. The actual type of the
-value is determined by the contagion rules when applied to the
-arguments.
+   :signature: - *object1* *object2* => #rest *object*
 
-\-
+.. method:: -
+   :sealed:
+   :specializer: <complex>, <complex>
 
-Open generic function
+   :signature: - *complex1 complex2*
 
-\- *object1* *object2* => #rest *object*
+.. method:: -
+   :specializer: <integer>, <integer>
 
-\-
+   :signature: - *integer1 integer2* => *integer*
 
-Sealed domain
+.. method:: -
+   :specializer: <machine-number>, <machine-number>
 
-\- *complex1* *complex2*
+   :signature: - *machine-number1* *machine-number2* => *machine-number*
 
-\-
+.. generic-function:: *
+   :open:
 
-G.f. method
+   Returns the result of multiplying the two arguments. The actual
+   type of the value is determined by the contagion rules when applied
+   to the arguments.
 
-\- *integer1 integer2* => *integer*
+   :signature: * *object1* *object2* => #rest *object*
 
-\-
+.. method:: *
+   :sealed:
+   :specializer: <complex>, <complex>
 
-G.f. method
+   :signature: \* *complex1* *complex2*
 
-\- *machine-number1* *machine-number2* => *machine-number*
+.. method:: *
+   :specializer: <integer>, <integer>
 
-Returns the result of subtracting the second argument from the first.
-The actual type of the value is determined by the contagion rules when
-applied to the arguments.
+   :signature: \* *integer1* *integer2* => *integer*
 
-\*
+.. method:: *
+   :specializer: <machine-number>, <machine-number>
 
-Open generic function
+   :signature: \* *machine-number1* *machine-number2* => *machine-number*
 
-\* *object1* *object2* => #rest *object*
+.. generic-function:: /
+   :open:
 
-\*
+   Returns the result of dividing the first argument by the
+   second. The actual type of the value is determined by the contagion
+   rules when applied to the arguments.
 
-Sealed domain
+   :signature: / *object1* *object2* => #rest *object*
 
-\* *complex1* *complex2*
+.. method:: /
+   :sealed:
+   :specializer: <complex>, <complex>
 
-\*
+   :signature: / *complex1* *complex2*
 
-G.f. method
+.. method:: /
+   :specializer: <float>, <float>
 
-\* *integer1* *integer* 2 => *integer*
+   :signature: / *float1* *float2* => *float*
 
-\*
+.. generic-function:: negative
+   :open:
 
-G.f. method
+   Negates the supplied argument. The returned value is of the same float
+   format as the supplied argument.
 
-\* *machine-number1* *machine-number2* => *machine-number*
+   :signature: negative *object* => #rest *negative-object*
 
-Returns the result of multiplying the two arguments. The actual type of
-the value is determined by the contagion rules when applied to the
-arguments.
+.. method:: negative
+   :sealed:
+   :specializer: <complex>
 
-/
+   :signature: negative *complex*
 
-Open generic function
+.. method:: negative
+   :specializer: <integer>
 
-/ *object1* *object2* => #rest *object*
+   :signature: negative *integer* => *negative-integer*
 
-/
+.. method:: negative
+   :specializer: <float>
 
-Sealed domain
+   :signature: negative *float* => *negative-float*
 
-/ *complex1* *complex2*
+.. generic-function:: floor
 
-/
+   Truncates a number toward negative infinity. The integer part is
+   returned as *integer*, the remainder is of the same float format as
+   the argument.
 
-G.f. method
+   :signature: floor *object* => *integer* *object*
 
-/ *float1* *float* 2 => *float*
+.. method:: floor
+   :specializer: <machine-number>
 
-Returns the result of dividing the first argument by the second. The
-actual type of the value is determined by the contagion rules when
-applied to the arguments.
+   :signature: floor *machine-number* => *integer* *machine-number*
 
-negative
+.. method:: floor
+   :specializer: <integer>
 
-Open generic function
+   :signature: floor *integer* => *integer* *integer*
 
-negative *object* => #rest *negative-object*
+.. method:: floor
+   :specializer: <float>
 
-negative
+   :signature: floor *float* => *integer* *float*
 
-Sealed domain
+.. generic-function:: ceiling
 
-negative *complex*
+   Truncates a number toward positive infinity. The integer part is
+   returned as *integer*, the remainder is of the same float format as
+   the argument.
 
-negative
+   :signature: ceiling *machine-number* => *integer* *machine-number*
 
-G.f. method
+.. method:: ceiling
+   :specializer: <machine-number>
 
-negative *integer* => *negative-integer*
+   :signature: ceiling *machine-number* => *integer* *machine-number*
 
-negative
+.. method:: ceiling
+   :specializer: <integer>
 
-G.f. method
+   :signature: ceiling *integer* => *integer* *integer*
 
-negative *float* => *negative-float*
+.. method:: ceiling
+   :specializer: <float>
 
-Negates the supplied argument. The returned value is of the same float
-format as the supplied argument.
+   :signature: ceiling *float* => *integer* *float*
 
-floor
+.. generic-function:: round
 
-Function
+   Rounds a number toward the nearest mathematical integer. The
+   integer part is returned as *integer*, the remainder is of the same
+   float format as the argument. If the argument is exactly between
+   two integers, then the result *integer* will be a multiple of two.
 
-floor *machine-number* => *integer* *machine-number*
- floor *integer* => *integer* *integer*
- floor *float* => *integer* *float*
+   :signature: round *object* => *integer* *object*
 
-Truncates a number toward negative infinity. The integer part is
-returned as *integer*, the remainder is of the same float format as the
-argument.
+.. method:: round
+   :specializer: <machine-number>
 
-ceiling
+   :signature: round *machine-number* => *integer* *machine-number*
 
-Function
+.. method:: round
+   :specializer: <integer>
 
-ceiling *machine-number* => *integer* *machine-number*
- ceiling *integer* => *integer* *integer*
- ceiling *float* => *integer* *float*
+   :signature: round *integer* => *integer* *integer*
 
-Truncates a number toward positive infinity. The integer part is
-returned as *integer*, the remainder is of the same float format as the
-argument.
+.. method:: round
+   :specializer: <float>
 
-round
+   :signature: round *float* => *integer* *float*
 
-Function
+.. generic-function:: truncate
 
-round *machine-number* => *integer* *machine-number*
- round *integer* => *integer* *integer*
- round *float* => *integer* *float*
+   Truncates a number toward zero. The integer part is returned as
+   *integer*, the remainder is of the same float format as the
+   argument.
 
-Rounds a number toward the nearest mathematical integer. The integer
-part is returned as *integer*, the remainder is of the same float
-format as the argument. If the argument is exactly between two integers,
-then the result *integer* will be a multiple of two.
+   :signature: truncate *machine-number* => *integer* *object*
 
-truncate
+.. method:: truncate
+   :specializer: <machine-number>
 
-Function
+   :signature: truncate *machine-number* => *integer* *machine-number*
 
-truncate *machine-number* => *integer* *machine-number*
- truncate *integer* => *integer* *integer*
- truncate *float* => *integer* *float*
+.. method:: truncate
+   :specializer: <integer>
 
-Truncates a number toward zero. The integer part is returned as
-*integer*, the remainder is of the same float format as the argument.
+   :signature: truncate *integer* => *integer* *integer*
 
-floor/
+.. method:: truncate
+   :specializer: <float>
 
-Function
+   :signature: truncate *float* => *integer* *float*
 
-::
+.. generic-function:: floor/
 
-    floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
-    floor/ *integer1* *integer2* => *integer* *integer*
-    floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
+   Divides the first argument into the second and truncates the result
+   toward negative infinity. The integer part is returned as
+   *integer*, the type of the remainder is determined by the contagion
+   rules when applied to the arguments.
 
-Divides the first argument into the second and truncates the result
-toward negative infinity. The integer part is returned as *integer*,
-the type of the remainder is determined by the contagion rules when
-applied to the arguments.
+   :signature: floor/ *object1* *object2* => *integer* *machine-number*
 
-ceiling/
+.. method:: floor/
+   :specializer: <machine-number>, <machine-number>
 
-Function
+   :signature: floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
-::
+.. method:: floor/
+   :specializer: <integer>, <integer>
 
-    ceiling/ *machine-number1* *machine-number2* => *integer* *machine-number*
-    ceiling/ *integer1* *integer2* => *integer* *integer*
-    ceiling/ *machine-number1* *machine-number2* => *integer* *machine-number*
+   :signature: floor/ *integer1* *integer2* => *integer* *integer*
 
-Divides the first argument into the second and truncates the result
-toward positive infinity. The integer part is returned as *integer*,
-the type of the remainder is determined by the contagion rules when
-applied to the arguments.
 
-round/
+.. generic-function:: ceiling/
 
-Function
+   Divides the first argument into the second and truncates the result
+   toward positive infinity. The integer part is returned as
+   *integer*, the type of the remainder is determined by the contagion
+   rules when applied to the arguments.
 
-::
+   :signature: ceiling/ *object1* *object2* => *integer* *object*
 
-    round/ *machine-number1* *machine-number2* => *integer* *machine-number*
-    round/ *integer1* *integer2* => *integer* *integer*
-    round/ *machine-number1* *machine-number2* => *integer* *machine-number*
+.. method:: ceiling/
+   :specializer: <machine-number>, <machine-number>
 
-Divides the first argument into the second and rounds the result toward
-the nearest mathematical integer. The integer part is returned as
-*integer*, the type of the remainder is determined by the contagion
-rules when applied to the arguments.
+   :signature: ceiling/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
-truncate/
+.. method:: ceiling/
+   :specializer: <integer>, <integer>
 
-Function
+   :signature: ceiling/ *integer1* *integer2* => *integer* *integer*
 
-::
+.. generic-function:: round/
 
-    truncate/ *machine-number1* *machine-number2* => *integer* *machine-number*
-    truncate/ *integer1* *integer* 2 => *integer* *integer*
-    truncate/ *machine-number1* *machine-number2* => *integer* *machine-number*
+   Divides the first argument into the second and rounds the result
+   toward the nearest mathematical integer. The integer part is
+   returned as *integer*, the type of the remainder is determined by
+   the contagion rules when applied to the arguments.
 
-Divides the first argument into the second and truncates the result
-toward zero. The integer part is returned as *integer*, the type of the
-remainder is determined by the contagion rules when applied to the
-arguments.
+   :signature: round/ *object1* *object2* => *integer* *machine-number*
 
-modulo
+.. method:: round/
+   :specializer: <machine-number>, <machine-number>
 
-Function
+   :signature: round/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
-::
+.. method:: round/
+   :specializer: <integer>, <integer>
 
-    modulo *machine-number1* *machine-number2* => *machine-number*
-    modulo *integer1* *integer2* => *integer*
-    modulo *machine-number1* *machine-number2* => *machine-number*
+   :signature: round/ *integer1* *integer2* => *integer* *integer*
 
-Returns the second value of *floor/ (* *arg1* *,* *arg2* *)*. The
-actual type of the second value is determined by the contagion rules
-when applied to the arguments.
 
-remainder
+.. generic-function:: truncate/
 
-Function
+   Divides the first argument into the second and truncates the result
+   toward zero. The integer part is returned as *integer*, the type of
+   the remainder is determined by the contagion rules when applied to
+   the arguments.
 
-::
+   :signature: truncate/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
-    remainder *machine-number1* *machine-number2* => *machine-number*
-    remainder *integer1* *integer2* => *integer*
-    remainder *machine-number1* *machine-number2* => *machine-number*
+.. method:: truncate/
+   :specializer: <integer>, <integer>
 
-Returns the second value of *truncate/ (* *arg1* *,* *arg2* *)*.The
-actual type of the second value is determined by the contagion rules
-when applied to the arguments.
+   :signature: truncate/ *integer1* *integer2* => *integer* *integer*
 
-^
+.. generic-function:: modulo
 
-Open generic function
+   Returns the second value of *floor/ (* *arg1* *,* *arg2* *)*. The
+   actual type of the second value is determined by the contagion
+   rules when applied to the arguments.
 
-^ *object1* *object2* => #rest *object*
+   :signature: modulo *machine-number1* *machine-number2* => *machine-number*
 
-^
+.. method:: modulo
+   :specializer: <machine-number>, <machine-number>
 
-Sealed domain
+   :signature: modulo *machine-number1* *machine-number2* => *machine-number*
 
-^ *complex1* *complex* 2
+.. method:: modulo
+   :specializer: <integer>, <integer>
 
-^
+   :signature:  modulo *integer1* *integer2* => *integer*
 
-G.f. method
+.. generic-function:: remainder
 
-^ *integer1* *integer2* => *integer*
+   Returns the second value of :drm:`truncate/` (* *arg1* *,* *arg2* *)*.The
+   actual type of the second value is determined by the contagion
+   rules when applied to the arguments.
 
-^
+   :signature: remainder *machine-number1* *machine-number2* => *machine-number*
 
-G.f. method
+.. method:: remainder
+   :specializer: <integer>, <integer>
 
-^ *float1* *integer2* => *float*
+   :signature: remainder *integer1* *integer2* => *integer*
 
-Returns the first argument raised to the power of the second argument.
-The value is of the same float format as the first argument. An error is
-signalled if both arguments are 0.
+   .. generic-function:: ^
+      :open:
 
-abs
+      Returns the first argument raised to the power of the second
+      argument.  The value is of the same float format as the first
+      argument. An error is signalled if both arguments are 0.
 
-Open generic function
+      :signature: ^ *object1* *object2* => #rest *object*
 
-abs *object* => #rest *object*
+   .. method:: ^
+      :sealed:
+      :specializer: <complex>, <complex>
 
-abs
+      :signature: ^ *complex1* *complex2*
 
-Sealed domain
+   .. method:: ^
+      :specializer: <integer>, <integer>
 
-abs *complex*
+      :signature: ^ *integer1* *integer2* => *integer*
 
-abs
+   .. method:: ^
+      :specializer: <float>, <integer>
 
-G.f. method
+      :signature: ^ *float1* *integer2* => *float*
 
-abs *integer* => *integer*
+.. generic-function:: abs
+   :open:
 
-abs
+   Returns the absolute value of the argument. The value is of the
+   same float format as the argument.
 
-G.f. method
+   :signature: abs *object* => #rest *object*
 
-abs *float* => *float*
+.. method:: abs
+   :sealed:
+   :specializer: <complex>
 
-Returns the absolute value of the argument. The value is of the same
-float format as the argument.
+   :signature: abs *complex*
 
-logior
+.. method:: abs
+   :specializer: <integer>
 
-Function
+   :signature: abs *integer* => *integer*
 
-logior #rest *integers* => *integer*
+.. method:: abs
+   :specializer: <float>
 
-Returns the bitwise inclusive *OR* of its integer arguments.
+   :signature: abs *float* => *float*
 
-logxor
+.. function:: logior
 
-Function
+   Returns the bitwise inclusive *OR* of its integer arguments.
 
-logxor #rest *integers* => *integer*
+   :signature: logior #rest *integers* => *integer*
 
-Returns the bitwise exclusive *OR* of its integer arguments.
+.. function:: logxor
 
-logand
+   Returns the bitwise exclusive *OR* of its integer arguments.
 
-Function
+   :signature: logxor #rest *integers* => *integer*
 
-logand #rest *integers* => *integer*
+.. function:: logand
 
-Returns the bitwise *AND* of its integer arguments.
+   Returns the bitwise *AND* of its integer arguments.
 
-lognot
+   :signature: logand #rest *integers* => *integer*
 
-Function
+.. function:: lognot
 
-lognot *integer1* => *integer2*
+   Returns the bitwise *NOT* of its integer arguments.
 
-Returns the bitwise *NOT* of its integer arguments.
+   :signature: lognot *integer1* => *integer2*
 
-logbit?
+.. function:: logbit?
 
-Function
+   Tests the value of a particular bit in its integer argument. The
+   *index* argument is an instance of :drm:`<integer>`.
 
-logbit? *index* *integer* => *boolean*
+   :signature: logbit? *index* *integer* => *boolean*
 
-Tests the value of a particular bit in its integer argument. The *index*
-argument is an instance of :drm:`<integer>`.
+.. function:: ash
 
-ash
+   Performs an arithmetic shift on its first argument.
 
-Function
+   :signature: ash *integer1* *count* => *integer*
 
-ash *integer1* *count* => *integer*
+.. function:: lcm
 
-Performs an arithmetic shift on its first argument.
+   Returns the least common multiple of its two arguments.
 
-lcm
+   :signature: lcm *integer1* *integer2* => *integer*
 
-Function
+.. function:: gcd
 
-lcm *integer1* *integer2* => *integer*
+   Returns the greatest common divisor of its two arguments.
 
-Returns the least common multiple of its two arguments.
-
-gcd
-
-Function
-
-gcd *integer1* *integer2* => *integer*
-
-Returns the greatest common divisor of its two arguments.
+   :signature: gcd *integer1* *integer2* => *integer*
 
 Collections
 -----------
@@ -736,37 +770,36 @@ The Table Protocol
 The following functions in the Dylan library are extended. Note that the
 hash IDs for tables are always instances of :drm:`<integer>`.
 
-merge-hash-codes
+.. function:: merge-hash-codes
 
-Function
+   :signature: merge-hash-codes *id1* *state1* *id2* *state2* #key *ordered?* => *merged-id* *merged-state*
 
-merge-hash-codes *id1* *state1* *id2* *state2* #key *ordered?*
- => *merged-id* *merged-state*
+   :description:
 
-Returns a hash code created from the merging of two argument hash codes.
-The *id* arguments are hash IDs, and the *state* arguments are hash
-states (instances of :drm:`<object>`). The *ordered?* argument is an
-instance of :drm:`<boolean>`. The returned merged values are instances of
-:drm:`<integer>` and :drm:`<object>`, as determined by the name of each argument.
+     Returns a hash code created from the merging of two argument hash
+     codes.  The *id* arguments are hash IDs, and the *state*
+     arguments are hash states (instances of :drm:`<object>`). The
+     *ordered?* argument is an instance of :drm:`<boolean>`. The
+     returned merged values are instances of :drm:`<integer>` and
+     :drm:`<object>`, as determined by the name of each argument.
 
-object-hash
+.. function:: object-hash
 
-Function
+   :signature: object-hash *object* => *hash-id* *hash-state*
 
-object-hash *object* => *hash-id* *hash-state*
-
-The hash function for the equivalence predicate *==*. The return values
-are of the same types as the return values of :drm:`merge-hash-codes`.
+   The hash function for the equivalence predicate *==*. The return
+   values are of the same types as the return values of
+   :drm:`merge-hash-codes`.
 
 Iteration Constructs
 --------------------
 
-for
+.. macro:: for
+   :statement:
 
-Statement macro
-
-The *start*, *bound*, and *increment* expressions in a numeric clause
-must evaluate to instances of ``<machine-number>`` for this macro.
+   The *start*, *bound*, and *increment* expressions in a numeric
+   clause must evaluate to instances of ``<machine-number>`` for this
+   macro.
 
 The generic-arithmetic Library
 ==============================
@@ -784,15 +817,12 @@ The Big-Integers library is one such implementation library. It provides
 a 64-bit implementation of :drm:`<integer>`.
 
 The standard integer implementation in the Dylan library is actually
-part of the following class hierarchy:
+part of the following class hierarchy::
 
-<abstract-integer>
-
-<integer>
-
-<big-integer>
-
-<double-integer>
+  <abstract-integer>
+   ├── <integer>
+   └── <big-integer>
+        └── <double-integer>
 
 (The classes ``<big-integer>`` and ``<double-integer>`` are implementation
 classes. You do not need to use them.)
@@ -840,11 +870,9 @@ name *<integer>#generic-arithmetic*.
 Specific constructors
 ---------------------
 
-range
+.. function:: range
 
-Function
-
-range #key *from* *to* *above* *below* *by* *size* => *range*
+   :signature: range #key *from* *to* *above* *below* *by* *size* => *range*
 
 This function is identical to the function *range#Dylan*, except that
 all of the supplied arguments must be instances of :drm:`<real>`.
@@ -917,13 +945,12 @@ clarity. The definition of the *for* macro is complex, so a version that
 uses generic arithmetic in numeric clauses is provided, rather than
 requiring programmers who want that feature to reconstruct it.
 
-for
+.. macro:: for
+   :statement:
 
-Statement macro
-
-The *start*, *bound*, and *increment* expressions in a numeric clause
-must evaluate to instances of ``<machine-number>`` for this macro.
-Otherwise, this macro is similar to *for#Dylan*.
+   The *start*, *bound*, and *increment* expressions in a numeric clause
+   must evaluate to instances of ``<machine-number>`` for this macro.
+   Otherwise, this macro is similar to *for#Dylan*.
 
 Exported Modules from the generic-arithmetic Library
 ----------------------------------------------------
@@ -1111,11 +1138,9 @@ Specific Constructors
 The Big-Integers library extends the functionality of specific
 constructors in the Dylan library as follows:
 
-limited
+.. function:: limited
 
-G.f. method
-
-limited *abstract-integer-class* #key *min* *max* => *limited-type*
+   :signature: limited *abstract-integer-class* #key *min* *max* => *limited-type*
 
 Returns a limited integer type, which is a subtype of
 ``<abstract-integer>``, whose instances are integers greater than or
@@ -1132,66 +1157,48 @@ The Limited Integer Type Protocol is extended to account for limited
 ``<abstract-integer>`` types.
 
 Instances and subtypes in the Big-Integers library
-
-:: todo Fix header style here---
+--------------------------------------------------
 
 This is true if and only if …
 
 … all these clauses are true
 
-instance?
- (x,
- limited(<abstract-integer>,
- min: y, max: z))
+.. code:: dylan
 
-instance?(x, <abstract-integer>)
- (y <= x)
- (x <= z)
+   instance?(x, limited(<abstract-integer>, min: y, max: z))
 
-instance?
- (x,
- limited(<abstract-integer>,
- min: y))
+   instance?(x, <abstract-integer>)
+   (y <= x)
+   (x <= z)
 
-instance?(x, <abstract-integer>)
- (y <= x)
+   instance?(x, limited(<abstract-integer>, min: y))
 
-instance?
- (x,
- limited(<abstract-integer>,
- max: z))
+   instance?(x, <abstract-integer>)
+   (y <= x)
 
-instance?(x, <abstract-integer>)
- (x <= z)
+   instance?(x, limited(<abstract-integer>, max: z))
 
-subtype?
- (limited(<abstract-integer>,
- min: w, max: x),
- limited(<abstract-integer>,
- min: y, max: z))
+   instance?(x, <abstract-integer>)
+   (x <= z)
 
-(w >= y)
- (x <= z)
+   subtype?(limited(<abstract-integer>, min: w, max: x),
+            limited(<abstract-integer>, min: y, max: z))
 
-subtype?
- (limited(<abstract-integer>,
- min: w ...),
- limited(<abstract-integer>,
- min: y))
+   (w >= y)
+   (x <= z)
 
-(w >= y)
+   subtype?(limited(<abstract-integer>, min: w ...),
+            limited(<abstract-integer>, min: y))
 
-subtype?
- (limited(<abstract-integer>,
- max: x ...),
- limited(<abstract-integer>,
- max: z))
+   (w >= y)
 
-(x <= z)
+   subtype?(limited(<abstract-integer>, max: x ...),
+            limited(<abstract-integer>, max: z))
+
+   (x <= z)
 
 Type-equivalence in the Big-Integers library
-:: todo Fix header style here---
-                                                  
+--------------------------------------------
 
 This is type equivalent to …
 
@@ -1199,33 +1206,27 @@ This is type equivalent to …
 
 … this is true
 
-limited
- (<abstract-integer>,
- min: y, max: z)
+.. code:: dylan
 
-limited
- (<integer>,
- min: y, max: z)
+   limited(<abstract-integer>, min: y, max: z)
+
+   limited(<integer>, min: y, max: z)
 
 *y* and *z* are both instances of :drm:`<integer>`.
 
-limited
- (<abstract-integer>,
- min: y,
- max: $maximum-integer)
+.. code:: dylan
 
-limited
- (<integer>, min: y)
+   limited(<abstract-integer>, min: y, max: $maximum-integer)
+
+   limited(<integer>, min: y)
 
 *y* is an instance of :drm:`<integer>`.
 
-limited
- (<abstract-integer>,
- min: $minimum-integer,
- max: z)
+.. code:: dylan
 
-limited
- (<integer>, max: z)
+   limited(<abstract-integer>, min: $minimum-integer, max: z)
+
+   limited(<integer>, max: z)
 
 *z* is an instance of :drm:`<integer>`.
 
