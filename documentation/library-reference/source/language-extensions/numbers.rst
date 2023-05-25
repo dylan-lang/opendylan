@@ -176,7 +176,7 @@ magnitude of two numbers:
 .. generic-function:: <
    :open:
 
-   Returns #t if its first argument is less than its second argument.
+   Returns :drm:`#t` if its first argument is less than its second argument.
 
    :signature: < *object1* *object2* => *boolean*
 
@@ -184,14 +184,14 @@ magnitude of two numbers:
    :sealed:
    :specializer: <complex>
 
-   Returns #t if its first argument is less than its second argument.
+   Returns :drm:`#t` if its first argument is less than its second argument.
 
    :signature: < *complex1* *complex2* => *boolean*
 
 .. method:: <
    :specializer: <machine-number>
 
-   Returns #t if its first argument is less than its second argument.
+   Returns :drm:`#t` if its first argument is less than its second argument.
 
    :signature: < *machine-number1* *machine-number2* => *boolean*
 
@@ -353,17 +353,17 @@ The following arithmetic operations are available in the Dylan library:
 
 .. method:: +
    :sealed:
-   :specializer: <complex>
+   :specializer: <complex>, <complex>
 
-   :signature: + *complex1* *complex* 2
-
-.. method:: +
-   :specializer: <integer>
-
-   :signature: + *integer1* *integer* 2 => *integer*
+   :signature: + *complex1* *complex2*
 
 .. method:: +
-   :specializer: <machine-number>
+   :specializer: <integer>, <complex>
+
+   :signature: + *integer1* *integer2* => *integer*
+
+.. method:: +
+   :specializer: <machine-number>, <machine-number>
 
    :signature: + *machine-number1* *machine-number2* => *machine-number*
 
@@ -384,12 +384,12 @@ The following arithmetic operations are available in the Dylan library:
    :signature: - *complex1 complex2*
 
 .. method:: -
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
    :signature: - *integer1 integer2* => *integer*
 
 .. method:: -
-   :specializer: <machine-number>
+   :specializer: <machine-number>, <machine-number>
 
    :signature: - *machine-number1* *machine-number2* => *machine-number*
 
@@ -404,17 +404,17 @@ The following arithmetic operations are available in the Dylan library:
 
 .. method:: *
    :sealed:
-   :specializer: <complex>
+   :specializer: <complex>, <complex>
 
    :signature: \* *complex1* *complex2*
 
 .. method:: *
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
-   :signature: \* *integer1* *integer* 2 => *integer*
+   :signature: \* *integer1* *integer2* => *integer*
 
 .. method:: *
-   :specializer: <machine-number>
+   :specializer: <machine-number>, <machine-number>
 
    :signature: \* *machine-number1* *machine-number2* => *machine-number*
 
@@ -429,12 +429,12 @@ The following arithmetic operations are available in the Dylan library:
 
 .. method:: /
    :sealed:
-   :specializer: <complex>
+   :specializer: <complex>, <complex>
 
    :signature: / *complex1* *complex2*
 
 .. method:: /
-   :specializer: <float>
+   :specializer: <float>, <float>
 
    :signature: / *float1* *float2* => *float*
 
@@ -565,12 +565,12 @@ The following arithmetic operations are available in the Dylan library:
    :signature: floor/ *object1* *object2* => *integer* *machine-number*
 
 .. method:: floor/
-   :specializer: <machine-number>
+   :specializer: <machine-number>, <machine-number>
 
    :signature: floor/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 .. method:: floor/
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
    :signature: floor/ *integer1* *integer2* => *integer* *integer*
 
@@ -585,12 +585,12 @@ The following arithmetic operations are available in the Dylan library:
    :signature: ceiling/ *object1* *object2* => *integer* *object*
 
 .. method:: ceiling/
-   :specializer: <machine-number>
+   :specializer: <machine-number>, <machine-number>
 
    :signature: ceiling/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 .. method:: ceiling/
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
    :signature: ceiling/ *integer1* *integer2* => *integer* *integer*
 
@@ -604,12 +604,12 @@ The following arithmetic operations are available in the Dylan library:
    :signature: round/ *object1* *object2* => *integer* *machine-number*
 
 .. method:: round/
-   :specializer: <machine-number>
+   :specializer: <machine-number>, <machine-number>
 
    :signature: round/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 .. method:: round/
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
    :signature: round/ *integer1* *integer2* => *integer* *integer*
 
@@ -624,9 +624,9 @@ The following arithmetic operations are available in the Dylan library:
    :signature: truncate/ *machine-number1* *machine-number2* => *integer* *machine-number*
 
 .. method:: truncate/
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
-   :signature: truncate/ *integer1* *integer* 2 => *integer* *integer*
+   :signature: truncate/ *integer1* *integer2* => *integer* *integer*
 
 .. generic-function:: modulo
 
@@ -637,25 +637,25 @@ The following arithmetic operations are available in the Dylan library:
    :signature: modulo *machine-number1* *machine-number2* => *machine-number*
 
 .. method:: modulo
-   :specializer: <machine-number>
+   :specializer: <machine-number>, <machine-number>
 
    :signature: modulo *machine-number1* *machine-number2* => *machine-number*
 
 .. method:: modulo
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
    :signature:  modulo *integer1* *integer2* => *integer*
 
 .. generic-function:: remainder
 
-   Returns the second value of *truncate/ (* *arg1* *,* *arg2* *)*.The
+   Returns the second value of :drm:`truncate/` (* *arg1* *,* *arg2* *)*.The
    actual type of the second value is determined by the contagion
    rules when applied to the arguments.
 
    :signature: remainder *machine-number1* *machine-number2* => *machine-number*
 
 .. method:: remainder
-   :specializer: <integer>
+   :specializer: <integer>, <integer>
 
    :signature: remainder *integer1* *integer2* => *integer*
 
