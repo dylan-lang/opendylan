@@ -45,7 +45,7 @@ interactive mode, opens the playground project, performs some
 arithmetic, defines a method, and then traces it::
 
     $ dylan-environment
-    Welcome to Open Dylan, Version 2022.1.
+    Welcome to Open Dylan!
 
     > play
     Opened project gui-dylan-playground

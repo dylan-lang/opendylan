@@ -3,6 +3,7 @@ Open Dylan Release Notes
 
 .. toctree::
 
+   2023.1
    2022.1
    2020.1
    2019.1

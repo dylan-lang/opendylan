@@ -1,14 +1,14 @@
 Using dylan-compiler interactively
 ==================================
 
-The interactive mode of ``dylan-compiler`` allows you to carry out
-multiple development tasks over a period of time without having to
-restart the console compiler each time.  To start the console
-environment in interactive mode, enter ``dylan-compiler`` without any
-arguments at a shell. For example::
+The interactive mode of :program:`dylan-compiler` allows you to carry out
+multiple development tasks over a period of time without having to restart the
+console compiler each time.  To start the console environment in interactive
+mode, enter :program:`dylan-compiler` without any arguments at a shell. For
+example::
 
     $ dylan-compiler
-    Welcome to Open Dylan, Version 2022.1.
+    Welcome to Open Dylan!
 
     For documentation on Open Dylan, see http://opendylan.org/documentation/.
     See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
