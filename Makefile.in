@@ -191,7 +191,7 @@ BOOTSTRAP_3_ROOT = $(abs_builddir)/Bootstrap.3
 BOOTSTRAP_3_LIBRARIES = \
 	dylan-compiler dylan-environment parser-compiler dswank
 BOOTSTRAP_3_STATICS = \
-	dylan-tool
+	dylan-tool-app
 
 BOOTSTRAP_3_COMPILER = \
         $(BOOTSTRAP_2_ROOT)/bin/dylan-compiler \
@@ -348,7 +348,7 @@ dist: 3-stage-bootstrap
 	rm -rf release/opendylan-$(version)/sources/bootstrap1-registry
 	cp -R Bootstrap.3/bin release/opendylan-$(version)/
 	cp -R Bootstrap.3/sbin/* release/opendylan-$(version)/bin
-	ln -s dylan-tool release/opendylan-$(version)/bin/dylan
+	ln -s dylan-tool-app release/opendylan-$(version)/bin/dylan
 	cp -R Bootstrap.3/databases release/opendylan-$(version)/
 	-cp -R Bootstrap.3/include/opendylan release/opendylan-$(version)/include
 	cp -R Bootstrap.3/lib release/opendylan-$(version)/
