@@ -12,7 +12,9 @@ now here is a manual check-list.
    out.
 
 #. Update submodules to the latest stable version tags and document the version
-   number changes in the release notes.
+   number changes in the release notes. This command may help::
+
+     git submodule foreach --quiet 'echo -n "$name "; git describe --always --tags $sha1'
 
    What "stable" means isn't well-defined; use your discretion. The important
    point is that libraries are bundled with the release so people may use them
@@ -22,7 +24,7 @@ now here is a manual check-list.
 #. Test on supported platforms.
 
    * Do a 3-stage boostrap: make distclean, autogen.sh, configure, make, make
-     install.
+     install, make dist.
 
    * Run ``make check`` and if anything fails that is not marked ``EXPECTED TO
      FAIL``, fix the problem or discuss with others how to proceed.
@@ -34,7 +36,6 @@ now here is a manual check-list.
 #. Update the version number in the sources
 
    * In the release-info library
-   * In the build/packages/unix/README file
    * In the configure.ac file
    * Do a ``git grep`` for the previous release number, e.g., "2019.1" and see
      if anything else needs to be updated.
@@ -45,10 +46,13 @@ now here is a manual check-list.
    Download the release tarballs.
 
 #. Update the release notes. Hopefully these have been maintained as changes
-   were made.  It may be worth scanning the commit logs or pull requests.
+   were made.  GitHub's "Draft a New Release" UI provides a succinct list of
+   contributions based on pull requests since the previous release; just click
+   on "Generate release notes" button. *But don't actually create the release
+   yet, until the release notes have been committed.*
 
    To determine what to put in the Contributors section of the notes, this
-   command is useful (with obvious modifications)::
+   command is useful (but modify the tag argument)::
 
      git log --format=short --no-merges v2019.1.0..origin/master | grep '^Author: ' | sort | uniq -c | sort -n
 

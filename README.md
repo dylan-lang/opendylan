@@ -9,7 +9,7 @@ If you're reading this inside of a binary release that you just downloaded and
 unpacked, then this is all you need to do to get started:
 
   ```
-  $ export PATH=/path/to/opendylan-2022.1/bin:$PATH    # for bash
+  $ export PATH=/path/to/opendylan/bin:$PATH    # for bash
   ```
 
 Verify that the downloaded version is working correctly by building a

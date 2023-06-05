@@ -7,7 +7,7 @@ a `working Open Dylan <https://opendylan.org/download/index.html>`_ installation
 To verify that your installation is working correctly, check the compiler's version::
 
     $ dylan-compiler -version
-    Version 2022.1
+    Version 2023.1
 
 If a version string doesn't appear, :command:`dylan-compiler` may not be on
 your ``$PATH``. For help, check the `installation instructions
