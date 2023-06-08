@@ -767,29 +767,7 @@ unbounded) sparse arrays are an example.
 The Table Protocol
 ------------------
 
-The following functions in the Dylan library are extended. Note that the
-hash IDs for tables are always instances of :drm:`<integer>`.
-
-.. function:: merge-hash-codes
-
-   :signature: merge-hash-codes *id1* *state1* *id2* *state2* #key *ordered?* => *merged-id* *merged-state*
-
-   :description:
-
-     Returns a hash code created from the merging of two argument hash
-     codes.  The *id* arguments are hash IDs, and the *state*
-     arguments are hash states (instances of :drm:`<object>`). The
-     *ordered?* argument is an instance of :drm:`<boolean>`. The
-     returned merged values are instances of :drm:`<integer>` and
-     :drm:`<object>`, as determined by the name of each argument.
-
-.. function:: object-hash
-
-   :signature: object-hash *object* => *hash-id* *hash-state*
-
-   The hash function for the equivalence predicate *==*. The return
-   values are of the same types as the return values of
-   :drm:`merge-hash-codes`.
+See :doc:`language-differences` for a list of changes to the table protocol.
 
 Iteration Constructs
 --------------------
