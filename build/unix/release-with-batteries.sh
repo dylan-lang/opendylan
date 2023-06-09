@@ -1,12 +1,12 @@
 #!/bin/sh
 set -e
 
-LLVM_RELEASE=15.0.5
+LLVM_RELEASE=16.0.5
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
 
-BDWGC_RELEASE=8.2.2
+BDWGC_RELEASE=8.2.4
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.

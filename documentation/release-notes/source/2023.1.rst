@@ -20,6 +20,10 @@ this release.
 Compiler
 ========
 
+* The "batteries included" installation includes `LLVM version 16.0.5
+  <https://github.com/llvm/llvm-project/releases/tag/llvmorg-16.0.5>`_ and `BDW
+  GC version 8.2.4 <https://github.com/ivmai/bdwgc/releases/tag/v8.2.4>`_.
+
 * `Dylan Enhancement Proposal (DEP) 12
   <https://opendylan.org/proposals/dep-0012-string-literals.html>`_ was
   implemented, adding multi-line and "raw" string literals.
