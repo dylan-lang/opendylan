@@ -1,4 +1,4 @@
-Language differences
+Language Differences
 ====================
 
 .. current-library:: dylan
@@ -98,7 +98,7 @@ a Table-extensions module, which you can read about in
 
 .. function:: object-hash
 
-   The hash function for the equivalence predicate ==.
+   The hash function for the equivalence predicate :drm:`==`.
 
    :signature: object-hash *object* *initial-state* => *hash-id* *result-state*
 
