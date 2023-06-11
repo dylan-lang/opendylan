@@ -564,11 +564,11 @@ The <socket> class
 
    :keyword direction: Specifies the direction of the stream. It must be
      one of ``#"input"``, ``#"output"``, and ``#"input-output"``. This
-     keyword is an inherited streams class keyword. See :doc:`io/streams`
+     keyword is an inherited streams class keyword. See :doc:`/io/streams`
      for a full description.
    :keyword element-type: An instance of :drm:`<class>`. Useful values are
      :class:`<byte-character>` and ``<byte>``. This keyword is an
-     inherited streams class keyword. See :doc:`io/streams`
+     inherited streams class keyword. See :doc:`/io/streams`
      for a full description.
 
 The <buffered-socket> class
@@ -632,7 +632,7 @@ The class of TCP client sockets.
    :keyword element-type: An instance of :drm:`<class>`. Useful values for
      :class:`<tcp-streams>` are :class:`<byte-character>` and ``<byte>``.
      This keyword is an inherited streams class keyword. See
-     :doc:`io/streams` for a full description.
+     :doc:`/io/streams` for a full description.
 
 .. generic-function:: remote-port
    :open:
@@ -684,7 +684,7 @@ The class of UDP client sockets.
      port to connect to. Required unless ``service:`` is supplied.
    :keyword element-type: An instance of :drm:`<class>`. Useful values for
      :class:`<udp-socket>` s are ``<byte-character>`` and ``<byte>``. This
-     keyword is an inherited streams class keyword. See :doc:`io/streams` for
+     keyword is an inherited streams class keyword. See :doc:`/io/streams` for
      a full description.
 
    :description:
