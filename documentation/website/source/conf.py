@@ -168,7 +168,3 @@ html_use_index = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'OpenDylandoc'
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
-
