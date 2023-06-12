@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Open Dylan'
-copyright = u'2011-2020, Dylan Hackers'
+copyright = u'2011-2023, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -168,7 +168,3 @@ html_use_index = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'OpenDylandoc'
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
-
