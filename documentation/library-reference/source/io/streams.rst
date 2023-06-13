@@ -2977,68 +2977,6 @@ are exported from the *streams* module.
      * :class:`<indenting-stream>`
      * :gf:`indent`
 
-.. macro:: with-open-file
-   :statement:
-
-   Runs a body of code within the context of a file stream.
-
-   :macrocall:
-     .. parsed-literal:: 
-        with-open-file (`stream-var` = `filename`, #rest `keys`)
-          `body`
-        end => `values`
-
-   :parameter stream-var: An Dylan variable-name *bnf*.
-   :parameter filename: An instance of :drm:`<string>`.
-   :parameter keys: Instances of :drm:`<object>`.
-   :parameter body: A Dylan body *bnf*.
-   :value values: Instances of :drm:`<object>`.
-
-   :description:
-
-     Provides a safe mechanism for working with file streams. The macro
-     creates a file stream and binds it to *stream-var*, evaluates a
-     *body* of code within the context of this binding, and then closes
-     the stream. The macro calls :gf:`close` upon exiting *body*.
-
-     The values of the last expression in *body* are returned.
-
-     Any *keys* are passed to the :meth:`make <make(<file-stream>)>`
-     method on :class:`<file-stream>`.
-
-   :example:
-
-     The following expression yields the contents of file *foo.text* as
-     a :class:`<byte-vector>`:
-
-     .. code-block:: dylan
-
-       with-open-file (fs = "foo.text", element-type: <byte>)
-         read-to-end(fs)
-       end;
-
-     It is roughly equivalent to:
-
-     .. code-block:: dylan
-
-       begin
-         let hidden-fs = #f; // In case the user bashes fs variable
-         block ()
-           hidden-fs := make(<file-stream>,
-                             locator: "foo.text", element-type: <byte>);
-           let fs = hidden-fs;
-           read-to-end(fs);
-         cleanup
-           if (hidden-fs) close(hidden-fs) end;
-         end block;
-       end;
-
-   :seealso:
-
-     - :meth:`close(<file-stream>)`
-     - :class:`<file-stream>`
-     - :meth:`make(<file-stream>)`
-
 .. macro:: with-stream-locked
    :statement:
 

@@ -33,6 +33,9 @@ set any available properties for the file.
 - :func:`delete-file`
 - :func:`rename-file`
 - :func:`file-property-setter`
+- :gf:`expand-pathname`
+- :gf:`shorten-pathname`
+- :macro:`with-open-file`
 
 Manipulating directories
 ------------------------
@@ -48,6 +51,7 @@ perform file management tasks at any position in the file system.
 - :func:`ensure-directories-exist`
 - :func:`do-directory`
 - :func:`working-directory-setter`
+- :gf:`directory-empty?`
 
 Finding out file system information
 -----------------------------------
@@ -77,8 +81,56 @@ properties of the file.
 - :func:`file-type`
 - :func:`link-target`
 
-The FILE-SYSTEM module
-----------------------
+File system locators
+--------------------
+
+The module offers multiple classes that reference either a directory
+or a file within the file system.
+
+- :class:`<file-system-locator>`
+- :class:`<file-system-file-locator>`
+- :class:`<file-system-directory-locator>`
+
+On Posix systems:
+
+- :class:`<posix-file-system-locator>`
+- :class:`<posix-directory-locator>`
+- :class:`<posix-file-locator>`
+
+On Microsoft systems:
+
+- :class:`<microsoft-server-locator>`
+- :class:`<microsoft-unc-locator>`
+- :class:`<microsoft-volume-locator>`
+- :class:`<microsoft-file-system-locator>`
+- :class:`<microsoft-directory-locator>`
+- :class:`<microsoft-file-locator>`
+
+Native locators, which are bound to the host platform:
+
+- :const:`<native-file-system-locator>`
+
+Conditions
+----------
+
+The conditions signaled by this module are:
+
+- :class:`<file-system-error>`
+- :class:`<file-error>`
+- :class:`<file-exists-error>`
+- :class:`<file-does-not-exist-error>`
+- :class:`<invalid-file-permissions-error>`
+
+All errors directly signaled by this module are subclasses of
+:class:`<file-system-error>`.
+
+The :gf:`file-error-locator` provides extra details about the file
+locator that signals the condition. This function can be used on the
+class :class:`<file-error>` and its subclasses.
+
+
+The FILE-SYSTEM module reference
+--------------------------------
 
 This section contains a reference entry for each item included in the
 File-System module.
@@ -203,6 +255,21 @@ File-System module.
       each directory is represented by a :class:`<directory-locator>`. The "."
       and ".." directories are not included in the result.
 
+.. generic-function:: directory-empty?
+   
+   Checks whether a directory is empty or not.
+
+   :signature: directory-empty? *directory* => *empty?*
+
+   :param directory: An instance of :class:`<pathname>`,
+   :value empty?: An instance of :class:`<boolean>`.
+
+.. method:: directory-empty?
+   :specializer: <file-system-directory-locator>
+
+   :param directory: An instance of :class:`<file-system-directory>`.
+   :value empty?: An instance of :class:`<boolean>`.
+   
 .. function:: do-directory
 
    Executes the supplied function once for each entity in the specified
@@ -286,6 +353,84 @@ File-System module.
    :seealso:
 
      - :func:`create-directory`
+
+.. generic-function:: expand-pathname
+
+   Given a pathname, returns its fully expanded form.
+
+   :signature: expand-pathname *path* => *expanded-path*
+
+   :param path: An instance of :class:`<pathname>`.
+   :value expanded-path: An instance of :class:`<pathname>`.
+
+.. method:: expand-pathname
+   :specializer: <file-system-locator>
+
+   Expand a file path to its fully expanded form.
+
+   :param path: An instance of :class:`<file-system-locator>`.
+
+.. method:: expand-pathname
+   :specializer: <string>
+
+   Expands a pathname given as a string.
+
+   :param path: An instance of :class:`<string>`.
+
+.. generic-function:: file-error-locator
+
+   :signature: file-error-locator *error* => (locator)
+
+   :param error: An instance of :class:`<file-error>`.
+   :value locator: An instance of :class:`<file-system-file-locator>`.
+
+   :description:
+
+      Returns the file locator associated with the error.
+
+.. class:: <file-does-not-exist-error>
+
+   Error type signaled accessing a file that do not exist.
+
+   :superclasses: :class:`<file-error>`
+
+   :description:
+
+      Signaled when trying to open a file and the file does not
+      already exist.
+
+.. class:: <file-error>
+
+   Error type signaled for all failed file operations.
+
+   :superclasses: :class:`<file-system-error>`
+
+   :keyword locator: An instance of
+     :class:`<file-system-file-locator>`. Specifies the file locator
+     related with the error.
+
+   :description:
+
+     Signaled when one of the file system functions triggers an error,
+     such as a permissions error when trying to delete or rename a file.
+     It provides information about the file locator.
+
+   :seealso:
+
+      - :class:`<file-system-error>`
+      - :class:`<file-system-file-locator>`
+      - :class:`<locator>`
+
+.. class:: <file-exists-error>
+
+   Error type signaled when a file already exists.
+
+   :superclasses: :class:`<file-error>`
+
+   :description:
+
+      Signaled when an attempt is made to create a file and it
+      already exists.
 
 .. function:: file-exists?
 
@@ -457,9 +602,45 @@ File-System module.
 
    :description:
 
-     Signalled when one of the file system functions triggers an error,
+     Signaled when one of the file system functions triggers an error,
      such as a permissions error when trying to delete or rename a file.
 
+.. class:: <file-system-locator>
+   :open:
+   :abstract:
+
+   :superclasses: :class:`<physical-locator>`
+
+   A file system locator is a locator that refers to either a directory
+   or a file within the file system.
+
+.. class:: <file-system-file-locator>
+
+   :superclasses: :class:`<file-system-locator>`, :class:`<file-locator>`
+
+   This locator refers to a non-directory file within a file system.
+
+.. class:: <file-system-directory-locator>
+
+   :superclasses: :class:`<file-system-locator>`, :class:`<directory-locator>`
+
+   This locator refers to a directory within a file system.
+
+.. function:: file-system-separator
+
+   Returns the character used to separate the directory components in
+   a file path.
+
+   :signature: file-system-separator => separator
+
+   :value separator: An instance of :class:`<character>`.
+
+   :description:
+
+   The character separator used in a file system is determined by the
+   specific file system and operating system. Open Dylan offers
+   modules that transparently provide the appropriate separator for
+   Posix and Microsoft systems.
 
 .. function:: file-type
 
@@ -508,6 +689,20 @@ File-System module.
      of this function can be used with concatenate to create pathnames
      of entities in the home directory.
 
+.. class:: <invalid-file-permissions-error>
+
+   Signals an error when the user has no permission to create, delete,
+   read or write a file.
+
+   :superclasses: :class:`<file-error>`
+
+   :description:
+
+     Signals an error when you attempt to perform an operation on a
+     file or directory that requires certain permissions, but the
+     permissions set on the file are incorrect or insufficient for
+     your operation.
+
 .. function:: link-target
 
    Returns the target of a symbolic link.
@@ -519,6 +714,74 @@ File-System module.
 
       Repeatedly follows symbolic links starting with *file* until it finds a
       non-link file or directory, or a non-existent link target.
+
+.. class:: <microsoft-server-locator>
+   :sealed:
+   :abstract:
+
+   The abstract superclass of all servers using Microsoft protocols.
+
+   :superclasses: :class:`<server-locator>`
+
+   :seealso: :class:`<microsoft-unc-locator>`
+	     :class:`<microsoft-volume-locator>`
+
+.. class:: <microsoft-unc-locator>
+   :sealed:
+
+   A server located using Microsoft's Univeral Naming Convention,
+   for example ``\\ComputerName\Share``
+
+   :superclasses: :class:`<microsoft-server-locator>`
+
+.. class:: <microsoft-volume-locator>
+   :sealed:
+
+   A server located using a volume name (drive letter) on a Microsoft
+   system, for example ``C``.
+
+   :superclasses: :class:`<microsoft-server-locator>`
+
+.. class:: <microsoft-file-system-locator>
+   :abstract:
+
+   The abstract superclass of files and directories on Microsoft file systems.
+
+   :superclasses: :class:`<file-system-locator>`
+
+.. class:: <microsoft-directory-locator>
+
+   A directory on a Microsoft file system.
+
+   :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<directory-locator>`
+
+   :slot locator-server: the server which holds this directory.
+
+.. class:: <microsoft-file-locator>
+
+   A file on a Microsoft file system.
+
+   :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<file-locator>`
+
+   :slot locator-directory: the directory that holds this file.
+   :slot locator-base: the file name without extension.
+   :slot locator-extension: the file extension.
+
+.. constant:: <native-file-system-locator>
+
+   File system locator bound to the host system locator.
+
+   :description:
+
+     A native file system locator is specific to the host system it is running
+     on. For example, if the host system is Posix, the file locator is bound to
+     :class:`<posix-file-system-locator>`, and if the host system is Microsoft,
+     it is bound to :class:`<microsoft-file-system-locator>`.
+
+   :seealso:
+
+     - :class:`<posix-file-system-locator>`
+     - :class:`<microsoft-file-system-locator>`
 
 .. type:: <pathname>
 
@@ -547,6 +810,33 @@ File-System module.
      - :func:`home-directory`
      - :func:`link-target`
      - :func:`rename-file`
+
+.. class:: <posix-file-system-locator>
+   :abstract:
+   :sealed:
+
+   The abstract superclass of files and directories on a posix-like
+   file system.
+
+   :superclasses: :class:`<file-system-locator>`
+
+.. class:: <posix-directory-locator>
+   :sealed:
+
+   A directory on a posix-like file system.
+
+   :superclasses: :class:`<file-system-directory-locator>`, :class:`<posix-file-system-locator>`
+
+.. class:: <posix-file-locator>
+   :sealed:
+
+   A file on a posix-like file system.
+
+   :superclasses: :class:`<file-system-file-locator>`, :class:`<posix-file-system-locator>`
+
+   :slot locator-directory: the directory that holds this file.
+   :slot locator-base: the file name without extension.
+   :slot locator-extension: the file extension.
 
 .. function:: rename-file
 
@@ -587,6 +877,27 @@ File-System module.
      Returns a sequence containing the pathnames of the root directories
      of the file systems on the local machine.
 
+.. generic-function:: shorten-pathname
+
+   Given a pathname, returns the shortest equivalent form.
+
+   :signature: shorten-pathname *path* => *shortened-path*
+
+   :param path: An instance of :class:`<pathname>`.
+   :value shorten-pathname: An instance of :class:`<pathname>`.
+
+   :description:
+
+   Given a pathname, returns the shortest equivalent form. For instance a DOS 
+   pathname on Windows.
+
+.. method:: shorten-pathname
+   :specializer: <file-system-locator>
+
+   A specialization of :gf:`shorten-pathname`.
+
+   :param path: An instance of :class:`<file-system-locator>`
+
 .. function:: temp-directory
 
    Returns the pathname of the temporary directory in use.
@@ -603,6 +914,68 @@ File-System module.
      temporary directory is defined, ``temp-directory`` returns :drm:`#f`.
      On Windows the temporary directory is specified by the ``TMP``
      environment variable.
+
+.. macro:: with-open-file
+   :statement:
+
+   Runs a body of code within the context of a file stream.
+
+   :macrocall:
+     .. parsed-literal:: 
+        with-open-file (`stream-var` = `filename`, #rest `keys`)
+          `body`
+        end => `values`
+
+   :parameter stream-var: An Dylan variable-name *bnf*.
+   :parameter filename: An instance of :drm:`<string>`.
+   :parameter keys: Instances of :drm:`<object>`.
+   :parameter body: A Dylan body *bnf*.
+   :value values: Instances of :drm:`<object>`.
+
+   :description:
+
+     Provides a safe mechanism for working with file streams. The macro
+     creates a file stream and binds it to *stream-var*, evaluates a
+     *body* of code within the context of this binding, and then closes
+     the stream. The macro calls :gf:`close` upon exiting *body*.
+
+     The values of the last expression in *body* are returned.
+
+     Any *keys* are passed to the :meth:`make <make(<file-stream>)>`
+     method on :class:`<file-stream>`.
+
+   :example:
+
+     The following expression yields the contents of file *foo.text* as
+     a :class:`<byte-vector>`:
+
+     .. code-block:: dylan
+
+       with-open-file (fs = "foo.text", element-type: <byte>)
+         read-to-end(fs)
+       end;
+
+     It is roughly equivalent to:
+
+     .. code-block:: dylan
+
+       begin
+         let hidden-fs = #f; // In case the user bashes fs variable
+         block ()
+           hidden-fs := make(<file-stream>,
+                             locator: "foo.text", element-type: <byte>);
+           let fs = hidden-fs;
+           read-to-end(fs);
+         cleanup
+           if (hidden-fs) close(hidden-fs) end;
+         end block;
+       end;
+
+   :seealso:
+
+     - :meth:`close(<file-stream>)`
+     - :class:`<file-stream>`
+     - :meth:`make(<file-stream>)`
 
 .. function:: working-directory
 

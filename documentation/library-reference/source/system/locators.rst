@@ -38,26 +38,8 @@ The locators Module
    is useful for coercing an abstract locator into its corresponding
    physical counterpart.
 
-.. class:: <file-system-locator>
-   :open:
-   :abstract:
-
-   :superclasses: :class:`<physical-locator>`
-
-   A file system locator is a locator that refers to either a directory
-   or a file within the file system.
-
-.. class:: <file-system-file-locator>
-
-   :superclasses: :class:`<file-system-locator>`, :class:`<file-locator>`
-
-   This locator refers to a file within a file system.
-
-.. class:: <file-system-directory-locator>
-
-   :superclasses: :class:`<file-system-locator>`, :class:`<directory-locator>`
-
-   This locator refers to a directory within a file system.
+   .. note:: Locator classes representing file system objects are documented
+             in :doc:`file-system`.
    
 .. class:: <directory-locator>
    :open:
@@ -632,85 +614,6 @@ The locators Module
    A locator using the file protocol.
    
    :superclasses: :class:`<server-url>`
-
-.. class:: <microsoft-server-locator>
-   :sealed:
-   :abstract:
-
-   The abstract superclass of all servers using Microsoft protocols.
-
-   :superclasses: :class:`<server-locator>`
-
-   :seealso: :class:`<microsoft-unc-locator>`
-	     :class:`<microsoft-volume-locator>`
-
-.. class:: <microsoft-unc-locator>
-   :sealed:
-
-   A server located using Microsoft's Univeral Naming Convention,
-   for example ``\\ComputerName\Share``
-
-   :superclasses: :class:`<microsoft-server-locator>`
-
-.. class:: <microsoft-volume-locator>
-   :sealed:
-
-   A server located using a volume name (drive letter) on a Microsoft
-   system, for example ``C``.
-
-   :superclasses: :class:`<microsoft-server-locator>`
-
-.. class:: <microsoft-file-system-locator>
-   :abstract:
-
-   The abstract superclass of files and directories on Microsoft file systems.
-
-   :superclasses: :class:`<file-system-locator>`
-
-.. class:: <microsoft-directory-locator>
-
-   A directory on a Microsoft file system.
-
-   :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<directory-locator>`
-
-   :slot locator-server: the server which holds this directory.
-
-.. class:: <microsoft-file-locator>
-
-   A file on a Microsoft file system.
-
-   :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<file-locator>`
-
-   :slot locator-directory: the directory that holds this file.
-   :slot locator-base: the file name without extension.
-   :slot locator-extension: the file extension.
-   :slot locator-name: the file name.
-
-.. class:: <posix-file-system-locator>
-   :abstract:
-   :sealed:
-
-   The abstract superclass of files and directories on a posix-like file system.
-
-   :superclasses: :class:`<file-system-locator>`
-
-.. class:: <posix-directory-locator>
-   :sealed:
-
-   A directory on a posix-like file system.
-
-   :superclasses: :class:`<file-system-directory-locator>`, :class:`<posix-file-system-locator>`
-
-.. class:: <posix-file-locator>
-   :sealed:
-
-   A file on a posix-like file system.
-
-   :superclasses: :class:`<file-system-file-locator>`, :class:`<posix-file-system-locator>`
-
-   :slot locator-directory: the directory that holds this file.
-   :slot locator-base: the file name without extension.
-   :slot locator-extension: the file extension.
 
 .. generic-function:: locator-default-port
 
