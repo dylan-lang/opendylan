@@ -1574,7 +1574,9 @@ MMError dylan_init_memory_manager(void)
   /* Create the MVFF pool for miscellaneous objects. */
   /* This is also used for wrappers. */
   res = mps_pool_create(&misc_pool, arena, mps_class_mvff(),
-                        MISCEXTENDBY, MISCAVGSIZE, MISCMAXSIZE);
+                        MISCEXTENDBY, MISCAVGSIZE,
+                        (size_t) 16,
+                        TRUE, TRUE, TRUE);
   if (res) { init_error("create misc pool"); return(res); }
 
   wrapper_pool = misc_pool;
