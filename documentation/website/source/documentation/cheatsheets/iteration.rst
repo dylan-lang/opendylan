@@ -2,9 +2,6 @@
 Iteration in Dylan
 ******************
 
-.. contents::
-   :local:
-   :backlinks: none
 
 Simple iteration with ``while`` and ``until``
 =============================================

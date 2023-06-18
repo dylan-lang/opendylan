@@ -13,8 +13,6 @@ Post-History:   04-Dec-2021 https://gitter.im/dylan-lang/general
 Dylan-Version:  2020.1
 ==============  =============================================
 
-.. contents:: Contents
-   :local:
 
 Revision History
 ================

@@ -2,8 +2,6 @@
 Dylan Cheat Sheet
 *****************
 
-.. contents::
-   :local:
 
 Literals
 ========
