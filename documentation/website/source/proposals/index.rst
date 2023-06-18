@@ -58,3 +58,18 @@ All Proposals by Number
 11   Standard      Final      `Numeric Literal Syntax <dep-0011-numeric-literal-syntax.html>`_ (`source <../_sources/proposals/dep-0011-numeric-literal-syntax.rst.txt>`__)
 12   Standard      Draft      `String Literal Syntax <dep-0012-string-literals.html>`_  (`source <../_sources/proposals/dep-0012-string-literals.rst.txt>`__)
 ==== ============= ========== =============================================
+
+.. toctree::
+   :hidden:
+
+   dep-0001-dep-process
+   dep-0002-define-function
+   dep-0003-c3-linearization
+   dep-0004-strings-library
+   dep-0005-subclass-function
+   dep-0006-single-file-library
+   dep-0007-collection-type-safety
+   dep-0008-multi-line-strings
+   dep-0010-element-otherwise
+   dep-0011-numeric-literal-syntax
+   dep-0012-string-literals
