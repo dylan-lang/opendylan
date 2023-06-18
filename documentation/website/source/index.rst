@@ -59,7 +59,7 @@ generation, including fine-grained control over dynamic and static behaviors.
 How do you like to learn?
 -------------------------
 
-* The `Tour of Dylan </about/>`_ is great if you like to learn by example.
+* The `Tour of Dylan </about/>`_ is a quick (30 minute) overview of the language.
 * If you want to play around without having to install anything, try the `Playground`_.
 * `Introduction to Dylan`_ provides a high-level overview of language features.
 * The `Dylan Programming Guide`_ is a book length Dylan tutorial.

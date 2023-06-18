@@ -49,10 +49,11 @@ even though the default will do the right thing.  You could write this:
 
 (*Note that the above is just an example and isn't intended to be super-efficient.*)
 
-Now, if you use ``add(#[1, 2, 3], 4)`` the method for :drm:`<vector>` will be called
-because the first argument is a ``<vector>``, and if you use ``add(#(1, 2, 3), 4)``
-then the first method will be called because the first argument is a :drm:`<list>`,
-which is a :drm:`<sequence>` but is not a :drm:`<vector>`.
+Now, if you use ``add(#[1, 2, 3], 4)`` the method for :drm:`<vector>` will be
+called because the first argument is a :drm:`<vector>`, and if you use
+``add(#(1, 2, 3), 4)`` then the first method will be called because the first
+argument is a :drm:`<list>`, which is a :drm:`<sequence>` but is not a
+:drm:`<vector>`.
 
 Very often, the compiler can figure out which method to call and so no run-time
 overhead for dispatch is incurred in those cases.  (The Open Dylan IDE has a

@@ -3,48 +3,41 @@ Multiple Return Values
 **********************
 
 Any Dylan expression may return multiple values and those values can
-be captured by ``let`` (using :drm:`round` as an example):
+be captured by :drm:`let`.  Using :drm:`round` as an example:
 
 .. code-block:: dylan
 
   let (integer, remainder) = round(3.2);
 
-``integer`` is bound to the :drm:`<integer>` value 3 and ``remainder`` is
-bound to the :drm:`<real>` value 0.2.
+Here ``integer`` is bound to the value ``3`` and ``remainder`` is bound to the
+value ``0.2``.
 
 ----
 
-Any function may return multiple values by calling the ``values``
+Any function may return multiple values by calling the :drm:`values`
 function in return position:
 
 .. code-block:: dylan
 
   define function parse-integer
-      (input :: <string>, start :: <integer>)
-   => (integer :: <integer>, _end :: <integer>)
-    let index = start;
+      (input :: <string>) => (integer :: <integer>, end-pos :: <integer>)
     let integer = 0;
-    ...code that sets index and integer...
-    values(integer, index)
+    let pos = 0;
+    ...code that sets pos and integer...
+    values(integer, pos)
   end;
 
 Call it like this:
 
 .. code-block:: dylan
 
-  let (int, epos) = parse-integer(" 123 ", 1);
+  let (int, epos) = parse-integer("123 blah");
 
 or like this if you don't need the second value:
 
 .. code-block:: dylan
 
-  let int = parse-integer(" 123 ", 1);
-
-Note that if you don't declare that the function returns multiple
-values then the compiler may not generate code to return them.  (One
-hopes to receive a nice warning in that case.)  Also, if you declare
-multiple return values but don't return that many, ``#f`` will be returned
-in place of the missing values.
+  let int = parse-integer("123 blah");
 
 ----
 
@@ -58,8 +51,8 @@ bind them to variables temporarily:
 
 ----
 
-You may bind multiple trailing values to a single variable by using
-:drm:`#rest <Parameter_Lists>`.  In the following example ``more`` will be bound to ``#(3,
+You may bind multiple trailing values to a single variable by using :drm:`#rest
+<Parameter_Lists>`.  In the following example ``more`` will be bound to ``#(3,
 4, 5)``.
 
 .. code-block:: dylan
@@ -68,7 +61,7 @@ You may bind multiple trailing values to a single variable by using
 
 ----
 
-Extra values are ignored and missing values are bound to #f:
+Extra values are ignored and missing values are bound to :drm:`#f`:
 
 .. code-block:: dylan
 

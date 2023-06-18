@@ -4,38 +4,45 @@ Hello, World!
 
 The canonical "Hello World" program in Dylan.
 
-File library.dylan:
+**File library.dylan:**
 
 .. code-block:: dylan
 
-  Module: dylan-user
+   Module: dylan-user
 
-  define library hello
-    use dylan;
-    use io, import: { format-out };
-  end;
+   define library hello
+     use dylan;
+     use io, import: { format-out };
+   end;
 
-  define module hello
-    use dylan;
-    use format-out;
-  end;
+   define module hello
+     use dylan;
+     use format-out;
+   end;
 
-File hello.dylan:
+**File hello.dylan:**
 
 .. code-block:: dylan
 
-  Module: hello
+   Module: hello
 
-  format-out("Hello!\n");
+   format-out("Hello!\n");
 
 
-**How it works:**
+.. hint:: The `dylan new application
+          <https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html#dylan-new-application>`_
+          command will create these files for you, along with a test suite and
+          build files.
 
-1. Every Dylan program defines a library and at least one module in
-   that library, and the simple Hello World program is no exception.
+How it works
+============
 
-#. Every source file must have a ``Module`` header to say which module its definitions
-   should be in. The library is defined in the pre-existing ``dylan-user`` module.
+* Every Dylan program defines a library and at least one module in that
+  library, and the simple Hello World program is no exception.
 
-#. The top level expressions in each source file are executed in order when the library
-   is loaded, so there is no need for a ``main`` method here.
+* Every source file has a ``Module:`` header to say which module its
+  definitions should be in. The library and module themselves are defined in
+  the pre-existing ``dylan-user`` module.
+
+* The top level expressions in each source file are executed in order when the
+  library is loaded, so there's no need for a ``main`` function.

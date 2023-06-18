@@ -1,23 +1,37 @@
+:hide-toc:
+
 *********************
 A Quick Tour of Dylan
 *********************
 
-Before starting the tour, a little more background on Dylan's history and goals may be
-helpful....
+Before starting the Tour, a few quick notes:
+
+1. You may find it useful to get a better feel for Dylan by pasting some of the
+   Tour examples into the Dylan Playground: https://play.opendylan.org (We hope
+   to integrate the playground directly into the Tour soon, to make this
+   easier.)
+
+2. A little more background on Dylan's history and goals may be helpful, in
+   which case keep reading below. Otherwise, feel free to go directly to
+   :doc:`examples/hello_world`.
+
+A bit more background on Dylan
+==============================
 
 Scheme and Common Lisp had a strong influence on Dylan. Like Scheme, Dylan is a "LISP-1",
 meaning it has a single namespace for variables and functions. Dylan's object system is
 derived from the Common Lisp Object System (CLOS), but simplified to allow for better
 compiler optimizations.
 
-Dylan's main design goal is to be a dynamic language well-suited for developing
-commercial software. It attempts to address potential performance issues by introducing
-"natural" limits to the full flexibility of Lisp systems, allowing the compiler to
-clearly understand compilable units (i.e., libraries).
+In general, Dylan attempts to address potential performance issues by
+introducing "natural" limits to the full flexibility of Lisp systems, for
+example by allowing the compiler to clearly understand compilable units (i.e.,
+libraries).
 
-In Dylan, all values (numbers, functions, classes, etc.) are first-class objects. Dylan
-supports multiple inheritance, polymorphism, multiple dispatch, keyword arguments, object
-introspection, pattern-based syntax extension macros, and many other features.
+In Dylan, all values (numbers, functions, classes, types, etc.) are first-class
+objects. Dylan supports multiple inheritance, polymorphism, multiple dispatch,
+keyword arguments, object introspection, pattern-based syntax extension macros,
+and many other features.
 
 Dylan programs have fine-grained control over dynamism, for applications that occupy a
 continuum between dynamic and static programming and supporting evolutionary development
