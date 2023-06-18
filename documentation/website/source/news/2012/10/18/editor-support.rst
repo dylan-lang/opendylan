@@ -28,10 +28,6 @@ Also, we've submitted a request for this plugin to be made
 available via Package Control for Sublime Text and hope
 that this is ready in the near future.
 
-.. raw:: html
-
-   <div class="clearfix"></div>
-
 Vim
 ---
 

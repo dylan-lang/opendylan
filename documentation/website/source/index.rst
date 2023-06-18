@@ -4,16 +4,14 @@
 Open Dylan
 **********
 
-An open source implementation of the `Dylan`_ programming language.
-
-.. raw:: html
-
-   <div class="dylan-top-quote">
-
 ..
    TODO: either reference
    https://blog.codecentric.de/en/2015/08/essence-of-object-functional-programming-practical-potential-of-scala/
    or better, write up our own description of object functional.
+
+.. raw:: html
+
+   <div style="font-style: italic">
 
 Dylan is an `object-functional`_ language originally `created by Apple`_ for the
 Newton. Dylan provides a programming model designed to support efficient machine code
@@ -38,13 +36,25 @@ generation, including fine-grained control over dynamic and static behaviors.
 * *Regular and simple syntax*.
 * *Everything returns values* - including conditionals like ``if`` and ``select``.
 
-
-Get Started
-===========
-
 .. raw:: html
 
-   <a href="/download" class="button">Install Dylan...</a>
+   <style>
+   .button,a.button {
+       background-color: #EA8D2F;
+       /* border-radius: 5px; */
+       border: none;
+       cursor: pointer;
+       display: inline-block;
+       font-size: 18px;
+       font-style: bold;
+       color: white;
+       margin: 20px 2px;
+       padding: 10px 32px;
+       text-align: center;
+       text-decoration: none;
+   }
+   </style>
+   <a href="download/" class="button">Install Dylan...</a>
 
 How do you like to learn?
 -------------------------
@@ -72,7 +82,7 @@ the library docs. Happy hacking!
    Tour of Dylan <about/index>
    Documentation <documentation/index>
    Get Involved <community/index>
-   Download <download/index>
+   Downloads <download/index>
    articles/index
    news/index
    Enhancement Proposals <proposals/index>

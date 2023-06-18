@@ -2,12 +2,8 @@
 News & Articles
 ***************
 
-.. raw:: html
-
-   <div class="row-fluid">
-     <div class="span6">
-
-     <h2>News</h2>
+News
+====
 
 .. include:: recent.rst.inc
 
@@ -83,12 +79,8 @@ News & Articles
   If you're looking for some of the old material, it can be found
   over at `<https://web.archive.org/web/20170313134206/http://old.opendylan.org/>`_.
 
-.. raw:: html
-
-    </div>
-    <div class="span6">
-
-    <h2>Articles</h2>
+Articles
+========
 
 `Dylan Macro System <../articles/macro-system.html>`_ by Dustin Voss.
     This article holds hard-won knowledge about how the Dylan macro system works
@@ -97,8 +89,3 @@ News & Articles
 `Procedural Dylan <../articles/procedural-dylan/index.html>`_ by Paul Haahr.
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
-
-.. raw:: html
-
-      </div>
-    </div>

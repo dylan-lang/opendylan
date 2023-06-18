@@ -6,32 +6,17 @@ Iteration in Dylan
 Simple iteration with ``while`` and ``until``
 =============================================
 
-.. raw:: html
-
-   <div class="row-fluid">
-     <div class="span6">
-
 .. code-block:: dylan
 
     while (condition?)
       // do something while the test condition? is true
     end;
 
-.. raw:: html
-
-     </div>
-     <div class="span6">
-
 .. code-block:: dylan
 
     until (condition?)
       // do something until the test condition? is true
     end;
-
-.. raw:: html
-
-     </div>
-   </div>
 
 Read more in the DRM: :drm:`while` and :drm:`until`.
 
