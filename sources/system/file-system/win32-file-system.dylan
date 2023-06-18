@@ -89,7 +89,7 @@ define function %resolve-locator
       end
     elseif (path-length > $MAX_PATH)
       win32-file-system-error("resolve", "%s", locator)
-    elseif (~%file-exists?(locator))
+    elseif (~%file-exists?(locator, #t))
       win32-file-system-error("resolve", "%s", locator)
     else
       as(object-class(locator), copy-sequence(path-buffer, end: path-length))
@@ -99,7 +99,8 @@ end function;
 
 ///
 define function %file-exists?
-    (file :: <microsoft-file-system-locator>) => (exists? :: <boolean>)
+    (file :: <microsoft-file-system-locator>, follow-links? :: <boolean>)
+ => (exists? :: <boolean>)
   let file = %expand-pathname(file);
   if (primitive-machine-word-not-equal?
         (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
@@ -179,7 +180,7 @@ define function %copy-file
   let destination = %expand-pathname(destination);
   // NOTE: Contrary to the documentation, CopyFile won't copy over
   // an existing read-only file so we need to delete it manually.
-  if (if-exists == #"replace" & %file-exists?(destination))
+  if (if-exists == #"replace" & %file-exists?(destination, #f))
     %delete-file(destination)
   end;
   unless (primitive-raw-as-boolean
@@ -211,7 +212,7 @@ define function %rename-file
   // the move if the target exists because MoveFileEx isn't implemented
   // in Windows 95.  (When this code was originally written, the
   // documentation for MoveFileEx failed to mention that fact.  Sigh)
-  if (if-exists == #"replace" & %file-exists?(destination))
+  if (if-exists == #"replace" & %file-exists?(destination, #f))
     %delete-file(destination)
   end;
   unless (primitive-raw-as-boolean
@@ -494,7 +495,7 @@ end function %delete-directory;
 ///---*** Is there an easier way?  (Look into it ...)
 define function %directory-empty?
     (directory :: <microsoft-directory-locator>) => (empty? :: <boolean>)
-  ~%file-exists?(directory)
+  ~%file-exists?(directory, #f)
     | block (return)
         %do-directory
           (method (directory :: <microsoft-directory-locator>, name :: <string>, type :: <file-type>)
