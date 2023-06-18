@@ -33,7 +33,7 @@ Unix Platforms
    +---------------------------+----------------------------------------------+---------------+
    | macOS (Intel)             | `opendylan-2022.1-x86_64-darwin.tar.bz2`_    | 119395771     |
    +---------------------------+----------------------------------------------+---------------+
-   | Mac OS X (Intel)          | `opendylan-2020.1-x86_64-darwin.tar.bz2`_    | 108361174     |
+   | Mac OS X (Intel)          | `opendylan-2022.1-x86_64-darwin.tar.bz2`_    | 108361174     |
    +---------------------------+----------------------------------------------+---------------+
 
 Note that Unix versions only have a command-line compiler and not the full IDE that is
@@ -53,7 +53,7 @@ Windows
 Open Dylan for Windows is currently a 32-bit application that runs under the WOW64 x86
 emulator on Windows 10 64-bit machines.
 
-Download the installer: `opendylan-2020.1-win32.exe`_ (101563388 bytes).
+Download: `opendylan-2022.1-win32.exe`_ (101563388 bytes)
 
 For installation, double-click on the installer, and follow instructions.  You
 need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
@@ -133,5 +133,6 @@ For 2019.1 and earlier releases:
 .. _opendylan-2022.1-x86_64-darwin.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-darwin.tar.bz2
 .. _opendylan-2022.1-x86_64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-linux.tar.bz2
 .. _opendylan-2022.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-freebsd.tar.bz2
+.. _opendylan-2022.1-x86_64-darwin.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-darwin.tar.bz2
 .. _download directories: https://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/

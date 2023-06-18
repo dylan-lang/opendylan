@@ -2,22 +2,33 @@
 Dylan Enhancement Proposals
 ***************************
 
-.. contents::  Contents
-   :local:
-
 .. NOTE: Each proposal must be in the "All Proposals by Number" table,
    regardless of status.  Open proposals must ADDITIONALLY be in the
    "Open Proposals" table.
 
-Introduction
-============
+This is the list of Dylan Enhancement Proposals, known as DEPs. A DEP is a
+design document which
 
-This is the index of all Dylan Enhancement Proposals, known as DEPs. A
-DEP number is never changed.  The historical record of the DEP texts
-is in the `GitHub website repository
-<https://github.com/dylan-lang/website/tree/master/source/proposals>`_
-.
+* provides information to the Dylan community, or
+* describes a new feature for the Dylan language or its standard libraries, or
+* describes changes to the processes or environment surrounding the Dylan
+  language or Open Dylan.
 
+The DEP should provide a concise technical specification of, and rationale for,
+the feature or process.
+
+We intend DEPs to be the primary mechanism for proposing new features, for
+collecting community input on an issue, and for documenting the design
+decisions that have gone into Dylan.  The DEP author is responsible for
+building consensus within the community and documenting dissenting opinions.
+
+Because the DEPs are maintained as text files in a versioned repository, their
+`revision history
+<https://github.com/dylan-lang/website/tree/master/source/proposals>`_ is the
+historical record of the feature proposal.
+
+For more information on the DEP process, see DEP 1, `DEP Purpose and Guidelines
+<dep-0001-dep-process.html>`_.
 
 
 Open Proposals (under consideration)

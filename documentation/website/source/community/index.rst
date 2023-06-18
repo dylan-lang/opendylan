@@ -1,9 +1,9 @@
-***********
-Participate
-***********
+*************
+Get Involved!
+*************
 
 Here are some resources for keeping up with what's going on in the Dylan hacker
-community...
+community and getting involved. We welcome your contributions!
 
 .. _contribute:
 
@@ -27,7 +27,7 @@ The Dylan Language room on Matrix
   GitHub, GitLab, Google, etc. and any Matrix client. For example, the
   Element web client link is:
 
-  https://app.element.io/#/room/#dylan-language:matrix.org
+  `https://app.element.io/#/room/#dylan-language:matrix.org <https://app.element.io/#/room/#dylan-language:matrix.org>`_
 
   To discuss coding issues you can use https://play.opendylan.org to share an example, or
   `create a gist on GitHub <https://gist.github.com>`_ and paste a link to it.
@@ -45,7 +45,6 @@ Mailing List
   but dylan-lang@ is the preferred forum.
 
 Dylan on Other Sites
-  - `Fosstodon <https://fosstodon.org/@DylanLang>`_
+  - Follow us on `Fosstodon <https://fosstodon.org/@DylanLang>`_!
   - `Reddit <https://www.reddit.com/r/dylanlang/>`_
   - `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
-  - `Twitter <https://twitter.com/DylanLanguage>`_

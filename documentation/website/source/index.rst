@@ -1,3 +1,6 @@
+:hide-toc:
+
+**********
 Open Dylan
 **********
 
@@ -20,9 +23,9 @@ generation, including fine-grained control over dynamic and static behaviors.
 
    </div>
 
-.. _Dylan: /books/drm/Title
-.. _object-functional: /about/examples/generic_functions.html
-.. _created by Apple: /history/
+.. _Dylan: books/drm/Title
+.. _object-functional: about/examples/generic_functions.html
+.. _created by Apple: history/
 
 
 * *Gradual typing* - specify types only where necessary for clarity or performance.
@@ -51,7 +54,7 @@ How do you like to learn?
 * `Introduction to Dylan`_ provides a high-level overview of language features.
 * The `Dylan Programming Guide`_ is a book length Dylan tutorial.
 * Like to jump in the deep end?  The `Dylan Reference Manual`_ might be for you.
-* If you have questions, give us a shout on `Gitter`_!
+* If you have questions, give us a shout on `Matrix`_!
 
 Or explore `all the docs </documentation/>`_, including cheat sheets, articles, and all
 the library docs. Happy hacking!
@@ -60,6 +63,19 @@ the library docs. Happy hacking!
 .. _Introduction to Dylan: https://opendylan.org/documentation/intro-dylan/
 .. _Dylan Programming Guide: https://opendylan.org/books/dpg/
 .. _Dylan Reference Manual: https://opendylan.org/books/drm/
-.. _Gitter: https://gitter.im/dylan-lang/general
+.. _Matrix: https://app.element.io/#/room/#dylan-language:matrix.org
+
+.. toctree::
+   :maxdepth: 3
+   :hidden:
+
+   Tour of Dylan <about/index>
+   Documentation <documentation/index>
+   Get Involved <community/index>
+   Download <download/index>
+   articles/index
+   news/index
+   Enhancement Proposals <proposals/index>
+   history/index
 
 .. -*- tab-width: 4 -*-

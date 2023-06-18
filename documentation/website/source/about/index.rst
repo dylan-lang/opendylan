@@ -26,10 +26,10 @@ Open Dylan compiler provides both "production" and "rapid development" modes. In
 development mode many of the static restrictions are removed from the generated code, for
 increased flexibility.
 
-Examples:
 
 .. toctree::
     :maxdepth: 1
+    :hidden:
 
     examples/hello_world
     examples/everything_value
