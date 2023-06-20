@@ -83,7 +83,6 @@ the library docs. Happy hacking!
    Documentation <documentation/index>
    Get Involved <community/index>
    Downloads <download/index>
-   articles/index
    news/index
    Enhancement Proposals <proposals/index>
    history/index

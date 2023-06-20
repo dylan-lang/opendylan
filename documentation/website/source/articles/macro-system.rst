@@ -1,4 +1,5 @@
 :copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+:orphan:
 
 .. sectionauthor:: Dustin Voss <d_j_v@me.com>
 .. default-role:: samp

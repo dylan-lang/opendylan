@@ -11,7 +11,6 @@ How to Contribute
   The `Hacker Guide <https://opendylan.org/documentation/hacker-guide/>`_ has details on
   how to contribute to the project.
 
-
 Report Bugs
   Bugs may be reported against the `opendylan repository`_ on GitHub. If you know the bug
   is in a specific library repository you can report it there instead. If unsure, use
@@ -48,3 +47,8 @@ Dylan on Other Sites
   - Follow us on `Fosstodon <https://fosstodon.org/@DylanLang>`_!
   - `Reddit <https://www.reddit.com/r/dylanlang/>`_
   - `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
+
+Pick a Project to Work On
+  If you're looking for ideas, maybe you'll find something in the
+  old `Google Summer of Code suggestions <gsoc/index>`_ or on the
+  `opendylan GitHub wiki <https://github.com/dylan-lang/opendylan/wiki>`_.
