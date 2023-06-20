@@ -1,11 +1,29 @@
-***************
-News & Articles
-***************
-
+****
 News
-====
+****
 
-.. include:: recent.rst.inc
+:doc:`New release: 2022.1 </news/2022/11/28/new-release>` *- 2022-11-28*
+  Open Dylan 2022.1 released!
+
+:doc:`Dylan Playground Launched </news/2020/12/30/playground>` *- 2020-12-30*
+  Try Dylan in your web browser!
+
+:doc:`New release: 2020.1 </news/2020/10/10/new-release>` *- 2020-10-10*
+  Open Dylan 2020.1 Released!
+
+:doc:`New release: 2019.1 </news/2019/03/31/new-release>` *- 2019-03-31*
+  Open Dylan 2019.1 Released!
+
+:doc:`New release: 2014.1 </news/2015/01/01/new-release>` *- 2015-01-01*
+  Open Dylan 2014.1 released!
+
+:doc:`Nix Packages Available </news/2014/05/28/nix-packages-available>` *- 2014-05-28*
+  Open Dylan builds have been added to the `Nix package manager`_.
+  This makes Open Dylan installable from systems using Nix, or the
+  `NixOS Linux distribution`_.
+
+.. _Nix package manager: https://nixos.org/
+.. _NixOS Linux distribution: https://nixos.org/
 
 :doc:`New release: 2013.2 </news/2013/12/23/new-release>` *- 2013-12-23*
   We just released Open Dylan 2013.2.
@@ -78,14 +96,3 @@ News
 
   If you're looking for some of the old material, it can be found
   over at `<https://web.archive.org/web/20170313134206/http://old.opendylan.org/>`_.
-
-Articles
-========
-
-`Dylan Macro System <../articles/macro-system.html>`_ by Dustin Voss.
-    This article holds hard-won knowledge about how the Dylan macro system works
-    and how to work around some of the gotchas that may catch a macro writer.
-
-`Procedural Dylan <../articles/procedural-dylan/index.html>`_ by Paul Haahr.
-    This essay explores Dylan from the perspective of a programmer used to
-    traditional procedural languages, such as Pascal or C.
