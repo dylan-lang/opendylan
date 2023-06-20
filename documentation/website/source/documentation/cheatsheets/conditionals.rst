@@ -1,6 +1,6 @@
-*********************
-Conditionals in Dylan
-*********************
+************************
+Conditionals Cheat Sheet
+************************
 
 ``if``
 ======
@@ -15,18 +15,6 @@ Conditionals in Dylan
       // otherwise, if other-test is true
     else
       // If no tests above were true
-    end;
-
-``unless``
-==========
-
-:drm:`unless` executes a body of code when the test expression
-is false:
-
-.. code-block:: dylan
-
-    unless (test-expression)
-      // do work, if test-expression is false
     end;
 
 ``case``
@@ -45,7 +33,7 @@ of code corresponding to the first condition that is true.
        otherwise
          => move(player1);
             move(player2);
-    end case; 
+    end case;
 
 ``select``
 ==========
@@ -70,10 +58,22 @@ to the first match found.
               char, format-string);
     end;
 
+``unless``
+==========
+
+:drm:`unless` executes a body of code when the test expression
+is false:
+
+.. code-block:: dylan
+
+    unless (test-expression)
+      // do work, if test-expression is false
+    end;
+
 ``when``
 ========
 
-This is just a short hand for ``if`` when there's no ``elseif`` or
+This is just a shorthand for :drm:`if` when there's no ``elseif`` or
 ``else`` branches.
 
 .. code-block:: dylan
@@ -82,5 +82,5 @@ This is just a short hand for ``if`` when there's no ``elseif`` or
       // if test-expression is true
     end;
 
-``when`` isn't defined in the DRM. To use it, you must ``use`` the
-``dylan-extensions`` module from the ``dylan`` library.
+:macro:`when` isn't defined in the DRM. To use it, you must :drm:`use
+<define_module>` the ``dylan-extensions`` module from the ``dylan`` library.

@@ -3,25 +3,10 @@ A Dylan Primer for Scheme Programmers
 
 This document was originally authored by Jonathan Sobel.
 
-Almost everything you already do in Scheme can be translated easily into
-Dylan. In fact, with one exception, Dylan is a proper superset of Scheme.
-The one exception is that continuations have indefinite extent in Scheme
-and dynamic extent in Dylan. Some individual implementations of Dylan
-might provide a mechanism for producing continuations with indefinite
-extent, making all Scheme programs be Dylan programs, too. (Of course,
-you won't be taking full advantage of the power of Dylan if you only
-write Scheme programs in it.)
+Almost everything you already do in Scheme has a direct counterpart in Dylan.
 
-This document is really just a large table in two columns. On the left,
-you will see a Scheme expression, and on the right, its Dylan counterpart.
-If one column contains N/A, then that language has no corresponding
-direct way to express what is in the other column.
-
-Please remember, there is much more to Dylan than what you'll find here!
-For example, this document doesn't show you how to define new classes or
-create generic functions (functions which support ad hoc polymorphic
-behavior). This document is only intended to help ease your transition
-from Scheme to Dylan.
+.. note:: If one column contains N/A, then that language has no corresponding
+          direct way to express what is in the other column.
 
 Literals
 --------
@@ -596,8 +581,9 @@ These are organized based on the "Standard Procedures" section of R4RS.
 +--------------------------------+-----------------------------------------------+
 | **Continuations**                                                              |
 |                                                                                |
-| As mentioned before, continuations have dynamic extent in Dylan. Also, whereas |
-| ``call/cc`` is a function, Dylan uses a syntax form to grab a continuation.    |
+| Continuations have indefinite extent in Scheme but have dynamic extent in      |
+| Dylan. Also, whereas ``call/cc`` is a function, Dylan uses special syntax      |
+| to grab a continuation.                                                        |
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |

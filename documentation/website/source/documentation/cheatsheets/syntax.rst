@@ -1,7 +1,8 @@
-*****************
-Dylan Cheat Sheet
-*****************
+******************
+Syntax Cheat Sheet
+******************
 
+.. TODO: add a note about `end` words
 
 Literals
 ========

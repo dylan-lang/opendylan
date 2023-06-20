@@ -1,6 +1,6 @@
-******************
-Iteration in Dylan
-******************
+*********************
+Iteration Cheat Sheet
+*********************
 
 
 Simple iteration with ``while`` and ``until``

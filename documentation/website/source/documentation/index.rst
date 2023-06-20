@@ -29,17 +29,6 @@ Learn Dylan
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. (Windows only.)
 
-Cheat Sheets
-============
-
-.. hlist::
-
-   * `Syntax <cheatsheet.html>`_
-   * `Iteration <cheatsheets/iteration.html>`_
-   * `Conditionals <cheatsheets/conditionals.html>`_
-   * `Collections <cheatsheets/collections.html>`_
-   * `For Scheme programmers <cheatsheets/scheme.html>`_
-
 References
 ==========
 
@@ -208,3 +197,9 @@ For Open Dylan Developers
 .. _Introduction to Dylan: intro-dylan/index.html
 .. _Library Reference: library-reference/index.html
 .. _Tour of Dylan: /about/
+
+.. toctree::
+   :hidden:
+
+   cheatsheets/index
+   Publications <publications>
