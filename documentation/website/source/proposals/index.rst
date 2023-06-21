@@ -35,6 +35,8 @@ Open Proposals (under consideration)
 ====================================
 
 ==== ============= ========== =============================================
+#    Track         Status     Title
+==== ============= ========== =============================================
 1    Process       Draft      `DEP Purpose and Guidelines <dep-0001-dep-process.html>`_  (`source <../_sources/proposals/dep-0001-dep-process.rst.txt>`__)
 6    Standard      Draft      `Single File Libraries <dep-0006-single-file-library.html>`_  (`source <../_sources/proposals/dep-0006-single-file-library.rst.txt>`__)
 10   Standard      Draft      `Defaulted Element Reference Syntax <dep-0010-element-otherwise.html>`_  (`source <../_sources/proposals/dep-0010-element-otherwise.rst.txt>`__)
@@ -45,6 +47,8 @@ Open Proposals (under consideration)
 All Proposals by Number
 =======================
 
+==== ============= ========== =============================================
+#    Track         Status     Title
 ==== ============= ========== =============================================
 1    Process       Draft      `DEP Purpose and Guidelines <dep-0001-dep-process.html>`_  (`source <../_sources/proposals/dep-0001-dep-process.rst.txt>`__)
 2    Standard      Final      `define function <dep-0002-define-function.html>`_ (`source <../_sources/proposals/dep-0002-define-function.rst.txt>`__)
