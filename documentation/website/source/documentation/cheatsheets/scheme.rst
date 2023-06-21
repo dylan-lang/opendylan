@@ -58,18 +58,18 @@ Literals
 |                        |                       |
 |    "Hello"             |    "Hello"            |
 +------------------------+-----------------------+
-| N/A                    | .. code-block:: dylan |
+| .. code-block:: scheme | .. code-block:: dylan |
 |                        |                       |
-|                        |    "Hello\n"          |
+|    "Hello\n"           |    "Hello\n"          |
 +------------------------+-----------------------+
 | .. code-block:: scheme | .. code-block:: dylan |
 |                        |                       |
 |    'apple              |    #"apple"           |
 |                        |    apple:             |
 +------------------------+-----------------------+
-| N/A                    | .. code-block:: dylan |
+| .. code-block:: scheme | .. code-block:: dylan |
 |                        |                       |
-|                        |    #"two words"       |
+|    '|two words|        |    #"two words"       |
 +------------------------+-----------------------+
 | .. code-block:: scheme | .. code-block:: dylan |
 |                        |                       |
@@ -77,7 +77,7 @@ Literals
 +------------------------+-----------------------+
 | .. code-block:: scheme | .. code-block:: dylan |
 |                        |                       |
-|    '#(5 10 15)         |    #[5, 10, 15]       |
+|    #(5 10 15)          |   #[5, 10, 15]        |
 +------------------------+-----------------------+
 | .. code-block:: scheme | N/A                   |
 |                        |                       |
@@ -115,26 +115,25 @@ Note that, in Dylan, any words after an ``end`` (e.g.
 |                                  |                                       |
 |    (lambda (x y . z)             |    method (x, y, #rest z)             |
 |      (say "hello")               |      say("hello");                    |
-|      (f x y z)                   |      f(x, y, z);                      |
-|    )                             |    end method                         |
+|      (f x y z))                  |      f(x, y, z);                      |
+|                                  |    end method                         |
 +----------------------------------+---------------------------------------+
 | .. code-block:: scheme           | .. code-block:: dylan                 |
 |                                  |                                       |
-|    (let ((x 5))                  |    let x = 5;                         |
-|      body)                       |    body                               |
-|                                  |    // (Scope ends at next             |
-|                                  |    // "body-ender.")                  |
-+----------------------------------+---------------------------------------+
-| N/A                              | .. code-block:: dylan                 |
-|                                  |                                       |
-|                                  |    let (x, y) = exp;                  |
-|                                  |    // (Binds multiple values          |
-|                                  |    // returned by exp.)               |
+|    (begin                        |    begin                              |
+|      (define x 5)                |      let x = 5;                       |
+|      body)                       |      body                             |
+|                                  |    end                                |
 +----------------------------------+---------------------------------------+
 | .. code-block:: scheme           | .. code-block:: dylan                 |
 |                                  |                                       |
-|    (let ((x 5) (y 6))            |    let (x, y) = values(5, 6);         |
-|      (f x y))                    |    f(x, y)                            |
+|    (define-values (x y) exp)     |    let (x, y) = exp;                  |
++----------------------------------+---------------------------------------+
+| .. code-block:: scheme           | .. code-block:: dylan                 |
+|                                  |                                       |
+|    (let-values (((x y)           |    let (x, y) = values(5, 6);         |
+|                  (values 5 6)))  |    f(x, y)                            |
+|      (f x y))                    |                                       |
 +----------------------------------+---------------------------------------+
 | .. code-block:: scheme           | .. code-block:: dylan                 |
 |                                  |                                       |
@@ -547,7 +546,7 @@ These are organized based on the "Standard Procedures" section of R4RS.
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
-|    (list>vector list)          |    as(<vector>, list)                         |
+|    (list->vector list)         |    as(<vector>, list)                         |
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
@@ -565,15 +564,17 @@ These are organized based on the "Standard Procedures" section of R4RS.
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
-|    (map proc list1 list2)      |    map(proc, list1, list2)                    |
+|    (map proc list1 list2 ...)  |    map(proc, list1, list2, ...)               |
 +--------------------------------+-----------------------------------------------+
-| N/A                            | .. code-block:: dylan                         |
+| .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
-|                                |    map(proc, vec1, vec2)                      |
+|    (vector-map proc            |    map(proc, vec1, vec2, ...)                 |
+|                vec1 vec2 ...)  |                                               |
 +--------------------------------+-----------------------------------------------+
-| N/A                            | .. code-block:: dylan                         |
+| .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
-|                                |    map(proc, string1, string2)                |
+|    (string-map                 |    map(proc, string1, string2)                |
+|       string1 string2 ...)     |                                               |
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
