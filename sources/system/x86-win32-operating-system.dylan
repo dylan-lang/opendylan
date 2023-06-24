@@ -614,7 +614,7 @@ define constant $null-device = "NUL:";
 // Note: streams are always returned in the order stdin, stdout, stderr
 //       even though not all of them are always returned.
 define function run-application
-    (command :: type-union(<string>, limited(<sequence>, of: <string>)),
+    (command :: <string>,
      #key under-shell? = #f,
           inherit-console? = #t,
           activate? = #t,
