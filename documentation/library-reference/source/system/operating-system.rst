@@ -413,6 +413,9 @@ System library's operating-system module.
       command as parsed by the shell. Example: ``"/bin/ls -l"`` or
       ``#["/bin/ls", "-l"]``
 
+      .. note:: On Windows this must be a :drm:`<string>`, never a sequence of
+                strings.
+
    :parameter #key under-shell?: An instance of :drm:`<boolean>`. If true (the
       default), use a shell to invoke the *command*. On Unix systems this is
       equivalent to ``/bin/sh -c '...command...'``. On Windows the
