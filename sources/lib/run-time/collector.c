@@ -79,6 +79,7 @@ typedef intptr_t DSINT;
 
 #define MISCEXTENDBY    ((size_t)16384)
 #define MISCAVGSIZE     ((size_t)32)
+#define MISCMAXSIZE     ((size_t)65536)
 
 static void report_runtime_error (char* header, char* message);
 
