@@ -110,6 +110,145 @@ Native locators, which are bound to the host platform:
 
 - :const:`<native-file-system-locator>`
 
+File streams
+------------
+
+File streams are intended only for accessing the contents of files. More
+general file handling facilities, such as renaming, deleting, moving, and
+parsing directory names, are provided by the :doc:`file-system
+</system/file-system>` module. The :drm:`make` method on :class:`<file-stream>`
+does not create direct instances of :class:`<file-stream>`, but instead an
+instance of a subclass determined by :gf:`type-for-file-stream`.
+
+make *file-stream-class*
+
+G.f method
+
+make <file-stream> #key locator: direction: if-exists:
+ if-does-not-exist: buffer-size: element-type:
+ asynchronous?: share-mode => *file-stream-instance*
+
+Creates and opens a stream over a file, and returns a new instance of a
+concrete subclass of :class:`<file-stream>` that streams over the
+contents of the file referenced by *filename*. To determine the concrete
+subclass to be instantiated, this method calls the generic function
+:gf:`type-for-file-stream`.
+
+The ``locator:`` init-keyword should be a string naming a file. If the
+:doc:`Locators <../system/locators>` library is in use, *filename*
+should be an instance of :class:`<locator>` or a string that can be
+coerced to one.
+
+The ``direction:`` init-keyword specifies the direction of the stream.
+This can be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
+The default is ``#"input"``.
+
+The ``if-exists:`` and ``if-does-not-exist:`` init-keywords specify actions
+to take if the file named by *filename* does or does not already exist
+when the stream is created. These init-keywords are discussed in more
+detail in `Options when creating file streams`_.
+
+The ``buffer-size:`` init-keyword can be used to suggest the size of a
+stream's buffer. See :class:`<buffered-stream>`.
+
+The ``element-type:`` init-keyword specifies the type of the elements in
+the file named by *filename*. See `Options when creating file
+streams`_ for more details.
+
+Options when creating file streams
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When creating file streams, you can supply the following init-keywords
+to *make* in addition to those described in `File streams`_:
+
+- ``if-exists:`` An action to take if the file already exists.
+- ``if-does-not-exist:`` An action to take if the file does not already exist.
+- ``element-type:`` How the elements of the underlying file are accessed.
+- ``asynchronous?:`` Allows asynchronous writing of stream data to disk.
+- ``share-mode:`` How the file can be accessed while the stream is
+  operating on it.
+
+The ``if-exists:`` init-keyword allows you to specify an action to take if
+the file named by *filename* already exists. The options are:
+
+- :drm:`#f` The file is opened with the stream position at the beginning.
+  This is the default when the stream's direction is ``#"input"`` or
+  ``#"input-output"``.
+- ``#"new-version"`` If the underlying file system supports file versioning,
+  a new version of the file is created. This is the default when the stream's
+  direction is ``#"output"``.
+  If the file system does not support file versioning, the default is
+  ``#"replace"`` when the direction of the stream is ``#"output"``.
+- ``#"overwrite"`` Set the stream's position to the beginning of the
+  file, but preserve the current contents of the file. This is useful
+  when the direction is ``#"input-output"`` or ``#"output"`` and you want
+  to overwrite an existing file.
+- ``#"replace"`` Delete the existing file and create a new file.
+- ``#"append"`` Set the stream's initial position to the end of the
+  existing file so that all new output occurs at the end of the file.
+  This option is only useful if the file is writeable.
+- ``#"truncate"`` If the file exists, it is truncated, setting the size
+  of the file to 0. If the file does not exist, create a new file.
+- ``#"signal"`` Signal a :class:`<file-exists-error>` condition.
+
+The ``if-does-not-exist:`` init-keyword allows you to specify an action to
+take if the file named by *filename* does not exist. The options are:
+
+- :drm:`#f` No action.
+- ``#"signal"`` Signal a :class:`<file-does-not-exist-error>` condition. This is
+  the default when the stream's direction is ``#"input"``.
+- ``#"create"`` Create a new zero-length file. This is the default when
+  the stream's direction is ``#"output"`` or ``#"input-output"``.
+
+Because creating a file stream *always* involves an attempt to open the
+underlying file, the aforementioned error conditions will occur during
+file stream instance initialization.
+
+File permissions are checked when creating and opening file streams, and
+if the user attempts to open a file for input, and has no read
+permission, or to open a file for output, and has no write permission,
+then an :class:`<invalid-file-permissions-error>`
+condition is signalled at the time the file stream is created.
+
+The ``element-type:`` init-keyword controls how the elements of the
+underlying file are accessed. The three possible element types
+are:
+
+- :type:`<byte-character>`
+  The file is accessed as a sequence of 8-bit characters.
+
+- :type:`<unicode-character>`
+  The file is accessed as a sequence of 16-bit Unicode characters.
+
+- :type:`<byte>`
+  The file is accessed as a sequence of unsigned 8-bit integers.
+
+The ``asynchronous?:`` init-keyword allows asynchronous writing of stream
+data to disk. If :drm:`#f`, whenever the stream has to write a buffer to
+disk, the thread which triggered the write must wait for the write to
+complete. If ``asynchronous?`` is :drm:`#t`, the write proceeds in parallel
+with the subsequent actions of the thread.
+
+Note that asynchronous writes complicate error handling a bit. Any write
+error which occurs most likely occurs after the call which triggered the
+write. If this happens, the error is stored in a queue, and the next
+operation on that stream signals the error. If you *close* the stream
+with the *wait?* flag :drm:`#f`, the close happens asynchronously (after all
+queued writes complete) and errors may occur after *close* has returned.
+A method :gf:`wait-for-io-completion` is provided to catch any errors that
+may occur after *close* is called.
+
+The ``share-mode:`` keyword determines how a file can be accessed by other
+streams while the stream has it open. The possible values are:
+
+- ``#"share-read"`` Allow other streams to be opened to the file for
+  reading but not for writing.
+- ``#"share-write"`` Allow other streams to be opened for writing but not
+  for reading.
+- ``#"share-read-write"`` Allow other streams to be opened for writing
+  or reading.
+- ``#"exclusive"`` Do not allow other streams to be opened to this file.
+
 Conditions
 ----------
 
@@ -714,6 +853,65 @@ File-System module.
 
       Repeatedly follows symbolic links starting with *file* until it finds a
       non-link file or directory, or a non-existent link target.
+
+.. method:: make
+   :specializer: <file-stream>
+
+   Creates and opens a stream over a file.
+
+   :signature: make *file-stream-class* #key *filename* *direction* *if-exists* *if-does-not-exist* *buffer-size* *element-type* => *file-stream-instance*
+
+   :parameter file-stream-class: The class :class:`<file-stream>`.
+   :parameter #key filename: An instance of :drm:`<object>`.
+   :parameter #key direction: One of ``#"input"``, ``#"output"``, or
+     ``#"input-output"``. The default is ``#"input"``.
+   :parameter #key if-exists: One of :drm:`#f`, ``#"new-version"``,
+     ``#"overwrite"``, ``#"replace"``, ``#"append"``, ``#"truncate"``,
+     ``#"signal"``. Default value: :drm:`#f`.
+   :parameter #key if-does-not-exist: One of :drm:`#f`, ``#"signal"``, or
+     ``#"create"``. Default value: depends on the value of *direction*.
+   :parameter #key buffer-size: An instance of :drm:`<integer>`.
+   :parameter #key element-type: One of :type:`<byte-character>`,
+     :type:`<unicode-character>`, or :type:`<byte>`, or :drm:`#f`.
+   :value file-stream-instance: An instance of :class:`<file-stream>`.
+
+   :description:
+
+     Creates and opens a stream over a file.
+
+     Returns a new instance of a concrete subclass of
+     :class:`<file-stream>` that streams over the contents of the file
+     referenced by *filename*. To determine the concrete subclass to be
+     instantiated, this method calls the generic function
+     :gf:`type-for-file-stream`.
+
+     The *filename* init-keyword should be a string naming a file. If
+     the :doc:`Locators <../system/locators>` library is in use,
+     *filename* should be an instance of :class:`<locator>` or a string
+     that can be coerced to one.
+
+     The *direction* init-keyword specifies the direction of the stream.
+
+     The *if-exists* and *if-does-not-exist* init-keywords specify
+     actions to take if the file named by *filename* does or does not
+     already exist when the stream is created. These init-keywords are
+     discussed in more detail in `Options when creating file streams`_.
+
+     The *buffer-size* init-keyword is explained in :class:`<buffered-stream>`.
+
+     The *element-type* init-keyword specifies the type of the elements
+     in the file named by *filename*. This allows file elements to be
+     represented abstractly; for instance, contiguous elements could be
+     treated as a single database record. This init-keyword defaults to
+     something useful, potentially based on the properties of the file;
+     `<byte-character>`_ and `<unicode-character>`_ are likely choices.
+     See `Options when creating file streams`_.
+
+   :seealso:
+
+     - :class:`<buffered-stream>`
+     - :class:`<file-stream>`
+     - :gf:`type-for-file-stream`
 
 .. class:: <microsoft-server-locator>
    :sealed:
