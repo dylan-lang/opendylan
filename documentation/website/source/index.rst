@@ -11,30 +11,39 @@ Open Dylan
 
 .. raw:: html
 
-   <div style="font-style: italic">
+   <div style="font-style: italic; margin-left: 50px; margin-right: 50px">
 
-Dylan is an `object-functional`_ language originally `created by Apple`_ for the
-Newton. Dylan provides a programming model designed to support efficient machine code
+Dylan is an :doc:`object-functional <about/examples/generic_functions>`
+language originally :doc:`created by Apple <history/index>` for the
+Newton. Dylan is a direct descendant of Scheme and CLOS (without the Lisp
+syntax) with a programming model designed to support efficient machine code
 generation, including fine-grained control over dynamic and static behaviors.
 
 .. raw:: html
 
    </div>
 
-.. _Dylan: books/drm/Title
-.. _object-functional: about/examples/generic_functions.html
-.. _created by Apple: history/
+New to Dylan?  We recommend starting with the :doc:`Tour of Dylan
+<about/index>`, a quick (30 minute) overview of the language, and/or stop by
+and ask questions on `Matrix`_.
 
+If you want to play around without having to install anything, try out the
+`Playground`_. It has a fixed set of imports so you don't have to worry about
+how to define libraries and modules right away.
 
-* *Gradual typing* - specify types only where necessary for clarity or performance.
-* *Generic functions* - dispatch on all positional arguments, for a powerful form of OO.
-* *Multiple inheritance* - use mix-ins to add behavior.
-* *Sealed domains* - for high performance method dispatch.
-* *Garbage collection* - you know you want it.
-* *Macros* - to extend the syntax.
-* *Exception handling* - doesn't unwind the stack, advanced recovery protocols.
-* *Regular and simple syntax*.
-* *Everything returns values* - including conditionals like ``if`` and ``select``.
+Then maybe try one of these more in-depth guides:
+
+* :doc:`opendylan/documentation/intro-dylan/source/index` provides a high-level
+  overview of language features.
+* `Dylan Programming Guide`_ is a book length Dylan tutorial.
+
+The `Dylan Reference Manual`_, besides being the official language definition,
+has an excellent, very brief `introduction
+<https://opendylan.org/books/drm/Introduction>`_ describing the language
+background and goals.
+
+Or explore :doc:`all the docs <documentation/index>`, including cheat sheets,
+articles, and all the library docs.
 
 .. raw:: html
 
@@ -56,35 +65,36 @@ generation, including fine-grained control over dynamic and static behaviors.
    </style>
    <a href="download/" class="button">Install Dylan...</a>
 
-How do you like to learn?
--------------------------
+*Happy hacking!*
 
-* The `Tour of Dylan </about/>`_ is a quick (30 minute) overview of the language.
-* If you want to play around without having to install anything, try the `Playground`_.
-* `Introduction to Dylan`_ provides a high-level overview of language features.
-* The `Dylan Programming Guide`_ is a book length Dylan tutorial.
-* Like to jump in the deep end?  The `Dylan Reference Manual`_ might be for you.
-* If you have questions, give us a shout on `Matrix`_!
-
-Or explore `all the docs </documentation/>`_, including cheat sheets, articles, and all
-the library docs. Happy hacking!
-
-.. _Playground: https://play.opendylan.org
-.. _Introduction to Dylan: https://opendylan.org/documentation/intro-dylan/
 .. _Dylan Programming Guide: https://opendylan.org/books/dpg/
 .. _Dylan Reference Manual: https://opendylan.org/books/drm/
+.. _Dylan: books/drm/Title
 .. _Matrix: https://app.element.io/#/room/#dylan-language:matrix.org
+.. _Playground: https://play.opendylan.org
 
 .. toctree::
-   :maxdepth: 3
+   :caption: Community
+   :hidden:
+
+   Get Involved <community/index>
+   Download <download/index>
+   Hacker Guide <opendylan/documentation/hacker-guide/source/index>
+   Enhancement Proposals <proposals/index>
+
+.. toctree::
+   :caption: Learning
    :hidden:
 
    Tour of Dylan <about/index>
-   Documentation <documentation/index>
-   Get Involved <community/index>
-   Downloads <download/index>
-   news/index
-   Enhancement Proposals <proposals/index>
-   history/index
+   Getting Started Guide <opendylan/documentation/getting-started-cli/source/index>
+   Dylan Programming Guide <https://opendylan.org/books/dpg/>
 
-.. -*- tab-width: 4 -*-
+.. toctree::
+   :caption: Reference Docs
+   :hidden:
+
+   Dylan Reference Manual <https://opendylan.org/books/drm/>
+   Package Docs <https://docs.opendylan.org>
+   Open Dylan Libraries <opendylan/documentation/library-reference/source/index>
+   All Documentation <documentation/index>
