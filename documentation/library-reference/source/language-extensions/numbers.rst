@@ -783,7 +783,7 @@ The generic-arithmetic Library
 ==============================
 
 The Generic-Arithmetic library exports the functions described in this
-section from an exported module called *generic-arithmetic*.
+section from a module called *generic-arithmetic*.
 
 The Generic-Arithmetic library provides a fully extensible version of
 all arithmetic operations. If an application only uses
@@ -791,8 +791,10 @@ Generic-Arithmetic, these versions of the operators reduce themselves to
 be equivalent to those in the Dylan library. But when you use additional
 implementation libraries, the arithmetic operators are extended.
 
-The Big-Integers library is one such implementation library. It provides
-a 64-bit implementation of :drm:`<integer>`.
+The Big-Integers library is one such implementation library. It provides a
+implementation of :drm:`<integer>` that uses two machine words to represent
+each integer. For example, on a 64-bit machine architecture this is a 128-bit
+signed integer.
 
 The standard integer implementation in the Dylan library is actually
 part of the following class hierarchy::
@@ -805,18 +807,18 @@ part of the following class hierarchy::
 (The classes ``<big-integer>`` and ``<double-integer>`` are implementation
 classes. You do not need to use them.)
 
-The modules in the Generic-Arithmetic library export
-``<abstract-integer>`` with the name :drm:`<integer>`. They also export a full
-set of arithmetic operators that use instances of ``<abstract-integer>``
-rather than instances of :drm:`<integer>` (in the Dylan library naming
-scheme). However, those operators just fall back to the Dylan library
-operators until you include an implementation library, such as
-Big-Integers, in your application.
+The modules in the Generic-Arithmetic library export ``<abstract-integer>``
+with the name :drm:`<integer>`. They also export a full set of arithmetic
+operators that use instances of ``<abstract-integer>`` rather than instances
+of :drm:`<integer>` (in the Dylan library naming scheme). However, those
+operators just fall back to the Dylan library operators until you include an
+implementation library, such as Big-Integers, in your application.
 
-When you use the Big-Integers library, the arithmetic operators exported
-by Generic-Arithmetic are enhanced to extend their results to 64-bit
-integers. If a result is small enough to fit in a Dylan library
-:drm:`<integer>`, it will be fitted into one.
+When you use the Big-Integers library, the arithmetic operators exported by
+Generic-Arithmetic are enhanced to extend their results to 128-bit integers on
+64-bit machines or 64-bit integers on 32-bit machine architectures. If a result
+is small enough to fit in a Dylan library :drm:`<integer>`, it will be fitted
+into one.
 
 Note that the Generic-Arithmetic library uses the same naming
 conventions for arithmetic operators as used by the Dylan library. This
@@ -833,11 +835,11 @@ an implementation library with Generic-Arithmetic.
 Ranges
 ------
 
-The Generic-Arithmetic library defines the class :drm:`<range>`, which is in
-most respects functionally equivalent to *<range>#Dylan*, but uses
-generic arithmetic operations in its implementation so that the
-initialization arguments can be instances of :drm:`<real>`, rather than
-being restricted to ``<machine-number>``.
+The Generic-Arithmetic library defines the class :class:`<range>`, which is in
+most respects functionally equivalent to *<range>#Dylan*, but uses generic
+arithmetic operations in its implementation so that the initialization
+arguments can be instances of :drm:`<real>`, rather than being restricted to
+:class:`<machine-number>`.
 
 Classes
 -------
@@ -858,68 +860,68 @@ all of the supplied arguments must be instances of :drm:`<real>`.
 Arithmetic operations
 ---------------------
 
-The following functions all apply *function* *#Dylan* to the arguments
-and return the results, where *function* is the appropriate function
-name. See `Arithmetic operations
-<http://opendylan.org/books/drm/Arithmetic_Operations#HEADING-100-49>`_
-for descriptions of each function as implemented in the Dylan library.
+The following functions all have Generic-Arithmetic implementations that are
+mathematically equivalent to the corresponding implementations defined on
+:drm:`<integer>` and documented in the DRM.  See :drm:`Arithmetic operations
+<Arithmetic_Operations#HEADING-100-49>` for descriptions of each function as
+implemented in the Dylan library.
 
-+ *object1* *object2* => #rest *object*
+:drm:`+` *object1* *object2* => #rest *object*
 
-- *object1* *object2* => #rest *object*
+:drm:`-` *object1* *object2* => #rest *object*
 
-\* *object1* *object2* => #rest *object*
+:drm:`*` *object1* *object2* => #rest *object*
 
-/ *object1* *object2* => #rest *object*
+:drm:`/` *object1* *object2* => #rest *object*
 
-negative *object* => #rest *negative-object*
+:drm:`negative` *object* => #rest *negative-object*
 
-floor *real1* => *abstract-integer* *real*
+:drm:`floor` *real1* => *abstract-integer* *real*
 
-ceiling *real1* => *abstract-integer* *real*
+:drm:`ceiling` *real1* => *abstract-integer* *real*
 
-round *real1* => *abstract-integer* *real*
+:drm:`round` *real1* => *abstract-integer* *real*
 
-truncate *real1* => *abstract-integer* *real*
+:drm:`truncate` *real1* => *abstract-integer* *real*
 
-floor/ *real1* *real2* => *abstract-integer* *real*
+:drm:`floor/` *real1* *real2* => *abstract-integer* *real*
 
-ceiling/ *real1* *real2* => *abstract-integer* *real*
+:drm:`ceiling/` *real1* *real2* => *abstract-integer* *real*
 
-round/ *real1* *real2* => *abstract-integer* *real*
+:drm:`round/` *real1* *real2* => *abstract-integer* *real*
 
-truncate/ *real1* *real2* => *abstract-integer* *real*
+:drm:`truncate/` *real1* *real2* => *abstract-integer* *real*
 
-modulo *real1* *real2* => *real*
+:drm:`modulo` *real1* *real2* => *real*
 
-remainder *real1* *real2* => *real*
+:drm:`remainder` *real1* *real2* => *real*
 
-^ *object1* *object2* => #rest *object*
+:drm:`^` *object1* *object2* => #rest *object*
 
-abs *object1* => #rest *object*
+:drm:`abs` *object1* => #rest *object*
 
-logior #rest *abstract-integer1* => *abstract-integer*
+:drm:`logior` #rest *abstract-integer1* => *abstract-integer*
 
-logxor #rest *abstract-integer1* => *abstract-integer*
+:drm:`logxor` #rest *abstract-integer1* => *abstract-integer*
 
-logand #rest *abstract-integer1* => *abstract-integer*
+:drm:`logand` #rest *abstract-integer1* => *abstract-integer*
 
-lognot *abstract-integer1* => *abstract-integer*
+:drm:`lognot` *abstract-integer1* => *abstract-integer*
 
-logbit? *integer* *abstract-integer* => *boolean*
+:drm:`logbit?` *integer* *abstract-integer* => *boolean*
 
-ash *abstract-integer1* *integer* => *abstract-integer*
+:drm:`ash` *abstract-integer1* *integer* => *abstract-integer*
 
-lcm *abstract-integer1* *abstract-integer2* => *abstract-integer*
+:drm:`lcm` *abstract-integer1* *abstract-integer2* => *abstract-integer*
 
-gcd *abstract-integer1* *abstract-integer2* => *abstract-integer*
+:drm:`gcd` *abstract-integer1* *abstract-integer2* => *abstract-integer*
 
 Iteration constructs
 --------------------
 
-While a programmer could make use of generic arithmetic in a *for* loop
+While a programmer could make use of generic arithmetic in a :drm:`for` loop
 by using explicit-step clauses, this approach leads to a loss of
-clarity. The definition of the *for* macro is complex, so a version that
+clarity. The definition of the :drm:`for` macro is complex, so a version that
 uses generic arithmetic in numeric clauses is provided, rather than
 requiring programmers who want that feature to reconstruct it.
 
@@ -988,8 +990,8 @@ As noted in `The Generic-Arithmetic library`_, the Generic-Arithmetic
 library provides an extensible protocol for adding specialized arithmetic
 functionality to your applications. By using the Generic-Arithmetic
 library alongside a special implementation library, you can make the
-standard arithmetic operations support number types such as big (64-bit)
-integers, or complex numbers.
+standard arithmetic operations support number types such as big (128-bit
+or 64-bit) integers, or complex numbers.
 
 This section provides an example of extending the basic Dylan arithmetic
 features using the Generic-Arithmetic library and the Big-Integers
@@ -1017,9 +1019,9 @@ Next you have to declare a module. There are three ways of using
 big-integer arithmetic that we can arrange with a suitable module
 declaration:
 
-#. Replace all integer arithmetic with the big-integer arithmetic
-#. Use both, with normal arithmetic remaining the default
-#. Use both, with the big-integer arithmetic becoming the default
+#. Replace all integer arithmetic with the big-integer arithmetic.
+#. Use both, with normal arithmetic remaining the default.
+#. Use both, with the big-integer arithmetic becoming the default.
 
 To get one of the three different effects described above, you need to
 arrange the ``define module`` declaration accordingly. To replace all
@@ -1051,23 +1053,24 @@ do this, use the same libraries but instead of using the
 .. code-block:: dylan
 
     use common-dylan;
-    use generic-arithmetic, prefix: "ga/"; // use any prefix you like
+    use generic-arithmetic, prefix: "generic/"; // use any prefix you like
 
-This imports the big-integer arithmetic binding names, but gives them a
-prefix ``ga/``, using the standard renaming mechanism available in module
-declarations. Thus you gain access to big arithmetic using renamed
-classes and operations like:
+This imports the big-integer arithmetic binding names, but gives them a prefix
+``generic/``, using the standard renaming mechanism available in module
+declarations. Thus you gain access to big arithmetic using renamed classes and
+operations like:
 
 .. code-block:: dylan
 
-    ga/<integer>
-    ga/+
-    ga/-
-    ga/*
+    generic/<integer>
+    generic/+
+    generic/-
+    generic/*
     ...
 
-The operations take either instances of :drm:`<integer>` or ``ga/<integer>`` (a
-subclass of :drm:`<integer>`) and return instances of ``ga/<integer>``.
+The operations take either instances of :drm:`<integer>` or
+``generic/<integer>`` (a subclass of :drm:`<integer>`) and return instances of
+``generic/<integer>``.
 
 Note that having imported the big-integer operations under new names,
 you have to use prefix rather than infix syntax when calling them. For
@@ -1075,20 +1078,20 @@ example:
 
 .. code-block:: dylan
 
-    ga/+ (5, 4);
+    generic/+(5, 4);
 
 not:
 
 .. code-block:: dylan
 
-    5 ga/+ 4;
+    5 generic/+ 4;
 
 The existing functions like :drm:`+` and :drm:`-` will only accept :drm:`<integer>`
-instances and ``ga/<integer>`` instances small enough to be represented as
+instances and ``generic/<integer>`` instances small enough to be represented as
 :drm:`<integer>` instances.
 
 Under this renaming scheme, reduced performance will be confined to the
-``ga/`` operations. Other operations, such as loop index increments and
+``generic/`` operations. Other operations, such as loop index increments and
 decrements, will retain their efficiency.
 
 Finally, you can make big-integer arithmetic the default but keep normal
@@ -1137,52 +1140,59 @@ The Limited Integer Type Protocol is extended to account for limited
 Instances and subtypes in the Big-Integers library
 --------------------------------------------------
 
-This is true if and only if …
-
-… all these clauses are true
+In each of the following code snippets, the expression in the first line is
+true if and only if all of the expressions following it are true.
 
 .. code:: dylan
 
    instance?(x, limited(<abstract-integer>, min: y, max: z))
 
    instance?(x, <abstract-integer>)
-   (y <= x)
-   (x <= z)
+   y <= x
+   x <= z
+
+.. code:: dylan
 
    instance?(x, limited(<abstract-integer>, min: y))
 
    instance?(x, <abstract-integer>)
-   (y <= x)
+   y <= x
+
+.. code:: dylan
 
    instance?(x, limited(<abstract-integer>, max: z))
 
    instance?(x, <abstract-integer>)
-   (x <= z)
+   x <= z
+
+.. code:: dylan
 
    subtype?(limited(<abstract-integer>, min: w, max: x),
             limited(<abstract-integer>, min: y, max: z))
 
-   (w >= y)
-   (x <= z)
+   w >= y
+   x <= z
+
+.. code:: dylan
 
    subtype?(limited(<abstract-integer>, min: w ...),
             limited(<abstract-integer>, min: y))
 
-   (w >= y)
+   w >= y
+
+.. code:: dylan
 
    subtype?(limited(<abstract-integer>, max: x ...),
             limited(<abstract-integer>, max: z))
 
-   (x <= z)
+   x <= z
 
 Type-equivalence in the Big-Integers library
 --------------------------------------------
 
-This is type equivalent to …
-
-… this, if and only if …
-
-… this is true
+In each of the following code snippets, the expression on the first line is
+type equivalent to the expression on the second line if and only if the text
+following both expressions is true.
 
 .. code:: dylan
 
@@ -1270,9 +1280,9 @@ determined by the contagion rules when applied to the arguments.
     - *abstract-integer* *float1* => *float*
     - *float1* *abstract-integer* => *float*
 
-   \* *abstract-integer1* *abstract-integer2* => *abstract-integer*
-   \* *abstract-integer* *float1* => *float*
-   \* *float1* *abstract-integer* => *float*
+    * *abstract-integer1* *abstract-integer2* => *abstract-integer*
+    * *abstract-integer* *float1* => *float*
+    * *float1* *abstract-integer* => *float*
 
 The return value of the following interface is of the same float format
 as the argument::
