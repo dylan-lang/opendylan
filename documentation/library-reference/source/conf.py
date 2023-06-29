@@ -20,6 +20,10 @@ import dylan.themes as dylan_themes
 sys.path.insert(0, os.path.abspath('../..'))
 from shared_sphinx_config import *
 
+extensions = [
+    'sphinx.ext.graphviz',
+    'dylan.domain'
+]
 
 # -- General configuration -----------------------------------------------------
 
