@@ -952,10 +952,8 @@ File-System module.
      instantiated, this method calls the generic function
      :gf:`type-for-file-stream`.
 
-     The *locator* init-keyword should be a string naming a file. If
-     the :doc:`Locators <../system/locators>` library is in use,
-     *locator* should be an instance of :class:`<locator>` or a string
-     that can be coerced to one.
+     The *locator* init-keyword should be a :class:`<file-locator>` or
+     a :drm:`<string>` that can be coerced to one.
 
      The *direction* init-keyword specifies the direction of the
      stream.  This can be one of ``#"input"``, ``#"output"``, or
