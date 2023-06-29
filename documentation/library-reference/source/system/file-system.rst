@@ -91,11 +91,69 @@ or a file within the file system.
 - :class:`<file-system-file-locator>`
 - :class:`<file-system-directory-locator>`
 
+.. graphviz::
+   :caption: File system locator class diagram. Dashed boxes are
+             classes from module `locators`.
+
+   digraph G {
+     fontname="Arial,sans-serif";
+     node [shape=box, color=gray];
+
+     physical_locator              [label="<physical-locator>\noa", style=dashed];
+     file_locator                  [label="<file-locator>\noa", style=dashed];
+     directory_locator             [label="<directory-locator>\noa",style=dashed];
+     file_system_locator           [label="<file-system-locator>\noa", style=bold, color="#17594A"];
+     file_system_file_locator      [label="<file-system-file-locator>", style=bold, color="#17594A"];
+     file_system_directory_locator [label="<file-system-directory-locator>", style=bold, color="#17594A"];
+
+     physical_locator              -> file_system_locator;
+     physical_locator              -> directory_locator;
+     physical_locator              -> file_locator;
+     file_system_locator           -> file_system_file_locator;
+     file_locator                  -> file_system_file_locator;
+     file_system_locator           -> file_system_directory_locator;
+     directory_locator             -> file_system_directory_locator;
+   }
+
 On Posix systems:
 
 - :class:`<posix-file-system-locator>`
 - :class:`<posix-directory-locator>`
 - :class:`<posix-file-locator>`
+
+.. graphviz::
+   :caption: Posix file system hierarchy. Dashed boxes are classes
+             from module `locators`.
+
+   digraph G {
+     fontname="Arial,sans-serif";
+     node  [shape=box, color=gray];
+
+     physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+     directory_locator             [label="<directory-locator>\noa",style=dashed];
+
+     file_locator                  [label="<file-locator>\noa", style=dashed];
+     file_system_locator           [label="<file-system-locator>\noa"];
+     file_system_file_locator      [label="<file-system-file-locator>"];
+     file_system_directory_locator [label="<file-system-directory-locator>"] ;
+
+     posix_file_system_locator     [label="<posix-file-system-locator>\noas", style=bold, color="#17594A"];
+     posix_directory_locator       [label="<posix-directory-locator>\ns", style=bold, color="#17594A"] ;
+     posix_file_locator            [label="<posix-file-locator>\ns", style=bold, color="#17594A"]
+
+     physical_locator              -> file_locator;
+     physical_locator              -> file_system_locator;
+     physical_locator              -> directory_locator;
+     directory_locator             -> file_system_directory_locator;
+     file_locator                  -> file_system_file_locator;
+     file_system_locator           -> file_system_file_locator;
+     file_system_locator           -> file_system_directory_locator;
+     file_system_locator           -> posix_file_system_locator;
+     file_system_directory_locator -> posix_directory_locator;
+     file_system_file_locator      -> posix_file_locator;
+     posix_file_system_locator     -> posix_directory_locator;
+     posix_file_system_locator     -> posix_file_locator;
+   }
 
 On Microsoft systems:
 
@@ -106,6 +164,45 @@ On Microsoft systems:
 - :class:`<microsoft-directory-locator>`
 - :class:`<microsoft-file-locator>`
 
+.. graphviz::
+   :caption: Microsoft file system hierarchy. Dashed boxes are classes
+             from module `locators`.
+
+   digraph G {
+     fontname="Arial,sans-serif";
+     node  [shape=box, color=gray];
+
+     locator                       [label="<locator>\noa",style=dashed];
+     physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+     directory_locator             [label="<directory-locator>\noa",style=dashed];
+     server_locator                [label="<server-locator>\noa",style=dashed];
+
+     file_locator                  [label="<file-locator>\noa", style=dashed];
+     file_system_locator           [label="<file-system-locator>\noa"];
+
+     microsoft_file_system_locator [label="<microsoft-file-system-locator>\na", style=bold, color="#17594A"];
+     microsoft_server_locator      [label="<microsoft-server-locator>\nas", style=bold, color="#17594A"];
+     microsoft_unc_locator         [label="<microsoft-unc-locator>\ns", style=bold, color="#17594A"];
+     microsoft_volume_locator      [label="<microsoft-volume-locator>\ns", style=bold, color="#17594A"];
+     microsoft_directory_locator   [label="<microsoft-directory-locator>", style=bold, color="#17594A"];
+     microsoft_file_locator        [label="<microsoft-file-locator>", style=bold, color="#17594A"];
+
+     locator                       -> server_locator;
+     locator                       -> physical_locator;
+     physical_locator              -> file_locator;
+     physical_locator              -> file_system_locator;
+     physical_locator              -> directory_locator;
+     server_locator                -> microsoft_server_locator;
+     directory_locator             -> microsoft_directory_locator;
+     file_locator                  -> microsoft_file_locator;
+     file_system_locator           -> microsoft_file_system_locator;
+     microsoft_file_system_locator -> microsoft_directory_locator;
+     microsoft_file_system_locator -> microsoft_file_locator;
+     microsoft_server_locator      -> microsoft_unc_locator;
+     microsoft_server_locator      -> microsoft_volume_locator;
+   }
+
+
 Native locators, which are bound to the host platform:
 
 - :const:`<native-file-system-locator>`
@@ -113,47 +210,15 @@ Native locators, which are bound to the host platform:
 File streams
 ------------
 
-File streams are intended only for accessing the contents of files. More
-general file handling facilities, such as renaming, deleting, moving, and
-parsing directory names, are provided by the :doc:`file-system
-</system/file-system>` module. The :drm:`make` method on :class:`<file-stream>`
-does not create direct instances of :class:`<file-stream>`, but instead an
-instance of a subclass determined by :gf:`type-for-file-stream`.
+File streams are intended only for accessing the contents of
+files. More general file handling facilities, such as renaming,
+deleting, moving, and parsing directory names, are provided by this
+module.
 
-make *file-stream-class*
-
-G.f method
-
-make <file-stream> #key locator: direction: if-exists:
- if-does-not-exist: buffer-size: element-type:
- asynchronous?: share-mode => *file-stream-instance*
-
-Creates and opens a stream over a file, and returns a new instance of a
-concrete subclass of :class:`<file-stream>` that streams over the
-contents of the file referenced by *filename*. To determine the concrete
-subclass to be instantiated, this method calls the generic function
-:gf:`type-for-file-stream`.
-
-The ``locator:`` init-keyword should be a string naming a file. If the
-:doc:`Locators <../system/locators>` library is in use, *filename*
-should be an instance of :class:`<locator>` or a string that can be
-coerced to one.
-
-The ``direction:`` init-keyword specifies the direction of the stream.
-This can be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
-The default is ``#"input"``.
-
-The ``if-exists:`` and ``if-does-not-exist:`` init-keywords specify actions
-to take if the file named by *filename* does or does not already exist
-when the stream is created. These init-keywords are discussed in more
-detail in `Options when creating file streams`_.
-
-The ``buffer-size:`` init-keyword can be used to suggest the size of a
-stream's buffer. See :class:`<buffered-stream>`.
-
-The ``element-type:`` init-keyword specifies the type of the elements in
-the file named by *filename*. See `Options when creating file
-streams`_ for more details.
+The :drm:`make` method on :class:`<file-stream>` does not create
+direct instances of :class:`<file-stream>`, but instead an instance of
+a subclass determined by :gf:`type-for-file-stream`. See
+`make`_ and `Options when creating file streams`_ below.
 
 Options when creating file streams
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -854,6 +919,8 @@ File-System module.
       Repeatedly follows symbolic links starting with *file* until it finds a
       non-link file or directory, or a non-existent link target.
 
+.. _make:
+
 .. method:: make
    :specializer: <file-stream>
 
@@ -862,7 +929,7 @@ File-System module.
    :signature: make *file-stream-class* #key *filename* *direction* *if-exists* *if-does-not-exist* *buffer-size* *element-type* => *file-stream-instance*
 
    :parameter file-stream-class: The class :class:`<file-stream>`.
-   :parameter #key filename: An instance of :drm:`<object>`.
+   :parameter #key locator: An instance of :drm:`<object>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. The default is ``#"input"``.
    :parameter #key if-exists: One of :drm:`#f`, ``#"new-version"``,
@@ -885,19 +952,20 @@ File-System module.
      instantiated, this method calls the generic function
      :gf:`type-for-file-stream`.
 
-     The *filename* init-keyword should be a string naming a file. If
-     the :doc:`Locators <../system/locators>` library is in use,
-     *filename* should be an instance of :class:`<locator>` or a string
-     that can be coerced to one.
+     The *locator* init-keyword should be a :class:`<file-locator>` or
+     a :drm:`<string>` that can be coerced to one.
 
-     The *direction* init-keyword specifies the direction of the stream.
+     The *direction* init-keyword specifies the direction of the
+     stream.  This can be one of ``#"input"``, ``#"output"``, or
+     ``#"input-output"``.  The default is ``#"input"``.
 
      The *if-exists* and *if-does-not-exist* init-keywords specify
      actions to take if the file named by *filename* does or does not
      already exist when the stream is created. These init-keywords are
      discussed in more detail in `Options when creating file streams`_.
 
-     The *buffer-size* init-keyword is explained in :class:`<buffered-stream>`.
+     The *buffer-size* init-keyword can be used to suggest the size of
+     a stream's buffer. See :class:`<buffered-stream>`.
 
      The *element-type* init-keyword specifies the type of the elements
      in the file named by *filename*. This allows file elements to be
