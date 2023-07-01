@@ -2,15 +2,11 @@ name: libraries-test-suite
 
 on:
   push:
-    # all branches
-    paths-ignore:
-      - 'documentation/**'
+    paths-ignore: ['documentation/**', '**.rst', '**.md']
   pull_request:
     branches:
-      - main
       - master
-    paths-ignore:
-      - 'documentation/**'
+    paths-ignore: ['documentation/**', '**.rst', '**.md']
 
   # This enables the Run Workflow button on the Actions tab.
   workflow_dispatch:
@@ -20,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -29,8 +25,8 @@ jobs:
 
       - uses: dylan-lang/install-opendylan@v3
         with:
-          version: 2022.1
-          tag: v2022.1.0
+          version: 2023.1
+          tag: v2023.1.0
 
       - name: Build libraries-test-suite-app
         run: |
