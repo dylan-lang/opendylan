@@ -6,10 +6,9 @@ There are a number of manual steps involved in making an Open Dylan release and
 it's easy to forget one or two. Hopefully we can automate some of these but for
 now here is a manual check-list.
 
-#. Let people know you plan to make a release. Use the Gitter channel for this.
-   Because the Dylan community is small there's no need to make a release
-   branch; people can just be careful what they commit until the release is
-   out.
+#. Tell `the Matrix channel
+   <https://matrix.to/#/#dylan-lang_general:gitter.im>`_ that you plan to build
+   a release.
 
 #. Update submodules to the latest stable version tags and document the version
    number changes in the release notes. This command may help::
@@ -33,22 +32,21 @@ now here is a manual check-list.
      <https://github.com/dylan-lang/opendylan/blob/master/README.md>`_ work on
      each platform.
 
+   **TODO:** This should be done automatically by GitHub CI. See
+   https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yaml
+   which currently only runs on Ubuntu.
+
 #. Update the version number in the sources
 
    * In the release-info library
    * In the configure.ac file
-   * Do a ``git grep`` for the previous release number, e.g., "2019.1" and see
-     if anything else needs to be updated.
+   * Do a ``git grep 2019.\\d`` to see if anything else needs to be updated.
 
 #. Update version numbers in ``build/unix/release-with-batteries.sh``
    to the latest stable versions of the relevant software (Clang+LLVM,
    the Boehm-Demers-Weiser garbage collector, and libunwind).
-   Download the release tarballs.
 
-#. Update the release notes. Hopefully these have been maintained as changes
-   were made.  GitHub's "Draft a New Release" UI provides a succinct list of
-   contributions based on pull requests since the previous release; just click
-   on "Generate release notes" button. *But don't actually create the release
+#. Update the release notes if necessary. *Don't actually create the release
    yet, until the release notes have been committed.*
 
    To determine what to put in the Contributors section of the notes, this
@@ -88,75 +86,71 @@ now here is a manual check-list.
 
    Ask Peter Housel to build the Windows release. :-)
 
-#. Test the tarballs
-
-   Before uploading to GitHub or opendylan.org, at least install and build
-   hello-world to make sure the release isn't obviously broken.
-
 #. Upload the binaries to GitHub
 
    Edit the release created previously and upload the binaries. Do **not**
    uncheck the "This is a pre-release" checkbox yet.
 
-   **Before finishing the steps below, make sure some core Dylan hackers use
-   the new release for a few days or a week.** With a small user base it's not
-   hard to miss critical problems.
+#. Test the tarballs
+
+   In your own branch, modify the `libraries-test-suite.yaml workflow
+   <https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yaml#L28>`_
+   to explicitly specify the new release version and tag so that it will be
+   installed and tested on a clean machine on multiple platforms. You'll have
+   to go to your fork in the GitHub UI, click on Actions, and find the workflow
+   runs.
 
 #. Upload binaries to opendylan.org
 
    The binaries go in ``/var/www/opendylan.org/downloads/opendylan/YYYY.n/``.
-   abeaumont, cgay, and housel have access currently.
+   abeaumont, cgay, and housel have access currently. (It's nice to have a
+   backup on a server that we own.)
 
 #. Update the `Downloads
    <https://github.com/dylan-lang/website/blob/master/source/download/index.rst>`_
    page.
 
-#. Write a news item and publish it on opendylan.org
-
-   Copy from the previous one but don't feel the need to follow the exact same
-   template. **Do** include the ``:Date:`` header as this is how articles get
-   included in the RSS feed.
-   https://github.com/dylan-lang/website/tree/master/source/news
-
-#. Announce the release. Probably a good idea to link to the above news item on
-   the website and just say a few brief words about the release in these
-   postings....
+#. Announce the release. Check previous announcements for ideas, but no need to
+   slavishly copy the format.
 
    * dylan-lang@googlegroups.com
-   * Tweet from @DylanLanguage
+   * @DylanLanguage on Twitter (housel)
+   * @DylanLang on fosstodon.org (cgay)
    * https://www.reddit.com/r/dylanlang/
 
-#. Some post-release tasks that aren't urgent but should be done soon...
+Post-release Tasks
+==================
 
-   #. Bump the OD version to something plausible, like 2023.1pre. `Example pull
-      request <https://github.com/dylan-lang/opendylan/pull/1465>`_.
+These items aren't urgent but should be done after each release.
 
-   #. Create a file in which to put the release notes for the next version. See
-      the above example pull request.
+#. Bump the OD version to something plausible, like 2023.1pre. `Example pull
+   request <https://github.com/dylan-lang/opendylan/pull/1465>`_.
 
-   #. Update other packages
+#. Create a file in which to put the release notes for the next version. See
+   the above example pull request.
 
-      * archlinux -- https://aur.archlinux.org/packages/opendylan/
-      * debian
-      * homebrew
+#. Update other packages
 
-      .. TODO: Add detail on how to make each package, either here or in a
-         separate document.
+   * archlinux -- https://aur.archlinux.org/packages/opendylan/
+   * debian
+   * homebrew
 
-   #. Update play.opendylan.org to the new version. Requires cgay for now, but
-      basically change the opendylan link to point to the new release, restart
-      the playground, and compile an example so the next build goes fast.
+   .. TODO: Add detail on how to make each package, either here or in a
+      separate document.
 
-   #. Update the `install-opendylan GitHub Action
-      <https://github.com/dylan-lang/install-opendylan/>`_ to use the new
-      release by default. Normally this just involves changed the default
-      values for the "version" and "tag" inputs.
+#. Update play.opendylan.org to the new version. Requires cgay for now, but
+   basically change the opendylan link to point to the new release, restart
+   the playground, and compile an example so the next build goes fast.
 
-      **Setting the new version as the default too quickly may be a bad idea.
-      People can explicitly upgrade to it whenever they want by changing their
-      CI to explicitly specify the new release.**
+#. Update the `install-opendylan GitHub Action
+   <https://github.com/dylan-lang/install-opendylan/>`_ to use the new
+   release by default. Normally this just involves changing the default
+   values for the "version" and "tag" inputs.
 
-   #. Update `the Wikipedia page
-      <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_ with the
-      latest release version and date.
+   **Setting the new version as the default too quickly may be a bad idea.
+   People can explicitly upgrade to it whenever they want by changing their
+   CI to explicitly specify the new release.**
 
+#. Update `the Wikipedia page
+   <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_ with the
+   latest release version and date.
