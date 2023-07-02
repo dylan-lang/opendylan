@@ -1,2 +1,0 @@
-Cleanup Typedefs
-****************

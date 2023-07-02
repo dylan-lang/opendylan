@@ -1,2 +1,0 @@
-Type System Improvements
-************************
