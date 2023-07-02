@@ -2,6 +2,7 @@ Open Dylan Release Notes
 ========================
 
 .. toctree::
+   :hidden:
 
    2023.1
    2022.1

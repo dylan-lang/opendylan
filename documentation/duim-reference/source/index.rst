@@ -4,9 +4,9 @@ DUIM Reference
 Contents:
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
-   copyright
    conventions
    geom
    ext-geom
@@ -16,6 +16,7 @@ Contents:
    layouts
    gadgets
    frames
+   copyright
 
 Indices and tables
 ==================

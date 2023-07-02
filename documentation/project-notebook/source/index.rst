@@ -29,6 +29,7 @@ Current Topics
 ==============
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
    compiler-implementation/index

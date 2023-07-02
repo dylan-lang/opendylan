@@ -7,6 +7,7 @@ in Open Dylan.
 Contents:
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
    preface

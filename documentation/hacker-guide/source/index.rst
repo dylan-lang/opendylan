@@ -5,10 +5,10 @@ Open Dylan Hacker's Guide
 Contents:
 
 .. toctree::
+   :hidden:
    :titlesonly:
    :maxdepth: 2
 
-   copyright
    contribute
    documentation/index
    build-system
@@ -18,6 +18,7 @@ Contents:
    duim/index
    topics/index
    glossary
+   copyright
 
 
 Indices and tables

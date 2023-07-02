@@ -5,9 +5,9 @@ Building Applications With DUIM
 Contents:
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
-   copyright.rst
    preface.rst
    intro.rst
    design.rst
@@ -17,6 +17,7 @@ Contents:
    commands.rst
    tour.rst
    source.rst
+   copyright.rst
 
 
 Indices and tables

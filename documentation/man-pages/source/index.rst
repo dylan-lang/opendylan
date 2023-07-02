@@ -9,6 +9,7 @@ Welcome to Open Dylan's documentation!
 Contents:
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
    dylan-compiler

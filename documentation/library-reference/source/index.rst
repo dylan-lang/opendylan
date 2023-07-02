@@ -9,6 +9,7 @@ See the `Dylan Package Docs <https://docs.opendylan.org>`_ for documentation of
 published Dylan packages.
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Extensions
 
@@ -16,6 +17,7 @@ published Dylan packages.
    lid
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Libraries
 

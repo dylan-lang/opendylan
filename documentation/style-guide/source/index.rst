@@ -3,6 +3,7 @@ Dylan Style Guide
 *****************
 
 .. contents::
+   :hidden:
    :depth: 1
    :local:
    :backlinks: none
