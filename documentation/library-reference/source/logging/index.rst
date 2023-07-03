@@ -11,10 +11,6 @@ Overview
 The logging library exports a single module named "logging".
 
 
-.. contents::
-
-
-
 Quick Start
 -----------
 

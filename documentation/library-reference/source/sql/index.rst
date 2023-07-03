@@ -18,9 +18,6 @@ and the same C-to-Dylan name mapping scheme as described in the Win32 API FFI
 library documentation. See the C FFI and Win32 library reference for details
 of that scheme. The ODBC-FFI library is otherwise undocumented.
 
-.. contents::
-   :local:
-
 Implementation
 --------------
 

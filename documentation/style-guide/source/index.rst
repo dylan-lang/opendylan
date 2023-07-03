@@ -2,15 +2,6 @@
 Dylan Style Guide
 *****************
 
-.. contents::
-   :hidden:
-   :depth: 1
-   :local:
-   :backlinks: none
-
-Purpose of this document
-========================
-
 This document describes a coding style that the Dylan group recommends.
 There are still some areas of disagreement, and there is still room to
 change this style guide. In some places the Dylan book group decided to

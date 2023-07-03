@@ -5,9 +5,6 @@ Notes, Warnings and Errors
 .. current-library:: dfmc-conditions
 .. current-module:: dfmc-conditions
 
-.. contents::
-   :local:
-
 The compiler provides a framework for handling notes, warnings and
 errors as they're encountered and created during the compilation
 process.
