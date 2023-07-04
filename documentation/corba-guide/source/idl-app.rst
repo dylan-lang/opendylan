@@ -1074,7 +1074,7 @@ Examples
 
    // Dylan
    define constant $E :: CORBA/<double> = 2.71828182845904523536;
-y   define constant $LYRS-TO-ALPHA-CENTAURI :: CORBA/<float> = 4.35;
+   define constant $LYRS-TO-ALPHA-CENTAURI :: CORBA/<float> = 4.35;
 
 
 Fixed-point decimals
