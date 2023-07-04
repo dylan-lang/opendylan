@@ -1,0 +1,463 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Dylan 2019.1 &mdash; Open Dylan Release Notes</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Dylan 2014.1 Release Notes" href="2014.1.html" />
+    <link rel="prev" title="Open Dylan 2020.1" href="2020.1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open Dylan Release Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Open Dylan 2019.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#llvm">LLVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiler">Compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-time">Run-time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging">Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-system">Build System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#library-changes">Library Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dylan-library">dylan Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-dylan-library">common-dylan Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#io-library">io Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#system-library">system Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-ffi-library">c-ffi Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testworks-library">testworks Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#collections-library">collections Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coloring-stream-library">coloring-stream Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variable-search-library">variable-search Library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Dylan Release Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Open Dylan 2019.1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/2019.1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="open-dylan-2019-1">
+<h1>Open Dylan 2019.1<a class="headerlink" href="#open-dylan-2019-1" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the 2019.1 release of Open Dylan, released 31
+March, 2019.  This release contains many enhancements and bug fixes, highlights
+of which are listed below.  For complete details see <a class="reference external" href="https://github.com/dylan-lang/opendylan/compare/v2014.1...v2019.1.0">the commit logs</a>.</p>
+<ul class="simple">
+<li><p>Download the release: <a class="reference external" href="http://opendylan.org/download">http://opendylan.org/download</a></p></li>
+<li><p>Read documentation: <a class="reference external" href="http://opendylan.org/documentation">http://opendylan.org/documentation</a></p></li>
+<li><p>Report problems: <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">https://github.com/dylan-lang/opendylan/issues</a></p></li>
+</ul>
+<div class="section" id="llvm">
+<h2>LLVM<a class="headerlink" href="#llvm" title="Permalink to this headline">¶</a></h2>
+<p>The LLVM back-end, which uses LLVM 7.x or later for code generation,
+is now full-featured and mature on i386 and x86_64 Linux, FreeBSD, and
+macOS platforms. Features of the LLVM back-end include:</p>
+<ul class="simple">
+<li><p>Full source-level debug information</p></li>
+<li><p>Zero-cost nonlocal exit support</p></li>
+<li><p>Arithmetic exception handling</p></li>
+</ul>
+<p>Note that LLVM is not yet the default back end so for now you must add
+<code class="docutils literal notranslate"><span class="pre">-back-end</span> <span class="pre">llvm</span></code> to the command line when building if you want LLVM.  We
+expect to make it the default in an upcoming release.</p>
+<p>Note also that the binary releases do not assume that you have a
+sufficiently new release of the LLVM Clang compiler, and are
+configured to use the platform default C compiler instead. If you have
+installed Clang 7.0 or later, you can edit
+<code class="docutils literal notranslate"><span class="pre">share/opendylan/build-scripts/config.jam</span></code> and set the CC variable
+to point to your Clang executable:</p>
+<div class="highlight-jam notranslate"><div class="highlight"><pre><span></span>CC                ?= clang-7 ;
+CCFLAGS           ?= -w -g -O2 ;
+C++               ?= clang++-7 ;
+C++FLAGS          ?= $(CCFLAGS) ;
+</pre></div>
+</div>
+</div>
+<div class="section" id="compiler">
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The compiler emits warnings for issues with <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">sealed</span> <span class="pre">domain</span></code>:</p>
+<ul>
+<li><p>Incorrect number of type specializers provided. The number of type
+specializers must match the number of required parameters for the
+generic function.</p></li>
+<li><p>Type specializers are not subtypes of the corresponding required
+argument of the generic function.</p>
+<p>For example, this is useful for catching an incorrect sealing of
+<code class="docutils literal notranslate"><span class="pre">make</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">sealed</span> <span class="nb">domain</span> <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;my-class&gt;</span><span class="p">);</span> <span class="c1">// Wrong</span>
+<span class="k">define</span> <span class="nb">sealed</span> <span class="nb">domain</span> <span class="nb">make</span> <span class="p">(</span><span class="nb">singleton</span><span class="p">(</span><span class="nc">&lt;my-class&gt;</span><span class="p">));</span> <span class="c1">// Correct</span>
+</pre></div>
+</div>
+</li>
+<li><p>Previously, <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">domain</span></code> was accepted without warning. This is
+not valid Dylan syntax as it should be <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">sealed</span> <span class="pre">domain</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Dylan functions that are marked as <code class="docutils literal notranslate"><span class="pre">not-inline</span></code> now take that into
+account when generating code in the LLVM and C back-ends.</p></li>
+<li><p>The C back-end no longer generates invalid C when outputting a
+float with a value of infinity or NaN.</p></li>
+<li><p>Some bugs that didn’t permit valid floating point literals to be
+used have been fixed. These are typically edge cases like <code class="docutils literal notranslate"><span class="pre">+.5</span></code>
+or <code class="docutils literal notranslate"><span class="pre">-3d3</span></code> rather than commonly used literal notations.</p></li>
+<li><p>The C back-end correctly handles indirect C-functions (where a
+function pointer is given to be invoked rather than a direct
+function call).</p></li>
+<li><p>Warnings and errors are now colorized when printing on supporting
+output devices.</p></li>
+<li><p>The compiler progress messages are now less verbose unless the
+<code class="docutils literal notranslate"><span class="pre">-verbose</span></code> command-line option is supplied.</p></li>
+<li><p>Warnings that refer to primitive and C functions are now clearer.</p></li>
+<li><p>A bug in the C back-end that broke required return values combined
+with type-checked <code class="docutils literal notranslate"><span class="pre">#rest</span></code> return values has been fixed.</p></li>
+<li><p>An erroneous validity check for the <code class="docutils literal notranslate"><span class="pre">Base-Address:</span></code> keyword in LID
+or HDP project files on Windows has been fixed.</p></li>
+<li><p>The HARP back-end can now handle raw FFI calls that return
+<code class="docutils literal notranslate"><span class="pre">&lt;raw-single-float&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;raw-double-float&gt;</span></code> values.</p></li>
+<li><p>The compiler command line, as well as the interactive <code class="docutils literal notranslate"><span class="pre">build</span></code> and
+<code class="docutils literal notranslate"><span class="pre">link</span></code> commands, accept a <code class="docutils literal notranslate"><span class="pre">-jobs</span></code> option to control the number
+of concurrent external build processes during the link
+stage. Setting this to the number of available CPU cores can provide
+speedups for large builds.</p></li>
+<li><p>The experimental <code class="docutils literal notranslate"><span class="pre">#name:foo</span></code> <a class="reference external" href="https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html">syntax</a> has been changed to <code class="docutils literal notranslate"><span class="pre">#:name:foo</span></code>.
+Requiring the initial colon will prevent conflicts with new hash literal
+syntax that may be added in the future. Several additional delimiter
+characters may now be used: <code class="docutils literal notranslate"><span class="pre">`...`</span></code>, <code class="docutils literal notranslate"><span class="pre">'...'</span></code>, <code class="docutils literal notranslate"><span class="pre">|...|</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="run-time">
+<h2>Run-time<a class="headerlink" href="#run-time" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Support for printing a backtrace (with demangled Dylan function names)
+when an unhandled error condition is signaled has been implemented.
+Note that this requires the use of the optional <code class="docutils literal notranslate"><span class="pre">libunwind</span></code> library.</p></li>
+<li><p>Support for handling “invalid” floating point exceptions has been
+added. These are generated when taking the square root of a negative
+number and other similar situations where the numerical domain
+is invalid.</p>
+<p>When an invalid floating point exception occurs,
+<code class="docutils literal notranslate"><span class="pre">&lt;arithmetic-domain-error&gt;</span></code> will be signaled (much like the other
+<code class="docutils literal notranslate"><span class="pre">&lt;arithmetic-error&gt;</span></code> situations).</p>
+</li>
+<li><p>Limited integer instance checks have been optimized. This will have
+the most impact when using the LLVM compiler backend.</p></li>
+<li><p>In the C runtime, <code class="docutils literal notranslate"><span class="pre">primitive_sleep</span></code> now functions correctly.</p></li>
+<li><p>Two new primitives, <code class="docutils literal notranslate"><span class="pre">primitive-read-cycle-counter</span></code> and
+<code class="docutils literal notranslate"><span class="pre">primitive-read-return-address</span></code>, have been added. These are useful
+for writing profiling and event logging tools.</p></li>
+</ul>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>There is a new <code class="docutils literal notranslate"><span class="pre">dylan-lldb</span></code> wrapper script which can be used to
+launch <code class="docutils literal notranslate"><span class="pre">lldb</span></code> and pre-load the Open Dylan LLDB integration scripts.
+<code class="docutils literal notranslate"><span class="pre">lldb</span></code> is the debugger that is part of the LLVM project. It is the
+default debugger on macOS.</p>
+<p>If you need it to launch a custom build of LLDB, you can set the
+<code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_LLDB</span></code> environment variable to point to an alternative
+<code class="docutils literal notranslate"><span class="pre">lldb</span></code> executable.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The documentation generator included within the compiler has been
+updated to produce better and more accurate documentation that will
+require less manual editing. To use it, after compiling your library,
+use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="o">-</span><span class="nb">format</span> <span class="n">rst</span> <span class="o">-</span><span class="n">file</span> <span class="n">my</span><span class="o">-</span><span class="n">lib</span><span class="o">.</span><span class="n">rst</span> <span class="n">interface</span><span class="o">-</span><span class="n">reference</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="build-system">
+<h2>Build System<a class="headerlink" href="#build-system" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The arguments to configure for specifying which garbage collector to
+use have changed. The arguments are now:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">mps</span><span class="o">=</span><span class="n">DIR</span>
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">gc</span><span class="o">=</span><span class="n">DIR</span>
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">harp</span><span class="o">-</span><span class="n">collector</span><span class="o">=</span><span class="n">mps</span><span class="o">|</span><span class="n">boehm</span><span class="o">|</span><span class="n">malloc</span>
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">c</span><span class="o">-</span><span class="n">collector</span><span class="o">=</span><span class="n">boehm</span><span class="o">|</span><span class="n">malloc</span>
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">llvm</span><span class="o">-</span><span class="n">collector</span><span class="o">=</span><span class="n">boehm</span><span class="o">|</span><span class="n">malloc</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--with-mps</span></code> option (for pointing to the Memory Pool System
+source directory) is only needed when using the MPS collector with
+the HARP back-end on either 32-bit x86 FreeBSD or 32-bit x86 Linux.</p>
+<p>The system should be able to find the Boehm-Demers-Weiser collector
+automatically if it is in the standard system install directory; the
+<code class="docutils literal notranslate"><span class="pre">--with-gc</span></code> option should only be needed if it is installed in a
+non-standard location.</p>
+<p>The default collectors are MPS for the HARP back-end’s run-time
+library, and the Boehm-Demers-Weiser collector for the C and LLVM
+back-ends. These shouldn’t be changed unless you’re sure you know
+what you’re doing.</p>
+</li>
+<li><p>A new option for building C++ code, <code class="docutils literal notranslate"><span class="pre">c++-source-files</span></code>,  has been
+added to LID files.  This matches the <code class="docutils literal notranslate"><span class="pre">c-source-files:</span></code> keyword.</p></li>
+<li><p>A failure to find shared libraries on Ubuntu 17 &amp; 18 was fixed. See
+GitHub issues <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/1064">1064</a> and <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/1197">1197</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="library-changes">
+<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dylan-library">
+<h3>dylan Library<a class="headerlink" href="#dylan-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Symbol comparisons when using <code class="docutils literal notranslate"><span class="pre">\=</span></code> are now the same as using <code class="docutils literal notranslate"><span class="pre">\==</span></code>
+rather than being significantly more expensive. See <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/899">issue #899</a>.</p></li>
+<li><p>The function dispatch implementation now makes a proper distinction
+between <code class="docutils literal notranslate"><span class="pre">&lt;single-method-engine-node&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;keyword-method&gt;</span></code> with the
+help of a new <code class="docutils literal notranslate"><span class="pre">primitive-callable-as-engine-node?</span></code> compiler primitive.</p></li>
+<li><p>Integer and floating point literal syntax is changed to allow underscore
+between any two successive digits, for readability.  See
+<a class="reference external" href="https://opendylan.org/proposals/dep-0011-numeric-literal-syntax.html">DEP-0011</a>
+for details.</p></li>
+</ul>
+</div>
+<div class="section" id="common-dylan-library">
+<h3>common-dylan Library<a class="headerlink" href="#common-dylan-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">transcendentals</span></code> module now has a <code class="docutils literal notranslate"><span class="pre">sincos</span></code> generic function.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">transcendentals</span></code> module now has a <code class="docutils literal notranslate"><span class="pre">hypot</span></code> generic function.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">transcendentals</span></code> module now has an <code class="docutils literal notranslate"><span class="pre">ilog2</span></code> function that returns
+the integer value of the logarithm of a value in base 2.</p></li>
+<li><p>The transcendental and hyperbolic functions are no longer sealing their
+domains on <code class="docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code> parameters.</p></li>
+<li><p>Again in the <code class="docutils literal notranslate"><span class="pre">transcendentals</span></code> module, many methods have been removed
+that converted from <code class="docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;float&gt;</span></code>. Callers should pass in
+values of the appropriate type and precision instead. This impacts:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">^</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sqrt</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sin</span></code>, <code class="docutils literal notranslate"><span class="pre">cos</span></code>, <code class="docutils literal notranslate"><span class="pre">tan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">asin</span></code>, <code class="docutils literal notranslate"><span class="pre">acos</span></code>, <code class="docutils literal notranslate"><span class="pre">atan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sinh</span></code>, <code class="docutils literal notranslate"><span class="pre">cosh</span></code>, <code class="docutils literal notranslate"><span class="pre">tanh</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">asinh</span></code>, <code class="docutils literal notranslate"><span class="pre">acosh</span></code>, <code class="docutils literal notranslate"><span class="pre">atanh</span></code></p></li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">common-extensions</span></code> module now provides a <code class="docutils literal notranslate"><span class="pre">classify-float</span></code> method
+which determines whether the given float is <code class="docutils literal notranslate"><span class="pre">#&quot;normal&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;zero&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;infinite&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;nan&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">#&quot;subnormal&quot;</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">byte-vector</span></code> module now provides <code class="docutils literal notranslate"><span class="pre">hexstring</span></code> and <code class="docutils literal notranslate"><span class="pre">from-hexstring</span></code>
+methods for fast conversion between <code class="docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code> and hexadecimal
+strings.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">thread</span></code> module has gained a <code class="docutils literal notranslate"><span class="pre">current-thread-id</span></code> function. The
+<code class="docutils literal notranslate"><span class="pre">thread-id</span></code> is also available for any <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code> object.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">simple-profiling</span></code> module now exports <code class="docutils literal notranslate"><span class="pre">start-profiling</span></code> and
+<code class="docutils literal notranslate"><span class="pre">stop-profiling</span></code> rather than requiring that users directly invoke
+<code class="docutils literal notranslate"><span class="pre">start-profiling-type</span></code> and <code class="docutils literal notranslate"><span class="pre">stop-profiling-type</span></code> multiple times.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">machine-words</span></code> module now knows how to count the bits set
+in a machine word via <code class="docutils literal notranslate"><span class="pre">%count-ones</span></code>. This is also available as
+a new compiler primitive, <code class="docutils literal notranslate"><span class="pre">primitive-machine-word-count-ones</span></code>.</p></li>
+<li><p>Mismatches in the use of internal-use raw types have been resolved.</p></li>
+</ul>
+</div>
+<div class="section" id="io-library">
+<h3>io Library<a class="headerlink" href="#io-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>An implementation of indenting streams for handling indented text
+output has been added. See <code class="docutils literal notranslate"><span class="pre">&lt;indented-stream&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">indent</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">with-indentation</span></code> in the <code class="docutils literal notranslate"><span class="pre">streams</span></code> module.</p></li>
+<li><p>Some generic functions that apply to <code class="docutils literal notranslate"><span class="pre">&lt;buffered-stream&gt;</span></code> have had
+their signatures tightened.</p></li>
+<li><p>Mismatches in the use of internal-use raw types have been resolved.</p></li>
+</ul>
+</div>
+<div class="section" id="system-library">
+<h3>system Library<a class="headerlink" href="#system-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A new <code class="docutils literal notranslate"><span class="pre">machine-concurrent-thread-count</span></code> function, which returns
+the number of active CPU cores or execution threads, has been added
+to the <code class="docutils literal notranslate"><span class="pre">operating-system</span></code> module.</p></li>
+<li><p>New specializations on <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a> have been added for creating locators
+from strings for the <code class="docutils literal notranslate"><span class="pre">&lt;file-system-directory-locator&gt;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&lt;file-system-file-locator&gt;</span></code> classes. These aren’t typically used but
+their omission led to possible confusion for users.</p></li>
+</ul>
+<ul class="simple">
+<li><p>A problem with constructing <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> objects for <code class="docutils literal notranslate"><span class="pre">time_t</span></code> values
+with more than 30 bits (i.e., any time after Sat Jan 10 13:37:04 UTC 2004)
+has been fixed.</p></li>
+<li><p>Mismatches in the use of internal-use raw types have been resolved.</p></li>
+</ul>
+</div>
+<div class="section" id="c-ffi-library">
+<h3>c-ffi Library<a class="headerlink" href="#c-ffi-library" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Nested C structs by value are now supported by the C backend. Previously,
+using this construct would result in a compilation error in the generated
+C code.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">%call-c-function</span></code> or <code class="docutils literal notranslate"><span class="pre">%objc-msgsend</span></code> with a void result type
+no longer requires specifying a result type of <code class="docutils literal notranslate"><span class="pre">&lt;raw-c-void&gt;</span></code>. Simply
+putting an empty value list is sufficient:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">%call-c-function</span> <span class="p">(</span><span class="s">&quot;SetLastError&quot;</span><span class="p">,</span> <span class="k">c-modifiers:</span> <span class="s">&quot;__stdcall&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">dwErrorCode</span> <span class="p">::</span> <span class="nc">&lt;raw-c-unsigned-long&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="p">(</span><span class="n">integer-as-raw</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Previously, this required specifying the result type explicitly:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">%call-c-function</span> <span class="p">(</span><span class="s">&quot;SetLastError&quot;</span><span class="p">,</span> <span class="k">c-modifiers:</span> <span class="s">&quot;__stdcall&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">dwErrorCode</span> <span class="p">::</span> <span class="nc">&lt;raw-c-unsigned-long&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">nothing</span> <span class="p">::</span> <span class="nc">&lt;raw-c-void&gt;</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">integer-as-raw</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="testworks-library">
+<h3>testworks Library<a class="headerlink" href="#testworks-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>It is no longer necessary to use suites. By default <code class="docutils literal notranslate"><span class="pre">run-test-application</span></code>
+runs all defined tests.</p></li>
+<li><p>Test results are now colorized when the output stream supports it.
+Green for success, red for failure, etc.</p></li>
+<li><p>Test summaries are more concise and easier to read.</p></li>
+<li><p>Added support for expected failures.</p></li>
+<li><p>New assertion macros <code class="docutils literal notranslate"><span class="pre">assert-instance?</span></code> and <code class="docutils literal notranslate"><span class="pre">assert-not-instance?</span></code>.</p></li>
+<li><p>Many other minor improvements including to the documentation.</p></li>
+</ul>
+</div>
+<div class="section" id="collections-library">
+<h3>collections Library<a class="headerlink" href="#collections-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">bit-count</span></code> operation from <code class="docutils literal notranslate"><span class="pre">bit-vector</span></code> (also used by <code class="docutils literal notranslate"><span class="pre">&lt;bit-set&gt;</span></code>)
+has been changed to use the new <code class="docutils literal notranslate"><span class="pre">primitive-machine-word-count-ones</span></code> that
+has been added in this release.</p></li>
+</ul>
+</div>
+<div class="section" id="coloring-stream-library">
+<h3>coloring-stream Library<a class="headerlink" href="#coloring-stream-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A new library for doing colored text output has been added. It currently
+supports ANSI codes on Unix terminals. It has been
+<a class="reference external" href="http://opendylan.org/documentation/library-reference/coloring-stream/">documented in the library reference</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="variable-search-library">
+<h3>variable-search Library<a class="headerlink" href="#variable-search-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A bug that caused intermittent crashes on FreeBSD has been fixed.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<p>We’d like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete…</p>
+<ul class="simple">
+<li><p>Bruce Mitchener</p></li>
+<li><p>Peter S. Housel</p></li>
+<li><p>Carl Gay</p></li>
+<li><p>Peter Hull</p></li>
+<li><p>Fernando Raya</p></li>
+<li><p>Alfredo Beaumont</p></li>
+<li><p>Wim Vander Schelden</p></li>
+<li><p>Kamil Rytarowski</p></li>
+<li><p>Ingo Albrecht</p></li>
+<li><p>Dan Midwood</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2020.1.html" class="btn btn-neutral float-left" title="Open Dylan 2020.1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2014.1.html" class="btn btn-neutral float-right" title="Open Dylan 2014.1 Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

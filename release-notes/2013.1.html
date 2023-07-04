@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Dylan 2013.1 Release Notes &mdash; Open Dylan Release Notes</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Dylan 2012.1 Release Notes" href="2012.1.html" />
+    <link rel="prev" title="Open Dylan 2013.2 Release Notes" href="2013.2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open Dylan Release Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Open Dylan 2013.1 Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#improvements">Improvements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#copyrights-and-licensing">Copyrights and Licensing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#portability">Portability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runtime">Runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testworks">TestWorks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#libraries">Libraries</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#collections">collections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#i-o">I/O</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#security">Security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bug-fixes">Bug Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windows-support">Windows Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-tools">Build Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compiler">Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#construction-of-byte-vector-instances">Construction of byte vector instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Libraries</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dylan">dylan</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#common-dylan">common-dylan</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network">network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#system">system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Dylan Release Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Open Dylan 2013.1 Release Notes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/2013.1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="open-dylan-2013-1-release-notes">
+<h1>Open Dylan 2013.1 Release Notes<a class="headerlink" href="#open-dylan-2013-1-release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document describes the 2013.1 release of Open Dylan, released
+July 11, 2013.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://opendylan.org/download/index.html">Download the release</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">Report bugs</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/v2013.1">Source code</a></p></li>
+</ul>
+</div>
+<div class="section" id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="copyrights-and-licensing">
+<h3>Copyrights and Licensing<a class="headerlink" href="#copyrights-and-licensing" title="Permalink to this headline">¶</a></h3>
+<p>The copyright notices have been updated to include the relevant
+copyright notice from Carnegie Mellon University as parts of this
+software are derived from the Gwydion Dylan project at Carnegie
+Mellon University.</p>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>LID file keywords are better documented in the Library Reference.</p>
+<p>The strings, bit-set, and bit-vector libraries have been documented in
+the Library Reference.</p>
+<p>The join method in the common-extensions library has been documented in the
+Library Reference.</p>
+<p>The table macro in the collections library has been documented in the Library
+Reference.</p>
+<p>The machine-number and transcendentals documentation sections have been
+updated to current documentation format.</p>
+</div>
+<div class="section" id="portability">
+<h3>Portability<a class="headerlink" href="#portability" title="Permalink to this headline">¶</a></h3>
+<p>The configure script could fail on Gentoo Linux as there was not always
+a static <code class="docutils literal notranslate"><span class="pre">libgc.a</span></code> available. We now check for the file that we need
+on each platform.</p>
+<p>The (incomplete) <code class="docutils literal notranslate"><span class="pre">amd64-freebsd</span></code> port has been renamed to <code class="docutils literal notranslate"><span class="pre">x86_64-freebsd</span></code>
+to be more consistent with our other platforms. Additionally, other fixes
+have been made to the 64 bit FreeBSD port.</p>
+<p>Initial groundwork is in place for an ARM Linux build using the C
+compiler back-end.</p>
+</div>
+<div class="section" id="runtime">
+<h3>Runtime<a class="headerlink" href="#runtime" title="Permalink to this headline">¶</a></h3>
+<p>The C run-time no longer attempts to drop into a debugger if you allocate
+more than roughly 100M of memory in a single allocation.</p>
+<p>Debugging code generated by the C compiler back-end is much improved
+and is documented.</p>
+</div>
+<div class="section" id="testworks">
+<h3>TestWorks<a class="headerlink" href="#testworks" title="Permalink to this headline">¶</a></h3>
+<p>TestWorks has been re-arranged some to have a single git submodule which
+has resulted in a couple of directories moving around.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">gui-testworks</span></code> library is now named <code class="docutils literal notranslate"><span class="pre">testworks-gui</span></code> to be consistent
+with the other TestWorks components.</p>
+</div>
+<div class="section" id="libraries">
+<h3>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="collections">
+<h4>collections<a class="headerlink" href="#collections" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">collections</span></code> library now exports a <code class="docutils literal notranslate"><span class="pre">collections</span></code> convenience
+module that re-exports the <code class="docutils literal notranslate"><span class="pre">set</span></code>, <code class="docutils literal notranslate"><span class="pre">bit-set</span></code>, <code class="docutils literal notranslate"><span class="pre">bit-vector</span></code> and
+<code class="docutils literal notranslate"><span class="pre">byte-vector</span></code> modules. This simplifies using the additional collection
+types from within other libraries and applications.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">table-extensions</span></code> module now exports <code class="docutils literal notranslate"><span class="pre">&lt;case-insensitive-string-table&gt;</span></code>,
+which is a table whose keys are strings and checked without case sensitivity.</p>
+</div>
+<div class="section" id="i-o">
+<h4>I/O<a class="headerlink" href="#i-o" title="Permalink to this headline">¶</a></h4>
+<p>Locking on streams has been reduced and eliminated in some cases. Previously,
+formatting to a string or formatting a date would engage in stream locking
+despite it not being necessary. This had a performance impact on the HTTP
+server among other applications.</p>
+</div>
+</div>
+<div class="section" id="security">
+<h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
+<p>The binaries generated by the HARP compiler back-end on x86-linux and
+x86-freebsd no longer have executable stacks.</p>
+</div>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>Unit tests have been added to the <code class="docutils literal notranslate"><span class="pre">byte-vector</span></code> module.</p>
+</div>
+</div>
+<div class="section" id="bug-fixes">
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="windows-support">
+<h3>Windows Support<a class="headerlink" href="#windows-support" title="Permalink to this headline">¶</a></h3>
+<p>The 2012.1 release introduced a bug with where settings were
+stored in the Windows registry. This has been corrected.</p>
+<p>The Windows installer for Open Dylan now defaults to suggesting the
+Pelles C tools rather than Visual C 6. This is the start of improving
+the new user experience on Windows and having it work out of the
+box.</p>
+</div>
+<div class="section" id="build-tools">
+<h3>Build Tools<a class="headerlink" href="#build-tools" title="Permalink to this headline">¶</a></h3>
+<p>Directories listed in the shell environment variable
+<code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> now take precedence over the
+<code class="docutils literal notranslate"><span class="pre">./registry</span></code> directory, if any.</p>
+<p>Warnings are now formatted in more standard way so that tools like
+Emacs can parse them, for example to jump to the source of the next
+error.</p>
+<p>Some simplifications to cross-compilation have been made. Setting
+<code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_PLATFORM_NAME</span></code> will now try to set the correct
+default build script. Additionally, the configure script now
+supports cross-compilation.</p>
+</div>
+<div class="section" id="id1">
+<h3>Runtime<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>A deadlock when using threads on x86-linux has been fixed. This bug
+was the result of signal handling code blocking signals that the
+GC required.</p>
+</div>
+<div class="section" id="compiler">
+<h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h3>
+<p>The compiler no longer asserts when compiling code that performs an
+<code class="docutils literal notranslate"><span class="pre">rcurry</span></code> on an <code class="docutils literal notranslate"><span class="pre">element-setter</span></code> method.</p>
+</div>
+<div class="section" id="construction-of-byte-vector-instances">
+<h3>Construction of byte vector instances<a class="headerlink" href="#construction-of-byte-vector-instances" title="Permalink to this headline">¶</a></h3>
+<p>When using the C backend <code class="docutils literal notranslate"><span class="pre">fill:</span></code> keyword parameter in <code class="docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code>
+instance construction was not working properly and caused the byte vector to
+be initialized with a wrong value. This has been corrected.</p>
+</div>
+<div class="section" id="id2">
+<h3>Libraries<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="dylan">
+<h4>dylan<a class="headerlink" href="#dylan" title="Permalink to this headline">¶</a></h4>
+<p>The Dylan library now allows <code class="docutils literal notranslate"><span class="pre">map</span></code>, etc., on <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;explicit-key-collection&gt;</span></code></a>
+subclasses that have a <code class="docutils literal notranslate"><span class="pre">key-test</span></code> other than <code class="docutils literal notranslate"><span class="pre">==</span></code>.</p>
+</div>
+<div class="section" id="common-dylan">
+<h4>common-dylan<a class="headerlink" href="#common-dylan" title="Permalink to this headline">¶</a></h4>
+<p>On Mac OS X, some code run at startup to get the application name and
+arguments would write past the end of a buffer, resulting in memory
+corruption and likely crashes.</p>
+</div>
+<div class="section" id="network">
+<h4>network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h4>
+<p>Various errors on 64 bit platforms were fixed, including attempting
+to establish a new connection. These errors were the result of using
+a 64 bit value where a 32 bit value was required.</p>
+</div>
+<div class="section" id="system">
+<h4>system<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h4>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">environment-variable-setter</span></code> no longer leaks memory.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2013.2.html" class="btn btn-neutral float-left" title="Open Dylan 2013.2 Release Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2012.1.html" class="btn btn-neutral float-right" title="Open Dylan 2012.1 Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

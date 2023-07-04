@@ -1,0 +1,164 @@
+*****************
+Open Dylan 2022.1
+*****************
+
+This document describes the 2022.1 release of Open Dylan, released 28
+November, 2022.  This release contains many enhancements and bug fixes,
+highlights of which are listed below.  For complete details see `the opendylan
+commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2020.1.0...v2022.1.0>`_.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+* Fixed a crash in the optimizer that ocurred when compiling certain
+  C-FFI primitive functions.
+
+* Improved support for code generation of ``apply`` calls to known
+  methods.
+
+* Improved source line tracking in the generated code, reducing the
+  occurence of code marked as being at line 0 by the debugger.
+
+* Added support for linking executable Dylan libraries and all of
+  their dependencies into a single unified executable using the
+  ``-unify`` build option. The unified executable will be stored in
+  the :file:`sbin` (static executables binary) directory of the
+  personal-root, normally ``./_build/sbin/``.
+
+* Fixed a build script problem that caused separate debug information
+  to be lost on FreeBSD platforms (or others using ``llvm-strip`` as
+  the default ``strip`` program).
+
+* Fixed a problem with certain types of multiple-value return (`bug 1455
+  <https://github.com/dylan-lang/opendylan/issues/1455>`_).
+
+* Fixed a problem with the optimization of functions that tail-call
+  themselves.
+
+* To aid with automation tasks the ``dylan-compiler`` and ``dylan-environment``
+  executables now return exit code ``3`` if any serious warnings are
+  generated. Use the new ``-allow-serious-warnings`` flag to return to the old
+  behavior of returning exit code ``0``.
+
+Tooling
+=======
+
+* The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command is a new tool
+  to manage Dylan packages and workspaces. It provides a centralized catalog of
+  Dylan packages and a way to manage dependencies without resorting to Git
+  submodules or needing to manually create registry files. See the `dylan-tool
+  documentation <https://opendylan.org/documentation/dylan-tool>`_ for
+  details.
+
+  .. note:: This tool is still in the relatively early stages of development.
+
+Run-time
+========
+
+* Fixed a problem that prevented treating invalid keyword arguments as
+  run-time warnings (`bug 1386
+  <https://github.com/dylan-lang/opendylan/issues/1386>`_)
+
+* Changed the run-time on x86_64 Linux to stop catching the SIGSEGV signal.
+
+Platform Support
+================
+
+* The 64-bit RISC-V architecture (rv64gc ISA) is now supported on Linux.
+
+IDE
+===
+
+* A bug that caused error pop-up dialogs whenever the cursor was moved
+  in an interactor window has been fixed.
+
+Documentation
+=============
+
+* The `Developing Component Software with CORBA
+  <http://opendylan.org/documentation/opendylan/corba-guide/index.htm>`_
+  guide has been updated.
+
+* Documentation for the DOOD library has been added to `the library reference
+  <https://opendylan.org/documentation/library-reference/index.html>`_.
+
+* Documentation for the internal ``access-path`` and ``debugger-manager``
+  libraries is now available in the `Open Dylan Hacker's Guide
+  <https://opendylan.org/documentation/hacker-guide/index.html>`_.
+
+Library Changes
+===============
+
+common-dylan Library
+--------------------
+
+* ``integer-to-string`` has a new *lowercase?* keyword argument. When true,
+  lowercase characters are used when *base* is above 10.
+
+* ``string-to-integer`` performance has been improved.
+
+io Library
+----------
+
+* The behavior of the ``%x`` format directive has changed. "%x" now outputs
+  lowercase hexadecimal numbers and "%X" outputs uppercase. The old behavior
+  was to always output uppercase. Fixes `bug 1054
+  <https://github.com/dylan-lang/opendylan/issues/1054>`_.
+
+system Library
+--------------
+
+* A segmentation fault when using ``list-locator`` was fixed (`bug 1372
+  <https://github.com/dylan-lang/opendylan/issues/1372>`_).
+
+* Function ``file-locator``, to create a file locator as a child of a directory
+  locator, is now exported from the locators module.
+
+ssl Library
+-----------
+
+The ``ssl-network`` library has been updated for compatibility with OpenSSL 1.1.x.
+
+testworks Library
+-----------------
+
+* The new function ``write-test-file`` simplifies the creation of test files.
+
+* ``test-temp-directory`` now handles test names containing ``/``.  This is
+  important for tests using the naming convention ``test-foo/subtest1``,
+  ``test-foo/subtest2``.
+
+
+collections Library
+-------------------
+
+* The ``table`` macro has been renamed to ``tabling``. ``table`` is not an
+  unlikely name for a function parameter when writing code that generically
+  operates on tables, and the existence of the ``table`` macro causes a
+  confusing compiler warning for references to that name that aren't in the
+  correct form.
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete...
+
+* Peter S. Housel
+* Carl Gay
+* Peter Hull
+* phongphan
+* Fernando Raya
+* Pierre De Pascale
+* kryptine

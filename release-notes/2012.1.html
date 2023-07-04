@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Dylan 2012.1 Release Notes &mdash; Open Dylan Release Notes</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Dylan 2011.1 Release Notes" href="2011.1.html" />
+    <link rel="prev" title="Open Dylan 2013.1 Release Notes" href="2013.1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open Dylan Release Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Open Dylan 2012.1 Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#language-specification-changes">Language Specification Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c3-superclass-linearization">C3 Superclass Linearization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#library-changes">Library Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-improvements">Documentation Improvements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dylan-compiler-improvements">dylan-compiler Improvements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#relocatable-executables-and-libraries">Relocatable Executables and Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usability-output-and-locating-libraries">Usability - Output and Locating Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug-back-end-improvements">Debug Back-end Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-generation">Documentation Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependency-graph-generation">Dependency Graph Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#code-generation-improvements">Code Generation Improvements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#limited-collections">Limited Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#miscellaneous-fixes">Miscellaneous Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#c-back-end-changes">C Back-end Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multi-threading">Multi-threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance-improvements">Performance Improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shared-library-initialization">Shared Library Initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixes">Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#c-ffi-changes">C-FFI Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c-variable-setters">C-variable setters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constant-slot-syntax">Constant Slot Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#other-changes">Other Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-dylan-compiler-under-gdb-with-fdmake">Running dylan-compiler under gdb with fdmake</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Dylan Release Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Open Dylan 2012.1 Release Notes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/2012.1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="open-dylan-2012-1-release-notes">
+<h1>Open Dylan 2012.1 Release Notes<a class="headerlink" href="#open-dylan-2012-1-release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document describes the 2012.1 release of Open Dylan, released
+December 19, 2012.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://opendylan.org/download/index.html">Download the release</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">Report bugs</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/v2012.1">Source code</a></p></li>
+</ul>
+</div>
+<div class="section" id="language-specification-changes">
+<h2>Language Specification Changes<a class="headerlink" href="#language-specification-changes" title="Permalink to this headline">¶</a></h2>
+<p>We try to keep changes to the language definition few and far between
+and limited to things that are either necessary or clear advantages.</p>
+<div class="section" id="c3-superclass-linearization">
+<h3>C3 Superclass Linearization<a class="headerlink" href="#c3-superclass-linearization" title="Permalink to this headline">¶</a></h3>
+<p>Open Dylan now uses the C3 superclass linearization algorithm.  This
+algorithm was originally designed for Dylan but for historical reasons
+was never implemented in Dylan, until now.  In most cases this change
+should not change the semantics of existing programs, but if it does
+the compiler will issue a serious warning.  In a future release this
+will be changed to non-serious warning, and then eventually the
+warning will be removed completely.</p>
+<p>See <a class="reference external" href="http://opendylan.org/proposals/dep-0003.html">DEP-0003</a> for
+more details.</p>
+</div>
+</div>
+<div class="section" id="library-changes">
+<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">CL-plists</span></code> module in the <code class="docutils literal notranslate"><span class="pre">cl</span></code> library has been removed.
+Any usages of it can be replaced by using the <code class="docutils literal notranslate"><span class="pre">plists</span></code> module
+from the <code class="docutils literal notranslate"><span class="pre">collections</span></code> library.  Additionally, the <code class="docutils literal notranslate"><span class="pre">plists</span></code>
+module has been <a class="reference external" href="http://opendylan.org/documentation/library-reference/collections/plists.html">documented</a>.</p></li>
+<li><p>Support for MacOS 9 locators has been removed. This is pre-OS X code
+and we don’t support Mac OS 9 as a platform.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">bit-vectors</span></code> module in the <code class="docutils literal notranslate"><span class="pre">collections</span></code> library works
+correctly now on 64 bit platforms.</p></li>
+<li><p>The floating point support in the <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> library has
+been enhanced.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">command-line-parser</span></code> library has been relicensed and is now
+available for wider usage.  This replaces old command parsing code.
+This library has not yet been documented, but it has been cleaned
+up substantially and the API is much more consistent.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load-library</span></code> has now been implemented on Linux, Mac OS X and
+FreeBSD. Previously, this was only supported on Windows.</p></li>
+<li><p>A new <code class="docutils literal notranslate"><span class="pre">strings</span></code> library replaces the <code class="docutils literal notranslate"><span class="pre">string-extensions</span></code>
+library.  The new library provides a simpler API with all names
+exported from a single <code class="docutils literal notranslate"><span class="pre">strings</span></code> module.  <a class="reference external" href="http://opendylan.org/proposals/dep-0004.html">DEP-0004</a> is currently the
+best documentation for this library.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">string-extensions</span></code> library has been removed.  Use the
+<code class="docutils literal notranslate"><span class="pre">strings</span></code> library instead.  Some of the functionality in
+<code class="docutils literal notranslate"><span class="pre">string-extensions</span></code>, such as character sets, was moved to the
+regular-expressions library, which was the only thing using it.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">functional-objects-extras</span></code> module was not used and has been
+removed.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">*open-accessors*</span></code> table has been removed from the I/O library.</p></li>
+<li><p>Previously, sometimes using <code class="docutils literal notranslate"><span class="pre">force-output()</span></code> would also result
+in an <code class="docutils literal notranslate"><span class="pre">fsync()</span></code> without specifying <code class="docutils literal notranslate"><span class="pre">synchronize?:</span> <span class="pre">#t</span></code>. This
+has been corrected. If you want to make sure that something
+makes it to the disk, either use <code class="docutils literal notranslate"><span class="pre">sychronize-output()</span></code>
+or pass <code class="docutils literal notranslate"><span class="pre">synchronize?:</span> <span class="pre">#t</span></code> to <code class="docutils literal notranslate"><span class="pre">force-output()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format-date</span></code> from the <code class="docutils literal notranslate"><span class="pre">system</span></code> library is faster.</p></li>
+</ul>
+</div>
+<div class="section" id="documentation-improvements">
+<h2>Documentation Improvements<a class="headerlink" href="#documentation-improvements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>All documentation has been converted to the Sphinx document
+generator.  This is a huge improvement in our ability to keep the
+documentation up-to-date, modernizes its look and feel, and allows
+us to generate various output formats.</p></li>
+<li><p>The core libraries documentation has been unified into one <a class="reference external" href="http://opendylan.org/documentation/library-reference/index.html">Dylan
+Library Reference</a>
+document.</p></li>
+<li><p>The documentation on using the Open Dylan Console Environment has
+been rewritten and expanded.  A new section on the Dylan Interaction
+Mode for Emacs (DIME) has been added.  See both in <a class="reference external" href="http://opendylan.org/documentation/getting-started/index.html">the Getting
+Started Guide</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="dylan-compiler-improvements">
+<h2>dylan-compiler Improvements<a class="headerlink" href="#dylan-compiler-improvements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="relocatable-executables-and-libraries">
+<h3>Relocatable Executables and Libraries<a class="headerlink" href="#relocatable-executables-and-libraries" title="Permalink to this headline">¶</a></h3>
+<p>Previously, the executables and libraries built by the Dylan
+compiler had to reside at a fixed path (set during compilation).</p>
+<p>This has now been loosened up significantly on Linux, Mac OS X
+and FreeBSD.  The same directory structure needs to be maintained
+with the <code class="docutils literal notranslate"><span class="pre">bin</span></code> and <code class="docutils literal notranslate"><span class="pre">lib</span></code> directories, but the location in
+the file system can change now.</p>
+<p>On Linux and FreeBSD, this uses <code class="docutils literal notranslate"><span class="pre">$ORIGIN</span></code> support in the
+dynamic linker.  On Mac OS X, this uses <code class="docutils literal notranslate"><span class="pre">rpath</span></code> support present
+in Mac OS X 10.5 and later.</p>
+</div>
+<div class="section" id="usability-output-and-locating-libraries">
+<h3>Usability - Output and Locating Libraries<a class="headerlink" href="#usability-output-and-locating-libraries" title="Permalink to this headline">¶</a></h3>
+<p>To simplify the build process, two changes were made to
+<code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Build products are now stored in <code class="docutils literal notranslate"><span class="pre">./_build</span></code> on non-Windows
+platforms instead of in <code class="docutils literal notranslate"><span class="pre">~/Open-Dylan</span></code>.  This may still be
+overridden via the <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_ROOT</span></code> environment variable
+if you prefer to re-use the same build products across multiple
+different projects, but we don’t recommend it.</p></li>
+<li><p>If the directory <code class="docutils literal notranslate"><span class="pre">./registry</span></code> exists, the compiler will add it
+to the beginning of the <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> environment
+variable so that those registry entries take precedence over
+others.</p></li>
+</ol>
+<p>The intention is that for projects that use several other projects one
+can now use git submodules and a project “registry” directory to make
+the following work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive &lt;url&gt;
+$ cd &lt;project-directory&gt;
+$ dylan-compiler -build &lt;project-name&gt;
+</pre></div>
+</div>
+<p>In the past it would be necessary to set various environment variables
+and clone the central “registry” repository.  A minor side-effect of
+this change is that if you work on several distinct projects you will
+initially have to build all dependencies, down to and including the
+<code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
+</div>
+<div class="section" id="debug-back-end-improvements">
+<h3>Debug Back-end Improvements<a class="headerlink" href="#debug-back-end-improvements" title="Permalink to this headline">¶</a></h3>
+<p>The debug back-end is used for printing the internal compiler
+state (the DFM).</p>
+<ul class="simple">
+<li><p>calls are printed with more detail.</p></li>
+<li><p>keyword and constrain type checks are printed more accurately.</p></li>
+<li><p>primitive invocations of C functions via FFI are printed correctly.</p></li>
+</ul>
+</div>
+<div class="section" id="documentation-generation">
+<h3>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the documentation updates, we’ve also enhanced the
+documentation generation feature within <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> to output
+the new format.  This can be used by, first loading and compiling
+a library and then:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">export</span> <span class="o">-</span><span class="nb">format</span> <span class="n">rst</span> <span class="n">interface</span><span class="o">-</span><span class="n">reference</span>
+</pre></div>
+</div>
+<p>In a future release, the support currently present for the XML formatted
+documentation will be removed.</p>
+</div>
+<div class="section" id="dependency-graph-generation">
+<h3>Dependency Graph Generation<a class="headerlink" href="#dependency-graph-generation" title="Permalink to this headline">¶</a></h3>
+<p>You can now generate a dependency graph (at the library level) for a
+project in both text and GraphViz <code class="docutils literal notranslate"><span class="pre">.dot</span></code> format.  Open a project and:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">export</span> <span class="o">-</span><span class="nb">format</span> <span class="n">dot</span> <span class="n">dependency</span><span class="o">-</span><span class="n">graph</span>
+</pre></div>
+</div>
+<p>or, for plain text:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">export</span> <span class="n">dependency</span><span class="o">-</span><span class="n">graph</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="code-generation-improvements">
+<h2>Code Generation Improvements<a class="headerlink" href="#code-generation-improvements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="limited-collections">
+<h3>Limited Collections<a class="headerlink" href="#limited-collections" title="Permalink to this headline">¶</a></h3>
+<p>There were some bugs and some missed opportunities for optimization in
+the limited collections code.</p>
+<p>Consider the following constant:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="nc">&lt;float-vec&gt;</span> <span class="o">=</span> <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;vector&gt;</span><span class="p">,</span> <span class="k">of:</span> <span class="nc">&lt;single-float&gt;</span><span class="p">,</span> <span class="k">size:</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The subtype relation was broken when the <code class="docutils literal notranslate"><span class="pre">size:</span></code> keyword is present:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;float-vec&gt;</span><span class="p">,</span> <span class="k">fill:</span> <span class="mf">0.0</span><span class="p">);</span>
+<span class="nb">instance?</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nc">&lt;float-vec&gt;</span><span class="p">);</span>  <span class="c1">// returns #f</span>
+</pre></div>
+</div>
+<p>This required fixing of <code class="docutils literal notranslate"><span class="pre">instance?</span></code> both in dfmc/modeling/types and
+dylan/type.</p>
+<p>Another issue with the same code was that the <code class="docutils literal notranslate"><span class="pre">size</span></code> method was not constant-folded at compile-time:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">:=</span> <span class="n">sin</span><span class="p">(</span><span class="n">foo</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>This line of code lead to the following intermediate (DFM) code, which
+includes range checks (for both index 0 and 1):</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">t32</span> <span class="o">:=</span> <span class="n">SLOT-VALUE-INITD</span><span class="p">({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="nb">size</span><span class="p">)</span>
+<span class="n">t39</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">cast-integer-as-raw</span><span class="p">(</span><span class="n">t32</span><span class="p">)]</span>
+<span class="n">t44</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">machine-word-unsigned-less-than?</span><span class="p">(</span><span class="n">^%1</span><span class="p">,</span> <span class="n">t39</span><span class="p">)]</span>
+<span class="k">IF</span> <span class="p">(</span><span class="n">t44</span><span class="p">)</span>
+  <span class="n">t51</span> <span class="o">:=</span> <span class="n">REPEATED-SLOT-VALUE</span><span class="p">({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="n">single-float-vector-element</span><span class="p">,</span> <span class="n">^%1</span><span class="p">)</span>
+<span class="k">ELSE</span>
+  <span class="n">*t28</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLi</span> <span class="o">^</span><span class="p">{</span><span class="nc">&lt;&amp;method&gt;</span> <span class="n">element-range-error</span> <span class="p">(</span><span class="nc">&lt;collection&gt;</span><span class="p">,</span> <span class="nc">&lt;object&gt;</span><span class="p">)}({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="n">^0</span><span class="p">)]</span>
+  <span class="n">t71</span> <span class="o">:=</span> <span class="n">*t28</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">t70</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">single-float-as-raw</span><span class="p">(</span><span class="n">t71</span><span class="p">)]</span>
+<span class="k">END</span> <span class="k">IF</span>
+<span class="n">t74</span> <span class="o">:=</span> <span class="p">[</span><span class="n">IF-MERGE</span> <span class="n">t51</span> <span class="n">t70</span><span class="p">]</span>
+<span class="n">t67</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">single-float-sin</span><span class="p">(</span><span class="n">t74</span><span class="p">)]</span>
+<span class="n">t68</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">raw-as-single-float</span><span class="p">(</span><span class="n">t67</span><span class="p">)]</span>
+<span class="n">t85</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">machine-word-unsigned-less-than?</span><span class="p">(</span><span class="n">^%5</span><span class="p">,</span> <span class="n">t39</span><span class="p">)]</span>
+<span class="k">IF</span> <span class="p">(</span><span class="n">t85</span><span class="p">)</span>
+  <span class="n">REPEATED-SLOT-VALUE</span><span class="p">({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="n">single-float-vector-element</span><span class="p">,</span> <span class="n">^%5</span><span class="p">)</span> <span class="o">:=</span> <span class="n">t67</span>
+<span class="k">ELSE</span>
+  <span class="p">[</span><span class="n">CALLi</span> <span class="o">^</span><span class="p">{</span><span class="nc">&lt;&amp;method&gt;</span> <span class="n">element-range-error</span> <span class="p">(</span><span class="nc">&lt;collection&gt;</span><span class="p">,</span> <span class="nc">&lt;object&gt;</span><span class="p">)}({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="n">^1</span><span class="p">)]</span>
+<span class="k">END</span> <span class="k">IF</span>
+<span class="p">[</span><span class="n">IF-MERGE</span> <span class="l">#f</span> <span class="l">#f</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The same Dylan code is now translated into the following DFM code:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">t19</span> <span class="o">:=</span> <span class="n">REPEATED-SLOT-VALUE</span><span class="p">({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="n">single-float-vector-element</span><span class="p">,</span> <span class="n">^%1</span><span class="p">)</span>
+<span class="n">t20</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">single-float-sin</span><span class="p">(</span><span class="n">t19</span><span class="p">)]</span>
+<span class="n">t21</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">raw-as-single-float</span><span class="p">(</span><span class="n">t20</span><span class="p">)]</span>
+<span class="n">REPEATED-SLOT-VALUE</span><span class="p">({{</span> <span class="n">foo</span> <span class="p">}},</span> <span class="n">single-float-vector-element</span><span class="p">,</span> <span class="n">^%5</span><span class="p">)</span> <span class="o">:=</span> <span class="n">t20</span>
+</pre></div>
+</div>
+<p>This required fixes in the modeling, typist and optimization parts of
+the compiler.</p>
+<p>A third issue was that the type inference always used the inferred
+type of the actual instance. This failed for primitive types,
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a> was used instead of <code class="docutils literal notranslate"><span class="pre">&lt;raw-single-float&gt;</span></code>. This
+lead towards code which the C compiler could not compile
+(<code class="docutils literal notranslate"><span class="pre">incompatible</span> <span class="pre">code</span> <span class="pre">in</span> <span class="pre">assignment</span></code>):</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:=</span> <span class="o">-</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>This required a fix in the typist.</p>
+</div>
+<div class="section" id="miscellaneous-fixes">
+<h3>Miscellaneous Fixes<a class="headerlink" href="#miscellaneous-fixes" title="Permalink to this headline">¶</a></h3>
+<p>The control flow graph could be incorrect if an unwind-protect without
+a body is optimized.</p>
+<p>Some slot initializer constants (floats in particular) when inherited
+between classes in different files would result in compilation errors.</p>
+<p>The compiler would crash when the <code class="docutils literal notranslate"><span class="pre">dimensions:</span></code> keyword was not given
+when constructing an <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#array"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;array&gt;</span></code></a>.</p>
+<p>The compiler now warns rather than crashes on invalid inherited slot
+specifications.</p>
+</div>
+</div>
+<div class="section" id="c-back-end-changes">
+<h2>C Back-end Changes<a class="headerlink" href="#c-back-end-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="multi-threading">
+<h3>Multi-threading<a class="headerlink" href="#multi-threading" title="Permalink to this headline">¶</a></h3>
+<p>The C back-end now fully supports multi-threading.  Several bugs
+unrelated to threading were also fixed in this work, which should
+improve the stability of the C back-end in general.</p>
+<p>This work is currently experimental and may have stability and
+performance issues.  Further feedback is welcome.</p>
+</div>
+<div class="section" id="performance-improvements">
+<h3>Performance Improvements<a class="headerlink" href="#performance-improvements" title="Permalink to this headline">¶</a></h3>
+<p>Previously, the C run-time was allocating unwind-protect control
+structures on the heap using the Garbage Collector. Additionally,
+unwind-protect was preserving signal state on some platforms, notably
+Mac OS X.  Together, this led to the C back-end being notably slower
+than the native HARP back-end when unwind-protects were used.</p>
+<p>This has been fixed and the resulting code can run in 50-80% of the
+time that it previously took. This is particularly true for users
+of the I/O libraries which make heavy use of unwind-protect.</p>
+<p>The C back-end was previously performing 2 type checks on keyword
+arguments. It now correctly only performs this check once.</p>
+</div>
+<div class="section" id="shared-library-initialization">
+<h3>Shared Library Initialization<a class="headerlink" href="#shared-library-initialization" title="Permalink to this headline">¶</a></h3>
+<p>The C back-end now generates shared libraries which can be used with
+<code class="docutils literal notranslate"><span class="pre">dlopen()</span></code>.  This behavior is in line with the libraries generated
+by the native HARP back-end.</p>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<p>Some other bugs that resulted in the generation of invalid C have
+been fixed.</p>
+<p>We now abort when applying too many arguments in C run-time.</p>
+<p>A compilation crash with C back-end when trying to emit an overflown
+integer has been fixed.</p>
+<p>Stack usage in method dispatch has been reduced. This fixes an issue
+where a default sized stack would be exhausted on 64 bit platforms,
+especially while building the compiler.</p>
+<p>Floating point constants could in some circumstances be corrupted
+when compiled.</p>
+</div>
+</div>
+<div class="section" id="c-ffi-changes">
+<h2>C-FFI Changes<a class="headerlink" href="#c-ffi-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="c-variable-setters">
+<h3>C-variable setters<a class="headerlink" href="#c-variable-setters" title="Permalink to this headline">¶</a></h3>
+<p>Setters should work with C-variables now.</p>
+</div>
+<div class="section" id="constant-slot-syntax">
+<h3>Constant Slot Syntax<a class="headerlink" href="#constant-slot-syntax" title="Permalink to this headline">¶</a></h3>
+<p>You can now use <code class="docutils literal notranslate"><span class="pre">constant</span> <span class="pre">slot</span></code> when defining a <code class="docutils literal notranslate"><span class="pre">C-struct</span></code> rather than having to set <code class="docutils literal notranslate"><span class="pre">setter:</span> <span class="pre">#f</span></code>.
+This makes the syntax closer to normal class definitions:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">C-struct</span> <span class="nc">&lt;Point&gt;</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">x-coord</span> <span class="p">::</span> <span class="nc">&lt;C-unsigned-short&gt;</span><span class="p">;</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">y-coord</span> <span class="p">::</span> <span class="nc">&lt;C-unsigned-short&gt;</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="other-changes">
+<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-dylan-compiler-under-gdb-with-fdmake">
+<h3>Running dylan-compiler under gdb with fdmake<a class="headerlink" href="#running-dylan-compiler-under-gdb-with-fdmake" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes, it is useful to be able to run <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> under <code class="docutils literal notranslate"><span class="pre">gdb</span></code> while doing a bootstrap build
+using fdmake. This is now easy to do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">FDMAKE_OPTIONS</span><span class="o">=--</span><span class="n">gdb</span> <span class="mi">3</span><span class="o">-</span><span class="n">stage</span><span class="o">-</span><span class="n">bootstrap</span>
+</pre></div>
+</div>
+<p>Unfortunately, gdb doesn’t return a correct exit status, so the build will fail after the first invocation
+of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>, but this is useful when looking into repeatable crashes.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2013.1.html" class="btn btn-neutral float-left" title="Open Dylan 2013.1 Release Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2011.1.html" class="btn btn-neutral float-right" title="Open Dylan 2011.1 Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

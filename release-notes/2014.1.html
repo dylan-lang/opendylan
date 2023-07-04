@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Dylan 2014.1 Release Notes &mdash; Open Dylan Release Notes</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Dylan 2013.2 Release Notes" href="2013.2.html" />
+    <link rel="prev" title="Open Dylan 2019.1" href="2019.1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open Dylan Release Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Open Dylan 2014.1 Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bash-completion">Bash Completion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-system">Build System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiler">Compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-ffi">C-FFI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-run-time">C Run-time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-dylan">Common Dylan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging">Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dfmc-execution">dfmc-execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dylan">Dylan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dylan-direct-c-ffi">dylan-direct-c-ffi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hash-algorithms">hash-algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#io">IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#make-dylan-app">make-dylan-app</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#strings">strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system">system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testworks">Testworks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Dylan Release Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Open Dylan 2014.1 Release Notes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/2014.1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="open-dylan-2014-1-release-notes">
+<h1>Open Dylan 2014.1 Release Notes<a class="headerlink" href="#open-dylan-2014-1-release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document describes the 2014.1 release of Open Dylan, released
+December 29, 2014.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://opendylan.org/download/index.html">Download the release</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">Report bugs</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/v2014.1">Source code</a></p></li>
+</ul>
+</div>
+<div class="section" id="bash-completion">
+<h2>Bash Completion<a class="headerlink" href="#bash-completion" title="Permalink to this headline">¶</a></h2>
+<p>A bash completion script is now included for <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> and
+can be found in <code class="docutils literal notranslate"><span class="pre">share/opendylan/bash_completion/</span></code>.  This can be
+symlinked into the relevant <code class="docutils literal notranslate"><span class="pre">bash_completion.d</span></code> directory on your
+system.</p>
+</div>
+<div class="section" id="build-system">
+<h2>Build System<a class="headerlink" href="#build-system" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The Jam files for Linux, FreeBSD and OS X have been updated to support
+doing a build when there are spaces in the path to the current working
+directory. This was previously only handled correctly for Windows.</p></li>
+<li><p>The arguments to configure have changed for specifying which garbage
+collector to use. The arguments are now:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">gc</span><span class="o">=</span><span class="n">mps</span><span class="o">|</span><span class="n">boehm</span>
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">gc</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">gc</span>
+</pre></div>
+</div>
+<p>If the GC is Boehm and it is installed system-wide, then the
+<code class="docutils literal notranslate"><span class="pre">with-gc-path</span></code> parameter should not be needed. It is always
+necessary for MPS and is needed for Boehm if Boehm is installed
+into a non-standard location.</p>
+</li>
+<li><p>When running <code class="docutils literal notranslate"><span class="pre">make</span></code>, performing a full bootstrap is now the default
+action. This was pretty much required before and was a common source
+of confusion, especially when preparing to install a development
+build.</p></li>
+<li><p>A bug introduced in 2013.2 that broke the handling of <code class="docutils literal notranslate"><span class="pre">jam-includes</span></code>
+has been fixed.</p></li>
+<li><p>Build scripts have moved. Previously, they were installed in the <code class="docutils literal notranslate"><span class="pre">lib</span></code>
+directory. They are now installed in a <code class="docutils literal notranslate"><span class="pre">share/opendylan/build-scripts/</span></code>
+directory.</p></li>
+</ul>
+</div>
+<div class="section" id="compiler">
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The intermediate language of the compiler, named Dylan Flow Machine,
+has been instrumented with tracing facilities. Changes to the control
+and data flow, as well as optimization information, can be received by
+setting the <code class="docutils literal notranslate"><span class="pre">*trace-dfm-callback*</span></code> (exported from the
+<code class="docutils literal notranslate"><span class="pre">dfmc-flow-graph</span></code>) variable to a unary function. The variable
+<code class="docutils literal notranslate"><span class="pre">*trace-dfm-outputter*</span></code> should also be set (<code class="docutils literal notranslate"><span class="pre">structured-output</span></code>,
+exported from the <code class="docutils literal notranslate"><span class="pre">dfmc-debug-back-end</span></code> library might be useful).</p>
+<p>The argument to the <code class="docutils literal notranslate"><span class="pre">*trace-dfm-callback</span></code> itself is a property list
+containing at least a <code class="docutils literal notranslate"><span class="pre">type</span></code> key, a source location (<code class="docutils literal notranslate"><span class="pre">method</span></code>,
+<code class="docutils literal notranslate"><span class="pre">file</span></code>, <code class="docutils literal notranslate"><span class="pre">library</span></code> keys), likely a <code class="docutils literal notranslate"><span class="pre">nodeid</span></code> key, and various
+other information.</p>
+<p>Compiling the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library with tracing emits lots of
+data (250MB). Therefore, a filtering can be established on a file
+name, method name, and/or library name. The variables
+<code class="docutils literal notranslate"><span class="pre">*trace-dfm-library*</span></code>, <code class="docutils literal notranslate"><span class="pre">*trace-dfm-file*</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">*trace-dfm-method*</span></code> are of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;symbol&gt;)</span></code> and are exported
+from the <code class="docutils literal notranslate"><span class="pre">dfmc-flow-graph</span></code> library.</p>
+<p>An example user of this interface is on <a class="reference external" href="https://github.com/hannesm/visualization-middleware">GitHub</a>.  A
+screencast showing an earlier implementation of this optimization
+visualization <a class="reference external" href="https://opendylan.org/~hannes/test4.avi">can be seen here</a>.</p>
+</li>
+<li><p>The C back-end would emit character constants that current versions
+of clang considered an error. The C back-end now generates a better
+representation.</p></li>
+<li><p>The output of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> is less verbose by default.  Use
+the <code class="docutils literal notranslate"><span class="pre">-verbose</span></code> flag to get the old behavior.</p></li>
+<li><p>Some extensions to the Dylan language that have been present in the
+Open Dylan compiler for a long time have been documented, including
+extensions to the macro system and an alternative syntax for currying
+functions.</p></li>
+</ul>
+</div>
+<div class="section" id="c-ffi">
+<h2>C-FFI<a class="headerlink" href="#c-ffi" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>There is a new <code class="docutils literal notranslate"><span class="pre">objc-selector-definer</span></code> compiler macro. This supports
+the Objective C / Dylan bridge by allowing the definition of Objective
+C selectors and functions for sending them, complete with type
+information.</p>
+<p>An example usage from the Objective C / Dylan bridge library is:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">objc-selector</span> <span class="n">sel/alloc</span>
+  <span class="n">parameter</span> <span class="n">target</span> <span class="p">::</span> <span class="nc">&lt;objc/class&gt;</span><span class="p">;</span>
+  <span class="n">result</span> <span class="n">objc-instance</span> <span class="p">::</span> <span class="nc">&lt;objc/instance-address&gt;</span><span class="p">;</span>
+  <span class="k">selector:</span> <span class="s">&quot;alloc&quot;</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This must be used in conjunction with the Objective C / Dylan
+bridge library.</p>
+</li>
+<li><p>A result of a <code class="docutils literal notranslate"><span class="pre">C-function</span></code> may now be flagged as an <code class="docutils literal notranslate"><span class="pre">error-result</span></code> which
+means that the import function will be called, but the actual value will not
+be returned. This is useful for wrapping C APIs which return error codes that
+should signal conditions when an error occurs.</p></li>
+<li><p>New C-FFI types, <code class="docutils literal notranslate"><span class="pre">&lt;C-size-t&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;C-ssize-t&gt;</span></code> are available. These map
+to the underlying C types <code class="docutils literal notranslate"><span class="pre">size_t</span></code> and <code class="docutils literal notranslate"><span class="pre">ssize_t</span></code>.</p></li>
+<li><p>Passing structs by value to C functions when using the C back-end has been fixed.
+This was not broken when using the HARP back-end.</p></li>
+</ul>
+</div>
+<div class="section" id="c-run-time">
+<h2>C Run-time<a class="headerlink" href="#c-run-time" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">debug-message</span></code> no longer crashes when printing some conditions.</p></li>
+</ul>
+</div>
+<div class="section" id="common-dylan">
+<h2>Common Dylan<a class="headerlink" href="#common-dylan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">simple-io</span></code> module has been renamed to <code class="docutils literal notranslate"><span class="pre">simple-format</span></code>.
+A convenience module that re-exports <code class="docutils literal notranslate"><span class="pre">simple-format</span></code> has been
+left as <code class="docutils literal notranslate"><span class="pre">simple-io</span></code> for short term compatibility.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">format-to-string</span></code> function has been moved to the newly
+renamed <code class="docutils literal notranslate"><span class="pre">simple-format</span></code> module. This function is no longer
+exported from <code class="docutils literal notranslate"><span class="pre">common-extensions</span></code>. You no longer need to
+exclude this function from <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> or <code class="docutils literal notranslate"><span class="pre">common-extensions</span></code>
+if you use the <code class="docutils literal notranslate"><span class="pre">format</span></code> module from the <code class="docutils literal notranslate"><span class="pre">io</span></code> library.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">&lt;timer&gt;</span></code> class has been renamed to <code class="docutils literal notranslate"><span class="pre">&lt;profiling-timer&gt;</span></code>.</p></li>
+<li><p>The function <code class="docutils literal notranslate"><span class="pre">integer-to-string</span></code> is now faster.</p></li>
+<li><p>On Mac OS X, application-filename() now returns the full absolute
+path. It also handles symlinks correctly now. This means that
+a symlink to a Dylan executable will function correctly as it
+already did on Linux and FreeBSD.</p></li>
+<li><p>The routine used for printing function signatures when displaying
+an error / condition now shows a more accurate signature rather
+than only the function specializers.</p></li>
+</ul>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>When using <a class="reference external" href="http://lldb.llvm.org/">LLDB</a> for debugging, Dylan
+support is now available. To use this, you need to import the
+Python scripts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">command</span> <span class="n">script</span> <span class="kn">import</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">opendylan</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">opendylan</span><span class="o">/</span><span class="n">lldb</span><span class="o">/</span><span class="n">dylan</span>
+</pre></div>
+</div>
+<p>Do not import the scripts under that directory directly. Once this
+has been loaded, then commands like <code class="docutils literal notranslate"><span class="pre">frame</span> <span class="pre">variable</span></code> will automatically
+start showing Dylan values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">frame</span> <span class="n">variable</span>
+<span class="p">(</span><span class="n">dylan_value</span><span class="p">)</span> <span class="n">mepargs_</span> <span class="o">=</span> <span class="mh">0xbfffd4c0</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">simple</span><span class="o">-</span><span class="nb">object</span><span class="o">-</span><span class="n">vector</span><span class="o">&gt;</span><span class="p">:</span> <span class="n">size</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span> <span class="p">{</span>
+  <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x00000009</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">integer</span><span class="o">&gt;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+  <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x02861eb0</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">byte</span><span class="o">-</span><span class="n">char</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">stream</span><span class="o">&gt;</span><span class="p">}</span>
+<span class="p">}</span>
+<span class="p">(</span><span class="n">dylan_value</span><span class="p">)</span> <span class="n">e_</span> <span class="o">=</span> <span class="mh">0x0018a288</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">absent</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">node</span><span class="o">&gt;</span><span class="p">}</span>
+<span class="p">(</span><span class="n">dylan_value</span><span class="p">)</span> <span class="n">parent_</span> <span class="o">=</span> <span class="mh">0x005cc384</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">incremental</span><span class="o">-</span><span class="n">generic</span><span class="o">-</span><span class="n">function</span><span class="o">&gt;</span><span class="p">:</span> <span class="n">do</span><span class="o">-</span><span class="n">execute</span><span class="o">-</span><span class="n">command</span><span class="p">}</span>
+<span class="p">(</span><span class="n">dylan_value</span><span class="p">)</span> <span class="n">T3</span> <span class="o">=</span> <span class="mh">0x00000000</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="dfmc-execution">
+<h2>dfmc-execution<a class="headerlink" href="#dfmc-execution" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dfmc-execution</span></code> provides a framework for interpreting the compiler’s
+IR (DFM). It has been experimentally restored from the source control
+history and some basic tests have been created in <code class="docutils literal notranslate"><span class="pre">sources/dfmc/testing/</span></code>.
+It currently has many limitations and bugs which we are still working
+out.</p></li>
+<li><p>We are evaluating using <code class="docutils literal notranslate"><span class="pre">dfmc-execution</span></code> to replace or augment
+the capabilities of <code class="docutils literal notranslate"><span class="pre">^top-level-eval-using-optimization</span></code> in
+<code class="docutils literal notranslate"><span class="pre">dfmc-conversion</span></code>.</p></li>
+<li><p>We are interested in hearing what sort of things people may be interested
+in using this for.</p></li>
+</ul>
+</div>
+<div class="section" id="dylan">
+<h2>Dylan<a class="headerlink" href="#dylan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>There is now an specialized implementation of <code class="docutils literal notranslate"><span class="pre">member?</span></code> defined
+for searching for a <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code> in a <code class="docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="dylan-direct-c-ffi">
+<h2>dylan-direct-c-ffi<a class="headerlink" href="#dylan-direct-c-ffi" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Much like <code class="docutils literal notranslate"><span class="pre">%call-c-function</span></code> for low-level C-FFI, there is now
+a <code class="docutils literal notranslate"><span class="pre">%objc-msgsend</span></code> for low-level Objective C messaging integration.
+More information about this will be forthcoming in an <code class="docutils literal notranslate"><span class="pre">objc-dylan</span></code>
+bridge library.</p>
+<p><code class="docutils literal notranslate"><span class="pre">%objc-msgsend</span></code> takes the target and selector as <code class="docutils literal notranslate"><span class="pre">&lt;raw-machine-word&gt;</span></code>
+values. As with <code class="docutils literal notranslate"><span class="pre">%call-c-function</span></code>, all values passed in and returned
+should be raw values.</p>
+<p>If you need the <code class="docutils literal notranslate"><span class="pre">objc_msgSend_stret</span></code> or other variants, pass
+<code class="docutils literal notranslate"><span class="pre">c-modifiers:</span> <span class="pre">&quot;_stret&quot;</span></code> or similar after the selector. The value
+passed here will be appended to <code class="docutils literal notranslate"><span class="pre">objc_msgSend</span></code> so it works for all
+variants, including sending to the super (<code class="docutils literal notranslate"><span class="pre">objc_msgSendSuper</span></code>, etc).</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">%objc-msgsend</span> <span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">selector</span><span class="p">)</span>
+   <span class="p">(</span><span class="n">argument</span> <span class="p">::</span> <span class="nc">&lt;raw-type&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="p">(</span><span class="n">argument-as-raw</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="hash-algorithms">
+<h2>hash-algorithms<a class="headerlink" href="#hash-algorithms" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A crash resulting from memory corruption when using sha-1 has been
+fixed.</p></li>
+<li><p>The library now builds on Windows.</p></li>
+</ul>
+</div>
+<div class="section" id="io">
+<h2>IO<a class="headerlink" href="#io" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>New functions <code class="docutils literal notranslate"><span class="pre">format-err</span></code> and <code class="docutils literal notranslate"><span class="pre">force-err</span></code> have been added that
+do the same thing as <code class="docutils literal notranslate"><span class="pre">format-out</span></code> and <code class="docutils literal notranslate"><span class="pre">force-out</span></code>, but operate
+on <code class="docutils literal notranslate"><span class="pre">*standard-error*</span></code> rather than <code class="docutils literal notranslate"><span class="pre">*standard-output*</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="make-dylan-app">
+<h2>make-dylan-app<a class="headerlink" href="#make-dylan-app" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make-dylan-app</span></code> is now included in the Windows distribution.</p></li>
+</ul>
+</div>
+<div class="section" id="strings">
+<h2>strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>String comparison and equality operations are now 10 times faster
+when they are known to be on byte-strings.</p></li>
+</ul>
+</div>
+<div class="section" id="system">
+<h2>system<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The function <code class="docutils literal notranslate"><span class="pre">format-date</span></code> is now faster.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">copy-file</span></code> method on Unix no longer fails when the path contains
+spaces.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">#&quot;write-date</span></code> file property has been removed. It was identical to
+<code class="docutils literal notranslate"><span class="pre">#&quot;modification-date&quot;</span></code>, so use that instead.</p></li>
+<li><p>Iterating over a directory with <code class="docutils literal notranslate"><span class="pre">do-directory</span></code> will no longer crash
+on <code class="docutils literal notranslate"><span class="pre">x86_64-darwin</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="testworks">
+<h2>Testworks<a class="headerlink" href="#testworks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Compiler warnings are now produced when a test or suite is unused.
+For example, it is easy to forget to add a test to any suite.  As a
+side effect of this change, it is now necessary to organize test
+suite code in a bottom-up style.  That is, you must define tests and
+suites <em>before</em> including them in a suite definition in your source
+file.  If you don’t, you will receive a warning about an “Illegal
+forward reference”.</p></li>
+<li><p>Benchmarks are once again supported.  See the <a class="reference external" href="http://opendylan.org/documentation/testworks/usage.html">documentation</a> for
+details.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2019.1.html" class="btn btn-neutral float-left" title="Open Dylan 2019.1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2013.2.html" class="btn btn-neutral float-right" title="Open Dylan 2013.2 Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

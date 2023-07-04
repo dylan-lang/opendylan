@@ -1,0 +1,287 @@
+*******************************
+Open Dylan 2014.1 Release Notes
+*******************************
+
+Introduction
+============
+
+This document describes the 2014.1 release of Open Dylan, released
+December 29, 2014.
+
+* `Download the release <http://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2014.1>`_
+
+Bash Completion
+===============
+
+A bash completion script is now included for ``dylan-compiler`` and
+can be found in ``share/opendylan/bash_completion/``.  This can be
+symlinked into the relevant ``bash_completion.d`` directory on your
+system.
+
+Build System
+============
+
+* The Jam files for Linux, FreeBSD and OS X have been updated to support
+  doing a build when there are spaces in the path to the current working
+  directory. This was previously only handled correctly for Windows.
+
+* The arguments to configure have changed for specifying which garbage
+  collector to use. The arguments are now::
+
+    --with-gc=mps|boehm
+    --with-gc-path=path/to/gc
+
+  If the GC is Boehm and it is installed system-wide, then the
+  ``with-gc-path`` parameter should not be needed. It is always
+  necessary for MPS and is needed for Boehm if Boehm is installed
+  into a non-standard location.
+
+* When running ``make``, performing a full bootstrap is now the default
+  action. This was pretty much required before and was a common source
+  of confusion, especially when preparing to install a development
+  build.
+
+* A bug introduced in 2013.2 that broke the handling of ``jam-includes``
+  has been fixed.
+
+* Build scripts have moved. Previously, they were installed in the ``lib``
+  directory. They are now installed in a ``share/opendylan/build-scripts/``
+  directory.
+
+Compiler
+========
+
+* The intermediate language of the compiler, named Dylan Flow Machine,
+  has been instrumented with tracing facilities. Changes to the control
+  and data flow, as well as optimization information, can be received by
+  setting the ``*trace-dfm-callback*`` (exported from the
+  ``dfmc-flow-graph``) variable to a unary function. The variable
+  ``*trace-dfm-outputter*`` should also be set (``structured-output``,
+  exported from the ``dfmc-debug-back-end`` library might be useful).
+
+  The argument to the ``*trace-dfm-callback`` itself is a property list
+  containing at least a ``type`` key, a source location (``method``,
+  ``file``, ``library`` keys), likely a ``nodeid`` key, and various
+  other information.
+
+  Compiling the ``dylan`` library with tracing emits lots of
+  data (250MB). Therefore, a filtering can be established on a file
+  name, method name, and/or library name. The variables
+  ``*trace-dfm-library*``, ``*trace-dfm-file*``, and
+  ``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and are exported
+  from the ``dfmc-flow-graph`` library.
+
+  An example user of this interface is on `GitHub
+  <https://github.com/hannesm/visualization-middleware>`_.  A
+  screencast showing an earlier implementation of this optimization
+  visualization `can be seen here
+  <https://opendylan.org/~hannes/test4.avi>`_.
+
+* The C back-end would emit character constants that current versions
+  of clang considered an error. The C back-end now generates a better
+  representation.
+
+* The output of ``dylan-compiler`` is less verbose by default.  Use
+  the ``-verbose`` flag to get the old behavior.
+
+* Some extensions to the Dylan language that have been present in the
+  Open Dylan compiler for a long time have been documented, including
+  extensions to the macro system and an alternative syntax for currying
+  functions.
+
+C-FFI
+=====
+
+* There is a new ``objc-selector-definer`` compiler macro. This supports
+  the Objective C / Dylan bridge by allowing the definition of Objective
+  C selectors and functions for sending them, complete with type
+  information.
+
+  An example usage from the Objective C / Dylan bridge library is:
+
+  .. code-block:: dylan
+
+     define objc-selector sel/alloc
+       parameter target :: <objc/class>;
+       result objc-instance :: <objc/instance-address>;
+       selector: "alloc";
+     end;
+
+  This must be used in conjunction with the Objective C / Dylan
+  bridge library.
+
+* A result of a ``C-function`` may now be flagged as an ``error-result`` which
+  means that the import function will be called, but the actual value will not
+  be returned. This is useful for wrapping C APIs which return error codes that
+  should signal conditions when an error occurs.
+
+* New C-FFI types, ``<C-size-t>`` and ``<C-ssize-t>`` are available. These map
+  to the underlying C types ``size_t`` and ``ssize_t``.
+
+* Passing structs by value to C functions when using the C back-end has been fixed.
+  This was not broken when using the HARP back-end.
+
+C Run-time
+==========
+
+* ``debug-message`` no longer crashes when printing some conditions.
+
+
+Common Dylan
+============
+
+* The ``simple-io`` module has been renamed to ``simple-format``.
+  A convenience module that re-exports ``simple-format`` has been
+  left as ``simple-io`` for short term compatibility.
+
+* The ``format-to-string`` function has been moved to the newly
+  renamed ``simple-format`` module. This function is no longer
+  exported from ``common-extensions``. You no longer need to
+  exclude this function from ``common-dylan`` or ``common-extensions``
+  if you use the ``format`` module from the ``io`` library.
+
+* The ``<timer>`` class has been renamed to ``<profiling-timer>``.
+
+* The function ``integer-to-string`` is now faster.
+
+* On Mac OS X, application-filename() now returns the full absolute
+  path. It also handles symlinks correctly now. This means that
+  a symlink to a Dylan executable will function correctly as it
+  already did on Linux and FreeBSD.
+
+* The routine used for printing function signatures when displaying
+  an error / condition now shows a more accurate signature rather
+  than only the function specializers.
+
+
+Debugging
+=========
+
+* When using `LLDB <http://lldb.llvm.org/>`_ for debugging, Dylan
+  support is now available. To use this, you need to import the
+  Python scripts::
+
+    command script import /path/to/opendylan/share/opendylan/lldb/dylan
+
+  Do not import the scripts under that directory directly. Once this
+  has been loaded, then commands like ``frame variable`` will automatically
+  start showing Dylan values::
+
+    (lldb) frame variable
+    (dylan_value) mepargs_ = 0xbfffd4c0 {<simple-object-vector>: size: 2} {
+      [0] = 0x00000009 {<integer>: 2}
+      [1] = 0x02861eb0 {<byte-char-file-stream>}
+    }
+    (dylan_value) e_ = 0x0018a288 {<absent-engine-node>}
+    (dylan_value) parent_ = 0x005cc384 {<incremental-generic-function>: do-execute-command}
+    (dylan_value) T3 = 0x00000000 {}
+
+
+dfmc-execution
+==============
+
+* ``dfmc-execution`` provides a framework for interpreting the compiler's
+  IR (DFM). It has been experimentally restored from the source control
+  history and some basic tests have been created in ``sources/dfmc/testing/``.
+  It currently has many limitations and bugs which we are still working
+  out.
+
+* We are evaluating using ``dfmc-execution`` to replace or augment
+  the capabilities of ``^top-level-eval-using-optimization`` in
+  ``dfmc-conversion``.
+
+* We are interested in hearing what sort of things people may be interested
+  in using this for.
+
+
+Dylan
+=====
+
+* There is now an specialized implementation of ``member?`` defined
+  for searching for a ``<byte-character>`` in a ``<byte-string>``.
+
+
+dylan-direct-c-ffi
+==================
+
+* Much like ``%call-c-function`` for low-level C-FFI, there is now
+  a ``%objc-msgsend`` for low-level Objective C messaging integration.
+  More information about this will be forthcoming in an ``objc-dylan``
+  bridge library.
+
+  ``%objc-msgsend`` takes the target and selector as ``<raw-machine-word>``
+  values. As with ``%call-c-function``, all values passed in and returned
+  should be raw values.
+
+  If you need the ``objc_msgSend_stret`` or other variants, pass
+  ``c-modifiers: "_stret"`` or similar after the selector. The value
+  passed here will be appended to ``objc_msgSend`` so it works for all
+  variants, including sending to the super (``objc_msgSendSuper``, etc).
+
+  .. code-block:: dylan
+
+      %objc-msgsend (target, selector)
+         (argument :: <raw-type>)
+       => ()
+        (argument-as-raw)
+      end;
+
+
+hash-algorithms
+===============
+
+* A crash resulting from memory corruption when using sha-1 has been
+  fixed.
+
+* The library now builds on Windows.
+
+
+IO
+==
+
+* New functions ``format-err`` and ``force-err`` have been added that
+  do the same thing as ``format-out`` and ``force-out``, but operate
+  on ``*standard-error*`` rather than ``*standard-output*``.
+
+
+make-dylan-app
+==============
+
+* ``make-dylan-app`` is now included in the Windows distribution.
+
+
+strings
+=======
+
+* String comparison and equality operations are now 10 times faster
+  when they are known to be on byte-strings.
+
+
+system
+======
+
+* The function ``format-date`` is now faster.
+* The ``copy-file`` method on Unix no longer fails when the path contains
+  spaces.
+* The ``#"write-date`` file property has been removed. It was identical to
+  ``#"modification-date"``, so use that instead.
+* Iterating over a directory with ``do-directory`` will no longer crash
+  on ``x86_64-darwin``.
+
+
+Testworks
+=========
+
+* Compiler warnings are now produced when a test or suite is unused.
+  For example, it is easy to forget to add a test to any suite.  As a
+  side effect of this change, it is now necessary to organize test
+  suite code in a bottom-up style.  That is, you must define tests and
+  suites *before* including them in a suite definition in your source
+  file.  If you don't, you will receive a warning about an "Illegal
+  forward reference".
+
+* Benchmarks are once again supported.  See the `documentation
+  <http://opendylan.org/documentation/testworks/usage.html>`_ for
+  details.

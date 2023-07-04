@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Dylan 2023.1 &mdash; Open Dylan Release Notes</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Dylan 2022.1" href="2022.1.html" />
+    <link rel="prev" title="Open Dylan Release Notes" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open Dylan Release Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Open Dylan 2023.1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#compiler">Compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tooling">Tooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#library-updates">Library Updates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#system-library">system Library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Dylan Release Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Open Dylan 2023.1</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/2023.1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="open-dylan-2023-1">
+<h1>Open Dylan 2023.1<a class="headerlink" href="#open-dylan-2023-1" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the 2023.1 release of Open Dylan, released 01
+June, 2023.  The highlights of the release are listed below.  For complete
+details see the <a class="reference external" href="https://github.com/dylan-lang/opendylan/compare/v2022.1.0...v2023.1.0">commit logs</a> for
+this release.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some commit logs, for example for testworks and other libraries that
+are included in Open Dylan as git submodules, may be in other
+repositories.</p>
+</div>
+<ul class="simple">
+<li><p>Download the release: <a class="reference external" href="http://opendylan.org/download">http://opendylan.org/download</a></p></li>
+<li><p>Read documentation: <a class="reference external" href="http://opendylan.org/documentation">http://opendylan.org/documentation</a></p></li>
+<li><p>Report problems: <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">https://github.com/dylan-lang/opendylan/issues</a></p></li>
+</ul>
+<div class="section" id="compiler">
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The “batteries included” installation includes <a class="reference external" href="https://github.com/llvm/llvm-project/releases/tag/llvmorg-16.0.5">LLVM version 16.0.5</a> and <a class="reference external" href="https://github.com/ivmai/bdwgc/releases/tag/v8.2.4">BDW
+GC version 8.2.4</a>.</p></li>
+<li><p><a class="reference external" href="https://opendylan.org/proposals/dep-0012-string-literals.html">Dylan Enhancement Proposal (DEP) 12</a> was
+implemented, adding multi-line and “raw” string literals.</p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/pull/1469">Improvements to LLVM bitcode generation</a></p></li>
+<li><p>A bug in <a class="reference external" href="https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html">parser expansions</a>
+that could crash the compiler if the end delimiter was missing has been fixed.</p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/1490">Bug 1490</a>, which
+could result in spurious warnings from the compiler <a class="reference external" href="https://github.com/dylan-lang/opendylan/pull/1492">has been fixed</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="tooling">
+<h2>Tooling<a class="headerlink" href="#tooling" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The <a class="reference external" href="https://github.com/dylan-lang/dylan-tool">dylan</a> command-line tool has
+had <a class="reference external" href="https://github.com/dylan-lang/dylan-tool/compare/730b5c99627ac653636ddaf01187a213d7d23aa8...f6edf2ef5f5c04f295a075ae70eb8462580be4ef">various improvements</a>,
+including:</p>
+<ul class="simple">
+<li><p>Simplified workspace model</p></li>
+<li><p>Simplified process to publish packages</p></li>
+<li><p>Packages installed locally in workspace directory by default</p></li>
+<li><p>Global package installation follows the <a class="reference external" href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a>.</p></li>
+<li><p>Symlink points to current installed version of packages, for easier tooling.</p></li>
+</ul>
+<p>Full documentation is
+<a class="reference external" href="https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html">here</a>.</p>
+</li>
+<li><p>The <strong class="program">make-dylan-app</strong> program has been removed and is replaced by
+<strong class="command">dylan new application</strong> and <strong class="command">dylan new library</strong>.</p></li>
+</ul>
+</div>
+<div class="section" id="library-updates">
+<h2>Library Updates<a class="headerlink" href="#library-updates" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="submodules">
+<h3>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h3>
+<p>Open Dylan uses Git submodules to pull in some dependencies and user programs
+may depend on these for now. The notable changes in those submodules are listed
+below:</p>
+<ul class="simple">
+<li><p><strong>sphinx-extensions</strong> - Improvements to DRM references.</p></li>
+<li><p><strong>dylan-tool</strong> - See above.</p></li>
+<li><p><strong>collection-extensions</strong> - The <code class="docutils literal notranslate"><span class="pre">split-at</span></code> function has been removed. Use
+<code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code> instead. Documentation improvements.</p></li>
+<li><p><strong>command-line-parser</strong> - Minor bug fix to add a missing newline when no
+subcommand is provided.</p></li>
+<li><p><strong>json</strong> - Fixed <code class="docutils literal notranslate"><span class="pre">sort-keys?</span></code> option for recursive <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-json</span></code> calls.</p></li>
+</ul>
+</div>
+<div class="section" id="system-library">
+<h3>system Library<a class="headerlink" href="#system-library" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/1470">bug</a> in
+<a class="reference external" href="https://opendylan.org/documentation/library-reference/system/locators.html#system:locators:locator-directory" title="(in Dylan Library Reference v1.0)"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">locator-directory</span></code></a> for relative directory locators was fixed.</p></li>
+<li><p>The <a class="reference external" href="https://opendylan.org/documentation/library-reference/system/operating-system.html#system:operating-system:run-application" title="(in Dylan Library Reference v1.0)"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">run-application</span></code></a> function is now fully documented.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">follow-links?:</span></code> keyword argument has been added to the
+<a class="reference external" href="https://opendylan.org/documentation/library-reference/system/file-system.html#system:file-system:file-exists?" title="(in Dylan Library Reference v1.0)"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-exists?</span></code></a> function. The default is true, for compatibility with the
+previous behavior.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<p>We’d like to thank all the people who made contributions to this release and to
+surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete…</p>
+<ul class="simple">
+<li><p>Fernando Raya</p></li>
+<li><p>Peter S. Housel</p></li>
+<li><p>Bruce Mitchener</p></li>
+<li><p>Carl Gay</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Open Dylan Release Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2022.1.html" class="btn btn-neutral float-right" title="Open Dylan 2022.1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

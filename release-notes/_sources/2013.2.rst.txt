@@ -1,0 +1,203 @@
+*******************************
+Open Dylan 2013.2 Release Notes
+*******************************
+
+Introduction
+============
+
+This document describes the 2013.2 release of Open Dylan, released
+December 23, 2013.
+
+* `Download the release <http://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2013.2>`_
+
+Improvements
+============
+
+Documentation
+-------------
+
+The `logging <http://opendylan.org/documentation/library-reference/logging/>`_ library has been documented.
+
+The `regular-expressions <http://opendylan.org/documentation/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
+
+The `date <http://opendylan.org/documentation/library-reference/system/date.html>`_ module documentation has been improved and now covers date formatting and parsing.
+
+The `C-FFI <http://opendylan.org/documentation/library-reference/c-ffi/>`_ library now discusses `linking against a library <http://opendylan.org/documentation/library-reference/c-ffi/#notes-on-linking>`_ rather than assuming that people will find the LID file documentation. `Tracing FFI calls <http://opendylan.org/documentation/library-reference/c-ffi/#tracing-ffi-calls>`_ has also been documented.
+
+Build Tools
+-----------
+
+Architectures
+^^^^^^^^^^^^^
+
+Our configure script now supports the multiarch layout used on recent Debian systems.
+
+``OPEN_DYLAN_PLATFORM_NAME`` is now ``OPEN_DYLAN_TARGET_PLATFORM`` to make
+the intent more clear. Additionally, this value is available to Jam as
+``TARGET_NAME``.
+
+Cross-compilation by setting ``OPEN_DYLAN_TARGET_PLATFORM`` in the environment
+is also improved, so long as the proper run-time libraries have been built.
+
+Error Reporting
+^^^^^^^^^^^^^^^
+
+``dylan-compiler`` now reports more information about circular references.
+Before, it reported::
+
+  .../opendylan/sources/dylan/multidimensional-array.dylan:19: Warning - The definition of $empty-dimensions is circular.
+        ---------------------------------------------------------------
+        define constant $empty-dimensions = make(<dimensions>, size: 0);
+        ---------------------------------------------------------------
+
+Now, it reports::
+
+  .../opendylan/sources/dylan/multidimensional-array.dylan:19: Warning - The definition of $empty-dimensions is circular among the following:
+  #({ define method size (object :: {<simple-single-float-array> in dylan-extensions}, #next next-method) => (size :: <integer>) ... end }, { define constant $empty-dimensions }, { define method size (object :: {<simple-object-array> in internal}, #next next-method) => (size :: <integer>) ... end }, { define method <implementation-class> constructor (class :: <class>, #next next-method, #rest init-args, #key ..., #all-keys) => (object :: {<implementation-class> in dylan-extensions}) ... end }, { (implicit) define generic <implementation-class> constructor (class, #key ...) => (#rest results) })
+        ---------------------------------------------------------------
+        define constant $empty-dimensions = make(<dimensions>, size: 0);
+        ---------------------------------------------------------------
+
+
+Libraries
+---------
+
+common-dylan
+^^^^^^^^^^^^
+
+A new module ``simple-timers`` has been added. This replaces the old
+primitives ``primitive-start-timer`` and ``primitive-stop-timer``
+which have been removed.
+
+``byte-storage-address`` and ``byte-storage-offset-address`` functions
+have been added for passing byte storage data to the C-FFI. These are
+implemented for ``<byte-string>``, ``<byte-vector>``, and ``<buffer>``.
+
+command-line-parser
+^^^^^^^^^^^^^^^^^^^
+
+Two new init keywords have been added to the :class:`<command-line-parser>`
+class: ``min-positional-options:`` and ``max-positional-options:``.
+
+dylan-extensions
+^^^^^^^^^^^^^^^^
+
+The ``debug-name`` method now has a specialization for ``<slot-descriptor>``.
+
+The ``debug-message`` method is now a function and doesn't perform any
+generic dispatch, making it safe to use it almost anywhere, including
+within the dispatch code.
+
+hash-algorithms
+^^^^^^^^^^^^^^^
+
+A hash algorithms library has been added that supports the MD5, SHA-1, SHA256,
+SHA384, and SHA512 algorithms. `Documentation <http://opendylan.org/documentation/library-reference/hash-algorithms/>`_
+is available. This library was written by Hannes Mehnert.
+
+I/O
+^^^
+
+Streams no longer default to having a lock, and the library as a whole
+no longer attempts to be thread-safe by default. If you need thread safety
+for a stream, use ``with-stream-locked`` at the application level to
+ensure that a stream is not accessed simultaneously from multiple threads.
+``format-out`` and the new ``force-out`` lock ``*standard-output*`` so
+that they are still thread-safe.
+
+A function ``stream-console?`` has been added to the ``<file-stream>`` class,
+this can be used to determine whether console output has been directed to a
+file.
+
+A new method ``force-out`` has been added to the ``format-out`` module.
+This method allows avoiding to import the ``streams`` and ``standard-io``
+modules when all you want is to flush the stream corresponding to
+``format-out``.
+
+I/O buffering has been improved on non-Windows platforms. It now defaults
+to buffering 16k instead of 512 bytes. This leads to some substantial
+compile time improvements on hosts with slow drives.
+
+logging
+^^^^^^^
+
+The logging library is now part of Open Dylan.  This means it is no
+longer necessary to add it as a git submodule in your project's
+sources and set up a registry entry in order to use it.
+
+network
+^^^^^^^
+
+The bindings ``$local-host`` and ``$loopback-address`` have been removed.
+The function ``local-host-name`` is now provided which returns the host name.
+The main reason for this change was ongoing confusion by the way the network
+library initialized itself (calling ``gethostname`` and passing its result
+to ``gethostbyname``, which does not work on all computers).
+
+runtime
+^^^^^^^
+
+The C runtime will now use compiler primitives for the primitives
+``primitive-machine-word-count-low-zeros`` and
+``primitive-machine-word-count-high-zeros``.
+
+System
+^^^^^^
+
+Two new functions have been added: ``current-process-id`` and
+``parent-process-id``.  On Unix these are equivalent to ``getpid`` and
+``getppid`` respectively.  On Windows they are equivalent to
+``GetCurrentProcessId`` and ``method () 0 end`` respectively.
+
+Testworks
+^^^^^^^^^
+
+* The documentation has been largely rewritten.  Only names exported
+  from the ``testworks`` module are documented.
+
+* New assert-\* macros replace the check-\* macros, which are now
+  deprecated.  The assert-\* macros make the assertion description
+  optional and if it isn't provided they use a description based on
+  the printed representation of the argument expressions.
+
+* ``assert-equal`` shows some additional details about why collections
+  failed to match.  (There are still improvements to be made here.)
+  There is also a new ``assert-not-equal`` macro.
+
+* There are several new command-line options:
+
+  + ``--list-suites`` to list suite names.
+  + ``--list-tests`` to list test names.
+  + ``--report-file`` to output the report to a file.
+  + ``--skip-suite`` used to be named ``--ignore-suite``.
+  + ``--skip-test`` used to be named ``--ignore-test``.
+  + ``--tag`` to run tests matching specific tags.
+
+* The ``--progress`` flag now accepts options "none", "default" (the
+  default), and "verbose".  The default output format is to show
+  suites and tests but not assertions, since they tend to be extremely
+  verbose.  Use ``--progress=verbose`` if you prefer to see assertion
+  output.
+
+* Benchmarks have been removed.  Instead, timing and allocation stats
+  are automatically recorded for all tests.  Relatedly, the
+  ``--profile`` option has been removed.
+
+* The Testworks code has been simplified and overhauled in general.
+
+* There is a new report format, "surefire", which outputs Surefire
+  XML, for use with Jenkins.  (This was in 2013.1 but there was no
+  release note.)
+
+Bug Fixes
+=========
+
+Common Dylan
+------------
+
+``application-arguments()`` will now work on ``x86_64-darwin``.
+
+The ``debug-message()`` function will now work around a possible clang compiler
+issue that causes a crash when printing integers.

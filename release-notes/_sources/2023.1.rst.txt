@@ -1,0 +1,110 @@
+*****************
+Open Dylan 2023.1
+*****************
+
+This document describes the 2023.1 release of Open Dylan, released 01
+June, 2023.  The highlights of the release are listed below.  For complete
+details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2022.1.0...v2023.1.0>`_ for
+this release.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+* The "batteries included" installation includes `LLVM version 16.0.5
+  <https://github.com/llvm/llvm-project/releases/tag/llvmorg-16.0.5>`_ and `BDW
+  GC version 8.2.4 <https://github.com/ivmai/bdwgc/releases/tag/v8.2.4>`_.
+
+* `Dylan Enhancement Proposal (DEP) 12
+  <https://opendylan.org/proposals/dep-0012-string-literals.html>`_ was
+  implemented, adding multi-line and "raw" string literals.
+
+* `Improvements to LLVM bitcode generation <https://github.com/dylan-lang/opendylan/pull/1469>`_
+
+* A bug in `parser expansions
+  <https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html>`_
+  that could crash the compiler if the end delimiter was missing has been fixed.
+
+* `Bug 1490 <https://github.com/dylan-lang/opendylan/issues/1490>`_, which
+  could result in spurious warnings from the compiler `has been fixed
+  <https://github.com/dylan-lang/opendylan/pull/1492>`_.
+
+
+Tooling
+=======
+
+* The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command-line tool has
+  had `various improvements
+  <https://github.com/dylan-lang/dylan-tool/compare/730b5c99627ac653636ddaf01187a213d7d23aa8...f6edf2ef5f5c04f295a075ae70eb8462580be4ef>`_,
+  including:
+
+  * Simplified workspace model
+  * Simplified process to publish packages
+  * Packages installed locally in workspace directory by default
+  * Global package installation follows the `XDG Base Directory Specification
+    <https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html>`_.
+  * Symlink points to current installed version of packages, for easier tooling.
+
+  Full documentation is
+  `here <https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html>`_.
+
+* The :program:`make-dylan-app` program has been removed and is replaced by
+  :command:`dylan new application` and :command:`dylan new library`.
+
+
+Library Updates
+===============
+
+Submodules
+----------
+
+Open Dylan uses Git submodules to pull in some dependencies and user programs
+may depend on these for now. The notable changes in those submodules are listed
+below:
+
+* **sphinx-extensions** - Improvements to DRM references.
+
+* **dylan-tool** - See above.
+
+* **collection-extensions** - The ``split-at`` function has been removed. Use
+  :gf:`split` instead. Documentation improvements.
+
+* **command-line-parser** - Minor bug fix to add a missing newline when no
+  subcommand is provided.
+
+* **json** - Fixed ``sort-keys?`` option for recursive :gf:`print-json` calls.
+
+
+system Library
+--------------
+
+* A `bug <https://github.com/dylan-lang/opendylan/issues/1470>`_ in
+  :func:`locator-directory` for relative directory locators was fixed.
+
+* The :func:`run-application` function is now fully documented.
+
+* A ``follow-links?:`` keyword argument has been added to the
+  :func:`file-exists?` function. The default is true, for compatibility with the
+  previous behavior.
+
+
+Contributors
+============
+
+We'd like to thank all the people who made contributions to this release and to
+surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete...
+
+* Fernando Raya
+* Peter S. Housel
+* Bruce Mitchener
+* Carl Gay
