@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Designing A Simple DUIM Application &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Improving The Design" href="improve.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Building Applications With DUIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Designing A Simple DUIM Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-of-the-application">Design of the application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-basic-sheet-hierarchy">Creating the basic sheet hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#placing-all-the-elements-in-a-single-layout">Placing all the elements in a single layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redesigning-the-layout">Redesigning the layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-radio-box">Adding a radio box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-contain-to-run-examples-interactively">Using contain to run examples interactively</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="improve.html">Improving The Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Building Applications With DUIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Designing A Simple DUIM Application</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/design.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="designing-a-simple-duim-application">
+<span id="index-0"></span><h1>Designing A Simple DUIM Application<a class="headerlink" href="#designing-a-simple-duim-application" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The next few chapters of the manual introduce you to some of the most
+important DUIM concepts, and show you how to go about designing and
+implementing a simple DUIM application. On a first read through, you
+should work through each chapter in turn, since each chapter relies
+heavily on the information in the previous chapters.</p>
+</div>
+<div class="section" id="design-of-the-application">
+<span id="index-1"></span><h2>Design of the application<a class="headerlink" href="#design-of-the-application" title="Permalink to this headline">¶</a></h2>
+<p>For the purposes of this example, the application developed is a simple
+task list manager. The design of the application attempts to achieve the
+following goals:</p>
+<ul class="simple">
+<li><p>The design is simple enough that the principles of the programming
+model should not be obscured by the code itself.</p></li>
+<li><p>The design attempts to use the most common elements of the various
+DUIM libraries.</p></li>
+<li><p>The design is extensible, so that you can customize it to your own
+needs.</p></li>
+</ul>
+<p>A task list manager was chosen because it is representative of the sort
+of GUI application that you will probably want to develop. Although the
+overall design is quite simple, it demonstrates several commonly used
+elements and techniques, and is easily extensible beyond the scope of
+this manual, should you wish to experiment with the code. The concept of
+a task list manager is familiar to the majority of readers, so you can
+study the code and the programming model, without having to spend time
+figuring out what the application itself is supposed to do.</p>
+<p>The final task list manager is shown in <a class="reference internal" href="#"><span class="doc">Designing A Simple DUIM Application</span></a>. To load the code
+for the final design into the environment, choose <strong>Tools &gt; Open Example
+Project</strong> from any window in the environment, and load the Task List 1
+project from the Documentation category of the Open Example Project dialog.</p>
+<div class="figure align-center" id="id1">
+<img alt="_images/tasklist.png" src="_images/tasklist.png" />
+<p class="caption"><span class="caption-text">The Task List Manager Application</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>The task list manager is very simple to use. You create a list of things
+that you need to do, assigning a priority to each task as you create it.
+The application can display the tasks in your list sorted in a variety
+of ways. You can save your task list to a file on disk, and open files
+of the same type.</p>
+<p>The task list manager demonstrates the use of menus and a variety of
+button, list, and text controls.</p>
+</div>
+<div class="section" id="creating-the-basic-sheet-hierarchy">
+<span id="index-2"></span><h2>Creating the basic sheet hierarchy<a class="headerlink" href="#creating-the-basic-sheet-hierarchy" title="Permalink to this headline">¶</a></h2>
+<p>This section shows you how to create gadgets and sheets that make up the
+overall visual design of the interface. It shows you how to improve upon
+an initial design, but does not go into any details on the callbacks
+necessary for the application; at the end of this section you have an
+initial visual design.</p>
+<div class="section" id="placing-all-the-elements-in-a-single-layout">
+<h3>Placing all the elements in a single layout<a class="headerlink" href="#placing-all-the-elements-in-a-single-layout" title="Permalink to this headline">¶</a></h3>
+<p>The main part of the task list manager is a list box that is used for
+displaying the tasks that you add in the course of using the program.
+For the initial design, there are buttons that let you add and remove
+tasks from the list, and a text field into which you type the text for
+new tasks.</p>
+<p>To begin with, the following code creates all these elements, and places
+them in a single window, one above the other.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;column-layout&gt;</span><span class="p">,</span>
+     <span class="k">children:</span> <span class="nb">vector</span> <span class="p">(</span><span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span><span class="mi">15</span><span class="p">),</span>
+                       <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">),</span>
+                       <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">),</span>
+                       <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+                             <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>You might notice a number of problems with this initial design:</p>
+<p>Firstly, the items have all been created correctly, but the resulting
+window is not particularly attractive. In order to improve the
+appearance, you need to rearrange the elements in the window by making
+better use of the layout facilities provided by DUIM.</p>
+<p>Secondly, the application does not yet look very much like a typical
+Windows application. Rather than individual buttons, the application
+should have a tool bar, and it is not common to have a text field in the
+main window of an application. There is no menu bar. Currently, the
+application has more of the feel of a dialog box, than a main
+application window. These issues are addressed later on in the example.</p>
+</div>
+<div class="section" id="redesigning-the-layout">
+<h3>Redesigning the layout<a class="headerlink" href="#redesigning-the-layout" title="Permalink to this headline">¶</a></h3>
+<p>To address the issue of layout first, you should group the text field
+and the <em>Add task</em> button in a row; since the two elements are
+inherently connected (the task you add is the one whose text is
+displayed in the text field), it makes sense to group them visually as
+well.</p>
+<p>The following code creates the necessary row layout:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">horizontally</span> <span class="p">()</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Note that the macro <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> has been used here. This macro takes
+any expressions that are passed to it and creates a row layout from the
+results of evaluating those expressions. The macro <code class="docutils literal notranslate"><span class="pre">vertically</span></code> works in
+a similar way, creating a column layout from its arguments. Use
+<code class="docutils literal notranslate"><span class="pre">vertically</span></code> to combine the row layout you just created with the <em>Remove
+task</em> button that still needs to be incorporated:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span> <span class="p">()</span>
+  <span class="n">horizontally</span> <span class="p">()</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">);</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Finally, you need to add this sheet hierarchy to another row layout, so
+that the main list box for the application is on the left, and the sheet
+hierarchy containing the buttons and text field is on the right:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">horizontally</span> <span class="p">()</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span> <span class="mi">15</span><span class="p">);</span>
+  <span class="n">vertically</span> <span class="p">()</span>
+    <span class="n">horizontally</span> <span class="p">()</span>
+      <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
+      <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">);</span>
+    <span class="k">end</span><span class="p">;</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">);</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>In the last few steps, you have exclusively used <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> and
+<code class="docutils literal notranslate"><span class="pre">vertically</span></code>. In fact, it does not matter if you use these macros, or
+if you create instances of <code class="docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code>
+explicitly using <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may have to resize the window to see everything.</p>
+</div>
+</div>
+<div class="section" id="adding-a-radio-box">
+<span id="index-3"></span><h3>Adding a radio box<a class="headerlink" href="#adding-a-radio-box" title="Permalink to this headline">¶</a></h3>
+<p>There is one aspect of the initial design that you have not yet
+incorporated into the structure: the radio box. This serves two purposes
+in the application:</p>
+<ol class="arabic simple">
+<li><p>It lets you choose the priority for a new task.</p></li>
+<li><p>It displays the priority of any task selected in the list.</p></li>
+</ol>
+<p>The code to create the radio box is as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Priority:&quot;</span><span class="p">,</span>
+      <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="s">&quot;Low&quot;</span><span class="p">),</span>
+      <span class="k">orientation:</span> <span class="ss">#&quot;vertical&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword can be used to ensure that
+each item is displayed one above the other.</p>
+<p>It is probably best to place the radio box immediately below the <em>Remove
+task</em> button. To do this, you need to add the definition for the radio
+box at the appropriate position in the call to <code class="docutils literal notranslate"><span class="pre">vertically</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">horizontally</span> <span class="p">()</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span> <span class="mi">15</span><span class="p">);</span>
+  <span class="n">vertically</span> <span class="p">()</span>
+    <span class="n">horizontally</span> <span class="p">()</span>
+      <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
+      <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">);</span>
+    <span class="k">end</span><span class="p">;</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">);</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Priority:&quot;</span><span class="p">,</span>
+          <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="s">&quot;Low&quot;</span><span class="p">),</span>
+          <span class="k">orientation:</span> <span class="ss">#&quot;vertical&quot;</span><span class="p">);</span>
+  <span class="k">end</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-contain-to-run-examples-interactively">
+<span id="index-4"></span><h3>Using contain to run examples interactively<a class="headerlink" href="#using-contain-to-run-examples-interactively" title="Permalink to this headline">¶</a></h3>
+<p>You can use the function <code class="docutils literal notranslate"><span class="pre">contain</span></code> to run any of the examples above
+using the interactor available in the Dylan environment. This function
+lets you see the results of your work immediately, without the need to
+compile any source code or build a project, and is extremely useful for
+experimenting interactively when you are developing your initial ideas
+for a GUI design.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">contain</span></code> function takes any expression that describes a hierarchy
+of sheets as an argument. It creates a frame which contains this sheet
+hierarchy, and displays the resulting frame on the screen.</p>
+<p>Thus, to run any of the code segments shown in this chapter, simply pass
+them to <code class="docutils literal notranslate"><span class="pre">contain</span></code> as an argument. Here are two examples, adapted from
+earlier examples in this chapter, as illustrations of how to use
+<code class="docutils literal notranslate"><span class="pre">contain</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span> <span class="p">(</span><span class="n">horizontally</span> <span class="p">()</span>
+           <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
+           <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">);</span>
+         <span class="k">end</span><span class="p">);</span>
+<span class="n">contain</span> <span class="p">(</span><span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>At this point, take a few minutes to go back over this chapter and
+practice using <code class="docutils literal notranslate"><span class="pre">contain</span></code> to run the code fragments that have already
+been discussed.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="improve.html" class="btn btn-neutral float-right" title="Improving The Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

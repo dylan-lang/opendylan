@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Designing A Simple DUIM Application" href="design.html" />
+    <link rel="prev" title="Preface" href="preface.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Building Applications With DUIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-the-duim-libraries">Overview of the DUIM libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-duim-programming-model">The DUIM programming model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#it-should-be-as-easy-to-use-as-possible">It should be as easy to use as possible.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#it-should-be-as-compact-as-possible">It should be as compact as possible.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#it-should-be-as-portable-as-possible">It should be as portable as possible.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="improve.html">Improving The Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Building Applications With DUIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/intro.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview-of-the-duim-libraries">
+<span id="index-0"></span><h2>Overview of the DUIM libraries<a class="headerlink" href="#overview-of-the-duim-libraries" title="Permalink to this headline">¶</a></h2>
+<p>The Dylan User Interface Manager (DUIM—pronounced “dwim”) is a
+Dylan-based programming interface that provides a layered set of
+portable facilities for constructing user interfaces.</p>
+<p>While DUIM provides an API to user interface facilities for the Dylan
+application programmer, it is not itself a window system toolkit. DUIM
+uses the service of the underlying window system and UI toolkits as much
+as possible. DUIM’s API is intended to insulate the programmer from most
+of the complexities of portability, since the DUIM application need only
+deal with DUIM objects and functions regardless of their operating
+platform (that is, the combination of Dylan, the host computer, and the
+host window environment).</p>
+<p>DUIM is a high level library that allows you to concentrate on how the
+interface looks and behaves rather than how to implement it on a
+particular platform. It abstracts out many of the concepts common to all
+window environments. The programmer is encouraged to think in terms of
+these abstractions, rather than in the specific capabilities of a
+particular host system. For example, using DUIM, you can specify the
+appearance of output in high-level terms and those high-level
+descriptions are turned into the appropriate appearance for the given
+host. Thus, the application has the same fundamental interface across
+multiple environments, although the details will differ from system to
+system.</p>
+</div>
+<div class="section" id="the-duim-programming-model">
+<span id="index-1"></span><h2>The DUIM programming model<a class="headerlink" href="#the-duim-programming-model" title="Permalink to this headline">¶</a></h2>
+<p>The Dylan User Interface Manager (DUIM) provides a complete functional
+interface so that you can use Open Dylan to develop and build
+graphical user interfaces (GUIs) for your applications. It comprises a
+suite of libraries, each of which provides a specific set of components
+necessary for developing a GUI.</p>
+<p>DUIM has a simple overall design, ensuring that developers who are
+relatively new to Dylan can produce results quickly and effectively. At
+the same time, the design is robust enough to allow more experienced
+developers to extend and use DUIM in non-standard ways when required, in
+order to produce specific behavior.</p>
+<p>Because it is completely written in Dylan, DUIM is able to harness all
+the power of the Dylan language. This means not only the clean
+object-oriented design of Dylan, but also the power of functionality
+such as macros and collections, together with the concise nature of the
+language syntax. This makes it easy to implement quite complicated GUI
+designs from the ground up, using small, clear pieces of code. This is
+in contrast to other GUI design libraries that have to rely on a much
+more verbose underlying language, such as C, which in turn leads to more
+complex GUI code that is harder to improve upon and maintain.</p>
+<p>In the functionality that it provides, DUIM has a number of goals:</p>
+<div class="section" id="it-should-be-as-easy-to-use-as-possible">
+<h3>It should be as easy to use as possible.<a class="headerlink" href="#it-should-be-as-easy-to-use-as-possible" title="Permalink to this headline">¶</a></h3>
+<p>As well as providing the minimum feature set necessary to build a GUI,
+DUIM provides functionality that lets you use common GUI features
+easily.</p>
+</div>
+<div class="section" id="it-should-be-as-compact-as-possible">
+<h3>It should be as compact as possible.<a class="headerlink" href="#it-should-be-as-compact-as-possible" title="Permalink to this headline">¶</a></h3>
+<p>DUIM does not provide <em>so much</em> functionality that either you, or the
+environment, is swamped in complexity.</p>
+</div>
+<div class="section" id="it-should-be-as-portable-as-possible">
+<h3>It should be as portable as possible.<a class="headerlink" href="#it-should-be-as-portable-as-possible" title="Permalink to this headline">¶</a></h3>
+<p>It should be relatively easy to compile code in, and for, as many
+different hardware and software configurations as possible.</p>
+<p>DUIM provides support for all the controls available in every modern GUI
+environment, and also allows you to develop your own controls as
+required. As far as possible, DUIM code is not specific to any
+particular platform, and whenever possible, controls native to the
+target environment are used in the resulting executable. This has two
+important consequences for your code:</p>
+<p>By using controls native to the target environment, it is easy to
+develop an application that has the correct look and feel for your
+platform.</p>
+<p>It enables DUIM code to be compiled and run on any platform for which a
+DUIM back-end has been implemented.</p>
+<p>A DUIM interface is built from <em>frames</em> ; each window in your
+application is represented by a frame. Each frame contains a hierarchy
+of <em>sheets</em>, in which each sheet represents a unique piece of your
+window (the menu bar, buttons, and so on). DUIM also handles the event
+loop for you, allowing you to write methods to handle just the events
+you wish to treat specially.</p>
+<p>The components of the sheet structure itself consist of three types of
+DUIM object:</p>
+<ul class="simple">
+<li><p><em>Gadgets</em>, which are discrete GUI controls such as buttons, panes, and
+menus. These are the basic behavioral element of a GUI, and provide
+methods to handle events such as mouse clicks.</p></li>
+<li><p><em>Layouts</em>, which are controls that, rather than having a physical
+appearance on screen, describe the arrangement of the sheets that are
+their children.</p></li>
+<li><p><em>User-defined sheets</em>, which are implemented by you rather than by DUIM
+itself.</p></li>
+</ul>
+<p>To implement a user-defined sheet, you create a new class and write
+methods to handle the different events that it receives, such as
+repainting itself, supporting mouse events, or handling the clipboard.</p>
+<p>To develop an application using DUIM, you typically have to define a
+number of classes of frame (one for every kind of window or dialog in
+your application). The definition of each frame class contains a
+description of the sheet hierarchy that describes the contents of the
+frame, together with any slots and initial values that are required by
+the frame class. Once the frame classes are defined, you need to define
+callback functions that are invoked when certain events occur within the
+scope of the sheet hierarchy, such as mouse button clicks or textual
+input. These callback functions encapsulate the behavior of the
+application.</p>
+<p>The chapters <a class="reference internal" href="design.html"><span class="doc">Designing A Simple DUIM Application</span></a> to <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a> provide an extended
+tutorial that illustrates the basic and most common principles
+involved in building a GUI for a simple application.</p>
+<p>As well as a rich set of GUI controls, DUIM provides support for the
+following features that are required in GUI design:</p>
+<ul class="simple">
+<li><p><em>Dialogs</em> You can build your own dialogs, wizards, and property
+frames using pre-supplied DUIM classes. In addition, a number of
+convenience functions are provided which let you add common dialogs
+(such as file requesters) to your GUI without having to design the
+dialog from scratch.</p></li>
+<li><p><em>Graphics</em> DUIM provides portable models for colors, fonts, images,
+and generic drawing operations.</p></li>
+<li><p><em>Events</em> DUIM provides portable models for keyboard handling and
+mouse handling, to simplify the process of writing your own event
+handling routines.</p></li>
+<li><p><em>Layouts</em> DUIM makes it easy to lay out groups of controls in a
+variety of standard ways, letting you arrange controls in columns,
+rows, or tables. DUIM takes care of any necessary calculations,
+ensuring that the size of each control, and the spacing between
+controls, is correct, without the need for any explicit layout
+calculation on your part.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="preface.html" class="btn btn-neutral float-left" title="Preface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="design.html" class="btn btn-neutral float-right" title="Designing A Simple DUIM Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

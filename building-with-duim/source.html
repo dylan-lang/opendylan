@@ -1,0 +1,931 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Source Code For The Task List Manager &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="prev" title="A Tour of the DUIM Libraries" href="tour.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Building Applications With DUIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="improve.html">Improving The Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Source Code For The Task List Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-task-list-manager-using-menu-gadgets">A task list manager using menu gadgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#contents-of-the-file-frame-dylan">Contents of the file <em>frame.dylan</em> :</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-task-list-manager-using-command-tables">A task list manager using command tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Contents of the file <em>frame.dylan</em> :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contents-of-the-file-task-list-dylan">Contents of the file <em>task-list.dylan</em> :</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Building Applications With DUIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Source Code For The Task List Manager</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/source.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="source-code-for-the-task-list-manager">
+<span id="index-0"></span><h1>Source Code For The Task List Manager<a class="headerlink" href="#source-code-for-the-task-list-manager" title="Permalink to this headline">¶</a></h1>
+<p>For completeness, here is the full source code for both versions of the
+task list manager. If you have followed the example given in <a class="reference internal" href="design.html"><span class="doc">Designing A Simple DUIM Application</span></a>
+through <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a> from the beginning, then your code should be the
+same as the code given in <a class="reference internal" href="#a-task-list-manager-using-menu-gadgets">A task list manager using menu gadgets</a>. The
+source code for the second version of the task list manager, using command
+tables, is given in <a class="reference internal" href="#a-task-list-manager-using-command-tables">A task list manager using command tables</a>.</p>
+<div class="section" id="a-task-list-manager-using-menu-gadgets">
+<span id="index-1"></span><h2>A task list manager using menu gadgets<a class="headerlink" href="#a-task-list-manager-using-menu-gadgets" title="Permalink to this headline">¶</a></h2>
+<p>This section contains the complete source code to the first complete
+design of the task list manager, described in Chapters <a class="reference internal" href="improve.html"><span class="doc">Improving The Design</span></a>
+to <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>. To load this code into the environment, choose
+<strong>Tools &gt; Open Example Project</strong> from any window in the environment. The
+code in this section can be loaded by choosing Task List 1 in the
+Documentation category of the Open Example Project dialog.</p>
+<div class="section" id="contents-of-the-file-frame-dylan">
+<h3>Contents of the file <em>frame.dylan</em> :<a class="headerlink" href="#contents-of-the-file-frame-dylan" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span>    <span class="s">task-list</span>
+<span class="na">Synopsis</span><span class="o">:</span>  <span class="s">Task List Manager.</span>
+<span class="na">Author</span><span class="o">:</span>    <span class="s">Functional Objects, Inc.</span>
+<span class="na">Copyright</span><span class="o">:</span>    <span class="s">Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.</span>
+<span class="s">              All rights reserved.</span>
+<span class="na">License</span><span class="o">:</span>      <span class="s">See License.txt in this distribution for details.</span>
+<span class="na">Warranty</span><span class="o">:</span>     <span class="s">Distributed WITHOUT WARRANTY OF ANY KIND</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="no">$priority-items</span>
+  <span class="o">=</span> <span class="p">#(#(</span><span class="s">&quot;Low&quot;</span><span class="p">,</span> <span class="ss">#&quot;low&quot;</span><span class="p">),</span>
+      <span class="p">#(</span><span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="ss">#&quot;medium&quot;</span><span class="p">),</span>
+      <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="ss">#&quot;high&quot;</span><span class="p">));</span>
+
+<span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">frame-task-list</span> <span class="p">::</span> <span class="nc">&lt;task-list&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-list&gt;</span><span class="p">);</span>
+
+  <span class="c1">// definition of menu bar</span>
+  <span class="n">pane</span> <span class="n">task-menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-bar&gt;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">file-menu</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">edit-menu</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">task-menu</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">help-menu</span><span class="p">));</span>
+  <span class="c1">// definition of menus</span>
+  <span class="n">pane</span> <span class="n">file-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;File&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">open-menu-button</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">save-menu-button</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">save-as-menu-button</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">exit-menu-button</span><span class="p">));</span>
+  <span class="n">pane</span> <span class="n">edit-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Edit&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">cut-menu-button</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">copy-menu-button</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">paste-menu-button</span><span class="p">));</span>
+  <span class="n">pane</span> <span class="n">task-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">add-menu-button</span><span class="p">,</span>
+                          <span class="n">frame</span><span class="p">.</span><span class="n">remove-menu-button</span><span class="p">));</span>
+  <span class="n">pane</span> <span class="n">help-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Help&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">about-menu-button</span><span class="p">));</span>
+
+  <span class="c1">// definition of menu buttons</span>
+
+  <span class="c1">// Commands in the File menu</span>
+  <span class="n">pane</span> <span class="n">open-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open...&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">open-file</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;o&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Opens an existing file.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">save-file</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;s&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Saves the current file to disk.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-as-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save As...&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">save-as-file</span><span class="p">,</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Saves the current file with a new name.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">exit-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Exit&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">exit-task</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f4&quot;</span><span class="p">,</span> <span class="ss">#&quot;alt&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Exits the application.&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Commands in the Edit menu</span>
+  <span class="n">pane</span> <span class="n">cut-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Cut&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;x&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Cut the selection to the clipboard.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">copy-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Copy&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;c&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Copy the selection to the clipboard.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">paste-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Paste&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;v&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Paste the selection in the clipboard at the current position.&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Commands in the Task menu</span>
+  <span class="n">pane</span> <span class="n">add-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add...&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">frame-add-task</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span>
+                        <span class="p">(</span><span class="ss">#&quot;a&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Add a new task.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">frame-remove-task</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span>
+                        <span class="p">(</span><span class="ss">#&quot;d&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Remove the selected task from the list.&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Commands in the Help menu</span>
+  <span class="n">pane</span> <span class="n">about-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;About&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">about-task</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f1&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Display information about the application.&quot;</span><span class="p">);</span>
+
+  <span class="c1">// definition of buttons</span>
+  <span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">frame-add-task</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">frame-remove-task</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">open-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open file&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">open-file</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save file&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">save-file</span><span class="p">);</span>
+
+  <span class="c1">// definition of radio box</span>
+  <span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+          <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+          <span class="k">orientation:</span> <span class="ss">#&quot;horizontal&quot;</span><span class="p">,</span>
+          <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+          <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+          <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span>
+          <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+
+  <span class="c1">// definition of tool bar</span>
+  <span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span>
+         <span class="k">child:</span> <span class="n">horizontally</span> <span class="p">()</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">open-button</span><span class="p">;</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">save-button</span><span class="p">;</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span>
+                <span class="k">end</span><span class="p">);</span>
+
+  <span class="c1">// definition of status bar</span>
+  <span class="n">pane</span> <span class="n">task-status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task Manager&quot;</span><span class="p">);</span>
+
+  <span class="c1">// definition of list</span>
+  <span class="n">pane</span> <span class="n">task-list</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span>
+          <span class="k">items:</span> <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">,</span>
+          <span class="k">label-key:</span> <span class="n">task-name</span><span class="p">,</span>
+          <span class="k">lines:</span> <span class="mi">15</span><span class="p">,</span>
+          <span class="k">value-changed-callback:</span> <span class="n">note-task-selection-change</span><span class="p">);</span>
+
+  <span class="c1">// main layout</span>
+  <span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">vertically</span> <span class="p">()</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">;</span>
+    <span class="k">end</span><span class="p">;</span>
+
+  <span class="c1">// activation of frame elements</span>
+  <span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-layout</span><span class="p">;</span>
+  <span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+  <span class="n">status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-status-bar</span><span class="p">;</span>
+  <span class="n">menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-menu-bar</span><span class="p">;</span>
+
+  <span class="c1">// frame title</span>
+  <span class="nb">keyword</span> <span class="k">title:</span> <span class="o">=</span> <span class="s">&quot;Task List Manager&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">initialize</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">,</span> <span class="k">#key</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+  <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">initialize</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">prompt-for-task</span>
+   <span class="p">(</span><span class="k">#key</span> <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Type text of new task&quot;</span><span class="p">,</span> <span class="n">owner</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">name</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">),</span>
+     <span class="n">priority</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;priority&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">task-text</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span>
+           <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">,</span>
+           <span class="k">activate-callback:</span> <span class="n">exit-dialog</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">priority-field</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+           <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+           <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+           <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+           <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">frame-add-task-dialog</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dialog-frame&gt;</span><span class="p">,</span>
+           <span class="k">title:</span> <span class="n">title</span><span class="p">,</span>
+           <span class="k">owner:</span> <span class="n">owner</span><span class="p">,</span>
+           <span class="k">layout:</span> <span class="n">vertically</span> <span class="p">()</span>
+                     <span class="n">task-text</span><span class="p">;</span>
+                     <span class="n">priority-field</span>
+                   <span class="k">end</span><span class="p">,</span>
+           <span class="k">input-focus:</span> <span class="n">task-text</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">start-dialog</span><span class="p">(</span><span class="n">frame-add-task-dialog</span><span class="p">))</span>
+    <span class="nb">values</span><span class="p">(</span><span class="n">gadget-value</span><span class="p">(</span><span class="n">task-text</span><span class="p">),</span> <span class="n">gadget-value</span><span class="p">(</span><span class="n">priority-field</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">prompt-for-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">make-keyboard-gesture</span>
+    <span class="p">(</span><span class="n">keysym</span> <span class="p">::</span> <span class="nc">&lt;symbol&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">modifiers</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">::</span> <span class="nc">&lt;keyboard-gesture&gt;</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;keyboard-gesture&gt;</span><span class="p">,</span> <span class="k">keysym:</span> <span class="n">keysym</span><span class="p">,</span> <span class="k">modifiers:</span> <span class="n">modifiers</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">make-keyboard-gesture</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">not-yet-implemented</span> <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Not yet implemented!&quot;</span><span class="p">,</span> <span class="k">owner:</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">not-yet-implemented</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">start-task</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-frame&gt;</span><span class="p">);</span>
+  <span class="n">start-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">start-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-add-task</span> <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">priority</span><span class="p">)</span> <span class="o">=</span> <span class="n">prompt-for-task</span><span class="p">(</span><span class="k">owner:</span> <span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">&amp;</span> <span class="n">priority</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">new-task</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">,</span> <span class="k">priority:</span> <span class="n">priority</span><span class="p">);</span>
+    <span class="n">add-task</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="n">new-task</span><span class="p">);</span>
+    <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+    <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="n">new-task</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-add-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-remove-task</span> <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span>
+                    <span class="p">(</span><span class="s">&quot;Really remove task %s&quot;</span><span class="p">,</span> <span class="n">task</span><span class="p">.</span><span class="n">task-name</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">,</span> <span class="k">style:</span> <span class="ss">#&quot;question&quot;</span><span class="p">))</span>
+    <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="l">#f</span><span class="p">;</span>
+    <span class="n">remove-task</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="n">task</span><span class="p">);</span>
+    <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-remove-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-selected-task</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">task</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">list-box</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">gadget-value</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-selected-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-selected-task-setter</span>
+    <span class="p">(</span><span class="n">task</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">),</span> <span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">task</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">list-box</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">gadget-value</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span> <span class="o">:=</span> <span class="n">task</span><span class="p">;</span>
+  <span class="n">note-task-selection-change</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">task</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-selected-task-setter</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">refresh-task-frame</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">list-box</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">modified?</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">gadget-items</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span> <span class="o">==</span> <span class="n">tasks</span><span class="p">)</span>
+    <span class="n">update-gadget</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">gadget-items</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span> <span class="o">:=</span> <span class="n">tasks</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="n">gadget-enabled?</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">save-button</span><span class="p">)</span> <span class="o">:=</span> <span class="n">modified?</span><span class="p">;</span>
+  <span class="n">gadget-enabled?</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">save-menu-button</span><span class="p">)</span> <span class="o">:=</span> <span class="n">modified?</span><span class="p">;</span>
+  <span class="n">note-task-selection-change</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">refresh-task-frame</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span>
+    <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">gadget</span><span class="p">.</span><span class="n">sheet-frame</span><span class="p">;</span>
+  <span class="n">note-task-selection-change</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">.</span><span class="n">gadget-value</span> <span class="o">:=</span> <span class="n">task</span><span class="p">.</span><span class="n">task-priority</span><span class="p">;</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">selection?</span> <span class="o">=</span> <span class="p">(</span><span class="n">task</span> <span class="o">~=</span> <span class="l">#f</span><span class="p">);</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span><span class="p">.</span><span class="n">gadget-enabled?</span> <span class="o">:=</span> <span class="n">selection?</span><span class="p">;</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">remove-menu-button</span><span class="p">.</span><span class="n">gadget-enabled?</span> <span class="o">:=</span> <span class="n">selection?</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">open-file</span>
+    <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">filename</span>
+    <span class="o">=</span> <span class="n">choose-file</span><span class="p">(</span><span class="k">frame:</span> <span class="n">frame</span><span class="p">,</span>
+                  <span class="k">default:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">,</span>
+                  <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">load-task-list</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">task-list</span><span class="p">)</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span> <span class="o">:=</span> <span class="n">task-list</span><span class="p">;</span>
+      <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span><span class="p">(</span><span class="s">&quot;Failed to open file %s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">open-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">save-file</span>
+    <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">save-as-file</span><span class="p">(</span><span class="n">gadget</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">save-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">save-as-file</span>
+    <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">filename</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">filename</span>
+    <span class="o">=</span> <span class="n">filename</span>
+        <span class="o">|</span> <span class="n">choose-file</span><span class="p">(</span><span class="k">frame:</span> <span class="n">frame</span><span class="p">,</span>
+                      <span class="k">default:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">,</span>
+                      <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">save-task-list</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">filename</span><span class="p">))</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span> <span class="o">:=</span> <span class="n">task-list</span><span class="p">;</span>
+      <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span>
+                    <span class="p">(</span><span class="s">&quot;Failed to save file %s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">save-as-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">about-task</span> <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Task List Manager&quot;</span><span class="p">,</span> <span class="k">owner:</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">about-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">exit-task</span> <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">save-file</span> <span class="p">(</span><span class="n">gadget</span><span class="p">);</span>
+  <span class="n">exit-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">exit-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">(</span><span class="n">arguments</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="c1">// handle the arguments</span>
+  <span class="n">start-task</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+
+<span class="k">begin</span>
+  <span class="n">main</span><span class="p">(</span><span class="n">application-arguments</span><span class="p">())</span> <span class="c1">// Start the application!</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Contents of the file <em>task-list.dylan</em> :</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span>    <span class="s">task-list</span>
+<span class="na">Synopsis</span><span class="o">:</span>  <span class="s">Task List Manager.</span>
+<span class="na">Author</span><span class="o">:</span>    <span class="s">Functional Objects, Inc.</span>
+<span class="na">Copyright</span><span class="o">:</span>    <span class="s">Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.</span>
+<span class="s">              All rights reserved.</span>
+<span class="na">License</span><span class="o">:</span>      <span class="s">See License.txt in this distribution for details.</span>
+<span class="na">Warranty</span><span class="o">:</span>     <span class="s">Distributed WITHOUT WARRANTY OF ANY KIND</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;task-list&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">task-list-tasks</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;stretchy-vector&gt;</span><span class="p">),</span>
+    <span class="k">init-keyword:</span> <span class="k">tasks:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">task-list-filename</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="l">#f</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">filename:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">task-list-modified?</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span> <span class="o">=</span> <span class="l">#f</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;task-list&gt;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="nc">&lt;priority&gt;</span> <span class="o">=</span> <span class="nb">one-of</span><span class="p">(</span><span class="ss">#&quot;low&quot;</span><span class="p">,</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span> <span class="ss">#&quot;high&quot;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;task&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">task-name</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">name:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">task-priority</span> <span class="p">::</span> <span class="nc">&lt;priority&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">priority:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;task&gt;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">add-task</span>
+    <span class="p">(</span><span class="n">task-list</span> <span class="p">::</span> <span class="nc">&lt;task-list&gt;</span><span class="p">,</span> <span class="n">task</span> <span class="p">::</span> <span class="nc">&lt;task&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="nb">add!</span><span class="p">(</span><span class="n">task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">,</span> <span class="n">task</span><span class="p">);</span>
+  <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span> <span class="o">:=</span> <span class="l">#t</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">add-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">remove-task</span>
+    <span class="p">(</span><span class="n">task-list</span> <span class="p">::</span> <span class="nc">&lt;task-list&gt;</span><span class="p">,</span> <span class="n">task</span> <span class="p">::</span> <span class="nc">&lt;task&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="nb">remove!</span><span class="p">(</span><span class="n">task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">,</span> <span class="n">task</span><span class="p">);</span>
+  <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span> <span class="o">:=</span> <span class="l">#t</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">remove-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">save-task-list</span>
+    <span class="p">(</span><span class="n">task-list</span> <span class="p">::</span> <span class="nc">&lt;task-list&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">filename</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">saved?</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">)</span>
+  <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">|</span> <span class="n">task-list-filename</span><span class="p">(</span><span class="n">task-list</span><span class="p">);</span>
+  <span class="n">with-open-file</span> <span class="p">(</span><span class="n">stream</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">task</span> <span class="k">in</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">)</span>
+      <span class="n">format</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s">&quot;%s</span><span class="se">\n</span><span class="s">%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+             <span class="n">task</span><span class="p">.</span><span class="n">task-name</span><span class="p">,</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">,</span> <span class="n">task</span><span class="p">.</span><span class="n">task-priority</span><span class="p">))</span>
+    <span class="k">end</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span> <span class="o">:=</span> <span class="l">#f</span><span class="p">;</span>
+  <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span> <span class="o">:=</span> <span class="n">filename</span><span class="p">;</span>
+  <span class="l">#t</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">save-task-list</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">load-task-list</span>
+   <span class="p">(</span><span class="n">filename</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">task-list</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task-list&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">tasks</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;stretchy-vector&gt;</span><span class="p">);</span>
+  <span class="nb">block</span> <span class="p">(</span><span class="n">return</span><span class="p">)</span>
+    <span class="n">with-open-file</span> <span class="p">(</span><span class="n">stream</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">)</span>
+      <span class="k">while</span> <span class="p">(</span><span class="l">#t</span><span class="p">)</span>
+        <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="n">read-line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="k">on-end-of-stream:</span> <span class="l">#f</span><span class="p">);</span>
+        <span class="k">unless</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">return</span><span class="p">()</span> <span class="k">end</span><span class="p">;</span>
+        <span class="k">let</span> <span class="n">priority</span> <span class="o">=</span> <span class="n">read-line</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="k">on-end-of-stream:</span> <span class="l">#f</span><span class="p">);</span>
+        <span class="k">unless</span> <span class="p">(</span><span class="n">priority</span><span class="p">)</span>
+          <span class="nb">error</span><span class="p">(</span><span class="s">&quot;Unexpectedly missing priority!&quot;</span><span class="p">)</span>
+        <span class="k">end</span><span class="p">;</span>
+        <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">,</span>
+                        <span class="k">priority:</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;symbol&gt;</span><span class="p">,</span> <span class="n">priority</span><span class="p">));</span>
+        <span class="nb">add!</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-list&gt;</span><span class="p">,</span> <span class="k">tasks:</span> <span class="n">tasks</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">filename</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">load-task-list</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-task-list-manager-using-command-tables">
+<span id="index-2"></span><h2>A task list manager using command tables<a class="headerlink" href="#a-task-list-manager-using-command-tables" title="Permalink to this headline">¶</a></h2>
+<p>This section contains the complete source code of the task list manager
+when command tables have been used to implement the menu system, rather
+than explicit menu gadgets. To load this code into the environment,
+choose <strong>Tools &gt; Open Example Project</strong> from any window in the
+environment. The code in this section can be loaded by choosing Task
+List 2 in the Documentation category of the Open Example Project dialog.</p>
+<p id="index-3">The command tables used in this implementation are described in
+<a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a>. You should refer to <a class="reference internal" href="improve.html"><span class="doc">Improving The Design</span></a> and <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>,
+for a full description of the rest of the code shown here. Note that,
+apart from code specific to command tables and callbacks, the code listed
+in this section is a repeat of code listed in <a class="reference internal" href="#a-task-list-manager-using-menu-gadgets">A task list manager using
+menu gadgets</a>.</p>
+<div class="section" id="id1">
+<h3>Contents of the file <em>frame.dylan</em> :<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span>    <span class="s">task-list</span>
+<span class="na">Synopsis</span><span class="o">:</span>  <span class="s">Task List Manager.</span>
+<span class="na">Author</span><span class="o">:</span>    <span class="s">Functional Objects, Inc.</span>
+<span class="na">Copyright</span><span class="o">:</span>    <span class="s">Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.</span>
+<span class="s">              All rights reserved.</span>
+<span class="na">License</span><span class="o">:</span>      <span class="s">See License.txt in this distribution for details.</span>
+<span class="na">Warranty</span><span class="o">:</span>     <span class="s">Distributed WITHOUT WARRANTY OF ANY KIND</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="no">$priority-items</span>
+  <span class="o">=</span> <span class="p">#(#(</span><span class="s">&quot;Low&quot;</span><span class="p">,</span> <span class="ss">#&quot;low&quot;</span><span class="p">),</span>
+      <span class="p">#(</span><span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="ss">#&quot;medium&quot;</span><span class="p">),</span>
+      <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="ss">#&quot;high&quot;</span><span class="p">));</span>
+
+<span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">frame-task-list</span> <span class="p">::</span> <span class="nc">&lt;task-list&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-list&gt;</span><span class="p">);</span>
+
+  <span class="c1">// Note: no definition of menu buttons in this implementation,</span>
+  <span class="c1">// See definition of command tables instead.</span>
+
+  <span class="c1">// definition of buttons</span>
+  <span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+     <span class="k">command:</span> <span class="n">frame-add-task</span><span class="p">,</span>
+     <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span> <span class="n">frame-add-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">end</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">,</span>
+     <span class="k">command:</span> <span class="n">frame-remove-task</span><span class="p">,</span>
+         <span class="k">activate-callback:</span>  <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span> <span class="n">frame-remove-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">end</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">open-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open file&quot;</span><span class="p">,</span>
+     <span class="k">command:</span> <span class="n">open-file</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span> <span class="n">open-file</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">end</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save file&quot;</span><span class="p">,</span>
+     <span class="k">command:</span> <span class="n">save-file</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span> <span class="n">save-file</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">end</span><span class="p">);</span>
+
+  <span class="c1">// definition of radio box</span>
+  <span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+     <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+     <span class="k">orientation:</span> <span class="ss">#&quot;horizontal&quot;</span><span class="p">,</span>
+     <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+     <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+     <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span>
+     <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span> <span class="n">not-yet-implemented</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">end</span><span class="p">);</span>
+
+  <span class="c1">// definition of tool bar</span>
+  <span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span>
+         <span class="k">child:</span> <span class="n">horizontally</span> <span class="p">()</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">open-button</span><span class="p">;</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">save-button</span><span class="p">;</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+                  <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span>
+                <span class="k">end</span><span class="p">);</span>
+
+  <span class="c1">// definition of status bar</span>
+  <span class="n">pane</span> <span class="n">task-status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task Manager&quot;</span><span class="p">);</span>
+
+  <span class="c1">// definition of list</span>
+  <span class="n">pane</span> <span class="n">task-list</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span>
+          <span class="k">items:</span> <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">,</span>
+          <span class="k">label-key:</span> <span class="n">task-name</span><span class="p">,</span>
+          <span class="k">lines:</span> <span class="mi">15</span><span class="p">,</span>
+          <span class="k">value-changed-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span> <span class="n">note-task-selection-change</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">end</span><span class="p">);</span>
+
+  <span class="c1">// main layout</span>
+  <span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">vertically</span> <span class="p">()</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">;</span>
+    <span class="k">end</span><span class="p">;</span>
+
+  <span class="c1">// activation of frame elements</span>
+  <span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-layout</span><span class="p">;</span>
+  <span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+  <span class="n">status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-status-bar</span><span class="p">;</span>
+  <span class="n">command-table</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="vg">*task-list-command-table*</span><span class="p">;</span>
+
+  <span class="c1">// frame title</span>
+  <span class="nb">keyword</span> <span class="k">title:</span> <span class="o">=</span> <span class="s">&quot;Task List Manager&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">initialize</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">,</span> <span class="k">#key</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+  <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">initialize</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">prompt-for-task</span>
+   <span class="p">(</span><span class="k">#key</span> <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Type text of new task&quot;</span><span class="p">,</span> <span class="n">owner</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">name</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">),</span>
+     <span class="n">priority</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;priority&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">task-text</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span>
+           <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">,</span>
+           <span class="k">activate-callback:</span> <span class="n">exit-dialog</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">priority-field</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+           <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+           <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+           <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+           <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">frame-add-task-dialog</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dialog-frame&gt;</span><span class="p">,</span>
+           <span class="k">title:</span> <span class="n">title</span><span class="p">,</span>
+           <span class="k">owner:</span> <span class="n">owner</span><span class="p">,</span>
+           <span class="k">layout:</span> <span class="n">vertically</span> <span class="p">()</span>
+                     <span class="n">task-text</span><span class="p">;</span>
+                     <span class="n">priority-field</span>
+                   <span class="k">end</span><span class="p">,</span>
+           <span class="k">input-focus:</span> <span class="n">task-text</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">start-dialog</span><span class="p">(</span><span class="n">frame-add-task-dialog</span><span class="p">))</span>
+    <span class="nb">values</span><span class="p">(</span><span class="n">gadget-value</span><span class="p">(</span><span class="n">task-text</span><span class="p">),</span> <span class="n">gadget-value</span><span class="p">(</span><span class="n">priority-field</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">prompt-for-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">not-yet-implemented</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Not yet implemented!&quot;</span><span class="p">,</span> <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">not-yet-implemented</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">start-task</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-frame&gt;</span><span class="p">);</span>
+  <span class="n">start-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">start-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-add-task</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">priority</span><span class="p">)</span> <span class="o">=</span> <span class="n">prompt-for-task</span><span class="p">(</span><span class="k">owner:</span> <span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">&amp;</span> <span class="n">priority</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">new-task</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">,</span> <span class="k">priority:</span> <span class="n">priority</span><span class="p">);</span>
+    <span class="n">add-task</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="n">new-task</span><span class="p">);</span>
+    <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+    <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="n">new-task</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-add-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-remove-task</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span>
+                    <span class="p">(</span><span class="s">&quot;Really remove task %s&quot;</span><span class="p">,</span> <span class="n">task</span><span class="p">.</span><span class="n">task-name</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">,</span> <span class="k">style:</span> <span class="ss">#&quot;question&quot;</span><span class="p">))</span>
+    <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="l">#f</span><span class="p">;</span>
+    <span class="n">remove-task</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="n">task</span><span class="p">);</span>
+    <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-remove-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-selected-task</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">task</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">list-box</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">gadget-value</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-selected-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-selected-task-setter</span>
+    <span class="p">(</span><span class="n">task</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">),</span> <span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">task</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">list-box</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">gadget-value</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span> <span class="o">:=</span> <span class="n">task</span><span class="p">;</span>
+  <span class="n">note-task-selection-change</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">task</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-selected-task-setter</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">refresh-task-frame</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">list-box</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">modified?</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span><span class="p">;</span>
+  <span class="k">let</span> <span class="n">tasks</span> <span class="o">=</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-tasks</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">gadget-items</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span> <span class="o">==</span> <span class="n">tasks</span><span class="p">)</span>
+    <span class="n">update-gadget</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">gadget-items</span><span class="p">(</span><span class="n">list-box</span><span class="p">)</span> <span class="o">:=</span> <span class="n">tasks</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="n">command-enabled?</span><span class="p">(</span><span class="n">save-file</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="n">modified?</span><span class="p">;</span>
+  <span class="n">note-task-selection-change</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">refresh-task-frame</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">.</span><span class="n">gadget-value</span> <span class="o">:=</span> <span class="n">task</span><span class="p">.</span><span class="n">task-priority</span><span class="p">;</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="n">command-enabled?</span><span class="p">(</span><span class="n">frame-remove-task</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="n">task</span> <span class="o">~=</span> <span class="l">#f</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">open-file</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">filename</span>
+    <span class="o">=</span> <span class="n">choose-file</span><span class="p">(</span><span class="k">frame:</span> <span class="n">frame</span><span class="p">,</span>
+                  <span class="k">default:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">,</span>
+                  <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">load-task-list</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">task-list</span><span class="p">)</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span> <span class="o">:=</span> <span class="n">task-list</span><span class="p">;</span>
+      <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span><span class="p">(</span><span class="s">&quot;Failed to open file %s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">open-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">save-file</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span><span class="p">)</span>
+    <span class="n">save-as-file</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">save-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">save-as-file</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">filename</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">filename</span>
+    <span class="o">=</span> <span class="n">filename</span>
+        <span class="o">|</span> <span class="n">choose-file</span><span class="p">(</span><span class="k">frame:</span> <span class="n">frame</span><span class="p">,</span>
+                      <span class="k">default:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">,</span>
+                      <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">save-task-list</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">filename</span><span class="p">))</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span> <span class="o">:=</span> <span class="n">task-list</span><span class="p">;</span>
+      <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span>
+                    <span class="p">(</span><span class="s">&quot;Failed to save file %s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">save-as-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">about-task</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Task List Manager&quot;</span><span class="p">,</span> <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">about-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">exit-task</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">save-file</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">exit-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">exit-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">function</span> <span class="n">make-keyboard-gesture</span>
+    <span class="p">(</span><span class="n">keysym</span> <span class="p">::</span> <span class="nc">&lt;symbol&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">modifiers</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">::</span> <span class="nc">&lt;keyboard-gesture&gt;</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;keyboard-gesture&gt;</span><span class="p">,</span> <span class="k">keysym:</span> <span class="n">keysym</span><span class="p">,</span> <span class="k">modifiers:</span> <span class="n">modifiers</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">make-keyboard-gesture</span><span class="p">;</span>
+
+<span class="c1">// Definition of the File menu</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Open&quot;</span> <span class="o">=</span> <span class="n">open-file</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;o&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Opens an existing file.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Save&quot;</span> <span class="o">=</span> <span class="n">save-file</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;s&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Saves the current file to disk.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Save As...&quot;</span> <span class="o">=</span> <span class="n">save-as-file</span><span class="p">,</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Saves the current file with a new name.&quot;</span><span class="p">;</span>
+  <span class="n">separator</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Exit&quot;</span> <span class="o">=</span> <span class="n">exit-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f4&quot;</span><span class="p">,</span> <span class="ss">#&quot;alt&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Exits the application.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span><span class="p">;</span>
+
+<span class="c1">// Definition of the Edit menu</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*edit-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Cut&quot;</span> <span class="o">=</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;x&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Cut the selection to the clipboard.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Copy&quot;</span> <span class="o">=</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;c&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Copy the selection to the clipboard.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Paste&quot;</span> <span class="o">=</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;v&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Paste the selection in the clipboard at the current position.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*edit-command-table*</span><span class="p">;</span>
+
+<span class="c1">// Definition of the Task menu</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*task-command-table*</span>
+    <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Add...&quot;</span> <span class="o">=</span> <span class="n">frame-add-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;a&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Add a new task.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Remove&quot;</span> <span class="o">=</span> <span class="n">frame-remove-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;d&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Remove the selected task from the list.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*task-command-table*</span><span class="p">;</span>
+
+<span class="c1">// Definition of the Help menu</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*help-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;About&quot;</span> <span class="o">=</span> <span class="n">about-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span>   <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f1&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Display information about the application.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*help-command-table*</span><span class="p">;</span>
+
+<span class="c1">// Definition of the overall menu bar</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*task-list-command-table*</span>
+    <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;File&quot;</span> <span class="o">=</span> <span class="vg">*file-command-table*</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Edit&quot;</span> <span class="o">=</span> <span class="vg">*edit-command-table*</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Task&quot;</span> <span class="o">=</span> <span class="vg">*task-command-table*</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Help&quot;</span> <span class="o">=</span> <span class="vg">*help-command-table*</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*task-list-command-table*</span><span class="p">;</span>
+
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">(</span><span class="n">arguments</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="c1">// handle the arguments</span>
+  <span class="n">start-task</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+
+<span class="k">begin</span>
+  <span class="n">main</span><span class="p">(</span><span class="n">application-arguments</span><span class="p">())</span> <span class="c1">// Start the application!</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="contents-of-the-file-task-list-dylan">
+<h3>Contents of the file <em>task-list.dylan</em> :<a class="headerlink" href="#contents-of-the-file-task-list-dylan" title="Permalink to this headline">¶</a></h3>
+<p>The file <em>task-list.dylan</em> is identical to the listing shown in <a class="reference internal" href="#a-task-list-manager-using-menu-gadgets">A
+task list manager using menu gadgets</a>, and so is not repeated here.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tour.html" class="btn btn-neutral float-left" title="A Tour of the DUIM Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Command Tables &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="A Tour of the DUIM Libraries" href="tour.html" />
+    <link rel="prev" title="Adding Callbacks to the Application" href="callbacks.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Building Applications With DUIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="improve.html">Improving The Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Command Tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-a-command-table">Implementing a command table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#re-implementing-the-menus-of-the-task-list-manager">Re-implementing the menus of the task list manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#including-command-tables-in-frame-definitions">Including command tables in frame definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changes-required-to-run-task-list-2">Changes required to run Task List 2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changes-to-button-definitions">Changes to button definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changes-to-callback-definitions">Changes to callback definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changes-to-method-definitions">Changes to method definitions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Building Applications With DUIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using Command Tables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/commands.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="using-command-tables">
+<span id="index-0"></span><h1>Using Command Tables<a class="headerlink" href="#using-command-tables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<span id="index-1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Another way that you can define a set of menus is by defining a <em>command
+table</em>. A command table lets you create the complete set of commands
+for an application in a more compact and reusable way than the standard
+menus you have seen so far. As well as making the definition of each
+command in a menu shorter and easier to code, it lets you handle effects
+such as the disabling of menu commands more elegantly, by removing the
+need to use <code class="docutils literal notranslate"><span class="pre">gadget-enabled</span></code>. You can include a command table in the
+definition of a frame in the same way that you can include a tool bar,
+or a status bar, and because of this, and the fact that you can include
+command tables within other command tables, it is easy to reuse the same
+command table across different frames in your application.</p>
+<p>Command tables are best used in the following situations:</p>
+<ul class="simple">
+<li><p>If your menu commands do not use check or radio buttons.</p></li>
+<li><p>If the menu bar in your application is not context sensitive (that
+is, the available commands on the menu remain consistent as the
+application state changes).</p></li>
+</ul>
+<p>In other cases, you should define your menu hierarchy by defining panes
+that combine specific gadgets, as demonstrated in <a class="reference internal" href="menus.html"><span class="doc">Adding Menus To The Application</span></a>. Using a
+combination of command tables and standard menu definitions in a GUI
+design is not recommended.</p>
+<p>The task list manager application does not use check or radio buttons in
+any of its menu commands, and the menu bar is not context sensitive.
+This means that, if you wish, you can define the commands in the task
+list manager using command tables, rather than standard menus.</p>
+<p>This chapter provides an introduction to command tables by showing you
+how to re-implement the menu system of the task list manager as a set of
+command tables. It does not provide a complete copy of all the source
+code necessary to implement the task list manager. For a complete copy
+of the code, please refer to <a class="reference internal" href="source.html"><span class="doc">Source Code For The Task List Manager</span></a>. To load the code into the
+environment, choose <strong>Tools &gt; Open Example Project</strong> from any window in the
+environment, and load the Task List 2 project from the Documentation
+category of the Open Example Project dialog.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that this project, like the Task List 1 project,
+is called <code class="docutils literal notranslate"><span class="pre">task-list</span></code> within the source code, and you should not
+load them both into the environment at the same time.</p>
+</div>
+</div>
+<div class="section" id="implementing-a-command-table">
+<span id="index-2"></span><h2>Implementing a command table<a class="headerlink" href="#implementing-a-command-table" title="Permalink to this headline">¶</a></h2>
+<p>You use <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">command-table</span></code> to define a new command table. Consider
+the following command table defined for the <em>File</em> menu in the task list
+manager:</p>
+<div class="highlight-dylan notranslate" id="index-3"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Open&quot;</span> <span class="o">=</span> <span class="n">open-file</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;o&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Opens an existing file.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Save&quot;</span> <span class="o">=</span> <span class="n">save-file</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;s&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Saves the current file to disk.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Save As...&quot;</span> <span class="o">=</span> <span class="n">save-as-file</span><span class="p">,</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Saves the current file with a new name.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Exit&quot;</span> <span class="o">=</span> <span class="n">exit-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f4&quot;</span><span class="p">,</span> <span class="ss">#&quot;alt&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Exits the application.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This defines a command table, called <code class="docutils literal notranslate"><span class="pre">*file-command-table*</span></code>, that
+contains all the menu commands required in the <em>File</em> menu of the task
+list manager. It replaces the definition of each menu button, as well as
+the definition of the <em>File</em> menu itself, in the original implementation
+of the task list manager application that was given in <a class="reference internal" href="menus.html"><span class="doc">Adding Menus To The Application</span></a>.
+As you can see, this definition is considerably shorter than the individual
+definitions of the menu and menu buttons previously required,</p>
+<p>When defining a command table, you should provide a list of other
+command tables from which the command table you are defining inherits.
+This is done in the clause</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>above. This is analogous to the way that the superclasses of any frame
+class are listed in the frame’s definition.</p>
+<p>Any items defined by the command tables which are to be inherited are
+automatically added to the command table being defined.</p>
+<p>In the example above, <code class="docutils literal notranslate"><span class="pre">*file-command-table*</span></code> inherits from only one
+command table: <code class="docutils literal notranslate"><span class="pre">*global-command-table*</span></code>. This is defined globally for
+the whole Dylan environment, and every command table that does not
+explicitly inherit from other command tables must inherit from this
+command table.</p>
+<p>Each menu item is introduced using the <code class="docutils literal notranslate"><span class="pre">menu-item</span></code> option, and a command
+is specified for each menu item immediately after the <code class="docutils literal notranslate"><span class="pre">=</span></code> sign. Each
+command is just the activate callback that was defined for the
+equivalent menu button gadget in <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>.</p>
+<p>Notice that you can use the <code class="docutils literal notranslate"><span class="pre">accelerator:</span></code> and <code class="docutils literal notranslate"><span class="pre">documentation:</span></code>
+init-keywords to specify a keyboard accelerator and a documentation
+string for each menu item in the command table, just like you can when
+you define each menu button in a menu using a specific gadget. In the
+same way, you can specify the value of any init-keyword that can be
+specified for an instance of <code class="docutils literal notranslate"><span class="pre">&lt;menu-button&gt;</span></code>.</p>
+</div>
+<div class="section" id="re-implementing-the-menus-of-the-task-list-manager">
+<h2>Re-implementing the menus of the task list manager<a class="headerlink" href="#re-implementing-the-menus-of-the-task-list-manager" title="Permalink to this headline">¶</a></h2>
+<p>The code below provides definitions for the entire menu hierarchy of the
+task list manager, using the same activate callbacks that are described
+and implemented in <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>. Note that the labels, documentation
+strings, and keyboard accelerators for each menu item are identical to
+the ones used in the original implementation of the task list manager.
+For completeness, the definition of <code class="docutils literal notranslate"><span class="pre">*file-command-table*</span></code>, described
+in <a class="reference internal" href="#"><span class="doc">Using Command Tables</span></a>, is repeated below.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Open&quot;</span> <span class="o">=</span> <span class="n">open-file</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;o&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Opens an existing file.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Save&quot;</span> <span class="o">=</span> <span class="n">save-file</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;s&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Saves the current file to disk.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Save As...&quot;</span> <span class="o">=</span> <span class="n">save-as-file</span><span class="p">,</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Saves the current file with a new name.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Exit&quot;</span> <span class="o">=</span> <span class="n">exit-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f4&quot;</span><span class="p">,</span> <span class="ss">#&quot;alt&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Exits the application.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*file-command-table*</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*edit-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Cut&quot;</span> <span class="o">=</span> <span class="n">cut-command</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;x&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Cut the selection to the clipboard.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Copy&quot;</span> <span class="o">=</span> <span class="n">copy-command</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;c&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Copy the selection to the clipboard.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Paste&quot;</span> <span class="o">=</span> <span class="n">paste-command</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;v&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Paste the selection in the clipboard at the current position.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*edit-command-table*</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*task-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Add...&quot;</span> <span class="o">=</span> <span class="n">frame-add-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;a&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Add a new task.&quot;</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Remove&quot;</span> <span class="o">=</span> <span class="n">frame-remove-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;d&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Remove the selected task from the list.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*task-command-table*</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="n">command-table</span> <span class="vg">*help-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;About&quot;</span> <span class="o">=</span> <span class="n">about-task</span><span class="p">,</span>
+    <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f1&quot;</span><span class="p">),</span>
+    <span class="k">documentation:</span> <span class="s">&quot;Display information about the application.&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*help-command-table*</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The definitions above can be used in place of the definition of each
+menu and menu button in the original implementation of the task list
+manager. You must place the command table definitions provided above
+after the callback definitions themselves, to avoid forward references.</p>
+</div>
+<div class="section" id="including-command-tables-in-frame-definitions">
+<span id="index-4"></span><h2>Including command tables in frame definitions<a class="headerlink" href="#including-command-tables-in-frame-definitions" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section, you defined four command tables: one for each
+menu in the task list manager. Next, you need to combine these command
+tables and include them in the definition of the <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>. The
+way to do this is to define an additional command table which has each
+of the other command tables as its components, and then supply this
+command table as an option in the definition of <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">command-table</span> <span class="vg">*task-list-command-table*</span> <span class="p">(</span><span class="vg">*global-command-table*</span><span class="p">)</span>
+  <span class="n">menu-item</span> <span class="s">&quot;File&quot;</span> <span class="o">=</span> <span class="vg">*file-command-table*</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Edit&quot;</span> <span class="o">=</span> <span class="vg">*edit-command-table*</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Task&quot;</span> <span class="o">=</span> <span class="vg">*task-command-table*</span><span class="p">;</span>
+  <span class="n">menu-item</span> <span class="s">&quot;Help&quot;</span> <span class="o">=</span> <span class="vg">*help-command-table*</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">command-table</span> <span class="vg">*task-list-command-table*</span>
+</pre></div>
+</div>
+<p>Just like the menu commands in each menu, every menu in the menu bar is
+defined as a menu item in the definition of the command table.</p>
+<p>You can add a command table to the definition of a frame class in much
+the same way as you add a layout, tool bar, status bar, or menu bar,
+using the <code class="docutils literal notranslate"><span class="pre">command-table</span></code> option. In the definition of <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>,
+replace the line that reads:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-menu-bar</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>with</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">command-table</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="vg">*task-list-command-table*</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A complete listing of the implementation of <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> using command
+tables is given in <a class="reference internal" href="source.html"><span class="doc">Source Code For The Task List Manager</span></a>.</p>
+</div>
+<div class="section" id="changes-required-to-run-task-list-2">
+<h2>Changes required to run Task List 2<a class="headerlink" href="#changes-required-to-run-task-list-2" title="Permalink to this headline">¶</a></h2>
+<p>In order for the Task List 2 project to run properly, you must modify
+some of the definitions you constructed in <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>. This section
+outlines the required changes. For your convenience, the complete source
+code for both of the Task List projects is provided in <a class="reference internal" href="source.html"><span class="doc">Source Code For The Task List Manager</span></a>.</p>
+<div class="section" id="changes-to-button-definitions">
+<h3>Changes to button definitions<a class="headerlink" href="#changes-to-button-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The definition of each button in the definition of <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> needs
+to be modified compared to their definition in the Task List 1 project,
+as described in <a class="reference external" href="improve.html#gluing-the-new-design-together">Gluing the new design together</a>.</p>
+<p>Broadly speaking, you need to update the <code class="docutils literal notranslate"><span class="pre">command:</span></code> keyword/argument
+pair for each button gadget, and you need to redefine the activate
+callback to allow for the fact that the callbacks now take frames as
+arguments.</p>
+<p>Thus, for a button that is defined as:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+        <span class="k">activate-callback:</span> <span class="n">frame-add-task</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>the new definition is:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+       <span class="k">command:</span> <span class="n">frame-add-task</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
+         <span class="n">frame-add-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+       <span class="k">end</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This change must also be made for the definition of radio box, which
+then becomes:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Definition of radio box</span>
+<span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+       <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+       <span class="k">orientation:</span> <span class="ss">#&quot;horizontal&quot;</span><span class="p">,</span>
+       <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+       <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+       <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span>
+       <span class="k">command:</span> <span class="n">not-yet-implemented</span>
+       <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
+         <span class="n">not-yet-implemented</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+       <span class="k">end</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For complete definitions, you should refer to the source code available
+in Appendix A or from the Open Example Project dialog in the
+environment.</p>
+</div>
+<div class="section" id="changes-to-callback-definitions">
+<h3>Changes to callback definitions<a class="headerlink" href="#changes-to-callback-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The following callbacks should be redefined so as to take an instance of
+<code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> as an argument, rather than an instance of <code class="docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code>.</p>
+<ul class="simple">
+<li><p>frame-add-task</p></li>
+<li><p>frame-remove-task</p></li>
+<li><p>open-file</p></li>
+<li><p>save-file</p></li>
+<li><p>save-as-file</p></li>
+<li><p>about-task</p></li>
+<li><p>exit-task</p></li>
+</ul>
+<p>For complete definitions of these callbacks, you should refer to the
+source code available in Appendix A or from the Open Example Project
+dialog in the environment.</p>
+</div>
+<div class="section" id="changes-to-method-definitions">
+<h3>Changes to method definitions<a class="headerlink" href="#changes-to-method-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The definitions for the methods given in Chapter 5 must be redefined so
+as to take an instance of <code class="docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code> as an argument, rather than an
+instance of <code class="docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code>. This change results in these new definitions:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">open-file</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">filename</span>
+    <span class="o">=</span> <span class="n">choose-file</span><span class="p">(</span><span class="k">frame:</span> <span class="n">frame</span><span class="p">,</span>
+                  <span class="k">default:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">,</span>
+                  <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">load-task-list</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">task-list</span><span class="p">)</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span> <span class="o">:=</span> <span class="n">task-list</span><span class="p">;</span>
+      <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span><span class="p">(</span><span class="s">&quot;Failed to open file %s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">open-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">save-file</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">task-list</span><span class="p">.</span><span class="n">task-list-modified?</span><span class="p">)</span>
+    <span class="n">save-as-file</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">save-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">save-as-file</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">filename</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">filename</span>
+    <span class="o">=</span> <span class="n">filename</span> <span class="o">|</span> <span class="n">choose-file</span><span class="p">(</span><span class="k">frame:</span> <span class="n">frame</span><span class="p">,</span>
+                             <span class="k">default:</span> <span class="n">task-list</span><span class="p">.</span><span class="n">task-list-filename</span><span class="p">,</span>
+                             <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">save-task-list</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="k">filename:</span> <span class="n">filename</span><span class="p">))</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">frame-task-list</span> <span class="o">:=</span> <span class="n">task-list</span><span class="p">;</span>
+      <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span>
+                   <span class="p">(</span><span class="s">&quot;Failed to save file %s&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">save-as-file</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-add-task</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">priority</span><span class="p">)</span> <span class="o">=</span> <span class="n">prompt-for-task</span><span class="p">(</span><span class="k">owner:</span> <span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">&amp;</span> <span class="n">priority</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">new-task</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task&gt;</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">,</span> <span class="k">priority:</span> <span class="n">priority</span><span class="p">);</span>
+    <span class="n">add-task</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="n">new-task</span><span class="p">);</span>
+    <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+    <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="n">new-task</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-add-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">frame-remove-task</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">task-list</span> <span class="o">=</span> <span class="n">frame-task-list</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">notify-user</span><span class="p">(</span><span class="n">format-to-string</span>
+                   <span class="p">(</span><span class="s">&quot;Really remove task %s&quot;</span><span class="p">,</span> <span class="n">task</span><span class="p">.</span><span class="n">task-name</span><span class="p">),</span>
+                  <span class="k">owner:</span> <span class="n">frame</span><span class="p">,</span> <span class="k">style:</span> <span class="ss">#&quot;question&quot;</span><span class="p">))</span>
+    <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="l">#f</span><span class="p">;</span>
+    <span class="n">remove-task</span><span class="p">(</span><span class="n">task-list</span><span class="p">,</span> <span class="n">task</span><span class="p">);</span>
+    <span class="n">refresh-task-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">frame-remove-task</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">frame-selected-task</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">.</span><span class="n">gadget-value</span> <span class="o">:=</span> <span class="n">task</span><span class="p">.</span><span class="n">task-priority</span><span class="p">;</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="n">command-enabled?</span><span class="p">(</span><span class="n">frame-remove-task</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span> <span class="o">:=</span> <span class="n">task</span> <span class="o">~=</span> <span class="l">#f</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">note-task-selection-change</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For details about <code class="docutils literal notranslate"><span class="pre">note-task-selection-change</span></code>, see <a class="reference external" href="callbacks.html#enabling-and-disabling-buttons-in-the-interface">Enabling and
+disabling buttons in the interface</a>. See <a class="reference external" href="source.html#a-task-list-manager-using-command-tables">A
+task list manager using command tables</a> for the
+complete source code for the Task List 2 project.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="callbacks.html" class="btn btn-neutral float-left" title="Adding Callbacks to the Application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tour.html" class="btn btn-neutral float-right" title="A Tour of the DUIM Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

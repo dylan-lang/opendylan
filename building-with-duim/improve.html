@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Improving The Design &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Adding Menus To The Application" href="menus.html" />
+    <link rel="prev" title="Designing A Simple DUIM Application" href="design.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Building Applications With DUIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Improving The Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#defining-a-project">Defining a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-the-application">Starting the application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-default-callback">Adding a default callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-a-new-frame-class">Defining a new frame class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-tool-bar">Adding a tool bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-status-bar">Adding a status bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gluing-the-new-design-together">Gluing the new design together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-dialog-for-adding-new-items">Creating a dialog for adding new items</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Building Applications With DUIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Improving The Design</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/improve.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="improving-the-design">
+<h1>Improving The Design<a class="headerlink" href="#improving-the-design" title="Permalink to this headline">¶</a></h1>
+<p>The simple layout hierarchy described in <a class="reference external" href="design.html#creating-the-basic-sheet-hierarchy">Creating the basic sheet
+hierarchy</a> has a
+number of problems associated with it, all of which revolve around the
+fact that the task list manager does not yet look very much like a
+standard Windows application. Although it is a simple design that does
+not warrant a complicated user interface, the design you have already
+seen looks more like a dialog box than an application window.</p>
+<p>This section shows you how to improve on the basic design, adding a menu
+bar and replacing the buttons with a proper tool bar. It also shows you
+how to move the text field into a separate dialog that pops up when you
+click the <em>Add task</em> button in the tool bar.</p>
+<p>From this point on, the interface is defined more formally, using
+frames. Up to now, the layout hierarchy has been presented informally,
+and you have used <code class="docutils literal notranslate"><span class="pre">contain</span></code> to display the layout interactively. This is
+fine for code that you want to evaluate once only, perhaps using the
+interactor, but for permanent code, a more rigorous framework is
+preferable.</p>
+<div class="section" id="defining-a-project">
+<span id="index-0"></span><h2>Defining a project<a class="headerlink" href="#defining-a-project" title="Permalink to this headline">¶</a></h2>
+<p>From this point on, you should put the code for the task list manager
+into a project, rather than evaluating pieces of code using the
+interactor. Please refer to the <em>Getting Started with Open Dylan</em>
+for complete details on how to manage projects using the environment;
+this section provides brief details that tell you how to create a
+project specifically for the task list manager application. Use the New
+Project wizard to create a GUI application, and call the project
+<code class="docutils literal notranslate"><span class="pre">task-list</span></code> when prompted. The New Project wizard offers the option of
+generating template source code to help you get started. For
+this example, you must ensure that this option is switched <em>off</em> (this
+is the default setting).</p>
+<p>Two versions of the task list manager are included with Open Dylan,
+so that you can load the code straight into the environment if you wish.
+These are available in the Open Example Project dialog, in the
+Documentation category. You can display this dialog by choosing <strong>Tools &gt;
+Open Example Project</strong> from the environment. The two versions included
+represent the state of the task list manager at the end of
+<a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>, and at the end of <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that both projects have the same name within the
+source code— <code class="docutils literal notranslate"><span class="pre">task-list</span></code> —and you should not load them both into
+the environment at the same time.</p>
+</div>
+<p>The number of source code files in a given project, and the names you
+give them, is entirely up to you. For the purposes of this example, you
+will use the files suggested by the New Project wizard. When you use the
+New Project wizard, Open Dylan will create a number of files for a
+project named <code class="docutils literal notranslate"><span class="pre">task-list</span></code>.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">module.dylan</span></code> and <code class="docutils literal notranslate"><span class="pre">library.dylan</span></code></dt><dd><p>These files define the library and modules for the project. For the
+purposes of this application, you can ignore these files.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">task-list.dylan</span></code></dt><dd><p>Add non-GUI-specific code to this file.</p>
+</dd>
+</dl>
+<p>Finally, you need to create the following new file using <em>File &gt; New</em>,
+and add it to the project using the <em>Project &gt; Insert File</em> command.
+Make sure that this file is the last one listed in the project window.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code></dt><dd><p>Add the GUI-specific code to this file.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="starting-the-application">
+<span id="index-1"></span><h2>Starting the application<a class="headerlink" href="#starting-the-application" title="Permalink to this headline">¶</a></h2>
+<p>As you add source code to the files in your project, there will be times
+when you want to build the project to test it. This section defines some
+methods that let you run the application in a clean way. Add these
+methods to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
+<p>The frame class that is used to implement the task list manager is
+called <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>. This class will be introduced in <a class="reference internal" href="#defining-a-new-frame-class">Defining a
+new frame class</a>. You can define a method to create an instance of
+<code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">start-task</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">frame</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-frame&gt;</span><span class="p">);</span>
+  <span class="n">start-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">start-task</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This method is provided as a convenient way to create the frame and then
+start its event loop. It returns when the event loop shuts down.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Obviously, you should not call this method until you have
+defined a frame class called <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>.</p>
+</div>
+<p>Finally, you can start the application with the following method, and
+its subsequent call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">(</span><span class="n">arguments</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="c1">// handle the arguments</span>
+  <span class="n">start-task</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+
+<span class="k">begin</span>
+  <span class="n">main</span><span class="p">(</span><span class="n">application-arguments</span><span class="p">())</span> <span class="c1">// Start the application!</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Make sure that this is the very last definition in the file
+<code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>, and remember that <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code> should itself be the
+last file listed in the project window.</p>
+<p>Once you have added these methods to your code, you can compile and link
+the code, and run the application to test it, using the appropriate
+commands in the Dylan environment.</p>
+<p>Note that, unlike languages such as C, Dylan does not insist on a single
+entrance point to an application such as the one given here. All the
+same, it is still good practice to define one if you can. The main
+difference between the use of the method <code class="docutils literal notranslate"><span class="pre">main</span></code> here, and the use of the
+<code class="docutils literal notranslate"><span class="pre">main</span></code> function in C, is in the arguments that need to be passed. In C,
+you need to pass two generic arguments: <code class="docutils literal notranslate"><span class="pre">argc</span></code>, which specifies the
+number of arguments you are passing, and <code class="docutils literal notranslate"><span class="pre">argv</span></code>, an array of strings
+that define the arguments themselves. In Dylan, however, you only need
+to pass the second of these arguments; since any Dylan collection
+already knows its own size, you do not need to pass the number of
+arguments as an additional parameter.</p>
+</div>
+<div class="section" id="adding-a-default-callback">
+<span id="index-2"></span><h2>Adding a default callback<a class="headerlink" href="#adding-a-default-callback" title="Permalink to this headline">¶</a></h2>
+<p>Nothing is more frustrating than designing a user interface that does
+not respond to user input. Although, in the early stages at least, the
+user interface does nothing particularly useful, you can at least define
+a “not yet implemented” message that can be used until you define real
+behavior for the application.</p>
+<p>The definition of the function that gives you this default behavior is
+as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">function</span> <span class="n">not-yet-implemented</span> <span class="p">(</span><span class="n">gadget</span> <span class="p">::</span> <span class="nc">&lt;gadget&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Not yet implemented!&quot;</span><span class="p">,</span> <span class="k">owner:</span> <span class="n">sheet-frame</span><span class="p">(</span><span class="n">gadget</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">not-yet-implemented</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Add this function to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
+<p>You can call this function from any gadget in the task list manager by
+defining it as the activate callback for each gadget. There are several
+types of callback, and this is the type that is used most in the task
+list manager. You can define the activate callback for any gadget using
+the <code class="docutils literal notranslate"><span class="pre">activate-callback:</span></code> init-keyword. More information about callbacks
+is given in <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>, in which some real callbacks are
+defined, to make the task list manager do something more substantial.</p>
+</div>
+<div class="section" id="defining-a-new-frame-class">
+<span id="index-3"></span><h2>Defining a new frame class<a class="headerlink" href="#defining-a-new-frame-class" title="Permalink to this headline">¶</a></h2>
+<p>To begin with, define a frame class using the layout hierarchy you have
+already created. Although it might seem redundant to implement an
+inelegant layout again, it is easier to illustrate the basic techniques
+using a design you are already familiar with. In addition, there are
+several elements in the design that can be reused successfully.</p>
+<p>Add the code described in this section to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
+<p id="index-4">Defining a new class of frame is just like defining any Dylan class,
+except that there are several extra options available beyond the slot
+options normally available to <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">class</span></code>. Each of these extra
+options lets you describe a particular aspect of the user interface. To
+define the new frame class, use the following structure:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+  <span class="c1">// definitions of frame slots and options go here</span>
+<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> is the name of the new class of frame,
+and``&lt;simple-frame&gt;`` is its superclass. Like ordinary Dylan classes,
+frame classes can have any number of superclasses, with multiple
+superclasses separated by commas. The superclass of any “standard” frame
+is usually <code class="docutils literal notranslate"><span class="pre">&lt;simple-frame&gt;</span></code>. If you were designing a dialog box, its
+superclass would be <code class="docutils literal notranslate"><span class="pre">&lt;dialog-frame&gt;</span></code>. If you were designing a wizard,
+its superclass would be <code class="docutils literal notranslate"><span class="pre">&lt;wizard-frame&gt;</span></code>.</p>
+<p>Adding slots to a frame class is exactly the same as adding slots to a
+standard Dylan class. You can define slot names, init-keywords,
+init-functions, default values, and so on. For this example, you are not
+defining any slots.</p>
+<p>Each user interface element in the new class of frame is specified as a
+pane with a name and a definition. A pane is a sheet within a layout,
+and you can think of panes as sheets that represent concrete classes in
+an interface (as opposed to abstract classes). In effect, specifying a
+pane allows you to group together existing gadgets into some meaningful
+relationship that effectively creates a new gadget, without actually
+defining a gadget class.</p>
+<p>The name is used to refer to the pane, both from within the frame
+definition itself, and from other code. The pane definition includes
+code to create the interface element. A pane specification also includes
+a place to declare a local variable that can be used within the pane’s
+definition to refer to the surrounding frame.</p>
+<p>The following code fragment defines the two buttons, the text field, the
+radio box, and the list box from the initial design:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">remove-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">task-text</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Priority:&quot;</span><span class="p">,</span>
+        <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="s">&quot;Low&quot;</span><span class="p">),</span>
+        <span class="k">orientation:</span> <span class="ss">#&quot;vertical&quot;</span><span class="p">,</span>
+        <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">task-list</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span> <span class="mi">15</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that the definition of each element is identical to the
+definitions included in the original layout described in <a class="reference external" href="design.html#creating-the-basic-sheet-hierarchy">Creating the
+basic sheet hierarchy</a> (except that
+activate callbacks have been added to the code). Adding <code class="docutils literal notranslate"><span class="pre">(frame)</span></code>
+immediately after the name of each pane lets you refer to the frame
+itself within the frame definition using a local variable. This means
+that you can refer to any pane within the frame using normal slot
+syntax; that is, a pane called <code class="docutils literal notranslate"><span class="pre">my-pane</span></code> can be referred to as
+<code class="docutils literal notranslate"><span class="pre">frame.my-pane</span></code> throughout all of the definition of the frame
+class. This ability is essential when you come to layout each pane in
+the frame itself.</p>
+<p>In addition, you need to define the layout in which to place these
+panes. This is itself just another pane, and its definition is again
+identical to the original layout described in <a class="reference external" href="design.html#creating-the-basic-sheet-hierarchy">Creating the basic
+sheet hierarchy</a>,
+with one exception; rather than defining each element explicitly, you
+just include a reference to the relevant pane that you have already
+defined using normal slot syntax, thus:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="n">horizontally</span> <span class="p">()</span>
+    <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+    <span class="n">vertically</span> <span class="p">()</span>
+      <span class="n">horizontally</span> <span class="p">()</span>
+        <span class="n">frame</span><span class="p">.</span><span class="n">task-text</span><span class="p">;</span>
+        <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+      <span class="k">end</span><span class="p">;</span>
+    <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span><span class="p">;</span>
+    <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">;</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To describe the top-level layout for the frame, you need to refer to
+this pane using the <code class="docutils literal notranslate"><span class="pre">layout</span></code> option, as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-layout</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You actually have a certain amount of freedom when choosing what to
+define as a pane in the definition of a frame class. For example, the
+layout in the <code class="docutils literal notranslate"><span class="pre">task-layout</span></code> pane actually contains a number of
+sub-layouts. If you wanted, each one of these sub-layouts could be
+defined as a separate pane within the frame definition. Note, however,
+that you only have to “activate” the top-most layout; there should only
+be one use of the <code class="docutils literal notranslate"><span class="pre">layout</span></code> option.</p>
+<p>Similarly, you are free to use whatever programming constructs you like
+when defining elements in your code. Just as in the earlier examples,
+you could define the layouts with explicit calls to <code class="docutils literal notranslate"><span class="pre">make</span></code>, rather than
+by using the <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> and <code class="docutils literal notranslate"><span class="pre">vertically</span></code> macros. Thus, the following
+definition of <code class="docutils literal notranslate"><span class="pre">task-layout</span></code> is just as valid as the one above:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;row-layout&gt;</span><span class="p">,</span>
+       <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">,</span>
+                        <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;column-layout&gt;</span><span class="p">,</span>
+                             <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;row-layout&gt;</span><span class="p">,</span>
+                                              <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">task-text</span><span class="p">,</span> <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">))))));</span>
+</pre></div>
+</div>
+<p>Notice that this construct is rather more complicated than the one using
+macros!</p>
+<p>Throughout this section, you may have noticed that you can identify a
+sequence of steps that need to occur inside the definition of a frame.
+It is good practice to keep this sequence in mind when writing your own
+frame-based code:</p>
+<ol class="arabic simple">
+<li><p>Define the content panes</p></li>
+<li><p>Define the layout panes</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">layout</span></code> option</p></li>
+</ol>
+<p>If you glue all the code defined in this section together, you end up
+with the following complete definition of a frame class.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+  <span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">task-text</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Priority:&quot;</span><span class="p">,</span>
+         <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="s">&quot;Low&quot;</span><span class="p">),</span>
+         <span class="k">orientation:</span> <span class="ss">#&quot;vertical&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">task-list</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span> <span class="mi">15</span><span class="p">,</span>
+          <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">horizontally</span> <span class="p">()</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+      <span class="n">vertically</span> <span class="p">()</span>
+        <span class="n">horizontally</span> <span class="p">()</span>
+          <span class="n">frame</span><span class="p">.</span><span class="n">task-text</span><span class="p">;</span>
+          <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+        <span class="k">end</span><span class="p">;</span>
+        <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span><span class="p">;</span>
+        <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">;</span>
+      <span class="k">end</span><span class="p">;</span>
+    <span class="k">end</span><span class="p">;</span>
+  <span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-layout</span><span class="p">;</span>
+  <span class="nb">keyword</span> <span class="k">title:</span> <span class="o">=</span> <span class="s">&quot;Task List Manager&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note the addition of a <code class="docutils literal notranslate"><span class="pre">title:</span></code> keyword at the end of the definition.
+This can be used to give any instance of the frame class a title that is
+displayed in the title bar of the frame’s window when it is mapped to
+the screen.</p>
+<p>At this stage, the application still has no real functionality, and
+there is no improvement in the interface compared to the initial design,
+but by defining a frame class, the implementation is inherently more
+robust, making it easier to modify and, eventually, maintain.</p>
+<p>If you want to try running your code, remember that you need to define
+some additional methods to create a frame instance and exit it cleanly.
+Methods for doing this were provided in <a class="reference internal" href="#starting-the-application">Starting the
+application</a>. If you define these methods now, you
+can create running versions of each successive generation of the
+application as it is developed.</p>
+</div>
+<div class="section" id="adding-a-tool-bar">
+<span id="index-5"></span><h2>Adding a tool bar<a class="headerlink" href="#adding-a-tool-bar" title="Permalink to this headline">¶</a></h2>
+<p>So far, you have seen how to experiment interactively to create an
+initial interface design. You have also seen how you can take that
+initial design and turn it into a more rigorous definition, for use
+within project source code, using a frame class. However, the design of
+the interface still leaves a lot to be desired, and the application
+still does not do anything. In this section, you start to look at
+improving the overall design of the interface.</p>
+<p>To begin with, add a tool bar to the interface of the application. Most
+modern applications have a tool bar that runs along the top edge of the
+main application window, beneath the application menu bar. Tool bars
+contain a number of buttons that give you quick access to some of the
+most common commands in the application. Each button has a label that
+designates its use, or, more often, a small icon. Although you have
+already added buttons to the interface that perform important tasks,
+they have the appearance of buttons in a dialog box, rather than buttons
+in the main window of an application. The solution is to use a tool bar.</p>
+<p>Adding a tool bar to the definition of a frame class is very similar to
+defining the overall layout of the panes in a frame class. You need to
+create the tool bar as a pane in the frame definition, and then
+incorporate it using the <code class="docutils literal notranslate"><span class="pre">tool-bar</span></code> clause, as shown below:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span> <span class="k">child:</span> <span class="p">...);</span>
+<span class="c1">// ...more definitions here...</span>
+<span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A tool bar has a layout as its child, and each button in the tool bar is
+defined as a child of that layout. You can either define each button
+within the definition of the tool bar itself, or, more appropriately,
+define each button as a pane in the frame, and then refer to the names
+of these panes in the tool bar definition.</p>
+<p>In fact, the buttons you defined in the earlier interface design can be
+used just as easily in a tool bar as they can within the main layout of
+the application itself. However, first you must remove the buttons from
+the task-layout pane of the definition of <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>. (If you fail
+to do this, DUIM attempts to use the same buttons in two different parts
+of the interface, with undefined results.) A complete definition of a
+simple tool bar containing two buttons is as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span>
+       <span class="k">child:</span> <span class="n">horizontally</span> <span class="p">()</span>
+                <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+                <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span>
+              <span class="k">end</span><span class="p">);</span>
+<span class="c1">// ...more definitions here...</span>
+<span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A tool bar that only contains two buttons is on the lean side, however,
+so let’s add two more buttons to open a file and save a file to disk.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">open-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+       <span class="k">label:</span> <span class="s">&quot;Open file&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">save-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+       <span class="k">label:</span> <span class="s">&quot;Save file&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+<span class="c1">// ...more definitions here...</span>
+<span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span>
+       <span class="k">child:</span> <span class="n">horizontally</span> <span class="p">()</span>
+                <span class="n">frame</span><span class="p">.</span><span class="n">open-button</span><span class="p">;</span>
+                <span class="n">frame</span><span class="p">.</span><span class="n">save-button</span><span class="p">;</span>
+                <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+                <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span>
+              <span class="k">end</span><span class="p">);</span>
+<span class="c1">// ...more definitions here...</span>
+<span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>More commonly, an icon is used to label buttons in a tool bar, rather
+than a text label. You can do this by supplying an instance of <code class="docutils literal notranslate"><span class="pre">&lt;image&gt;</span></code>
+to the <code class="docutils literal notranslate"><span class="pre">label:</span></code> init-keyword when you define the button, rather than an
+instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+<p>So now the application has a tool bar. Somewhat oddly, it does not yet
+have a menu bar or a system of menus — most tool bars represent a subset
+of the commands already available from the application’s menu system. A
+menu system is added to the task list manager in <a class="reference internal" href="menus.html"><span class="doc">Adding Menus To The Application</span></a>.</p>
+</div>
+<div class="section" id="adding-a-status-bar">
+<span id="index-6"></span><h2>Adding a status bar<a class="headerlink" href="#adding-a-status-bar" title="Permalink to this headline">¶</a></h2>
+<p>As well as a tool bar, most applications have a status bar. This is a
+bar that runs along the bottom edge of the main application window, and
+displays information about the current status of the application. At its
+most basic, a status bar provides a label that displays text of some
+sort. In many applications, status bars contain a number of different
+fields, providing a wide range of functionality. At their most complex,
+a status bar may have several different labels that display information
+about the current state of the application, and labels that display help
+for the currently selected menu command.</p>
+<p>It is worth adding a very simple status bar to the task list
+application. This contains a label that could eventually be used to
+display the name of the file currently loaded into the application.
+Adding a status bar to the definition of a frame class is very similar
+to adding a tool bar: you need to define a pane that describes the
+status bar, and then you need to incorporate it using the <code class="docutils literal notranslate"><span class="pre">status-bar</span></code>
+clause.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">task-status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task Manager&quot;</span><span class="p">);</span>
+<span class="c1">// ...more definitions here...</span>
+<span class="n">status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-status-bar</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Now you have added a status bar to the application. The next step is to
+glue all the pieces together once again to create your modified frame
+design.</p>
+</div>
+<div class="section" id="gluing-the-new-design-together">
+<span id="index-7"></span><h2>Gluing the new design together<a class="headerlink" href="#gluing-the-new-design-together" title="Permalink to this headline">¶</a></h2>
+<p>In improving the initial design of the application, you have added a
+tool bar and a status bar. Adding a tool bar, in particular, has
+obviated the need for some of the elements that you added to the earlier
+version of the frame design. In this section, you throw away those
+elements that are no longer needed, and add in the new elements, to
+create a new, improved design for the frame class.</p>
+<p>One part of the initial design you have not yet improved on is the radio
+box that shows the priority of any task in the list. Ideally, rather
+than using a radio box, you would display the priority of each task
+alongside the task itself, within the list box. For now, however, keep
+the radio box.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+       <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+       <span class="k">orientation:</span> <span class="ss">#&quot;horizontal&quot;</span><span class="p">,</span>
+       <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+       <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+       <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Notice that the orientation is no longer constrained to be vertical. In
+the new design, a horizontal radio box looks better. By default, the
+orientation of a radio box is horizontal, so you could just completely
+remove the initialization of the <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword from the
+definition of the pane. In general, though, if you care about the
+orientation of a gadget, you should specify it explicitly, so leave the
+init-keyword in the pane definition, and change its value, as shown
+above.</p>
+<p>Next, notice that the items are now specified using a named constant,
+rather than by embedding literals in the pane definition. The definition
+of this constant is as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="no">$priority-items</span>
+  <span class="o">=</span> <span class="p">#(#(</span><span class="s">&quot;Low&quot;</span><span class="p">,</span> <span class="ss">#&quot;low&quot;</span><span class="p">),</span>
+      <span class="p">#(</span><span class="s">&quot;Medium&quot;</span><span class="p">,</span> <span class="ss">#&quot;medium&quot;</span><span class="p">),</span>
+      <span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span> <span class="ss">#&quot;high&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Add the definition for this constant to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
+<p>Using lists of string and symbol values in this constant lets you assign
+values to the individual components of the radio box elegantly, in
+conjunction with the other improvements to the definition of
+<code class="docutils literal notranslate"><span class="pre">priority-box</span></code>.</p>
+<ul>
+<li><p>The <em>label key</em> is a function which is passed an entry from the sequence
+and returns a string to use as the label.</p>
+<p>Assigning <code class="docutils literal notranslate"><span class="pre">first</span></code> to the label key of <code class="docutils literal notranslate"><span class="pre">priority-box</span></code> ensures that the
+first element from each sub-list of <code class="docutils literal notranslate"><span class="pre">$priority-items</span></code> (the string) is
+used as the label for the appropriate item. Thus, the first button in
+priority box is labeled “Low”.</p>
+</li>
+<li><p>The <em>value key</em> is a function which is passed an entry and returns the
+logical value of the entry.</p>
+<p>Assigning <code class="docutils literal notranslate"><span class="pre">second</span></code> to the value key of <code class="docutils literal notranslate"><span class="pre">priority-box</span></code> ensures that the
+second element from each sub-list of <code class="docutils literal notranslate"><span class="pre">$priority-items</span></code> (the symbol) is
+used as the value for the appropriate item. Thus, the first button in
+priority box has the value <code class="docutils literal notranslate"><span class="pre">#&quot;low&quot;</span></code>.</p>
+</li>
+</ul>
+<p>Lastly, <code class="docutils literal notranslate"><span class="pre">priority-box</span></code> is given a default value: <code class="docutils literal notranslate"><span class="pre">#&quot;medium&quot;</span></code>. This
+ensures that the button labeled “Medium” is selected by default whenever
+<code class="docutils literal notranslate"><span class="pre">priority-box</span></code> is first created.</p>
+<p>The definitions for <code class="docutils literal notranslate"><span class="pre">add-button</span></code>, <code class="docutils literal notranslate"><span class="pre">remove-button</span></code>, and <code class="docutils literal notranslate"><span class="pre">task-list</span></code>
+remain unchanged from the initial design. In addition, you need to add
+the definitions for <code class="docutils literal notranslate"><span class="pre">open-button</span></code> and <code class="docutils literal notranslate"><span class="pre">save-button</span></code> described in
+<a class="reference internal" href="#adding-a-tool-bar">Adding a tool bar</a>.</p>
+<p>You also need to add in the definitions for the tool bar and status bar
+themselves, as described in <a class="reference internal" href="#adding-a-tool-bar">Adding a tool bar</a>
+and <a class="reference internal" href="#adding-a-status-bar">Adding a status bar</a>.</p>
+<p>The definition for <code class="docutils literal notranslate"><span class="pre">task-layout</span></code> has become much simpler. Because you
+have added buttons to the tool bar, the main layout for the application
+has reduced to a single column layout whose children are <code class="docutils literal notranslate"><span class="pre">task-list</span></code> and
+<code class="docutils literal notranslate"><span class="pre">priority-box</span></code>.</p>
+<p>The definition for the new design of the frame class now looks as
+follows (button definitions vary slightly for the Task List 2 project,
+see <a class="reference external" href="source.html#a-task-list-manager-using-command-tables">A task list manager using command tables</a>):</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+  <span class="c1">// definition of buttons</span>
+  <span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">open-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open file&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save file&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="c1">// definition of radio box</span>
+  <span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+          <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+          <span class="k">orientation:</span> <span class="ss">#&quot;horizontal&quot;</span><span class="p">,</span>
+          <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+          <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+          <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span>
+          <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="c1">// definition of tool bar</span>
+  <span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span>
+         <span class="k">child:</span> <span class="n">horizontally</span> <span class="p">()</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">open-button</span><span class="p">;</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">save-button</span><span class="p">;</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span>
+         <span class="k">end</span><span class="p">);</span>
+  <span class="c1">// definition of status bar</span>
+  <span class="n">pane</span> <span class="n">task-status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task Manager&quot;</span><span class="p">);</span>
+  <span class="c1">// definition of list</span>
+  <span class="n">pane</span> <span class="n">task-list</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span> <span class="mi">15</span><span class="p">,</span>
+          <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="c1">// main layout</span>
+  <span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">vertically</span> <span class="p">()</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">;</span>
+    <span class="k">end</span><span class="p">;</span>
+  <span class="c1">// activation of frame elements</span>
+  <span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-layout</span><span class="p">;</span>
+  <span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+  <span class="n">status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-status-bar</span><span class="p">;</span>
+  <span class="c1">// frame title</span>
+  <span class="nb">keyword</span> <span class="k">title:</span> <span class="o">=</span> <span class="s">&quot;Task List Manager&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note that this definition does not incorporate the original <code class="docutils literal notranslate"><span class="pre">task-text</span></code>
+pane defined in <a class="reference internal" href="#defining-a-new-frame-class">Defining a new frame class</a>. In fact, this part of the
+original interface is handled differently in the final design, and is
+re-implemented in <a class="reference internal" href="#creating-a-dialog-for-adding-new-items">Creating a dialog for adding new items</a>.</p>
+</div>
+<div class="section" id="creating-a-dialog-for-adding-new-items">
+<span id="index-8"></span><h2>Creating a dialog for adding new items<a class="headerlink" href="#creating-a-dialog-for-adding-new-items" title="Permalink to this headline">¶</a></h2>
+<p>You may be wondering what has happened to <code class="docutils literal notranslate"><span class="pre">task-text</span></code>, the text field
+in which you typed the text of each new task. In the new design, this is
+moved to a new dialog box that is popped up whenever you choose a
+command to add a new task to the list. This section shows you how to
+define this dialog.</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">prompt-for-task</span></code> below creates and displays a dialog that
+asks the user to type the text for a new task. The definition of
+<code class="docutils literal notranslate"><span class="pre">task-text</span></code> is very similar to the definition you provided in the
+initial design, with the exception that the activate callback exits the
+dialog, rather than calling the <code class="docutils literal notranslate"><span class="pre">not-yet-implemented</span></code> function.</p>
+<div class="figure align-center" id="id4">
+<span id="index-9"></span><img alt="_images/new-task.png" src="_images/new-task.png" />
+<p class="caption"><span class="caption-text">The dialog box created by the prompt-for-task method</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>The method takes two keyword arguments: a title, which is assigned a
+value by default, and an owner, which is used as the owner for the
+dialog that is displayed by <code class="docutils literal notranslate"><span class="pre">prompt-for-task</span></code>. Note that the title is
+never explicitly set by any calls to <code class="docutils literal notranslate"><span class="pre">prompt-for-task</span></code> in the task list
+manager; it is provided here as an illustration of how you can provide a
+default value for a keyword argument, rather than requiring that it
+either always be passed in the call to the method, or that it be
+hard-wired into the code.</p>
+<p>The method returns two values: the name of the new task, that is, the
+text that the user types into the text field, and the priority of the
+new task.</p>
+<p>Add this method to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The definition of the <code class="docutils literal notranslate"><span class="pre">prompt-for-task</span></code> method uses the
+<code class="docutils literal notranslate"><span class="pre">&lt;priority&gt;</span></code> type. Note that this type is defined in <a class="reference external" href="callbacks.html#defining-the-underlying-data-structures-for-tasks">Defining
+the underlying data structures for tasks</a>. Until
+the relevant code in <a class="reference external" href="callbacks.html#defining-the-underlying-data-structures-for-tasks">Defining the underlying data structures for
+tasks</a>
+is added to your project, any attempt to build it will generate a
+serious warning.</p>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">prompt-for-task</span>
+    <span class="p">(</span><span class="k">#key</span> <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Type text of new task&quot;</span><span class="p">,</span> <span class="n">owner</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">name</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">),</span>
+  <span class="n">priority</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;priority&gt;</span><span class="p">))</span>
+  <span class="k">let</span> <span class="n">task-text</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span>
+                       <span class="k">label:</span> <span class="s">&quot;Task text:&quot;</span><span class="p">,</span>
+                       <span class="k">activate-callback:</span> <span class="n">exit-dialog</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">priority-field</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+                            <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+                            <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+                            <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+                            <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">frame-add-task-dialog</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dialog-frame&gt;</span><span class="p">,</span>
+                                   <span class="k">title:</span> <span class="n">title</span><span class="p">,</span>
+                                   <span class="k">owner:</span> <span class="n">owner</span><span class="p">,</span>
+                                   <span class="k">layout:</span> <span class="n">vertically</span> <span class="p">()</span>
+                                     <span class="n">task-text</span><span class="p">;</span>
+                                     <span class="n">priority-field</span>
+                                   <span class="k">end</span><span class="p">,</span>
+                                   <span class="k">input-focus:</span> <span class="n">task-text</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">start-dialog</span><span class="p">(</span><span class="n">frame-add-task-dialog</span><span class="p">))</span>
+    <span class="nb">values</span><span class="p">(</span><span class="n">gadget-value</span><span class="p">(</span><span class="n">task-text</span><span class="p">),</span> <span class="n">gadget-value</span><span class="p">(</span><span class="n">priority-field</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">prompt-for-task</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Notice that the dialog used in the <code class="docutils literal notranslate"><span class="pre">prompt-for-task</span></code> method is created
+inline within the method definition. In this particular case, the dialog
+is only ever needed within the context of <code class="docutils literal notranslate"><span class="pre">prompt-for-task</span></code> and so it is
+not necessary to use <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">frame</span></code> to create a distinct class of frame
+specifically for this dialog.</p>
+<p>Note also that <em>OK</em> and <em>Cancel</em> buttons are generated automatically for
+a dialog box; you do not need to define them explicitly.</p>
+<p>Later on, the activate callback you define for the <code class="docutils literal notranslate"><span class="pre">add-button</span></code> pane
+calls this method, then inserts the return value into the list
+<code class="docutils literal notranslate"><span class="pre">task-list</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="design.html" class="btn btn-neutral float-left" title="Designing A Simple DUIM Application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="menus.html" class="btn btn-neutral float-right" title="Adding Menus To The Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding Menus To The Application &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Adding Callbacks to the Application" href="callbacks.html" />
+    <link rel="prev" title="Improving The Design" href="improve.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Building Applications With DUIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="improve.html">Improving The Design</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding Menus To The Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-description-of-the-menu-system">A description of the menu system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-menu-hierarchy">Creating a menu hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-strings">Documentation strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keyboard-accelerators">Keyboard accelerators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gluing-the-final-design-together">Gluing the final design together</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Building Applications With DUIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Adding Menus To The Application</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/menus.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="adding-menus-to-the-application">
+<span id="index-0"></span><h1>Adding Menus To The Application<a class="headerlink" href="#adding-menus-to-the-application" title="Permalink to this headline">¶</a></h1>
+<p>Now it is time to consider adding some menus to your application. There
+are two basic ways that you can create a system of menus for your
+application:</p>
+<ul class="simple">
+<li><p>Design a hierarchical series of panes using the <code class="docutils literal notranslate"><span class="pre">&lt;menu-bar&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&lt;menu&gt;</span></code>, and various menu buttons classes, and glue the elements of
+this design together in the correct order.</p></li>
+<li><p>Use a command table.</p></li>
+</ul>
+<p>In this chapter, the first of these methods is demonstrated. For
+information about command tables, refer to <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a>. Before
+discussing the first method listed above, the overall design of the
+menu system for the task list manager is discussed.</p>
+<div class="section" id="a-description-of-the-menu-system">
+<span id="index-1"></span><h2>A description of the menu system<a class="headerlink" href="#a-description-of-the-menu-system" title="Permalink to this headline">¶</a></h2>
+<p>Before implementing the menus for the task list manager, it is worth
+describing what you are going to implement. The menu system of the task
+list manager comprises four menus: a <em>File</em> menu, <em>Edit</em> menu, <em>Task</em>
+menu, and <em>Help</em>. Each of these menus contains a number of commands, as
+follows:</p>
+<ul class="simple">
+<li><p><em>File</em> menu
+The <em>File</em> menu contains four commands that operate on
+the files loaded into the task list manager. The <em>Open</em> command opens
+a new file. The <em>Save</em> command saves the currently loaded file to
+disk. The <em>Save As</em> command saves the currently loaded file to disk
+under a new name. The <em>Exit</em> command quits the task application
+completely.</p></li>
+<li><p><em>Edit</em> menu
+The <em>Edit</em> menu contains the standard clipboard commands:
+<em>Cut</em>, <em>Copy</em>, and <em>Paste</em>.</p></li>
+<li><p><em>Task</em> menu
+The <em>Task</em> menu contains two commands that operate on
+individual tasks. The <em>Add</em> command adds a new task to the list. The
+<em>Remove</em> command removes the selected task from the list.</p></li>
+<li><p><em>Help</em> menu
+In a full-blown application, you would use commands in
+the <em>Help</em> menu as one hook into your online help system (other hooks
+being provided by buttons in dialog boxes and the F1 key). In this
+application, the <em>Help</em> menu contains a single command that simply
+displays a simple About dialog for the application.</p></li>
+</ul>
+</div>
+<div class="section" id="creating-a-menu-hierarchy">
+<span id="index-2"></span><h2>Creating a menu hierarchy<a class="headerlink" href="#creating-a-menu-hierarchy" title="Permalink to this headline">¶</a></h2>
+<p>As you might expect, creating a menu hierarchy in a frame definition is
+a matter of defining a series of panes for the frame. At the top-most
+level in the menu hierarchy is the menu bar itself. The menu bar
+contains each menu defined for the application and each menu contains
+the menu commands that themselves perform operations. Once the panes
+have been defined, the menu bar needs to be included in the frame using
+the <code class="docutils literal notranslate"><span class="pre">menu-bar</span></code> clause.</p>
+<p>First of all, you can create a pane that defines the menu bar itself as
+follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">task-menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-bar&gt;</span><span class="p">,</span>
+       <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">file-menu</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">edit-menu</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">task-menu</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">help-menu</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Next, define the File and Tasks menus themselves:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pane</span> <span class="n">file-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;File&quot;</span><span class="p">,</span>
+       <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">open-menu-button</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">save-menu-button</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">save-as-menu-button</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">exit-menu-button</span><span class="p">));</span>
+<span class="n">pane</span> <span class="n">edit-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Edit&quot;</span><span class="p">,</span>
+       <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">cut-menu-button</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">copy-menu-button</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">paste-menu-button</span><span class="p">));</span>
+<span class="n">pane</span> <span class="n">task-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task&quot;</span><span class="p">,</span>
+       <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">add-menu-button</span><span class="p">,</span>
+                        <span class="n">frame</span><span class="p">.</span><span class="n">remove-menu-button</span><span class="p">));</span>
+<span class="n">pane</span> <span class="n">help-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Help&quot;</span><span class="p">,</span>
+       <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">about-menu-button</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Finally, you need to define the menu commands themselves. A command that
+appears on a menu is defined as an instance of <code class="docutils literal notranslate"><span class="pre">&lt;menu-button&gt;</span></code>, and so
+there is a strong similarity between these buttons and some of the
+buttons already defined. DUIM also generates mnemonics for each menu
+item; thus, the items appear as <em>File</em> and <em>Edit</em>, and so forth. (Note
+that the <code class="docutils literal notranslate"><span class="pre">make-keyboard-gesture</span></code> function that appears below is defined
+in <a class="reference internal" href="#keyboard-accelerators">Keyboard accelerators</a>.)</p>
+<div class="highlight-dylan notranslate" id="index-3"><div class="highlight"><pre><span></span><span class="c1">// Commands in the File menu</span>
+<span class="n">pane</span> <span class="n">open-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open...&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;o&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Opens an existing file.&quot;</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">save-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;s&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Saves the current file to disk.&quot;</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">save-as-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save As...&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">save-as-file</span><span class="p">,</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Saves the current file with a new name.&quot;</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">exit-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Exit&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f4&quot;</span><span class="p">,</span> <span class="ss">#&quot;alt&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Exits the application.&quot;</span><span class="p">);</span>
+
+<span class="c1">//Commands in the Edit menu</span>
+<span class="n">pane</span> <span class="n">cut-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Cut&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;x&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Cut the selection to the clipboard.&quot;</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">copy-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Copy&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;c&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Copy the selection to the clipboard.&quot;</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">paste-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Paste&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;v&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Paste the selection in the clipboard at the current position.&quot;</span><span class="p">);</span>
+
+<span class="c1">//Commands in the Task menu</span>
+<span class="n">pane</span> <span class="n">add-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add...&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span>
+                     <span class="p">(</span><span class="ss">#&quot;a&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Add a new task.&quot;</span><span class="p">);</span>
+<span class="n">pane</span> <span class="n">remove-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span>
+                     <span class="p">(</span><span class="ss">#&quot;d&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span> <span class="s">&quot;Remove the selected task from the list.&quot;</span><span class="p">);</span>
+
+<span class="c1">//Commands in the Help menu</span>
+<span class="n">pane</span> <span class="n">about-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;About&quot;</span><span class="p">,</span>
+       <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+       <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f1&quot;</span><span class="p">),</span>
+       <span class="k">documentation:</span>
+         <span class="s">&quot;Display information about the application.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once you have defined the menu bar and all the children that it is to
+contain, you need to activate the menu bar in the frame by including the
+following towards the end of the frame definition.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-menu-bar</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The definitions of these menu buttons demonstrate two interesting new
+features: the use of keyboard accelerators, and the use of documentation
+strings.</p>
+<div class="section" id="documentation-strings">
+<span id="index-4"></span><h3>Documentation strings<a class="headerlink" href="#documentation-strings" title="Permalink to this headline">¶</a></h3>
+<p>Documentation strings let you provide brief online help for gadgets such
+as menu buttons. You can specify a documentation string for any gadget
+using the <code class="docutils literal notranslate"><span class="pre">documentation:</span></code> init-keyword. Although you can make whatever
+use you want of these strings, using the <code class="docutils literal notranslate"><span class="pre">gadget-documentation</span></code> and
+<code class="docutils literal notranslate"><span class="pre">gadget-documentation-setter</span></code> methods, documentation strings for menu
+buttons are used in status bars without any need for special action on
+your part. If you display a menu and move the mouse pointer over the
+items in the menu, then the documentation string defined for each item
+is displayed in the status bar of the frame for as long as the mouse
+pointer is over the menu item. It is generally good practice to supply
+documentation strings for all the menu items in a frame. Documentation
+strings for other gadgets become tooltips in Windows.</p>
+</div>
+<div class="section" id="keyboard-accelerators">
+<span id="index-5"></span><h3>Keyboard accelerators<a class="headerlink" href="#keyboard-accelerators" title="Permalink to this headline">¶</a></h3>
+<p>Keyboard accelerators let you define a combination of keys that can be
+pressed in order to invoke the activate callback of a gadget. This means
+that you can access the functionality of an application without having
+to choose commands from menus using the mouse, and can make it much
+quicker to use an application you are familiar with.</p>
+<p>To specify a keyboard accelerator, you need to specify an alphanumeric
+character, or a function key, together with any modifier keys (such as
+the CONTROL or ALT keys) that should be held down while the alphanumeric
+character is pressed. You actually create a keyboard accelerator by
+calling the <code class="docutils literal notranslate"><span class="pre">make</span></code> method on <code class="docutils literal notranslate"><span class="pre">&lt;keyboard-gesture&gt;</span></code>, though to make it a
+little easier, define the function below, which is used in the
+definition of each menu button.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">function</span> <span class="n">make-keyboard-gesture</span>
+  <span class="p">(</span><span class="n">keysym</span> <span class="p">::</span> <span class="nc">&lt;symbol&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">modifiers</span><span class="p">)</span>
+<span class="p">=&gt;</span> <span class="p">(</span><span class="n">gesture</span> <span class="p">::</span> <span class="nc">&lt;keyboard-gesture&gt;</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;keyboard-gesture&gt;</span><span class="p">,</span> <span class="k">keysym:</span> <span class="n">keysym</span><span class="p">,</span> <span class="k">modifiers:</span> <span class="n">modifiers</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">function</span> <span class="n">make-keyboard-gesture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Add this definition to the file <em>frame.dylan</em>.</p>
+<p>The keyboard accelerators defined demonstrate the several useful points
+about keyboard accelerators:</p>
+<ul class="simple">
+<li><p>Whenever possible, use standard keyboard accelerators for standard
+application commands on your platform. Here, you use CONTROL+O to
+open a file, CONTROL+S to save a file, and CONTROL+X, CONTROL+C, and
+CONTROL+V respectively for <em>Cut</em>, <em>Copy</em>, and <em>Paste</em>.</p></li>
+<li><p>As well as standard alphanumeric characters, you can use function
+keys as keyboard accelerators.</p></li>
+<li><p>As well as the more common CONTROL key, you can use the ALT and SHIFT
+keys as modifiers, though you should not use the SHIFT key as the
+sole modifier.</p></li>
+<li><p>You can use more than one modifier key at once.</p></li>
+<li><p>If you wish, you need not use any modifier keys at all, as is the
+case with the (slightly non-standard) keyboard accelerator for the
+<em>About</em> command.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="gluing-the-final-design-together">
+<span id="index-6"></span><h2>Gluing the final design together<a class="headerlink" href="#gluing-the-final-design-together" title="Permalink to this headline">¶</a></h2>
+<p>You can now add the definitions of the menu bar, menus, and menu
+buttons, to the definition of the <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> class, to give the code
+shown below. At this stage, the only thing missing from the final
+application are real callback functions. Callbacks are dealt with in
+<a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>.</p>
+<p>Note that the final definition of <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> includes the
+definition of a slot: <code class="docutils literal notranslate"><span class="pre">frame-task-list</span></code>. This takes an instance of
+the class <code class="docutils literal notranslate"><span class="pre">&lt;task-list&gt;</span></code> as a value, the default value being an empty
+<code class="docutils literal notranslate"><span class="pre">&lt;task-list&gt;</span></code>.  Although it has not been referred to so far, this
+class will be used as the basic data structure in which task lists are
+stored, and a more complete description of these data structures is
+given in <a class="reference external" href="callbacks.html#defining-the-underlying-data-structures-for-tasks">Defining the underlying data structures for tasks</a>. It
+transpires that defining the <code class="docutils literal notranslate"><span class="pre">frame-task-list</span></code> slot is essential for
+some of the file handling routines that are described in <a class="reference external" href="callbacks.html#handling-files-in-the-task-list-manager">Handling
+files in the task list manager</a>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">frame-task-list</span> <span class="p">::</span> <span class="nc">&lt;task-list&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;task-list&gt;</span><span class="p">);</span>
+
+  <span class="c1">// definition of menu bar</span>
+  <span class="n">pane</span> <span class="n">task-menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-bar&gt;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">file-menu</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">edit-menu</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">task-menu</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">help-menu</span><span class="p">));</span>
+
+  <span class="c1">// definition of menus</span>
+  <span class="n">pane</span> <span class="n">file-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;File&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">open-menu-button</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">save-menu-button</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">save-as-menu-button</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">exit-menu-button</span><span class="p">));</span>
+  <span class="n">pane</span> <span class="n">edit-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Edit&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">cut-menu-button</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">copy-menu-button</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">paste-menu-button</span><span class="p">));</span>
+  <span class="n">pane</span> <span class="n">task-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">add-menu-button</span><span class="p">,</span>
+  <span class="n">frame</span><span class="p">.</span><span class="n">remove-menu-button</span><span class="p">));</span>
+
+  <span class="n">pane</span> <span class="n">help-menu</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Help&quot;</span><span class="p">,</span>
+         <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">frame</span><span class="p">.</span><span class="n">about-menu-button</span><span class="p">));</span>
+
+  <span class="c1">// definition of menu buttons</span>
+
+  <span class="c1">// Commands in the File menu</span>
+  <span class="n">pane</span> <span class="n">open-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open...&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;o&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Opens an existing file.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;s&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Saves the current file to disk.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-as-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save As...&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">save-as-file</span><span class="p">,</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Saves the current file with a new name.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">exit-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Exit&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f4&quot;</span><span class="p">,</span> <span class="ss">#&quot;alt&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Exits the application.&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Commands in the Edit menu</span>
+  <span class="n">pane</span> <span class="n">cut-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Cut&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;x&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Cut the selection to the clipboard.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">copy-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Copy&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;c&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Copy the selection to the clipboard.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">paste-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Paste&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;v&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Paste the selection in the clipboard at the current position.&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Commands in the Task menu</span>
+  <span class="n">pane</span> <span class="n">add-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add...&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span>
+                       <span class="p">(</span><span class="ss">#&quot;a&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span> <span class="s">&quot;Add a new task.&quot;</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span>
+                       <span class="p">(</span><span class="ss">#&quot;d&quot;</span><span class="p">,</span> <span class="ss">#&quot;control&quot;</span><span class="p">,</span> <span class="ss">#&quot;shift&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Remove the selected task from the list.&quot;</span><span class="p">);</span>
+
+  <span class="c1">//Commands in the Help menu</span>
+  <span class="n">pane</span> <span class="n">about-menu-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;menu-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;About&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">,</span>
+         <span class="k">accelerator:</span> <span class="n">make-keyboard-gesture</span><span class="p">(</span><span class="ss">#&quot;f1&quot;</span><span class="p">),</span>
+         <span class="k">documentation:</span>
+           <span class="s">&quot;Display information about the application.&quot;</span><span class="p">);</span>
+
+  <span class="c1">// definition of buttons</span>
+  <span class="n">pane</span> <span class="n">add-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Add task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">remove-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Remove task&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">open-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Open file&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+  <span class="n">pane</span> <span class="n">save-button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Save file&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+
+  <span class="c1">// definition of radio box</span>
+  <span class="n">pane</span> <span class="n">priority-box</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+         <span class="k">items:</span> <span class="no">$priority-items</span><span class="p">,</span>
+         <span class="k">orientation:</span> <span class="ss">#&quot;horizontal&quot;</span><span class="p">,</span>
+         <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
+         <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
+         <span class="k">value:</span> <span class="ss">#&quot;medium&quot;</span><span class="p">,</span>
+         <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+
+  <span class="c1">// definition of tool bar</span>
+  <span class="n">pane</span> <span class="n">task-tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tool-bar&gt;</span><span class="p">,</span>
+         <span class="k">child:</span> <span class="n">horizontally</span> <span class="p">()</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">open-button</span><span class="p">;</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">save-button</span><span class="p">;</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">add-button</span><span class="p">;</span>
+           <span class="n">frame</span><span class="p">.</span><span class="n">remove-button</span>
+         <span class="k">end</span><span class="p">);</span>
+
+  <span class="c1">// definition of status bar</span>
+  <span class="n">pane</span> <span class="n">task-status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Task Manager&quot;</span><span class="p">);</span>
+
+  <span class="c1">// definition of list</span>
+  <span class="n">pane</span> <span class="n">task-list</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(),</span> <span class="k">lines:</span> <span class="mi">15</span><span class="p">,</span>
+          <span class="k">activate-callback:</span> <span class="n">not-yet-implemented</span><span class="p">);</span>
+
+  <span class="c1">// main layout</span>
+  <span class="n">pane</span> <span class="n">task-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="n">vertically</span> <span class="p">()</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">task-list</span><span class="p">;</span>
+      <span class="n">frame</span><span class="p">.</span><span class="n">priority-box</span><span class="p">;</span>
+    <span class="k">end</span><span class="p">;</span>
+
+  <span class="c1">// activation of frame elements</span>
+  <span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-layout</span><span class="p">;</span>
+  <span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-tool-bar</span><span class="p">;</span>
+  <span class="n">status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-status-bar</span><span class="p">;</span>
+  <span class="n">menu-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">task-menu-bar</span><span class="p">;</span>
+
+  <span class="c1">// frame title</span>
+  <span class="nb">keyword</span> <span class="k">title:</span> <span class="o">=</span> <span class="s">&quot;Task List Manager&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;task-frame&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="improve.html" class="btn btn-neutral float-left" title="Improving The Design" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="callbacks.html" class="btn btn-neutral float-right" title="Adding Callbacks to the Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
