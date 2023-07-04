@@ -1,0 +1,1882 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integers &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="object-with-elements" href="object-with-elements.html" />
+    <link rel="prev" title="Inlining adjectives for methods, constants, functions, and slots" href="inlining.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define-function.html">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Integers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extensions-to-the-dylan-library">Extensions to the dylan Library</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ranges">Ranges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specific-constructors">Specific constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equality-comparisons">Equality comparisons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#magnitude-comparisons">Magnitude comparisons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#properties-of-numbers">Properties of numbers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#arithmetic-operations">Arithmetic operations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#collections">Collections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-table-protocol">The Table Protocol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iteration-constructs">Iteration Constructs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-generic-arithmetic-library">The generic-arithmetic Library</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Ranges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Specific constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Arithmetic operations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Iteration constructs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exported-modules-from-the-generic-arithmetic-library">Exported Modules from the generic-arithmetic Library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-dylan-excluding-arithmetic-module">The dylan-excluding-arithmetic Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-dylan-arithmetic-module">The dylan-arithmetic Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-generic-arithmetic-dylan-module">The generic-arithmetic-dylan Module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-special-arithmetic-features">Using Special Arithmetic Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-big-integers-library">The big-integers Library</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Specific Constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instances-and-subtypes-in-the-big-integers-library">Instances and subtypes in the Big-Integers library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type-equivalence-in-the-big-integers-library">Type-equivalence in the Big-Integers library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Equality comparisons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">Magnitude comparisons</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">Properties of Numbers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">Arithmetic Operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Integers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/numbers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="integers">
+<h1>Integers<a class="headerlink" href="#integers" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the Open Dylan implementation of arithmetic
+functions, especially integer arithmetic. It describes a number of
+extensions to the Dylan language, which are available from the Dylan
+library. It also describes a generic arithmetic facility that, through
+the use of other libraries, allows you to extend arithmetic to special
+number types, such as “big” (64-bit) integers.</p>
+<p>Throughout this document, arguments are instances of the class specified
+by the argument name (ignoring any numeric suffixes), unless otherwise
+noted. Thus, the arguments <em>integer</em>, <em>integer1</em>, and <em>integer2</em> would
+all be instances of the class <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<p>The goals of the extensions to the Dylan language described in this
+document are as follows:</p>
+<ul>
+<li><p>Provide arithmetic operations that are closed over small integers.</p>
+<p>This allows type inference to propagate small integer declarations more
+widely, because there is no possibility of automatic coercion into some
+more general format.</p>
+</li>
+<li><p>Make the arithmetic operations that are closed over small integers
+easily accessible to programmers.</p></li>
+<li><p>Allow the Dylan library to be described in such a way that only small
+integers are present by default, moving support for infinite precision
+integer arithmetic to the Big-Integers library, which must be explicitly
+used.</p></li>
+<li><p>Support infinite precision integer arithmetic through the Big-Integers
+library.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using that library in another library does not have a negative
+effect on the correctness or performance of other libraries in the same
+application that do not use it.</p>
+</div>
+</li>
+<li><p>Maintain compatibility with the DRM specification.</p>
+<p>In particular, the extensions support the production of efficient code
+for programs written to be portable with respect to the DRM
+specification. Use of implementation-specific types or operations in
+order to get reasonable efficiency is not required. This precludes
+relegating the <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> class and <em>limited-&lt;integer&gt;</em> types to
+inefficient implementations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When there are several distinct interfaces with the same name
+but in different modules, the notation <em>interface</em> <em>#</em> <em>module</em> is used
+in this document to remove ambiguity.</p>
+</div>
+</li>
+<li><p>Specify that the class <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> has a finite,
+implementation-dependent range, bounded by the constants
+<code class="docutils literal notranslate"><span class="pre">$minimum-integer</span></code> and <code class="docutils literal notranslate"><span class="pre">$maximum-integer</span></code>.</p>
+<p>The representation for integers must be at least 28 bits, including the
+sign. That is, the minimum conforming value for <code class="docutils literal notranslate"><span class="pre">$maximum-integer</span></code> is <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">^</span>
+<span class="pre">27</span> <span class="pre">-</span> <span class="pre">1</span></code> and the maximum conforming value for <code class="docutils literal notranslate"><span class="pre">$minimum-integer</span></code> is <code class="docutils literal notranslate"><span class="pre">-2</span> <span class="pre">^</span>
+<span class="pre">27</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>Rationale:</em> Restricting <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> in this way allows the programmer
+to stay in the efficient range without requiring exact knowledge of what
+that range might be. The full generality of extended precision integers
+is provided by the Big-Integers library, for programmers who actually
+need that functionality.</p>
+</div>
+</li>
+<li><p>Define the type <code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code> to be the type union of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;float&gt;</span></code></a> and
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+<p>The Dylan library provides implementations of the generic functions and
+functions described in this document. If the result of one of these
+operations is specified to be an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and the
+mathematically correct result cannot be represented as an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>
+then an error is signaled. This removes fully generic arithmetic from
+the Dylan library. In particular, it removes extended integers, ratios,
+and rectangular complex numbers.</p>
+<div class="section" id="extensions-to-the-dylan-library">
+<h2>Extensions to the dylan Library<a class="headerlink" href="#extensions-to-the-dylan-library" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the extensions to the Dylan library that provide
+the arithmetic operations available as standard to your applications.
+You do not have to explicitly use any additional libraries to have
+access to any of the functionality described in this section. Note that
+this section only describes extensions to the Dylan library; for
+complete descriptions, you should also refer to the <em>Dylan Reference
+Manual</em>.</p>
+<p>Note that the Common-Dylan library also has these extensions because it
+uses the Dylan library.</p>
+<div class="section" id="ranges">
+<h3>Ranges<a class="headerlink" href="#ranges" title="Permalink to this headline">¶</a></h3>
+<p>The initialization arguments for <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#range"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;range&gt;</span></code></a> must all be instances of
+<code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code> rather than <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p>
+</div>
+<div class="section" id="specific-constructors">
+<h3>Specific constructors<a class="headerlink" href="#specific-constructors" title="Permalink to this headline">¶</a></h3>
+<p>The following specific constructors are available for use with the class
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:limited">
+<code class="sig-name descname">limited</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:limited" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a new type that represents a subset of the class <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>limited <em>integer-class</em> #key <em>min</em> <em>max</em> =&gt; <em>limited-type</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>integer-class</strong> – The singleton(&lt;integer&gt;).</p></li>
+<li><p><strong>min</strong> – The lower bound of the range. The default is
+<code class="docutils literal notranslate"><span class="pre">$minimum-integer</span></code>.</p></li>
+<li><p><strong>max</strong> – The upper bound of the range. The default is <code class="docutils literal notranslate"><span class="pre">$maximum-integer</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>The <em>integer-class</em> argument is the class <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>, and all other
+arguments are instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. The range of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> is
+bounded by default.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:range">
+<code class="sig-name descname">range</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:range" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to specify ranges of numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>range (#key from:, to:, above:, below:, by:, size:) =&gt; &lt;range&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>All of the supplied arguments must be instances of <code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="equality-comparisons">
+<h3>Equality comparisons<a class="headerlink" href="#equality-comparisons" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#equal"><code class="xref drm docutils literal notranslate"><span class="pre">=</span></code></a> function compares two objects and returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the values of
+the two objects are equal to each other, that is of the same magnitude.</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:=">
+<code class="sig-name descname">=</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:=" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>= <em>object1</em> <em>object2</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests its arguments to see if they are of the same magnitude.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:=([complex])">
+<code class="sig-name descname">=(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:=([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests its arguments to see if they are of the same magnitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>= <em>complex1</em> <em>complex2</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:=([machine-number])">
+<code class="sig-name descname">=(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:=([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests its arguments to see if they are of the same magnitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>= <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="magnitude-comparisons">
+<h3>Magnitude comparisons<a class="headerlink" href="#magnitude-comparisons" title="Permalink to this headline">¶</a></h3>
+<p>The Dylan library provides the following interfaces for testing the
+magnitude of two numbers:</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:[">
+<code class="sig-name descname">&lt;</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:[" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if its first argument is less than its second argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>&lt; <em>object1</em> <em>object2</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:[([complex])">
+<code class="sig-name descname">&lt;(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:[([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if its first argument is less than its second argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>&lt; <em>complex1</em> <em>complex2</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:[([machine-number])">
+<code class="sig-name descname">&lt;(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:[([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if its first argument is less than its second argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>&lt; <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="properties-of-numbers">
+<h3>Properties of numbers<a class="headerlink" href="#properties-of-numbers" title="Permalink to this headline">¶</a></h3>
+<p>Various number properties can be tested using the following predicates
+in the Dylan library:</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:odd?">
+<code class="sig-name descname">odd?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:odd?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an odd value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>odd? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:odd?([complex])">
+<code class="sig-name descname">odd?(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:odd?([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>odd? <em>complex</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether the argument supplied represents an odd value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:odd?([integer])">
+<code class="sig-name descname">odd?(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:odd?([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an odd value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>odd? <em>integer</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:even?">
+<code class="sig-name descname">even?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:even?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an even value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>even? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:even?([complex])">
+<code class="sig-name descname">even?(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:even?([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an even value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>even? <em>complex</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:even?([integer])">
+<code class="sig-name descname">even?(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:even?([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an even value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>even? <em>integer</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:zero?">
+<code class="sig-name descname">zero?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:zero?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a zero value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>zero? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:zero?([complex])">
+<code class="sig-name descname">zero?(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:zero?([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a zero value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>zero? <em>complex</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:zero?([machine-number])">
+<code class="sig-name descname">zero?(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:zero?([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a zero value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>zero? <em>machine-number</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:positive?">
+<code class="sig-name descname">positive?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:positive?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a positive value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:positive?([complex])">
+<code class="sig-name descname">positive?(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:positive?([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>positive? <em>complex</em></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether the argument supplied represents a positive value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:positive?([machine-number])">
+<code class="sig-name descname">positive?(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:positive?([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>positive? <em>machine-number</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether the argument supplied represents a positive value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:negative?">
+<code class="sig-name descname">negative?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:negative?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a negative value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:negative?([complex])">
+<code class="sig-name descname">negative?(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:negative?([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a negative value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative? <em>complex</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:negative?([machine-number])">
+<code class="sig-name descname">negative?(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:negative?([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents a negative value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative? <em>machine-number</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:integral?">
+<code class="sig-name descname">integral?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:integral?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an integral value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>integral? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:integral?([complex])">
+<code class="sig-name descname">integral?(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:integral?([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an integral value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>integral? <em>complex</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:integral?([machine-number])">
+<code class="sig-name descname">integral?(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:integral?([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument supplied represents an integral value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>integral? <em>machine-number</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="arithmetic-operations">
+<h3>Arithmetic operations<a class="headerlink" href="#arithmetic-operations" title="Permalink to this headline">¶</a></h3>
+<p>The following arithmetic operations are available in the Dylan library:</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:+">
+<code class="sig-name descname">+</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:+" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the sum of the two supplied arguments. The actual type of
+the value is determined by the contagion rules when applied to the
+arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:+([complex],[complex])">
+<code class="sig-name descname">+(&lt;complex&gt;, &lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:+([complex],[complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>complex1</em> <em>complex2</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:+([integer],[complex])">
+<code class="sig-name descname">+(&lt;integer&gt;, &lt;complex&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:+([integer],[complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:+([machine-number],[machine-number])">
+<code class="sig-name descname">+(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:+([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:-">
+<code class="sig-name descname">-</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the result of subtracting the second argument from the
+first.  The actual type of the value is determined by the contagion
+rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:-([complex],[complex])">
+<code class="sig-name descname">-(&lt;complex&gt;, &lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:-([complex],[complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>complex1 complex2</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:-([integer],[integer])">
+<code class="sig-name descname">-(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:-([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>integer1 integer2</em> =&gt; <em>integer</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:-([machine-number],[machine-number])">
+<code class="sig-name descname">-(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:-([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:*">
+<code class="sig-name descname">*</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the result of multiplying the two arguments. The actual
+type of the value is determined by the contagion rules when applied
+to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:*([complex],[complex])">
+<code class="sig-name descname">*(&lt;complex&gt;, &lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:*([complex],[complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>* <em>complex1</em> <em>complex2</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:*([integer],[integer])">
+<code class="sig-name descname">*(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:*([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>* <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:*([machine-number],[machine-number])">
+<code class="sig-name descname">*(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:*([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>* <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:/">
+<code class="sig-name descname">/</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:/" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the result of dividing the first argument by the
+second. The actual type of the value is determined by the contagion
+rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>/ <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:/([complex],[complex])">
+<code class="sig-name descname">/(&lt;complex&gt;, &lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:/([complex],[complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>/ <em>complex1</em> <em>complex2</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:/([float],[float])">
+<code class="sig-name descname">/(&lt;float&gt;, &lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:/([float],[float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>/ <em>float1</em> <em>float2</em> =&gt; <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:negative">
+<code class="sig-name descname">negative</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:negative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Negates the supplied argument. The returned value is of the same float
+format as the supplied argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative <em>object</em> =&gt; #rest <em>negative-object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:negative([complex])">
+<code class="sig-name descname">negative(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:negative([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative <em>complex</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:negative([integer])">
+<code class="sig-name descname">negative(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:negative([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative <em>integer</em> =&gt; <em>negative-integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:negative([float])">
+<code class="sig-name descname">negative(&lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:negative([float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>negative <em>float</em> =&gt; <em>negative-float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:floor">
+<code class="sig-name descname">floor</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:floor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Truncates a number toward negative infinity. The integer part is
+returned as <em>integer</em>, the remainder is of the same float format as
+the argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor <em>object</em> =&gt; <em>integer</em> <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:floor([machine-number])">
+<code class="sig-name descname">floor(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:floor([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:floor([integer])">
+<code class="sig-name descname">floor(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:floor([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:floor([float])">
+<code class="sig-name descname">floor(&lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:floor([float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:ceiling">
+<code class="sig-name descname">ceiling</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:ceiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Truncates a number toward positive infinity. The integer part is
+returned as <em>integer</em>, the remainder is of the same float format as
+the argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:ceiling([machine-number])">
+<code class="sig-name descname">ceiling(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:ceiling([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:ceiling([integer])">
+<code class="sig-name descname">ceiling(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:ceiling([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:ceiling([float])">
+<code class="sig-name descname">ceiling(&lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:ceiling([float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:round">
+<code class="sig-name descname">round</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rounds a number toward the nearest mathematical integer. The
+integer part is returned as <em>integer</em>, the remainder is of the same
+float format as the argument. If the argument is exactly between
+two integers, then the result <em>integer</em> will be a multiple of two.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round <em>object</em> =&gt; <em>integer</em> <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:round([machine-number])">
+<code class="sig-name descname">round(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:round([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:round([integer])">
+<code class="sig-name descname">round(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:round([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:round([float])">
+<code class="sig-name descname">round(&lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:round([float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:truncate">
+<code class="sig-name descname">truncate</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:truncate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Truncates a number toward zero. The integer part is returned as
+<em>integer</em>, the remainder is of the same float format as the
+argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>truncate <em>machine-number</em> =&gt; <em>integer</em> <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:truncate([machine-number])">
+<code class="sig-name descname">truncate(&lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:truncate([machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>truncate <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:truncate([integer])">
+<code class="sig-name descname">truncate(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:truncate([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>truncate <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:truncate([float])">
+<code class="sig-name descname">truncate(&lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:truncate([float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>truncate <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:floor/">
+<code class="sig-name descname">floor/</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:floor/" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the first argument into the second and truncates the result
+toward negative infinity. The integer part is returned as
+<em>integer</em>, the type of the remainder is determined by the contagion
+rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor/ <em>object1</em> <em>object2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:floor/([machine-number],[machine-number])">
+<code class="sig-name descname">floor/(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:floor/([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:floor/([integer],[integer])">
+<code class="sig-name descname">floor/(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:floor/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>floor/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:ceiling/">
+<code class="sig-name descname">ceiling/</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:ceiling/" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the first argument into the second and truncates the result
+toward positive infinity. The integer part is returned as
+<em>integer</em>, the type of the remainder is determined by the contagion
+rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling/ <em>object1</em> <em>object2</em> =&gt; <em>integer</em> <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:ceiling/([machine-number],[machine-number])">
+<code class="sig-name descname">ceiling/(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:ceiling/([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:ceiling/([integer],[integer])">
+<code class="sig-name descname">ceiling/(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:ceiling/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ceiling/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:round/">
+<code class="sig-name descname">round/</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:round/" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the first argument into the second and rounds the result
+toward the nearest mathematical integer. The integer part is
+returned as <em>integer</em>, the type of the remainder is determined by
+the contagion rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round/ <em>object1</em> <em>object2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:round/([machine-number],[machine-number])">
+<code class="sig-name descname">round/(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:round/([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:round/([integer],[integer])">
+<code class="sig-name descname">round/(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:round/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>round/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:truncate/">
+<code class="sig-name descname">truncate/</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:truncate/" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the first argument into the second and truncates the result
+toward zero. The integer part is returned as <em>integer</em>, the type of
+the remainder is determined by the contagion rules when applied to
+the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>truncate/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:truncate/([integer],[integer])">
+<code class="sig-name descname">truncate/(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:truncate/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>truncate/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:modulo">
+<code class="sig-name descname">modulo</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:modulo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the second value of <em>floor/ (</em> <em>arg1</em> <em>,</em> <em>arg2</em> <em>)</em>. The
+actual type of the second value is determined by the contagion
+rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>modulo <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:modulo([machine-number],[machine-number])">
+<code class="sig-name descname">modulo(&lt;machine-number&gt;, &lt;machine-number&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:modulo([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>modulo <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:modulo([integer],[integer])">
+<code class="sig-name descname">modulo(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:modulo([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>modulo <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:remainder">
+<code class="sig-name descname">remainder</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:dylan:remainder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the second value of <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#truncate_div"><code class="xref drm docutils literal notranslate"><span class="pre">truncate/</span></code></a> (* <em>arg1</em> <em>,</em> <em>arg2</em> <em>)</em>.The
+actual type of the second value is determined by the contagion
+rules when applied to the arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>remainder <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:remainder([integer],[integer])">
+<code class="sig-name descname">remainder(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:remainder([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>remainder <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:^">
+<code class="sig-name descname">^</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:^" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first argument raised to the power of the second
+argument.  The value is of the same float format as the first
+argument. An error is signalled if both arguments are 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>^ <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:^([complex],[complex])">
+<code class="sig-name descname">^(&lt;complex&gt;, &lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:^([complex],[complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>^ <em>complex1</em> <em>complex2</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:^([integer],[integer])">
+<code class="sig-name descname">^(&lt;integer&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:^([integer],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>^ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:^([float],[integer])">
+<code class="sig-name descname">^(&lt;float&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:^([float],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>^ <em>float1</em> <em>integer2</em> =&gt; <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:abs">
+<code class="sig-name descname">abs</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:abs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the absolute value of the argument. The value is of the
+same float format as the argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>abs <em>object</em> =&gt; #rest <em>object</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:abs([complex])">
+<code class="sig-name descname">abs(&lt;complex&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:dylan:abs([complex])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>abs <em>complex</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:abs([integer])">
+<code class="sig-name descname">abs(&lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:abs([integer])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>abs <em>integer</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:dylan:abs([float])">
+<code class="sig-name descname">abs(&lt;float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dylan:dylan:abs([float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>abs <em>float</em> =&gt; <em>float</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:logior">
+<code class="sig-name descname">logior</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:logior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the bitwise inclusive <em>OR</em> of its integer arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>logior #rest <em>integers</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:logxor">
+<code class="sig-name descname">logxor</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:logxor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the bitwise exclusive <em>OR</em> of its integer arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>logxor #rest <em>integers</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:logand">
+<code class="sig-name descname">logand</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:logand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the bitwise <em>AND</em> of its integer arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>logand #rest <em>integers</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:lognot">
+<code class="sig-name descname">lognot</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:lognot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the bitwise <em>NOT</em> of its integer arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>lognot <em>integer1</em> =&gt; <em>integer2</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:logbit?">
+<code class="sig-name descname">logbit?</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:logbit?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the value of a particular bit in its integer argument. The
+<em>index</em> argument is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>logbit? <em>index</em> <em>integer</em> =&gt; <em>boolean</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:ash">
+<code class="sig-name descname">ash</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:ash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an arithmetic shift on its first argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ash <em>integer1</em> <em>count</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:lcm">
+<code class="sig-name descname">lcm</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:lcm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the least common multiple of its two arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>lcm <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:gcd">
+<code class="sig-name descname">gcd</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:gcd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the greatest common divisor of its two arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>gcd <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="collections">
+<h3>Collections<a class="headerlink" href="#collections" title="Permalink to this headline">¶</a></h3>
+<p>The keys for sequences are always instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. This means
+that certain kinds of collections cannot be sequences; very large (or
+unbounded) sparse arrays are an example.</p>
+</div>
+<div class="section" id="the-table-protocol">
+<h3>The Table Protocol<a class="headerlink" href="#the-table-protocol" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="language-differences.html"><span class="doc">Language Differences</span></a> for a list of changes to the table protocol.</p>
+</div>
+<div class="section" id="iteration-constructs">
+<h3>Iteration Constructs<a class="headerlink" href="#iteration-constructs" title="Permalink to this headline">¶</a></h3>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:dylan:for">
+<code class="sig-name descname">for</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:dylan:for" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <em>start</em>, <em>bound</em>, and <em>increment</em> expressions in a numeric
+clause must evaluate to instances of <code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code> for this
+macro.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="the-generic-arithmetic-library">
+<h2>The generic-arithmetic Library<a class="headerlink" href="#the-generic-arithmetic-library" title="Permalink to this headline">¶</a></h2>
+<p>The Generic-Arithmetic library exports the functions described in this
+section from a module called <em>generic-arithmetic</em>.</p>
+<p>The Generic-Arithmetic library provides a fully extensible version of
+all arithmetic operations. If an application only uses
+Generic-Arithmetic, these versions of the operators reduce themselves to
+be equivalent to those in the Dylan library. But when you use additional
+implementation libraries, the arithmetic operators are extended.</p>
+<p>The Big-Integers library is one such implementation library. It provides a
+implementation of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> that uses two machine words to represent
+each integer. For example, on a 64-bit machine architecture this is a 128-bit
+signed integer.</p>
+<p>The standard integer implementation in the Dylan library is actually
+part of the following class hierarchy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;abstract-integer&gt;
+ ├── &lt;integer&gt;
+ └── &lt;big-integer&gt;
+      └── &lt;double-integer&gt;
+</pre></div>
+</div>
+<p>(The classes <code class="docutils literal notranslate"><span class="pre">&lt;big-integer&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;double-integer&gt;</span></code> are implementation
+classes. You do not need to use them.)</p>
+<p>The modules in the Generic-Arithmetic library export <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>
+with the name <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. They also export a full set of arithmetic
+operators that use instances of <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> rather than instances
+of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (in the Dylan library naming scheme). However, those
+operators just fall back to the Dylan library operators until you include an
+implementation library, such as Big-Integers, in your application.</p>
+<p>When you use the Big-Integers library, the arithmetic operators exported by
+Generic-Arithmetic are enhanced to extend their results to 128-bit integers on
+64-bit machines or 64-bit integers on 32-bit machine architectures. If a result
+is small enough to fit in a Dylan library <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>, it will be fitted
+into one.</p>
+<p>Note that the Generic-Arithmetic library uses the same naming
+conventions for arithmetic operators as used by the Dylan library. This
+means that some renaming is required in modules that require access to
+both the basic Dylan interfaces and the interfaces supplied by the
+Generic-Arithmetic library. As described earlier, the notation
+<em>interface</em> <em>#</em> <em>module</em> is used to denote different interfaces of the
+same name, where <em>interface</em> is the name of the interface, and <em>module</em>
+is the name of the module it is exported from.</p>
+<p>See <a class="reference internal" href="#using-special-arithmetic-features">Using special arithmetic features</a> for an example of how to use
+an implementation library with Generic-Arithmetic.</p>
+<div class="section" id="id1">
+<h3>Ranges<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The Generic-Arithmetic library defines the class <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;range&gt;</span></code>, which is in
+most respects functionally equivalent to <em>&lt;range&gt;#Dylan</em>, but uses generic
+arithmetic operations in its implementation so that the initialization
+arguments can be instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, rather than being restricted to
+<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code>.</p>
+</div>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<p>The class <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> is imported and re-exported under the
+name <em>&lt;integer&gt;#generic-arithmetic</em>.</p>
+</div>
+<div class="section" id="id2">
+<h3>Specific constructors<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt class="dylan-api">
+<code class="sig-name descname">range</code> <em class="property">Function</em></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>range #key <em>from</em> <em>to</em> <em>above</em> <em>below</em> <em>by</em> <em>size</em> =&gt; <em>range</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>This function is identical to the function <em>range#Dylan</em>, except that
+all of the supplied arguments must be instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p>
+</div>
+<div class="section" id="id3">
+<h3>Arithmetic operations<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The following functions all have Generic-Arithmetic implementations that are
+mathematically equivalent to the corresponding implementations defined on
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and documented in the DRM.  See <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#HEADING-100-49"><code class="xref drm docutils literal notranslate"><span class="pre">Arithmetic</span> <span class="pre">operations</span></code></a> for descriptions of each function as
+implemented in the Dylan library.</p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a> <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#multiplication"><code class="xref drm docutils literal notranslate"><span class="pre">*</span></code></a> <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#division"><code class="xref drm docutils literal notranslate"><span class="pre">/</span></code></a> <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#negative"><code class="xref drm docutils literal notranslate"><span class="pre">negative</span></code></a> <em>object</em> =&gt; #rest <em>negative-object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#floor"><code class="xref drm docutils literal notranslate"><span class="pre">floor</span></code></a> <em>real1</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#ceiling"><code class="xref drm docutils literal notranslate"><span class="pre">ceiling</span></code></a> <em>real1</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#round"><code class="xref drm docutils literal notranslate"><span class="pre">round</span></code></a> <em>real1</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#truncate"><code class="xref drm docutils literal notranslate"><span class="pre">truncate</span></code></a> <em>real1</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#floor_div"><code class="xref drm docutils literal notranslate"><span class="pre">floor/</span></code></a> <em>real1</em> <em>real2</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#ceiling_div"><code class="xref drm docutils literal notranslate"><span class="pre">ceiling/</span></code></a> <em>real1</em> <em>real2</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#round_div"><code class="xref drm docutils literal notranslate"><span class="pre">round/</span></code></a> <em>real1</em> <em>real2</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#truncate_div"><code class="xref drm docutils literal notranslate"><span class="pre">truncate/</span></code></a> <em>real1</em> <em>real2</em> =&gt; <em>abstract-integer</em> <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#modulo"><code class="xref drm docutils literal notranslate"><span class="pre">modulo</span></code></a> <em>real1</em> <em>real2</em> =&gt; <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#remainder"><code class="xref drm docutils literal notranslate"><span class="pre">remainder</span></code></a> <em>real1</em> <em>real2</em> =&gt; <em>real</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#exponentiation"><code class="xref drm docutils literal notranslate"><span class="pre">^</span></code></a> <em>object1</em> <em>object2</em> =&gt; #rest <em>object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#abs"><code class="xref drm docutils literal notranslate"><span class="pre">abs</span></code></a> <em>object1</em> =&gt; #rest <em>object</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logior"><code class="xref drm docutils literal notranslate"><span class="pre">logior</span></code></a> #rest <em>abstract-integer1</em> =&gt; <em>abstract-integer</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logxor"><code class="xref drm docutils literal notranslate"><span class="pre">logxor</span></code></a> #rest <em>abstract-integer1</em> =&gt; <em>abstract-integer</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logand"><code class="xref drm docutils literal notranslate"><span class="pre">logand</span></code></a> #rest <em>abstract-integer1</em> =&gt; <em>abstract-integer</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#lognot"><code class="xref drm docutils literal notranslate"><span class="pre">lognot</span></code></a> <em>abstract-integer1</em> =&gt; <em>abstract-integer</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logbit_"><code class="xref drm docutils literal notranslate"><span class="pre">logbit?</span></code></a> <em>integer</em> <em>abstract-integer</em> =&gt; <em>boolean</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#ash"><code class="xref drm docutils literal notranslate"><span class="pre">ash</span></code></a> <em>abstract-integer1</em> <em>integer</em> =&gt; <em>abstract-integer</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#lcm"><code class="xref drm docutils literal notranslate"><span class="pre">lcm</span></code></a> <em>abstract-integer1</em> <em>abstract-integer2</em> =&gt; <em>abstract-integer</em></p>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#gcd"><code class="xref drm docutils literal notranslate"><span class="pre">gcd</span></code></a> <em>abstract-integer1</em> <em>abstract-integer2</em> =&gt; <em>abstract-integer</em></p>
+</div>
+<div class="section" id="id4">
+<h3>Iteration constructs<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>While a programmer could make use of generic arithmetic in a <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> loop
+by using explicit-step clauses, this approach leads to a loss of
+clarity. The definition of the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> macro is complex, so a version that
+uses generic arithmetic in numeric clauses is provided, rather than
+requiring programmers who want that feature to reconstruct it.</p>
+<dl class="macro">
+<dt class="dylan-api">
+<code class="sig-name descname">for</code> <em class="property">Statement Macro</em></dt>
+<dd><p>The <em>start</em>, <em>bound</em>, and <em>increment</em> expressions in a numeric clause
+must evaluate to instances of <code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code> for this macro.
+Otherwise, this macro is similar to <em>for#Dylan</em>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="exported-modules-from-the-generic-arithmetic-library">
+<h3>Exported Modules from the generic-arithmetic Library<a class="headerlink" href="#exported-modules-from-the-generic-arithmetic-library" title="Permalink to this headline">¶</a></h3>
+<p>The Generic-Arithmetic library exports several modules that are provided
+for the convenience of programmers who wish to create additional modules
+based on the <em>dylan</em> module plus various combinations of the arithmetic
+models.</p>
+</div>
+<div class="section" id="the-dylan-excluding-arithmetic-module">
+<h3>The dylan-excluding-arithmetic Module<a class="headerlink" href="#the-dylan-excluding-arithmetic-module" title="Permalink to this headline">¶</a></h3>
+<p>The Dylan-Excluding-Arithmetic module imports and re-exports all of the
+interfaces exported by the <em>dylan</em> module from the Dylan library, except
+for the following excluded interfaces:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#range"><code class="xref drm docutils literal notranslate"><span class="pre">range</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#multiplication"><code class="xref drm docutils literal notranslate"><span class="pre">*</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#division"><code class="xref drm docutils literal notranslate"><span class="pre">/</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#negative"><code class="xref drm docutils literal notranslate"><span class="pre">negative</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#floor"><code class="xref drm docutils literal notranslate"><span class="pre">floor</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#ceiling"><code class="xref drm docutils literal notranslate"><span class="pre">ceiling</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#round"><code class="xref drm docutils literal notranslate"><span class="pre">round</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#truncate"><code class="xref drm docutils literal notranslate"><span class="pre">truncate</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#floor_div"><code class="xref drm docutils literal notranslate"><span class="pre">floor/</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#ceiling_div"><code class="xref drm docutils literal notranslate"><span class="pre">ceiling/</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#round_div"><code class="xref drm docutils literal notranslate"><span class="pre">round/</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#truncate_div"><code class="xref drm docutils literal notranslate"><span class="pre">truncate/</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#modulo"><code class="xref drm docutils literal notranslate"><span class="pre">modulo</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#remainder"><code class="xref drm docutils literal notranslate"><span class="pre">remainder</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#exponentiation"><code class="xref drm docutils literal notranslate"><span class="pre">^</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#abs"><code class="xref drm docutils literal notranslate"><span class="pre">abs</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logior"><code class="xref drm docutils literal notranslate"><span class="pre">logior</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logxor"><code class="xref drm docutils literal notranslate"><span class="pre">logxor</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logand"><code class="xref drm docutils literal notranslate"><span class="pre">logand</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#lognot"><code class="xref drm docutils literal notranslate"><span class="pre">lognot</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#logbit_"><code class="xref drm docutils literal notranslate"><span class="pre">logbit?</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#ash"><code class="xref drm docutils literal notranslate"><span class="pre">ash</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#lcm"><code class="xref drm docutils literal notranslate"><span class="pre">lcm</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#gcd"><code class="xref drm docutils literal notranslate"><span class="pre">gcd</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="the-dylan-arithmetic-module">
+<h3>The dylan-arithmetic Module<a class="headerlink" href="#the-dylan-arithmetic-module" title="Permalink to this headline">¶</a></h3>
+<p>The Dylan-Arithmetic module imports and re-exports all of the interfaces
+exported by the <em>dylan</em> module from the Dylan library which are excluded
+by the <em>dylan-excluding-arithmetic</em> module.</p>
+</div>
+<div class="section" id="the-generic-arithmetic-dylan-module">
+<h3>The generic-arithmetic-dylan Module<a class="headerlink" href="#the-generic-arithmetic-dylan-module" title="Permalink to this headline">¶</a></h3>
+<p>The Generic-Arithmetic-Dylan module imports and reexports all of the
+interfaces exported by the <em>dylan-excluding-arithmetic</em> module and the
+<em>generic-arithmetic</em> module.</p>
+<p>The <em>dylan-excluding-arithmetic</em>, <em>dylan-arithmetic</em>, and
+<em>generic-arithmetic</em> modules provide convenient building blocks for
+programmers to build the particular set of global name bindings they
+wish to work with. The purpose of the <em>generic-arithmetic-dylan</em> module
+is to provide a standard environment in which generic arithmetic is the
+norm, for those programmers who might want that.</p>
+</div>
+</div>
+<div class="section" id="using-special-arithmetic-features">
+<h2>Using Special Arithmetic Features<a class="headerlink" href="#using-special-arithmetic-features" title="Permalink to this headline">¶</a></h2>
+<p>As noted in <a class="reference internal" href="#the-generic-arithmetic-library">The Generic-Arithmetic library</a>, the Generic-Arithmetic
+library provides an extensible protocol for adding specialized arithmetic
+functionality to your applications. By using the Generic-Arithmetic
+library alongside a special implementation library, you can make the
+standard arithmetic operations support number types such as big (128-bit
+or 64-bit) integers, or complex numbers.</p>
+<p>This section provides an example of extending the basic Dylan arithmetic
+features using the Generic-Arithmetic library and the Big-Integers
+implementation library.</p>
+<p>To use special arithmetic features, a library’s <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">library</span></code>
+declaration must use at least the following libraries:</p>
+<ul class="simple">
+<li><p>common-dylan</p></li>
+<li><p>generic-arithmetic</p></li>
+<li><p><em>special-arithmetic-implementation-library</em></p></li>
+</ul>
+<p>So for Big-Integers you would write:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">library</span> <span class="n">foo</span>
+  <span class="k">use</span> <span class="n">common-dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">generic-arithmetic</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">big-integers</span><span class="p">;</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">library</span> <span class="n">foo</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Next you have to declare a module. There are three ways of using
+big-integer arithmetic that we can arrange with a suitable module
+declaration:</p>
+<ol class="arabic simple">
+<li><p>Replace all integer arithmetic with the big-integer arithmetic.</p></li>
+<li><p>Use both, with normal arithmetic remaining the default.</p></li>
+<li><p>Use both, with the big-integer arithmetic becoming the default.</p></li>
+</ol>
+<p>To get one of the three different effects described above, you need to
+arrange the <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> declaration accordingly. To replace all
+integer arithmetic with big-integer arithmetic, include the following in
+your <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> declaration:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="n">generic-arithmetic-common-dylan</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>(Note that the module definition should not use the Big-Integers module.
+The Big-Integers library is used as a side-effects library only, that
+is, it is referenced in the library definition so that it will be
+loaded. Its definitions extend the Generic-Arithmetic library.)</p>
+<p>If you replace all integer arithmetic with big-integer arithmetic in
+this way, there will be performance hits. For instance, loop indices
+will have to be checked at run-time to see whether a normal or big
+integer representation is being used, and a choice must be made about
+the representation for an incremented value.</p>
+<p>You can take a different approach that reduces the cost of big-integer
+arithmetic. Under this approach you leave normal integer arithmetic
+unchanged, and get access to big-integer arithmetic when you need it. To
+do this, use the same libraries but instead of using the
+<code class="docutils literal notranslate"><span class="pre">common-dylan-generic-arithmetic</span></code> module, include the following in your
+<code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> declaration:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="n">common-dylan</span><span class="p">;</span>
+<span class="k">use</span> <span class="n">generic-arithmetic</span><span class="p">,</span> <span class="k">prefix:</span> <span class="s">&quot;generic/&quot;</span><span class="p">;</span> <span class="c1">// use any prefix you like</span>
+</pre></div>
+</div>
+<p>This imports the big-integer arithmetic binding names, but gives them a prefix
+<code class="docutils literal notranslate"><span class="pre">generic/</span></code>, using the standard renaming mechanism available in module
+declarations. Thus you gain access to big arithmetic using renamed classes and
+operations like:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">generic/&lt;integer&gt;</span>
+<span class="n">generic/+</span>
+<span class="n">generic/-</span>
+<span class="n">generic/*</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>The operations take either instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> or
+<code class="docutils literal notranslate"><span class="pre">generic/&lt;integer&gt;</span></code> (a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>) and return instances of
+<code class="docutils literal notranslate"><span class="pre">generic/&lt;integer&gt;</span></code>.</p>
+<p>Note that having imported the big-integer operations under new names,
+you have to use prefix rather than infix syntax when calling them. For
+example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">generic/+</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>not:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span> <span class="n">generic/+</span> <span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The existing functions like <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a> will only accept <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>
+instances and <code class="docutils literal notranslate"><span class="pre">generic/&lt;integer&gt;</span></code> instances small enough to be represented as
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> instances.</p>
+<p>Under this renaming scheme, reduced performance will be confined to the
+<code class="docutils literal notranslate"><span class="pre">generic/</span></code> operations. Other operations, such as loop index increments and
+decrements, will retain their efficiency.</p>
+<p>Finally, you can make big-integer arithmetic the default but keep normal
+arithmetic around for when you need it. Your <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code>
+declaration should contain:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="n">generic-arithmetic-common-dylan</span><span class="p">;</span>
+<span class="k">use</span> <span class="n">dylan-arithmetic</span><span class="p">,</span> <span class="k">prefix:</span> <span class="s">&quot;dylan/&quot;</span><span class="p">;</span> <span class="c1">//use any prefix you like</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-big-integers-library">
+<h2>The big-integers Library<a class="headerlink" href="#the-big-integers-library" title="Permalink to this headline">¶</a></h2>
+<p>The Big-Integers library exports a module called <code class="docutils literal notranslate"><span class="pre">big-integers</span></code>, which
+imports and re-exports all of the interfaces exported by the
+<code class="docutils literal notranslate"><span class="pre">generic-arithmetic</span></code> module of the Generic-Arithmetic library.</p>
+<p>The Big-Integers library modifies the behavior of functions provided by
+the Dylan library as described in this section.</p>
+<div class="section" id="id5">
+<h3>Specific Constructors<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The Big-Integers library extends the functionality of specific
+constructors in the Dylan library as follows:</p>
+<dl class="function">
+<dt class="dylan-api">
+<code class="sig-name descname">limited</code> <em class="property">Function</em></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>limited <em>abstract-integer-class</em> #key <em>min</em> <em>max</em> =&gt; <em>limited-type</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Returns a limited integer type, which is a subtype of
+<code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, whose instances are integers greater than or
+equal to <em>min</em> (if specified) and less than or equal to <em>max</em> (if
+specified). If no keyword arguments are specified, the result type is
+equivalent to <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>. The argument
+<em>abstract-integer-class</em> is the class <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>.</p>
+<p>If both <em>min</em> and <em>max</em> are supplied, and both are instances of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>, then the result type is equivalent to calling <em>limited</em> on
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> with those same bounds.</p>
+<p>The Limited Integer Type Protocol is extended to account for limited
+<code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> types.</p>
+</div>
+<div class="section" id="instances-and-subtypes-in-the-big-integers-library">
+<h3>Instances and subtypes in the Big-Integers library<a class="headerlink" href="#instances-and-subtypes-in-the-big-integers-library" title="Permalink to this headline">¶</a></h3>
+<p>In each of the following code snippets, the expression in the first line is
+true if and only if all of the expressions following it are true.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">))</span>
+
+<span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nc">&lt;abstract-integer&gt;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">&lt;=</span> <span class="n">x</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">z</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nc">&lt;abstract-integer&gt;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">&lt;=</span> <span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">))</span>
+
+<span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nc">&lt;abstract-integer&gt;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">z</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">subtype?</span><span class="p">(</span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">w</span><span class="p">,</span> <span class="k">max:</span> <span class="n">x</span><span class="p">),</span>
+         <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">))</span>
+
+<span class="n">w</span> <span class="o">&gt;=</span> <span class="n">y</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">z</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">subtype?</span><span class="p">(</span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">w</span> <span class="p">...),</span>
+         <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="n">w</span> <span class="o">&gt;=</span> <span class="n">y</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">subtype?</span><span class="p">(</span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">max:</span> <span class="n">x</span> <span class="p">...),</span>
+         <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">z</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="type-equivalence-in-the-big-integers-library">
+<h3>Type-equivalence in the Big-Integers library<a class="headerlink" href="#type-equivalence-in-the-big-integers-library" title="Permalink to this headline">¶</a></h3>
+<p>In each of the following code snippets, the expression on the first line is
+type equivalent to the expression on the second line if and only if the text
+following both expressions is true.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>y</em> and <em>z</em> are both instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">,</span> <span class="k">max:</span> <span class="no">$maximum-integer</span><span class="p">)</span>
+
+<span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>y</em> is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="no">$minimum-integer</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">max:</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>z</em> is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<p>Type disjointness is modified as follows to account for limited
+<code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> types.</p>
+<p>A limited integer type is disjoint from a class if their base types are
+disjoint or the class is <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and the range of the limited
+integer type is disjoint from the range of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (that is, from
+<em>$minimum-integer</em> to <em>$maximum-integer</em>).</p>
+</div>
+<div class="section" id="id6">
+<h3>Equality comparisons<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>The behavior of equality comparisons in the Dylan library is modified by
+the Big-Integers library as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
+<span class="o">=</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
+<span class="o">=</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>Magnitude comparisons<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>The behavior of magnitude comparisons in the Dylan library is modified
+by the Big-Integers library as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span>
+<span class="o">&lt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
+<span class="o">&lt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>Properties of Numbers<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>The behavior of number property tests in the Dylan library is modified
+by the Big-Integers library as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>odd? *abstract-integer* =&gt; *boolean*
+even? *abstract-integer* =&gt; *boolean*
+zero? *abstract-integer* =&gt; *boolean*
+positive? *abstract-integer* =&gt; *boolean*
+negative? *abstract-integer* =&gt; *boolean*
+integral? *abstract-integer* =&gt; *boolean*
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>Arithmetic Operations<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>The Big-Integers library modifies the behavior of the functions provided
+by the Generic-Arithmetic library as described below.</p>
+<p>The actual type of the return value for all the following interfaces is
+determined by the contagion rules when applied to the arguments.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span>
+<span class="o">+</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+<span class="o">+</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+
+<span class="o">-</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span>
+<span class="o">-</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+<span class="o">-</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+
+<span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span>
+<span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+<span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The return value of the following interface is of the same float format
+as the argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">negative</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">negative</span><span class="o">-</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The second return value of all the following interfaces is of the same
+float format as the argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span>
+<span class="n">floor</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+
+<span class="n">ceiling</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span>
+<span class="n">ceiling</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+
+<span class="nb">round</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span>
+<span class="nb">round</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+
+<span class="n">truncate</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span>
+<span class="n">truncate</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The second return value of all the following interfaces is of the same
+float format as the first argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer3</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer4</span><span class="o">*</span>
+<span class="n">floor</span><span class="o">/</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+
+<span class="n">ceiling</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer3</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer4</span><span class="o">*</span>
+<span class="n">ceiling</span><span class="o">/</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+
+<span class="nb">round</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer3</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer4</span><span class="o">*</span>
+<span class="nb">round</span><span class="o">/</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+
+<span class="n">truncate</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer3</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer4</span>
+<span class="n">truncate</span><span class="o">/</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The second return value of the following interfaces is of the same float
+format as the second argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+<span class="n">ceiling</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+<span class="nb">round</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+<span class="n">truncate</span><span class="o">/</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">*</span><span class="n">float2</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The return value of the following interfaces is of the same float format
+as the first argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modulo</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+<span class="n">remainder</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The return value of the following interfaces is of the same float format
+as the second argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modulo</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span>
+<span class="n">modulo</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+<span class="n">remainder</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span>
+<span class="n">remainder</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer</span><span class="o">*</span> <span class="o">*</span><span class="n">float1</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">float</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The behavior of the following miscellaneous interfaces is also modified
+by the Big-Integers library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>^ *abstract-integer1* *integer* =&gt; *abstract-integer
+abs *abstract-integer1* =&gt; *abstract-integer*
+logior #rest *abstract-integer1* =&gt; *abstract-integer*
+logxor #rest *abstract-integer1* =&gt; *abstract-integer*
+logand #rest *abstract-integer1* =&gt; *abstract-integer*
+lognot *abstract-integer1* =&gt; *abstract-integer*
+logbit? *integer* *abstract-integer* =&gt; *boolean*
+ash *abstract-integer1* *integer* =&gt; *abstract-integer*
+lcm *abstract-integer1* *abstract-integer2* =&gt; *abstract-integer*
+gcd *abstract-integer1* *abstract-integer2* =&gt; *abstract-integer*
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="inlining.html" class="btn btn-neutral float-left" title="Inlining adjectives for methods, constants, functions, and slots" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="object-with-elements.html" class="btn btn-neutral float-right" title="object-with-elements" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

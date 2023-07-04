@@ -1,0 +1,806 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The DOOD library &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The dylan Library" href="../dylan/index.html" />
+    <link rel="prev" title="The transcendentals Module" href="../common-dylan/transcendentals.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The DOOD library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-dylan-object-oriented-database">The Dylan Object Oriented Database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-dood-module">The DOOD module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas">Schemas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reading">Reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tables">Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proxies">Proxies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proxy-examples">Proxy examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dump-by-reference">Dump by Reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#compression">Compression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiple-databases">Multiple Databases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The DOOD library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/dood/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-dood-library">
+<h1>The DOOD library<a class="headerlink" href="#the-dood-library" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-dylan-object-oriented-database">
+<h2>The Dylan Object Oriented Database<a class="headerlink" href="#the-dylan-object-oriented-database" title="Permalink to this headline">¶</a></h2>
+<p>The Dylan Object Oriented Database (DOOD) is a simple mechanism for
+storing arbitrary objects and lazily loading them. During dump time,
+DOOD traverses a graph of objects and encodes the objects as a
+sequence of bytes. These bytes are later interpreted by DOOD during
+load time reconstructing an isomorphic object-graph in which cyclic
+structures and shared references are preserved. DOOD provides ways to
+control what slots in objects should be stored, and to decide what
+objects should be stored by proxies.</p>
+<p>DOOD was meant to be a very simple Dylan object store that supported:</p>
+<ul class="simple">
+<li><p>pay as you go</p></li>
+<li><p>incremental loading,</p></li>
+<li><p>flexible proxies, and</p></li>
+<li><p>non-corrupting commits</p></li>
+</ul>
+<p>DOOD was not meant to provide:</p>
+<ul class="simple">
+<li><p>multiuser support,</p></li>
+<li><p>full blown transaction support,</p></li>
+<li><p>incremental writes,</p></li>
+<li><p>schema evolution, nor</p></li>
+<li><p>client/server support</p></li>
+</ul>
+<p>In order to add persistence to a program, the easiest thing is to
+just save and load the data completely:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">dump-data</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">locator</span><span class="p">)</span>
+  <span class="k">let</span> <span class="n">dood</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="k">locator:</span> <span class="n">locator</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">,</span>
+                  <span class="k">if-exists:</span> <span class="ss">#&quot;replace&quot;</span><span class="p">);</span>
+  <span class="n">dood-root</span><span class="p">(</span><span class="n">dood</span><span class="p">)</span> <span class="o">:=</span> <span class="n">data</span><span class="p">;</span>
+  <span class="n">dood-commit</span><span class="p">(</span><span class="n">dood</span><span class="p">);</span>
+  <span class="n">dood-close</span><span class="p">(</span><span class="n">dood</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">load-data</span> <span class="p">(</span><span class="n">locator</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="k">let</span> <span class="n">dood</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="k">locator:</span> <span class="n">locator</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dood-root</span><span class="p">(</span><span class="n">dood</span><span class="p">);</span>
+  <span class="n">dood-close</span><span class="p">(</span><span class="n">dood</span><span class="p">);</span>
+  <span class="n">data</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This works great for simple applications. More complicated
+applications potentially require support for data compression, special
+reinitialization, lazy loading of data, and multiple databases. Data
+can be compressed by being able to specify that only a subset of an
+object’s slots are saved (for example, an object may cache information
+in a slot) or more generally by dumping the object’s information in a
+completely different format on disk. The former technique is described
+in the schema section below and the latter technique is described in
+the proxy section below.</p>
+<div class="section" id="the-dood-module">
+<h3>The DOOD module<a class="headerlink" href="#the-dood-module" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood]">
+<code class="sig-name descname">&lt;dood&gt;</code> <em class="property">Open Primary Class</em><a class="headerlink" href="#dood:dood:[dood]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>if-exists</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.  Specifies
+the actions to take during creation of a file
+stream when the <code class="docutils literal notranslate"><span class="pre">locator:</span></code> init-keyword is
+specified. If <code class="docutils literal notranslate"><span class="pre">if-exists:</span></code>
+init-keyword specifies
+<code class="docutils literal notranslate"><span class="pre">#&quot;replace&quot;</span></code> then the database
+is considered empty.</p></li>
+<li><p><strong>backups?</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code>. Specifies
+whether a new file is used during a
+commit. <code class="docutils literal notranslate"><span class="pre">backups?</span></code> is always false when the
+<code class="docutils literal notranslate"><span class="pre">stream:</span></code> init-keyword is specified.</p></li>
+<li><p><strong>batch-mode?</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code>.</p></li>
+<li><p><strong>default-segment</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-segment&gt;</span></code>.</p></li>
+<li><p><strong>locator</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>. Should be a
+object valid for opening a stream with a
+<code class="docutils literal notranslate"><span class="pre">locator:</span></code> init-keyword.</p></li>
+<li><p><strong>name</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>. Usually a string
+or symbol but user-controlled.</p></li>
+<li><p><strong>read-only?</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code>.</p></li>
+<li><p><strong>segments</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code>.</p></li>
+<li><p><strong>stream</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;stream&gt;)</span></code>.</p></li>
+<li><p><strong>version</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code>. Specifies a
+version that can be used for version
+control. Upon opening of an existing database,
+the specified version is compared against the
+stored version, and if they are different a
+<a class="reference internal" href="#dood:dood:[dood-user-version-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-user-version-warning&gt;</span></code></a> condition is
+signaled.</p></li>
+<li><p><strong>world</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-world&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This class can be user subclassed and used as the basis for specialized
+loading and dumping behavior.</p>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-opening-warning]">
+<code class="sig-name descname">&lt;dood-opening-warning&gt;</code> <em class="property">Class</em><a class="headerlink" href="#dood:dood:[dood-opening-warning]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-warning&gt;</span></code></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> (<em>required</em>) – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Superclass of all dood warnings.</p>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-corruption-warning]">
+<code class="sig-name descname">&lt;dood-corruption-warning&gt;</code> <em class="property">Class</em><a class="headerlink" href="#dood:dood:[dood-corruption-warning]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dood:dood:[dood-opening-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-opening-warning&gt;</span></code></a></p>
+</dd>
+</dl>
+<p>Signaled if DOOD data is found to be corrupted.</p>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-version-warning]">
+<code class="sig-name descname">&lt;dood-version-warning&gt;</code> <em class="property">Class</em><a class="headerlink" href="#dood:dood:[dood-version-warning]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dood:dood:[dood-opening-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-opening-warning&gt;</span></code></a></p>
+</dd>
+</dl>
+<p>Signaled if the current DOOD version is different from the saved
+DOOD version.</p>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-user-version-warning]">
+<code class="sig-name descname">&lt;dood-user-version-warning&gt;</code> <em class="property">Class</em><a class="headerlink" href="#dood:dood:[dood-user-version-warning]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dood:dood:[dood-version-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-version-warning&gt;</span></code></a></p>
+</dd>
+</dl>
+<p>Signaled if the specified user version is different from the saved
+user version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-name([dood])">
+<code class="sig-name descname">dood-name(&lt;dood&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-name([dood])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the specified dood.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-root">
+<code class="sig-name descname">dood-root</code> <em class="property">Generic function</em><a class="headerlink" href="#dood:dood:dood-root" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-root (object) =&gt; (value)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the one distinguished root of the specified dood. It is
+defaulted to be <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> when a new dood is created.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-root-setter">
+<code class="sig-name descname">dood-root-setter</code> <em class="property">Generic function</em><a class="headerlink" href="#dood:dood:dood-root-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-root-setter (value object) =&gt; (value)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>value</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>object</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">{&lt;dood&gt;</span> <span class="pre">in</span> <span class="pre">dood}</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Sets the one distinguished root of the specified dood.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-commit">
+<code class="sig-name descname">dood-commit</code> <em class="property">Generic function</em><a class="headerlink" href="#dood:dood:dood-commit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-commit (dood #key flush? dump? break? parents? clear? stats? size) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+<li><p><strong>flush?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>dump?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>break?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>parents?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>clear?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>stats?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>size</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Saves the data reachable from <a class="reference internal" href="#dood:dood:dood-root"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">dood-root</span></code></a>. When the <code class="docutils literal notranslate"><span class="pre">backups?:</span></code>
+init-keyword is specified to be true, the data is first written to
+a new file. The new file is named the same as the specified locator
+but with its suffix changed to “new”. Upon success, the original
+data file is replaced with the new file. Upon failure the new file
+is just removed and the original data file is untouched.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-size">
+<code class="sig-name descname">dood-size</code> <em class="property">Generic function</em><a class="headerlink" href="#dood:dood:dood-size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-size (dood) =&gt; (res)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>res</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the size in bytes of the data file.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-close">
+<code class="sig-name descname">dood-close</code> <em class="property">Generic function</em><a class="headerlink" href="#dood:dood:dood-close" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-close (dood #rest all-keys #key abort?) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+<li><p><strong>all-keys</strong> (<em>#rest</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+<li><p><strong>abort?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Closes the specified database and underlying file stream if created
+with <code class="docutils literal notranslate"><span class="pre">locator:</span></code> init-keyword. If the <code class="docutils literal notranslate"><span class="pre">stream:</span></code> init-keyword was
+specified then it is the user’s responsibility to close this
+stream. Abort is passed through to close an underlying file stream.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="schemas">
+<h3>Schemas<a class="headerlink" href="#schemas" title="Permalink to this headline">¶</a></h3>
+<p>Schemas are declarative descriptions of how objects are persistently
+dumped and loaded. In the current version of DOOD, schemas are not
+themselves persistently stored. User versions can be used to manually
+ensure compatible schemas.</p>
+<dl class="macro">
+<dt class="dylan-api" id="dood:dood:dood-class-definer">
+<code class="sig-name descname">dood-class-definer</code> <em class="property">Macro</em><a class="headerlink" href="#dood:dood:dood-class-definer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">dood-class-definer</span></code> macro defines a dylan class with extra
+slot adjectives specifying the dumping and loading behavior of the
+corresponding slot. The default DOOD treatment of a slot, called
+<code class="docutils literal notranslate"><span class="pre">deep</span></code>, is that its contents is recursively dumped and eagerly
+loaded. There are three dood slot adjectives that modify this
+behavior: <code class="docutils literal notranslate"><span class="pre">lazy</span></code>, <code class="docutils literal notranslate"><span class="pre">disk</span></code>, and <code class="docutils literal notranslate"><span class="pre">weak.</span></code> A <code class="docutils literal notranslate"><span class="pre">lazy</span></code> slot’s
+contents is recursively dumped and lazily loaded, that is, loaded
+from disk upon first access. A <code class="docutils literal notranslate"><span class="pre">disk</span></code> slot’s contents is
+recursively dumped and is always loaded from disk when and only
+when explicitly accessed and is never written back to the slot. A
+<code class="docutils literal notranslate"><span class="pre">weak</span></code> slot’s contents is never dumped and a user can specify a
+<code class="docutils literal notranslate"><span class="pre">reinit-expression</span></code> to be used instead during loading. A
+<code class="docutils literal notranslate"><span class="pre">reinit-expression</span></code> must be specified even if an
+<code class="docutils literal notranslate"><span class="pre">init-expression</span></code> is the same, otherwise reinitialization will
+not occur and the slot will be unbound. In the current version of
+DOOD, the <code class="docutils literal notranslate"><span class="pre">reinit-expression</span></code> must appear as the first slot
+keyword parameter if at all. Accessing <code class="docutils literal notranslate"><span class="pre">lazy</span></code> slot values in a
+closed database will signal a <code class="docutils literal notranslate"><span class="pre">dood-proxy-error</span></code> (see below).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">dood-class</span> <span class="nc">&lt;computation&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="n">lazy</span> <span class="nb">slot</span> <span class="n">computation-source-location</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;source-location&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="l">#f</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">source-location:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">computation-previous</span> <span class="p">::</span> <span class="nc">&lt;compution&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">previous:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">computation-next</span> <span class="p">::</span> <span class="nc">&lt;computation&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">previous:</span><span class="p">;</span>
+  <span class="n">weak</span> <span class="nb">slot</span> <span class="n">computation-type</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;type-estimate&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="l">#f</span><span class="p">,</span>
+    <span class="k">reinit-expression:</span> <span class="l">#f</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">dood-class</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading">
+<h3>Reading<a class="headerlink" href="#reading" title="Permalink to this headline">¶</a></h3>
+<p>Internally DOOD loads objects by instantiation and slot assignment. An
+object is instantiated via the internal system allocator, which
+returns an uninitialized instance, and then initialized by applying
+the setters of an object’s class.</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-reinitialize">
+<code class="sig-name descname">dood-reinitialize</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dood:dood:dood-reinitialize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-reinitialize (dood object) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+<li><p><strong>object</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For some objects the simple instantiation and slot assignment
+approach will not produce a well-formed object. <a class="reference internal" href="#dood:dood:dood-reinitialize"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">dood-reinitialize</span></code></a>
+gives objects a chance to correct any reconstruction problems. This
+function is called on an object immediately after the object has
+been loaded from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">dood-class</span> <span class="nc">&lt;rectangle&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">rectangle-height</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">height:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">rectangle-width</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">width:</span><span class="p">;</span>
+  <span class="n">weak</span> <span class="n">rectangle-area</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">dood-class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-reinitialize</span> <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;rectangle&gt;</span><span class="p">)</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+  <span class="n">rectangle-area</span><span class="p">(</span><span class="n">object</span><span class="p">)</span>
+    <span class="o">:=</span> <span class="n">rectangle-height</span><span class="p">(</span><span class="n">object</span><span class="p">)</span> <span class="o">*</span> <span class="n">rectangle-width</span><span class="p">(</span><span class="n">object</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tables">
+<h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-lazy-symbol-table]">
+<code class="sig-name descname">&lt;dood-lazy-symbol-table&gt;</code> <em class="property">Class</em><a class="headerlink" href="#dood:dood:[dood-lazy-symbol-table]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-lazy-key-table&gt;</span></code></p>
+</dd>
+</dl>
+<p>Provide a mechanism for indexes. The keys are symbols and are
+loaded lazily using a binary search. This is known to be an
+inferior layout strategy and will be replaced by b*-trees in the
+future.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-lazy-forward-iteration-protocol">
+<code class="sig-name descname">dood-lazy-forward-iteration-protocol</code> <em class="property">Generic function</em><a class="headerlink" href="#dood:dood:dood-lazy-forward-iteration-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-lazy-forward-iteration-protocol (table) =&gt; (#rest results)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>table</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>#rest results</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Used for walking only keys presently loaded. The standard
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#forward-iteration-protocol"><code class="xref drm docutils literal notranslate"><span class="pre">forward-iteration-protocol</span></code></a> will load all keys and values
+into memory.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="proxies">
+<h3>Proxies<a class="headerlink" href="#proxies" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes users need more control over how objects are dumped to
+disk. DOOD provide a general mechanism called a proxy, which provides
+both a disk representation of an object and a reconstruction
+policy. The basic idea is that during the dumping process each memory
+object is given a chance to provide a disk object (a proxy) to be used
+for dumping and then upon loading, a loaded disk object is given a
+chance to map back to its original memory object. Proxies can be used
+for mapping objects back to unique runtime objects, for compressing
+objects, for looking up objects in external databases, etc.</p>
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-proxy]">
+<code class="sig-name descname">&lt;dood-proxy&gt;</code> <em class="property">Open Class</em><a class="headerlink" href="#dood:dood:[dood-proxy]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-mapped-and-owned-object&gt;</span></code></p>
+</dd>
+</dl>
+<p>This is the superclass of all proxy objects. Users must subclass
+this class in order to define a new kind of proxy.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-disk-object">
+<code class="sig-name descname">dood-disk-object</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dood:dood:dood-disk-object" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-disk-object (dood object) =&gt; (disk-object)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+<li><p><strong>object</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disk-object</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Users write methods on this generic when they want an object to
+have a proxy. It returns a disk-object which is dumped in lieu of
+the memory-object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-disk-object([dood],[object])">
+<code class="sig-name descname">dood-disk-object(&lt;dood&gt;, &lt;object&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[object])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-disk-object([dood],[dood-mapped-and-owned-object])">
+<code class="sig-name descname">dood-disk-object(&lt;dood&gt;, &lt;dood-mapped-and-owned-object&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[dood-mapped-and-owned-object])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-disk-object([dood],[generic-function])">
+<code class="sig-name descname">dood-disk-object(&lt;dood&gt;, &lt;generic-function&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[generic-function])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-disk-object([dood],[function])">
+<code class="sig-name descname">dood-disk-object(&lt;dood&gt;, &lt;function&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[function])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-disk-object([dood],[class])">
+<code class="sig-name descname">dood-disk-object(&lt;dood&gt;, &lt;class&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[class])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-disk-object([dood],[integer])">
+<code class="sig-name descname">dood-disk-object(&lt;dood&gt;, &lt;integer&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[integer])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dood:dood:dood-restore-proxy">
+<code class="sig-name descname">dood-restore-proxy</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dood:dood:dood-restore-proxy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>dood-restore-proxy (dood proxy) =&gt; (memory-object)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dood</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood&gt;</span></code></a>.</p></li>
+<li><p><strong>proxy</strong> – An instance of <a class="reference internal" href="#dood:dood:[dood-proxy]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-proxy&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>memory-object</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This function is called immediately after a proxy is reconstructed
+with instantiation and slot assignment. Its job is to map from a
+disk-object back to its memory-object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-restore-proxy([dood],[dood-program-module-proxy])">
+<code class="sig-name descname">dood-restore-proxy(&lt;dood&gt;, &lt;dood-program-module-proxy&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-program-module-proxy])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-restore-proxy([dood],[dood-program-binding-proxy])">
+<code class="sig-name descname">dood-restore-proxy(&lt;dood&gt;, &lt;dood-program-binding-proxy&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-program-binding-proxy])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dood:dood:dood-restore-proxy([dood],[dood-class-program-binding-proxy])">
+<code class="sig-name descname">dood-restore-proxy(&lt;dood&gt;, &lt;dood-class-program-binding-proxy&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-class-program-binding-proxy])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="dood:dood:[dood-proxy-error]">
+<code class="sig-name descname">&lt;dood-proxy-error&gt;</code> <em class="property">Open Class</em><a class="headerlink" href="#dood:dood:[dood-proxy-error]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></p>
+</dd>
+</dl>
+<p>Signaled when proxy is restored from closed database.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="proxy-examples">
+<h3>Proxy examples<a class="headerlink" href="#proxy-examples" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="dump-by-reference">
+<h4>Dump by Reference<a class="headerlink" href="#dump-by-reference" title="Permalink to this headline">¶</a></h4>
+<p>The first example shows how proxies can be used to dump objects by
+reference back to objects in a user’s program. This is necessary when
+the data can not be dumped by DOOD (e.g., functions).</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="no">$boot-objects</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;table&gt;</span><span class="p">);</span>
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;boot-object&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">boot-id</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">id:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">boot-function</span> <span class="p">::</span> <span class="nc">&lt;function&gt;</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">function:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">initialize</span> <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;boot-object&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">id</span><span class="p">,</span> <span class="k">#all-keys</span><span class="p">)</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+  <span class="no">$boot-objects</span><span class="p">[</span><span class="n">id</span><span class="p">]</span> <span class="o">:=</span> <span class="n">object</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;boot-proxy&gt;</span> <span class="p">(</span><span class="nc">&lt;dood-proxy&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">boot-id</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">id:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-disk-object</span>
+    <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;boot-object&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">proxy</span> <span class="p">::</span> <span class="nc">&lt;boot-proxy&gt;</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;boot-proxy&gt;</span><span class="p">,</span> <span class="k">id:</span> <span class="n">boot-id</span><span class="p">(</span><span class="n">object</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-restore-proxy</span>
+    <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">proxy</span> <span class="p">::</span> <span class="nc">&lt;boot-proxy&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;boot-object&gt;</span><span class="p">)</span>
+  <span class="no">$boot-objects</span><span class="p">[</span><span class="n">boot-id</span><span class="p">(</span><span class="n">proxy</span><span class="p">)]</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compression">
+<h4>Compression<a class="headerlink" href="#compression" title="Permalink to this headline">¶</a></h4>
+<p>The second example shows how proxies can be used to compress an object’s
+disk representation.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;person&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">person-gender</span> <span class="p">::</span> <span class="nb">one-of</span><span class="p">(</span><span class="ss">#&quot;male&quot;</span><span class="p">,</span> <span class="ss">#&quot;female&quot;</span><span class="p">),</span>
+    <span class="k">required-init-keyword:</span> <span class="k">gender:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">person-height</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">height:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="nc">&lt;person-code&gt;</span> <span class="o">=</span> <span class="nc">&lt;integer&gt;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">encode-person</span> <span class="p">(</span><span class="n">person</span> <span class="p">::</span> <span class="nc">&lt;person&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">code</span> <span class="p">::</span> <span class="nc">&lt;person-code&gt;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">person-gender</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="o">==</span> <span class="ss">#&quot;male&quot;</span><span class="p">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">end</span>
+      <span class="o">+</span> <span class="p">(</span><span class="n">person-height</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">decode-person</span> <span class="p">(</span><span class="n">code</span> <span class="p">::</span> <span class="nc">&lt;person-code&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">person</span> <span class="p">::</span> <span class="nc">&lt;person&gt;</span><span class="p">)</span>
+  <span class="n">person-gender</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="o">:=</span> <span class="k">if</span> <span class="p">(</span><span class="nb">even?</span><span class="p">(</span><span class="n">code</span><span class="p">))</span> <span class="ss">#&quot;male&quot;</span> <span class="k">else</span> <span class="ss">#&quot;female&quot;</span><span class="p">;</span>
+  <span class="n">person-height</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="o">:=</span> <span class="nb">truncate/</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;person-proxy&gt;</span> <span class="p">(</span><span class="nc">&lt;dood-proxy&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">person-code</span> <span class="p">::</span> <span class="nc">&lt;person-code&gt;</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">code:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-disk-object</span>
+    <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;person&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">proxy</span> <span class="p">::</span> <span class="nc">&lt;person-proxy&gt;</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;person-proxy&gt;</span><span class="p">,</span> <span class="k">code:</span> <span class="n">encode-person</span><span class="p">(</span><span class="n">object</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-restore-proxy</span>
+    <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">proxy</span> <span class="p">::</span> <span class="nc">&lt;person-proxy&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;person&gt;</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;person&gt;</span><span class="p">,</span> <span class="n">decode-person</span><span class="p">(</span><span class="n">person-code</span><span class="p">(</span><span class="n">object</span><span class="p">)))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-databases">
+<h4>Multiple Databases<a class="headerlink" href="#multiple-databases" title="Permalink to this headline">¶</a></h4>
+<p>The third example demonstrates how to use proxies for interdatabase
+references. Suppose that each database is registered in a symbol-table
+of databases and that each object stored in these databases knows both
+its name and to which database it belongs. Furthermore, suppose that
+each database has a lazy symbol-table stored as its distinguished
+root.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;dooded-object&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">object-dood-name</span><span class="p">,</span>    <span class="k">required-init-keyword:</span> <span class="k">dood-name:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">object-binding-name</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">binding-name:</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;dood-cross-binding-proxy&gt;</span> <span class="p">(</span><span class="nc">&lt;dood-proxy&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">proxy-dood-name</span><span class="p">,</span>    <span class="k">required-init-keyword:</span> <span class="k">dood-name:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">proxy-binding-name</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">binding-name:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-external-object</span> <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">name</span> <span class="p">::</span> <span class="nc">&lt;symbol&gt;</span><span class="p">)</span>
+  <span class="k">let</span> <span class="n">symbol-table</span> <span class="o">=</span> <span class="n">dood-root</span><span class="p">(</span><span class="n">dood</span><span class="p">);</span>
+  <span class="nb">element</span><span class="p">(</span><span class="n">symbol-table</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="k">default:</span> <span class="l">#f</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="no">$doods</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;table&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">lookup-dood</span> <span class="p">(</span><span class="n">name</span> <span class="p">::</span> <span class="nc">&lt;symbol&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">)</span>
+  <span class="nb">element</span><span class="p">(</span><span class="no">$doods</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="k">default:</span> <span class="l">#f</span><span class="p">)</span>
+    <span class="o">|</span> <span class="p">(</span><span class="nb">element</span><span class="p">(</span><span class="no">$doods</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+       <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="k">locator:</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-restore-proxy</span>
+    <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">proxy</span> <span class="p">::</span> <span class="nc">&lt;dood-cross-binding-proxy&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">object</span><span class="p">)</span>
+  <span class="k">let</span> <span class="n">external-dood</span> <span class="o">=</span> <span class="n">lookup-dood</span><span class="p">(</span><span class="n">proxy-dood-name</span><span class="p">(</span><span class="n">proxy</span><span class="p">);</span>
+  <span class="n">dood-external-object</span><span class="p">(</span><span class="n">external-dood</span><span class="p">,</span> <span class="n">proxy-binding-name</span><span class="p">(</span><span class="n">proxy</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">dood-disk-object</span>
+    <span class="p">(</span><span class="n">dood</span> <span class="p">::</span> <span class="nc">&lt;dood&gt;</span><span class="p">,</span> <span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;dooded-object&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">disk-object</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">dood-name</span><span class="p">(</span><span class="n">dood</span><span class="p">)</span> <span class="o">==</span> <span class="n">object-dood-name</span><span class="p">(</span><span class="n">object</span><span class="p">))</span> <span class="c1">// local?</span>
+    <span class="n">object</span>
+  <span class="k">else</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;dood-cross-binding-proxy&gt;</span><span class="p">,</span>
+      <span class="k">dood-name:</span>    <span class="n">dood-name</span><span class="p">(</span><span class="n">dood</span><span class="p">),</span>
+      <span class="k">binding-name:</span> <span class="n">object-binding-name</span><span class="p">(</span><span class="n">object</span><span class="p">))</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../common-dylan/transcendentals.html" class="btn btn-neutral float-left" title="The transcendentals Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../dylan/index.html" class="btn btn-neutral float-right" title="The dylan Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alternative Curry Syntax &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Numeric Literal Syntax" href="numeric-literals.html" />
+    <link rel="prev" title="Parser Expansions" href="parser-expansions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define-function.html">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numbers.html">Integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Alternative Curry Syntax</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#abstract">Abstract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#copyright">Copyright</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specification">Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rationale">Rationale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backwards-compatibility">Backwards Compatibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference-implementation">Reference Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Alternative Curry Syntax</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/alternative-curry-syntax.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="alternative-curry-syntax">
+<h1>Alternative Curry Syntax<a class="headerlink" href="#alternative-curry-syntax" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental extension. It is not
+well specified and may change or disappear in the future.
+This documentation is largely in the format of a DEP in
+case we want to propose it in the future.</p>
+</div>
+<div class="section" id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>An alternative syntax for currying functions has been provided
+within Open Dylan.</p>
+</div>
+<div class="section" id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this headline">¶</a></h2>
+<p>This document is public domain.</p>
+</div>
+<div class="section" id="specification">
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this headline">¶</a></h2>
+<p>Functions called with an “omitted” or placeholder parameter return
+a curried function as if <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#curry"><code class="xref drm docutils literal notranslate"><span class="pre">curry</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#rcurry"><code class="xref drm docutils literal notranslate"><span class="pre">rcurry</span></code></a> had been
+used.</p>
+<p>There may be multiple placeholder parameters and they can be in
+any parameter position. A curried function that has 2 placeholder
+parameters will need 2 parameters when called.</p>
+<p>This can be used with operators as well.</p>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>There are situations in which using <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#curry"><code class="xref drm docutils literal notranslate"><span class="pre">curry</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#rcurry"><code class="xref drm docutils literal notranslate"><span class="pre">rcurry</span></code></a>
+can result in confusing code that is difficult to understand at
+a quick glance. The alternative syntax provides an easy to understand
+way to set up a curried function.</p>
+</div>
+<div class="section" id="rationale">
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
+<p>The alternative curry syntax was implemented in 1999 by Keith Playford
+and has been in the compiler since then. It does not break any existing
+code.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>In this example, the two curried functions will have the same result:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">to-string-1</span> <span class="o">=</span> <span class="nb">curry</span><span class="p">(</span><span class="nb">as</span><span class="p">,</span> <span class="nc">&lt;byte-string&gt;</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">to-string-2</span> <span class="o">=</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;byte-string&gt;</span><span class="p">,</span> <span class="n">_</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As indicated earlier, multiple arguments being omitted is supported:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">function</span> <span class="n">adder</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">adder</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">_</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// r == 6</span>
+</pre></div>
+</div>
+<p>Placeholder arguments can be used with operators as well:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">incr</span> <span class="o">=</span> <span class="n">_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">double</span> <span class="o">=</span> <span class="n">_</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>These can be used inline with functions that take functions as arguments:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%=&quot;</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">#(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Taking some examples from the Open Dylan compiler, some simplifications are
+possible:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">map</span><span class="p">(</span><span class="nb">method</span> <span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="n">print-condition</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="l">#t</span><span class="p">)</span> <span class="k">end</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">subnotes</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="n">outer-values</span>
+  <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">method</span> <span class="p">(</span><span class="nb">variable</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+          <span class="n">jam-variable</span><span class="p">(</span><span class="n">jam</span><span class="p">,</span> <span class="nb">variable</span><span class="p">,</span> <span class="k">default:</span> <span class="l">#f</span><span class="p">)</span>
+        <span class="k">end</span><span class="p">,</span>
+        <span class="n">variables</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>could be rewritten as:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">map</span><span class="p">(</span><span class="n">print-condition</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="l">#t</span><span class="p">),</span> <span class="n">o</span><span class="p">.</span><span class="n">subnotes</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="n">outer-values</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">jam-variable</span><span class="p">(</span><span class="n">jam</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="k">default:</span> <span class="l">#f</span><span class="p">),</span> <span class="n">variables</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="backwards-compatibility">
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>There are no backwards compatibility considerations for this functionality
+as the <code class="docutils literal notranslate"><span class="pre">_</span></code> is not a valid variable name in the language as specified by
+the DRM.</p>
+</div>
+<div class="section" id="reference-implementation">
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this headline">¶</a></h2>
+<p>This functionality has been present within Open Dylan since 1999. The code
+is largely focused in these methods in <code class="docutils literal notranslate"><span class="pre">dfmc/conversion/convert.dylan</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">curried-arguments?</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">convert-curried-function-call</span></code></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parser-expansions.html" class="btn btn-neutral float-left" title="Parser Expansions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="numeric-literals.html" class="btn btn-neutral float-right" title="Numeric Literal Syntax" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

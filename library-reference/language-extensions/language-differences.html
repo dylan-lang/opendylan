@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Differences &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Function Definition" href="define-function.html" />
+    <link rel="prev" title="Dylan Language Extensions" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Language Differences</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#table-protocol">Table Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="define-function.html">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numbers.html">Integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Language Differences</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/language-differences.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="language-differences">
+<h1>Language Differences<a class="headerlink" href="#language-differences" title="Permalink to this headline">¶</a></h1>
+<p>Note that in addition to the intentional differences documented below, there
+are several <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues?q=is%3Aissue+is%3Aopen+label%3ADRM">known bugs</a>
+related to compliance with the language standard as documented in the DRM.</p>
+<div class="section" id="table-protocol">
+<h2>Table Protocol<a class="headerlink" href="#table-protocol" title="Permalink to this headline">¶</a></h2>
+<p>For efficiency, Open Dylan adopts a slightly different table protocol
+to that described by the DRM. Hashing functions take an additional
+hash-state argument and merge it into the hash-state result. The
+function <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#merge-hash-codes"><code class="xref drm docutils literal notranslate"><span class="pre">merge-hash-codes</span></code></a> is replaced by <a class="reference internal" href="#dylan:dylan:merge-hash-ids"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">merge-hash-ids</span></code></a> because
+hash-states are merged as part of the hashing process. The constant
+<code class="docutils literal notranslate"><span class="pre">$permanent-hash-state</span></code> is no longer required; the same effect can be
+achieved by returning the argument <em>hash-state</em> unchanged as the result
+<em>hash-state</em>. Finally, <a class="reference internal" href="#dylan:dylan:object-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">object-hash</span></code></a> has been altered to use the new
+protocol.</p>
+<p>This section describes the items that have been changed. We also provide
+a Table-extensions module, which you can read about in
+<a class="reference internal" href="../collections/table-extensions.html"><span class="doc">The table-extensions Module</span></a>.</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:dylan:table-protocol">
+<code class="sig-name descname">table-protocol</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:dylan:table-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns functions used to implement the iteration protocol for tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>table-protocol <em>table</em> =&gt; <em>test-function</em> <em>hash-function</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>table</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test-function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>hash-function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the functions used to iterate over tables. These functions are
+in turn used to implement the other collection operations on <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p>
+<p>The <em>test-function</em> argument is for the table test function, which is
+used to compare table keys. It returns true if, according to the table’s
+equivalence predicate, the keys are members of the same equivalence
+class. Its signature must be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">-</span><span class="n">function</span> <span class="o">*</span><span class="n">key1</span><span class="o">*</span> <span class="o">*</span><span class="n">key2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The <em>hash-function</em> argument is for the table hash function, which
+computes the hash code of a key. Its signature must be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">hash</span><span class="o">-</span><span class="n">function</span> <span class="o">*</span><span class="n">key</span><span class="o">*</span> <span class="o">*</span><span class="n">initial</span><span class="o">-</span><span class="n">state</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="nb">id</span><span class="o">*</span> <span class="o">*</span><span class="n">result</span><span class="o">-</span><span class="n">state</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>In this signature, <em>initial-state</em> is an instance of <a class="reference internal" href="../collections/table-extensions.html#collections:table-extensions:[hash-state]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code></a>.
+The hash function computes the hash code of <em>key</em>, using the hash
+function that is associated with the table’s equivalence predicate. The
+hash code is returned as two values: an integer <em>id</em> and a hash-state
+<em>result-state</em>. This <em>result-state</em> is obtained by merging the
+<em>initial-state</em> with the hash-state that results from hashing <em>key</em>.
+The <em>result-state</em> may or may not be == to <em>initial-state</em>. The
+<em>initial-state</em> could be modified by this operation.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:merge-hash-ids">
+<code class="sig-name descname">merge-hash-ids</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:merge-hash-ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a hash ID created by merging two hash IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>merge-hash-ids <em>id1</em> <em>id2</em> #key <em>ordered</em> =&gt; <em>merged-id</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>id1</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>id2</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>ordered</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>merged-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Computes a new hash ID by merging the argument hash IDs in some
+implementation-dependent way. This can be used, for example, to
+generate a hash ID for an object by combining hash IDs of some of
+its parts.</p>
+<p>The <em>id1</em>, <em>id2</em> arguments and the return value <em>merged-id</em> are all
+integers.</p>
+<p>The <em>ordered</em> argument is a boolean, and determines whether the
+algorithm used to the merge the IDs is permitted to be
+order-dependent. If false (the default), the merged result must be
+independent of the order in which the arguments are provided. If
+true, the order of the arguments matters because the algorithm used
+need not be either commutative or associative. It is best to
+provide a true value for <em>ordered</em> when possible, as this may
+result in a better distribution of hash IDs. However, <em>ordered</em>
+must only be true if that will not cause the hash function to
+violate the second constraint on hash functions, described on page
+<a class="reference external" href="https://opendylan.org/books/drm/Tables#XREF-1049"><code class="xref drm docutils literal notranslate"><span class="pre">123</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">DRM</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:dylan:object-hash">
+<code class="sig-name descname">object-hash</code> <em class="property">Function</em><a class="headerlink" href="#dylan:dylan:object-hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>The hash function for the equivalence predicate <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>object-hash <em>object</em> <em>initial-state</em> =&gt; <em>hash-id</em> <em>result-state</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>initial-state</strong> – An instance of <a class="reference internal" href="../collections/table-extensions.html#collections:table-extensions:[hash-state]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>result-state</strong> – An instance of <a class="reference internal" href="../collections/table-extensions.html#collections:table-extensions:[hash-state]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns a hash code for <em>object</em> that corresponds to the
+equivalence predicate <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p>
+<p>This function is a useful tool for writing hash functions in which
+the object identity of some component of a key is to be used in
+computing the hash code.</p>
+<p>It returns a hash ID (an integer) and the result of merging the
+initial state with the associated hash state for the object,
+computed in some implementation-dependent manner.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Dylan Language Extensions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="define-function.html" class="btn btn-neutral float-right" title="Function Definition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

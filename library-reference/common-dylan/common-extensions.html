@@ -1,0 +1,2153 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The common-extensions Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The machine-words Module" href="machine-words.html" />
+    <link rel="prev" title="The byte-vector Module" href="byte-vector.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The common-dylan Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The common-extensions Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The common-dylan Library</a></li>
+      <li class="breadcrumb-item active">The common-extensions Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/common-dylan/common-extensions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-common-extensions-module">
+<h1>The common-extensions Module<a class="headerlink" href="#the-common-extensions-module" title="Permalink to this headline">¶</a></h1>
+<p>The <em>common-extensions</em> module contains a variety of useful basic
+extensions to the Dylan language and is exported from the
+<em>common-dylan</em> library.  As a convenience, the <em>common-dylan</em> module
+re-exports everything from the <em>common-extensions</em> and <em>dylan</em> modules.</p>
+<p>The extensions are:</p>
+<ul>
+<li><p>Collection model: <a class="reference internal" href="#common-dylan:common-extensions:[stretchy-sequence]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stretchy-sequence&gt;</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:[string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code></a>,
+<a class="reference internal" href="#common-dylan:common-extensions:difference"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">difference</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:fill-table!"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">fill-table!</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:find-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">find-element</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:position"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">position</span></code></a>,
+<a class="reference internal" href="#common-dylan:common-extensions:remove-all-keys!"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">remove-all-keys!</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:definetable"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">table</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a>, and <a class="reference internal" href="#common-dylan:common-extensions:join"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">join</span></code></a>.</p></li>
+<li><p>Condition system: <a class="reference internal" href="#common-dylan:common-extensions:[format-string-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;format-string-condition&gt;</span></code></a>,
+<a class="reference internal" href="#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a>, and <a class="reference internal" href="#common-dylan:common-extensions:condition-to-string"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">condition-to-string</span></code></a>.</p></li>
+<li><p>Control flow: <a class="reference internal" href="#common-dylan:common-extensions:iterate"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">iterate</span></code></a> and <a class="reference internal" href="#common-dylan:common-extensions:when"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">when</span></code></a>.</p></li>
+<li><p>Development conveniences:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:debug-message"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">debug-message</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:ignore"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignore</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:ignorable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignorable</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:unsupplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied?</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:unsupplied"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied</span></code></a>,
+<a class="reference internal" href="#common-dylan:common-extensions:supplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">supplied?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a> <a class="reference internal" href="#common-dylan:common-extensions:unfound?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound?</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:found?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">found?</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:unfound"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:one-of"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">one-of</span></code></a></p></li>
+</ul>
+</li>
+<li><p>Handling application startup and shutdown:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-arguments"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-arguments</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-filename"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-filename</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:exit-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">exit-application</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:register-application-exit-function"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">register-application-exit-function</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:tokenize-command-line"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">tokenize-command-line</span></code></a></p></li>
+</ul>
+<p>See also: <a class="reference internal" href="../command-line-parser/index.html"><span class="doc">The command-line-parser Library</span></a></p>
+</li>
+<li><p>Performance analysis: <a class="reference internal" href="simple-profiling.html#common-dylan:simple-profiling:timing"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">timing</span></code></a>, <a class="reference internal" href="simple-profiling.html#common-dylan:simple-profiling:profiling"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">profiling</span></code></a>.</p></li>
+<li><p>Type conversion functions: <a class="reference internal" href="#common-dylan:common-extensions:integer-to-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">integer-to-string</span></code></a>,
+<a class="reference internal" href="#common-dylan:common-extensions:string-to-integer"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">string-to-integer</span></code></a>, and <a class="reference internal" href="#common-dylan:common-extensions:float-to-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">float-to-string</span></code></a>.</p></li>
+<li><p>Byte storage access functions: <a class="reference internal" href="byte-vector.html#common-dylan:byte-vector:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a>,
+<a class="reference internal" href="byte-vector.html#common-dylan:byte-vector:byte-storage-offset-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-offset-address</span></code></a>, which are re-exported from
+the <a class="reference internal" href="byte-vector.html"><span class="doc">byte-vector module</span></a>.</p></li>
+</ul>
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:common-extensions:assert">
+<code class="sig-name descname">assert</code> <em class="property">Statement Macro</em><a class="headerlink" href="#common-dylan:common-extensions:assert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals an error if the expression passed to it evaluates to false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">assert <cite>expression</cite> <cite>format-string</cite> [<cite>format-arg</cite>] =&gt; <cite>false</cite></pre>
+<pre class="literal-block">assert <cite>expression</cite> =&gt; <cite>false</cite></pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>expression</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>format-string</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>format-arg</strong> – A Dylan expression <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>false</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Signals an error if <em>expression</em> evaluates to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+<p>An assertion or “assert” is a simple tool for testing that
+conditions hold in program code.</p>
+<p>The <em>format-string</em> is a format string as defined on page 112 of
+the DRM. If <em>format-string</em> is supplied, the error is formatted
+accordingly, along with any instances of <em>format-arg</em>.</p>
+<p>If <em>expression</em> is not <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:assert"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">assert</span></code></a> does not evaluate
+<em>format-string</em> or any instances of <em>format-arg</em>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:debug-assert"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">debug-assert</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="common-dylan:common-extensions:[byte-character]">
+<code class="sig-name descname">&lt;byte-character&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#common-dylan:common-extensions:[byte-character]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of 8-bit characters that instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a> can
+contain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The class of 8-bit characters that instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>
+can contain.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:concatenate!">
+<code class="sig-name descname">concatenate!</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:concatenate!" title="Permalink to this definition">¶</a></dt>
+<dd><p>A destructive version of the Dylan language’s <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a>;
+that is, one that might modify its first argument.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>concatenate! <em>sequence</em> #rest <em>more-sequences</em> =&gt; <em>result-sequence</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>more-sequences</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result-sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A destructive version of the Dylan language’s <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a>;
+that is, one that might modify its first argument.</p>
+<p>It returns the concatenation of one or more sequences, in a
+sequence that may or may not be freshly allocated. If
+<em>result-sequence</em> is freshly allocated, then, as for
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a>, it is of the type returned by
+<a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#type-for-copy"><code class="xref drm docutils literal notranslate"><span class="pre">type-for-copy</span></code></a> of <em>sequence</em>.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="k">define</span> <span class="nb">variable</span> <span class="vg">*x*</span> <span class="o">=</span> <span class="s">&quot;great-&quot;</span><span class="p">;</span>
+<span class="s">&quot;great-&quot;</span>
+<span class="o">&gt;</span> <span class="k">define</span> <span class="nb">variable</span> <span class="vg">*y*</span> <span class="o">=</span> <span class="s">&quot;abs&quot;</span><span class="p">;</span>
+<span class="s">&quot;abs&quot;</span>
+<span class="o">&gt;</span> <span class="n">concatenate!</span> <span class="p">(</span><span class="vg">*x*</span><span class="p">,</span> <span class="vg">*y*</span><span class="p">);</span>
+<span class="s">&quot;great-abs&quot;</span>
+<span class="o">&gt;</span> <span class="vg">*x*</span><span class="p">;</span>
+<span class="s">&quot;great-abs&quot;</span>
+<span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:condition-to-string">
+<code class="sig-name descname">condition-to-string</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:condition-to-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of a condition object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>condition-to-string <em>condition</em> =&gt; <em>string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>condition</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns a string representation of a general instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>. There is a method on
+<a class="reference internal" href="#common-dylan:common-extensions:[format-string-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;format-string-condition&gt;</span></code></a> and method on
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#type-error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type-error&gt;</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:common-extensions:debug-assert">
+<code class="sig-name descname">debug-assert</code> <em class="property">Statement Macro</em><a class="headerlink" href="#common-dylan:common-extensions:debug-assert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals an error if the expression passed to it evaluates to false —
+but only when the code is compiled in interactive development mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">debug-assert <cite>expression</cite> <cite>format-string</cite> [<cite>format-arg</cite>] =&gt; <cite>false</cite></pre>
+<pre class="literal-block">debug-assert <cite>expression</cite> =&gt; <cite>false</cite></pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>expression</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>format-string</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>format-arg</strong> – A Dylan expression <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>false</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Signals an error if <em>expression</em> evaluates to false — but only when
+the code is compiled in debugging mode.</p>
+<p>An assertion or “assert” is a simple and popular development tool
+for testing conditions in program code.</p>
+<p>This macro is identical to <a class="reference internal" href="#common-dylan:common-extensions:assert"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">assert</span></code></a>, except that the assert is
+defined to take place only while debugging.</p>
+<p>The Open Dylan compiler removes debug-assertions when it compiles
+code in “production” mode as opposed to “debugging” mode.</p>
+<p>The <em>format-string</em> is a format string as defined on page 112 of
+the DRM.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:assert"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">assert</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:debug-message">
+<code class="sig-name descname">debug-message</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:debug-message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a string and outputs it to the debugger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>debug-message <em>format-string</em> #rest <em>format-args</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>format-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>format-args</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Formats a string and outputs it to the debugger.</p>
+<p>The <em>format-string</em> is a format string as defined on page 112 of
+the DRM.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:common-extensions:default-handler([warning])">
+<code class="sig-name descname">default-handler(&lt;warning&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:common-extensions:default-handler([warning])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the message of a warning instance to the Open Dylan debugger
+window’s messages pane.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>default-handler <em>warning</em> =&gt; <em>false</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>warning</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#warning"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;warning&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>false</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Prints the message of a warning instance to the Open Dylan debugger
+window’s messages pane. It uses <a class="reference internal" href="#common-dylan:common-extensions:debug-message"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">debug-message</span></code></a>, to do so.</p>
+<p>This method is a required, predefined method in the Dylan language,
+described on page 361 of the DRM as printing the warning’s message
+in an implementation-defined way. We document this method here
+because our implementation of it uses the function
+<a class="reference internal" href="#common-dylan:common-extensions:debug-message"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">debug-message</span></code></a>, which is defined in the <em>common-dylan</em>
+library. Thus to use this <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#default-handler"><code class="xref drm docutils literal notranslate"><span class="pre">default-handler</span></code></a> method on
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#warning"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;warning&gt;</span></code></a>, your library needs to use the <em>common-dylan</em> library
+or a library that uses it, rather than simply using the Dylan
+library.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>In the following code, the signalled messages appear in the Open
+Dylan debugger window.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;my-warning&gt;</span> <span class="p">(</span><span class="nc">&lt;warning&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">say-hello</span><span class="p">()</span>
+  <span class="n">format-out</span><span class="p">(</span><span class="s">&quot;hello there!</span><span class="se">\\</span><span class="s">n&quot;</span><span class="p">);</span>
+  <span class="k">signal</span><span class="p">(</span><span class="s">&quot;help!&quot;</span><span class="p">);</span>
+  <span class="k">signal</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;my-warning&gt;</span><span class="p">));</span>
+  <span class="n">format-out</span><span class="p">(</span><span class="s">&quot;goodbye</span><span class="se">\\</span><span class="s">n&quot;</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">say-hello</span><span class="p">;</span>
+
+<span class="n">say-hello</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The following messages appear in the debugger messages pane:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Application Dylan message: Warning: help!
+Application Dylan message: Warning: {&lt;my-warning&gt;}
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">{&lt;my-warning&gt;}</span></code> means an instance of <code class="docutils literal notranslate"><span class="pre">&lt;my-warning&gt;</span></code>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:debug-message"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">debug-message</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#default-handler"><code class="xref drm docutils literal notranslate"><span class="pre">default-handler</span></code></a>, page 361 of the DRM.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:default-last-handler">
+<code class="sig-name descname">default-last-handler</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:default-last-handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats and outputs a Dylan condition using <a class="reference internal" href="#common-dylan:common-extensions:condition-to-string"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">condition-to-string</span></code></a>
+and passes control on to the next handler.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>default-last-handler <em>serious-condition</em> <em>next-handler</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>serious-condition</strong> – A object of class <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#serious-condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;serious-condition&gt;</span></code></a>.</p></li>
+<li><p><strong>next-handler</strong> – A function.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>A handler utility function defined on objects of class
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#serious-condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;serious-condition&gt;</span></code></a> that can be by bound dynamically around a
+computation via <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let_handler"><code class="xref drm docutils literal notranslate"><span class="pre">let</span> <span class="pre">handler</span></code></a> or installed globally
+via <a class="reference internal" href="#common-dylan:common-extensions:definelast-handler"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">last-handler</span></code></a>.</p>
+<p>This function formats and outputs the Dylan condition
+<em>serious-condition</em> using <a class="reference internal" href="#common-dylan:common-extensions:condition-to-string"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">condition-to-string</span></code></a> from this library,
+and passes control on to the next handler.</p>
+<p>This function is automatically installed as the last handler if
+your library uses the <em>common-dylan</em> library.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>The following form defines a dynamic handler around some body:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="nb">handler</span> <span class="nc">&lt;serious-condition&gt;</span> <span class="o">=</span> <span class="n">default-last-handler</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>while the following form installs a globally visible last-handler:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">last-handler</span> <span class="nc">&lt;serious-condition&gt;</span>
+  <span class="o">=</span> <span class="n">default-last-handler</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:definelast-handler"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">last-handler</span></code></a></p></li>
+<li><p><em>win32-last-handler</em> in the <em>C FFI and Win32</em> library reference, under
+library <em>win32-user</em> and module <em>win32-default-handler</em>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:common-extensions:definelast-handler">
+<code class="sig-name descname">define last-handler</code> <em class="property">Defining Macro</em><a class="headerlink" href="#common-dylan:common-extensions:definelast-handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a “last-handler” to be used after any dynamic handlers and
+before calling <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#default-handler"><code class="xref drm docutils literal notranslate"><span class="pre">default-handler</span></code></a>.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">define last-handler (<cite>condition</cite>, #key <cite>test</cite>, <cite>init-args</cite>) = <cite>handler</cite> ;
+
+define last-handler <cite>condition</cite> = <cite>handler</cite>;
+
+define last-handler;</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>condition</strong> – A Dylan expression <em>bnf</em>. The class of
+condition for which the handler should be invoked.</p></li>
+<li><p><strong>test</strong> – A Dylan expression <em>bnf</em>. A function of one argument
+called on the condition to test applicability of the handler.</p></li>
+<li><p><strong>init-args</strong> – A Dylan expression <em>bnf</em>. A sequence of
+initialization arguments used to make an instance of the handler’s
+condition class.</p></li>
+<li><p><strong>handler</strong> – A Dylan expression <em>bnf</em>. A function of two
+arguments,</p></li>
+<li><p><strong>condition</strong> – and <em>next-handler</em>, that is called on a
+condition which matches the handler’s condition class and test
+function.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>A last-handler is a global form of the dynamic handler introduced
+via <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let_handler"><code class="xref drm docutils literal notranslate"><span class="pre">let</span> <span class="pre">handler</span></code></a>, and is defined using an identical
+syntax. The last handler is treated as a globally visible dynamic
+handler. During signalling if a last-handler has been installed
+then it is the last handler tested for applicability before
+<a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#default-handler"><code class="xref drm docutils literal notranslate"><span class="pre">default-handler</span></code></a> is invoked. If a last-handler has been
+installed then it is also the last handler iterated over in a call
+to <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#do-handlers"><code class="xref drm docutils literal notranslate"><span class="pre">do-handlers</span></code></a>.</p>
+<p>The first two defining forms are equivalent to the two alternate
+forms of let handler. If more than one of these first defining
+forms is executed then the last one executed determines the
+installed handler. The current last-handler can be uninstalled by
+using the degenerate third case of the defining form, that has no
+condition description or handler function.</p>
+<p>The intention is that libraries will install last handlers to
+provide basic runtime error handling, taking recovery actions such
+as quitting the application, trying to abort the current
+application operation, or entering a connected debugger.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>The following form defines a last-handler function called
+<em>default-last-handler</em> that is invoked on conditions of class
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#serious-condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;serious-condition&gt;</span></code></a>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">last-handler</span> <span class="nc">&lt;serious-condition&gt;</span>
+  <span class="o">=</span> <span class="n">default-last-handler</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>win32-last-handler</em> in the <em>C FFI and Win32</em> library reference,
+under library <em>win32-user</em> and module <em>win32-default-handler</em>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:common-extensions:definetable">
+<code class="sig-name descname">define table</code> <em class="property">Defining Macro</em><a class="headerlink" href="#common-dylan:common-extensions:definetable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a constant binding in the current module and initializes it
+to a new table object.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">define table <cite>name</cite> [ :: <cite>type</cite> ] = { [ <cite>key</cite> =&gt; <cite>element</cite> ]* }</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – A Dylan name <em>bnf</em>.</p></li>
+<li><p><strong>type</strong> – A Dylan operand <em>bnf</em>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p></li>
+<li><p><strong>key</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>element</strong> – A Dylan expression <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Defines a constant binding <em>name</em> in the current module, and
+initializes it to a new table object, filled in with the keys and
+elements specified.</p>
+<p>If the argument <em>type</em> is supplied, the new table created is an
+instance of that type. Therefore <em>type</em> must be <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a> or a
+subclass thereof. If <em>type</em> is not supplied, the new table created
+is an instance of a concrete subclass of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">table</span> <span class="no">$colors</span> <span class="p">::</span> <span class="nc">&lt;object-table&gt;</span>
+  <span class="o">=</span> <span class="p">{</span> <span class="ss">#&quot;red&quot;</span> <span class="p">=&gt;</span> <span class="no">$red</span><span class="p">,</span>
+      <span class="ss">#&quot;green&quot;</span> <span class="p">=&gt;</span> <span class="no">$green</span><span class="p">,</span>
+      <span class="ss">#&quot;blue&quot;</span> <span class="p">=&gt;</span> <span class="no">$blue</span> <span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:difference">
+<code class="sig-name descname">difference</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sequence containing the elements of one sequence that are
+not members of a second.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>difference <em>sequence-1</em> <em>sequence-2</em> #key <em>test</em> =&gt; <em>result-sequence</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence-1</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>sequence-2</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>test</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result-sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns a sequence containing the elements of <em>sequence-1</em> that are
+not members of <em>sequence-2</em>. You can supply a membership test
+function as <em>test</em>.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">difference</span><span class="p">(#(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">#(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">));</span>
+<span class="p">#(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:false-or">
+<code class="sig-name descname">false-or</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:false-or" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a union type comprised of <code class="docutils literal notranslate"><span class="pre">singleton(#f)</span></code> and one or more types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>false-or <em>type</em> #rest <em>more-types</em> =&gt; <em>result-type</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>type</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#type"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></a>.</p></li>
+<li><p><strong>more-types</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#type"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result-type</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#type"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns a union type comprised of <code class="docutils literal notranslate"><span class="pre">singleton(#f)</span></code>, <em>type</em>, any
+other types passed as <em>more-types</em>.</p>
+<p>This function is useful for specifying slot types and function
+return values.</p>
+<p>The expression</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">false-or</span><span class="p">(</span><span class="vg">*t-1*</span><span class="p">,</span> <span class="vg">*t-2*</span><span class="p">,</span> <span class="p">..)</span>
+</pre></div>
+</div>
+<p>is type-equivalent to</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">type-union</span><span class="p">(</span><span class="nb">singleton</span><span class="p">(</span><span class="l">#f</span><span class="p">),</span> <span class="vg">*t-1*</span><span class="p">,</span> <span class="vg">*t-2*</span><span class="p">,</span> <span class="p">..)</span>
+</pre></div>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:fill-table!">
+<code class="sig-name descname">fill-table!</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:fill-table!" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills a table with the keys and elements supplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>fill-table! <em>table</em> <em>keys-and-elements</em> =&gt; <em>table</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>table</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p></li>
+<li><p><strong>keys-and-elements</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Modifies table so that it contains the keys and elements supplied
+in the sequence <em>keys-and-elements</em>.</p>
+<p>This function interprets <em>keys-and-elements</em> as key-element pairs,
+that is, it treats the first element as a table key, the second as
+the table element corresponding to that key, and so on. The keys
+and elements should be suitable for <em>table</em>.</p>
+<p>Because <em>keys-and-elements</em> is treated as a sequence of paired
+key-element values, it should contain an even number of elements;
+if it contains an odd number of elements, <em>fill-table!</em> ignores the
+last element (which would have been treated as a key).</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:find-element">
+<code class="sig-name descname">find-element</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:find-element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an element from a collection such that the element satisfies
+a predicate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>find-element <em>collection</em> <em>function</em> #key <em>skip</em> <em>failure</em> =&gt; <em>element</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;collection&gt;</span></code></a>.</p></li>
+<li><p><strong>predicate</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>skip</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>failure</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns a collection element that satisfies <em>predicate</em>.</p>
+<p>This function is identical to Dylan’s <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#find-key"><code class="xref drm docutils literal notranslate"><span class="pre">find-key</span></code></a>, but it
+returns the element that satisfies <em>predicate</em> rather than the key
+that corresponds to the element.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:float-to-string">
+<code class="sig-name descname">float-to-string</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:float-to-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a floating-point number to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>float-to-string <em>float</em> =&gt; <em>string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>float</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;float&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Formats a floating-point number to a string. It uses scientific
+notation where necessary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="common-dylan:common-extensions:[format-string-condition]">
+<code class="sig-name descname">&lt;format-string-condition&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#common-dylan:common-extensions:[format-string-condition]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of conditions that take a format string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The class of conditions that take a format string, as defined by
+the DRM.</p>
+<p>It is the superclass of Dylan’s <a class="reference internal" href="#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>The <a class="reference internal" href="../io/format.html"><span class="doc">Format module</span></a> in the <a class="reference internal" href="../io/index.html"><span class="doc">IO library</span></a>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:ignore">
+<code class="sig-name descname">ignore</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>A compiler directive that tells the compiler it must not issue a
+warning if its argument is bound but not referenced.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ignore <em>variable</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>variable</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>When the compiler encounters a variable that is bound but not
+referenced, it normally issues a warning. The <code class="docutils literal notranslate"><span class="pre">ignore</span></code> function
+is a compiler directive that tells the compiler it <em>must not</em> issue
+this warning if <em>variable</em> is bound but not referenced. The
+<code class="docutils literal notranslate"><span class="pre">ignore</span></code> function has no run-time cost.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ignore</span></code> function is useful for ignoring arguments passed to,
+or values returned by, a function, method, or macro. The function
+has the same extent as a <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let"><code class="xref drm docutils literal notranslate"><span class="pre">let</span></code></a>; that is, it applies to the
+smallest enclosing implicit body.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">ignore</span></code> if you never intend to reference <em>variable</em> within
+the extent of the <code class="docutils literal notranslate"><span class="pre">ignore</span></code>. The compiler will issue a warning to
+tell you if your program violates the <code class="docutils literal notranslate"><span class="pre">ignore</span></code>. If you are not
+concerned about the <code class="docutils literal notranslate"><span class="pre">ignore</span></code> being violated, and do not wish to
+be warned if violation occurs, use <a class="reference internal" href="#common-dylan:common-extensions:ignorable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignorable</span></code></a> instead.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>This function ignores some of its arguments:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="n">x</span> <span class="p">::</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">args</span><span class="p">)</span>
+  <span class="n">ignore</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Here, we use <em>ignore</em> to ignore one of the values returned by <em>fn</em>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="o">=</span> <span class="n">fn</span><span class="p">();</span>
+<span class="n">ignore</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:ignorable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignorable</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:ignorable">
+<code class="sig-name descname">ignorable</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:ignorable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A compiler directive that tells the compiler it <em>need not</em> issue a
+warning if its argument is bound but not referenced.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ignorable <em>variable</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>variable</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>When the compiler encounters a variable that is bound but not
+referenced, it normally issues a warning. The <code class="docutils literal notranslate"><span class="pre">ignorable</span></code>
+function is a compiler directive that tells the compiler it <em>need
+not</em> issue this warning if <em>variable</em> is bound but not referenced.
+The <code class="docutils literal notranslate"><span class="pre">ignorable</span></code> function has no run-time cost.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ignorable</span></code> function is useful for ignoring arguments passed
+to, or values returned by, a function, method, or macro. The
+function has the same extent as a <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let"><code class="xref drm docutils literal notranslate"><span class="pre">let</span></code></a>; that is, it applies
+to the smallest enclosing implicit body.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ignorable</span></code> function is similar to <a class="reference internal" href="#common-dylan:common-extensions:ignore"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignore</span></code></a>. However,
+unlike <a class="reference internal" href="#common-dylan:common-extensions:ignore"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignore</span></code></a>, it does not issue a warning if you
+subsequently reference <em>variable</em> within the extent of the
+<code class="docutils literal notranslate"><span class="pre">ignorable</span></code> declaration. You might prefer <code class="docutils literal notranslate"><span class="pre">ignorable</span></code> to
+<a class="reference internal" href="#common-dylan:common-extensions:ignore"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignore</span></code></a> if you are not concerned about such violations and
+do not wish to be warned about them.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>This function ignores some of its arguments:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="n">x</span> <span class="p">::</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">args</span><span class="p">)</span>
+  <span class="n">ignorable</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Here, we use <code class="docutils literal notranslate"><span class="pre">ignorable</span></code> to ignore one of the values returned by
+<em>fn</em>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="o">=</span> <span class="n">fn</span><span class="p">();</span>
+<span class="n">ignorable</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:ignore"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignore</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:integer-to-string">
+<code class="sig-name descname">integer-to-string</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:integer-to-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>integer-to-string <em>integer</em> #key <em>base</em> <em>size</em> <em>fill</em> =&gt; <em>string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>integer</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>base</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (default 10).</p></li>
+<li><p><strong>size</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (default 0).</p></li>
+<li><p><strong>fill</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a> (default 0).</p></li>
+<li><p><strong>lowercase?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a> (default <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>).</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns a string representation of <em>integer</em> in the given <em>base</em>, which
+must be between 2 and 36. The size of the string is right-aligned to
+<em>size</em>, and it is filled with the <em>fill</em> character. If the string is
+already larger than <em>size</em> then it is not truncated. If <em>lowercase?</em> is
+true then lowercase characters are used when <em>base</em> is higher than 10.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:common-extensions:iterate">
+<code class="sig-name descname">iterate</code> <em class="property">Statement Macro</em><a class="headerlink" href="#common-dylan:common-extensions:iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over a body.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">iterate <cite>name</cite> ({<cite>argument</cite> = <cite>init-value</cite>}*)
+  [ <cite>body</cite> ]
+end [ iterate ]</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>argument</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>init-value</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – Zero or more instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Defines a function that can be used to iterate over a body. It is
+similar to <em>for</em>, but allows you to control when iteration will
+occur.</p>
+<p>It creates a function called <em>name</em> which will perform a single
+step of the iteration at a time; <em>body</em> can call <em>name</em> whenever it
+wants to iterate another step. The form evaluates by calling the
+new function with the initial values specified.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">iterate</span> <span class="n">recurse</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="n">x</span> <span class="k">else</span> <span class="n">x</span> <span class="o">*</span> <span class="n">recurse</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:one-of">
+<code class="sig-name descname">one-of</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:one-of" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a union type comprised of singletons formed from its arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>one-of <em>object</em> #rest <em>more-objects</em> =&gt; <em>type</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>more-objects</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#type"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns a union type comprised of <code class="docutils literal notranslate"><span class="pre">singleton(object)</span></code> and the
+singletons of any other objects passed with <em>more-object</em>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">one-of</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Is a type expression that is equivalent to</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">type-union</span><span class="p">(</span><span class="nb">singleton</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">singleton</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">singleton</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:position">
+<code class="sig-name descname">position</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the key at which a particular value occurs in a sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>position <em>sequence</em> <em>target</em> #key <em>test</em> <em>start</em> <em>end</em> <em>skip</em> <em>count</em> =&gt; <em>position</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>target</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>test</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p></li>
+<li><p><strong>start</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>end</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>skip</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>count</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;integer&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the position at which <em>target</em> occurs in <em>sequence</em>.</p>
+<p>If <em>test</em> is supplied, <em>position</em> uses it as an equivalence
+predicate for comparing <em>sequence</em> ‘s elements to <em>target</em>. It should
+take two objects and return a boolean. The default predicate used is
+<a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p>
+<p>The <em>skip</em> argument is interpreted as it is by Dylan’s <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#find-key"><code class="xref drm docutils literal notranslate"><span class="pre">find-key</span></code></a>
+function: <em>position</em> ignores the first <em>skip</em> elements that match
+<em>target</em>, and if <em>skip</em> or fewer elements satisfy <em>test</em>, it
+returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+<p>The <em>start</em> and <em>end</em> arguments indicate, if supplied, which subrange
+of the <em>sequence</em> is used for the search.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:remove-all-keys!">
+<code class="sig-name descname">remove-all-keys!</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:remove-all-keys!" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all keys in a mutable collection, leaving it empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>remove-all-keys! <em>mutable-collection</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>mutable-collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-collection&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Modifies <em>mutable-collection</em> by removing all its keys and leaving it
+empty. There is a predefined method on <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="common-dylan:common-extensions:[simple-condition]">
+<code class="sig-name descname">&lt;simple-condition&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#common-dylan:common-extensions:[simple-condition]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of simple conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:common-extensions:[format-string-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;format-string-condition&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The class of simple conditions. It is the superclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-error&gt;</span></code></a>,
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-warning"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-warning&gt;</span></code></a>, and <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-restart"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-restart&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#condition-format-string"><code class="xref drm docutils literal notranslate"><span class="pre">condition-format-string</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/condition-format-args"><code class="xref drm docutils literal notranslate"><span class="pre">condition-format-args</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="common-dylan:common-extensions:[stretchy-sequence]">
+<code class="sig-name descname">&lt;stretchy-sequence&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#common-dylan:common-extensions:[stretchy-sequence]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of stretchy sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#stretchy-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;stretchy-collection&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The class of stretchy sequences.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="common-dylan:common-extensions:[string-table]">
+<code class="sig-name descname">&lt;string-table&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#common-dylan:common-extensions:[string-table]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of tables that use strings for keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The class of tables that use instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> for their
+keys. It is an error to use a key that is not an instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+<p>Keys are compared with the equivalence predicate <code class="docutils literal notranslate"><span class="pre">\=</span></code>.</p>
+<p>The elements of the table are instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p>
+<p>It is an error to modify a key once it has been used to add an element
+to a <code class="docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code>. The effects of modification are not defined.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is also exported from the <em>table-extensions</em> module
+of the <em>table-extensions</em> library.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:string-to-integer">
+<code class="sig-name descname">string-to-integer</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:string-to-integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the integer represented by its string argument, or by a
+substring of that argument, in a number base between 2 and 36.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>string-to-integer <em>string</em> #key <em>base</em> <em>start</em> <em>end</em> <em>default</em> =&gt; <em>integer</em> <em>next-key</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>base</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 10.</p></li>
+<li><p><strong>start</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>end</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">sizeof(*string*)</span></code>.</p></li>
+<li><p><strong>default</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>integer</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>next-key</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the integer represented by the characters of <em>string</em> in
+the number base <em>base</em>, where <em>base</em> is between 2 and 36. You can
+constrain the search to a substring of <em>string</em> by giving values
+for <em>start</em> and <em>end</em>.</p>
+<p>This function returns the next key beyond the last character it
+examines.</p>
+<p>If there is no integer contained in the specified region of the
+string, this function returns <em>default</em>, if specified. If you do
+not give a value for <em>default</em>, this function signals an error.</p>
+<p>This function is similar to C’s <code class="docutils literal notranslate"><span class="pre">strtod</span></code> function.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:subclass">
+<code class="sig-name descname">subclass</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:subclass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a type representing a class and its subclasses.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>subclass <em>class</em> =&gt; <em>subclass-type</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>class</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subclass-type</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#type"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns a type that describes all the objects representing
+subclasses of the given class. We term such a type a <em>subclass
+type</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">subclass</span></code> function is allowed to return an existing type if
+that type is type equivalent to the subclass type requested.</p>
+<p>Without <code class="docutils literal notranslate"><span class="pre">subclass</span></code>, methods on generic functions (such as Dylan’s
+standard <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a>) that take types as arguments
+are impossible to reuse without resorting to ad hoc techniques. In
+the language defined by the DRM, the only mechanism available for
+specializing such methods is to use singleton types. A singleton
+type specializer used in this way, by definition, gives a method
+applicable to exactly one type. In particular, such methods are not
+applicable to subtypes of the type in question. In order to define
+reusable methods on generic functions like this, we need a type
+which allows us to express applicability to a type and all its
+subtypes.</p>
+<p>For an object <em>O</em> and class <em>Y</em>, the following <a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Types#instance_"><code class="xref drm docutils literal notranslate"><span class="pre">instance?</span></code></a>
+relationship applies:</p>
+<dl class="simple">
+<dt><strong>INSTANCE-1</strong>: <code class="docutils literal notranslate"><span class="pre">instance?(*O*,</span> <span class="pre">subclass(*Y*))</span></code></dt><dd><p>True if and only if <em>O</em> is a class and <em>O</em> is a subclass of <em>Y</em>.</p>
+</dd>
+</dl>
+<p>For classes <em>X</em> and <em>Y</em> the following <a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Types#subtype_"><code class="xref drm docutils literal notranslate"><span class="pre">subtype?</span></code></a> relationships hold
+(note that a rule applies only when no preceding rule matches):</p>
+<dl class="simple">
+<dt><strong>SUBTYPE-1</strong>: <code class="docutils literal notranslate"><span class="pre">subtype?(subclass(*X*),</span> <span class="pre">subclass(*Y*))</span></code></dt><dd><p>True if and only if <em>X</em> is a subclass of <em>Y</em>.</p>
+</dd>
+<dt><strong>SUBTYPE-2</strong>: <code class="docutils literal notranslate"><span class="pre">subtype?(singleton(*X*),</span> <span class="pre">subclass(*Y*))</span></code></dt><dd><p>True if and only if <em>X</em> is a class and <em>X</em> is a subclass of <em>Y</em>.</p>
+</dd>
+<dt><strong>SUBTYPE-3</strong>: <code class="docutils literal notranslate"><span class="pre">subtype?(subclass(*X*),</span> <span class="pre">singleton(*Y*))</span></code></dt><dd><p>Always false.</p>
+</dd>
+<dt><strong>SUBTYPE-4</strong>: <code class="docutils literal notranslate"><span class="pre">subtype?(subclass(*X*),</span> <span class="pre">*Y*)</span></code></dt><dd><p>where <em>Y</em> is not a subclass type. True if <em>Y</em> is <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a> or
+any proper superclass of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a> (including <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>, any
+implementation-defined supertypes, and unions involving any of
+these). There may be other implementation-defined combinations of
+types <em>X</em> and <em>Y</em> for which this is also true.</p>
+</dd>
+<dt><strong>SUBTYPE-5</strong>: <code class="docutils literal notranslate"><span class="pre">subtype?(*X*,</span> <span class="pre">subclass(*Y*))</span></code></dt><dd><p>where <em>X</em> is not a subclass type. True if <em>Y</em> is <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a> or any
+proper supertype of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a> and <em>X</em> is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a>.</p>
+</dd>
+</dl>
+<p>Note that by subclass relationships <em>SUBTYPE-4</em> and <em>SUBTYPE-5</em>, we get
+this correspondence: <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a> and <code class="docutils literal notranslate"><span class="pre">subclass(&lt;object&gt;)</span></code> are type
+equivalent.</p>
+<p>Where the <a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Types#subtype_"><code class="xref drm docutils literal notranslate"><span class="pre">subtype?</span></code></a> test has not been sufficient to determine an
+ordering for a method’s argument position, the following further
+method-ordering rules apply to cases involving subclass types (note that
+a rule applies only when no preceding rule matches):</p>
+<ul class="simple">
+<li><p><strong>SPECIFICITY+1</strong>. <code class="docutils literal notranslate"><span class="pre">subclass(*X*)</span></code> precedes <code class="docutils literal notranslate"><span class="pre">subclass(*Y*)</span></code>
+when the argument is a class <em>C</em> and <em>X</em> precedes <em>Y</em> in the
+class precedence list of <em>C</em>.</p></li>
+<li><p><strong>SPECIFICITY+2</strong>. <code class="docutils literal notranslate"><span class="pre">subclass(*X*)</span></code> always precedes <em>Y</em>, <em>Y</em> not
+a subclass type. That is, applicable subclass types precede any
+other applicable class-describing specializer.</p></li>
+</ul>
+<p>The constraints implied by sealing come by direct application of sealing
+rules 1–3 (see page 136 of the DRM) and the following disjointness
+criteria for subclass types (note that a rule applies only when no
+preceding rule matches):</p>
+<ul class="simple">
+<li><p><strong>DISJOINTNESS+1</strong>. A subclass type <code class="docutils literal notranslate"><span class="pre">subclass(*X*)</span></code> and a
+type <em>Y</em> are disjoint if <em>Y</em> is disjoint from <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a>, or if
+<em>Y</em> is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a> without instance classes that
+are also subclasses of <em>X</em>.</p></li>
+<li><p><strong>DISJOINTNESS+2</strong>. Two subclass types <code class="docutils literal notranslate"><span class="pre">subclass(*X*)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">subclass(*Y*)</span></code> are disjoint if the classes <em>X</em> and <em>Y</em> are
+disjoint.</p></li>
+<li><p><strong>DISJOINTNESS+3</strong>. A subclass type <code class="docutils literal notranslate"><span class="pre">subclass(*X*)</span></code> and a
+singleton type <code class="docutils literal notranslate"><span class="pre">singleton(*O*)</span></code> are disjoint unless <em>O</em> is a
+class and <em>O</em> is a subclass of <em>X</em>.</p></li>
+</ul>
+<p>The guiding principle behind the semantics is that, as far as possible,
+methods on classes called with an instance should behave isomorphically
+to corresponding methods on corresponding subclass types called with the
+class of that instance. So, for example, given the heterarchy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span>
+  \<span class="o">|</span>
+  <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span>
+  <span class="o">/</span> \\
+<span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span>
+ \\ <span class="o">/</span>
+  <span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>and methods:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="nc">&lt;A&gt;</span><span class="p">)</span>
+<span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="nc">&lt;B&gt;</span><span class="p">)</span>
+<span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="nc">&lt;C&gt;</span><span class="p">)</span>
+<span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="nc">&lt;D&gt;</span><span class="p">)</span>
+
+<span class="nb">method</span> <span class="n">foo-using-type</span> <span class="p">(</span><span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;A&gt;</span><span class="p">))</span>
+<span class="nb">method</span> <span class="n">foo-using-type</span> <span class="p">(</span><span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;B&gt;</span><span class="p">))</span>
+<span class="nb">method</span> <span class="n">foo-using-type</span> <span class="p">(</span><span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;C&gt;</span><span class="p">))</span>
+<span class="nb">method</span> <span class="n">foo-using-type</span> <span class="p">(</span><span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;D&gt;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>that for a direct instance <em>D1</em> of <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">foo-using-type</span><span class="p">(</span><span class="nc">&lt;D&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>should behave analogously to:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="p">(</span><span class="n">D1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>with respect to method selection.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;A&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;B&gt;</span> <span class="p">(</span><span class="nc">&lt;A&gt;</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;C&gt;</span> <span class="p">(</span><span class="nc">&lt;A&gt;</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;D&gt;</span> <span class="p">(</span><span class="nc">&lt;B&gt;</span><span class="p">,</span> <span class="nc">&lt;C&gt;</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">make</span> <span class="p">(</span><span class="nb">class</span> <span class="p">::</span> <span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;A&gt;</span><span class="p">),</span> <span class="k">#key</span><span class="p">)</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">&quot;Making an &lt;A&gt;&quot;</span><span class="p">);</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">make</span> <span class="p">(</span><span class="nb">class</span> <span class="p">::</span> <span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;B&gt;</span><span class="p">),</span> <span class="k">#key</span><span class="p">)</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">&quot;Making a &lt;B&gt;&quot;</span><span class="p">);</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">make</span> <span class="p">(</span><span class="nb">class</span> <span class="p">::</span> <span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;C&gt;</span><span class="p">),</span> <span class="k">#key</span><span class="p">)</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">&quot;Making a &lt;C&gt;&quot;</span><span class="p">);</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">make</span> <span class="p">(</span><span class="nb">class</span> <span class="p">::</span> <span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;D&gt;</span><span class="p">),</span> <span class="k">#key</span><span class="p">)</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">&quot;Making a &lt;D&gt;&quot;</span><span class="p">);</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? make(&lt;D&gt;);
+Making a &lt;D&gt;
+Making a &lt;B&gt;
+Making a &lt;C&gt;
+Making an &lt;A&gt;
+{instance of &lt;D&gt;}
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="common-dylan:common-extensions:$unfound">
+<code class="sig-name descname">$unfound</code> <em class="property">Constant</em><a class="headerlink" href="#common-dylan:common-extensions:$unfound" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unique value that can be used to indicate that a search operation
+failed.</p>
+<dl class="field-list">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;list&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p>A unique value.</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>A unique value that can be used to indicate that a search operation
+failed.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">unfound?</span><span class="p">(</span><span class="nb">element</span><span class="p">(</span><span class="n">section-index-table</span><span class="p">,</span> <span class="n">section-name</span><span class="p">,</span>
+                     <span class="k">default:</span> <span class="no">$unfound</span><span class="p">)))</span>
+  <span class="n">section-index-table</span><span class="p">[</span><span class="n">section-name</span><span class="p">]</span> <span class="o">:=</span> <span class="n">section-index-table</span><span class="p">.</span><span class="nb">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">write-record</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="ss">#&quot;SECTIONNAME&quot;</span><span class="p">,</span> <span class="n">section-name</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:found?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">found?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unfound?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unfound"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:unfound">
+<code class="sig-name descname">unfound</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:unfound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the unique “unfound” value, <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>unfound () =&gt; <em>unfound-marker</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>unfound-marker</strong> – The value <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+<p>Returns the unique “unfound” value, <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:found?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">found?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unfound?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:found?">
+<code class="sig-name descname">found?</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:found?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if <em>object</em> is not equal to <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>, and false otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>found? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boolean</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns true if <em>object</em> is not equal to <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>, and false otherwise.</p>
+<p>It uses <code class="docutils literal notranslate"><span class="pre">\=</span></code> as the equivalence predicate.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unfound?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unfound"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:unfound?">
+<code class="sig-name descname">unfound?</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:unfound?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if its argument is equal to the unique “unfound” value,
+<a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>, and false if it is not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>unfound? <em>object</em> =&gt; <em>unfound?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>unfound?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns true if <em>object</em> is equal to the unique “unfound” value,
+<a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>, and false if it is not. It uses <code class="docutils literal notranslate"><span class="pre">\=</span></code>
+as the equivalence predicate.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:found?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">found?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unfound"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unfound</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unfound"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unfound</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="common-dylan:common-extensions:$unsupplied">
+<code class="sig-name descname">$unsupplied</code> <em class="property">Constant</em><a class="headerlink" href="#common-dylan:common-extensions:$unsupplied" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unique value that can be used to indicate that a keyword was not
+supplied.</p>
+<dl class="field-list">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;list&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p>A unique value.</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>A unique value that can be used to indicate that a keyword was not
+supplied.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">find-next-or-previous-string</span>
+    <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;editor-state-mixin&gt;</span><span class="p">,</span>
+     <span class="k">#key</span> <span class="n">reverse?</span> <span class="o">=</span> <span class="no">$unsupplied</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">editor</span> <span class="p">::</span> <span class="nc">&lt;basic-editor&gt;</span> <span class="o">=</span> <span class="n">frame-editor</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">reverse?</span>
+    <span class="o">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">supplied?</span><span class="p">(</span><span class="n">reverse?</span><span class="p">))</span>
+        <span class="n">reverse?</span>
+      <span class="k">else</span>
+        <span class="n">editor-reverse-search?</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+      <span class="k">end</span><span class="p">;</span>
+  <span class="p">...</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:supplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">supplied?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unsupplied"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unsupplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied?</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:unsupplied">
+<code class="sig-name descname">unsupplied</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:unsupplied" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the unique “unsupplied” value, <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>unsupplied () =&gt; <em>unsupplied-marker</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>unsupplied-marker</strong> – The value <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the unique “unsupplied” value, <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>See <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:supplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">supplied?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unsupplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied?</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:supplied?">
+<code class="sig-name descname">supplied?</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:supplied?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if its argument is not equal to the unique “unsupplied”
+value, <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>, and false if it is.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>supplied? <em>object</em> =&gt; <em>supplied?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>supplied?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns true if <em>object</em> is not equal to the unique “unsupplied”
+value, <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>, and false if it is. It uses <code class="docutils literal notranslate"><span class="pre">\=</span></code> as
+the equivalence predicate.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unsupplied"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unsupplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied?</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:unsupplied?">
+<code class="sig-name descname">unsupplied?</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:unsupplied?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if its argument is equal to the unique “unsupplied”
+value, <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>, and false if it is not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>unsupplied? <em>value</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boolean</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns true if its argument is equal to the unique “unsupplied”
+value, <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>, and false if it is not. It uses <code class="docutils literal notranslate"><span class="pre">\=</span></code>
+as the equivalence predicate.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>See <a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:supplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">supplied?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:unsupplied"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:common-extensions:when">
+<code class="sig-name descname">when</code> <em class="property">Statement Macro</em><a class="headerlink" href="#common-dylan:common-extensions:when" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes an implicit body if a test expression is true, and does
+nothing if the test is false.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">when (<cite>test</cite>) [ <cite>consequent</cite> ] end [ when ]</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>test</strong> – A Dylan expression <em>bnf</em>.</p></li>
+<li><p><strong>consequent</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – Zero or more instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Executes <em>consequent</em> if <em>test</em> is true, and does nothing if <em>test</em>
+is false.</p>
+<p>This macro behaves identically to Dylan’s standard <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#if"><code class="xref drm docutils literal notranslate"><span class="pre">if</span></code></a>
+statement macro, except that there is no alternative flow of
+execution when the test is false.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">when</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="o">~</span> <span class="n">x</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:split">
+<code class="sig-name descname">split</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a sequence (e.g., a string) into subsequences delineated by a
+given separator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>split <em>sequence</em> <em>separator</em> #key <em>start</em> <em>end</em> <em>count</em> <em>remove-if-empty?</em> =&gt; <em>parts</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>start</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: 0.</p></li>
+<li><p><strong>end</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: <code class="docutils literal notranslate"><span class="pre">sequence.size</span></code>.</p></li>
+<li><p><strong>count</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: no limit.</p></li>
+<li><p><strong>remove-if-empty?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.  Default value: #f.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parts</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Splits <em>sequence</em> into subsequences, splitting at each occurrence
+of <em>separator</em>.  The <em>sequence</em> is searched from left to right,
+starting at <em>start</em> and ending at <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+<p>The resulting <em>parts</em> sequence is limited in size to <em>count</em> elements.</p>
+<p>If <em>remove-if-empty?</em> is true, the result will not contain any
+subsequences that are empty.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[function])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;function&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[sequence])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;sequence&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[object])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;object&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:common-extensions:split([sequence],[function])">
+<code class="sig-name descname">split(&lt;sequence&gt;, &lt;function&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:common-extensions:split([sequence],[function])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a sequence (e.g., a string) into subsequences delineated by a
+given separator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>split <em>sequence</em> <em>separator</em> #key <em>start</em> <em>end</em> <em>count</em> <em>remove-if-empty?</em> =&gt; <em>parts</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>start</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: 0.</p></li>
+<li><p><strong>end</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: <code class="docutils literal notranslate"><span class="pre">sequence.size</span></code>.</p></li>
+<li><p><strong>count</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: no limit.</p></li>
+<li><p><strong>remove-if-empty?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.  Default value: #f.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parts</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This is in some sense the most basic method, since others can be implemented
+in terms of it.  The <em>separator</em> function must accept three arguments:</p>
+<ol class="arabic simple">
+<li><p>The sequence in which to search for a separator,</p></li>
+<li><p>the start index in that sequence at which to begin searching, and</p></li>
+<li><p>the index at which to stop searching (exclusive).</p></li>
+</ol>
+<p>The <em>separator</em> function must return <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> to indicate that no separator was
+found, or two values:</p>
+<ol class="arabic simple">
+<li><p>The start index of the separator in the sequence and</p></li>
+<li><p>the index of the first element after the end of the separator.</p></li>
+</ol>
+<p>It is an error for the returned start and end indices to be equal since this
+is equivalent to splitting on an empty separator, which is undefined.  It is
+undefined what happens if the return values are outside the <code class="docutils literal notranslate"><span class="pre">[start,</span> <span class="pre">end)</span></code>
+range passed to the <em>separator</em> function.</p>
+<p>The initial start and end indices passed to the separator function are the
+same as the <em>start</em> and <em>end</em> arguments passed to this method.  The
+separator function should stay within the given bounds whenever possible.
+(In particular it may not always be possible when the separator is a regular
+expression.)</p>
+<p>See <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/6ef338a6b3b09d7715b5b1a51634c9c1a85d29c4/sources/common-dylan/common-extensions.dylan#L312">the source code</a>
+for <a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[object])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;object&gt;)</span></code></a> for an example of using this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:common-extensions:split([sequence],[object])">
+<code class="sig-name descname">split(&lt;sequence&gt;, &lt;object&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:common-extensions:split([sequence],[object])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a sequence (e.g., a string) into subsequences separated by a specific
+object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>split <em>sequence</em> <em>separator</em> #key <em>start</em> <em>end</em> <em>count</em> <em>remove-if-empty?</em> =&gt; <em>parts</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>start</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: 0.</p></li>
+<li><p><strong>end</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: <code class="docutils literal notranslate"><span class="pre">sequence.size</span></code>.</p></li>
+<li><p><strong>count</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: no limit.</p></li>
+<li><p><strong>remove-if-empty?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.  Default value: #f.</p></li>
+<li><p><strong>test</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parts</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Splits <em>sequence</em> around each occurrence of <em>separator</em>, which is compared
+to each element with the <em>test</em> function.</p>
+<p>This method handles the relatively common case where <em>sequence</em> is a string
+and <em>separator</em> is a <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a>.</p>
+<dl class="field-list">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a.b.c&quot;</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>     <span class="p">=&gt;</span> <span class="p">#(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">)</span>
+<span class="n">split</span><span class="p">(#[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">#(#[</span><span class="mi">1</span><span class="p">],</span> <span class="p">#[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:common-extensions:split([sequence],[sequence])">
+<code class="sig-name descname">split(&lt;sequence&gt;, &lt;sequence&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:common-extensions:split([sequence],[sequence])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a sequence (e.g., a string) into subsequences separated by another
+sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>split <em>sequence</em> <em>separator</em> #key <em>start</em> <em>end</em> <em>count</em> <em>remove-if-empty?</em> =&gt; <em>parts</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>start</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: 0.</p></li>
+<li><p><strong>end</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: <code class="docutils literal notranslate"><span class="pre">sequence.size</span></code>.</p></li>
+<li><p><strong>count</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  Default value: no limit.</p></li>
+<li><p><strong>remove-if-empty?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.  Default value: #f.</p></li>
+<li><p><strong>test</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parts</strong> – <p>An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p>
+<p>Splits <em>sequence</em> around occurrences of the <em>separator</em> subsequence.  This
+handles the relatively common case where <em>sequence</em> and <em>separator</em> are
+both instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+<dl class="field-list">
+<dt class="field-odd">example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">split</span><span class="p">(</span><span class="s">&quot;aabbccdd&quot;</span><span class="p">,</span> <span class="s">&quot;bb&quot;</span><span class="p">))</span> <span class="p">=&gt;</span> <span class="p">#(</span><span class="s">&quot;aa&quot;</span><span class="p">,</span> <span class="s">&quot;ccdd&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to use <a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a> to find a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> which
+is a single element of another sequence it may not do what you
+expect because this method is more specific than
+<a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[object])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;object&gt;)</span></code></a>.  This is expected to be a
+rare case that can be handled by using <a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[function])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span>
+<span class="pre">&lt;function&gt;)</span></code></a> if necessary.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:common-extensions:join">
+<code class="sig-name descname">join</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:common-extensions:join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join several sequences (e.g. strings) together, including a separator
+between each pair of adjacent sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>join <em>sequences</em> <em>separator</em> #key <em>key</em> <em>conjunction</em> =&gt; <em>joined</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequences</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>key</strong> (<em>#key</em>) – Transformation to apply to each item. Default value:
+<a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#identity"><code class="xref drm docutils literal notranslate"><span class="pre">identity</span></code></a>.</p></li>
+<li><p><strong>conjunction</strong> (<em>#key</em>) – Last separator. Default value: #f</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joined</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Join <em>sequences</em> together, including <em>separator</em> between each sequence.</p>
+<p>If the first argument is empty, an empty sequence of type
+<code class="docutils literal notranslate"><span class="pre">type-for-copy(separator)</span></code> is returned. If <em>sequences</em> is of size one,
+the first element is returned. Otherwise, the resulting <em>joined</em> sequence
+will be of the same type as <em>sequences</em>.</p>
+<p>Every element in <em>sequences</em> is transformed by <em>key</em>, which is a function
+that must accept one argument.</p>
+<p>If <em>conjunction</em> is not false, it is used instead of <em>separator</em> to join
+the last pair of elements in <em>sequences</em>.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">join</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span> <span class="mi">1</span><span class="p">,</span> <span class="k">to:</span> <span class="mi">3</span><span class="p">),</span> <span class="s">&quot;, &quot;</span><span class="p">,</span>
+     <span class="k">key:</span> <span class="n">integer-to-string</span><span class="p">,</span> <span class="k">conjunction:</span> <span class="s">&quot; and &quot;</span><span class="p">)</span>
+<span class="p">=&gt;</span> <span class="s">&quot;1, 2 and 3&quot;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:join([sequence],[sequence])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">join(&lt;sequence&gt;,</span> <span class="pre">&lt;sequence&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:common-extensions:join([sequence],[sequence])">
+<code class="sig-name descname">join(&lt;sequence&gt;, &lt;sequence&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:common-extensions:join([sequence],[sequence])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join several sequences together, including a separator between each pair of
+adjacent sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>join <em>sequences</em> <em>separator</em> #key <em>key</em> <em>conjunction</em> =&gt; <em>joined</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>items</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>key</strong> (<em>#key</em>) – Transformation to apply to each item. An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>conjunction</strong> (<em>#key</em>) – Last separator. An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;sequence&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joined</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:join"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">join</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:application-arguments">
+<code class="sig-name descname">application-arguments</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:application-arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the arguments passed to the running application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>application-arguments =&gt; <em>arguments</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>arguments</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the arguments passed to the running application as a vector
+of instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-filename"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-filename</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:tokenize-command-line"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">tokenize-command-line</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:application-filename">
+<code class="sig-name descname">application-filename</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:application-filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full filename of the running application.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>application-filename =&gt; <em>false-or-filename</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>false-or-filename</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;byte-string&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the full filename (that is, the absolute pathname) of the
+running application, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if the filename cannot be
+determined.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>The following is an example of an absolute pathname naming an
+application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">foo</span><span class="se">\\</span><span class="s2">bar.exe&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-arguments"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-arguments</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:tokenize-command-line"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">tokenize-command-line</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:application-name">
+<code class="sig-name descname">application-name</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:application-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the running application.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>application-name =&gt; <em>name</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the name of the running application. This is normally the
+command name as typed on the command line and may be a non-absolute
+pathname.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>The following is an example of a non-absolute pathname used to refer to
+the application name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;foo</span><span class="se">\\</span><span class="s2">bar.exe&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-arguments"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-arguments</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-filename"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-filename</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:tokenize-command-line"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">tokenize-command-line</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:exit-application">
+<code class="sig-name descname">exit-application</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:exit-application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminates execution of the running application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>exit-application <em>status</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>status</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Terminates execution of the running application, returning the
+value of <em>status</em> to whatever launched the application, for example
+an MS-DOS window or Windows 95/NT shell.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is also available from the <a class="reference internal" href="../system/operating-system.html"><span class="doc">operating-system</span></a> module.</p>
+</div>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:register-application-exit-function"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">register-application-exit-function</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:register-application-exit-function">
+<code class="sig-name descname">register-application-exit-function</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:register-application-exit-function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a function to be executed when the application is about to exit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>register-application-exit-function <em>function</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Register a function to be executed when the application is about to
+exit. The Dylan runtime will make sure that these functions are executed.</p>
+<p>The <em>function</em> should not expect any arguments, nor expect that any return
+values be used.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, the registered functions will be invoked in the reverse
+order in which they were added. This is <strong>not</strong> currently a contractual
+guarantee and may be subject to change.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is also available from the <a class="reference internal" href="../system/operating-system.html"><span class="doc">operating-system</span></a> module.</p>
+</div>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:exit-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">exit-application</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:common-extensions:tokenize-command-line">
+<code class="sig-name descname">tokenize-command-line</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:common-extensions:tokenize-command-line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a command line into a command name and arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>tokenize-command-line <em>line</em> =&gt; <em>command</em> #rest <em>arguments</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>line</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>#rest arguments</strong> – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Parses the command specified in <em>line</em> into a command name and
+arguments. The rules used to tokenize the string are given in
+Microsoft’s C/C++ reference in the section <a class="reference external" href="http://msdn.microsoft.com/en-us/library/a1y7w461.aspx">“Parsing C Command-Line
+Arguments”</a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-arguments"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-arguments</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:common-extensions:application-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="byte-vector.html" class="btn btn-neutral float-left" title="The byte-vector Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="machine-words.html" class="btn btn-neutral float-right" title="The machine-words Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

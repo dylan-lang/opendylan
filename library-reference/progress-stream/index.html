@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The progress-stream Library &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The regular-expressions Library" href="../regular-expressions/index.html" />
+    <link rel="prev" title="The network Library" href="../network/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The progress-stream Library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/progress-stream/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-progress-stream-library">
+<h1>The progress-stream Library<a class="headerlink" href="#the-progress-stream-library" title="Permalink to this headline">¶</a></h1>
+<p>Many text-mode programs that perform long-running, non-interactive
+tasks (such as compilers) provide a running indication of what
+fraction of the task is complete using a bar graph drawn using text
+characters. This library implements a wrapper stream that interleaves
+the progress bar graph with any status output. When output is not
+directed to a console then progress updates are ignored.</p>
+<dl class="class">
+<dt class="dylan-api" id="progress-stream:progress-stream:[progress-stream]">
+<code class="sig-name descname">&lt;progress-stream&gt;</code> <em class="property">Abstract Instantiable Class</em><a class="headerlink" href="#progress-stream:progress-stream:[progress-stream]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../io/streams.html#io:streams:[wrapper-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapper-stream&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>force?</strong> – If true, forces the wrapped stream to be treated as
+a console, allowing textual progress bar output.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Keyword</dt>
+<dd class="field-odd"><p>bar-width: An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> representing
+the number of bar characters to be included in textual
+progress bar output. Defaults to 40.</p>
+</dd>
+<dt class="field-even">Keyword</dt>
+<dd class="field-even"><p>line-width: An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> representing
+the total line width (including both progress bar and label)
+in characters. Defaults to 79.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="progress-stream:progress-stream:show-progress">
+<code class="sig-name descname">show-progress</code> <em class="property">Generic function</em><a class="headerlink" href="#progress-stream:progress-stream:show-progress" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>show-progress (stream position range #key label) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="#progress-stream:progress-stream:[progress-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;progress-stream&gt;</span></code></a>.</p></li>
+<li><p><strong>position</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>range</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>label</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Graphically displays the current progress, proportional to
+<em>position</em> divided by <em>range</em>, to the given <em>stream</em>. In the
+case where <em>stream</em> is a console (i.e., unredirected
+<a class="reference internal" href="../io/standard-io.html#io:standard-io:*standard-output*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*standard-output*</span></code></a>), <a class="reference internal" href="#progress-stream:progress-stream:show-progress"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">show-progress</span></code></a> will draw a
+textual progress bar with overall width configured in the
+<a class="reference internal" href="#progress-stream:progress-stream:[progress-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;progress-stream&gt;</span></code></a> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="progress-stream:progress-stream:stream-supports-show-progress?">
+<code class="sig-name descname">stream-supports-show-progress?</code> <em class="property">Generic function</em><a class="headerlink" href="#progress-stream:progress-stream:stream-supports-show-progress?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stream-supports-show-progress? (stream) =&gt; (supports-show-progress?)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="../io/streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>supports-show-progress?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns a true value if the <em>stream</em> argument can usefully
+support the <a class="reference internal" href="#progress-stream:progress-stream:show-progress"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">show-progress</span></code></a> operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../network/index.html" class="btn btn-neutral float-left" title="The network Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../regular-expressions/index.html" class="btn btn-neutral float-right" title="The regular-expressions Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

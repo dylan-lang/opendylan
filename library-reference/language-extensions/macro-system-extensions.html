@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Macro System Extensions &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Parser Expansions" href="parser-expansions.html" />
+    <link rel="prev" title="object-with-elements" href="object-with-elements.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define-function.html">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numbers.html">Integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Macro System Extensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#traced-macros">Traced Macros</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#template-calls">Template Calls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Macro System Extensions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/macro-system-extensions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="macro-system-extensions">
+<h1>Macro System Extensions<a class="headerlink" href="#macro-system-extensions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="traced-macros">
+<h2>Traced Macros<a class="headerlink" href="#traced-macros" title="Permalink to this headline">¶</a></h2>
+<p>Macros can be defined with an adjective, <code class="docutils literal notranslate"><span class="pre">traced</span></code>.  This causes the
+macro expander to output some useful information during compilation:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">traced</span> <span class="nb">macro</span> <span class="n">when2</span>
+  <span class="p">{</span> <span class="n">when2</span> <span class="p">(</span><span class="nt">?cond</span><span class="o">:</span><span class="nb">expression</span><span class="p">)</span> <span class="nt">?</span><span class="o">:</span><span class="nb">body</span> <span class="k">end</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nt">?cond</span><span class="p">)</span> <span class="nt">?body</span> <span class="k">end</span> <span class="p">}</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="n">when2</span> <span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+  <span class="n">format-out</span><span class="p">(</span><span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Compiling this will result in this output from the compiler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">when2</span> <span class="p">}</span> <span class="o">&gt;</span> <span class="n">when2</span> <span class="p">(</span><span class="mi">23</span><span class="p">)</span> <span class="nb">format</span><span class="o">-</span><span class="n">out</span> <span class="p">(</span><span class="s2">&quot;Hello, world!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span> <span class="n">end</span>
+<span class="p">{</span> <span class="n">when2</span> <span class="p">}</span> <span class="o">&lt;</span> <span class="k">if</span> <span class="p">(</span><span class="mi">23</span><span class="p">)</span> <span class="nb">format</span><span class="o">-</span><span class="n">out</span> <span class="p">(</span><span class="s2">&quot;Hello, world!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span> <span class="n">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="template-calls">
+<h2>Template Calls<a class="headerlink" href="#template-calls" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This extension was originally described in an appendix to
+<a class="reference external" href="http://people.csail.mit.edu/jrb/Projects/dexprs.pdf">D-Expressions: Lisp Power, Dylan Style</a>.
+This text is largely copied from there.</p>
+</div>
+<p>A number of limitations of local rewrite rules require resorting to
+top-level auxiliary macros. The first problem is that local rewrite
+rules do not have access to pattern variables defined in main rule
+sets. The usual solution is to employ an auxiliary macro which takes
+those needed variables as extra macro arguments. For example, suppose
+we want to add a prefix option to allow the creation of properties with
+a common prefix. We need to introduce an auxiliary macro so that the
+prefix variable can be in scope when iterating over the properties.
+For example, consider the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">properties-definer</span>
+  <span class="p">{</span> <span class="k">define</span> <span class="n">properties</span> <span class="nt">?kind</span><span class="o">:</span><span class="nb">name</span>
+         <span class="n">prefixed-by</span> <span class="nt">?prefix</span><span class="o">:</span><span class="nb">name</span> <span class="nt">?properties</span><span class="o">:</span><span class="nb">*</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">define</span> <span class="nb">variable</span> <span class="nt">?kind</span>
+           <span class="o">=</span> <span class="nb">concatenate</span>
+               <span class="p">(</span><span class="n">prefixed-props</span> <span class="p">(?</span><span class="s">&quot;prefix&quot;</span><span class="p">)</span> <span class="nt">?properties</span> <span class="k">end</span><span class="p">)</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="k">define</span> <span class="n">properties</span> <span class="nt">?kind</span><span class="o">:</span><span class="nb">name</span> <span class="nt">?properties</span><span class="o">:</span><span class="nb">*</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">define</span> <span class="nb">variable</span> <span class="nt">?kind</span>
+           <span class="o">=</span> <span class="nb">concatenate</span>
+               <span class="p">(</span><span class="n">prefixed-props</span> <span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="nt">?properties</span> <span class="k">end</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">macro</span> <span class="n">prefixed-props</span>
+  <span class="p">{</span> <span class="n">prefixed-props</span> <span class="p">(</span><span class="nt">?prefix</span><span class="o">:</span><span class="nb">name</span><span class="p">)</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">#()</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="n">prefixed-props</span> <span class="p">(</span><span class="nt">?prefix</span><span class="o">:</span><span class="nb">name</span><span class="p">)</span> <span class="nt">?prop</span><span class="o">:</span><span class="nb">name</span><span class="p">;</span> <span class="nt">?more</span><span class="o">:</span><span class="nb">*</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nb">list</span><span class="p">(</span><span class="nt">?prefix</span> <span class="p">##</span> <span class="nt">?prop</span><span class="p">),</span>
+         <span class="n">prefixed-props</span> <span class="p">(</span><span class="nt">?prefix</span><span class="p">)</span> <span class="nt">?more</span> <span class="k">end</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Auxiliary macros are also needed when pattern variables must be walked in two
+different ways. Consider a macro, called <code class="docutils literal notranslate"><span class="pre">iterate</span></code>, for creating internally
+recursive procedures that are as convenient as loops. It has the following
+basic form:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">iterate</span> <span class="n">name</span> <span class="p">(</span><span class="nb">variable</span> <span class="o">=</span> <span class="n">init</span><span class="p">,</span> <span class="p">...)</span>
+  <span class="n">body</span>
+<span class="k">end</span> <span class="n">iterate</span>
+</pre></div>
+</div>
+<p>and has the semantics of evaluating the body with the variables initially
+bound to the inits and such that any call to <code class="docutils literal notranslate"><span class="pre">name</span></code> inside the body
+recursively calls the procedure with the variables bound to the arguments
+of the call.  In writing a macro for <code class="docutils literal notranslate"><span class="pre">iterate</span></code>, the parenthesized
+fragments must be walked once to extract variables and another time to
+extract initial values.  Unfortunately, with the current macro system,
+there is no way to walk the same pattern variable with more than one
+set of local rewrite rules. Instead, an extra copy of the pattern variable
+must be made and passed on to an auxiliary macro:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">iterate</span>
+  <span class="p">{</span> <span class="n">iterate</span> <span class="nt">?loop</span><span class="o">:</span><span class="nb">name</span> <span class="p">(</span><span class="nt">?args</span><span class="o">:</span><span class="nb">*</span><span class="p">)</span> <span class="nt">?</span><span class="o">:</span><span class="nb">body</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="n">iterate-aux</span> <span class="nt">?loop</span> <span class="p">(</span><span class="nt">?args</span><span class="p">)</span> <span class="p">(</span><span class="nt">?args</span><span class="p">)</span>
+           <span class="nt">?body</span>
+         <span class="k">end</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span> <span class="n">iterate</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">macro</span> <span class="n">iterate-aux</span>
+  <span class="p">{</span> <span class="n">iterate-aux</span> <span class="nt">?loop</span><span class="o">:</span><span class="nb">name</span> <span class="p">(</span><span class="nt">?args</span><span class="p">)</span> <span class="p">(</span><span class="nt">?inits</span><span class="p">)</span> <span class="nt">?</span><span class="o">:</span><span class="nb">body</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">local</span> <span class="nb">method</span> <span class="nt">?loop</span> <span class="p">(</span><span class="nt">?args</span><span class="p">)</span> <span class="nt">?body</span> <span class="k">end</span><span class="p">;</span>
+         <span class="nt">?loop</span><span class="p">(</span><span class="nt">?inits</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="k">args:</span>
+  <span class="p">{</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?</span><span class="o">:</span><span class="nb">variable</span> <span class="o">=</span> <span class="nt">?</span><span class="o">:</span><span class="nb">expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?variable</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="k">inits:</span>
+  <span class="p">{</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?</span><span class="o">:</span><span class="nb">variable</span> <span class="o">=</span> <span class="nt">?</span><span class="o">:</span><span class="nb">expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span> <span class="n">iterate-aux</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Both of these reasons for needing auxiliary macros are somewhat artificial
+because in fact local rewrite rules are really like local functions and
+should allow extra arguments and should be directly callable on any
+pattern variable. The problem lies in the fact that the local rewrite
+rule is artificially tied to one pattern variable by virtue of its name.</p>
+<p>In order to overcome this problem, we introduce a direct template call,
+obviating the need for auxiliary macros in many cases. This leads to a
+much more elegant solution to these more complicated macros. A template
+auxiliary rule set call has the following form:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nt">?@rule-name</span><span class="p">{</span> <span class="nc">&lt;arbitrary-template-stuff&gt;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>where a new macro punctuation <code class="docutils literal notranslate"><span class="pre">?&#64;</span></code> marks a template call. For example,
+in the prefixed <code class="docutils literal notranslate"><span class="pre">properties-definer</span></code> macro, we can now directly invoke
+a local rewrite rule set with extra arguments:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">properties-definer</span>
+  <span class="p">{</span> <span class="k">define</span> <span class="n">properties</span> <span class="nt">?kind</span><span class="o">:</span><span class="nb">name</span>
+         <span class="n">prefixed-by</span> <span class="nt">?prefix</span><span class="o">:</span><span class="nb">name</span> <span class="nt">?properties</span><span class="o">:</span><span class="nb">*</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">define</span> <span class="nb">variable</span> <span class="nt">?kind</span>
+           <span class="o">=</span> <span class="nb">concatenate</span>
+               <span class="p">(</span><span class="nt">?@prefixed-properties</span><span class="p">{</span> <span class="p">?</span><span class="s">&quot;prefix&quot;</span><span class="p">;</span> <span class="nt">?properties</span> <span class="p">})</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="k">define</span> <span class="n">properties</span> <span class="nt">?kind</span><span class="o">:</span><span class="nb">name</span> <span class="nt">?properties</span><span class="o">:</span><span class="nb">*</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">define</span> <span class="nb">variable</span> <span class="nt">?kind</span>
+           <span class="o">=</span> <span class="nb">concatenate</span><span class="p">(</span><span class="nt">?@prefixed-properties</span><span class="p">{</span> <span class="s">&quot;&quot;</span><span class="p">;</span> <span class="nt">?properties</span> <span class="p">}</span> <span class="p">}</span>
+
+<span class="k">prefixed-properties:</span>
+  <span class="p">{</span> <span class="nt">?prefix</span><span class="o">:</span><span class="nb">name</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">#()</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?prefix</span><span class="o">:</span><span class="nb">name</span><span class="p">;</span> <span class="nt">?property</span><span class="o">:</span><span class="nb">name</span><span class="p">;</span> <span class="nt">?more</span><span class="o">:</span><span class="nb">*</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nb">list</span><span class="p">(</span><span class="nt">?prefix</span> <span class="p">##</span> <span class="nt">?property</span><span class="p">),</span>
+         <span class="nt">?@prefixed-properties</span><span class="p">{</span> <span class="nt">?prefix</span><span class="p">;</span> <span class="nt">?more</span> <span class="p">}</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">iterate</span></code> can now be written without auxiliary macros using two
+template calls:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">iterate2</span>
+  <span class="p">{</span> <span class="n">iterate2</span> <span class="nt">?</span><span class="o">:</span><span class="nb">name</span> <span class="p">(</span><span class="nt">?bindings</span><span class="o">:</span><span class="nb">*</span><span class="p">)</span> <span class="nt">?</span><span class="o">:</span><span class="nb">body</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">local</span> <span class="nb">method</span> <span class="nt">?name</span> <span class="p">(</span><span class="nt">?@vars</span><span class="p">{</span> <span class="nt">?bindings</span> <span class="p">})</span> <span class="nt">?body</span> <span class="k">end</span><span class="p">;</span>
+         <span class="nt">?name</span><span class="p">(</span><span class="nt">?@inits</span><span class="p">{</span> <span class="nt">?bindings</span> <span class="p">})</span> <span class="p">}</span>
+
+<span class="k">vars:</span>
+  <span class="p">{</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?</span><span class="o">:</span><span class="nb">variable</span> <span class="o">=</span> <span class="nt">?</span><span class="o">:</span><span class="nb">expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?variable</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="k">inits:</span>
+  <span class="p">{</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?</span><span class="o">:</span><span class="nb">variable</span> <span class="o">=</span> <span class="nt">?</span><span class="o">:</span><span class="nb">expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>We can also introduce a template macro call</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nt">?@</span><span class="p">{</span> <span class="nc">&lt;arbitrary-template-stuff-that-forms-a-macro-call&gt;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>which acts as a kind of shorthand for the <code class="docutils literal notranslate"><span class="pre">:macro</span></code> constraint and permits
+the definition of macros for use as shared rewriting tools. For example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">traced</span> <span class="nb">macro</span> <span class="n">mcreverse</span>
+  <span class="p">{</span> <span class="n">mcreverse</span><span class="p">(</span><span class="nt">?list</span><span class="o">:</span><span class="nb">*</span><span class="p">)</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?list</span> <span class="p">}</span>
+
+<span class="k">list:</span>
+  <span class="p">{</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?</span><span class="o">:</span><span class="nb">expression</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?expression</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="nt">?</span><span class="o">:</span><span class="nb">expression</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">...,</span> <span class="nt">?expression</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="n">traced</span> <span class="nb">macro</span> <span class="n">user</span>
+  <span class="p">{</span> <span class="n">user</span><span class="p">(</span><span class="nt">?stuff</span><span class="o">:</span><span class="nb">*</span><span class="p">)</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nb">list</span><span class="p">(</span><span class="nt">?@</span><span class="p">{</span> <span class="n">mcreverse</span><span class="p">(</span><span class="nt">?stuff</span><span class="p">)</span> <span class="p">})</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">traced</span></code> modifier causes macro expansion to be traced. For
+example, here’s the trace for <code class="docutils literal notranslate"><span class="pre">user(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">user</span> <span class="p">}</span> <span class="o">&gt;</span> <span class="n">user</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">{</span> <span class="n">mcreverse</span> <span class="p">}</span> <span class="o">&gt;</span> <span class="n">mcreverse</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">{</span> <span class="n">mcreverse</span> <span class="p">}</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span>
+<span class="p">{</span> <span class="n">user</span> <span class="p">}</span> <span class="o">&lt;</span> <span class="nb">list</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like normal macro calls, a new hygiene context is created for <code class="docutils literal notranslate"><span class="pre">?&#64;{</span> <span class="pre">}</span></code>
+calls, so you could define <code class="docutils literal notranslate"><span class="pre">gensym</span></code> thusly:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">gensym</span>
+  <span class="p">{</span> <span class="n">gensym</span><span class="p">()</span> <span class="p">}</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="n">gensymed-name</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="object-with-elements.html" class="btn btn-neutral float-left" title="object-with-elements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="parser-expansions.html" class="btn btn-neutral float-right" title="Parser Expansions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

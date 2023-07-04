@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The print and pprint Modules &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The streams Module" href="streams.html" />
+    <link rel="prev" title="The format-out Module" href="format-out.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The io Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="format.html">The format Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format-out.html">The format-out Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The print and pprint Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#print-functions">Print functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pretty-printing">Pretty printing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-print-module">The print Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-pprint-module">The pprint Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="streams.html">The streams Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The io Library</a></li>
+      <li class="breadcrumb-item active">The print and pprint Modules</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/io/print.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-print-and-pprint-modules">
+<h1>The print and pprint Modules<a class="headerlink" href="#the-print-and-pprint-modules" title="Permalink to this headline">¶</a></h1>
+<p>The IO library’s printing modules provide an interface that outputs an object
+in Dylan literal syntax if the object can be represented as a Dylan literal,
+and otherwise, outputs the object in an implementation-dependent manner.</p>
+<p>There are two functions, <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> and <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a>. The
+<a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> function accepts keyword arguments that form a print request,
+controlling features such as circular printing, how deep within a data
+structure to print, how many elements in long sequences to print before using
+an ellipsis notation, whether pretty printing is desired, and so on. Users
+extend <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>’s ability to print various objects by adding methods to
+the <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> generic function.</p>
+<p>The <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> function handles most of the overhead to satisfy special
+print requests, outputting any special notations required, and it only calls
+<a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> when it is necessary to print objects. Users should always
+call the <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> function to output objects, especially recursively from
+within <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods, to output an object’s components.  Users
+should never call <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> directly.</p>
+<p>The IO library exports two modules for use with printing, <em>print</em> and
+<em>pprint</em>. Reference entries for the interfaces exported from the <em>print</em> module
+can be found in <a class="reference internal" href="#the-print-module">The print Module</a>, and reference entries for interfaces
+exported from the <em>pprint</em> module are in <a class="reference internal" href="#the-pprint-module">The pprint Module</a>.</p>
+<p>These modules use the Streams module. See <a class="reference internal" href="streams.html"><span class="doc">The streams Module</span></a> for
+full details of the Streams module.</p>
+<div class="section" id="print-functions">
+<h2>Print functions<a class="headerlink" href="#print-functions" title="Permalink to this headline">¶</a></h2>
+<p>The Print module offers functions for users to call to print objects,
+<a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> and <a class="reference internal" href="#io:print:print-to-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print-to-string</span></code></a>, along with interfaces that allow you
+to modify the way your own objects are printed: <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> and
+<a class="reference internal" href="#io:print:printing-object"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-object</span></code></a>.</p>
+<p>The Print module exports the following variables which provide default
+values for calls to the print function. Their values are
+implementation-dependent.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#io:print:*print-level*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-level*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:print:*print-length*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-length*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:print:*print-pretty?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-pretty?*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:print:*print-escape?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-escape?*</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="pretty-printing">
+<h2>Pretty printing<a class="headerlink" href="#pretty-printing" title="Permalink to this headline">¶</a></h2>
+<p>When writing <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods, you can ignore whether pretty
+printing is in effect. If you write your <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> method using
+pretty printing functions, then when pretty printing is in effect, the
+output is pretty printed. When pretty printing is not in effect, your
+method produces output as though you had not written it to use pretty
+printing. All <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods that are written to do pretty
+printing must call the pretty printing functions within the dynamic
+scope of a call to <em>pprint-logical-block</em>; otherwise, the pretty
+printing functions are no-ops.</p>
+<p>The following interfaces are exported from the <em>pprint</em> module:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#io:pprint:*default-line-length*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*default-line-length*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:pprint:*print-miser-width*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-miser-width*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:pprint:pprint-newline"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">pprint-newline</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:pprint:pprint-indent"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">pprint-indent</span></code></a></p></li>
+<li><p><a class="reference internal" href="#io:pprint:pprint-tab"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">pprint-tab</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="the-print-module">
+<h2>The print Module<a class="headerlink" href="#the-print-module" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item exported from the
+IO library’s <em>print</em> module.</p>
+<dl class="function">
+<dt class="dylan-api" id="io:print:print">
+<code class="sig-name descname">print</code> <em class="property">Function</em><a class="headerlink" href="#io:print:print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints <em>object</em> to the specified stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>print <em>object</em> <em>stream</em> #key <em>circle? escape? length level pretty?</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+<li><p><strong>circle?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value:
+<a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a>.</p></li>
+<li><p><strong>escape?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value:
+<a class="reference internal" href="#io:print:*print-escape?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-escape?*</span></code></a>.</p></li>
+<li><p><strong>level</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.
+Default value: <a class="reference internal" href="#io:print:*print-level*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-level*</span></code></a>.</p></li>
+<li><p><strong>length</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.
+Default value: <a class="reference internal" href="#io:print:*print-length*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-length*</span></code></a>.</p></li>
+<li><p><strong>pretty?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value:
+<a class="reference internal" href="#io:print:*print-pretty?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-pretty?*</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Prints <em>object</em> to <em>stream</em> according to the print request formed
+by the keyword arguments. A first call to <em>print</em> creates a
+printing stream to represent the print request, and recursive calls
+to <em>print</em> on this printing stream process the keyword arguments
+differently (see below). There are inspection functions for
+querying the print request. When <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> actually prints an
+object, it calls <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a>. Though the inspection
+functions for querying the print request allow you to inspect any
+parameter of the print request, <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods should
+only need to call <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-length</span></code>. All other aspects of the
+print request are handled by <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>. There is one exception,
+which is described in <a class="reference internal" href="#pretty-printing">Pretty printing</a>.</p>
+<p>The <em>level</em> keyword controls how deep into a nested data structure
+to print. The value <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> indicates that there is no limit. The
+default, <a class="reference internal" href="#io:print:*print-level*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-level*</span></code></a>, has no effect on recursive calls to
+<a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>. Recursive calls to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> may change the value of
+<em>print-level</em> explicitly, but <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> always uses a value to
+ensure the print request formed by the first call to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> is
+never exceeded. For example, if a first call to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> set the
+level to 5, and while at a depth of 3, a recursive call specified a
+level of 4, the recursive call would only descend 2 more levels,
+not 4.</p>
+<p>The <em>length</em> keyword controls how many elements of a sequence to
+print before printing ellipsis notation (<em>…</em>). The value <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+indicates that there is no limit. The <em>print-length</em> control can be
+interpreted loosely by some <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods to control
+how many <em>elements</em> of any kind of object to print; for example,
+the default <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a> method might regard <em>print-length</em> to
+determine how many slot-name/value pairs to print. The default,
+<a class="reference internal" href="#io:print:*print-length*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-length*</span></code></a>, has no effect on recursive calls to
+<a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>. Recursive calls to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> may change the value of
+<em>print-length</em> explicitly, but they may only decrease the value,
+never increase it.</p>
+<p>The <em>circle?</em> keyword indicates whether printing should check all
+subcomponent references to make sure the printing process does not
+infinitely recurse through a data structure. Circular printing also
+tags objects that occur more than once when they are first printed,
+and later occurrences are printed as a reference to the previously
+emitted tag. The default, <a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a>, has no effect on
+recursive calls to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>. If <em>print-circle?</em> is already <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>,
+then it remains <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> throughout all recursive calls. If
+<em>print-circle?</em> is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, then recursive calls to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> can
+change the value to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> ; however, when printing exits the
+dynamic scope of the call that changed the value to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, the
+value reverts back to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. If the original call to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>
+specifies <em>circle?</em> as <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, and dynamically distinct recursive
+calls turn circular printing on and off, all output generated while
+circular printing was on shares the same tagging space; that is, if
+<code class="docutils literal notranslate"><span class="pre">#1#</span></code> is printed twice, once from each of two distinct recursive
+calls to print, then each <code class="docutils literal notranslate"><span class="pre">#1#</span></code> is guaranteed to signify the same
+<a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a> object.</p>
+<p>The <em>pretty?</em> keyword indicates whether printing should attempt to
+insert line breaks and indentation to format objects according to
+how programmers tend to find it easier to read data. The default,
+<a class="reference internal" href="#io:print:*print-pretty?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-pretty?*</span></code></a>, has no effect on recursive calls to
+<a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>. If <em>print-pretty?</em> is already <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, then it remains
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> throughout all recursive calls. If <em>print-pretty?</em> is
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, then recursive calls to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> can change the value to
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> ; however, when printing exits the dynamic scope of the call
+that changed the value to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, the value reverts back to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+<p>The <em>escape?</em> keyword indicates whether printing should show escape
+codes in strings and, by extension, whether other objects should be
+printed with additional identifying information.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="variable">
+<dt class="dylan-api" id="io:print:*print-circle?*">
+<code class="sig-name descname">*print-circle?*</code> <em class="property">Thread Variable</em><a class="headerlink" href="#io:print:*print-circle?*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls whether or not to detect circular structures when printing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;boolean&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p><a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a> holds the default value for whether or not to
+detect circular structures when printing. When <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, circularity
+detection is enabled. The default is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+<p>When calling <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> directly, <a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a> may be
+overridden by specifying a value for the <code class="docutils literal notranslate"><span class="pre">circle?</span></code> argument. It is
+dynamically bound by <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> so that its value is inherited by
+recursive calls.</p>
+<p>Note that when <a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a> is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> attempts to print circular
+structures may result in failure to terminate.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> for more detail on how circular structures are handled.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="variable">
+<dt class="dylan-api" id="io:print:*print-escape?*">
+<code class="sig-name descname">*print-escape?*</code> <em class="property">Thread Variable</em><a class="headerlink" href="#io:print:*print-escape?*" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Whether to print objects for debugging or for display to the end user.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;boolean&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a></p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Controls whether or not <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> displays extra identifying
+information for the object being printed, making it easier to distinguish
+from other objects of the same type for debugging purposes. For those who
+know Python, this is much like the difference between <code class="docutils literal notranslate"><span class="pre">__repr__</span></code> and
+<code class="docutils literal notranslate"><span class="pre">__str__</span></code>.</p>
+<p>For example, when <a class="reference internal" href="#io:print:*print-escape?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-escape?*</span></code></a> is true strings print exactly the
+way Dylan string literals look, for example <code class="docutils literal notranslate"><span class="pre">&quot;abc\\n&quot;</span></code>. When
+<a class="reference internal" href="#io:print:*print-escape?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-escape?*</span></code></a> is false the same string prints as <code class="docutils literal notranslate"><span class="pre">abc</span></code> with a
+trailing newline.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="variable">
+<dt class="dylan-api" id="io:print:*print-length*">
+<code class="sig-name descname">*print-length*</code> <em class="property">Thread Variable</em><a class="headerlink" href="#io:print:*print-length*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the number of elements of an expression to print.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>false-or(&lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Controls how many elements to print at a given level of a nested
+expression. The default is unlimited (<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>).</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="variable">
+<dt class="dylan-api" id="io:print:*print-level*">
+<code class="sig-name descname">*print-level*</code> <em class="property">Thread Variable</em><a class="headerlink" href="#io:print:*print-level*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls how deeply into a nested expression to print.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>false-or(&lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Controls how many levels of a nested expression to print.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="variable">
+<dt class="dylan-api" id="io:print:*print-pretty?*">
+<code class="sig-name descname">*print-pretty?*</code> <em class="property">Thread Variable</em><a class="headerlink" href="#io:print:*print-pretty?*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls whether or not pretty printing is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;boolean&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Controls whether or not <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> does pretty printing by default.
+May be overridden via the <code class="docutils literal notranslate"><span class="pre">pretty?</span></code> keyword argument to <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="io:print:print-object">
+<code class="sig-name descname">print-object</code> <em class="property">Open Generic function</em><a class="headerlink" href="#io:print:print-object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints an object to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>print-object <em>object stream</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Prints an object to a stream. Extend the ability of <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> to print
+objects by adding methods to this generic function. When <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a>
+actually prints an object, it calls <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a>.</p>
+<p>The most common use of this functionality is to change the way objects in
+your own library display in the debugger, to make individual instances
+more easily identifiable. See the example under <a class="reference internal" href="#io:print:printing-object"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-object</span></code></a>.</p>
+<p>Never call <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> directly.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#io:print:printing-object"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-object</span></code></a>, which simplifies writing <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a>
+methods.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="io:print:print-to-string">
+<code class="sig-name descname">print-to-string</code> <em class="property">Function</em><a class="headerlink" href="#io:print:print-to-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> on <em>object</em> and returns the result as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>print-to-string <em>object</em> #key <em>circle? escape? level length pretty?</em> =&gt; <em>result</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>level</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.
+Default value: <a class="reference internal" href="#io:print:*print-level*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-level*</span></code></a>.</p></li>
+<li><p><strong>length</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.
+Default value: <a class="reference internal" href="#io:print:*print-length*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-length*</span></code></a>.</p></li>
+<li><p><strong>circle?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value:
+<a class="reference internal" href="#io:print:*print-circle?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-circle?*</span></code></a>.</p></li>
+<li><p><strong>pretty?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value:
+<a class="reference internal" href="#io:print:*print-pretty?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-pretty?*</span></code></a>.</p></li>
+<li><p><strong>escape?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value:
+<a class="reference internal" href="#io:print:*print-escape?*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*print-escape?*</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Calls <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> to produce output according to the print
+request formed by the keyword arguments and returns the result as a
+string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="io:print:printing-object">
+<code class="sig-name descname">printing-object</code> <em class="property">Macro</em><a class="headerlink" href="#io:print:printing-object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-logical-block</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">printing-object(<cite>object</cite>, <cite>stream</cite>, #key type? = #t)
+  <cite>body</cite>
+end</pre>
+</p>
+</dd>
+</dl>
+<p><em>printing-object</em> may be used within <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> to print Dylan
+objects in a standardized way while adding identifying information for your
+own classes. Example:</p>
+<blockquote>
+<div><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">print-object</span> <span class="p">(</span><span class="n">acct</span> <span class="p">::</span> <span class="nc">&lt;account&gt;</span><span class="p">,</span> <span class="n">stream</span> <span class="p">::</span> <span class="nc">&lt;stream&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">printing-object</span><span class="p">(</span><span class="n">acct</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">account-name</span><span class="p">(</span><span class="n">acct</span><span class="p">),</span> <span class="n">stream</span><span class="p">,</span> <span class="k">escape?:</span> <span class="l">#t</span><span class="p">);</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>With the above method, an <code class="docutils literal notranslate"><span class="pre">&lt;account&gt;</span></code> object with name “foo” will print as
+<code class="docutils literal notranslate"><span class="pre">{&lt;account&gt;</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">#xDEADBEEF}</span></code>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="the-pprint-module">
+<h2>The pprint Module<a class="headerlink" href="#the-pprint-module" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item exported from the
+IO library’s <em>pprint</em> module.</p>
+<dl class="variable">
+<dt class="dylan-api" id="io:pprint:*default-line-length*">
+<code class="sig-name descname">*default-line-length*</code> <em class="property">Variable</em><a class="headerlink" href="#io:pprint:*default-line-length*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the default line length used by the pretty printer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;integer&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p>80</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Controls the line length used by the pretty printer to determine
+how much output will fit on a single line. The value must be an
+integer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="io:pprint:pprint-indent">
+<code class="sig-name descname">pprint-indent</code> <em class="property">Function</em><a class="headerlink" href="#io:pprint:pprint-indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the indentation to use within the current logical block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>pprint-indent <em>relative-to n stream</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>relative-to</strong> – One of <code class="docutils literal notranslate"><span class="pre">#&quot;block&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">#&quot;current&quot;</span></code>.</p></li>
+<li><p><strong>n</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Specifies the indentation to use within the current logical block.
+When <em>relative-to</em> is <code class="docutils literal notranslate"><span class="pre">#&quot;block&quot;</span></code>, then <a class="reference internal" href="#io:pprint:pprint-indent"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">pprint-indent</span></code></a> sets the
+indentation to the column of the first character of the logical
+block plus <em>n</em>. When <em>relative-to</em> is <code class="docutils literal notranslate"><span class="pre">#&quot;current&quot;</span></code>, then
+<a class="reference internal" href="#io:pprint:pprint-indent"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">pprint-indent</span></code></a> sets the indentation to the current column plus
+<em>n</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="io:pprint:pprint-logical-block">
+<code class="sig-name descname">pprint-logical-block</code> <em class="property">Function</em><a class="headerlink" href="#io:pprint:pprint-logical-block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Groups printing into a logical block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>pprint-logical-block <em>stream</em> #key <em>prefix per-line-prefix body suffix column</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+<li><p><strong>prefix</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>per-line-prefix</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>body</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>suffix</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>column</strong> (<em>#key</em>) – A <em>limited</em> instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>, minimum 0.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Groups printing into a logical block. The logical block provides
+boundaries for new levels of indentation, affects <code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code>
+newlines, and so on. <em>Prefix</em> is a string to print at the beginning
+of the logical block. The block’s indentation is automatically set
+to be one character position greater than the column in which
+<em>prefix</em> ends. Alternatively, <em>per-line-prefix</em> is a string to
+print on every line of the logical block. This function signals an
+error if it is called with both <em>prefix</em> and <em>per-line-prefix</em>
+supplied as non-<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. <em>Suffix</em> is a string to print at the end of
+the logical block. <em>Column</em> advises the pretty printer as to the
+current column of the output stream (the default is zero). The
+<em>column</em> argument may be ignored entirely by some methods, and it
+may be ignored in some cases by methods that can better determine
+the stream’s current output column.</p>
+<p>The <em>body</em> keyword must be a function that can take one argument,
+and this argument is a stream. The <em>body</em> function should use the
+stream argument passed to it; the <em>body</em> function should not close
+over the stream argument to <a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a>.
+<a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a> wraps <em>stream</em> with a pretty printing
+stream when <em>stream</em> is any other kind of stream. If <em>stream</em> is
+already a pretty printing stream, then the <em>body</em> function is
+called on <em>stream</em>.</p>
+<p>All <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods that are written to do pretty
+printing must call the other pretty printing functions within the
+dynamic scope of a call to <a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a>; otherwise, the
+pretty printing functions are no-ops.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="io:pprint:pprint-newline">
+<code class="sig-name descname">pprint-newline</code> <em class="property">Function</em><a class="headerlink" href="#io:pprint:pprint-newline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Announces a conditional newline to the pretty printer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>pprint-newline <em>kind stream</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>kind</strong> – One of <code class="docutils literal notranslate"><span class="pre">#&quot;fill&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;miser&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;mandatory&quot;</span></code>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Announces a conditional newline to the pretty printer. The pretty
+printer emits a newline depending on the <em>kind</em> and the state of
+the pretty printer’s current line buffer. The <em>kind</em> argument has
+roughly the following meanings:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;fill&quot;</span></code> Emit a newline if the current <em>section</em> of output
+does not fit on one line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code> Emit a newline if any <code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code> newline in the
+current <em>section</em> needs to be emitted. That is, if a current
+<em>section</em> of output cannot fit on one line, and any one of the
+<code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code> newlines in the section needs to be emitted, then
+emit them all.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;miser&quot;</span></code> Emit a newline as if it were a <code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code>
+newline, but only when <em>miser mode</em> is in effect. Miser style is
+in effect when a logical block starts past a particular column of
+output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;mandatory&quot;</span></code> Emit a newline always. Establish that any
+containing <em>sections</em> cannot be printed on a single line so that
+<code class="docutils literal notranslate"><span class="pre">#&quot;linear&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">#&quot;miser&quot;</span></code> newlines will be emitted as
+appropriate.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="io:pprint:pprint-tab">
+<code class="sig-name descname">pprint-tab</code> <em class="property">Function</em><a class="headerlink" href="#io:pprint:pprint-tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Announces a tab to the pretty printer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>pprint-tab <em>kind colnum colinc stream</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>kind</strong> – One of <code class="docutils literal notranslate"><span class="pre">#&quot;line&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;line-relative&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;section&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;section-relative&quot;</span></code>.</p></li>
+<li><p><strong>colnum</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>colinc</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Announces a tab to the pretty printer. The <em>colnum</em> and <em>colinc</em>
+arguments have meaning based on the value of <em>kind</em>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;line&quot;</span></code>
+Tab to output column <em>colnum</em>. If the output is already at
+or beyond <em>colnum</em>, then add <em>colinc</em> to <em>colnum</em> until printing can
+continue at a column beyond the end of the output already on the
+line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;line-relative&quot;</span></code>
+Output <em>colnum</em> spaces. Then output enough spaces to tab to a column
+that is a multiple of <em>colinc</em> from the beginning of the line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;section&quot;</span></code>
+Similar to <code class="docutils literal notranslate"><span class="pre">#&quot;line&quot;</span></code>, but column counting is relative
+to the beginning of the current <em>section</em> rather than the beginning
+of the line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;section-relative&quot;</span></code>
+Similar to <code class="docutils literal notranslate"><span class="pre">#&quot;line-relative&quot;</span></code>, but column counting is relative to
+the beginning of the current <em>section</em> rather than the beginning of
+the line.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="variable">
+<dt class="dylan-api" id="io:pprint:*print-miser-width*">
+<code class="sig-name descname">*print-miser-width*</code> <em class="property">Variable</em><a class="headerlink" href="#io:pprint:*print-miser-width*" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls miser mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>false-or(&lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Controls <em>miser mode</em>. Pretty printing is in miser mode whenever a
+logical block (see <a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a>) begins in a column
+of output that is greater than:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">dylan</span>
+
+   <span class="o">*</span><span class="n">default</span><span class="o">-</span><span class="n">line</span><span class="o">-</span><span class="n">length</span><span class="o">*</span> <span class="o">-</span> <span class="o">*</span><span class="nb">print</span><span class="o">-</span><span class="n">miser</span><span class="o">-</span><span class="n">width</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The value must be an integer or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> (the default); <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+indicates that the pretty printer should never enter miser mode.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="format-out.html" class="btn btn-neutral float-left" title="The format-out Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="streams.html" class="btn btn-neutral float-right" title="The streams Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

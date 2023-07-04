@@ -1,0 +1,1862 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The file-system Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The operating-system Module" href="operating-system.html" />
+    <link rel="prev" title="The locators Module" href="locators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The system Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="date.html">The date Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locators.html">The locators Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The file-system Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#types-specific-to-file-system-operations">Types specific to file system operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manipulating-files">Manipulating files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manipulating-directories">Manipulating directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finding-out-file-system-information">Finding out file system information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finding-out-file-information">Finding out file information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-system-locators">File system locators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-streams">File streams</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conditions">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-file-system-module-reference">The FILE-SYSTEM module reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The system Library</a></li>
+      <li class="breadcrumb-item active">The file-system Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/system/file-system.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-file-system-module">
+<h1><a class="toc-backref" href="#id6">The file-system Module</a><a class="headerlink" href="#the-file-system-module" title="Permalink to this headline">¶</a></h1>
+<p>The File-System module is part of the System library and provides a
+generic interface to the file system of the local machine. Remotely
+mounted file systems are also accessible using this module.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-file-system-module" id="id6">The file-system Module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#types-specific-to-file-system-operations" id="id7">Types specific to file system operations</a></p></li>
+<li><p><a class="reference internal" href="#manipulating-files" id="id8">Manipulating files</a></p></li>
+<li><p><a class="reference internal" href="#manipulating-directories" id="id9">Manipulating directories</a></p></li>
+<li><p><a class="reference internal" href="#finding-out-file-system-information" id="id10">Finding out file system information</a></p></li>
+<li><p><a class="reference internal" href="#finding-out-file-information" id="id11">Finding out file information</a></p></li>
+<li><p><a class="reference internal" href="#file-system-locators" id="id12">File system locators</a></p></li>
+<li><p><a class="reference internal" href="#file-streams" id="id13">File streams</a></p>
+<ul>
+<li><p><a class="reference internal" href="#options-when-creating-file-streams" id="id14">Options when creating file streams</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#conditions" id="id15">Conditions</a></p></li>
+<li><p><a class="reference internal" href="#the-file-system-module-reference" id="id16">The FILE-SYSTEM module reference</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="types-specific-to-file-system-operations">
+<h2><a class="toc-backref" href="#id7">Types specific to file system operations</a><a class="headerlink" href="#types-specific-to-file-system-operations" title="Permalink to this headline">¶</a></h2>
+<p>The File-System module contains a number of types specifically designed
+for use by interfaces in the module.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[file-type]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;file-type&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[copy/rename-disposition]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;copy/rename-disposition&gt;</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="manipulating-files">
+<h2><a class="toc-backref" href="#id8">Manipulating files</a><a class="headerlink" href="#manipulating-files" title="Permalink to this headline">¶</a></h2>
+<p>The File-System module contains a number of interfaces that let you
+perform standard file management operations on files already resident on
+the filesystem. You can rename, copy, or delete any file, and you can
+set any available properties for the file.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:copy-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">copy-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:delete-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">delete-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">rename-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-property-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property-setter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:expand-pathname"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">expand-pathname</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:shorten-pathname"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">shorten-pathname</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:with-open-file"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-open-file</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="manipulating-directories">
+<h2><a class="toc-backref" href="#id9">Manipulating directories</a><a class="headerlink" href="#manipulating-directories" title="Permalink to this headline">¶</a></h2>
+<p>The File-System module contains a number of interfaces that let you
+create and delete directories. These can be used in conjunction with the
+file manipulation operations described in <a class="reference internal" href="#manipulating-files">Manipulating files</a> to
+perform file management tasks at any position in the file system.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:create-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">create-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:delete-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">delete-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:directory-contents"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">directory-contents</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:ensure-directories-exist"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ensure-directories-exist</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:do-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">do-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:working-directory-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">working-directory-setter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:directory-empty?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">directory-empty?</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="finding-out-file-system-information">
+<h2><a class="toc-backref" href="#id10">Finding out file system information</a><a class="headerlink" href="#finding-out-file-system-information" title="Permalink to this headline">¶</a></h2>
+<p>A number of functions return environment information regarding the
+directory structure of the file system. Each function takes no
+arguments, and returns a pathname or list of pathnames. The return
+values can be use in conjunction with other functions to perform
+file-based operations relative to the directories involved.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:home-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">home-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:root-directories"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">root-directories</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:temp-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">temp-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:working-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">working-directory</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="finding-out-file-information">
+<h2><a class="toc-backref" href="#id11">Finding out file information</a><a class="headerlink" href="#finding-out-file-information" title="Permalink to this headline">¶</a></h2>
+<p>Several interfaces in the File-System module allow you to interrogate
+files for information. You can find out whether a file exists, what its
+name is, or which directory it resides in, and you can find the current
+properties of the file.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:file-exists?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-exists?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-properties"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-properties</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-property"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-type"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-type</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">link-target</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="file-system-locators">
+<h2><a class="toc-backref" href="#id12">File system locators</a><a class="headerlink" href="#file-system-locators" title="Permalink to this headline">¶</a></h2>
+<p>The module offers multiple classes that reference either a directory
+or a file within the file system.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[file-system-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-file-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[file-system-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-directory-locator&gt;</span></code></a></p></li>
+</ul>
+<div class="figure align-default" id="id1">
+<div class="graphviz"><img src="../_images/graphviz-2f22b3956e85800a6c52fe4f8bc83fe696c7dbe4.png" alt="digraph G {
+  fontname=&quot;Arial,sans-serif&quot;;
+  node [shape=box, color=gray];
+
+  physical_locator              [label=&quot;&lt;physical-locator&gt;\noa&quot;, style=dashed];
+  file_locator                  [label=&quot;&lt;file-locator&gt;\noa&quot;, style=dashed];
+  directory_locator             [label=&quot;&lt;directory-locator&gt;\noa&quot;,style=dashed];
+  file_system_locator           [label=&quot;&lt;file-system-locator&gt;\noa&quot;, style=bold, color=&quot;#17594A&quot;];
+  file_system_file_locator      [label=&quot;&lt;file-system-file-locator&gt;&quot;, style=bold, color=&quot;#17594A&quot;];
+  file_system_directory_locator [label=&quot;&lt;file-system-directory-locator&gt;&quot;, style=bold, color=&quot;#17594A&quot;];
+
+  physical_locator              -&gt; file_system_locator;
+  physical_locator              -&gt; directory_locator;
+  physical_locator              -&gt; file_locator;
+  file_system_locator           -&gt; file_system_file_locator;
+  file_locator                  -&gt; file_system_file_locator;
+  file_system_locator           -&gt; file_system_directory_locator;
+  directory_locator             -&gt; file_system_directory_locator;
+}" class="graphviz" /></div>
+<p class="caption"><span class="caption-text">File system locator class diagram. Dashed boxes are
+classes from module <cite>locators</cite>.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>On Posix systems:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[posix-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-system-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[posix-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-directory-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[posix-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-locator&gt;</span></code></a></p></li>
+</ul>
+<div class="figure align-default" id="id2">
+<div class="graphviz"><img src="../_images/graphviz-ecb8eb19f557aab509276abaff538aabcd2165bd.png" alt="digraph G {
+  fontname=&quot;Arial,sans-serif&quot;;
+  node  [shape=box, color=gray];
+
+  physical_locator              [label=&quot;&lt;physical-locator&gt;\noa&quot;, style=dashed] ;
+  directory_locator             [label=&quot;&lt;directory-locator&gt;\noa&quot;,style=dashed];
+
+  file_locator                  [label=&quot;&lt;file-locator&gt;\noa&quot;, style=dashed];
+  file_system_locator           [label=&quot;&lt;file-system-locator&gt;\noa&quot;];
+  file_system_file_locator      [label=&quot;&lt;file-system-file-locator&gt;&quot;];
+  file_system_directory_locator [label=&quot;&lt;file-system-directory-locator&gt;&quot;] ;
+
+  posix_file_system_locator     [label=&quot;&lt;posix-file-system-locator&gt;\noas&quot;, style=bold, color=&quot;#17594A&quot;];
+  posix_directory_locator       [label=&quot;&lt;posix-directory-locator&gt;\ns&quot;, style=bold, color=&quot;#17594A&quot;] ;
+  posix_file_locator            [label=&quot;&lt;posix-file-locator&gt;\ns&quot;, style=bold, color=&quot;#17594A&quot;]
+
+  physical_locator              -&gt; file_locator;
+  physical_locator              -&gt; file_system_locator;
+  physical_locator              -&gt; directory_locator;
+  directory_locator             -&gt; file_system_directory_locator;
+  file_locator                  -&gt; file_system_file_locator;
+  file_system_locator           -&gt; file_system_file_locator;
+  file_system_locator           -&gt; file_system_directory_locator;
+  file_system_locator           -&gt; posix_file_system_locator;
+  file_system_directory_locator -&gt; posix_directory_locator;
+  file_system_file_locator      -&gt; posix_file_locator;
+  posix_file_system_locator     -&gt; posix_directory_locator;
+  posix_file_system_locator     -&gt; posix_file_locator;
+}" class="graphviz" /></div>
+<p class="caption"><span class="caption-text">Posix file system hierarchy. Dashed boxes are classes
+from module <cite>locators</cite>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>On Microsoft systems:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-server-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-server-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-unc-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-unc-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-volume-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-volume-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-system-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-directory-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-locator&gt;</span></code></a></p></li>
+</ul>
+<div class="figure align-default" id="id3">
+<div class="graphviz"><img src="../_images/graphviz-ace6005e1b0f58e71aff6bc8f5b3118f4c023e6e.png" alt="digraph G {
+  fontname=&quot;Arial,sans-serif&quot;;
+  node  [shape=box, color=gray];
+
+  locator                       [label=&quot;&lt;locator&gt;\noa&quot;,style=dashed];
+  physical_locator              [label=&quot;&lt;physical-locator&gt;\noa&quot;, style=dashed] ;
+  directory_locator             [label=&quot;&lt;directory-locator&gt;\noa&quot;,style=dashed];
+  server_locator                [label=&quot;&lt;server-locator&gt;\noa&quot;,style=dashed];
+
+  file_locator                  [label=&quot;&lt;file-locator&gt;\noa&quot;, style=dashed];
+  file_system_locator           [label=&quot;&lt;file-system-locator&gt;\noa&quot;];
+
+  microsoft_file_system_locator [label=&quot;&lt;microsoft-file-system-locator&gt;\na&quot;, style=bold, color=&quot;#17594A&quot;];
+  microsoft_server_locator      [label=&quot;&lt;microsoft-server-locator&gt;\nas&quot;, style=bold, color=&quot;#17594A&quot;];
+  microsoft_unc_locator         [label=&quot;&lt;microsoft-unc-locator&gt;\ns&quot;, style=bold, color=&quot;#17594A&quot;];
+  microsoft_volume_locator      [label=&quot;&lt;microsoft-volume-locator&gt;\ns&quot;, style=bold, color=&quot;#17594A&quot;];
+  microsoft_directory_locator   [label=&quot;&lt;microsoft-directory-locator&gt;&quot;, style=bold, color=&quot;#17594A&quot;];
+  microsoft_file_locator        [label=&quot;&lt;microsoft-file-locator&gt;&quot;, style=bold, color=&quot;#17594A&quot;];
+
+  locator                       -&gt; server_locator;
+  locator                       -&gt; physical_locator;
+  physical_locator              -&gt; file_locator;
+  physical_locator              -&gt; file_system_locator;
+  physical_locator              -&gt; directory_locator;
+  server_locator                -&gt; microsoft_server_locator;
+  directory_locator             -&gt; microsoft_directory_locator;
+  file_locator                  -&gt; microsoft_file_locator;
+  file_system_locator           -&gt; microsoft_file_system_locator;
+  microsoft_file_system_locator -&gt; microsoft_directory_locator;
+  microsoft_file_system_locator -&gt; microsoft_file_locator;
+  microsoft_server_locator      -&gt; microsoft_unc_locator;
+  microsoft_server_locator      -&gt; microsoft_volume_locator;
+}" class="graphviz" /></div>
+<p class="caption"><span class="caption-text">Microsoft file system hierarchy. Dashed boxes are classes
+from module <cite>locators</cite>.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>Native locators, which are bound to the host platform:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[native-file-system-locator]"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">&lt;native-file-system-locator&gt;</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="file-streams">
+<h2><a class="toc-backref" href="#id13">File streams</a><a class="headerlink" href="#file-streams" title="Permalink to this headline">¶</a></h2>
+<p>File streams are intended only for accessing the contents of
+files. More general file handling facilities, such as renaming,
+deleting, moving, and parsing directory names, are provided by this
+module.</p>
+<p>The <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> method on <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a> does not create
+direct instances of <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a>, but instead an instance of
+a subclass determined by <a class="reference internal" href="../io/streams.html#io:streams:type-for-file-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">type-for-file-stream</span></code></a>. See
+<a class="reference internal" href="#make">make</a> and <a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a> below.</p>
+<div class="section" id="options-when-creating-file-streams">
+<h3><a class="toc-backref" href="#id14">Options when creating file streams</a><a class="headerlink" href="#options-when-creating-file-streams" title="Permalink to this headline">¶</a></h3>
+<p>When creating file streams, you can supply the following init-keywords
+to <em>make</em> in addition to those described in <a class="reference internal" href="#file-streams">File streams</a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">if-exists:</span></code> An action to take if the file already exists.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if-does-not-exist:</span></code> An action to take if the file does not already exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">element-type:</span></code> How the elements of the underlying file are accessed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">asynchronous?:</span></code> Allows asynchronous writing of stream data to disk.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">share-mode:</span></code> How the file can be accessed while the stream is
+operating on it.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">if-exists:</span></code> init-keyword allows you to specify an action to take if
+the file named by <em>filename</em> already exists. The options are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> The file is opened with the stream position at the beginning.
+This is the default when the stream’s direction is <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">#&quot;input-output&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;new-version&quot;</span></code> If the underlying file system supports file versioning,
+a new version of the file is created. This is the default when the stream’s
+direction is <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code>.
+If the file system does not support file versioning, the default is
+<code class="docutils literal notranslate"><span class="pre">#&quot;replace&quot;</span></code> when the direction of the stream is <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;overwrite&quot;</span></code> Set the stream’s position to the beginning of the
+file, but preserve the current contents of the file. This is useful
+when the direction is <code class="docutils literal notranslate"><span class="pre">#&quot;input-output&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code> and you want
+to overwrite an existing file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;replace&quot;</span></code> Delete the existing file and create a new file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;append&quot;</span></code> Set the stream’s initial position to the end of the
+existing file so that all new output occurs at the end of the file.
+This option is only useful if the file is writeable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;truncate&quot;</span></code> If the file exists, it is truncated, setting the size
+of the file to 0. If the file does not exist, create a new file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code> Signal a <a class="reference internal" href="#system:file-system:[file-exists-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-exists-error&gt;</span></code></a> condition.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">if-does-not-exist:</span></code> init-keyword allows you to specify an action to
+take if the file named by <em>filename</em> does not exist. The options are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> No action.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code> Signal a <a class="reference internal" href="#system:file-system:[file-does-not-exist-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-does-not-exist-error&gt;</span></code></a> condition. This is
+the default when the stream’s direction is <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;create&quot;</span></code> Create a new zero-length file. This is the default when
+the stream’s direction is <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">#&quot;input-output&quot;</span></code>.</p></li>
+</ul>
+<p>Because creating a file stream <em>always</em> involves an attempt to open the
+underlying file, the aforementioned error conditions will occur during
+file stream instance initialization.</p>
+<p>File permissions are checked when creating and opening file streams, and
+if the user attempts to open a file for input, and has no read
+permission, or to open a file for output, and has no write permission,
+then an <a class="reference internal" href="#system:file-system:[invalid-file-permissions-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;invalid-file-permissions-error&gt;</span></code></a>
+condition is signalled at the time the file stream is created.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">element-type:</span></code> init-keyword controls how the elements of the
+underlying file are accessed. The three possible element types
+are:</p>
+<ul class="simple">
+<li><p><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code>
+The file is accessed as a sequence of 8-bit characters.</p></li>
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:[unicode-character]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;unicode-character&gt;</span></code></a>
+The file is accessed as a sequence of 16-bit Unicode characters.</p></li>
+<li><p><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code>
+The file is accessed as a sequence of unsigned 8-bit integers.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">asynchronous?:</span></code> init-keyword allows asynchronous writing of stream
+data to disk. If <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, whenever the stream has to write a buffer to
+disk, the thread which triggered the write must wait for the write to
+complete. If <code class="docutils literal notranslate"><span class="pre">asynchronous?</span></code> is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, the write proceeds in parallel
+with the subsequent actions of the thread.</p>
+<p>Note that asynchronous writes complicate error handling a bit. Any write
+error which occurs most likely occurs after the call which triggered the
+write. If this happens, the error is stored in a queue, and the next
+operation on that stream signals the error. If you <em>close</em> the stream
+with the <em>wait?</em> flag <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, the close happens asynchronously (after all
+queued writes complete) and errors may occur after <em>close</em> has returned.
+A method <a class="reference internal" href="../io/streams.html#io:streams:wait-for-io-completion"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for-io-completion</span></code></a> is provided to catch any errors that
+may occur after <em>close</em> is called.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">share-mode:</span></code> keyword determines how a file can be accessed by other
+streams while the stream has it open. The possible values are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;share-read&quot;</span></code> Allow other streams to be opened to the file for
+reading but not for writing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;share-write&quot;</span></code> Allow other streams to be opened for writing but not
+for reading.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;share-read-write&quot;</span></code> Allow other streams to be opened for writing
+or reading.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;exclusive&quot;</span></code> Do not allow other streams to be opened to this file.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="conditions">
+<h2><a class="toc-backref" href="#id15">Conditions</a><a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h2>
+<p>The conditions signaled by this module are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[file-exists-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-exists-error&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[file-does-not-exist-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-does-not-exist-error&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[invalid-file-permissions-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;invalid-file-permissions-error&gt;</span></code></a></p></li>
+</ul>
+<p>All errors directly signaled by this module are subclasses of
+<a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a>.</p>
+<p>The <a class="reference internal" href="#system:file-system:file-error-locator"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">file-error-locator</span></code></a> provides extra details about the file
+locator that signals the condition. This function can be used on the
+class <a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a> and its subclasses.</p>
+</div>
+<div class="section" id="the-file-system-module-reference">
+<h2><a class="toc-backref" href="#id16">The FILE-SYSTEM module reference</a><a class="headerlink" href="#the-file-system-module-reference" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item included in the
+File-System module.</p>
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:copy-file">
+<code class="sig-name descname">copy-file</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:copy-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a copy of a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>copy-file <em>old-file</em> <em>new-file</em> #key <em>if-exists</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>old-file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>new-file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>if-exists</strong> (<em>#key</em>) – An instance of
+<a class="reference internal" href="#system:file-system:[copy/rename-disposition]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;copy/rename-disposition&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Copies <em>old-file</em> to <em>new-file</em>. If <em>new-file</em> already exists, the
+action of this function is controlled by the value of <em>if-exists</em>. The
+default is to prompt you before overwriting an existing file.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[copy/rename-disposition]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;copy/rename-disposition&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">rename-file</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="type">
+<dt class="dylan-api" id="system:file-system:[copy/rename-disposition]">
+<code class="sig-name descname">&lt;copy/rename-disposition&gt;</code> <em class="property">Type</em><a class="headerlink" href="#system:file-system:[copy/rename-disposition]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type that represents possible actions when overwriting existing
+files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Equivalent</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">one-of(#&quot;signal&quot;,</span> <span class="pre">#&quot;replace&quot;)</span></code></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>This type represents the acceptable values for the <em>if-exists:</em>
+argument to the <a class="reference internal" href="#system:file-system:copy-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">copy-file</span></code></a> and <a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">rename-file</span></code></a>
+functions. Only two values are acceptable:</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code> is used, then you are warned before a file is
+overwritten during a copy or move operation.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">#&quot;replace&quot;</span></code> is used, then you are not warned before a file is
+overwritten during a copy or move operation.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:copy-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">copy-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">rename-file</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:copy-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">copy-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">rename-file</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:create-directory">
+<code class="sig-name descname">create-directory</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:create-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new directory in the specified parent directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>create-directory <em>parent</em> <em>name</em> =&gt; <em>directory</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>parent</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Creates <em>directory</em> in the specified <em>parent</em> directory. The return
+value of this function can be used with <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a> to
+create pathnames of entities in the new directory.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:delete-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">delete-directory</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:delete-directory">
+<code class="sig-name descname">delete-directory</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:delete-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>delete-directory <em>directory</em> #key <em>recursive?</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>recursive?</strong> (<em>#key</em>) – An instance of <code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code>.
+Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Deletes the specified directory. By default the directory may
+only be deleted if it is empty. Pass <code class="docutils literal notranslate"><span class="pre">recursive?:</span> <span class="pre">#t</span></code> to delete
+the directory and its contents recursively.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:create-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">create-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:delete-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">delete-file</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:delete-file">
+<code class="sig-name descname">delete-file</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:delete-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the specified file system entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>delete-file <em>file</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Deletes the file system entity specified by <em>file</em>. If <em>file</em>
+refers to a link, the link is removed, but the actual file that the
+link points to is not removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:directory-contents">
+<code class="sig-name descname">directory-contents</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:directory-contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sequence of files and subdirectories contained in a directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>directory-contents <em>directory</em> =&gt; <em>locators</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>locators</strong> – A <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> of <a class="reference internal" href="locators.html#system:locators:[locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;locator&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>In the result, each file is represented by a <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> and
+each directory is represented by a <a class="reference internal" href="locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a>. The “.”
+and “..” directories are not included in the result.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:file-system:directory-empty?">
+<code class="sig-name descname">directory-empty?</code> <em class="property">Generic function</em><a class="headerlink" href="#system:file-system:directory-empty?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether a directory is empty or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>directory-empty? <em>directory</em> =&gt; <em>empty?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>,</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>empty?</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:file-system:directory-empty?([file-system-directory-locator])">
+<code class="sig-name descname">directory-empty?(&lt;file-system-directory-locator&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#system:file-system:directory-empty?([file-system-directory-locator])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-directory&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>empty?</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:do-directory">
+<code class="sig-name descname">do-directory</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:do-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the supplied function once for each entity in the specified
+directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>do-directory <em>function</em> <em>directory</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Executes <em>function</em> once for each entity in <em>directory</em>.</p>
+<p>The signature of <em>function</em> is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">function</span><span class="o">*</span> <span class="o">*</span><span class="n">directory</span><span class="o">*</span> <span class="o">*</span><span class="n">name</span><span class="o">*</span> <span class="o">*</span><span class="nb">type</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="p">()</span>
+</pre></div>
+</div>
+<p>where <em>directory</em> is an instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>, <em>name</em> is
+an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>, and <em>type</em> is an instance of
+<a class="reference internal" href="#system:file-system:[file-type]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;file-type&gt;</span></code></a>.</p>
+<p>Within <em>function</em>, the values of <em>directory</em> and <em>name</em> can be
+concatenated to generate a <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a> suitable for use by
+the other functions in the module.</p>
+<p>The following calls are equivalent:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">do-directory</span><span class="p">(</span><span class="n">my-function</span><span class="p">,</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">FOO.TEXT&quot;</span><span class="p">)</span>
+
+<span class="n">do-directory</span><span class="p">(</span><span class="n">my-function</span><span class="p">,</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>as they both operate on the contents of <code class="docutils literal notranslate"><span class="pre">C:\\USERS\\JOHN</span></code>. The call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">do-directory</span><span class="p">(</span><span class="n">my-function</span><span class="p">,</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is not equivalent as it will operate on the contents of <code class="docutils literal notranslate"><span class="pre">C:\\USERS</span></code>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:ensure-directories-exist">
+<code class="sig-name descname">ensure-directories-exist</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:ensure-directories-exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensures that all the directories in the pathname leading to a file
+exist, creating any that do not, as needed.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ensure-directories-exist <em>file</em> =&gt; <em>created?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>created?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Ensures that all the directories in the pathname leading to a file
+exist, creating any that do not, as needed. The return value
+indicates whether or not any directory was created.</p>
+<p>The following calls are equivalent:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">ensure-directories-exist</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">FOO.TEXT&quot;</span><span class="p">)</span>
+<span class="n">ensure-directories-exist</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>as they will both create the directories <em>USERS</em> and <em>JOHN</em> if needed.
+The call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">ensure-directories-exist</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is not equivalent as it will only create <em>USERS</em> if needed.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">ensure-directories-exist</span><span class="p">(</span><span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">FOO.TEXT&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:create-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">create-directory</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:file-system:expand-pathname">
+<code class="sig-name descname">expand-pathname</code> <em class="property">Generic function</em><a class="headerlink" href="#system:file-system:expand-pathname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a pathname, returns its fully expanded form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>expand-pathname <em>path</em> =&gt; <em>expanded-path</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>expanded-path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:file-system:expand-pathname([file-system-locator])">
+<code class="sig-name descname">expand-pathname(&lt;file-system-locator&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#system:file-system:expand-pathname([file-system-locator])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand a file path to its fully expanded form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:file-system:expand-pathname([string])">
+<code class="sig-name descname">expand-pathname(&lt;string&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#system:file-system:expand-pathname([string])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expands a pathname given as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:file-system:file-error-locator">
+<code class="sig-name descname">file-error-locator</code> <em class="property">Generic function</em><a class="headerlink" href="#system:file-system:file-error-locator" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-error-locator <em>error</em> =&gt; (locator)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>error</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>locator</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-system-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-file-locator&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the file locator associated with the error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-does-not-exist-error]">
+<code class="sig-name descname">&lt;file-does-not-exist-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[file-does-not-exist-error]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error type signaled accessing a file that do not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Signaled when trying to open a file and the file does not
+already exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-error]">
+<code class="sig-name descname">&lt;file-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[file-error]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error type signaled for all failed file operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>locator</strong> – An instance of
+<a class="reference internal" href="#system:file-system:[file-system-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-file-locator&gt;</span></code></a>. Specifies the file locator
+related with the error.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Signaled when one of the file system functions triggers an error,
+such as a permissions error when trying to delete or rename a file.
+It provides information about the file locator.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[file-system-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-file-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="locators.html#system:locators:[locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;locator&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-exists-error]">
+<code class="sig-name descname">&lt;file-exists-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[file-exists-error]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error type signaled when a file already exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Signaled when an attempt is made to create a file and it
+already exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:file-exists?">
+<code class="sig-name descname">file-exists?</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:file-exists?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the specified file exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-exists? <em>file</em> #key <em>follow-links?</em> =&gt; <em>exists?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>follow-links?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Defaults to
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exists?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if <em>file</em> exists. If the file refers to a symbolic link,
+the behavior depends on the value of <em>follow-links?</em>. If <em>follow-links?</em>
+is true (the default) the target of the link is checked; otherwise the
+link itself is checked.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:file-properties">
+<code class="sig-name descname">file-properties</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:file-properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the properties of a file system entity.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-properties <em>file</em> =&gt; <em>properties</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>properties</strong> – An instance of a concrete subclass of
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;explicit-key-collection&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns all the properties of <em>file</em>. The keys to the properties
+collection are the same as those use by <a class="reference internal" href="#system:file-system:file-property"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">file-property</span></code></a>, above.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">file-properties</span><span class="p">()</span> <span class="p">[</span><span class="ss">#&quot;size&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:file-property"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">file-property</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-property-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property-setter</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:file-system:file-property">
+<code class="sig-name descname">file-property</code> <em class="property">Sealed Generic function</em><a class="headerlink" href="#system:file-system:file-property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the specified property of a file system entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-property <em>file</em> #key <em>key</em> =&gt; <em>property</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>key</strong> (<em>#key</em>) – One of <code class="docutils literal notranslate"><span class="pre">#&quot;author&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;size&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;creation-date&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;access-date&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;modification-date&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;readable?&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;writeable?&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;executable?&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>property</strong> – The value of the property specified by <em>key</em>. The
+type of the value returned depends on the value of <em>key</em>: see the
+description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the property of <em>file</em> specified by <em>key</em>. The value
+returned depends on the value of <em>key</em>, as shown in Table <a class="reference internal" href="#file-property-return-value-types"><span class="std std-ref">Return
+value types of file-property</span></a>.</p>
+<span class="target" id="file-property-return-value-types"></span><table class="docutils align-default" id="id4">
+<caption><span class="caption-text">Return value types of <code class="docutils literal notranslate"><span class="pre">file-property</span></code></span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value of <em>key</em></p></th>
+<th class="head"><p>Type of return value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;author&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;size&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;creation-date&quot;</span></code></p></td>
+<td><p><a class="reference internal" href="date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;access-date&quot;</span></code></p></td>
+<td><p><a class="reference internal" href="date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;modification-date&quot;</span></code></p></td>
+<td><p><a class="reference internal" href="date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;readable?&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;writeable?&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;executable?&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Not all platforms implement all of the above keys. Some platforms
+may support additional keys. The <code class="docutils literal notranslate"><span class="pre">#&quot;author&quot;</span></code> key is supported on
+all platforms but may return <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if it is not meaningful on a
+given platform. Use of an unsupported key signals an error.</p>
+<p>All keys listed above are implemented by Win32, though note that
+<code class="docutils literal notranslate"><span class="pre">#&quot;author&quot;</span></code> always returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:file-property-setter"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">file-property-setter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-properties"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-properties</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:file-system:file-property-setter">
+<code class="sig-name descname">file-property-setter</code> <em class="property">Sealed Generic function</em><a class="headerlink" href="#system:file-system:file-property-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the specified property of a file system entity to a given value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-property-setter <em>new-value</em> <em>file</em> <em>key</em> =&gt; <em>new-value</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>new-value</strong> – The type of this depends on the value of <em>key</em>.
+See the description for details.</p></li>
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>key</strong> – One of <code class="docutils literal notranslate"><span class="pre">#&quot;author&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;size&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;creation-date&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;access-date&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;modification-date&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;readable?&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;writeable?&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;executable?&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new-value</strong> – The type of this depends on the value of <em>key</em>. See
+the description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Sets the property of <em>file</em> specified by <em>key</em> to <em>new-value</em>. The type
+of <em>new-value</em> depends on the property specified by key, as shown in
+Table <a class="reference internal" href="#file-property-setter-return-value-types"><span class="std std-ref">New value types of file-property-setter</span></a> below.</p>
+<span class="target" id="file-property-setter-return-value-types"></span><table class="docutils align-default" id="id5">
+<caption><span class="caption-text">New value types of <em>file-property-setter</em></span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value of <em>key</em></p></th>
+<th class="head"><p>Type of <em>new-value</em></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;author&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;size&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;creation-date&quot;</span></code></p></td>
+<td><p><a class="reference internal" href="date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;access-date&quot;</span></code></p></td>
+<td><p><a class="reference internal" href="date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;modification-date&quot;</span></code></p></td>
+<td><p><a class="reference internal" href="date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;readable?&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;writeable?&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#&quot;executable?&quot;</span></code></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Note that <em>file-property-setter</em> returns the value that was set, and so
+return values have the same types as specified values, depending on the
+value of <em>key</em>.</p>
+<p>Not all platforms implement all of the above keys. Some platforms may
+support additional keys. Use of an unsupported key signals an error.</p>
+<p>The only property that can be set on Win32 is <code class="docutils literal notranslate"><span class="pre">#&quot;writeable?&quot;</span></code>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:file-property"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">file-property</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-properties"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-properties</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-system-error]">
+<code class="sig-name descname">&lt;file-system-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[file-system-error]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error type signaled when any other functions in the File-System
+module signal an error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>, <a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Signaled when one of the file system functions triggers an error,
+such as a permissions error when trying to delete or rename a file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-system-locator]">
+<code class="sig-name descname">&lt;file-system-locator&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#system:file-system:[file-system-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="locators.html#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+<p>A file system locator is a locator that refers to either a directory
+or a file within the file system.</p>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-system-file-locator]">
+<code class="sig-name descname">&lt;file-system-file-locator&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[file-system-file-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>, <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+<p>This locator refers to a non-directory file within a file system.</p>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[file-system-directory-locator]">
+<code class="sig-name descname">&lt;file-system-directory-locator&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[file-system-directory-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>, <a class="reference internal" href="locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+<p>This locator refers to a directory within a file system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:file-system-separator">
+<code class="sig-name descname">file-system-separator</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:file-system-separator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the character used to separate the directory components in
+a file path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-system-separator =&gt; separator</p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>separator</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+<p>The character separator used in a file system is determined by the
+specific file system and operating system. Open Dylan offers
+modules that transparently provide the appropriate separator for
+Posix and Microsoft systems.</p>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:file-type">
+<code class="sig-name descname">file-type</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:file-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the type of the specified file system entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>file-type <em>file</em> =&gt; <em>file-type</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file-type</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-type]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;file-type&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the type of <em>file</em>, the specified file system entity. A
+file system entity can either be a file, a directory, or a link to
+another file or directory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="type">
+<dt class="dylan-api" id="system:file-system:[file-type]">
+<code class="sig-name descname">&lt;file-type&gt;</code> <em class="property">Type</em><a class="headerlink" href="#system:file-system:[file-type]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type representing all possible types of a file system entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Equivalent</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">one-of(#&quot;file&quot;,</span> <span class="pre">#&quot;directory&quot;,</span> <span class="pre">#&quot;link&quot;)</span></code></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The type representing all possible types of a file system entity.
+An entity on the file system can either be a file, a directory or
+folder, or a link to another file or directory. The precise
+terminology used to refer to these different types of entity
+depends on the operating system you are working in.</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:do-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">do-directory</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:home-directory">
+<code class="sig-name descname">home-directory</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:home-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current value of the home directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>home-directory () =&gt; <em>home-directory</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>home-directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the current value of the home directory. The return value
+of this function can be used with concatenate to create pathnames
+of entities in the home directory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[invalid-file-permissions-error]">
+<code class="sig-name descname">&lt;invalid-file-permissions-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[invalid-file-permissions-error]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signals an error when the user has no permission to create, delete,
+read or write a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Signals an error when you attempt to perform an operation on a
+file or directory that requires certain permissions, but the
+permissions set on the file are incorrect or insufficient for
+your operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:link-target">
+<code class="sig-name descname">link-target</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:link-target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the target of a symbolic link.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>link-target <em>file</em> =&gt; <em>target</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file</strong> – An instance of type <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> – An instance of type <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Repeatedly follows symbolic links starting with <em>file</em> until it finds a
+non-link file or directory, or a non-existent link target.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="make"></span><dl class="method">
+<dt class="dylan-api" id="system:file-system:make([file-stream])">
+<code class="sig-name descname">make(&lt;file-stream&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#system:file-system:make([file-stream])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and opens a stream over a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>make <em>file-stream-class</em> #key <em>filename</em> <em>direction</em> <em>if-exists</em> <em>if-does-not-exist</em> <em>buffer-size</em> <em>element-type</em> =&gt; <em>file-stream-instance</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>file-stream-class</strong> – The class <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a>.</p></li>
+<li><p><strong>locator</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>direction</strong> (<em>#key</em>) – One of <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">#&quot;input-output&quot;</span></code>. The default is <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>.</p></li>
+<li><p><strong>if-exists</strong> (<em>#key</em>) – One of <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, <code class="docutils literal notranslate"><span class="pre">#&quot;new-version&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;overwrite&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;replace&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;append&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;truncate&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>if-does-not-exist</strong> (<em>#key</em>) – One of <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, <code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">#&quot;create&quot;</span></code>. Default value: depends on the value of <em>direction</em>.</p></li>
+<li><p><strong>buffer-size</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>element-type</strong> (<em>#key</em>) – One of <code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code>,
+<a class="reference internal" href="../io/streams.html#io:streams:[unicode-character]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;unicode-character&gt;</span></code></a>, or <code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code>, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file-stream-instance</strong> – An instance of <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Creates and opens a stream over a file.</p>
+<p>Returns a new instance of a concrete subclass of
+<a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a> that streams over the contents of the file
+referenced by <em>filename</em>. To determine the concrete subclass to be
+instantiated, this method calls the generic function
+<a class="reference internal" href="../io/streams.html#io:streams:type-for-file-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">type-for-file-stream</span></code></a>.</p>
+<p>The <em>locator</em> init-keyword should be a <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> or
+a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> that can be coerced to one.</p>
+<p>The <em>direction</em> init-keyword specifies the direction of the
+stream.  This can be one of <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">#&quot;input-output&quot;</span></code>.  The default is <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>.</p>
+<p>The <em>if-exists</em> and <em>if-does-not-exist</em> init-keywords specify
+actions to take if the file named by <em>filename</em> does or does not
+already exist when the stream is created. These init-keywords are
+discussed in more detail in <a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a>.</p>
+<p>The <em>buffer-size</em> init-keyword can be used to suggest the size of
+a stream’s buffer. See <a class="reference internal" href="../io/streams.html#io:streams:[buffered-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffered-stream&gt;</span></code></a>.</p>
+<p>The <em>element-type</em> init-keyword specifies the type of the elements
+in the file named by <em>filename</em>. This allows file elements to be
+represented abstractly; for instance, contiguous elements could be
+treated as a single database record. This init-keyword defaults to
+something useful, potentially based on the properties of the file;
+<a class="reference external" href="byte-character">byte-character</a> and <a class="reference external" href="unicode-character">unicode-character</a> are likely choices.
+See <a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:[buffered-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffered-stream&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:type-for-file-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">type-for-file-stream</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[microsoft-server-locator]">
+<code class="sig-name descname">&lt;microsoft-server-locator&gt;</code> <em class="property">Abstract Sealed Class</em><a class="headerlink" href="#system:file-system:[microsoft-server-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The abstract superclass of all servers using Microsoft protocols.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="locators.html#system:locators:[server-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-locator&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><a class="reference internal" href="#system:file-system:[microsoft-unc-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-unc-locator&gt;</span></code></a>
+<a class="reference internal" href="#system:file-system:[microsoft-volume-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-volume-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[microsoft-unc-locator]">
+<code class="sig-name descname">&lt;microsoft-unc-locator&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:file-system:[microsoft-unc-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A server located using Microsoft’s Univeral Naming Convention,
+for example <code class="docutils literal notranslate"><span class="pre">\\ComputerName\Share</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[microsoft-server-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-server-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[microsoft-volume-locator]">
+<code class="sig-name descname">&lt;microsoft-volume-locator&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:file-system:[microsoft-volume-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A server located using a volume name (drive letter) on a Microsoft
+system, for example <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[microsoft-server-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-server-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[microsoft-file-system-locator]">
+<code class="sig-name descname">&lt;microsoft-file-system-locator&gt;</code> <em class="property">Abstract Class</em><a class="headerlink" href="#system:file-system:[microsoft-file-system-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The abstract superclass of files and directories on Microsoft file systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[microsoft-directory-locator]">
+<code class="sig-name descname">&lt;microsoft-directory-locator&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[microsoft-directory-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A directory on a Microsoft file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[microsoft-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-system-locator&gt;</span></code></a>, <a class="reference internal" href="locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Slots</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>locator-server</strong> – the server which holds this directory.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[microsoft-file-locator]">
+<code class="sig-name descname">&lt;microsoft-file-locator&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:file-system:[microsoft-file-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file on a Microsoft file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[microsoft-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-system-locator&gt;</span></code></a>, <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Slots</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>locator-directory</strong> – the directory that holds this file.</p></li>
+<li><p><strong>locator-base</strong> – the file name without extension.</p></li>
+<li><p><strong>locator-extension</strong> – the file extension.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="system:file-system:[native-file-system-locator]">
+<code class="sig-name descname">&lt;native-file-system-locator&gt;</code> <em class="property">Constant</em><a class="headerlink" href="#system:file-system:[native-file-system-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>File system locator bound to the host system locator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>A native file system locator is specific to the host system it is running
+on. For example, if the host system is Posix, the file locator is bound to
+<a class="reference internal" href="#system:file-system:[posix-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-system-locator&gt;</span></code></a>, and if the host system is Microsoft,
+it is bound to <a class="reference internal" href="#system:file-system:[microsoft-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-system-locator&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:[posix-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-system-locator&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[microsoft-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-system-locator&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="type">
+<dt class="dylan-api" id="system:file-system:[pathname]">
+<code class="sig-name descname">&lt;pathname&gt;</code> <em class="property">Type</em><a class="headerlink" href="#system:file-system:[pathname]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type representing a file system entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Equivalent</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">type-union(&lt;string&gt;,</span> <span class="pre">&lt;file-system-locator&gt;)</span></code></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>A type that identifies a file system entity. This can be either a
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> or a <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:copy-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">copy-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:create-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">create-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:delete-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">delete-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:delete-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">delete-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:do-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">do-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:ensure-directories-exist"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ensure-directories-exist</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-exists?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-exists?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-properties"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-properties</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-property"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-property-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property-setter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:file-type"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-type</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:home-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">home-directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">link-target</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">rename-file</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[posix-file-system-locator]">
+<code class="sig-name descname">&lt;posix-file-system-locator&gt;</code> <em class="property">Abstract Sealed Class</em><a class="headerlink" href="#system:file-system:[posix-file-system-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The abstract superclass of files and directories on a posix-like
+file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[posix-directory-locator]">
+<code class="sig-name descname">&lt;posix-directory-locator&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:file-system:[posix-directory-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A directory on a posix-like file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-directory-locator&gt;</span></code></a>, <a class="reference internal" href="#system:file-system:[posix-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-system-locator&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:file-system:[posix-file-locator]">
+<code class="sig-name descname">&lt;posix-file-locator&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:file-system:[posix-file-locator]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file on a posix-like file system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:file-system:[file-system-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-file-locator&gt;</span></code></a>, <a class="reference internal" href="#system:file-system:[posix-file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-system-locator&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Slots</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>locator-directory</strong> – the directory that holds this file.</p></li>
+<li><p><strong>locator-base</strong> – the file name without extension.</p></li>
+<li><p><strong>locator-extension</strong> – the file extension.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:rename-file">
+<code class="sig-name descname">rename-file</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:rename-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renames a specified file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>rename-file <em>old-file</em> <em>new-file</em> #key <em>if-exists</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>old-file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>new-file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>if-exists</strong> – An instance of
+<a class="reference internal" href="#system:file-system:[copy/rename-disposition]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;copy/rename-disposition&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Renames <em>old-file</em> to <em>new-file</em>. If <em>new-file</em> already exists, the
+action of this function is controlled by the value of <em>if-exists</em>.
+The default is to prompt you before overwriting an existing file.</p>
+<p>This operation may fail if the source and destination are not on
+the same file system.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:copy-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">copy-file</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:[copy/rename-disposition]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;copy/rename-disposition&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:root-directories">
+<code class="sig-name descname">root-directories</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:root-directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sequence containing the pathnames of the root directories of
+the file systems on the local machine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>root-directories () =&gt; <em>roots</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>roots</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns a sequence containing the pathnames of the root directories
+of the file systems on the local machine.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:file-system:shorten-pathname">
+<code class="sig-name descname">shorten-pathname</code> <em class="property">Generic function</em><a class="headerlink" href="#system:file-system:shorten-pathname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a pathname, returns the shortest equivalent form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>shorten-pathname <em>path</em> =&gt; <em>shortened-path</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shorten-pathname</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+<p>Given a pathname, returns the shortest equivalent form. For instance a DOS
+pathname on Windows.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:file-system:shorten-pathname([file-system-locator])">
+<code class="sig-name descname">shorten-pathname(&lt;file-system-locator&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#system:file-system:shorten-pathname([file-system-locator])" title="Permalink to this definition">¶</a></dt>
+<dd><p>A specialization of <a class="reference internal" href="#system:file-system:shorten-pathname"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">shorten-pathname</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:temp-directory">
+<code class="sig-name descname">temp-directory</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:temp-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the pathname of the temporary directory in use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>temp-directory () =&gt; <em>temp-directory</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>temp-directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>, or false.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the pathname of the temporary directory in use. The return
+value of this function can be used with <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a> to
+create pathnames of entities in the temporary directory. If no
+temporary directory is defined, <code class="docutils literal notranslate"><span class="pre">temp-directory</span></code> returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.
+On Windows the temporary directory is specified by the <code class="docutils literal notranslate"><span class="pre">TMP</span></code>
+environment variable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="system:file-system:with-open-file">
+<code class="sig-name descname">with-open-file</code> <em class="property">Statement Macro</em><a class="headerlink" href="#system:file-system:with-open-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a body of code within the context of a file stream.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">with-open-file (<cite>stream-var</cite> = <cite>filename</cite>, #rest <cite>keys</cite>)
+  <cite>body</cite>
+end =&gt; <cite>values</cite></pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream-var</strong> – An Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>filename</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>keys</strong> – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Provides a safe mechanism for working with file streams. The macro
+creates a file stream and binds it to <em>stream-var</em>, evaluates a
+<em>body</em> of code within the context of this binding, and then closes
+the stream. The macro calls <a class="reference internal" href="../io/streams.html#io:streams:close"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">close</span></code></a> upon exiting <em>body</em>.</p>
+<p>The values of the last expression in <em>body</em> are returned.</p>
+<p>Any <em>keys</em> are passed to the <a class="reference internal" href="#system:file-system:make([file-stream])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">make</span></code></a>
+method on <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>The following expression yields the contents of file <em>foo.text</em> as
+a <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-open-file</span> <span class="p">(</span><span class="n">fs</span> <span class="o">=</span> <span class="s">&quot;foo.text&quot;</span><span class="p">,</span> <span class="k">element-type:</span> <span class="nc">&lt;byte&gt;</span><span class="p">)</span>
+  <span class="n">read-to-end</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>It is roughly equivalent to:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span>
+  <span class="k">let</span> <span class="n">hidden-fs</span> <span class="o">=</span> <span class="l">#f</span><span class="p">;</span> <span class="c1">// In case the user bashes fs variable</span>
+  <span class="nb">block</span> <span class="p">()</span>
+    <span class="n">hidden-fs</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;file-stream&gt;</span><span class="p">,</span>
+                      <span class="k">locator:</span> <span class="s">&quot;foo.text&quot;</span><span class="p">,</span> <span class="k">element-type:</span> <span class="nc">&lt;byte&gt;</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">fs</span> <span class="o">=</span> <span class="n">hidden-fs</span><span class="p">;</span>
+    <span class="n">read-to-end</span><span class="p">(</span><span class="n">fs</span><span class="p">);</span>
+  <span class="k">cleanup</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hidden-fs</span><span class="p">)</span> <span class="n">close</span><span class="p">(</span><span class="n">hidden-fs</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+  <span class="k">end</span> <span class="nb">block</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:close([file-stream])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">close(&lt;file-stream&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:make([file-stream])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">make(&lt;file-stream&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:working-directory">
+<code class="sig-name descname">working-directory</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:working-directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the working directory for the current process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>working-directory () =&gt; <em>working-directory</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>working-directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a> of the current working directory in
+the current process on the local machine. You can use the return
+value of <code class="docutils literal notranslate"><span class="pre">working-directory</span></code> in conjunction with
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a> to specify pathnames of entities in the working
+directory.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:working-directory-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">working-directory-setter</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:file-system:working-directory-setter">
+<code class="sig-name descname">working-directory-setter</code> <em class="property">Function</em><a class="headerlink" href="#system:file-system:working-directory-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the working directory for the current process.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>working-directory-setter <em>directory</em> =&gt; <em>directory</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Sets the working directory for the current process.</p>
+<p>Note that the following calls are equivalent</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">working-directory</span><span class="p">()</span> <span class="o">:=</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">FOO.TEXT&quot;</span><span class="p">;</span>
+<span class="n">working-directory</span><span class="p">()</span> <span class="o">:=</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>as they will both set the working directory to <em>C:\USERS\JOHN</em>. The
+call</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">working-directory</span><span class="p">()</span> <span class="o">:=</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>is not equivalent as it sets the working directory to <em>C:\USERS</em>.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">working-directory</span><span class="p">()</span> <span class="o">:=</span> <span class="s">&quot;C:</span><span class="se">\\</span><span class="s">USERS</span><span class="se">\\</span><span class="s">JOHN</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:file-system:working-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">working-directory</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="locators.html" class="btn btn-neutral float-left" title="The locators Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="operating-system.html" class="btn btn-neutral float-right" title="The operating-system Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

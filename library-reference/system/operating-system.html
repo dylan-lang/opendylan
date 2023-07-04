@@ -1,0 +1,853 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The operating-system Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The t-lists Library" href="../t-lists/index.html" />
+    <link rel="prev" title="The file-system Module" href="file-system.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The system Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="date.html">The date Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locators.html">The locators Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-system.html">The file-system Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The operating-system Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#manipulating-environment-information">Manipulating environment information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-and-introspecting-applications">Running and Introspecting Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-shared-libraries">Working with shared libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">The operating-system module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The system Library</a></li>
+      <li class="breadcrumb-item active">The operating-system Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/system/operating-system.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-operating-system-module">
+<h1><a class="toc-backref" href="#id2">The operating-system Module</a><a class="headerlink" href="#the-operating-system-module" title="Permalink to this headline">¶</a></h1>
+<p>The operating-system module is part of the System library. It provides
+an interface to some features of the host machine’s operating system.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-operating-system-module" id="id2">The operating-system Module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#manipulating-environment-information" id="id3">Manipulating environment information</a></p></li>
+<li><p><a class="reference internal" href="#running-and-introspecting-applications" id="id4">Running and Introspecting Applications</a></p></li>
+<li><p><a class="reference internal" href="#working-with-shared-libraries" id="id5">Working with shared libraries</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id6">The operating-system module</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="manipulating-environment-information">
+<h2><a class="toc-backref" href="#id3">Manipulating environment information</a><a class="headerlink" href="#manipulating-environment-information" title="Permalink to this headline">¶</a></h2>
+<p>The operating-system module contains a number of interfaces for
+examining and specifying information about the operating system
+environment of the host machine. As well as providing constants that you
+can use in your code, you can examine and set the value of any
+environment variable in the system.</p>
+<p>The following constants contain machine-specific information:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
+</ul>
+<p>These constants contain information about the hardware and software
+resident on the host machine. The constants let you programmatically
+check the current system conditions before executing a piece of code.</p>
+<p>The following function also returns information about the machine:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:machine-concurrent-thread-count"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">machine-concurrent-thread-count</span></code></a></p></li>
+</ul>
+<p>The following two functions let you manipulate the values of any
+environment variables in the system.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:environment-variable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">environment-variable</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:environment-variable-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">environment-variable-setter</span></code></a></p></li>
+</ul>
+<p>The following functions access information about the user logged on to
+the current machine, where available.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:login-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">login-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:login-group"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">login-group</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:owner-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">owner-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:owner-organization"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">owner-organization</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="running-and-introspecting-applications">
+<h2><a class="toc-backref" href="#id4">Running and Introspecting Applications</a><a class="headerlink" href="#running-and-introspecting-applications" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:run-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">run-application</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:current-process-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-process-id</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:parent-process-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parent-process-id</span></code></a></p></li>
+</ul>
+<p>The following functions are defined in the <a class="reference internal" href="../common-dylan/index.html"><span class="doc">common-dylan</span></a> library and re-exported from the operating-system
+module:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:application-arguments"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-arguments</span></code></a></p></li>
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:application-filename"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-filename</span></code></a></p></li>
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:application-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:exit-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">exit-application</span></code></a></p></li>
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:register-application-exit-function"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">register-application-exit-function</span></code></a></p></li>
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:tokenize-command-line"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">tokenize-command-line</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="working-with-shared-libraries">
+<h2><a class="toc-backref" href="#id5">Working with shared libraries</a><a class="headerlink" href="#working-with-shared-libraries" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:load-library"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">load-library</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id6">The operating-system module</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item exported from the
+System library’s operating-system module.</p>
+<dl class="constant">
+<dt class="dylan-api" id="system:operating-system:$architecture-little-endian?">
+<code class="sig-name descname">$architecture-little-endian?</code> <em class="property">Constant</em><a class="headerlink" href="#system:operating-system:$architecture-little-endian?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant specifying whether the processor architecture is little-endian.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;boolean&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This constant is a boolean value that is true if the processor
+architecture is little-endian and false if it is big-endian. (A
+processor is little-endian if the rightmost bit in a word is the
+least-significant bit.) For processors implementing the Intel x86
+architecture this value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:current-process-id">
+<code class="sig-name descname">current-process-id</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:current-process-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the integer value for the current process ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>current-process-id =&gt; <em>pid</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pid</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the integer value of the current process ID.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="../dylan/threads.html#dylan:threads:current-thread-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-thread-id</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:parent-process-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parent-process-id</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:environment-variable">
+<code class="sig-name descname">environment-variable</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:environment-variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of a specified environment variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>environment-variable <em>name</em> =&gt; <em>value</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the value of the environment variable specified by <em>name</em>,
+or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if there is no such environment variable.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:environment-variable-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">environment-variable-setter</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:environment-variable-setter">
+<code class="sig-name descname">environment-variable-setter</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:environment-variable-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of an environment variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>environment-variable-setter <em>new-value</em> <em>name</em> =&gt; <em>new-value</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>new-value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new-value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Changes the value of the environment variable specified by <em>name</em>
+to <em>new-value</em>. If <em>new-value</em> is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, the environment variable
+is undefined. If the environment variable does not already exist,
+<em>environment-variable-setter</em> creates it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Windows 95 places restrictions on the number of
+environment variables allowed, based on the total length of the
+names and values of the existing environment variables. The
+function <em>environment-variable-setter</em> only creates a new
+environment variable if it is possible within these restrictions.
+See the relevant Windows 95 documentation for more details.</p>
+</div>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:environment-variable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">environment-variable</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:load-library">
+<code class="sig-name descname">load-library</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:load-library" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a shared library into the current process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>load-library <em>name</em> =&gt; <em>module</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> – An instance of <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Loads the library specified by <em>name</em> into the current process. The
+library must be a shared library.</p>
+<p>If the library is a library written in Dylan, then when it loaded,
+constructor functions will run which set up the various methods and other
+Dylan objects within the shared library. Top level code within the library
+will be executed.</p>
+<p>Load-time failures, for example due to missing files or
+unsatisfied symbol dependencies, will cause an <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>
+condition to be signaled.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dynamic loading of Dylan code is currently only
+supported on non-Windows platforms using the LLVM
+back-end, and on Windows using the HARP back-end.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:login-name">
+<code class="sig-name descname">login-name</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:login-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> the name of the user logged on
+to the current machine, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if unavailable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>login-name () =&gt; <em>name-or-false</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name-or-false</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> the name of the user logged
+on to the current machine, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if unavailable.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:login-group"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">login-group</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:login-group">
+<code class="sig-name descname">login-group</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:login-group" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>login-group () =&gt; <em>group-or-false</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>group-or-false</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> the group (for example NT
+domain, or Windows Workgroup) of which the user logged on to the
+current machine is a member, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if the group is unavailable.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:login-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">login-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="system:operating-system:$machine-name">
+<code class="sig-name descname">$machine-name</code> <em class="property">Constant</em><a class="headerlink" href="#system:operating-system:$machine-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant specifying the type of hardware installed in the host machine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;symbol&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p>#”x86”, #”x86-64”, #”ppc”</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>This constant is a symbol that represents the type of hardware
+installed in the host machine.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="system:operating-system:$os-name">
+<code class="sig-name descname">$os-name</code> <em class="property">Constant</em><a class="headerlink" href="#system:operating-system:$os-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant specifying the operating system running on the host machine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;symbol&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p>#”win32”, #”linux”, #”darwin”, #”freebsd”</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>This constant is a symbol that represents the operating system
+running on the host machine.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="system:operating-system:$os-variant">
+<code class="sig-name descname">$os-variant</code> <em class="property">Constant</em><a class="headerlink" href="#system:operating-system:$os-variant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant specifying which variant of an operating system the current
+machine is running, where relevant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;symbol&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This constant is a symbol value distinguishing between variants of
+the operating system identified by <code class="docutils literal notranslate"><span class="pre">$os-name</span></code>, where relevant;
+otherwise it has the same value as <code class="docutils literal notranslate"><span class="pre">$os-name</span></code>. On Windows, the
+possible values are <code class="docutils literal notranslate"><span class="pre">#&quot;win3.1&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;win95&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;win98&quot;</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">#&quot;winnt&quot;</span></code>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="system:operating-system:$os-version">
+<code class="sig-name descname">$os-version</code> <em class="property">Constant</em><a class="headerlink" href="#system:operating-system:$os-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant specifying which version of an operating system the current
+machine is running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;string&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The constant <em>$os-version</em> is a string value that identifies the
+version of the operating system. For Windows NT, a typical value
+would be <em>“4.0.1381 Service Pack 3”</em>. For Windows 95, a typical
+value would be <em>“4.0.1212 B”</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:owner-name">
+<code class="sig-name descname">owner-name</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:owner-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the user who owns the current machine, if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>owner-name () =&gt; <em>name-or-false</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name-or-false</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> the name of the user who
+owns the current machine (that is, the name entered when the
+machine was registered), or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if the name is unavailable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:owner-organization">
+<code class="sig-name descname">owner-organization</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:owner-organization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the organization to which the user who owns the current
+machine belongs, if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>owner-organization () =&gt; <em>organization-or-false</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>organization-or-false</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> the organization to which
+the user who owns the current machine belongs, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if the
+name is unavailable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:parent-process-id">
+<code class="sig-name descname">parent-process-id</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:parent-process-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the integer value for the parent process ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>parent-process-id =&gt; <em>pid</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pid</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Returns the integer value of the parent process ID.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is not yet implemented on Windows.</p>
+</div>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:current-process-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-process-id</span></code></a></p></li>
+<li><p><a class="reference internal" href="../dylan/threads.html#dylan:threads:current-thread-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-thread-id</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="system:operating-system:$platform-name">
+<code class="sig-name descname">$platform-name</code> <em class="property">Constant</em><a class="headerlink" href="#system:operating-system:$platform-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant specifying the operating system running on and the type of
+hardware installed in the host machine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>&lt;symbol&gt;</p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86-win32&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;x86-linux&quot;</span></code>, etc.</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>This constant is a symbol that represents the both the operating
+system running on, and the type of hardware installed in, the host
+machine. It is a combination of the <a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a> and
+<a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a> constants.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86-win32&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;x86_64-linux&quot;</span></code></p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:machine-concurrent-thread-count">
+<code class="sig-name descname">machine-concurrent-thread-count</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:machine-concurrent-thread-count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of concurrent execution threads available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>machine-concurrent-thread-count =&gt; <em>count</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>count</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the number of execution threads currently
+available. This normally corresponds to the number of logical
+processor cores currently online, and may vary over the lifetime
+of the program.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:run-application">
+<code class="sig-name descname">run-application</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:run-application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launches an application in a new process, using the specified name and
+arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>run-application <em>command</em> #key <em>minimize?</em> <em>activate?</em>
+<em>under-shell?</em> <em>inherit-console?</em> <em>outputter</em> <em>asynchronous?</em>
+<em>environment</em> <em>working-directory</em> <em>input</em> <em>if-input-does-not-exist</em>
+<em>output</em> <em>if-output-exists</em> <em>error</em> <em>if-error-exists</em> <em>hide?</em>
+=&gt; <em>status</em> <em>signal</em> <em>process</em> #rest <em>streams</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>command</strong> – <p>An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>. Either a string
+containing the entire command or a sequence of strings representing the
+command as parsed by the shell. Example: <code class="docutils literal notranslate"><span class="pre">&quot;/bin/ls</span> <span class="pre">-l&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">#[&quot;/bin/ls&quot;,</span> <span class="pre">&quot;-l&quot;]</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows this must be a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>, never a sequence of
+strings.</p>
+</div>
+</p></li>
+<li><p><strong>under-shell?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. If true (the
+default), use a shell to invoke the <em>command</em>. On Unix systems this is
+equivalent to <code class="docutils literal notranslate"><span class="pre">/bin/sh</span> <span class="pre">-c</span> <span class="pre">'...command...'</span></code>. On Windows the
+<span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">COMSPEC</span></code> environment variable specifies</p></li>
+<li><p><strong>inherit-console?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Whether
+to run in the same session and process group as the calling process and
+therefore retain the same controlling TTY. Essentially, whether or not to
+call <code class="docutils literal notranslate"><span class="pre">setsid()</span></code>. If you want the subprocess to be a daemon process, pass
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. The default is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
+<li><p><strong>outputter</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. A function with
+signature <code class="docutils literal notranslate"><span class="pre">(buffer</span> <span class="pre">::</span> <span class="pre">&lt;string&gt;,</span> <span class="pre">#key</span> <span class="pre">end)</span></code> which will receive all output
+(both stdout and stderr) from the command.</p></li>
+<li><p><strong>asynchronous?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. If true,
+return immediately after creating the process. Otherwise, block until the
+command completes or is terminated by signal.</p></li>
+<li><p><strong>environment</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;explicit-key-collection&gt;</span></code></a>.  A table mapping environment variable
+names (strings) to values (also strings). These values <em>augment</em> the
+environment in the current process. (There is currently no way to specify
+via this API that <em>environment</em> should be the only environment variables
+set in the subprocess.)</p></li>
+<li><p><strong>working-directory</strong> (<em>#key</em>) – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of
+<a class="reference internal" href="file-system.html#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>. If not #f, the working directory of the subprocess
+is set to this directory.</p></li>
+<li><p><strong>input</strong> (<em>#key</em>) – <p>An instance of <a class="reference internal" href="file-system.html#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a> or one of the
+following symbols:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;inherit&quot;</span></code>: Inherit standard input from the calling process. Write
+to <a class="reference internal" href="../io/standard-io.html#io:standard-io:*standard-input*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*standard-input*</span></code></a> to send input to the subprocess.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;null&quot;</span></code>: Use a null stream as standard input.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;stream&quot;</span></code>: Create and return a stream connected to the subprocess’s
+standard input.</p></li>
+<li><p>A <a class="reference internal" href="file-system.html#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>: Open the specified file for reading and connect
+it to the subprocess’s standard input.</p></li>
+</ul>
+</p></li>
+<li><p><strong>if-input-does-not-exist</strong> (<em>#key</em>) – <p>Either <code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">#&quot;create&quot;</span></code>. The default is <code class="docutils literal notranslate"><span class="pre">#signal</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code>: Signal a <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-does-not-exist-error&gt;</span></code> if
+<code class="docutils literal notranslate"><span class="pre">input</span></code> is a pathname that names a non-existent file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;create&quot;</span></code>: Create an empty input file and connect it to standard
+input of the subprocess.</p></li>
+</ul>
+</p></li>
+<li><p><strong>output</strong> (<em>#key</em>) – <p>An instance of <a class="reference internal" href="file-system.html#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a> or one of the
+following symbols:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;inherit&quot;</span></code>: Inherit standard output from the calling process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;null&quot;</span></code>: Send standard output to a null stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;stream&quot;</span></code>: Create and return a stream connected to the subprocess’s
+standard output.</p></li>
+<li><p>A <a class="reference internal" href="file-system.html#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>: Open the specified file for writing and connect
+it to the subprocess’s standard output.</p></li>
+</ul>
+</p></li>
+<li><p><strong>if-output-exists</strong> (<em>#key</em>) – As for the <code class="docutils literal notranslate"><span class="pre">if-exists</span></code> option when
+creating an output <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a> except that <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> is not
+allowed.</p></li>
+<li><p><strong>error</strong> (<em>#key</em>) – Possible values are the same as for the <code class="docutils literal notranslate"><span class="pre">output</span></code>
+parameter except that they apply to <a class="reference internal" href="../io/standard-io.html#io:standard-io:*standard-error*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*standard-error*</span></code></a>.</p></li>
+<li><p><strong>if-error-exists</strong> (<em>#key</em>) – As for the <code class="docutils literal notranslate"><span class="pre">if-exists</span></code> option when
+creating an output <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a> except that <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> is not
+allowed.</p></li>
+<li><p><strong>activate?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.  If the
+<em>activate?</em> argument is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, the shell window becomes the active
+window. The default is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>. (<strong>Ignored on Unix platforms.</strong>)</p></li>
+<li><p><strong>minimize?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. If <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, the
+command’s shell window will appear minimized. The default is
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. (<strong>Ignored on Unix platforms.</strong>)</p></li>
+<li><p><strong>hide?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.  If <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, the
+window associated with this process will be hidden. The default is
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. (<strong>Ignored on Unix platforms.</strong>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. The exit status returned by
+<code class="docutils literal notranslate"><span class="pre">waitpid</span></code> (Unix) or <code class="docutils literal notranslate"><span class="pre">WaitForSingleObject</span></code> (Windows).</p></li>
+<li><p><strong>signal</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. If the process
+was terminated by a signal this value is the signal number.</p></li>
+<li><p><strong>process</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;application-process&gt;</span></code>.  If
+<code class="docutils literal notranslate"><span class="pre">asynchronous?</span></code> is true, <a class="reference internal" href="#system:operating-system:run-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">run-application</span></code></a> returns immediately
+and this value identifies the running process. See
+<a class="reference internal" href="#system:operating-system:wait-for-application-process"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">wait-for-application-process</span></code></a>, which may be used to wait for this
+process to terminate.</p></li>
+<li><p><strong>#rest streams</strong> – Instances of <a class="reference internal" href="../io/streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>. Up to three streams
+are returned, always in the order stdin, stdout, stderr.  For example, if
+the arguments were <code class="docutils literal notranslate"><span class="pre">input:</span> <span class="pre">#&quot;null&quot;,</span> <span class="pre">output:</span> <span class="pre">#&quot;stream&quot;,</span> <span class="pre">error:</span> <span class="pre">#&quot;stream&quot;</span></code>
+then two streams are returned: output and error.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Launches an application in a new process, using the name and arguments
+specified in <em>command</em>.</p>
+<p>Perhaps the simplest example is to run a command synchronously, with all
+input/output inherited from the parent shell and only looking at the exit
+status return value:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">exit-status</span> <span class="o">=</span> <span class="n">run-application</span><span class="p">(</span><span class="s">&quot;/bin/ls foo&quot;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">~zero?</span><span class="p">(</span><span class="n">exit-status</span><span class="p">))</span>
+  <span class="nb">error</span><span class="p">(</span><span class="s">&quot;/bin/ls failed with status %d&quot;</span><span class="p">,</span> <span class="n">exit-status</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:exit-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">exit-application</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:wait-for-application-process"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">wait-for-application-process</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:operating-system:wait-for-application-process">
+<code class="sig-name descname">wait-for-application-process</code> <em class="property">Function</em><a class="headerlink" href="#system:operating-system:wait-for-application-process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for a process to terminate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>wait-format-application-process <em>process</em> =&gt; <em>status</em> <em>signal</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>process</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;application-process&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>status</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. The exit status returned by
+<code class="docutils literal notranslate"><span class="pre">waitpid</span></code> (Unix) or <code class="docutils literal notranslate"><span class="pre">WaitForSingleObject</span></code> (Windows).</p></li>
+<li><p><strong>signal</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. If the process
+was terminated by a signal this value is the signal number.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="file-system.html" class="btn btn-neutral float-left" title="The file-system Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../t-lists/index.html" class="btn btn-neutral float-right" title="The t-lists Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

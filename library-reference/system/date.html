@@ -1,0 +1,2294 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The date Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The locators Module" href="locators.html" />
+    <link rel="prev" title="The system Library" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The system Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The date Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#representing-dates-and-times">Representing dates and times</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#representing-durations">Representing durations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performing-operations-on-dates-and-durations">Performing operations on dates and durations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#comparing-dates">Comparing dates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comparing-durations">Comparing durations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#performing-arithmetic-operations">Performing arithmetic operations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dealing-with-time-zones">Dealing with time-zones</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-information-from-dates">Extracting information from dates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#formatting-dates">Formatting Dates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parsing-dates">Parsing Dates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">The date module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="locators.html">The locators Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-system.html">The file-system Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The system Library</a></li>
+      <li class="breadcrumb-item active">The date Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/system/date.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-date-module">
+<h1><a class="toc-backref" href="#id2">The date Module</a><a class="headerlink" href="#the-date-module" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">date</span></code> module is part of the System library and provides a
+machine-independent facility for representing and manipulating dates and
+date/time intervals.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-date-module" id="id2">The date Module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#representing-dates-and-times" id="id3">Representing dates and times</a></p></li>
+<li><p><a class="reference internal" href="#representing-durations" id="id4">Representing durations</a></p></li>
+<li><p><a class="reference internal" href="#performing-operations-on-dates-and-durations" id="id5">Performing operations on dates and durations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#comparing-dates" id="id6">Comparing dates</a></p></li>
+<li><p><a class="reference internal" href="#comparing-durations" id="id7">Comparing durations</a></p></li>
+<li><p><a class="reference internal" href="#performing-arithmetic-operations" id="id8">Performing arithmetic operations</a></p></li>
+<li><p><a class="reference internal" href="#dealing-with-time-zones" id="id9">Dealing with time-zones</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#extracting-information-from-dates" id="id10">Extracting information from dates</a></p></li>
+<li><p><a class="reference internal" href="#formatting-dates" id="id11">Formatting Dates</a></p></li>
+<li><p><a class="reference internal" href="#parsing-dates" id="id12">Parsing Dates</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id13">The date module</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="representing-dates-and-times">
+<h2><a class="toc-backref" href="#id3">Representing dates and times</a><a class="headerlink" href="#representing-dates-and-times" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">date</span></code> module contains a single class, <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>, an instance of which
+can represent any date between 1 Jan 1800 00:00:00 and 31 Dec 2199
+23:59:59, Greenwich Mean Time. You can create a date object by calling
+the function <em>encode-date</em> or using the <em>make</em> method for <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:make([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">make</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:current-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[day-of-week]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code></a></p></li>
+</ul>
+<p>Each of the arguments to <a class="reference internal" href="#system:date:encode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-date</span></code></a> and to the <a class="reference internal" href="#system:date:make([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">make</span></code></a> method on <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> is an instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (except for the <em>iso8601-string</em> keyword for the <em>make</em>
+method, which is a string) that is passed as an init-keyword value to
+the <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object. Each init-keyword takes an instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>, limited to the natural range for that attribute. For
+example, <em>month:</em> can only take values between 1 and 12.</p>
+<p>You must specify values, via <a class="reference internal" href="#system:date:encode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-date</span></code></a>, for at least the
+<em>year:</em>, <em>month:</em>, and <em>day:</em> init-keywords. In addition, you can also
+specify values for <em>hours:</em>, <em>minutes:</em>, <em>seconds:</em>, <em>microseconds:</em>,
+and <em>time-zone-offset:</em>. If not supplied, the default value for each of
+these init-keywords is 0.</p>
+<p>The <em>time-zone-offset:</em> init-keyword is used to represent time zones in
+the <code class="docutils literal notranslate"><span class="pre">date</span></code> module as <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> values representing the offset in minutes
+from Greenwich Mean Time (GMT). Positive values are used for time zones
+East of Greenwich; negative values represent time zones to the west of
+Greenwich.</p>
+<p>For example, the value -300 (-5 hours) is U.S. Eastern Standard Time and
+the value -240 (-4 hours) is U.S. Eastern Daylight Savings Time.</p>
+<p>If you wish, a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> can be specified completely by using the
+<em>iso8601-string:</em> init-keyword. This init-keyword takes an instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>, which should be a valid ISO8601 format date. If you use the
+<em>iso8601-string:</em> init-keyword, there is no need to specify any other
+init-keywords to a call to <em>make</em> on <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>.</p>
+</div>
+<div class="section" id="representing-durations">
+<h2><a class="toc-backref" href="#id4">Representing durations</a><a class="headerlink" href="#representing-durations" title="Permalink to this headline">¶</a></h2>
+<p>Date/time intervals, called durations, are modeled in a style quite
+similar to that of SQL. There are two, effectively disjoint, classes of
+duration: one with a resolution of months (for example, 3 years, 2
+months) and the other with a resolution of microseconds (for example, 50
+days, 6 hours, 23 minutes). The first is <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a> and the
+second <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>.</p>
+<p>An important distinction between <code class="docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code> is that a given instance of
+<code class="docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code> is always a fixed unit of a fixed length, whereas
+a <code class="docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code> follows the vagaries of the calendar. So if
+you have a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> that represents, for example, the 5th of some month,
+adding a <code class="docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code> of 1 month to that will always take you
+to the 5th of the following month, whether that is an interval of 28,
+29, 30, or 31 days.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-year/month-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-year/month-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-day/time-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-day/time-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+</ul>
+</div>
+<div class="section" id="performing-operations-on-dates-and-durations">
+<h2><a class="toc-backref" href="#id5">Performing operations on dates and durations</a><a class="headerlink" href="#performing-operations-on-dates-and-durations" title="Permalink to this headline">¶</a></h2>
+<p>A number of interfaces are exported from the <code class="docutils literal notranslate"><span class="pre">date</span></code> module that let you
+perform other operations on dates and durations, and extract
+date-specific information from your local machine.</p>
+<div class="section" id="comparing-dates">
+<h3><a class="toc-backref" href="#id6">Comparing dates</a><a class="headerlink" href="#comparing-dates" title="Permalink to this headline">¶</a></h3>
+<p>The following operations are exported from the <code class="docutils literal notranslate"><span class="pre">date</span></code> module.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:date:=([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+</ul>
+<p>These methods let you perform arithmetic-like operations on dates to
+test for equality, or to test whether one date occurred before another.</p>
+</div>
+<div class="section" id="comparing-durations">
+<h3><a class="toc-backref" href="#id7">Comparing durations</a><a class="headerlink" href="#comparing-durations" title="Permalink to this headline">¶</a></h3>
+<p>The following operations are exported from the <code class="docutils literal notranslate"><span class="pre">date</span></code> module.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:date:=([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+</ul>
+<p>As with dates, you can perform arithmetic-like operations on durations
+to test for equality, or to test whether one duration is shorter than
+another.</p>
+</div>
+<div class="section" id="performing-arithmetic-operations">
+<h3><a class="toc-backref" href="#id8">Performing arithmetic operations</a><a class="headerlink" href="#performing-arithmetic-operations" title="Permalink to this headline">¶</a></h3>
+<p>You can add, subtract, multiply, and divide dates and durations in a
+number of ways to produce a variety of date or duration information.
+Methods are defined for any combination of date and duration, with any
+operation that makes sense, and the return value is of the appropriate
+type.</p>
+<p>For example, a method is defined that subtracts one date from another,
+and returns a duration, but there is no method for adding two dates
+together, since dates cannot be summed in any sensible way. However,
+there are methods for adding dates and durations which return dates.</p>
+<p>Note that some addition and subtraction operations involving dates and
+instances of <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a> can cause
+errors where the result is a date that does not exist in the calendar.
+For example, adding one month to January 30th.</p>
+<p>The table below summarizes the methods defined for each arithmetic
+operation, for different combinations of date and duration arguments,
+together with their return values.</p>
+<p>Methods defined for arithmetic operations on dates and durations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Op</p></th>
+<th class="head"><p>Argument 1</p></th>
+<th class="head"><p>Argument 2</p></th>
+<th class="head"><p>Return value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dealing-with-time-zones">
+<h3><a class="toc-backref" href="#id9">Dealing with time-zones</a><a class="headerlink" href="#dealing-with-time-zones" title="Permalink to this headline">¶</a></h3>
+<p>The following functions return information about the time-zone that the
+host machine is in.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:date:local-time-zone-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">local-time-zone-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:local-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">local-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:local-daylight-savings-time?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">local-daylight-savings-time?</span></code></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="extracting-information-from-dates">
+<h2><a class="toc-backref" href="#id10">Extracting information from dates</a><a class="headerlink" href="#extracting-information-from-dates" title="Permalink to this headline">¶</a></h2>
+<p>A number of functions are available to return discrete pieces of
+information from a specified <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object. These are useful to allow
+you to deconstruct a given date in order to retrieve useful information
+from it.</p>
+<p>The most basic way to extract information from a date is to use the
+function <em>decode-date</em>.</p>
+<ul>
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p>
+<p>Decodes a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> into its constituent parts. This function is the
+companion of <em>encode-date</em>, in that it takes a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object and
+returns all of its constituent parts. Note, however, that in contrast to
+<em>encode-date</em>, it does not return any millisecond component to the
+date, but it does return the day of the week of the specified date.</p>
+</li>
+</ul>
+<p>A number of other functions exist to extract individual components from
+a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object. Each of these functions is listed below. Each
+function takes a single argument, a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object, and returns the
+component of the date referred to in the function name. For example,
+<em>date-month</em> takes a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object as an argument, and returns the
+month that the date refers to.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+</ul>
+<p>For each function except <em>date-day-of-week</em>, the value returned is an
+instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. The <em>date-day-of-week</em> function returns an
+object of type <code class="docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code>. For more information, please refer to
+the reference entries of each function. Also see the function
+<a class="reference internal" href="#system:date:date-time-zone-offset-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset-setter</span></code></a>, which allows you to set
+the time-zone offset of a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> explicitly.</p>
+</div>
+<div class="section" id="formatting-dates">
+<h2><a class="toc-backref" href="#id11">Formatting Dates</a><a class="headerlink" href="#formatting-dates" title="Permalink to this headline">¶</a></h2>
+<p>To return an ISO 8601 format date from a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object, use the
+function <a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a>.</p>
+<p>Dates can also be returned in RFC-822 and RFC-1123 formats with the
+<a class="reference internal" href="#system:date:as-rfc822-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc822-string</span></code></a> and <a class="reference internal" href="#system:date:as-rfc1123-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc1123-string</span></code></a> functions.</p>
+<p>More flexible date formatting is available with <a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a>.</p>
+</div>
+<div class="section" id="parsing-dates">
+<h2><a class="toc-backref" href="#id12">Parsing Dates</a><a class="headerlink" href="#parsing-dates" title="Permalink to this headline">¶</a></h2>
+<p>Dates can be parsed with <a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a>. ISO-8601 formatted
+date strings can be parsed with <a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a>.</p>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id13">The date module</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item exported from the
+Date module.</p>
+<dl class="method">
+<dt class="dylan-api" id="system:date:=([date])">
+<code class="sig-name descname">=(&lt;date&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:=([date])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two dates for equality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><em>date1</em> = <em>date2</em> =&gt; <em>equal?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date1</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+<li><p><strong>date2</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>equal?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This method lets you compare two dates to see if they are equal.
+Any differences in microseconds between <em>date1</em> and <em>date2</em> are
+ignored.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:=([duration])">
+<code class="sig-name descname">=(&lt;duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:=([duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two durations for equality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><em>duration1</em> = <em>duration2</em> =&gt; <em>equal?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>duration1</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+<li><p><strong>duration2</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>equal?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This method lets you compare two durations to see if they are
+equal. If the durations are actually instances of
+<a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>, any differences in microseconds
+between <em>duration1</em> and <em>duration2</em> are ignored.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:[([date])">
+<code class="sig-name descname">&lt;(&lt;date&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:[([date])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines whether one date is earlier than another.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><em>date1</em> &lt; <em>date2</em> =&gt; <em>before?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date1</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+<li><p><strong>date2</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>before?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This method determines if <em>date1</em> is earlier than <em>date2</em>. Any
+differences in microseconds between <em>date1</em> and <em>date2</em> are
+ignored.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:=([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:[([duration])">
+<code class="sig-name descname">&lt;(&lt;duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:[([duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines whether one duration is less than another.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><em>duration1</em> &lt; <em>duration2</em> =&gt; <em>less-than?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>duration1</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+<li><p><strong>duration2</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>less-than?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This method determines if <em>duration1</em> is less than <em>duration2</em>. If
+the durations are actually instances of <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>, any
+differences in microseconds between <em>duration1</em> and <em>duration2</em> are
+ignored.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:=([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:+([date])">
+<code class="sig-name descname">+(&lt;date&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:+([date])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs addition on specific combinations of dates and durations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>arg1</em> <em>arg2</em> =&gt; <em>sum</em></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>arg1</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> or
+<a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>. See description for details.</p></li>
+<li><p><strong>arg2</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> or
+<a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>. See description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sum</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A number of methods are defined for the <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> generic function to allow
+summing of various combinations of dates and durations. Note that there
+is not a method defined for every possible combination of date and
+duration. Specifically, you cannot sum two dates. The table below lists
+the methods that are defined on <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> and <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p>
+<p>Methods defined for addition of dates and durations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>arg1</p></th>
+<th class="head"><p>arg2</p></th>
+<th class="head"><p>sum</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/(&lt;duration&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:+([duration])">
+<code class="sig-name descname">+(&lt;duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:+([duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs addition on durations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>arg1</em> <em>arg2</em> =&gt; <em>sum</em></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>arg1</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+<li><p><strong>arg2</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sum</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A number of methods are defined for the <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> generic function to
+allow summing of durations. Note that there is not a method defined
+for every possible combination of duration. Specifically, you cannot
+sum different types of duration. The table below lists the methods
+that are defined on <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a>.</p>
+<p>Methods defined for addition of durations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>arg1</p></th>
+<th class="head"><p>arg2</p></th>
+<th class="head"><p>sum</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/(&lt;duration&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:-([date])">
+<code class="sig-name descname">-(&lt;date&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:-([date])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs subtraction on specific combinations of dates and durations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>arg1</em> <em>arg2</em> =&gt; <em>diff</em></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>arg1</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> or
+<a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>. See description for details.</p></li>
+<li><p><strong>arg2</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>, or an
+instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> if <em>arg1</em> is a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>.
+See description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> or
+<a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>. See description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A number of methods are defined for the <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a> generic function to allow
+subtraction of various combinations of dates and durations. Note that
+there is not a method defined for every possible combination of date and
+duration. Specifically, you cannot subtract a date from a duration, and
+you cannot subtract different types of duration. The return value can be
+either a date or a duration, depending on the arguments supplied. The
+table below lists the methods that are defined on <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a>.</p>
+<p>Methods defined for subtraction of dates and durations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>arg1</p></th>
+<th class="head"><p>arg2</p></th>
+<th class="head"><p>difference</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/(&lt;duration&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:-([duration])">
+<code class="sig-name descname">-(&lt;duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:-([duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs subtraction on specific combinations of durations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>arg1</em> <em>arg2</em> =&gt; <em>diff</em></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>arg1</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> or
+<a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>. See description for details.</p></li>
+<li><p><strong>arg2</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>, or an
+instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> if <em>arg1</em> is a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>.
+See description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> or
+<a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>. See description for details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A number of methods are defined for the <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a> generic function to allow
+subtraction of durations. Note that there is not a method defined for
+every possible combination of duration. Specifically, you cannot
+subtract different types of duration. The table below lists the
+methods that are defined on <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#subtraction"><code class="xref drm docutils literal notranslate"><span class="pre">-</span></code></a>.</p>
+<p>Methods defined for subtraction of dates and durations</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>arg1</p></th>
+<th class="head"><p>arg2</p></th>
+<th class="head"><p>difference</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+<td><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/(&lt;duration&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:*([duration])">
+<code class="sig-name descname">*(&lt;duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:*([duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiplies a duration by a scale factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>* <em>duration</em> <em>scale</em> =&gt; <em>new-duration</em></p>
+</dd>
+<dt class="field-even">Signature</dt>
+<dd class="field-even"><p>* <em>scale</em> <em>duration</em> =&gt; <em>new-duration</em></p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+<li><p><strong>scale</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>new-duration</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p><em>Note:</em> These arguments can be expressed in any order.</p>
+<p>Multiples a duration by a scale factor and returns the result. Note that
+the arguments can be expressed in any order: methods are defined such
+that the duration can be placed first or second in the list of
+arguments.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/(&lt;duration&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:/([duration])">
+<code class="sig-name descname">/(&lt;duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:/([duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides a duration by a scale factor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>/ <em>duration</em> <em>scale</em> =&gt; <em>new-duration</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+<li><p><strong>scale</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new-duration</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;date&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-(&lt;duration&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*(&lt;duration&gt;)</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:as-iso8601-string">
+<code class="sig-name descname">as-iso8601-string</code> <em class="property">Function</em><a class="headerlink" href="#system:date:as-iso8601-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of a date, conforming to the ISO 8601
+standard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>as-iso8601-string <em>date</em> #key <em>precision</em> =&gt; <em>iso8601-string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+<li><p><strong>precision</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iso8601-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns a string representation of <em>date</em> using the format
+identified by International Standard ISO 8601 (for example,
+<code class="docutils literal notranslate"><span class="pre">&quot;19960418T210634Z&quot;</span></code>). If <em>precision</em> is non-zero, the specified
+number of digits of a fraction of a second are included in the
+string (for example, <code class="docutils literal notranslate"><span class="pre">&quot;19960418T210634.0034Z&quot;</span></code>).</p>
+<p>The returned string always expresses the time in Greenwich Mean
+Time. The <em>iso8601-string</em> init-keyword for <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>,
+however, accepts ISO 8601 strings with other time zone
+specifications.</p>
+<p>This is the same as calling:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format-date</span><span class="p">(</span><span class="s">&quot;%Y-%m-%dT%H:%M:%S%:z&quot;</span><span class="p">,</span> <span class="n">date</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc822-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc822-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc1123-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc1123-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:as-rfc822-string">
+<code class="sig-name descname">as-rfc822-string</code> <em class="property">Function</em><a class="headerlink" href="#system:date:as-rfc822-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of a date, conforming to
+<a class="reference external" href="http://www.w3.org/Protocols/rfc822/#z28">RFC 822</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>as-rfc822-string <em>date</em> =&gt; <em>rfc822-string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rfc822-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>An example in this format is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Sun</span><span class="p">,</span> <span class="mi">01</span> <span class="n">Sep</span> <span class="mi">13</span> <span class="mi">17</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">GMT</span>
+</pre></div>
+</div>
+<p>This is the same as calling:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format-date</span><span class="p">(</span><span class="s">&quot;%a, %d %b %y %H:%M:%S %z&quot;</span><span class="p">,</span> <span class="n">date</span><span class="p">);</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc1123-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc1123-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:as-rfc1123-string">
+<code class="sig-name descname">as-rfc1123-string</code> <em class="property">Function</em><a class="headerlink" href="#system:date:as-rfc1123-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of a date, conforming to
+<a class="reference external" href="http://www.faqs.org/rfcs/rfc1123.html">RFC 1123</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>as-rfc1123-string <em>date</em> =&gt; <em>rfc1123-string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rfc1123-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The date format for RFC-1123 is the same as for RFC-822
+except that the year must be 4 digits rather than 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Sun</span><span class="p">,</span> <span class="mi">01</span> <span class="n">Sep</span> <span class="mi">2013</span> <span class="mi">17</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">GMT</span>
+</pre></div>
+</div>
+<p>This is the same as calling:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format-date</span><span class="p">(</span><span class="s">&quot;%a, %d %b %Y %H:%M:%S %z&quot;</span><span class="p">,</span> <span class="n">date</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This format is commonly used in email, HTTP headers,
+RSS feeds and other protocols where date representations
+are used.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc822-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc822-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:current-date">
+<code class="sig-name descname">current-date</code> <em class="property">Function</em><a class="headerlink" href="#system:date:current-date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a date object representing the current date and time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>current-date () =&gt; <em>date</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns <em>date</em> for the current date and time.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:date:[date]">
+<code class="sig-name descname">&lt;date&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:date:[date]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of objects representing dates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>iso8601-string</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>.
+Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>year</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1800,</span> <span class="pre">max:</span>
+<span class="pre">2199)</span></code>.</p></li>
+<li><p><strong>month</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1,</span> <span class="pre">max:</span>
+<span class="pre">12)</span></code>.</p></li>
+<li><p><strong>day</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1,</span> <span class="pre">max:</span> <span class="pre">31)</span></code>.</p></li>
+<li><p><strong>hours</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span>
+<span class="pre">23)</span></code>. Default value: 0.</p></li>
+<li><p><strong>minutes</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span>
+<span class="pre">59)</span></code>. Default value: 0.</p></li>
+<li><p><strong>seconds</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span>
+<span class="pre">59)</span></code>. Default value: 0.</p></li>
+<li><p><strong>microseconds</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span>
+<span class="pre">max:</span> <span class="pre">999999)</span></code>. Default value: 0.</p></li>
+<li><p><strong>time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default
+value: 0.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Represents a date and time between 1 Jan 1800 00:00:00 and 31 Dec
+2199 23:59:59, Greenwich Mean Time (GMT).</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> can be specified to microsecond precision and includes
+a time zone indication.</p>
+<p>If supplied, the <em>iso8601-string:</em> init-keyword completely
+specifies the value of the <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>. Otherwise, the <em>year:</em>,
+<em>month:</em>, and <em>day:</em> init-keywords must be supplied. Note that,
+although you can supply ISO 8601 strings that represent any time
+zone specification, the related function <a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a>
+always returns an ISO 8601 string representing a time in Greenwich
+Mean Time.</p>
+<p>For the <em>time-zone-offset</em> init-keyword, a positive number
+represents an offset ahead of GMT, in minutes, and a negative
+number represents an offset behind GMT. The value returned is an
+instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (for example, -300 represents the offset
+for EST, which is 5 hours behind GMT).</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:=([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc822-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc822-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc1123-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc1123-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:current-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset-setter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc822-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc822-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc1123-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc1123-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[day-of-week]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-day">
+<code class="sig-name descname">date-day</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-day" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the day of the month component of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-day <em>date</em> =&gt; <em>day</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the day of the month component of the specified <em>date</em>. For
+example, if passed a <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> that represented 16:36 on the
+20th June, 1997, <em>date-day</em> returns the value 20.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-day-of-week">
+<code class="sig-name descname">date-day-of-week</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-day-of-week" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the day of the week of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-day-of-week <em>date</em> =&gt; <em>day-of-week</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>day-of-week</strong> – An object of type <code class="docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the day of the week of the specified <em>date</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[day-of-week]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-hours">
+<code class="sig-name descname">date-hours</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-hours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the hour component of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-hours <em>date</em> =&gt; <em>hour</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hour</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the hour component of the specified <em>date</em>. This component is
+always expressed in 24 hour format.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-microseconds">
+<code class="sig-name descname">date-microseconds</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-microseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the microseconds component of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-microseconds <em>date</em> =&gt; <em>microseconds</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>microseconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the microseconds component of the specified <em>date</em>. Note
+that this does <em>not</em> return the entire date object, represented as
+a number of microseconds; it returns any value assigned to the
+<em>microseconds:</em> init-keyword when the <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> object was
+created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-minutes">
+<code class="sig-name descname">date-minutes</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-minutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the minutes component of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-minutes <em>date</em> =&gt; <em>minutes</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minutes</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the minutes component of the specified <em>date</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-month">
+<code class="sig-name descname">date-month</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-month" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the month of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-month <em>date</em> =&gt; <em>month</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>month</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the month of the specified <em>date</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-seconds">
+<code class="sig-name descname">date-seconds</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the seconds component of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-seconds <em>date</em> =&gt; <em>seconds</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the seconds component of the specified <em>date</em>. Note that
+this does <em>not</em> return the entire date object, represented as a
+number of seconds; it returns any value assigned to the <em>seconds:</em>
+init-keyword when the <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> object was created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-time-zone-offset">
+<code class="sig-name descname">date-time-zone-offset</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-time-zone-offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the time zone offset of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-time-zone-offset <em>date</em> =&gt; <em>time-zone-offset</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the time zone offset of the specified <em>date</em>. The values of
+the other components of <em>date</em> reflect this time zone.</p>
+<p>A positive number represents an offset ahead of GMT, in minutes,
+and a negative number represents an offset behind GMT. The value
+returned is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (for example, -300
+represents the offset for EST, which is 5 hours behind GMT).</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-year"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-year</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset-setter</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-time-zone-offset-setter">
+<code class="sig-name descname">date-time-zone-offset-setter</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-time-zone-offset-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the time zone offset of a specified date, while maintaining
+the same point in time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-time-zone-offset-setter <em>new-time-zone-offset</em> <em>date</em>  =&gt; <em>new-time-zone-offset</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>new-time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new-time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Changes the time zone offset of <em>date</em> without changing the actual
+point in time identified by the <em>date</em>. The values of the other
+components of <em>date</em> are adjusted to reflect the new time zone.</p>
+<p>The <em>new-time-zone-offset</em> argument should represent the offset
+from GMT, in minutes. Thus, if you wish to specify a new offset
+representing EST, which is 5 hours behind GMT,
+<em>new-time-zone-offset</em> should have the value -300.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:date-year">
+<code class="sig-name descname">date-year</code> <em class="property">Function</em><a class="headerlink" href="#system:date:date-year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the year of a specified date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>date-year <em>date</em> =&gt; <em>year</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the year of the specified <em>date</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-month"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-month</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-hours"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-hours</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-minutes"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-minutes</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-seconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-seconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-microseconds"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-microseconds</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>:: todo Make this a type.</p>
+<dl class="class">
+<dt class="dylan-api" id="system:date:[day-of-week]">
+<code class="sig-name descname">&lt;day-of-week&gt;</code> <em class="property">Class</em><a class="headerlink" href="#system:date:[day-of-week]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The days of the week.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The days of the week. This is the type of the return value of the
+<a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a> function.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">one-of</span><span class="p">(</span><span class="ss">#&quot;Sunday&quot;</span><span class="p">,</span> <span class="ss">#&quot;Monday&quot;</span><span class="p">,</span> <span class="ss">#&quot;Tuesday&quot;</span><span class="p">,</span> <span class="ss">#&quot;Wednesday&quot;</span><span class="p">,</span> <span class="ss">#&quot;Thursday&quot;</span><span class="p">,</span> <span class="ss">#&quot;Friday&quot;</span><span class="p">,</span> <span class="ss">#&quot;Saturday&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:date-day-of-week"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">date-day-of-week</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:date:[day/time-duration]">
+<code class="sig-name descname">&lt;day/time-duration&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:date:[day/time-duration]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of objects representing durations in units of microseconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>days</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>hours</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>minutes</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>microseconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of objects representing durations in units of
+microseconds. It is a subclass of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p>
+<p>Use this class to represent a number of days and fractions thereof.
+If you need to represent durations in calendar units of months or
+years, use <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a> instead.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-day/time-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-day/time-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:decode-date">
+<code class="sig-name descname">decode-date</code> <em class="property">Function</em><a class="headerlink" href="#system:date:decode-date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the date and time stored in a date object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>decode-date <em>date</em> =&gt; <em>year month day hours minutes seconds day-of-week time-zone-offset</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>month</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>day</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>hours</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>minutes</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>day-of-week</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code>.</p></li>
+<li><p><strong>time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the date and time stored in <em>date</em>.</p>
+<p>Note that it does not return the millisecond component of a
+<a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>, but it does return the appropriate
+<code class="docutils literal notranslate"><span class="pre">&lt;day-of-week&gt;</span></code>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:encode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-date</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="system:date:decode-duration">
+<code class="sig-name descname">decode-duration</code> <em class="property">Sealed Generic function</em><a class="headerlink" href="#system:date:decode-duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes a duration into its constituent parts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>decode-duration <em>duration</em> =&gt; #rest <em>components</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>#rest components</strong> – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Decodes an instance of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a> into its constituent
+parts. There are methods for this generic function that specialize
+on <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a> and <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>
+respectively, as described below.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-duration([day/time-duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-duration([year/month-duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:decode-duration([day/time-duration])">
+<code class="sig-name descname">decode-duration(&lt;day/time-duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:decode-duration([day/time-duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes a day/time duration into its constituent parts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>decode-duration <em>duration</em> =&gt; <em>days</em> <em>hours</em> <em>minutes</em> <em>seconds</em> <em>microseconds</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>days</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>hours</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>minutes</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>microseconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Decodes an instance of <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a> into its
+constituent parts.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-duration([year/month-duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-day/time-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-day/time-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:decode-duration([year/month-duration])">
+<code class="sig-name descname">decode-duration(&lt;year/month-duration&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#system:date:decode-duration([year/month-duration])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes a year/month duration into its constituent parts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>decode-duration <em>duration</em> =&gt; <em>years</em> <em>months</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>years</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>months</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Decodes an instance of <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a> into its
+constituent parts.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-duration([day/time-duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-year/month-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-year/month-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:date:[duration]">
+<code class="sig-name descname">&lt;duration&gt;</code> <em class="property">Abstract Instantiable Sealed Class</em><a class="headerlink" href="#system:date:[duration]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of objects representing durations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>iso8601-string</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>.
+Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>year</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1800,</span> <span class="pre">max:</span>
+<span class="pre">2199)</span></code>.</p></li>
+<li><p><strong>month</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1,</span> <span class="pre">max:</span>
+<span class="pre">12)</span></code>.</p></li>
+<li><p><strong>day</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1,</span> <span class="pre">max:</span> <span class="pre">31)</span></code>.</p></li>
+<li><p><strong>hours</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span>
+<span class="pre">23)</span></code>. Default value: 0.</p></li>
+<li><p><strong>minutes</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span>
+<span class="pre">59)</span></code>. Default value: 0.</p></li>
+<li><p><strong>seconds</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span>
+<span class="pre">59)</span></code>. Default value: 0.</p></li>
+<li><p><strong>microseconds</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span>
+<span class="pre">max:</span> <span class="pre">999999)</span></code>. Default value: 0.</p></li>
+<li><p><strong>time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default
+value: 0.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>This class is the used to represent durations. It is a subclass of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>, and it has two subclasses.</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:=([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:*([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">*</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:/([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">/</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:encode-date">
+<code class="sig-name descname">encode-date</code> <em class="property">Function</em><a class="headerlink" href="#system:date:encode-date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a date object for the specified date and time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>encode-date <em>year month day hours minutes seconds</em> #key*microseconds time-zone-offset* =&gt; <em>date</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>year</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>month</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>day</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>hours</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>minutes</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>microseconds</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value:
+0.</p></li>
+<li><p><strong>#keytime-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default
+value: <code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">local-time-zone-offset()</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Creates a <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> object for the specified date and time.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-date"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:local-time-zone-offset"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">local-time-zone-offset</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:make([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">make</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:encode-day/time-duration">
+<code class="sig-name descname">encode-day/time-duration</code> <em class="property">Function</em><a class="headerlink" href="#system:date:encode-day/time-duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a day/time duration from a set of integer values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>encode-day/time-duration <em>days</em> <em>hours</em> <em>minutes</em> <em>seconds</em> <em>microseconds</em> =&gt; <em>duration</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>days</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>hours</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>minutes</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>microseconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Creates an instance of <a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-year/month-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-year/month-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:encode-year/month-duration">
+<code class="sig-name descname">encode-year/month-duration</code> <em class="property">Function</em><a class="headerlink" href="#system:date:encode-year/month-duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a year/month duration from a set of integer values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>encode-year/month-duration <em>years</em> <em>months</em> =&gt; <em>duration</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>years</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>months</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> – An instance of <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Creates an instance of <a class="reference internal" href="#system:date:[year/month-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;year/month-duration&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-day/time-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-day/time-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:format-date">
+<code class="sig-name descname">format-date</code> <em class="property">Function</em><a class="headerlink" href="#system:date:format-date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a date according to a format string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>format-date <em>format</em> <em>date</em> =&gt; <em>formatted-date</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>format</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formatted-date</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p><code class="docutils literal notranslate"><span class="pre">format-date</span></code> interprets a control string, <code class="docutils literal notranslate"><span class="pre">format</span></code>,
+to create a string representing the <code class="docutils literal notranslate"><span class="pre">date</span></code>.</p>
+<p>The control string can contain these directives:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%Y</span></code> - The year.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%y</span></code> - The year, in 2 digit form.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%H</span></code> - Hours, zero padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%k</span></code> - Hours, space padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%M</span></code> - Minutes, zero padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%S</span></code> - Seconds, zero padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%f</span></code> - Microseconds, 6 digits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%F</span></code> - Milliseconds, 3 digits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%T</span></code> - Time, each component zero padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%m</span></code> - Month in numeric form, zero padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%d</span></code> - Day of the month, zero padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%e</span></code> - Day of the month, space padded.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%A</span></code> - Name of the day of the week.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%a</span></code> - Short name of the day of the week.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%B</span></code> - Name of the month.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%b</span></code> - Short name of the month.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%z</span></code> - Time zone offset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%:z</span></code> - Time zone offset, but using <code class="docutils literal notranslate"><span class="pre">:</span></code> between hours and minutes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%n</span></code> - A new line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%%</span></code> - A % character.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:as-rfc822-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc822-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-rfc1123-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-rfc1123-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:local-daylight-savings-time?">
+<code class="sig-name descname">local-daylight-savings-time?</code> <em class="property">Function</em><a class="headerlink" href="#system:date:local-daylight-savings-time?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the local machine is using Daylight Savings Time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>local-daylight-savings-time? () =&gt; <em>dst?</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dst?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the local machine is using Daylight Savings Time,
+and <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:local-time-zone-name">
+<code class="sig-name descname">local-time-zone-name</code> <em class="property">Function</em><a class="headerlink" href="#system:date:local-time-zone-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the time zone name in use by the local machine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>local-time-zone-name () =&gt; <em>time-zone-name</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>time-zone-name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the time zone name in use by the local machine, if
+available, or a string of the form <code class="docutils literal notranslate"><span class="pre">+/-HHMM</span></code> if the time zone
+name is unknown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:local-time-zone-offset">
+<code class="sig-name descname">local-time-zone-offset</code> <em class="property">Function</em><a class="headerlink" href="#system:date:local-time-zone-offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the offset of the time-zone from Greenwich Mean Time,
+expressed as a number of minutes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>local-time-zone-offset () =&gt; <em>time-zone-offset</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>time-zone-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the offset of the time-zone from Greenwich Mean Time,
+expressed as a number of minutes. A positive number represents an
+offset ahead of GMT, and a negative number represents an offset
+behind GMT. The return value is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (for
+example, -300 represents the offset for EST, which is 5 hours
+behind GMT). The return value incorporates daylight savings time
+when necessary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="system:date:make([date])">
+<code class="sig-name descname">make(&lt;date&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#system:date:make([date])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an instance of the <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> class.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>make <em>date-class</em> #key <em>iso8601-string year month day hours minutes seconds microseconds time-zone-offset</em> =&gt; <em>date-instance</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date-class</strong> – The class <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+<li><p><strong>iso8601-string</strong> (<em>#key</em>) – An instance of
+<code class="docutils literal notranslate"><span class="pre">false-or(&lt;string&gt;)</span></code>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>year</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1800,</span>
+<span class="pre">max:</span> <span class="pre">2199)</span></code>.</p></li>
+<li><p><strong>month</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1,</span>
+<span class="pre">max:</span> <span class="pre">12)</span></code>.</p></li>
+<li><p><strong>day</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">1,</span> <span class="pre">max:</span>
+<span class="pre">31)</span></code>.</p></li>
+<li><p><strong>hours</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span>
+<span class="pre">max:</span> <span class="pre">23)</span></code>. Default value: 0.</p></li>
+<li><p><strong>minutes</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span>
+<span class="pre">max:</span> <span class="pre">59)</span></code>. Default value: 0.</p></li>
+<li><p><strong>seconds</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span>
+<span class="pre">max:</span> <span class="pre">59)</span></code>. Default value: 0.</p></li>
+<li><p><strong>microseconds</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span>
+<span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span> <span class="pre">999999)</span></code>. Default value: 0.</p></li>
+<li><p><strong>time-zone-offset</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.
+Default value: 0.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>date-instance</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Creates an instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p>
+<p>The make method on <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> takes the same
+keywords as the <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> class.</p>
+<p><strong>Note</strong>: The iso8601-string keyword accepts a richer subset of
+the ISO 8601 specification than is produced by the
+<a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a> function. See <a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a>
+for details.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;date&gt;</span><span class="p">,</span> <span class="k">iso8601-string:</span> <span class="s">&quot;19970717T1148-0400&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:parse-date-string">
+<code class="sig-name descname">parse-date-string</code> <em class="property">Function</em><a class="headerlink" href="#system:date:parse-date-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a date in string form according to a control string, returning
+a date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>parse-date-string <em>date</em> <em>format</em> =&gt; <em>date</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>format</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Parses a date in string form according to a control string, <code class="docutils literal notranslate"><span class="pre">format</span></code>.
+The control string uses the same directives as <a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="system:date:parse-iso8601-string">
+<code class="sig-name descname">parse-iso8601-string</code> <em class="property">Function</em><a class="headerlink" href="#system:date:parse-iso8601-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a variety of variants on ISO-8601 formatted date strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>parse-iso8601-string <em>string</em> #key <em>strict?</em> =&gt; <em>date</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>strict?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>, default <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>date</strong> – An instance of <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>This function parses the ISO 8601 formats listed below, with the
+following differences if strict? = #f:</p>
+<ul class="simple">
+<li><p>the ‘-‘ in YYYY-MM-DD is optional</p></li>
+<li><p>the ‘:’ in hh:mm:ss is optional</p></li>
+<li><p>the ‘:’ in the timezone is optional</p></li>
+<li><p>the date and time may be separated by a space character</p></li>
+<li><p>TZD may be preceded by a space character</p></li>
+</ul>
+<p>See <a class="reference external" href="http://www.w3.org/TR/NOTE-datetime.html">http://www.w3.org/TR/NOTE-datetime.html</a>.</p>
+<dl class="simple">
+<dt>Year:</dt><dd><p>YYYY (eg 1997)</p>
+</dd>
+<dt>Year and month:</dt><dd><p>YYYY-MM (eg 1997-07)</p>
+</dd>
+<dt>Complete date:</dt><dd><p>YYYY-MM-DD (eg 1997-07-16)</p>
+</dd>
+<dt>Complete date plus hours and minutes:</dt><dd><p>YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)</p>
+</dd>
+<dt>Complete date plus hours, minutes and seconds:</dt><dd><p>YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)</p>
+</dd>
+<dt>Complete date plus hours, minutes, seconds and a decimal fraction of a second</dt><dd><p>YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)</p>
+</dd>
+<dt>where:</dt><dd><ul class="simple">
+<li><p>YYYY = four-digit year</p></li>
+<li><p>MM   = two-digit month (01=January, etc.)</p></li>
+<li><p>DD   = two-digit day of month (01 through 31)</p></li>
+<li><p>hh   = two digits of hour (00 through 23) (am/pm NOT allowed)</p></li>
+<li><p>mm   = two digits of minute (00 through 59)</p></li>
+<li><p>ss   = two digits of second (00 through 59)</p></li>
+<li><p>s    = one or more digits representing a decimal fraction of a second</p></li>
+<li><p>TZD  = time zone designator (Z or +hh:mm or -hh:mm)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="system:date:[year/month-duration]">
+<code class="sig-name descname">&lt;year/month-duration&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#system:date:[year/month-duration]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of objects representing durations with a coarse resolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>year</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>month</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of objects representing durations in units of calendar
+years and months. It is a subclass of <a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a>.</p>
+<p>Use this class to represent a number of calendar years and months.
+If you need to represent durations in units of days or fractions
+thereof (to microsecond resolution), use
+<a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a> instead.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">&lt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:+([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">+</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:-([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">-</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:decode-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">decode-duration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:encode-year/month-duration"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">encode-year/month-duration</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#system:date:[day/time-duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;day/time-duration&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:date:[duration]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duration&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="The system Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="locators.html" class="btn btn-neutral float-right" title="The locators Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

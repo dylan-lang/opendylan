@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The simple-profiling Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The simple-random Module" href="simple-random.html" />
+    <link rel="prev" title="The simple-format Module" href="simple-format.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The common-dylan Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The simple-profiling Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-profiling">Simple Profiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#internals">Internals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The common-dylan Library</a></li>
+      <li class="breadcrumb-item active">The simple-profiling Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/common-dylan/simple-profiling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-simple-profiling-module">
+<h1>The simple-profiling Module<a class="headerlink" href="#the-simple-profiling-module" title="Permalink to this headline">¶</a></h1>
+<p>This module provides an easy to use interface for measuring application
+performance.</p>
+<div class="section" id="simple-profiling">
+<h2>Simple Profiling<a class="headerlink" href="#simple-profiling" title="Permalink to this headline">¶</a></h2>
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:simple-profiling:timing">
+<code class="sig-name descname">timing</code> <em class="property">Statement Macro</em><a class="headerlink" href="#common-dylan:simple-profiling:timing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the time, in seconds and microseconds, spent executing the body
+of code it is wrapped around.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">timing () [ <cite>body</cite> ] end [ timing ]</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>microseconds</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the time, in seconds and microseconds, spent executing the
+body of code it is wrapped around.</p>
+<p>The first value returned is the number of whole seconds spent in
+<em>body</em>. The second value returned is the number of microseconds
+spent in <em>body</em> in addition to <em>seconds</em>.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">timing</span> <span class="p">()</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">from</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">format-to-string</span><span class="p">(</span><span class="s">&quot;%d %d&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="p">=&gt;</span> <span class="mi">1</span> <span class="mi">671000</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="common-dylan:simple-profiling:profiling">
+<code class="sig-name descname">profiling</code> <em class="property">Macro</em><a class="headerlink" href="#common-dylan:simple-profiling:profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives access to the CPU time, in seconds and microseconds, as well as
+some memory allocation statistics, spent executing the body of code
+it is wrapped around.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">profiling ([<cite>profiling-type</cite>, ...])
+  <cite>body</cite>
+results
+  <cite>results</cite>
+end</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>profiling-type</strong> – Any of <code class="docutils literal notranslate"><span class="pre">cpu-time-seconds</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cpu-time-microseconds</span></code>, <code class="docutils literal notranslate"><span class="pre">allocation</span></code> and
+<code class="docutils literal notranslate"><span class="pre">allocation-stats</span></code>.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em></p></li>
+<li><p><strong>results</strong> – A Dylan body <em>bnf</em></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This macro takes a set of <em>profiling-type</em> parameters, performs
+the <em>body</em> of code and then executes the <em>results</em>. Within the
+results block, there will be bindings with the names of the profiling
+types which have the corresponding value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">allocation-stats</span></code> is more involved and not
+as flexible as one might hope. This needs further documentation
+and perhaps an improved implementation.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The memory allocation statistics may not work on all
+run-times and platforms.</p>
+</div>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">profiling</span> <span class="p">(</span><span class="n">cpu-time-seconds</span><span class="p">,</span> <span class="n">cpu-time-microseconds</span><span class="p">,</span> <span class="n">allocation</span><span class="p">)</span>
+  <span class="n">execute-command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+<span class="n">results</span>
+  <span class="n">message</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s">&quot;Command took %d.%s seconds, and allocated %d bytes&quot;</span><span class="p">,</span>
+          <span class="n">cpu-time-seconds</span><span class="p">,</span>
+          <span class="n">integer-to-string</span><span class="p">(</span><span class="nb">floor/</span><span class="p">(</span><span class="n">cpu-time-microseconds</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="k">size:</span> <span class="mi">3</span><span class="p">),</span>
+          <span class="n">allocation</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="internals">
+<h2>Internals<a class="headerlink" href="#internals" title="Permalink to this headline">¶</a></h2>
+<p>These functions don’t typically need to be called directly but
+may be useful in some scenarios.</p>
+<dl class="type">
+<dt class="dylan-api" id="common-dylan:simple-profiling:[profiling-state]">
+<code class="sig-name descname">&lt;profiling-state&gt;</code> <em class="property">Type</em><a class="headerlink" href="#common-dylan:simple-profiling:[profiling-state]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Equivalent</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#object-table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object-table&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="type">
+<dt class="dylan-api" id="common-dylan:simple-profiling:[cpu-profiling-type]">
+<code class="sig-name descname">&lt;cpu-profiling-type&gt;</code> <em class="property">Type</em><a class="headerlink" href="#common-dylan:simple-profiling:[cpu-profiling-type]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Equivalent</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">one-of(#&quot;cpu-time-seconds&quot;,</span> <span class="pre">#&quot;cpu-time-microseconds&quot;)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:simple-profiling:profiling-type-result">
+<code class="sig-name descname">profiling-type-result</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>profiling-type-result (state keyword #key #all-keys) =&gt; (value)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>state</strong> – An instance of <a class="reference internal" href="#common-dylan:simple-profiling:[profiling-state]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;profiling-state&gt;</span></code></a>.</p></li>
+<li><p><strong>keyword</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:profiling-type-result([profiling-state],[cpu-profiling-type])">
+<code class="sig-name descname">profiling-type-result(&lt;profiling-state&gt;, &lt;cpu-profiling-type&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#&quot;allocation&quot;))">
+<code class="sig-name descname">profiling-type-result(&lt;profiling-state&gt;, singleton(#&quot;allocation&quot;))</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#&quot;allocation-stats&quot;))">
+<code class="sig-name descname">profiling-type-result(&lt;profiling-state&gt;, singleton(#&quot;allocation-stats&quot;))</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:simple-profiling:start-profiling">
+<code class="sig-name descname">start-profiling</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>start-profiling (profiling-types) =&gt; (state)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>profiling-types</strong> – A sequence of any of <code class="docutils literal notranslate"><span class="pre">#&quot;cpu-time-seconds&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">#&quot;cpu-time-microseconds&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;allocation#</span></code> and
+<code class="docutils literal notranslate"><span class="pre">#&quot;allocation-stats#</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – An instance of <a class="reference internal" href="#common-dylan:simple-profiling:[profiling-state]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;profiling-state&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This is useful for when direct control over profiling is needed rather
+than using the <a class="reference internal" href="#common-dylan:simple-profiling:profiling"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">profiling</span></code></a> macro.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:simple-profiling:start-profiling-type">
+<code class="sig-name descname">start-profiling-type</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>start-profiling-type (state keyword) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>state</strong> – An instance of <a class="reference internal" href="#common-dylan:simple-profiling:[profiling-state]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;profiling-state&gt;</span></code></a>.</p></li>
+<li><p><strong>keyword</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:start-profiling-type([profiling-state],[cpu-profiling-type])">
+<code class="sig-name descname">start-profiling-type(&lt;profiling-state&gt;, &lt;cpu-profiling-type&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#&quot;allocation&quot;))">
+<code class="sig-name descname">start-profiling-type(&lt;profiling-state&gt;, singleton(#&quot;allocation&quot;))</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#&quot;allocation-stats&quot;))">
+<code class="sig-name descname">start-profiling-type(&lt;profiling-state&gt;, singleton(#&quot;allocation-stats&quot;))</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:simple-profiling:stop-profiling">
+<code class="sig-name descname">stop-profiling</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stop-profiling (state profiling-types) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>state</strong> – An instance of <a class="reference internal" href="#common-dylan:simple-profiling:[profiling-state]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;profiling-state&gt;</span></code></a>.</p></li>
+<li><p><strong>profiling-types</strong> – A sequence of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>. These
+symbols should be the same as those passed to <a class="reference internal" href="#common-dylan:simple-profiling:start-profiling"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">start-profiling</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:simple-profiling:stop-profiling-type">
+<code class="sig-name descname">stop-profiling-type</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stop-profiling-type (state keyword) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>state</strong> – An instance of <a class="reference internal" href="#common-dylan:simple-profiling:[profiling-state]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;profiling-state&gt;</span></code></a>.</p></li>
+<li><p><strong>keyword</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:stop-profiling-type([profiling-state],[cpu-profiling-type])">
+<code class="sig-name descname">stop-profiling-type(&lt;profiling-state&gt;, &lt;cpu-profiling-type&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#&quot;allocation&quot;))">
+<code class="sig-name descname">stop-profiling-type(&lt;profiling-state&gt;, singleton(#&quot;allocation&quot;))</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#&quot;allocation-stats&quot;))">
+<code class="sig-name descname">stop-profiling-type(&lt;profiling-state&gt;, singleton(#&quot;allocation-stats&quot;))</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simple-format.html" class="btn btn-neutral float-left" title="The simple-format Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simple-random.html" class="btn btn-neutral float-right" title="The simple-random Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1165 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The transcendentals Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The DOOD library" href="../dood/index.html" />
+    <link rel="prev" title="The simple-timers Module" href="simple-timers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The common-dylan Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The transcendentals Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#constants">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The common-dylan Library</a></li>
+      <li class="breadcrumb-item active">The transcendentals Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/common-dylan/transcendentals.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-transcendentals-module">
+<h1>The transcendentals Module<a class="headerlink" href="#the-transcendentals-module" title="Permalink to this headline">¶</a></h1>
+<p>The <em>transcendentals</em> module, exported from the <a class="reference internal" href="index.html"><span class="doc">common-dylan</span></a>
+library, provides a set of generic functions for ANSI C-like behavior over real
+numbers. The restrictions and error cases described in this document are
+intended to be the same as they are in ANSI C.</p>
+<p>Because implementation of these functions might be by a standard library
+for transcendentals accessed by a foreign function interface, the exact
+precision and algorithms (and hence, the exact results) for all of these
+functions is explicitly unspecified.</p>
+<p>Note, however, that a program may expect the following, even in libraries that
+are implemented by calling foreign libraries:</p>
+<ul class="simple">
+<li><p>Domain and range errors should be signalled as Dylan errors.</p></li>
+<li><p>Floating point precision <em>contagion</em> must obey Dylan rules. That is,
+functions called on single precision values return single precision results,
+and functions on double precision values return double precision results.
+When a function (e.g., <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#exponentiation"><code class="xref drm docutils literal notranslate"><span class="pre">^</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:atan2"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan2</span></code></a>, etc.) accepts two arguments, if
+either argument is a double precision value then the result is also double
+precision.</p></li>
+</ul>
+<p>As a rule this module does not automatically convert integer values to floating
+point values. Callers should do so explicitly, so as to choose the appropriate
+floating point type for their needs.</p>
+<p>Complex numbers are not implemented. If the result of calling any
+<em>transcendentals</em> function would be a complex number <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a> is
+signalled.</p>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item exported from the
+<em>transcendentals</em> module.</p>
+<div class="section" id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
+<dl class="constant">
+<dt class="dylan-api" id="common-dylan:transcendentals:$single-e">
+<code class="sig-name descname">$single-e</code> <em class="property">Constant</em><a class="headerlink" href="#common-dylan:transcendentals:$single-e" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value of <em>e</em>, the base of natural logarithms, as a single precision
+floating point number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="common-dylan:transcendentals:$double-e">
+<code class="sig-name descname">$double-e</code> <em class="property">Constant</em><a class="headerlink" href="#common-dylan:transcendentals:$double-e" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value of <em>e</em>, the base of natural logarithms, as a double precision
+floating point number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="common-dylan:transcendentals:$single-pi">
+<code class="sig-name descname">$single-pi</code> <em class="property">Constant</em><a class="headerlink" href="#common-dylan:transcendentals:$single-pi" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value of <em>π</em> as a single precision floating point number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="common-dylan:transcendentals:$double-pi">
+<code class="sig-name descname">$double-pi</code> <em class="property">Constant</em><a class="headerlink" href="#common-dylan:transcendentals:$double-pi" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value of <em>π</em> as a double precision floating point number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:^([single-float],[single-float])">
+<code class="sig-name descname">^(&lt;single-float&gt;, &lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:^([single-float],[single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#exponentiation"><code class="xref drm docutils literal notranslate"><span class="pre">^</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><strong>base</strong> ^ <strong>exponent</strong> =&gt; y</p>
+</dd>
+</dl>
+<p>Returns <strong>base</strong> raised to the power <strong>exponent</strong> as a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>. If <strong>base</strong> is <code class="docutils literal notranslate"><span class="pre">0</span></code> and <strong>exponent</strong> is not
+positive, an error is signalled. If <strong>base</strong> is negative and <strong>exponent</strong> is
+not an integer, an error is signalled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:^([double-float],[double-float])">
+<code class="sig-name descname">^(&lt;double-float&gt;, &lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:^([double-float],[double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#exponentiation"><code class="xref drm docutils literal notranslate"><span class="pre">^</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p><strong>base</strong> ^ <strong>exponent</strong> =&gt; y</p>
+</dd>
+</dl>
+<p>Returns <strong>base</strong> raised to the power <strong>exponent</strong> as a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>. If <strong>base</strong> is <code class="docutils literal notranslate"><span class="pre">0</span></code> and <strong>exponent</strong> is not
+positive, an error is signalled. If <strong>base</strong> is negative and <strong>exponent</strong> is
+not an integer, an error is signalled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:^([single-float],[double-float])">
+<code class="sig-name descname">^(&lt;single-float&gt;, &lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:^([single-float],[double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the first argument to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> and calls
+<a class="reference internal" href="#common-dylan:transcendentals:^([double-float],[double-float])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">^(&lt;double-float&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:^([double-float],[single-float])">
+<code class="sig-name descname">^(&lt;double-float&gt;, &lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:^([double-float],[single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the second argument to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> and calls
+<a class="reference internal" href="#common-dylan:transcendentals:^([double-float],[double-float])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">^(&lt;double-float&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:acos">
+<code class="sig-name descname">acos</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:acos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>acos(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.
+If <strong>x</strong> is not in the range <code class="docutils literal notranslate"><span class="pre">[-1,1]</span></code>, an error is signalled.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the arc cosine of its argument. The floating point precision of the
+result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:asin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asin</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:atan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:acos([single-float])">
+<code class="sig-name descname">acos(&lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:acos([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:acos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acos</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:acos([double-float])">
+<code class="sig-name descname">acos(&lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:acos([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:acos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acos</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:acosh">
+<code class="sig-name descname">acosh</code> <em class="property">Open Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:acosh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>acosh(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the hyperbolic arc cosine of its argument. The floating point
+precision of the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:asinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asinh</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:atanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atanh</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:acosh([single-float])">
+<code class="sig-name descname">acosh(&lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:acosh([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:acosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acosh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:acosh([double-float])">
+<code class="sig-name descname">acosh(&lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:acosh([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:acosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acosh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:asin">
+<code class="sig-name descname">asin</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:asin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>asin(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.
+If <strong>x</strong> is not in the range <cite>[-1,+1]</cite>, an error is signalled.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the arc sine of its argument. The floating point precision of
+the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:acos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:atan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:asin([single-float])">
+<code class="sig-name descname">asin(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:asin([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:asin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asin</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:asin([double-float])">
+<code class="sig-name descname">asin(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:asin([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:asin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asin</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:asinh">
+<code class="sig-name descname">asinh</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:asinh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>asinh(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the hyperbolic arc sine of its argument. The floating point
+precision of the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:acosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acosh</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:atanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atanh</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:asinh([single-float])">
+<code class="sig-name descname">asinh(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:asinh([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:asinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asinh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:asinh([double-float])">
+<code class="sig-name descname">asinh(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:asinh([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:asinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asinh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan">
+<code class="sig-name descname">atan</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:atan" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>atan(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.
+If <strong>x</strong> is not in the range <cite>[-1,+1]</cite>, an error is signalled.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the arc tangent of its argument. The floating point precision of the
+result is given by the precision of <em>x</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:acos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:asin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asin</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan([single-float])">
+<code class="sig-name descname">atan(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atan([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:atan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan([double-float])">
+<code class="sig-name descname">atan(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atan([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:atan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan2">
+<code class="sig-name descname">atan2</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:atan2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>atan2(x, y) =&gt; z</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The first angle, in radians.</p></li>
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The second angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the arc tangent of <strong>x</strong> divided by <strong>y</strong>. <strong>x</strong> may be zero if
+<strong>y</strong> is not zero. The signs of <strong>x</strong> and <strong>y</strong> are used to derive what
+quadrant the angle falls in.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan2([single-float],[single-float])">
+<code class="sig-name descname">atan2(&lt;single-float&gt;, &lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atan2([single-float],[single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:atan2"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan2</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan2([double-float],[double-float])">
+<code class="sig-name descname">atan2(&lt;double-float&gt;, &lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atan2([double-float],[double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:atan2"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atan2</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan2([single-float],[double-float])">
+<code class="sig-name descname">atan2(&lt;single-float&gt;, &lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atan2([single-float],[double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the first argument to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> and calls
+<a class="reference internal" href="#common-dylan:transcendentals:atan2([double-float],[double-float])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">atan2(&lt;double-float&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atan2([double-float],[single-float])">
+<code class="sig-name descname">atan2(&lt;double-float&gt;, &lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atan2([double-float],[single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the second argument to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> and calls
+<a class="reference internal" href="#common-dylan:transcendentals:atan2([double-float],[double-float])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">atan2(&lt;double-float&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:atanh">
+<code class="sig-name descname">atanh</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:atanh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>atanh(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the hyperbolic arc tangent of its argument. The floating point
+precision of the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:acosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">acosh</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:asinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">asinh</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atanh([single-float])">
+<code class="sig-name descname">atanh(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atanh([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:atanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atanh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:atanh([double-float])">
+<code class="sig-name descname">atanh(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:atanh([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:atanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">atanh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:cos">
+<code class="sig-name descname">cos</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:cos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>cos(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the cosine of its argument. The floating point precision of the
+result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:sin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sin</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:sincos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sincos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:tan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tan</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:cos([single-float])">
+<code class="sig-name descname">cos(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:cos([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:cos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cos</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:cos([double-float])">
+<code class="sig-name descname">cos(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:cos([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:cos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cos</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:cosh">
+<code class="sig-name descname">cosh</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:cosh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>cosh(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the hyperbolic cosine of its argument. The floating point
+precision of the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:sinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sinh</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:tanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tanh</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:cosh([single-float])">
+<code class="sig-name descname">cosh(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:cosh([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:cosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cosh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:cosh([double-float])">
+<code class="sig-name descname">cosh(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:cosh([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:cosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cosh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:exp">
+<code class="sig-name descname">exp</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:exp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>exp(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns <em>e</em>, the base of natural logarithms, raised to the power <strong>x</strong>.  The
+floating point precision is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#exponentiation"><code class="xref drm docutils literal notranslate"><span class="pre">^</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:ilog2"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ilog2</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:log"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">log</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:logn"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">logn</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:exp([single-float])">
+<code class="sig-name descname">exp(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:exp([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:exp"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">exp</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:exp([double-float])">
+<code class="sig-name descname">exp(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:exp([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:exp"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">exp</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:hypot">
+<code class="sig-name descname">hypot</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:hypot" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>hypot(x, y) =&gt; z</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the Euclidian distance without unnecessary overflow or underflow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:hypot([single-float],[single-float])">
+<code class="sig-name descname">hypot(&lt;single-float&gt;, &lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:hypot([single-float],[single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Euclidian distance as a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a> without
+unnecessary overflow or underflow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:hypot([double-float],[double-float])">
+<code class="sig-name descname">hypot(&lt;double-float&gt;, &lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:hypot([double-float],[double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Euclidian distance as a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> without
+unnecessary overflow or underflow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:hypot([single-float],[double-float])">
+<code class="sig-name descname">hypot(&lt;single-float&gt;, &lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:hypot([single-float],[double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the first argument to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> and calls
+<a class="reference internal" href="#common-dylan:transcendentals:hypot([double-float],[double-float])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">hypot(&lt;double-float&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:hypot([double-float],[single-float])">
+<code class="sig-name descname">hypot(&lt;double-float&gt;, &lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:hypot([double-float],[single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the second argument to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> and calls
+<a class="reference internal" href="#common-dylan:transcendentals:hypot([double-float],[double-float])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">hypot(&lt;double-float&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:transcendentals:isqrt">
+<code class="sig-name descname">isqrt</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:transcendentals:isqrt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>isqrt(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the integer square root of <strong>x</strong>, that is the greatest integer less
+than or equal to the exact positive square root of <strong>x</strong>. If <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>, an
+error is signalled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:sqrt"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sqrt</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:log">
+<code class="sig-name descname">log</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the natural logarithm of its argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>log(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the natural logarithm of <strong>x</strong> to the base <em>e</em>. If <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>, an
+error is signalled. The floating point precision of the result is given by
+the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:exp"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">exp</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:ilog2"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ilog2</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:logn"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">logn</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:log([single-float])">
+<code class="sig-name descname">log(&lt;single-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:log([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>log(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the natural logarithm of <strong>x</strong> to the base <em>e</em> as a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:log([double-float])">
+<code class="sig-name descname">log(&lt;double-float&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#common-dylan:transcendentals:log([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>log(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the natural logarithm of <strong>x</strong> to the base <em>e</em> as a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:transcendentals:logn">
+<code class="sig-name descname">logn</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:transcendentals:logn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the logarithm of its argument to the given base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>logn(x, base) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a></p></li>
+<li><p><strong>base</strong> – The base. An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the logarithm of <strong>x</strong> to the base <strong>base</strong>. If <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">base</span>
+<span class="pre">&lt;=</span> <span class="pre">1</span></code>, an error is signalled. The floating point precision of the result is
+given by the precision of <strong>x</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In practice both <strong>x</strong> and <strong>base</strong> must be instances of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;float&gt;</span></code></a> since they are passed directly to <a class="reference internal" href="#common-dylan:transcendentals:log"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">log</span></code></a>,
+which only has methods on <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;float&gt;</span></code></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:exp"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">exp</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:log"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">log</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:ilog2"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ilog2</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:transcendentals:ilog2">
+<code class="sig-name descname">ilog2</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:transcendentals:ilog2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>ilog2(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the integer base 2 logarithm of <strong>x</strong>, truncated to an
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.  That is, it returns the greatest integer less than or
+equal to the exact base 2 logarithm of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:exp"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">exp</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:logn"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">logn</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:log"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">log</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:sin">
+<code class="sig-name descname">sin</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:sin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sin(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the sine of its argument. The floating point precision of the result
+is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:cos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:sincos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sincos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:tan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tan</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sin([single-float])">
+<code class="sig-name descname">sin(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sin([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sin</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sin([double-float])">
+<code class="sig-name descname">sin(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sin([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sin</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:sincos">
+<code class="sig-name descname">sincos</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:sincos" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sincos(x) =&gt; (sin, cos)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sin</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The result of <code class="docutils literal notranslate"><span class="pre">sin(x)</span></code>.</p></li>
+<li><p><strong>cos</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The result of <code class="docutils literal notranslate"><span class="pre">cos(x)</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns both the sine and the cosine of its argument. The floating point
+precision of the results is given by the precision of <strong>x</strong>. In some
+implementations <a class="reference internal" href="#common-dylan:transcendentals:sincos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sincos</span></code></a> may have better performance than calling
+<code class="docutils literal notranslate"><span class="pre">sin(x)</span></code> and <code class="docutils literal notranslate"><span class="pre">cos(x)</span></code> separately.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:cos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:sin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sin</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sincos([single-float])">
+<code class="sig-name descname">sincos(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sincos([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sincos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sincos</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sincos([double-float])">
+<code class="sig-name descname">sincos(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sincos([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sincos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sincos</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:sinh">
+<code class="sig-name descname">sinh</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:sinh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sinh(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the hyperbolic sine of its argument. The floating point precision of
+the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:cosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cosh</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:tanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tanh</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sinh([single-float])">
+<code class="sig-name descname">sinh(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sinh([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sinh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sinh([double-float])">
+<code class="sig-name descname">sinh(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sinh([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sinh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:sqrt">
+<code class="sig-name descname">sqrt</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:sqrt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sqrt(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the square root of <strong>x</strong>. If <strong>x</strong> is less than zero an error is
+signalled. The floating point precision of the result is given by the
+precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:isqrt"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">isqrt</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sqrt([single-float])">
+<code class="sig-name descname">sqrt(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sqrt([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sqrt"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sqrt</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:sqrt([double-float])">
+<code class="sig-name descname">sqrt(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:sqrt([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:sqrt"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sqrt</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:tan">
+<code class="sig-name descname">tan</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:tan" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>tan(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the tangent of <strong>x</strong>. The floating point precision of the result is
+given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:cos"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cos</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:sin"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sin</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:tan([single-float])">
+<code class="sig-name descname">tan(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:tan([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:tan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tan</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:tan([double-float])">
+<code class="sig-name descname">tan(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:tan([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:tan"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tan</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="common-dylan:transcendentals:tanh">
+<code class="sig-name descname">tanh</code> <em class="property">Generic function</em><a class="headerlink" href="#common-dylan:transcendentals:tanh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>tanh(x) =&gt; y</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. The angle, in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns the hyperbolic tangent of <strong>x</strong>. The floating point precision
+of the result is given by the precision of <strong>x</strong>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#common-dylan:transcendentals:cosh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">cosh</span></code></a>, <a class="reference internal" href="#common-dylan:transcendentals:sinh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">sinh</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:tanh([single-float])">
+<code class="sig-name descname">tanh(&lt;single-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:tanh([single-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:tanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tanh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="common-dylan:transcendentals:tanh([double-float])">
+<code class="sig-name descname">tanh(&lt;double-float&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#common-dylan:transcendentals:tanh([double-float])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Double precision floating point implementation of <a class="reference internal" href="#common-dylan:transcendentals:tanh"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tanh</span></code></a>. Returns a
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simple-timers.html" class="btn btn-neutral float-left" title="The simple-timers Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../dood/index.html" class="btn btn-neutral float-right" title="The DOOD library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

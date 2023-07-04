@@ -1,0 +1,2294 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The threads Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The hash-algorithms Library" href="../hash-algorithms/index.html" />
+    <link rel="prev" title="The dylan-primitives Module" href="primitives.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The dylan Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="finalization.html">The finalization Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The threads Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multi-thread-semantics">Multi-thread semantics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#atomicity">Atomicity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ordering">Ordering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#explicit-synchronization">Explicit synchronization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conditional-update">Conditional update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-dynamic-environment">The dynamic environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#thread-variables">Thread variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dynamic-binding">Dynamic binding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#thread-safety-in-client-libraries">Thread safety in client libraries</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-requirements">General requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#effects-on-the-dylan-library">Effects on the Dylan library</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-threads-class-hierarchy">The Threads class hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-features">Basic features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#low-level-synchronization">Low-level synchronization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operations-on-threads">Operations on threads</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#synchronization-protocol">Synchronization protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Basic features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#locks">Locks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#semaphores">Semaphores</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exclusive-locks">Exclusive locks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recursive-locks">Recursive locks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simple-locks">Simple locks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiple-reader-single-writer-locks">Multiple reader / single writer locks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notifications">Notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timers">Timers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Thread variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Dynamic binding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#an-extended-form-of-dynamic-bind">An extended form of dynamic-bind</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#locked-variables">Locked variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Conditional update</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#an-extended-form-of-conditional-update">An extended form of conditional-update!</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The dylan Library</a></li>
+      <li class="breadcrumb-item active">The threads Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/dylan/threads.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-threads-module">
+<h1><a class="toc-backref" href="#id6">The threads Module</a><a class="headerlink" href="#the-threads-module" title="Permalink to this headline">¶</a></h1>
+<p>The Threads module provides a portable threads interface for Dylan. The Threads
+module is designed to map easily and efficiently onto the threads facilities
+provided by all common operating systems.</p>
+<p>All documented bindings are exported from the module <em>threads</em> in the <em>dylan</em>
+and <em>common-dylan</em> libraries.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-threads-module" id="id6">The threads Module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#multi-thread-semantics" id="id7">Multi-thread semantics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#atomicity" id="id8">Atomicity</a></p></li>
+<li><p><a class="reference internal" href="#ordering" id="id9">Ordering</a></p></li>
+<li><p><a class="reference internal" href="#explicit-synchronization" id="id10">Explicit synchronization</a></p></li>
+<li><p><a class="reference internal" href="#conditional-update" id="id11">Conditional update</a></p></li>
+<li><p><a class="reference internal" href="#the-dynamic-environment" id="id12">The dynamic environment</a></p></li>
+<li><p><a class="reference internal" href="#thread-variables" id="id13">Thread variables</a></p></li>
+<li><p><a class="reference internal" href="#dynamic-binding" id="id14">Dynamic binding</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#thread-safety-in-client-libraries" id="id15">Thread safety in client libraries</a></p>
+<ul>
+<li><p><a class="reference internal" href="#general-requirements" id="id16">General requirements</a></p></li>
+<li><p><a class="reference internal" href="#effects-on-the-dylan-library" id="id17">Effects on the Dylan library</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#the-threads-class-hierarchy" id="id18">The Threads class hierarchy</a></p></li>
+<li><p><a class="reference internal" href="#basic-features" id="id19">Basic features</a></p>
+<ul>
+<li><p><a class="reference internal" href="#low-level-synchronization" id="id20">Low-level synchronization</a></p></li>
+<li><p><a class="reference internal" href="#operations-on-threads" id="id21">Operations on threads</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#synchronization-protocol" id="id22">Synchronization protocol</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id23">Basic features</a></p></li>
+<li><p><a class="reference internal" href="#locks" id="id24">Locks</a></p></li>
+<li><p><a class="reference internal" href="#semaphores" id="id25">Semaphores</a></p></li>
+<li><p><a class="reference internal" href="#exclusive-locks" id="id26">Exclusive locks</a></p></li>
+<li><p><a class="reference internal" href="#recursive-locks" id="id27">Recursive locks</a></p></li>
+<li><p><a class="reference internal" href="#simple-locks" id="id28">Simple locks</a></p></li>
+<li><p><a class="reference internal" href="#multiple-reader-single-writer-locks" id="id29">Multiple reader / single writer locks</a></p></li>
+<li><p><a class="reference internal" href="#notifications" id="id30">Notifications</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#timers" id="id31">Timers</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id32">Thread variables</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id33">Dynamic binding</a></p>
+<ul>
+<li><p><a class="reference internal" href="#an-extended-form-of-dynamic-bind" id="id34">An extended form of dynamic-bind</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#locked-variables" id="id35">Locked variables</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id36">Conditional update</a></p>
+<ul>
+<li><p><a class="reference internal" href="#an-extended-form-of-conditional-update" id="id37">An extended form of conditional-update!</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="multi-thread-semantics">
+<h2><a class="toc-backref" href="#id7">Multi-thread semantics</a><a class="headerlink" href="#multi-thread-semantics" title="Permalink to this headline">¶</a></h2>
+<p>The Threads module provides multiple threads of control within a single
+space of objects and module variables. Each thread runs in its own
+independent stack. The mechanism by which the threads are scheduled is
+not specified, and it is not possible to determine how the execution of
+instructions by different threads will be interleaved. No mechanism is
+provided to call a function on an existing thread other than the current
+thread. Neither is there a mechanism to signal an exception on a thread
+other than the current thread.</p>
+<div class="section" id="atomicity">
+<h3><a class="toc-backref" href="#id8">Atomicity</a><a class="headerlink" href="#atomicity" title="Permalink to this headline">¶</a></h3>
+<p>In general, the Threads module guarantees that assignments to slots and
+variables are atomic. That is, after an assignment, but before
+synchronization, another thread will see either the old value or the new
+value of the location. There is no possibility of seeing a half-way
+state.</p>
+<p>In some circumstances, when a slot or a variable is specialized to be of
+a particularly constrained type, the Threads module does not guarantee
+atomicity of assignments. Such a type may include a subtype of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a> or a subtype of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#extended-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;extended-float&gt;</span></code></a>. It may not include
+any other type that is either defined in the current specification of
+the Dylan language, or that could be created from standard facilities
+provided by the current specification of the language. This restriction
+of the atomicity guarantee is intended to permit implementations to
+represent the values of such slots or variables in a form which uses
+more space than a normal Dylan value, for optimal efficiency.</p>
+<p>For those cases where the implementation does not provide the atomicity
+guarantee, the results of accessing a normal variable are undefined if:</p>
+<ul class="simple">
+<li><p>The read could proceed in parallel with some write of the same
+location</p></li>
+<li><p>Two writes of the same location could have proceeded in parallel
+since the last non-parallel write</p></li>
+</ul>
+<p>Two memory references <em>proceed in parallel</em> if they are not explicitly
+sequentialized, either by being in a single thread, or by explicit
+inter-thread synchronization.</p>
+<p>Programmers should guard against the possibility of undefined values by
+using explicit inter-thread synchronization.</p>
+</div>
+<div class="section" id="ordering">
+<h3><a class="toc-backref" href="#id9">Ordering</a><a class="headerlink" href="#ordering" title="Permalink to this headline">¶</a></h3>
+<p>The ordering of visibility of side effects performed in other threads is
+undefined, unless explicit synchronization is used. Implementations of
+the module may guarantee that the visibility of side-effects performed
+by another thread is ordered according to the control flow of the other
+thread (<em>strong ordering</em>), but multi-processor implementations might
+not be strongly ordered. Portable code should not assume strong
+ordering, and should use explicit synchronization where the order of
+side effects is important. There is currently no module introspection
+facility to determine if the implementation is strongly or weakly
+ordered.</p>
+<p>Because of the possibility of weak ordering, the compiler is free to
+assume that the effects of other threads may be ignored between explicit
+synchronization points, and it may perform any optimizations which
+preserve the semantics of a single-thread model regardless of their
+effects on other threads — for example, common sub-expression
+elimination, or changing the order of evaluation.</p>
+</div>
+<div class="section" id="explicit-synchronization">
+<h3><a class="toc-backref" href="#id10">Explicit synchronization</a><a class="headerlink" href="#explicit-synchronization" title="Permalink to this headline">¶</a></h3>
+<p>The Threads module provides low-level synchronization functions which
+control the ordering of operations with respect to other threads, and
+control when the side effects that have been performed within one thread
+become visible within other threads.</p>
+<p>At a higher level, the Threads module provides a variety of
+synchronization facilities, described below. These facilities include
+mutual-exclusion locks, semaphores and notifications. Each facility
+guarantees that when synchronization has been achieved, all the side
+effects of another thread are visible, at least up to the point where
+that other thread last released the synchronization facility.</p>
+<p>An appropriate synchronization must be used to guard side-effects on
+state if there is any possibility of those side-effects either being
+corrupted by another thread or corrupting another thread. For example, a
+function which assigns to two slots of an object may require the use of
+a lock to guarantee that other threads never observe the object in a
+partly updated state.</p>
+<p>It is up to module designers to document when synchronization is not
+performed internally, and when synchronization protocols must be used by
+clients. The implications for the Dylan library, and some other
+low-level libraries, are discussed in <a class="reference internal" href="#thread-safety-in-client-libraries">Thread safety in client
+libraries</a>.</p>
+</div>
+<div class="section" id="conditional-update">
+<h3><a class="toc-backref" href="#id11">Conditional update</a><a class="headerlink" href="#conditional-update" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the synchronization primitives, the module provides a
+conditional update mechanism which is not synchronized, but which tests
+whether the value in a variable or slot has changed and atomically
+updates it if not.</p>
+<p>By using conditional updates, a thread can confirm (or deny) that there
+has been no interference from other threads, without any need for a
+blocking operation. This is more efficient for those circumstances where
+interference is not disastrous and it is possible to recompute the
+update.</p>
+<p>For example, a function which increments the value of a variable might
+use a conditional update to store the new value into place, in order to
+guarantee a numeric sequence for the variable. In this example, the
+function might loop until the conditional update has succeeded.</p>
+<p>It is possible to achieve synchronization by looping until a conditional
+update is successful, and then synchronizing side effects. This is not
+recommended, because the busy-waiting state during the loop may disallow
+other threads from running. Normally, conditional update should be used
+only when it is expected to succeed. If it is likely that the
+conditional update might fail multiple times around the loop, then
+either the number of times around the loop should be limited, or a
+blocking function from the Threads module should be used within the
+loop.</p>
+</div>
+<div class="section" id="the-dynamic-environment">
+<h3><a class="toc-backref" href="#id12">The dynamic environment</a><a class="headerlink" href="#the-dynamic-environment" title="Permalink to this headline">¶</a></h3>
+<p>Dylan has an implicit notion of a <em>dynamic environment</em>, corresponding
+to language constructs with <em>dynamic extent</em>. For example, the <em>block</em>
+construct can introduce <em>cleanup-clauses</em>, and the <em>body</em> of the block
+is executed in a dynamic environment in which those cleanup-clauses are
+active. <em>Handlers</em> and <em>exit procedures</em> are other examples of language
+features related to the dynamic environment.</p>
+<p>The dynamic environment is defined to be thread-local. When a new thread
+is created, it starts with a fresh dynamic environment. It is an error
+to attempt to use a handler or a non-local exit function belonging to
+another thread. It is impossible to use an unwind-protect cleanup from
+another thread.</p>
+<p>Although the binding of condition handlers only affects the dynamic
+environment of the current thread, unhandled conditions are passed to
+the global generic function <em>default-handler</em>. This function might
+<em>call the debugger</em>. The Threads module does not define what calling
+the debugger means.</p>
+<p>Note that in Dylan, unlike in C and C++, <em>lexical</em> variables (that is
+local, or <em>let</em> -bound variables) have indefinite extent — that is, have
+a lifetime independent of the function or block in which they were
+created — and are not bound in the dynamic environment. Because those
+variables are in general potentially global, you may need to explicitly
+synchronize accesses to them.</p>
+</div>
+<div class="section" id="thread-variables">
+<h3><a class="toc-backref" href="#id13">Thread variables</a><a class="headerlink" href="#thread-variables" title="Permalink to this headline">¶</a></h3>
+<p>The Threads module provides a new type of variable: a <em>thread</em>
+variable, also known as a <em>thread-local</em> variable. These variables are
+similar to normal module variables in the sense that they are visible
+according to the same scoping rules and have the same semantics in a
+single-threaded program. However, in contrast to a normal variable,
+assignments to a thread variable in one thread are not visible when
+evaluating the variable in another thread.</p>
+<p>Whenever a thread is created, the value of each thread variable is
+initialized to a thread-independent value resulting from a once-only
+evaluation of the initialization expression of the thread variable
+definition.</p>
+<p>See page <a class="reference internal" href="#dylan:threads:thread"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">thread</span></code></a> for details of the <code class="docutils literal notranslate"><span class="pre">thread</span></code> adjective to
+<a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a>.</p>
+</div>
+<div class="section" id="dynamic-binding">
+<h3><a class="toc-backref" href="#id14">Dynamic binding</a><a class="headerlink" href="#dynamic-binding" title="Permalink to this headline">¶</a></h3>
+<p>The Threads module exports a macro for dynamic binding. A <em>binding</em> is a
+mapping between a variable and a*value-cell* which holds the variable’s
+value. A <em>dynamic</em> binding is a binding which has dynamic extent, and
+shadows any outermost bindings. Dynamic bindings can be considered to be
+a property of the dynamic environment.</p>
+<p>Thread variables can have new dynamic bindings created for them with the
+macro <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>. Thread variables inherently have
+thread-local bindings, so it is possible to re-bind a thread variable
+dynamically using the Dylan construct <code class="docutils literal notranslate"><span class="pre">*block*</span> <span class="pre">...</span> <span class="pre">*cleanup*</span></code>. The
+<a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a> macro can be implemented in this way.</p>
+<p>The thread-local nature of dynamically bindable variables may not be
+optimal for all problem domains. For instance a shared, global,
+outermost binding may be desirable, or alternatively, a thread may want
+to inherit current bindings from the parent thread at creation time,
+giving a “fork”-type model of state inheritance. These alternatives are
+not pursued in this module, but they might be an interesting area for
+future research.</p>
+</div>
+</div>
+<div class="section" id="thread-safety-in-client-libraries">
+<h2><a class="toc-backref" href="#id15">Thread safety in client libraries</a><a class="headerlink" href="#thread-safety-in-client-libraries" title="Permalink to this headline">¶</a></h2>
+<p>If an application uses multiple threads, then there may be thread safety
+requirements for any library that can be called simultaneously by
+multiple threads, even if the called library does not use the Threads
+library directly.</p>
+<p>This section is about thread safety in any library that is designed to
+be used in a multi-threaded application.</p>
+<div class="section" id="general-requirements">
+<h3><a class="toc-backref" href="#id16">General requirements</a><a class="headerlink" href="#general-requirements" title="Permalink to this headline">¶</a></h3>
+<p>A library’s designer is responsible for documenting which features of
+the library offer built-in synchronization and which do not. While there
+is no definitive rule that can assist designers in this documentation,
+the following guidelines may be useful.</p>
+<p>If a client of the library forgets to use a synchronization feature when
+one is necessary, the library designer should ensure that the effect of
+the lack of synchronization is limited to a small unit — probably a
+single object. In cases where the designer cannot guarantee that the
+effect will be limited, the library should either implement the
+synchronization internally, or provide a macro for clients to use
+instead.</p>
+<p>Library implementors must ensure that the library provides implicit
+synchronization for any hidden global state which is maintained by the
+library. Library designers may choose whether the library should offer
+implicit synchronization of the state of objects managed by the library.
+The interface is more convenient if the synchronization is implicit, but
+it may be more efficient to rely on explicit synchronization by the
+client. Library designers should always document the choice they make.</p>
+</div>
+<div class="section" id="effects-on-the-dylan-library">
+<h3><a class="toc-backref" href="#id17">Effects on the Dylan library</a><a class="headerlink" href="#effects-on-the-dylan-library" title="Permalink to this headline">¶</a></h3>
+<p>The definition of the Dylan library is not changed with the addition of
+the Threads module. The implementation ensures that all hidden global
+state (such as the symbol table and any generic function caches) is
+implicitly synchronized. Those functions in the Dylan library which are
+defined to modify the state of objects are not defined to provide
+implicit synchronization. However, implementations are expected to
+ensure that synchronization bugs in Dylan programs will not cause
+obscure errors that cannot be explained in terms of the semantics of
+Dylan language constructs.</p>
+<p>The library guarantees that <em>element</em> and <em>element-setter</em> will be
+atomic for all of Dylan’s non-stretchy built-in collection classes, and
+for <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>, except for subclasses of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>, and limited
+collections where the elements are constrained to be either of a type
+for which slots and variables do not guarantee atomicity (see
+<a class="reference internal" href="#atomicity">Atomicity</a>) or a subtype of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a>, or of a proper subtype of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. This design is intended to permit implementations to use
+efficient representations for element values, which use either more or
+less space than a normal Dylan value. It is undefined whether any of
+the other standard Dylan functions are atomic. Where atomicity is not
+guaranteed, clients should guard against unexpected behavior by using
+explicit synchronization, as appropriate.</p>
+</div>
+</div>
+<div class="section" id="the-threads-class-hierarchy">
+<h2><a class="toc-backref" href="#id18">The Threads class hierarchy</a><a class="headerlink" href="#the-threads-class-hierarchy" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id5">
+<img alt="../_images/threads.png" src="../_images/threads.png" />
+<p class="caption"><span class="caption-text">Threads class hierarchy.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>s - sealed  | o - open</p></li>
+<li><p>p - primary | f - free</p></li>
+<li><p>c - concrete | a - abstract</p></li>
+<li><p>u - uninstantiable | i - instantiable</p></li>
+</ul>
+</div>
+<div class="section" id="basic-features">
+<h2><a class="toc-backref" href="#id19">Basic features</a><a class="headerlink" href="#basic-features" title="Permalink to this headline">¶</a></h2>
+<p>This section documents basic features of the Threads module: operations
+on threads and low-level synchronization.</p>
+<div class="section" id="low-level-synchronization">
+<h3><a class="toc-backref" href="#id20">Low-level synchronization</a><a class="headerlink" href="#low-level-synchronization" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:sequence-point">
+<code class="sig-name descname">sequence-point</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:sequence-point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells the compiler that it must consider the possibility of visible side
+effects from other threads at the point of the call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sequence-point () =&gt; ()</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Tells the compiler that it must consider the possibility of visible
+side effects from other threads at the point of the call.</p>
+<p>Normally, the compiler is not obliged to consider this possibility,
+and is free to rearrange program order provided that the reordering
+cannot be detected within a thread.</p>
+<p>Calling this function effectively prohibits the compiler from
+rearranging the order of reads or writes from or to global data,
+relative to the call. This function may disallow compiler
+optimizations, leading to less efficient code — even for strongly
+ordered machines.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:synchronize-side-effects">
+<code class="sig-name descname">synchronize-side-effects</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:synchronize-side-effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>As <a class="reference internal" href="#dylan:threads:sequence-point"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">sequence-point</span></code></a>, with the addition that all side effects
+that have been performed within the calling thread are made visible
+within all other threads.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>synchronize-side-effects () =&gt; ()</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A call to this function implies all the constraints to the compiler
+of a call to <a class="reference internal" href="#dylan:threads:sequence-point"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">sequence-point</span></code></a>. In addition it ensures that
+all side effects that have been performed within the calling thread
+are made visible within all other threads. Hence, no side effect
+performed after the call can be visible to other threads before
+side effects performed before the call. On a strongly ordered
+machine, this function might legitimately be performed as a null
+operation.</p>
+<p>Some of the standard synchronization functions in the Threads
+module also ensure the visibility of side effects and act as
+sequence points, as if by a call to this function. This is defined
+to happen as follows:</p>
+<ul class="simple">
+<li><p>Immediately before a thread exits and becomes available for
+joining with <a class="reference internal" href="#dylan:threads:join-thread"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">join-thread</span></code></a></p></li>
+<li><p>Before <a class="reference internal" href="#dylan:threads:thread-yield"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">thread-yield</span></code></a> yields control</p></li>
+<li><p>After <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> achieves synchronization (for all methods
+provided by the Threads module)</p></li>
+<li><p>Upon entry to <a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> (for all methods provided by the
+Threads module)</p></li>
+<li><p>Upon entry to <a class="reference internal" href="#dylan:threads:release-all"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">release-all</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>This example uses low-level synchronization to implement a class
+for performing lazy evaluation in a thread-safe manner, without the
+need for locks.</p>
+<p>The class guarantees that the value will not be computed until it
+is needed, although it does not guarantee that it will not be
+computed more than once concurrently. This might be useful for
+memorization purposes.</p>
+<p>The class uses 3 slots: one for a function which may be used to
+compute the value, one for a boolean indicating whether the value
+is already known, and one for the value itself, if known.</p>
+<p>It is essential that no instance can ever be observed in a state
+where the boolean indicates a known value before the value is
+present. The low-level synchronization functions ensure this cannot
+happen.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;lazy-value&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">thunk</span> <span class="p">::</span> <span class="nc">&lt;function&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">thunk:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">internal-guard</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span> <span class="o">=</span> <span class="l">#t</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">computed-value</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">lazy-value</span> <span class="p">(</span><span class="n">lv</span> <span class="p">::</span> <span class="nc">&lt;lazy-value&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">lv</span><span class="p">.</span><span class="n">internal-guard</span><span class="p">)</span>
+    <span class="c1">// Don&#39;t yet have a value == so compute it now;</span>
+    <span class="k">let</span> <span class="n">value</span> <span class="o">=</span> <span class="n">lv</span><span class="p">.</span><span class="n">thunk</span><span class="p">();</span>
+    <span class="c1">// Store the value in place</span>
+    <span class="n">lv</span><span class="p">.</span><span class="n">computed-value</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="c1">// Before dropping the guard, synchronize side</span>
+    <span class="c1">// effects to ensure there is no possibility that</span>
+    <span class="c1">// other threads might see the lowered guard</span>
+    <span class="c1">// before seeing the value</span>
+    <span class="n">synchronize-side-effects</span><span class="p">();</span>
+    <span class="c1">// Now we can drop the guard to permit other</span>
+    <span class="c1">// threads to use this value</span>
+    <span class="n">lv</span><span class="p">.</span><span class="n">internal-guard</span> <span class="o">:=</span> <span class="l">#f</span><span class="p">;</span>
+    <span class="c1">// Finally, return the computed value</span>
+    <span class="n">value</span>
+  <span class="k">else</span> <span class="c1">// The value has already been computed and</span>
+    <span class="c1">// stored, so use it</span>
+    <span class="c1">// First, need a sequence-point to force the</span>
+    <span class="c1">// compiler not to move the read of the</span>
+    <span class="c1">// computed-value so that it is performed BEFORE</span>
+    <span class="c1">// the read of the guard.</span>
+    <span class="n">sequence-point</span><span class="p">();</span>
+    <span class="n">lv</span><span class="p">.</span><span class="n">computed-value</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="operations-on-threads">
+<h3><a class="toc-backref" href="#id21">Operations on threads</a><a class="headerlink" href="#operations-on-threads" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[thread]">
+<code class="sig-name descname">&lt;thread&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#dylan:threads:[thread]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. Required.</p></li>
+<li><p><strong>priority</strong> – A signed integer.</p></li>
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class representing a thread of control executing <em>function</em>.</p>
+<p>The <em>function</em> is called with no arguments in the empty dynamic
+environment of the new thread. The thread terminates when the
+function returns.</p>
+<p>The function is executable immediately. You can suspend a new
+thread (almost) immediately on creation by arranging for it to
+synchronize on an unavailable resource upon entry to the function.</p>
+<p>The optional <em>priority</em> keyword provides a scheduling priority for
+the thread. The higher the value, the greater the priority. The
+default value is zero, which is also the value of the constant
+<code class="docutils literal notranslate"><span class="pre">$normal-priority</span></code>, one of several constants that correspond to
+useful priority levels. The module offers no way to change the
+priority of a thread dynamically.</p>
+<p>The following constants, listed in order of increasing value, may
+be useful as values for the optional <em>priority</em> keyword.</p>
+<ul class="simple">
+<li><p>$low-priority</p></li>
+<li><p>$background-priority</p></li>
+<li><p>$normal-priority</p></li>
+<li><p>$interactive-priority</p></li>
+<li><p>$high-priority</p></li>
+</ul>
+<p>The <em>name</em> keyword is a string that is used as the function’s name for
+convenience purposes, such as debugging.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><p>The class <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a> provides the following
+operations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:thread-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">thread-name</span></code></a> Returns the name of a thread, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if no name was
+supplied.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:thread-id"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">thread-id</span></code></a> Returns the ID of a thread.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:join-thread"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">join-thread</span></code></a> Blocks until one of the specified threads has terminated,
+and returns the values of its function.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:thread-name">
+<code class="sig-name descname">thread-name</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:thread-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of a thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>thread-name <em>thread</em> =&gt; <em>name-or-false</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name-or-false</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">type-union(&lt;string&gt;,</span> <span class="pre">singleton(#f))</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the name of <em>thread</em> as a string. If <em>thread</em> does not have
+a name, this function returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:threads:thread-id">
+<code class="sig-name descname">thread-id</code> <em class="property">Generic function</em><a class="headerlink" href="#dylan:threads:thread-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the thread ID of a thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>thread-id <em>thread</em> =&gt; <em>thread-id</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thread-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the thread ID of a thread. This is similar to the process ID for
+an operating system process.</p>
+<p>This is a value controlled by the underlying operating system. It is
+most useful when trying to correlate thread activity with reports from
+other tools.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:join-thread">
+<code class="sig-name descname">join-thread</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:join-thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for another, existing, thread to terminate, and then returns the
+values of its function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>join-thread <em>thread</em> #rest <em>threads</em> =&gt; <em>thread-joined</em> #rest <em>results</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>. A thread to
+join.</p></li>
+<li><p><strong>threads</strong> (<em>#rest</em>) – Instances of <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>. More
+threads to join.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thread-joined</strong> – An instance of <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>. The thread
+that was joined.</p></li>
+<li><p><strong>#rest results</strong> – Zero or more instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. The
+values returned from the thread that was joined.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Conditions</dt>
+<dd class="field-even"><p><p>An implementation of <em>join-thread</em> is permitted to signal the following
+condition:</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;duplicate-join-error&gt;</span></code></dt><dd><p>A condition of this class (a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>) may be
+signalled when a thread is passed to <em>join-thread</em>, if that
+thread has already been joined by an earlier call to
+<em>join-thread</em>, or if that thread is currently active in another
+call to <em>join-thread</em>.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Waits for another, existing, thread to terminate, by blocking if
+necessary, and then returns the values of its function. The
+function returns the thread object that was joined, along with any
+values its function returns.</p>
+<p>If more than one thread is passed to <em>join-thread</em>, the current
+thread blocks until the first of those threads terminates. The
+values returned are those of the first thread to terminate.</p>
+<p>If one or more of the multiple threads has already terminated at
+the time of the call, then one of those terminated threads is
+joined. When more than one thread has already terminated, it is
+undefined which of those threads the implementation will join.</p>
+<p>It is an error to pass a thread to <em>join-thread</em> if it has already
+been joined in a previous call to <em>join-thread</em>. It is an error to
+pass a thread to <em>join-thread</em> if that thread is also being
+processed by another simultaneous call to <em>join-thread</em> from
+another thread.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:thread-yield">
+<code class="sig-name descname">thread-yield</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:thread-yield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force the current thread to yield control to the part of the
+implementation responsible for scheduling threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>thread-yield () =&gt; ()</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Forces the current thread to yield control to the part of the
+implementation responsible for scheduling threads. Doing so may
+have the effect of allowing other threads to run, and may be
+essential to avoid deadlock in a co-operative scheduling
+environment.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:current-thread">
+<code class="sig-name descname">current-thread</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:current-thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>current-thread () =&gt; <em>thread</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the current thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:current-thread-id">
+<code class="sig-name descname">current-thread-id</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:current-thread-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ID of the current thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>current-thread-id () =&gt; <em>thread-id</em></p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the ID of the current thread.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:thread-id"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">thread-id</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="synchronization-protocol">
+<h2><a class="toc-backref" href="#id22">Synchronization protocol</a><a class="headerlink" href="#synchronization-protocol" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id23">Basic features</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[synchronization]">
+<code class="sig-name descname">&lt;synchronization&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#dylan:threads:[synchronization]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of objects that are used for inter-thread synchronization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of objects that are used for inter-thread synchronization.</p>
+<p>There is no explicit mechanism in the module to block on a number
+of synchronization objects simultaneously, until synchronization
+can be achieved with one of them. This mechanism can be implemented
+by creating a new thread to wait for each synchronization object,
+and arranging for each thread to release a notification once
+synchronization has been achieved.</p>
+<p>The <em>name</em> keyword is a string that is used as the synchronization
+object’s name for convenience purposes, such as debugging.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><p>The class <a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a> provides the following operations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> Block until synchronization can be achieved.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> Release the object to make it available for
+synchronization.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:synchronization-name"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">synchronization-name</span></code></a> Returns the name of the
+synchronization object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:threads:wait-for">
+<code class="sig-name descname">wait-for</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:threads:wait-for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocks until a synchronization object is available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>wait-for <em>object</em> #key <em>timeout</em> =&gt; <em>success</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a>.</p></li>
+<li><p><strong>timeout</strong> – Time-out interval. If the value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+(the default), the time-out interval never elapses. Otherwise
+the value should be a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, corresponding to the desired
+interval in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>success</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Blocks until a synchronization object is available.</p>
+<p>This function is the basic blocking primitive of the Threads
+module. It blocks until <em>object</em> is available and synchronization
+can be achieved, or the <em>timeout</em> interval has expired. A
+non-blocking synchronization may be attempted by specifying a
+<em>timeout</em> of zero. Individual methods may adjust the state of the
+synchronization object on synchronization. The function returns
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if synchronization is achieved before the timeout interval
+elapses; otherwise it returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:threads:release">
+<code class="sig-name descname">release</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:threads:release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases a synchronization object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release <em>object</em> #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Releases the supplied synchronization object, <em>object</em>, potentially
+making it available to other threads. Individual methods describe
+what this means for each class of synchronization. This function
+does not block for any of the subclasses of
+<a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a> provided by the module.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:threads:synchronization-name">
+<code class="sig-name descname">synchronization-name</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:threads:synchronization-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of a synchronization object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>synchronization-name <em>object</em> =&gt; <em>name-or-false</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name-or-false</strong> – An instance of
+<code class="docutils literal notranslate"><span class="pre">type-union(&lt;string&gt;,</span> <span class="pre">singleton(#f))</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the name of the synchronization object, <em>object</em>, if it was
+created with the <em>name</em> init-keyword. Otherwise <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> is returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="locks">
+<h3><a class="toc-backref" href="#id24">Locks</a><a class="headerlink" href="#locks" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[lock]">
+<code class="sig-name descname">&lt;lock&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#dylan:threads:[lock]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of locks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Locks are synchronization objects which change state when they are
+<em>claimed</em> (using <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a>), and revert state when <em>released</em>
+(using <a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a>).</p>
+<p>It is normally necessary for programs to ensure that locks are
+released, otherwise there is the possibility of <em>deadlock</em>. Locks
+may be used to restrict the access of other threads to shared
+resources between the synchronization and the release. It is common
+for a protected operation to be performed by a body of code which
+is evaluated in a single thread between synchronization and
+release. A macro <a class="reference internal" href="#dylan:threads:with-lock"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-lock</span></code></a> is provided for this purpose. When
+a thread uses a lock for <em>mutual-exclusion</em> in this way, the thread
+is said to <em>own the lock</em>.</p>
+<p><a class="reference internal" href="#dylan:threads:[lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;lock&gt;</span></code></a> has no direct instances; calling <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> on <a class="reference internal" href="#dylan:threads:[lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;lock&gt;</span></code></a>
+returns an instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><p><p>The class <a class="reference internal" href="#dylan:threads:[lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;lock&gt;</span></code></a> provides the following operations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:with-lock"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-lock</span></code></a> Execute a body of code between <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> and
+<a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> operations.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:with-lock">
+<code class="sig-name descname">with-lock</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:with-lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds a lock while executing a body of code.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">with-lock (<cite>lock</cite>, #key <cite>keys</cite>)
+  <cite>body</cite>
+[ failure <cite>failure-expr</cite> ]
+end</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="#dylan:threads:[lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;lock&gt;</span></code></a>.</p></li>
+<li><p><strong>keys</strong> – Zero or more of the keywords provided by <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a>.</p></li>
+<li><p><strong>body</strong> – A body of Dylan code.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – Zero or more instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Conditions</dt>
+<dd class="field-even"><p><a class="reference internal" href="#dylan:threads:with-lock"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-lock</span></code></a> may signal a condition of the following class (a
+subclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#serious-condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;serious-condition&gt;</span></code></a>):</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;timeout-expired&gt;</span></code></dt><dd><p>This is signalled when <a class="reference internal" href="#dylan:threads:with-lock"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-lock</span></code></a> did not succeed in claiming
+the lock within the timeout period.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Execute the <em>body</em> with <em>lock</em> held. If a <em>failure</em> clause is
+supplied, then it will be evaluated and its values returned from
+<a class="reference internal" href="#dylan:threads:with-lock"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-lock</span></code></a> if the lock cannot be claimed (because a timeout
+occurred). The default, if no <em>failure</em> clause is supplied, is
+to signal an exception of class <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;timeout-expired&gt;</span></code>. If there
+is no failure, <a class="reference internal" href="#dylan:threads:with-lock"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-lock</span></code></a> returns the results of evaluating the
+body.</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>If no <em>failure</em> clause is supplied, the macro expands into code
+equivalent to the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">the-lock</span> <span class="o">=</span> <span class="vg">*lock*</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">wait-for</span><span class="p">(</span><span class="n">the-lock</span><span class="p">,</span> <span class="n">*keys</span> <span class="p">...</span><span class="o">*</span><span class="p">))</span>
+  <span class="nb">block</span> <span class="p">()</span>
+    <span class="vg">*body*</span><span class="p">...</span>
+  <span class="k">cleanup</span>
+    <span class="n">release</span><span class="p">(</span><span class="n">the-lock</span><span class="p">)</span>
+  <span class="k">end</span> <span class="nb">block</span>
+<span class="k">else</span>
+  <span class="k">signal</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;timeout-expired&gt;</span><span class="p">,</span>
+              <span class="k">synchronization:</span> <span class="n">the-lock</span><span class="p">)</span>
+<span class="k">end</span> <span class="k">if</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="semaphores">
+<h3><a class="toc-backref" href="#id25">Semaphores</a><a class="headerlink" href="#semaphores" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[semaphore]">
+<code class="sig-name descname">&lt;semaphore&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[semaphore]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of traditional counting semaphores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;lock&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>initial-count</strong> – A non-negative integer, corresponding to the
+initial state of the internal counter. The default value is 0.</p></li>
+<li><p><strong>maximum-count</strong> – A non-negative integer corresponding to the
+maximum permitted value of the internal counter. The default value
+is the largest value supported by the implementation, which is the
+value of the constant <code class="docutils literal notranslate"><span class="pre">$semaphore-maximum-count-limit</span></code>. This
+constant will not be smaller than 10000.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The <a class="reference internal" href="#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a> class is a class representing a traditional
+counting semaphore. An instance of <a class="reference internal" href="#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a> contains a
+counter in its internal state. Calling <a class="reference internal" href="#dylan:threads:release([semaphore])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">release</span></code></a> on a semaphore increments the internal
+count. Calling <a class="reference internal" href="#dylan:threads:wait-for([semaphore])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">wait-for</span></code></a> on a
+semaphore decrements the internal count, unless it is zero, in
+which case the thread blocks until another thread releases the
+semaphore.</p>
+<p>Semaphores are less efficient than exclusive locks, but they have
+asynchronous properties which may be useful (for example for
+managing queues or pools of shared resources). Semaphores may be
+released by any thread, so there is no built-in concept of a thread
+owning a semaphore. It is not necessary for a thread to release a
+semaphore after waiting for it — although semaphores may be used as
+locks if they do.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:wait-for([semaphore])">
+<code class="sig-name descname">wait-for(&lt;semaphore&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:wait-for([semaphore])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Claims a semaphore object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>wait-for <em>object</em> #key <em>timeout</em> =&gt; <em>success</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>. The
+semaphore object to wait for.</p></li>
+<li><p><strong>timeout</strong> (<em>#key</em>) – Time-out interval. If the value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+(the default), the time-out interval never elapses.
+Otherwise the value should be a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, corresponding
+to the desired interval in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>success</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Decrements the internal count of the semaphore object, blocking if
+the count is zero.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:release([semaphore])">
+<code class="sig-name descname">release(&lt;semaphore&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:release([semaphore])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases a semaphore object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release <em>object</em> #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Conditions</dt>
+<dd class="field-odd"><p><p>An implementation of this <a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> method is permitted to signal a
+condition of the following class, which is a subclass of
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>:</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;count-exceeded-error&gt;</span></code></dt><dd><p>This may be signalled when an attempt is made to release a
+<a class="reference internal" href="#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a> when the internal counter is already at its
+maximum count.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Releases a semaphore object, by incrementing its internal count.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="exclusive-locks">
+<h3><a class="toc-backref" href="#id26">Exclusive locks</a><a class="headerlink" href="#exclusive-locks" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[exclusive-lock]">
+<code class="sig-name descname">&lt;exclusive-lock&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#dylan:threads:[exclusive-lock]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of locks which prohibit unlocking by threads that do not own
+the lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;lock&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The class of locks which prohibit unlocking by threads that do not
+own the lock.</p>
+<p>The notion of ownership is directly supported by the class, and a
+thread can test whether an <a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> is currently owned.
+An instance of <a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> can only be owned by one thread
+at a time, by calling <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> on the lock.</p>
+<p>Once owned, any attempt by any other thread to wait for the lock
+will cause that thread to block. It is an error for a thread to
+release an <a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> if another thread owns it.</p>
+<p><a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> has no direct instances; calling <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> on
+<a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> returns an instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><p><p>The class <a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> provides the following operations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:owned?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">owned?</span></code></a> Tests to see if the lock has been claimed by the
+current thread.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:release([exclusive-lock])">
+<code class="sig-name descname">release(&lt;exclusive-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:release([exclusive-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases an exclusive lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release <em>object</em> #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Conditions</dt>
+<dd class="field-odd"><p><p>Implementations of <a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> methods for subclasses of
+<a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> are permitted to signal a condition
+of the following class, which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>:</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;not-owned-error&gt;</span></code></dt><dd><p>This may be signalled when an attempt is made to release an
+<a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a> when the lock is not owned by the
+current thread.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Releases a lock that is owned by the calling thread. It is an error
+if the lock is not owned.</p>
+<p>The Threads module does not provide a method on <a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> for
+<a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a>, which is an open abstract class. Each
+concrete subclass will have an applicable method which may signal
+errors according to the protocol described above.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="dylan:threads:owned?">
+<code class="sig-name descname">owned?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dylan:threads:owned?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether an exclusive lock has been claimed by the current thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>owned? <em>object</em> =&gt; <em>owned?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owned?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether the exclusive lock has been claimed by the current
+thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="recursive-locks">
+<h3><a class="toc-backref" href="#id27">Recursive locks</a><a class="headerlink" href="#recursive-locks" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[recursive-lock]">
+<code class="sig-name descname">&lt;recursive-lock&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[recursive-lock]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of locks that can be locked recursively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>A thread can lock a <a class="reference internal" href="#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a> multiple times,
+recursively, but the lock must later be released the same number of
+times. The lock will be freed on the last of these releases.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:wait-for([recursive-lock])">
+<code class="sig-name descname">wait-for(&lt;recursive-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:wait-for([recursive-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Summary</dt>
+<dd class="field-odd"><p>Claims a recursive lock.</p>
+</dd>
+<dt class="field-even">Signature</dt>
+<dd class="field-even"><p>wait-for <em>object</em> #key <em>timeout</em> =&gt; <em>success</em></p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>timeout</strong> (<em>#key</em>) – Time-out interval. If the value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+(the default), the time-out interval never elapses. Otherwise
+the value should be a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, corresponding to the desired
+interval in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>success</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Claims a recursive lock, blocking if it is owned by another thread.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:release([recursive-lock])">
+<code class="sig-name descname">release(&lt;recursive-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:release([recursive-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases a recursive lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release <em>object</em> #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Releases a recursive lock, and makes it available if it has been
+released as many times as it was claimed with <a class="reference internal" href="#dylan:threads:wait-for([recursive-lock])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">wait-for</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:owned?([recursive-lock])">
+<code class="sig-name descname">owned?(&lt;recursive-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:owned?([recursive-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether a recursive lock has been claimed by the current thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>owned? <em>object</em> =&gt; <em>owned?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <cite>&lt;recursive-lock&gt;</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owned?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether a recursive lock has been claimed by the current
+thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="simple-locks">
+<h3><a class="toc-backref" href="#id28">Simple locks</a><a class="headerlink" href="#simple-locks" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[simple-lock]">
+<code class="sig-name descname">&lt;simple-lock&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[simple-lock]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple and efficient lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a> class represents the most simple and
+efficient mutual exclusion synchronization primitive. It is an
+error to lock a <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a> recursively. An attempt to do so
+might result in an error being signalled, or deadlock occurring.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:wait-for([simple-lock])">
+<code class="sig-name descname">wait-for(&lt;simple-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:wait-for([simple-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Claims a simple lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>wait-for <em>object</em> #key <em>timeout</em> =&gt; <em>success</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>timeout</strong> (<em>#key</em>) – Time-out interval. If the value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+(the default), the time-out interval never elapses. Otherwise the
+value should be a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, corresponding to the desired interval
+in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>success</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Claims a simple lock, blocking if it is owned by another thread.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:release([simple-lock])">
+<code class="sig-name descname">release(&lt;simple-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:release([simple-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases a simple lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release <em>object</em> #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Releases a simple lock.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:owned?([simple-lock])">
+<code class="sig-name descname">owned?(&lt;simple-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:owned?([simple-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether a simple lock has been claimed by the current thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>owned? <em>object</em> =&gt; <em>owned?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owned?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether a simple lock has been claimed by the current thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="multiple-reader-single-writer-locks">
+<h3><a class="toc-backref" href="#id29">Multiple reader / single writer locks</a><a class="headerlink" href="#multiple-reader-single-writer-locks" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[read-write-lock]">
+<code class="sig-name descname">&lt;read-write-lock&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[read-write-lock]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of locks that can have multiple readers but only one writer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[exclusive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;exclusive-lock&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The class of locks that can have multiple readers but only one
+writer.</p>
+<p>The <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a> class can be locked in either of two
+modes, <em>read</em> and <em>write</em>. A write lock is exclusive, and implies
+ownership of the lock. However, a read lock is non-exclusive, and
+an instance can be locked multiple times in read mode, whether by
+multiple threads, recursively by a single thread, or a combination
+of both.</p>
+<p>A <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a> can only be locked in write mode if the
+lock is free, and the operation will block if necessary. It can
+only be freed by the thread that owns it.</p>
+<p>A <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a> can be locked in read mode provided that
+it is not owned with a write lock. The operation will block while
+the lock is owned. Each time it is locked in read mode, an internal
+counter is incremented. This counter is decremented each time a
+read-mode lock is released. The lock is freed when the counter
+becomes zero.</p>
+<p>The <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a> class is less efficient than the other
+lock classes defined in the Threads module. However, it provides an
+efficient and convenient means to protect data that is frequently
+read and may occasionally be written by multiple concurrent
+threads.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:wait-for([read-write-lock])">
+<code class="sig-name descname">wait-for(&lt;read-write-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:wait-for([read-write-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Claims a read-write lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>wait-for <em>object</em> #key <em>timeout</em> <em>mode</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>timeout</strong> (<em>#key</em>) – Time-out interval. If the value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+(the default), the time-out interval never elapses. Otherwise the
+value should be a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, corresponding to the desired interval
+in seconds.</p></li>
+<li><p><strong>mode</strong> (<em>#key</em>) – The mode of the lock to wait for. Valid values
+are <code class="docutils literal notranslate"><span class="pre">#&quot;read&quot;</span></code> (the default) and <code class="docutils literal notranslate"><span class="pre">#&quot;write&quot;</span></code>, which wait for locks
+in read mode and write mode respectively.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>success</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Claims a read-write lock, blocking if necessary. The behavior
+depends on the value of <em>mode</em>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;read&quot;</span></code> If there is a write lock, blocks until the lock
+becomes free. Then claims the lock by incrementing its internal
+read-lock counter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;write&quot;</span></code> First waits until the lock becomes free, by blocking
+if necessary. Then claims exclusive ownership of the lock in
+write mode.</p></li>
+</ul>
+<p>If the claim is successful, this method returns true; otherwise it
+returns false.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:release([read-write-lock])">
+<code class="sig-name descname">release(&lt;read-write-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:release([read-write-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases a read-write-lock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release object #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Releases a read-write lock.</p>
+<p>If the lock is owned by the calling thread, it is freed. If the
+lock is locked in read mode, the count of the number of locks held
+is decremented; the lock is freed if the count becomes zero.
+Otherwise it is an error to release the lock, and an implementation
+is permitted to signal a <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;not-owned-error&gt;</span></code> condition.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:owned?([read-write-lock])">
+<code class="sig-name descname">owned?(&lt;read-write-lock&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:owned?([read-write-lock])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether a read-write lock is owned — that is, has been locked
+in write mode — by the current thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>owned? <em>object</em> =&gt; <em>owned?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[read-write-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;read-write-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owned?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Tests whether a read-write lock is owned — that is, has been locked
+in write mode — by the current thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="notifications">
+<h3><a class="toc-backref" href="#id30">Notifications</a><a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="dylan:threads:[notification]">
+<code class="sig-name descname">&lt;notification&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#dylan:threads:[notification]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of objects that can be used to notify threads of a change
+of state elsewhere in the program.</p>
+<dl class="field-list">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:[synchronization]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;synchronization&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.
+Required.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of objects that can be used to notify threads of a change
+of state elsewhere in the program. Notifications are used in
+association with locks, and are sometimes called <em>condition
+variables</em>. They may be used to support the sharing of data between
+threads using <em>monitors</em>. Each <a class="reference internal" href="#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a> is permanently
+associated with a <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>, although the same lock
+may be associated with many notifications.</p>
+<p>The required <em>lock</em> is associated with the notification, and it is
+only possible to wait for, or release, the notification if the lock
+is owned.</p>
+<p>Threads wait for the change of state to be notified by calling
+<a class="reference internal" href="#dylan:threads:wait-for([notification])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">wait-for</span></code></a>. Threads notify other
+threads of the change of state by calling <a class="reference internal" href="#dylan:threads:release([notification])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">release</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><p>The class <a class="reference internal" href="#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a> provides the following operations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:associated-lock"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">associated-lock</span></code></a> Returns the lock associated with the
+notification object.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> Wait for the notification of the change in state.
+The associated lock must be owned, and is atomically released
+before synchronization, and reclaimed after.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> Notify the change of state to a single waiting
+thread. This has no effect on the associated lock, which must be
+owned.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:release-all"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">release-all</span></code></a> Notify the change of state to all waiting
+threads. This has no effect on the associated lock, which must be
+owned.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>This example shows how to use a notification and an associated lock to
+implement a queue. The variable <code class="docutils literal notranslate"><span class="pre">*queue*</span></code> is the actual queue object
+(a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#deque"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;deque&gt;</span></code></a>). Queue access is performed by interlocking pushes and
+pops on the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#deque"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;deque&gt;</span></code></a>. The <code class="docutils literal notranslate"><span class="pre">*queue*</span></code> variable can be a constant,
+since it is the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#deque"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;deque&gt;</span></code></a> which is mutated and not the value of
+<code class="docutils literal notranslate"><span class="pre">*queue*</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="vg">*queue*</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;deque&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">*lock*</span></code> is used to isolate access to the queue</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="vg">*lock*</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;lock&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">*something-queued*</span></code> is a notification which is used to
+notify other threads that an object is being put onto an empty queue.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="vg">*something-queued*</span> <span class="o">=</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;notification&gt;</span><span class="p">,</span> <span class="k">lock:</span> <span class="vg">*lock*</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The function <em>put-on-queue</em> pushes an object onto the queue. If the
+queue was initially empty, then all threads which are waiting for the
+queue to fill are notified that there is a new entry.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">put-on-queue</span> <span class="p">(</span><span class="n">object</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">with-lock</span> <span class="p">(</span><span class="vg">*lock*</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="vg">*queue*</span><span class="p">.</span><span class="nb">empty?</span><span class="p">)</span>
+      <span class="n">release-all</span><span class="p">(</span><span class="vg">*something-queued*</span><span class="p">)</span>
+    <span class="k">end</span><span class="p">;</span>
+    <span class="nb">push</span><span class="p">(</span><span class="vg">*queue*</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+  <span class="k">end</span> <span class="n">with-lock</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <em>get-from-queue</em> function returns an object from the queue. If no
+object is immediately available, then it blocks until it receives a
+notification that the queue is no longer empty. After receiving the
+notification it tests again to see if an object is present, in case it
+was popped by another thread.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">get-from-queue</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">object</span><span class="p">)</span>
+  <span class="n">with-lock</span> <span class="p">(</span><span class="vg">*lock*</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="vg">*queue*</span><span class="p">.</span><span class="nb">empty?</span><span class="p">)</span>
+      <span class="n">wait-for</span><span class="p">(</span><span class="vg">*something-queued*</span><span class="p">)</span>
+    <span class="k">end</span><span class="p">;</span>
+    <span class="nb">pop</span><span class="p">(</span><span class="vg">*queue*</span><span class="p">)</span>
+  <span class="k">end</span> <span class="n">with-lock</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:associated-lock">
+<code class="sig-name descname">associated-lock</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:associated-lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the lock associated with the notification object supplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>associated-lock <em>notification</em> =&gt; <em>lock</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the lock associated with the notification object <em>notification</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:wait-for([notification])">
+<code class="sig-name descname">wait-for(&lt;notification&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:wait-for([notification])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for another thread to release a notification.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>wait-for <em>notification</em> #key <em>timeout</em> =&gt; <em>success</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+<li><p><strong>timeout</strong> (<em>#key</em>) – Time-out interval. If the value is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
+(the default), the time-out interval never elapses. Otherwise the
+value should be a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>, corresponding to the desired interval
+in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>success</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Wait for another thread to release <em>notification</em>. The lock
+associated with the notification must be owned. Atomically, the
+lock is released and the current thread starts blocking, waiting
+for another thread to release the notification. The current thread
+reclaims the lock once it has received the notification.</p>
+<p>Note that the state should be tested again once <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> has
+returned, because there may have been a delay between the
+<a class="reference internal" href="#dylan:threads:release([notification])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">release</span></code></a> of the notification and
+the claiming of the lock, and the state may have been changed
+during that time. If a timeout is supplied, then this is used for
+waiting for the release of the notification only. The <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a>
+function always waits for the lock with no timeout, and it is
+guaranteed that the lock will be owned on return. The <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a>
+function returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if the notification wait times out.</p>
+</p>
+</dd>
+<dt class="field-odd">Conditions</dt>
+<dd class="field-odd"><p><p>Implementations of this <a class="reference internal" href="#dylan:threads:wait-for"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">wait-for</span></code></a> method are permitted to signal a
+condition of the following class, which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>:</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;not-owned-error&gt;</span></code></dt><dd><p>Implementations can signal this error if the application attempts
+to wait for a notification when the associated lock is not owned by
+the current thread.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="dylan:threads:release([notification])">
+<code class="sig-name descname">release(&lt;notification&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#dylan:threads:release([notification])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases a notification to one of the threads that are blocked and
+waiting for it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release <em>notification</em> #key =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Conditions</dt>
+<dd class="field-odd"><p><p>Implementations of this <a class="reference internal" href="#dylan:threads:release"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release</span></code></a> method are permitted to signal a
+condition of the following class, which is a subclass of
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>:</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;not-owned-error&gt;</span></code></dt><dd><p>Implementations can signal this error if the application attempts
+to release a notification when the associated lock is not owned
+by the current thread.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Releases <em>notification</em>, announcing the change of state to one of
+the threads which are blocked and waiting for it. The choice of
+which thread receives the notification is undefined. The receiving
+thread may not be unblocked immediately, because it must first
+claim ownership of the notification’s associated lock.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:release-all">
+<code class="sig-name descname">release-all</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:release-all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release a notification to all the threads that are blocked and waiting
+for it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>release-all <em>notification</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Conditions</dt>
+<dd class="field-odd"><p><p>Implementations of the <a class="reference internal" href="#dylan:threads:release-all"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">release-all</span></code></a> function are permitted to signal a
+condition of the following class, which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>:</p>
+<dl class="simple">
+<dt><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;not-owned-error&gt;</span></code></dt><dd><p>This may be signalled when an attempt is made to release a
+notification when the associated lock is not owned by the current
+thread.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Releases <em>notification</em>, announcing the change of state to all
+threads which are blocked and waiting for it. Those threads will
+then necessarily have to compete for the lock associated with the
+notification.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="timers">
+<h2><a class="toc-backref" href="#id31">Timers</a><a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt class="dylan-api" id="dylan:threads:sleep">
+<code class="sig-name descname">sleep</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocks the current thread for a specified number of seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sleep <em>interval</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>interval</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Blocks the current thread for the number of seconds specified in
+<em>interval</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id32">Thread variables</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:thread">
+<code class="sig-name descname">thread</code> <em class="property">Variable definition adjective Macro</em><a class="headerlink" href="#dylan:threads:thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>An adjective to <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a> for defining thread variables.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">define thread variable <cite>bindings</cite> = <cite>init</cite> ;</pre>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>An adjective to <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a>. The construct <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">thread</span>
+<span class="pre">variable</span></code> defines module variables in the current module which
+have thread-local bindings. The initialization expression is
+evaluated once, and is used to provide the initial values for the
+variables in each thread. The value of a thread variable binding
+may be changed with the normal assignment operator <a class="reference external" href="https://opendylan.org/books/drm/Function_Macros#assignment"><code class="xref drm docutils literal notranslate"><span class="pre">:=</span></code></a>. This
+assignment is not visible in other threads.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">thread</span> <span class="nb">variable</span> <span class="vg">*standard-output*</span>
+  <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;standard-output-stream&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id33">Dynamic binding</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:dynamic-bind">
+<code class="sig-name descname">dynamic-bind</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:dynamic-bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a body of code in a context in which variables are dynamically
+rebound.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">dynamic-bind (<cite>place1</cite> = <cite>init1</cite>, <cite>place2</cite> = <cite>init2</cite>, ...)
+  <cite>body</cite>
+end</pre>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Executes <em>body</em> with the specified <em>places</em> rebound in the dynamic
+environment, each place being initialized to the results of
+evaluating the initialization expressions. In other words, the
+places are initialized to new values on entry to the body but
+restored to their old values once the body has finished executing,
+whether because it finishes normally, or because of a non-local
+transfer of control. Typically, each <em>place</em> is a thread variable.</p>
+<p>If the <em>place</em> is a <em>name</em>, it must be the name of a thread
+variable in the module scope.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>The following example shows the dynamic binding of a single variable.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">dynamic-bind</span> <span class="p">(</span><span class="vg">*standard-output*</span> <span class="o">=</span> <span class="n">new-val</span><span class="p">())</span>
+  <span class="n">top-level-loop</span> <span class="p">()</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This expands into code equivalent to the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span>
+  <span class="k">let</span> <span class="n">old-value</span> <span class="o">=</span> <span class="vg">*standard-output*</span><span class="p">;</span>
+  <span class="nb">block</span> <span class="p">()</span>
+    <span class="vg">*standard-output*</span> <span class="o">:=</span> <span class="n">new-val</span><span class="p">();</span>
+    <span class="n">top-level-loop</span><span class="p">()</span>
+  <span class="k">cleanup</span>
+    <span class="vg">*standard-output*</span> <span class="o">:=</span> <span class="n">old-value</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="an-extended-form-of-dynamic-bind">
+<h3><a class="toc-backref" href="#id34">An extended form of dynamic-bind</a><a class="headerlink" href="#an-extended-form-of-dynamic-bind" title="Permalink to this headline">¶</a></h3>
+<p>Some implementations of the Threads module may provide an extended form
+of <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a> for binding places other than variables. The
+implementation of this extended form requires the use of non-standard
+features in the Dylan macro system, and hence cannot be written as a
+portable macro. These non-standard extensions are subject to discussion
+amongst the Dylan language designers, and may eventually become standard
+features. Until such time as standardization occurs, implementations are
+not mandated to implement the extended form of <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>, and
+portable code should not depend upon this feature.</p>
+<p>The extended form is described below.</p>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:dynamic-bind(extended)">
+<code class="sig-name descname">dynamic-bind (extended)</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:dynamic-bind(extended)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a body of code in a context in which variables or other places
+are dynamically rebound.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">dynamic-bind (<cite>place1</cite> = <cite>init1</cite>, <cite>place2</cite> = <cite>init2</cite>, ...)
+  <cite>body</cite>
+end</pre>
+<p>(This is the same as the simple form.)</p>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>If <em>place</em> is not a name, then it may have the syntax of a call to a
+function. This permits an extended form for <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>, by analogy
+with the extended form for <a class="reference external" href="https://opendylan.org/books/drm/Function_Macros#assignment"><code class="xref drm docutils literal notranslate"><span class="pre">:=</span></code></a>. In this case, if the place appears
+syntactically as <code class="docutils literal notranslate"><span class="pre">name(arg1,</span> <span class="pre">...</span> <span class="pre">argn)</span></code>, then the macro expands into
+a call to the function</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">name-dynamic-binder</span><span class="p">(</span><span class="vg">*init*</span><span class="p">,</span> <span class="vg">*body-method*</span><span class="p">,</span> <span class="vg">*arg1*</span><span class="p">,</span> <span class="p">...</span> <span class="vg">*argn*</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <em>init</em> is the initial value for the binding, and <em>body-method</em>
+is function with no parameters whose body is the body of the
+<a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>. The extended form also permits the other <code class="docutils literal notranslate"><span class="pre">.</span></code> and
+<code class="docutils literal notranslate"><span class="pre">[]</span></code> syntaxes for function calls.</p>
+<p>There are no features in the current version of the Threads module
+which make use of the extended form of <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>The following example shows the extended form of <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">dynamic-bind</span> <span class="p">(</span><span class="n">object</span><span class="p">.</span><span class="n">a-slot</span> <span class="o">=</span> <span class="n">new-slot-val</span><span class="p">())</span>
+  <span class="n">inner-body</span><span class="p">(</span><span class="n">object</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This expands into code equivalent to the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">a-slot-dynamic-binder</span><span class="p">(</span><span class="n">new-slot-val</span><span class="p">(),</span>
+                      <span class="nb">method</span> <span class="p">()</span> <span class="n">inner-body</span><span class="p">(</span><span class="n">object</span><span class="p">)</span> <span class="k">end</span><span class="p">,</span>
+                      <span class="n">object</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="locked-variables">
+<h2><a class="toc-backref" href="#id35">Locked variables</a><a class="headerlink" href="#locked-variables" title="Permalink to this headline">¶</a></h2>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:locked">
+<code class="sig-name descname">locked</code> <em class="property">Variable definition adjective Macro</em><a class="headerlink" href="#dylan:threads:locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a locked variable.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">define locked variable <cite>bindings</cite> = <cite>init</cite> ;</pre>
+</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>An adjective to <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a>. The construct <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">locked</span>
+<span class="pre">variable</span></code> defines module variables in the current module that can
+be tested and updated with <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a>,
+<a class="reference internal" href="#dylan:threads:atomic-increment!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">atomic-increment!</span></code></a>, or <a class="reference internal" href="#dylan:threads:atomic-decrement!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">atomic-decrement!</span></code></a>.</p>
+<p>Other threads are prevented from modifying the locked variable
+during the conditional update operation by means of a low-level
+locking mechanism, which is expected to be extremely efficient.</p>
+</p>
+</dd>
+<dt class="field-odd">Operations</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> Atomically compare and conditionally
+assign to the variable.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:atomic-increment!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">atomic-increment!</span></code></a> Atomically increment the variable.</p></li>
+<li><p><a class="reference internal" href="#dylan:threads:atomic-decrement!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">atomic-decrement!</span></code></a>  Atomically decrement the variable.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">locked</span> <span class="nb">variable</span> <span class="vg">*number-detected*</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id36">Conditional update</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:conditional-update!">
+<code class="sig-name descname">conditional-update!</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:conditional-update!" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an atomic test-and-set operation.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">conditional-update!(<cite>local-name</cite> = <cite>place</cite>)
+  <cite>body</cite>
+  [success <cite>success-expr</cite> ]
+  [failure <cite>failure-expr</cite> ]
+end</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>local-name</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>place</strong> – A Dylan variable-name <em>bnf</em>,
+If the implementation provides the extended form of
+<a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a>, <em>place</em> can also be a
+function call.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – See description.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Performs an atomic test-and-set operation. Where appropriate, it should
+be implemented using dedicated processor instructions, and is expected
+to be extremely efficient on most platforms.</p>
+<p>The value of the <em>place</em> is evaluated once to determine the initial
+value, which is then bound to the <em>local-name</em> as a lexical variable.
+The <em>body</em> is then evaluated to determine the new value for the place.
+The place is then conditionally updated — which means that the following
+steps are performed atomically:</p>
+<ol class="arabic simple">
+<li><p>The place is evaluated again, and a test is made to see if it has
+been updated since the initial evaluation. This may involve a
+comparison with the old value using <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>, though implementations
+might use a more direct test for there having been an assignment to
+the place. It is undefined whether the test will succeed or fail in
+the case where the place was updated with a value that is identical
+to the old value when compared using <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p></li>
+<li><p>If the value was found not to have been updated since the initial
+evaluation, the new value is stored by assignment. Otherwise the
+conditional update fails.</p></li>
+</ol>
+<p>If the update was successful, then <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> returns the
+result of the <em>success</em> expression, or returns the new value of the
+place if no <em>success</em> clause was supplied.</p>
+<p>If the update failed, then <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> signals a condition,
+unless a <em>failure</em> clause was given, in which case the value is
+returned.</p>
+<p>If the <em>place</em> is a <em>name</em>, it must be the name of a <em>locked variable</em>
+in the current module scope. See <a class="reference internal" href="#locked-variables">Locked variables</a>.</p>
+</p>
+</dd>
+<dt class="field-odd">Conditions</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> may signal a condition of the following class
+(which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>), unless a <em>failure</em> clause is
+supplied.</p>
+<p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;conditional-update-error&gt;</span></code></p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>The following example does an atomic increment of <code class="docutils literal notranslate"><span class="pre">*number-detected*</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">until</span> <span class="p">(</span><span class="n">conditional-update!</span>
+         <span class="p">(</span><span class="n">current-val</span> <span class="o">=</span> <span class="vg">*number-detected*</span><span class="p">)</span>
+         <span class="n">current-val</span> <span class="o">+</span> <span class="mi">1</span>
+         <span class="n">failure</span> <span class="l">#f</span>
+       <span class="k">end</span> <span class="n">conditional-update!</span><span class="p">)</span>
+<span class="k">end</span> <span class="k">until</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:atomic-increment!">
+<code class="sig-name descname">atomic-increment!</code> <em class="property">Function Macro</em><a class="headerlink" href="#dylan:threads:atomic-increment!" title="Permalink to this definition">¶</a></dt>
+<dd><p>Atomically increments a place containing a numeric value.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">atomic-increment!(<cite>place</cite>)</pre>
+<pre class="literal-block">atomic-increment!(<cite>place</cite>, <cite>by</cite>)</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>place</strong> – A Dylan variable-name <em>bnf</em>.
+If the implementation provides the extended form of
+<a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a>, <em>place</em> can also be a
+function call.</p></li>
+<li><p><strong>by</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. Default value: 1.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new-value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Atomically increments a place containing a numeric value.</p>
+<p>The value of the <em>place</em> is evaluated one or more times to
+determine the initial value. A new value is computed from this
+value and <em>by</em>, by applying <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#addition"><code class="xref drm docutils literal notranslate"><span class="pre">+</span></code></a> from the Dylan module. The new
+value is atomically stored back into <em>place</em>.</p>
+<p>The macro returns the new value of <em>place</em>.</p>
+<p>The <em>place</em> must be a suitable place for
+<a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a>.</p>
+<p>Implementations of <a class="reference internal" href="#dylan:threads:atomic-increment!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">atomic-increment!</span></code></a> are permitted to use
+<a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> (as in the described example), and
+hence can involve a loop and can cause <em>place</em> to be evaluated more
+than once. However, an atomic increment of a locked variable might
+be implemented by a more efficient non-looping mechanism on some
+platforms.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>The following example atomically increments <code class="docutils literal notranslate"><span class="pre">*number-detected*</span></code>
+by 2, and returns the incremented value.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">atomic-increment!</span><span class="p">(</span><span class="vg">*number-detected*</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:atomic-decrement!">
+<code class="sig-name descname">atomic-decrement!</code> <em class="property">Function Macro</em><a class="headerlink" href="#dylan:threads:atomic-decrement!" title="Permalink to this definition">¶</a></dt>
+<dd><p>Atomically decrements a place containing a numeric value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">atomic-decrement!(<cite>place</cite>)</pre>
+<pre class="literal-block">atomic-decrement!(<cite>place</cite>, <cite>by</cite>)</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>place</strong> – A Dylan variable-name <em>bnf</em>.
+If the implementation provides the extended form of
+<a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a>, <em>place</em> can also be a
+function call.</p></li>
+<li><p><strong>by</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. Default value: 1.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new-value</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Atomically decrements a place containing a numeric value. It has
+the same semantics as <a class="reference internal" href="#dylan:threads:atomic-increment!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">atomic-increment!</span></code></a> with the exception
+that the <em>place</em> is decremented.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="an-extended-form-of-conditional-update">
+<h3><a class="toc-backref" href="#id37">An extended form of conditional-update!</a><a class="headerlink" href="#an-extended-form-of-conditional-update" title="Permalink to this headline">¶</a></h3>
+<p>Some implementations of the Threads module may provide an extended form
+of <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> for updating places other than locked
+variables. The implementation of this extended form requires the use of
+non-standard features in the Dylan macro system, and hence cannot be
+written as a portable macro. These non-standard extensions are subject
+to discussion amongst the Dylan language designers, and may eventually
+become features. Until such time as standardization occurs,
+implementations are not mandated to implement the extended form of
+<a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a>, and portable code should not depend upon the
+feature.</p>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:threads:conditional-update!(extended)">
+<code class="sig-name descname">conditional-update! (extended)</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:conditional-update!(extended)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an atomic test-and-set operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">conditional-update!(<cite>local-name</cite> = <cite>place</cite>)
+  <cite>body</cite>
+  [success <cite>success-expr</cite> ]
+  [failure <cite>failure-expr</cite> ]
+end</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>local-name</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>place</strong> – A Dylan variable-name <em>bnf</em> or a function call.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This extended form of <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> additionally accepts a
+<em>place</em> that has the syntax of a call to a function. This extended form
+for <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> is analogous to that for <a class="reference external" href="https://opendylan.org/books/drm/Function_Macros#assignment"><code class="xref drm docutils literal notranslate"><span class="pre">:=</span></code></a>. In this case,
+if the <em>place</em> appears syntactically as</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*name*</span> <span class="p">(</span><span class="vg">*arg*</span> <span class="mi">1</span><span class="p">,</span> <span class="p">...</span> <span class="vg">*arg*</span> <span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The macro expands into this call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*name*</span> <span class="n">-conditional-updater</span><span class="p">(</span><span class="vg">*new-value*</span><span class="p">,</span> <span class="vg">*local-name*</span><span class="p">,</span> <span class="vg">*arg*</span> <span class="mi">1</span><span class="p">,</span> <span class="p">...</span>  <span class="vg">*arg*</span> <span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the result of this function call is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, the conditional update is
+deemed to have failed.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="primitives.html" class="btn btn-neutral float-left" title="The dylan-primitives Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../hash-algorithms/index.html" class="btn btn-neutral float-right" title="The hash-algorithms Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

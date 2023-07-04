@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weak tables &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Inlining adjectives for methods, constants, functions, and slots" href="inlining.html" />
+    <link rel="prev" title="Extensions to the FOR iteration construct" href="for-iteration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define-function.html">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numbers.html">Integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Weak tables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/weak-tables.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="weak-tables">
+<h1>Weak tables<a class="headerlink" href="#weak-tables" title="Permalink to this headline">¶</a></h1>
+<p>We have extended <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">table</span></code> to incorporate <em>weak references</em>
+through keys and values.</p>
+<p>A weak reference is an reference that the garbage collector treats as
+irrelevant to establishing whether the object referred to is live. If an
+object has only weak references to it, the garbage collector can delete
+the reference and recycle the object’s memory. We call a normal
+reference a <em>strong reference</em>.</p>
+<p>Weak references are a useful tool for building data structures where you
+do not want the garbage collector to preserve objects in the structure
+on account of certain references merely used to build up the structure.</p>
+<p>Typically, this level of control is not required in a language like
+Dylan, which does not expose memory references to programs. But without
+the ability to tell the garbage collector to disregard certain kinds of
+reference, data structures such as tables could be bloated unnecessarily
+by the garbage collector preserving entries (a key/value pair) solely
+because the table object itself has a reference to the entry’s key or
+value.</p>
+<p>Open Dylan provides weakness options for instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>. A
+table can have <em>weak keys</em> or <em>weak values</em>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;table&gt;</span><span class="p">,</span> <span class="k">weak:</span> <span class="ss">#&quot;key&quot;</span><span class="p">);</span> <span class="c1">// makes a weak-key table</span>
+
+<span class="nb">make</span><span class="p">(</span><span class="nc">&lt;table&gt;</span><span class="p">,</span> <span class="k">weak:</span> <span class="ss">#&quot;value&quot;</span><span class="p">);</span> <span class="c1">// makes a weak-value table</span>
+</pre></div>
+</div>
+<p>In a weak-keyed table, if a key is no longer referenced from anywhere
+else in the program (apart from weak references, including from the same
+table), then the entry (key and value) can be deleted from the table.
+After that, the key object will be recycled. The value will also be
+recycled unless it has strong references from elsewhere in the program.</p>
+<p>Weak-valued tables are much the same, except that the focus is values
+and not keys. In a weak-valued table, if a value is no longer referenced
+from anywhere else in the program (apart from weak references, including
+from the same table), then the entry (value and key) can be deleted from
+the table. After that, the value object will be recycled. The key will
+also be recycled unless it has strong references from elsewhere in the
+program.</p>
+<p>Weak tables are useful for implementing many sorts of cache, where the
+cached data is recomputable and yet both expensive to compute and also
+expensive to keep for a long time. For example, consider something like
+a font cache for an X Window System server, or a printer. Fonts might be
+looked up by name, so the strings would be the keys of the table. The
+values would be the bitmaps for the font. While the X server is using a
+font, the cache will be kept alive — so any further requests to select
+the font will find the data already present. However, if the font is not
+used then you would eventually expect the garbage collector to clean it
+out. Any future request would then have to re-load all the bitmaps.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="for-iteration.html" class="btn btn-neutral float-left" title="Extensions to the FOR iteration construct" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inlining.html" class="btn btn-neutral float-right" title="Inlining adjectives for methods, constants, functions, and slots" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

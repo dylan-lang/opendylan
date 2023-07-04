@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Function Definition &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Extensions to the FOR iteration construct" href="for-iteration.html" />
+    <link rel="prev" title="Language Differences" href="language-differences.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numbers.html">Integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Function Definition</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/define-function.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="function-definition">
+<h1>Function Definition<a class="headerlink" href="#function-definition" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#dylan:dylan:definefunction"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">function</span></code></a> definition macro provides a convenient way
+to define functions that have no generic properties and hence are not
+suitable for definition with <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_generic"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">generic</span></code></a> or
+<a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#method"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">method</span></code></a>. This extension has been accepted as part
+of the language since the DRM was published.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">function</span></code> macro provides a way of defining a function that
+says clearly to other programmers that the function is not part of any
+generic operation; furthermore, the function will not be extended as a
+generic function, and calling it need not involve any generic dispatch.
+Without this macro, programmers who wanted to do so would have to turn
+to <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">constant</span></code>. With <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">function</span></code>, programmer intent is
+more explicit and it relays more information to future maintainers of a
+piece of code.</p>
+<p>The language definition of <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">function</span></code> explicitly <em>does not</em>
+specify what it expands into, so that Dylan implementations have
+latitude to support this definer in the best way suited to the
+implementation.</p>
+<dl class="macro">
+<dt class="dylan-api" id="dylan:dylan:definefunction">
+<code class="sig-name descname">define function</code> <em class="property">Defining Macro</em><a class="headerlink" href="#dylan:dylan:definefunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a constant binding in the current module and initializes it to a
+new function.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">define { <cite>adjective</cite> }* function <cite>name</cite> <cite>parameter-list</cite>
+  [ <cite>body</cite> ]
+end [ function ] [ <cite>name</cite> ]</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>adjective</strong> – A Dylan unreserved-name <em>bnf</em>.</p></li>
+<li><p><strong>name</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>parameter-list</strong> – A Dylan parameter-list <em>bnf</em>.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Creates a constant module binding with the name <em>name</em>, and
+initializes it to a new function described by <em>parameter-list</em>,
+<em>options</em>, and any adjectives.</p>
+<p>The adjectives permitted depend on the implementation.</p>
+<p>The <em>parameter-list</em> describes the number and types of the
+function’s arguments and return values. It is an error to supply
+<code class="docutils literal notranslate"><span class="pre">#next</span></code> in the parameter list, and there is no implicit <code class="docutils literal notranslate"><span class="pre">#next</span></code>
+parameter.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p>The following functions return the same values as they would if the
+function had been defined as a bare method with the same signature:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#function-specializers"><code class="xref drm docutils literal notranslate"><span class="pre">function-specializers</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#function-arguments"><code class="xref drm docutils literal notranslate"><span class="pre">function-arguments</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#function-return-values"><code class="xref drm docutils literal notranslate"><span class="pre">function-return-values</span></code></a></p></li>
+</ul>
+<p>Calling some of the following reflective operations on a function
+defined with <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">function</span></code> may be an error:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#generic-function-methods"><code class="xref drm docutils literal notranslate"><span class="pre">generic-function-methods</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#add-method"><code class="xref drm docutils literal notranslate"><span class="pre">add-method</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#generic-function-mandatory-keywords"><code class="xref drm docutils literal notranslate"><span class="pre">generic-function-mandatory-keywords</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#sorted-applicable-methods"><code class="xref drm docutils literal notranslate"><span class="pre">sorted-applicable-methods</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#find-method"><code class="xref drm docutils literal notranslate"><span class="pre">find-method</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#remove-method"><code class="xref drm docutils literal notranslate"><span class="pre">remove-method</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Reflective_Operations_on_Functions#applicable-method_"><code class="xref drm docutils literal notranslate"><span class="pre">applicable-method?</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="language-differences.html" class="btn btn-neutral float-left" title="Language Differences" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="for-iteration.html" class="btn btn-neutral float-right" title="Extensions to the FOR iteration construct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

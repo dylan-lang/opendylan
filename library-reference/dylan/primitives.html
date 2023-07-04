@@ -1,0 +1,2548 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The dylan-primitives Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The threads Module" href="threads.html" />
+    <link rel="prev" title="The finalization Module" href="finalization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The dylan Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="finalization.html">The finalization Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The dylan-primitives Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#runtime-system-functions">Runtime System Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#primitives-for-machine-information">Primitives for Machine Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#primitive-functions-for-the-threads-library">Primitive Functions for the threads library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simple-runtime-primitives">Simple Runtime Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#entry-point-functions">Entry Point Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#compiler-primitives">Compiler Primitives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-primitives">General Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#low-level-apply-primitives">Low-Level Apply Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#integer-primitives">Integer Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#float-primitives">Float Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#accessor-primitives">Accessor Primitives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The dylan Library</a></li>
+      <li class="breadcrumb-item active">The dylan-primitives Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/dylan/primitives.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-dylan-primitives-module">
+<h1>The dylan-primitives Module<a class="headerlink" href="#the-dylan-primitives-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="runtime-system-functions">
+<h2>Runtime System Functions<a class="headerlink" href="#runtime-system-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="primitives-for-machine-information">
+<h3>Primitives for Machine Information<a class="headerlink" href="#primitives-for-machine-information" title="Permalink to this headline">¶</a></h3>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-read-cycle-counter">
+<code class="sig-name descname">primitive-read-cycle-counter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-read-cycle-counter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>() =&gt; (cycle-count)</p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>cycle-count</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;raw-machine-word&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>On x86 and x86_64 architectures, this is equivalent to calling
+the <code class="docutils literal notranslate"><span class="pre">rdtsc</span></code> instruction. For full precision, this should only
+be used on 64 bit builds.</p>
+<p>This is equivalent to using the LLVM intrinsic <code class="docutils literal notranslate"><span class="pre">llvm.readcyclecounter</span></code>
+or the Clang built-in <code class="docutils literal notranslate"><span class="pre">__builtin_readcyclecounter</span></code>.</p>
+<p>This has not been implemented in the HARP back-end.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-read-return-address">
+<code class="sig-name descname">primitive-read-return-address</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-read-return-address" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>() =&gt; (return-address)</p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>return-address</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;raw-machine-word&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Returns the address to which the current function will return
+when it exits. This yields the address of the code which
+invoked the current function.</p>
+<p>For best results, invoke this primitive within a function
+which has been prevented from being inlined.</p>
+<p>This is equivalent to using the LLVM intrinsic <code class="docutils literal notranslate"><span class="pre">llvm.returnaddress</span></code>
+or the Clang and GCC built-in <code class="docutils literal notranslate"><span class="pre">__builtin_return_address</span></code>.</p>
+<p>This has not been implemented in the HARP back-end.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="primitive-functions-for-the-threads-library">
+<h3>Primitive Functions for the threads library<a class="headerlink" href="#primitive-functions-for-the-threads-library" title="Permalink to this headline">¶</a></h3>
+<p>This section describes in detail the arguments, values, and operations
+of the primitive functions.</p>
+<div class="section" id="threads">
+<h4>Threads<a class="headerlink" href="#threads" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-thread">
+<code class="sig-name descname">primitive-make-thread</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-thread" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(thread :: &lt;thread&gt;, function :: &lt;function&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+<li><p><strong>function</strong> – The initial function to run after the thread is created.
+An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Creates a new OS thread and destructively modifies the container slots
+in the Dylan thread object with the handles of the new OS thread. The
+new OS thread is started in a way which calls the supplied Dylan
+function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-destroy-thread">
+<code class="sig-name descname">primitive-destroy-thread</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-destroy-thread" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(thread :: &lt;thread&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Frees any runtime-allocated memory associated with the thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-initialize-current-thread">
+<code class="sig-name descname">primitive-initialize-current-thread</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-initialize-current-thread" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(thread :: &lt;thread&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>The container slots in the Dylan thread object are destructively
+modified with the handles of the current OS thread. This function will
+be used to initialize the first thread, which will not have been started
+as the result of a call to <em>primitive-make-thread</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-thread-join-single">
+<code class="sig-name descname">primitive-thread-join-single</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-thread-join-single" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(thread :: &lt;thread&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. 0 = ok, anything else is an error, corresponding to a multiple join.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks (if necessary) until the specified thread has
+terminated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-thread-join-multiple">
+<code class="sig-name descname">primitive-thread-join-multiple</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-thread-join-multiple" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(thread-vector :: &lt;simple-object-vector&gt;) =&gt; (result)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread-vector</strong> – A <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a> containing <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a> objects</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> – The <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a> that was joined, if the join was successful; otherwise, a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> indicating the error.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks (if necessary) until one of the specified
+threads has terminated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-thread-yield">
+<code class="sig-name descname">primitive-thread-yield</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-thread-yield" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>() =&gt; ()</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>For co-operatively scheduled threads implementations, the calling thread
+yields execution in favor of another thread. This may do nothing in
+some implementations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-current-thread">
+<code class="sig-name descname">primitive-current-thread</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-current-thread" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>() =&gt; (thread-handle)</p>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>thread-handle</strong> – A low-level handle corresponding to the current thread</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the low-level handle of the current thread, which is assumed to
+be in the handle container slot of one of the <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a> objects known
+to the Dylan library. This result is therefore NOT a Dylan object. The
+mapping from this value back to the <a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a> object must be performed
+by the Dylan threads library, and not the primitive layer, because the
+<a class="reference internal" href="threads.html#dylan:threads:[thread]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></a> object is subject to garbage collection, and may not be
+referenced from any low-level data structures.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="simple-locks">
+<h4>Simple Locks<a class="headerlink" href="#simple-locks" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-simple-lock">
+<code class="sig-name descname">primitive-make-simple-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-simple-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;, name :: false-or(&lt;byte-string&gt;)) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>name</strong> – The name of the lock (as a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>) or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Creates a new OS lock and destructively modifies the container slot in
+the Dylan lock object with the handle of the new OS lock.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-destroy-simple-lock">
+<code class="sig-name descname">primitive-destroy-simple-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-destroy-simple-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Frees any runtime-allocated memory associated with the lock.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-simple-lock">
+<code class="sig-name descname">primitive-wait-for-simple-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-simple-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks until the specified lock is available
+(unlocked) and then locks it. When the function returns, the lock is
+owned by the calling thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-simple-lock-timed">
+<code class="sig-name descname">primitive-wait-for-simple-lock-timed</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-simple-lock-timed" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;, millisecs :: &lt;integer&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>millisecs</strong> – Timeout period in milliseconds</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 1 = timeout expired</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks until either the specified lock is available
+(unlocked) or the timeout period expires. If the lock becomes available,
+this function locks it. If the function returns 0, the lock is owned by
+the calling thread, otherwise a timeout occurred.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-release-simple-lock">
+<code class="sig-name descname">primitive-release-simple-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-release-simple-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 2 = not locked</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Unlocks the specified lock. The lock must be owned by the calling
+thread, otherwise the result indicates “not locked”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-owned-simple-lock">
+<code class="sig-name descname">primitive-owned-simple-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-owned-simple-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (owned :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owned</strong> – 0= not owned, 1 = owned</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns 1 if the specified lock is owned (locked) by the calling thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="recursive-locks">
+<h4>Recursive Locks<a class="headerlink" href="#recursive-locks" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-recursive-lock">
+<code class="sig-name descname">primitive-make-recursive-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-recursive-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;, name :: false-or(&lt;byte-string&gt;)) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>name</strong> – The name of the lock (as a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>) or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Creates a new OS lock and destructively modifies the container slot in
+the Dylan lock object with the handle of the new OS lock.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-destroy-recursive-lock">
+<code class="sig-name descname">primitive-destroy-recursive-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-destroy-recursive-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Frees any runtime-allocated memory associated with the lock.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-recursive-lock">
+<code class="sig-name descname">primitive-wait-for-recursive-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-recursive-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks until the specified lock is available
+(unlocked or already locked by the calling thread). When the lock
+becomes available, this function claims ownership of the lock and
+increments the lock count. When the function returns, the lock is
+owned by the calling thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-recursive-lock-timed">
+<code class="sig-name descname">primitive-wait-for-recursive-lock-timed</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-recursive-lock-timed" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;, millisecs :: &lt;integer&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>millisecs</strong> – Timeout period in milliseconds</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 1 = timeout expired</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks until the specified lock is available
+(unlocked or already locked by the calling thread). If the lock
+becomes available, this function claims ownership of the lock,
+increments an internal lock count, and returns 0. If a timeout
+occurs, the function leaves the lock unmodified and returns 1.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-release-recursive-lock">
+<code class="sig-name descname">primitive-release-recursive-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-release-recursive-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 2 = not locked</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Checks that the lock is owned by the calling thread, and returns 2 if
+not. If the lock is owned, its internal count is decremented by 1. If
+the count is then zero, the lock is then released.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-owned-recursive-lock">
+<code class="sig-name descname">primitive-owned-recursive-lock</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-owned-recursive-lock" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (owned :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owned</strong> – 0= not owned, 1 = owned</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns 1 if the specified lock is locked and owned by the calling
+thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="semaphores">
+<h4>Semaphores<a class="headerlink" href="#semaphores" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-semaphore">
+<code class="sig-name descname">primitive-make-semaphore</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-semaphore" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;, name :: false-or(&lt;byte-string&gt;), initial :: &lt;integer&gt;, max :: &lt;integer&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>.</p></li>
+<li><p><strong>name</strong> – The name of the lock (as a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>) or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+<li><p><strong>initial</strong> – The initial value for the semaphore count.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Creates a new OS semaphore with the specified initial count and
+destructively modifies the container slot in the Dylan lock object with
+the handle of the new OS semaphore.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-destroy-semaphore">
+<code class="sig-name descname">primitive-destroy-semaphore</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-destroy-semaphore" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Frees any runtime-allocated memory associated with the semaphore.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-semaphore">
+<code class="sig-name descname">primitive-wait-for-semaphore</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-semaphore" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks until the internal count of the specified
+semaphore becomes greater than zero. It then decrements the semaphore
+count.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-semaphore-timed">
+<code class="sig-name descname">primitive-wait-for-semaphore-timed</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-semaphore-timed" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;, millisecs :: &lt;integer&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>.</p></li>
+<li><p><strong>millisecs</strong> – Timeout period in milliseconds</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 1 = timeout expired</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The calling thread blocks until either the internal count of the
+specified semaphore becomes greater than zero or the timeout period
+expires. In the former case, the function decrements the semaphore count
+and returns 0. In the latter case, the function returns 1.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-release-semaphore">
+<code class="sig-name descname">primitive-release-semaphore</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-release-semaphore" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[semaphore]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 3 = count exceeded</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This function checks that internal count of the semaphore is not at its
+maximum limit, and returns 3 if the test fails. Otherwise the internal
+count is incremented.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="notifications">
+<h4>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-notification">
+<code class="sig-name descname">primitive-make-notification</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-notification" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(notification :: &lt;portable-container&gt;, name :: false-or(&lt;byte-string&gt;)) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+<li><p><strong>name</strong> – The name of the notification (as a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>) or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Creates a new OS notification (condition variable) and destructively
+modifies the container slot in the Dylan lock object with the handle of
+the new OS notification.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-destroy-notification">
+<code class="sig-name descname">primitive-destroy-notification</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-destroy-notification" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(notification :: &lt;portable-container&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Frees any runtime-allocated memory associated with the notification.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-notification">
+<code class="sig-name descname">primitive-wait-for-notification</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-notification" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(notification :: &lt;portable-container&gt;, lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 2 = not locked, 3 = other error</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The function checks that the specified lock is owned by the calling
+thread, and returns 2 if the test fails. Otherwise, the calling thread
+atomically releases the lock and then blocks, waiting to be notified of
+the condition represented by the specified notification. When the
+calling thread is notified of the condition, the function reclaims
+ownership of the lock, blocking if necessary, before returning 0.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-wait-for-notification-timed">
+<code class="sig-name descname">primitive-wait-for-notification-timed</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-wait-for-notification-timed" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(notification :: &lt;portable-container&gt;, lock :: &lt;portable-container&gt;, millisecs :: &lt;integer&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+<li><p><strong>millisecs</strong> – Timeout period in milliseconds</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 1 = timeout, 2 = not locked, 3 = other error</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The function checks that the specified lock is owned by the calling
+thread, and returns 2 if the test fails. Otherwise, the calling thread
+atomically releases the lock and then blocks, waiting to be notified of
+the condition represented by the specified notification, or for the
+timeout period to expire. The function then reclaims ownership of the
+lock, blocking indefinitely if necessary, before returning either 0 or 1
+to indicate whether a timeout occurred.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-release-notification">
+<code class="sig-name descname">primitive-release-notification</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-release-notification" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(notification :: &lt;portable-container&gt;, lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 2 = not locked</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>If the calling thread does not own the specified lock, the function
+returns the error value 2. Otherwise, the function releases the
+specified notification, notifying another thread that is blocked waiting
+for the notification to occur. If more than one thread is waiting for
+the notification, it is unspecified which thread is notified. If no
+threads are waiting, then the release has no effect.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-release-all-notification">
+<code class="sig-name descname">primitive-release-all-notification</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-release-all-notification" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(notification :: &lt;portable-container&gt;, lock :: &lt;portable-container&gt;) =&gt; (error-code :: &lt;integer&gt;)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>notification</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[notification]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></a>.</p></li>
+<li><p><strong>lock</strong> – An instance of <a class="reference internal" href="threads.html#dylan:threads:[simple-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>error-code</strong> – 0 = ok, 2 = not locked</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>If the calling thread does not own the specified lock, the function
+returns the error value 2. Otherwise, the function releases the
+specified notification, notifying all other threads that are blocked
+waiting for the notification to occur. If no threads are waiting, then
+the release has no effect.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="timers">
+<h4>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-sleep">
+<code class="sig-name descname">primitive-sleep</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-sleep" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(millisecs :: &lt;integer&gt;) =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>millisecs</strong> – Time interval in milliseconds</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>This function causes the calling thread to block for the specified time
+interval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="thread-variables">
+<h4>Thread Variables<a class="headerlink" href="#thread-variables" title="Permalink to this headline">¶</a></h4>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-allocate-thread-variable">
+<code class="sig-name descname">primitive-allocate-thread-variable</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-allocate-thread-variable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(initial-value) =&gt; (handle-on-variable)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>initial-value</strong> – A Dylan object that is to be the initial value of the
+fluid variable.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>handle-on-variable</strong> – An OS handle on the fluid variable, to be stored
+as the immediate value of the variable. Variable reading and assignment
+will indirect through this handle. The handle is not a Dylan object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This function creates a new thread-local variable handle, and assigns
+the specified initial value to the location indicated by the handle. The
+function must arrange to assign the initial value to the thread-local
+location associated with all other existing threads, too. The function
+must also arrange that whenever a new thread is subsequently created, it
+also has its thread-local location indicated by the handle set to the
+initial value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="simple-runtime-primitives">
+<h3>Simple Runtime Primitives<a class="headerlink" href="#simple-runtime-primitives" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.primitive_allocate">
+D <code class="sig-name descname">primitive_allocate</code><span class="sig-paren">(</span>int<em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_allocate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the interface to the memory allocator which might be dependent
+on the garbage collector. It takes a size in bytes as a parameter, and
+returns some freshly allocated memory which the run-time system knows
+how to memory-manage.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_byte_allocate">
+D <code class="sig-name descname">primitive_byte_allocate</code><span class="sig-paren">(</span>int<em> word_size</em>, int<em> byte_size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_byte_allocate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is built on the same mechanism as <a class="reference internal" href="#c.primitive_allocate" title="primitive_allocate"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_allocate()</span></code></a>,
+but it is specifically designed for allocating objects which have Dylan
+slots, but also have a repeated slot of byte-sized elements, such as a
+byte string, or a byte vector. It takes two parameters, a size in ‘words’
+for the object slots (e.g., one for ‘class’ and a second for ‘size’),
+followed by the number of bytes for the vector. The value returned from
+the primitive is the freshly allocated memory making up the string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_fill_E_">
+D <code class="sig-name descname">primitive_fill_E_</code><span class="sig-paren">(</span>D<em> storage[]</em>, int<em> size</em>, D<em> value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_fill_E_" title="Permalink to this definition">¶</a></dt>
+<dd><p>(The odd name is a result of name mangling from <code class="docutils literal notranslate"><span class="pre">primitive-fill!</span></code>).
+This takes a Dylan object (or a pointer to the middle of one), a size,
+and a value. It inserts the value into as many slots as are specified by
+<em>size</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_replace_E_">
+D <code class="sig-name descname">primitive_replace_E_</code><span class="sig-paren">(</span>D<em> dst[]</em>, D<em> src[]</em>, int<em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_replace_E_" title="Permalink to this definition">¶</a></dt>
+<dd><p>(See <a class="reference internal" href="#c.primitive_fill_E_" title="primitive_fill_E_"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_fill_E_()</span></code></a> re. name). This copies from the source
+vector into the destination vector as many values as are specified in
+the <em>size</em> parameter.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_replace_vector_E_">
+D <code class="sig-name descname">primitive_replace_vector_E_</code><span class="sig-paren">(</span>SOV*<em> dest</em>, SOV*<em> source</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_replace_vector_E_" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is related to <a class="reference internal" href="#c.primitive_replace_E_" title="primitive_replace_E_"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_replace_E_()</span></code></a>, except that the two
+arguments are guaranteed to be simple object vectors, and they are
+self-sizing. It takes two parameters, ‘dest’, and ‘source’, and the data
+from ‘source’ is copied into ‘dest’. ‘Dest’ is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_allocate_vector">
+D <code class="sig-name descname">primitive_allocate_vector</code><span class="sig-paren">(</span>int<em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_allocate_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is related to <a class="reference internal" href="#c.primitive_allocate" title="primitive_allocate"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_allocate()</span></code></a>, except that it takes
+a ‘size’ argument, which is the size of repeated slots in a simple object
+vector (SOV). An object which is big enough to hold the specified indices
+is allocated, and appropriately initialized, so that the ‘class’ field
+shows that it is an SOV, and the ‘size’ field shows how big it is.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_copy_vector">
+D <code class="sig-name descname">primitive_copy_vector</code><span class="sig-paren">(</span>D<em> vector</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_copy_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>This takes a SOV as a parameter, and allocates a fresh SOV of the same
+size. It copies all the data that was supplied from the old one to the
+new one, and returns the new one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_initialize_vector_from_buffer">
+D <code class="sig-name descname">primitive_initialize_vector_from_buffer</code><span class="sig-paren">(</span>SOV *<em> vector</em>, int<em> size</em>, D*<em> buffer</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_initialize_vector_from_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This primitive takes a pre-existing vector, and copies data into it from
+a buffer so as to initialize an SOV. The primitive takes a SOV to be
+updated, a ‘size’ parameter (the specified size of the SOV), and a
+pointer to a buffer which will supply the necessary data. The class and
+size values for the new SOV are set, and the data written to the rest of
+the SOV. The SOV is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_make_string">
+D <code class="sig-name descname">primitive_make_string</code><span class="sig-paren">(</span>char *<em> string</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_make_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This takes as a parameter a ‘C’ string with is zero-terminated, and
+returns a Dylan string with the same data inside it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_continue_unwind">
+D <code class="sig-name descname">primitive_continue_unwind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_continue_unwind" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is used as the last thing to be done at the end of an
+unwind-protect cleanup. It is responsible for determining why the
+cleanup is being called, and thus taking appropriate action afterwards.</p>
+<p>It handles 2 basic cases:</p>
+<ul class="simple">
+<li><p>a non-local exit</p></li>
+<li><p>a normal unwind-protect</p></li>
+</ul>
+<p>In the first case we wish to transfer control back to some other
+location, but there is a cleanup that needs to be done first. In this
+case there will be an unwind-protect frame on the stack which contains a
+marker to identify the target of the non-local exit. Control can thus be
+transferred, possibly invoking another unwind-protect on the way.</p>
+<p>Alternatively, no transfer of control may be required, and
+unwind-protect can proceed normally. As a result of evaluating our
+protected forms, the multiple values of these forms are stored in the
+unwind-protect frame. These values are put back in the multiple values
+area, and control is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_nlx">
+D <code class="sig-name descname">primitive_nlx</code><span class="sig-paren">(</span>Bind_exit_frame*<em> target</em>, SOV*<em> arguments</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_nlx" title="Permalink to this definition">¶</a></dt>
+<dd><p>This takes two parameters: a bind-exit frame which is put on the stack
+whenever a bind-exit frame is bound, and an SOV of the multiple values
+that we wish to return to that bind-exit point. We then step to the
+bind-exit frame target, while checking to see if there are any
+intervening unwind-protect frames. If there are, we put the marker for
+our ultimate destination into the unwind-protect frame that has been
+detected on the stack between us and our destination. The multiple
+values we wish to return are put into the unwind-protect frame. The
+relevant cleanup code is invoked, and at the end of this a
+<a class="reference internal" href="#c.primitive_continue_unwind" title="primitive_continue_unwind"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_continue_unwind()</span></code></a> should be called. This should
+detect that there is further to go, and insert the multiple values
+into any intervening frames.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_inlined_nlx">
+D <code class="sig-name descname">primitive_inlined_nlx</code><span class="sig-paren">(</span>Bind_exit_frame*<em> target</em>, D<em> first_argument</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_inlined_nlx" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is similar to <a class="reference internal" href="#c.primitive_nlx" title="primitive_nlx"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_nlx()</span></code></a>, except that it is used when the
+compiler has been able to gain more information about the circumstances
+in which the non-local-exit call is happening. In particular it is used
+when it is possible to in-line the call, so that the multiple values
+that are being passed are known to be in the multiple values area,
+rather than having been created as an SOV. An SOV has to be built up
+from these arguments.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_make_box">
+D* <code class="sig-name descname">primitive_make_box</code><span class="sig-paren">(</span>D<em> object</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_make_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>A box is a value-cell that is used for closed-over variables which are
+subject to assignment. The function takes a Dylan object, and returns a
+value-cell box which contains the object. The compiler deals with the
+extra level of indirection needed to get the value out of the box.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_make_environment">
+D* <code class="sig-name descname">primitive_make_environment</code><span class="sig-paren">(</span>int<em> size</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_make_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the function which makes the vector which is used in a closure.
+The arguments to this are either boxes, or normal Dylan objects. This
+takes an argument of ‘size’ for the initial arguments to be closed over,
+plus the arguments themselves. <code class="docutils literal notranslate"><span class="pre">size</span></code> arguments are built up into an SOV
+which is used as an environment.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="entry-point-functions">
+<h3>Entry Point Functions<a class="headerlink" href="#entry-point-functions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.xep_0">
+D <code class="sig-name descname">xep_0</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_1">
+D <code class="sig-name descname">xep_1</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_2">
+D <code class="sig-name descname">xep_2</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_3">
+D <code class="sig-name descname">xep_3</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_4">
+D <code class="sig-name descname">xep_4</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_5">
+D <code class="sig-name descname">xep_5</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_6">
+D <code class="sig-name descname">xep_6</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_7">
+D <code class="sig-name descname">xep_7</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_8">
+D <code class="sig-name descname">xep_8</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.xep_9">
+D <code class="sig-name descname">xep_9</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.xep_9" title="Permalink to this definition">¶</a></dt>
+<dd><p>These are the XEP entry-point handlers for those Dylan functions which
+do not accept optional parameters. Each Dylan function has an external
+(safe) entry point with full checking. After checking, this calls the
+internal entry point, which is the most efficient available.</p>
+<p>The compiler itself only ever generates code for the internal entry
+point. Any value put into the external entry point field of an object is
+a shared value provided by the runtime system. If the function takes no
+parameters, the value will be <code class="docutils literal notranslate"><span class="pre">xep0</span></code>; if it takes a single required
+parameter it will be <code class="docutils literal notranslate"><span class="pre">xep1</span></code>, and so on. There are values available for
+<code class="docutils literal notranslate"><span class="pre">xep0</span></code> to <code class="docutils literal notranslate"><span class="pre">xep9</span></code>. For more than nine required parameters, the
+<a class="reference internal" href="#c.xep" title="xep"><code class="xref c c-func docutils literal notranslate"><span class="pre">xep()</span></code></a> function is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.xep">
+D <code class="sig-name descname">xep</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.xep" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the function takes more than nine required parameters, then the
+function will simply be called <code class="docutils literal notranslate"><span class="pre">xep</span></code>, the general function which will
+work in all such cases. The arguments are passed as ‘varargs’. This
+function will check the number of arguments, raising an error if it is
+wrong. It then sets the calling convention for calling the internal
+entry point. This basically means that the function register is
+appropriately set, and the implementation ‘mlist’ parameter is set to
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.optional_xep">
+D <code class="sig-name descname">optional_xep</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.optional_xep" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used as the XEP code for any Dylan function which has
+optional parameters. In this case, the external entry point conventions
+do not require the caller to have any knowledge of where the optionals
+start. The XEP code is thus responsible for separating the code into
+those which are required parameters, to be passed via the normal machine
+conventions, and those which are optionals. to be passed as a Dylan SOV.
+If the function object takes keywords, all the information about which
+keywords are accepted is stored in the function itself. The vector of
+optional parameters is scanned by the XEP code to see if any appropriate
+ones have been supplied. If one is found, then the associated value is
+taken and used as an implicit parameter to the internal entry point. If
+a value is not supplied, then a suitable default parameter which is
+stored inside the function object is passed instead.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_0">
+D <code class="sig-name descname">gf_xep_0</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_1">
+D <code class="sig-name descname">gf_xep_1</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_2">
+D <code class="sig-name descname">gf_xep_2</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_3">
+D <code class="sig-name descname">gf_xep_3</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_4">
+D <code class="sig-name descname">gf_xep_4</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_5">
+D <code class="sig-name descname">gf_xep_5</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_6">
+D <code class="sig-name descname">gf_xep_6</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_7">
+D <code class="sig-name descname">gf_xep_7</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_8">
+D <code class="sig-name descname">gf_xep_8</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep_9">
+D <code class="sig-name descname">gf_xep_9</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em><span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep_9" title="Permalink to this definition">¶</a></dt>
+<dd><p>These primitives are similar to <a class="reference internal" href="#c.xep_0" title="xep_0"><code class="xref c c-func docutils literal notranslate"><span class="pre">xep_0()</span></code></a> through <a class="reference internal" href="#c.xep_9" title="xep_9"><code class="xref c c-func docutils literal notranslate"><span class="pre">xep_9()</span></code></a>,
+but deal with the entry points for generic functions. Generic functions
+do not require the ‘mlist’ parameter to be set, so a special optimized
+entry point is provided. These versions are for 0 - 9 required
+parameters.  These functions call the internal entry point.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.gf_xep">
+D <code class="sig-name descname">gf_xep</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.gf_xep" title="Permalink to this definition">¶</a></dt>
+<dd><p>This primitive is similar to <a class="reference internal" href="#c.xep" title="xep"><code class="xref c c-func docutils literal notranslate"><span class="pre">xep()</span></code></a>, but deals with the entry
+points for generic functions. Generic functions do not require the
+‘mlist’ parameter to be set, so a special optimized entry point is
+provided. This is the general version for functions which do not
+take optional arguments. This function calls the internal entry point.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.gf_optional_xep">
+D <code class="sig-name descname">gf_optional_xep</code><span class="sig-paren">(</span>FN*<em> function</em>, int<em> argument_count</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.gf_optional_xep" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is used for all generic functions which take optional arguments.
+This function calls the internal entry point.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_basic_iep_apply">
+D <code class="sig-name descname">primitive_basic_iep_apply</code><span class="sig-paren">(</span>FN*<em> f</em>, int<em> argument_count</em>, D<em> a[]</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_basic_iep_apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is used to call internal entry points. It takes three parameters: a
+Dylan function object (where the iep is stored in a slot), an argument
+count of the number of arguments that we are passing to the iep, and a
+vector of all of these arguments. This is a ‘basic’ IEP apply because is
+does no more than check the argument count, and call the IEP with the
+appropriate number of Dylan parameters. It does not bother to set any
+implementation parameters. Implementation parameters which could be set
+in by other primitives are ‘function’, and a ‘mlist’ (the list of
+next-methods) . Not all IEPs care about the ‘function’ or ‘mlist’
+parameters, but when the compiler calls <a class="reference internal" href="#c.primitive_basic_iep_apply" title="primitive_basic_iep_apply"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_basic_iep_apply()</span></code></a>,
+it has to make sure that any necessary ‘function’ or ‘mlist’ parameters
+have been set up.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_iep_apply">
+D <code class="sig-name descname">primitive_iep_apply</code><span class="sig-paren">(</span>FN*<em> f</em>, int<em> argument_count</em>, D<em> a[]</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_iep_apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is closely related to <a class="reference internal" href="#c.primitive_basic_iep_apply" title="primitive_basic_iep_apply"><code class="xref c c-func docutils literal notranslate"><span class="pre">primitive_basic_iep_apply()</span></code></a>. It takes
+the same number of parameters, but it sets the explicit,
+implementation-dependent function parameter which is usually set to the
+first argument, and also sets the ‘mlist’ argument to ‘false’. This is
+the normal case when a method object is being called directly, rather
+than as part of a generic function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.primitive_xep_apply">
+D <code class="sig-name descname">primitive_xep_apply</code><span class="sig-paren">(</span>FN*<em> f</em>, int<em> argument_count</em>, D<em> a[]</em><span class="sig-paren">)</span><a class="headerlink" href="#c.primitive_xep_apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a more usual usage of apply, i.e., the standard Dylan calling
+convention being invoked by <em>apply</em>. It takes three parameters: the
+Dylan function to be called, the number of arguments being passed, and a
+vector containing all those arguments. This primitive relates to the
+external entry point for the function, and guarantees full type checking
+and argument count checking. This primitive does all that is necessary
+to conform with the xep calling convention of Dylan: i.e., it sets the
+‘function’ parameter, it sets the argument count, and then calls the XEP
+for the function.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="compiler-primitives">
+<h2>Compiler Primitives<a class="headerlink" href="#compiler-primitives" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-primitives">
+<h3>General Primitives<a class="headerlink" href="#general-primitives" title="Permalink to this headline">¶</a></h3>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-box">
+<code class="sig-name descname">primitive-make-box</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-box" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(object :: &lt;object&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-allocate">
+<code class="sig-name descname">primitive-allocate</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-allocate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(size :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-byte-allocate">
+<code class="sig-name descname">primitive-byte-allocate</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-byte-allocate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(word-size :: &lt;raw-small-integer&gt;, byte-size :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-environment">
+<code class="sig-name descname">primitive-make-environment</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-environment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(size :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-copy-vector">
+<code class="sig-name descname">primitive-copy-vector</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-copy-vector" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(vector :: &lt;object&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-make-string">
+<code class="sig-name descname">primitive-make-string</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-make-string" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(vector :: &lt;raw-c-char*&gt;) =&gt; &lt;raw-c-char*&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-function-code">
+<code class="sig-name descname">primitive-function-code</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-function-code" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(function :: &lt;object&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-function-environment">
+<code class="sig-name descname">primitive-function-environment</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-function-environment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(function :: &lt;object&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="low-level-apply-primitives">
+<h3>Low-Level Apply Primitives<a class="headerlink" href="#low-level-apply-primitives" title="Permalink to this headline">¶</a></h3>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-xep-apply">
+<code class="sig-name descname">primitive-xep-apply</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-xep-apply" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(function :: &lt;object&gt;, buffer-size :: &lt;raw-small-integer&gt;, buffer :: &lt;object&gt;) =&gt; :: &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-iep-apply">
+<code class="sig-name descname">primitive-iep-apply</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-iep-apply" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(function :: &lt;object&gt;, buffer-size :: &lt;raw-small-integer&gt;, buffer :: &lt;object&gt;) =&gt; &lt;object&gt;)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-true?">
+<code class="sig-name descname">primitive-true?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-true?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(value :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>This primitive returns Dylan true if <em>value</em> is non-zero, and false if
+<em>value</em> is zero.</p>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-false?">
+<code class="sig-name descname">primitive-false?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-false?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(value :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>This is the complement of <em>primitive-true?</em>, returning <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the
+value is 0, <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> otherwise.</p>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-equals?">
+<code class="sig-name descname">primitive-equals?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-equals?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;object&gt;, y :: &lt;object&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-continue-unwind">
+<code class="sig-name descname">primitive-continue-unwind</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-continue-unwind" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>() =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-nlx">
+<code class="sig-name descname">primitive-nlx</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-nlx" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(bind-exit-frame :: &lt;raw-c-void*&gt;, args :: &lt;raw-c-void*&gt;) =&gt; &lt;raw-c-void&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-inlined-nlx">
+<code class="sig-name descname">primitive-inlined-nlx</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-inlined-nlx" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(bind-exit-frame :: &lt;raw-c-void*&gt;, first-argument :: &lt;raw-c-void*&gt;) =&gt; &lt;raw-c-void&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-variable-lookup">
+<code class="sig-name descname">primitive-variable-lookup</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-variable-lookup" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(variable-pointer :: &lt;raw-c-void*&gt;) =&gt; &lt;raw-c-void*&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-variable-lookup-setter">
+<code class="sig-name descname">primitive-variable-lookup-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-variable-lookup-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(value :: &lt;raw-c-void*&gt;, variable-pointer :: &lt;raw-c-void*&gt;) =&gt; &lt;raw-c-void*&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="integer-primitives">
+<h3>Integer Primitives<a class="headerlink" href="#integer-primitives" title="Permalink to this headline">¶</a></h3>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-int?">
+<code class="sig-name descname">primitive-int?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-int?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;object&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-equals?">
+<code class="sig-name descname">primitive-address-equals?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-equals?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-add">
+<code class="sig-name descname">primitive-address-add</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-add" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-subtract">
+<code class="sig-name descname">primitive-address-subtract</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-subtract" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-multiply">
+<code class="sig-name descname">primitive-address-multiply</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-multiply" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-left-shift">
+<code class="sig-name descname">primitive-address-left-shift</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-left-shift" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-right-shift">
+<code class="sig-name descname">primitive-address-right-shift</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-right-shift" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-not">
+<code class="sig-name descname">primitive-address-not</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-not" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-and">
+<code class="sig-name descname">primitive-address-and</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-and" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-address-or">
+<code class="sig-name descname">primitive-address-or</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-address-or" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-address&gt;, y :: &lt;raw-address&gt;) =&gt; &lt;raw-address&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-equals?">
+<code class="sig-name descname">primitive-small-integer-equals?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-equals?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-not-equals?">
+<code class="sig-name descname">primitive-small-integer-not-equals?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-not-equals?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-less-than?">
+<code class="sig-name descname">primitive-small-integer-less-than?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-less-than?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-greater-than?">
+<code class="sig-name descname">primitive-small-integer-greater-than?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-greater-than?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-greater-than-or-equal?">
+<code class="sig-name descname">primitive-small-integer-greater-than-or-equal?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-greater-than-or-equal?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-negate">
+<code class="sig-name descname">primitive-small-integer-negate</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-negate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-add">
+<code class="sig-name descname">primitive-small-integer-add</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-add" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-subtract">
+<code class="sig-name descname">primitive-small-integer-subtract</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-subtract" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-multiply">
+<code class="sig-name descname">primitive-small-integer-multiply</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-multiply" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-divide">
+<code class="sig-name descname">primitive-small-integer-divide</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-divide" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-modulo">
+<code class="sig-name descname">primitive-small-integer-modulo</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-modulo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-left-shift">
+<code class="sig-name descname">primitive-small-integer-left-shift</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-left-shift" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-right-shift">
+<code class="sig-name descname">primitive-small-integer-right-shift</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-right-shift" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-not">
+<code class="sig-name descname">primitive-small-integer-not</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-not" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-and">
+<code class="sig-name descname">primitive-small-integer-and</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-and" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-or">
+<code class="sig-name descname">primitive-small-integer-or</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-or" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-xor">
+<code class="sig-name descname">primitive-small-integer-xor</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-xor" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;, y :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>In addition to the small-integer operators above, there are also
+definitions for three other integer types, defined in the same manner.
+The following table summarizes the relationship between these types and
+Dylan primitives.</p>
+<p>Integer Types and Dylan Primitives</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 34%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>General Variety
+of Integer</p></th>
+<th class="head"><p>Class of Primitive
+Parameters and Return
+Values</p></th>
+<th class="head"><p>Value of <em>type</em> in Primitive
+Name primitive-<em>type</em>-<em>operator</em></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Small Integer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;raw-small-integer&gt;</span></code></p></td>
+<td><p><em>small-integer</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>Big Integer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;raw-big-integer&gt;</span></code></p></td>
+<td><p><em>big-integer</em></p></td>
+</tr>
+<tr class="row-even"><td><p>Machine Integer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;raw-machine-integer&gt;</span></code></p></td>
+<td><p><em>machine-integer</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>Unsigned Machine
+Integer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;raw-unsigned-machine-</span>
+<span class="pre">integer&gt;</span></code></p></td>
+<td><p><em>unsigned-machine-integer</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="float-primitives">
+<h3>Float Primitives<a class="headerlink" href="#float-primitives" title="Permalink to this headline">¶</a></h3>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-decoded-bits-as-single-float">
+<code class="sig-name descname">primitive-decoded-bits-as-single-float</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-decoded-bits-as-single-float" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(sign :: &lt;raw-small-integer&gt;, exponent :: &lt;raw-small-integer&gt;, significand :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-single-float&gt;)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-bits-as-single-float">
+<code class="sig-name descname">primitive-bits-as-single-float</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-bits-as-single-float" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Uses a custom emitter to map to a call to a function called
+<em>integer_to_single_float</em> in the runtime system.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-as-bits">
+<code class="sig-name descname">primitive-single-float-as-bits</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-as-bits" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Uses a custom emitter to map to a call to a function called
+<em>single_float_to_integer</em> in the runtime system.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-equals?">
+<code class="sig-name descname">primitive-single-float-equals?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-equals?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-not-equals?">
+<code class="sig-name descname">primitive-single-float-not-equals?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-not-equals?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-less-than?">
+<code class="sig-name descname">primitive-single-float-less-than?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-less-than?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-less-than-or-equal?">
+<code class="sig-name descname">primitive-single-float-less-than-or-equal?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-less-than-or-equal?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-greater-than?">
+<code class="sig-name descname">primitive-single-float-greater-than?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-greater-than?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-greater-than-or-equal?">
+<code class="sig-name descname">primitive-single-float-greater-than-or-equal?</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-greater-than-or-equal?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-c-int&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-negate">
+<code class="sig-name descname">primitive-single-float-negate</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-negate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-add">
+<code class="sig-name descname">primitive-single-float-add</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-add" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-subtract">
+<code class="sig-name descname">primitive-single-float-subtract</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-subtract" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-multiply">
+<code class="sig-name descname">primitive-single-float-multiply</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-multiply" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-divide">
+<code class="sig-name descname">primitive-single-float-divide</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-divide" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;, y :: &lt;raw-single-float&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-unary-divide">
+<code class="sig-name descname">primitive-single-float-unary-divide</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-unary-divide" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(x :: &lt;raw-single-float&gt;&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="accessor-primitives">
+<h3>Accessor Primitives<a class="headerlink" href="#accessor-primitives" title="Permalink to this headline">¶</a></h3>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-element">
+<code class="sig-name descname">primitive-element</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-element" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(array :: &lt;object&gt;, index :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This is used for de-referencing slots in the middle of Dylan objects,
+and thus potentially invokes read-barrier code. It takes two parameters:
+a Dylan object, and an index which is the ‘word’ index into the object.
+It returns the Dylan value found in that corresponding slot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-element-setter">
+<code class="sig-name descname">primitive-element-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-element-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;object&gt;, array :: &lt;object&gt;, index :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This is the assignment operator corresponding to <em>primitive-element</em>,
+which is used to change the value of a Dylan slot. This takes an extra
+initial parameter which is the new value to put into the object. The new
+value is stored in the appropriate object at the given index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-byte-element">
+<code class="sig-name descname">primitive-byte-element</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-byte-element" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(array &lt;object&gt;, base-index :: &lt;raw-small-integer&gt;, byte-offset :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-c-char&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This is similar to <em>primitive-element</em>, but deals with byte vectors. It
+takes a new value and a Dylan object, along with a base offset and a
+byte offset. The base offset, expressed in words, and the byte offset,
+expressed in bytes, are added, and the byte found at that location is
+returned.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-byte-element-setter">
+<code class="sig-name descname">primitive-byte-element-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-byte-element-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-c-char&gt;) array :: &lt;object&gt;, base-index :: &lt;raw-small-integer&gt;,  byte-offset :: &lt;raw-small-integer&gt;) =&gt; &lt;raw-c-char&gt;</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This is the corresponding setter for <em>primitive-byte-element</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-fill!">
+<code class="sig-name descname">primitive-fill!</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-fill!" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(array :: &lt;object&gt;, size :: &lt;raw-small-integer&gt;, value :: &lt;object&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-replace!">
+<code class="sig-name descname">primitive-replace!</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-replace!" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-array :: &lt;object&gt;, array :: &lt;object&gt;, size :: &lt;raw-small-integer&gt;) =&gt; &lt;object&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-replace-bytes!">
+<code class="sig-name descname">primitive-replace-bytes!</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-replace-bytes!" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(dst :: &lt;raw-c-void*&gt;, src :: &lt;raw-c-void*&gt;, size :: &lt;raw-c-int&gt;) =&gt; &lt;raw-c-void&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>The following primitives, named <em>primitive-</em> <em>type</em> <em>-at</em> and
+<em>primitive-</em> <em>type</em> <em>-at-setter</em> load or store, respectively, a value of
+the designated <em>type</em> at the specified address.</p>
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-untyped-at">
+<code class="sig-name descname">primitive-untyped-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-untyped-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-untyped&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-untyped-at-setter">
+<code class="sig-name descname">primitive-untyped-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-untyped-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-untyped&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-untyped&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-pointer-at">
+<code class="sig-name descname">primitive-pointer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-pointer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-pointer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-pointer-at-setter">
+<code class="sig-name descname">primitive-pointer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-pointer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-pointer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-pointer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-byte-character-at">
+<code class="sig-name descname">primitive-byte-character-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-byte-character-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-byte-character&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-byte-character-at-setter">
+<code class="sig-name descname">primitive-byte-character-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-byte-character-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-byte-character&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-byte-character&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-at">
+<code class="sig-name descname">primitive-small-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-small-integer-at-setter">
+<code class="sig-name descname">primitive-small-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-small-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-small-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-small-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-big-integer-at">
+<code class="sig-name descname">primitive-big-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-big-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-big-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-big-integer-at-setter">
+<code class="sig-name descname">primitive-big-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-big-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-big-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-big-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-machine-integer-at">
+<code class="sig-name descname">primitive-machine-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-machine-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-machine-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-machine-integer-at-setter">
+<code class="sig-name descname">primitive-machine-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-machine-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-machine-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-machine-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-machine-integer-at">
+<code class="sig-name descname">primitive-unsigned-machine-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-machine-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-machine-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-machine-integer-at-setter">
+<code class="sig-name descname">primitive-unsigned-machine-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-machine-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-unsigned-machine-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-machine-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-at">
+<code class="sig-name descname">primitive-single-float-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-single-float-at-setter">
+<code class="sig-name descname">primitive-single-float-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-single-float-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-single-float&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-double-float-at">
+<code class="sig-name descname">primitive-double-float-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-double-float-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-double-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-double-float-at-setter">
+<code class="sig-name descname">primitive-double-float-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-double-float-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-double-float&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-double-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-extended-float-at">
+<code class="sig-name descname">primitive-extended-float-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-extended-float-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-extended-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-extended-float-at-setter">
+<code class="sig-name descname">primitive-extended-float-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-extended-float-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-extended-float&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-extended-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-8-bit-integer-at">
+<code class="sig-name descname">primitive-signed-8-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-8-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-8-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-8-bit-integer-at-setter">
+<code class="sig-name descname">primitive-signed-8-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-8-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-signed-8-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-8-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-8-bit-integer-at">
+<code class="sig-name descname">primitive-unsigned-8-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-8-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-8-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-8-bit-integer-at-setter">
+<code class="sig-name descname">primitive-unsigned-8-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-8-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-unsigned-8-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-8-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-16-bit-integer-at">
+<code class="sig-name descname">primitive-signed-16-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-16-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-16-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-16-bit-integer-at-setter">
+<code class="sig-name descname">primitive-signed-16-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-16-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-signed-16-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-16-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-16-bit-integer-at">
+<code class="sig-name descname">primitive-unsigned-16-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-16-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-16-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-16-bit-integer-at-setter">
+<code class="sig-name descname">primitive-unsigned-16-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-16-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-unsigned-16-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-16-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-32-bit-integer-at">
+<code class="sig-name descname">primitive-signed-32-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-32-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-32-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-32-bit-integer-at-setter">
+<code class="sig-name descname">primitive-signed-32-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-32-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-signed-32-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-32-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-32-bit-integer-at">
+<code class="sig-name descname">primitive-unsigned-32-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-32-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-32-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-32-bit-integer-at-setter">
+<code class="sig-name descname">primitive-unsigned-32-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-32-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-unsigned-32-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-32-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-64-bit-integer-at">
+<code class="sig-name descname">primitive-signed-64-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-64-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-64-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-signed-64-bit-integer-at-setter">
+<code class="sig-name descname">primitive-signed-64-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-signed-64-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-signed-64-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-signed-64-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-64-bit-integer-at">
+<code class="sig-name descname">primitive-unsigned-64-bit-integer-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-64-bit-integer-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-64-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-unsigned-64-bit-integer-at-setter">
+<code class="sig-name descname">primitive-unsigned-64-bit-integer-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-unsigned-64-bit-integer-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-unsigned-64-bit-integer&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-unsigned-64-bit-integer&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-ieee-single-float-at">
+<code class="sig-name descname">primitive-ieee-single-float-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-ieee-single-float-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-ieee-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-ieee-single-float-at-setter">
+<code class="sig-name descname">primitive-ieee-single-float-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-ieee-single-float-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-ieee-single-float&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-ieee-single-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-ieee-double-float-at">
+<code class="sig-name descname">primitive-ieee-double-float-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-ieee-double-float-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-ieee-double-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-ieee-double-float-at-setter">
+<code class="sig-name descname">primitive-ieee-double-float-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-ieee-double-float-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-ieee-double-float&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-ieee-double-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-ieee-extended-float-at">
+<code class="sig-name descname">primitive-ieee-extended-float-at</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-ieee-extended-float-at" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-ieee-extended-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="primitive">
+<dt class="dylan-api" id="dylan:dylan-primitives:primitive-ieee-extended-float-at-setter">
+<code class="sig-name descname">primitive-ieee-extended-float-at-setter</code> <em class="property">Primitive</em><a class="headerlink" href="#dylan:dylan-primitives:primitive-ieee-extended-float-at-setter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>(new-value :: &lt;raw-ieee-extended-float&gt;, address :: &lt;raw-pointer&gt;) =&gt; &lt;raw-ieee-extended-float&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="finalization.html" class="btn btn-neutral float-left" title="The finalization Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="threads.html" class="btn btn-neutral float-right" title="The threads Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

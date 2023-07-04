@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The format Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The format-out Module" href="format-out.html" />
+    <link rel="prev" title="The io Library" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The io Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The format Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#control-strings">Control strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">The format Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="format-out.html">The format-out Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="print.html">The print and pprint Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streams.html">The streams Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The io Library</a></li>
+      <li class="breadcrumb-item active">The format Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/io/format.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-format-module">
+<h1>The format Module<a class="headerlink" href="#the-format-module" title="Permalink to this headline">¶</a></h1>
+<p>The Format module is exported
+from the IO library. This module extends the functionality of the format
+strings described in <a class="reference external" href="https://opendylan.org/books/drm/Condition_Messages"><code class="xref drm docutils literal notranslate"><span class="pre">Dylan's</span> <span class="pre">condition</span> <span class="pre">system</span></code></a>
+and provides two new functions for processing the extended format strings.
+The Format module is a small module, but it uses the printing modules and
+some of the Streams module. <a class="reference internal" href="print.html"><span class="doc">The print and pprint Modules</span></a> and <a class="reference internal" href="streams.html"><span class="doc">The streams Module</span></a> give full
+details of the Print and Streams libraries.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">format</span></code> module exports all the identifiers described in this document.</p>
+<div class="section" id="control-strings">
+<h2>Control strings<a class="headerlink" href="#control-strings" title="Permalink to this headline">¶</a></h2>
+<p>The Format module’s format strings, or control strings, offer the same
+directives as <a class="reference external" href="https://opendylan.org/books/drm/Condition_Messages"><code class="xref drm docutils literal notranslate"><span class="pre">Dylan's</span> <span class="pre">format</span> <span class="pre">strings</span></code></a> offer,
+but Format provides a few more directives, and permits a single argument
+to all format directives.</p>
+<p>The argument is an integer that must appear contiguously between the
+dispatch character, <code class="docutils literal notranslate"><span class="pre">%</span></code>, and the format directive. The argument
+indicates a printing field in which to justify the output of the
+directive. A positive integer indicates that the output should be flush
+right within the field, and a negative integer indicates the output
+should be flush left within the field. If the output length is greater
+than the field’s width, then output occurs as if there were no field
+specification. The following are examples of valid format directives:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">s</span>
+<span class="o">%</span><span class="n">S</span>
+<span class="o">%</span><span class="mi">15</span><span class="n">d</span>
+<span class="o">%-</span><span class="mi">10</span><span class="o">=</span>
+</pre></div>
+</div>
+<p>The directives are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%s</span></code> Prints the next format argument as a message by calling the
+function <a class="reference internal" href="#io:format:print-message"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-message</span></code></a> on the format argument and the stream.
+This directive is the same as Dylan’s <code class="docutils literal notranslate"><span class="pre">%s</span></code> format-string directive
+except for two features: (i) this module’s <code class="docutils literal notranslate"><span class="pre">%s</span></code> directive outputs
+character objects, and (ii) you can extend the <code class="docutils literal notranslate"><span class="pre">%s</span></code> functionality by
+adding methods to <a class="reference internal" href="#io:format:print-message"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-message</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%=</span></code> Prints the next format argument by calling the <a class="reference internal" href="print.html#io:print:print"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print</span></code></a>
+function from the Print module on the format argument and the stream.
+You can extend the <code class="docutils literal notranslate"><span class="pre">%=</span></code> functionality by adding methods to the
+<a class="reference internal" href="print.html#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> function from the Print module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%c</span></code> Print the next format argument, which must be a character,
+according to Dylan’s <code class="docutils literal notranslate"><span class="pre">%s</span></code> format-string directive. This module’s
+<code class="docutils literal notranslate"><span class="pre">%c</span></code> directive is the same as this module’s <code class="docutils literal notranslate"><span class="pre">%s</span></code> directive.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%d</span></code> Prints a decimal representation of the next format argument,
+which must be an integer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%b</span></code> Prints a binary representation of the next format argument,
+which must be an integer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%o</span></code> Prints an octal representation of the next format argument,
+which must be an integer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%x</span></code> Prints a lowercase hexadecimal representation of the next format
+argument, which must be an integer. Use <code class="docutils literal notranslate"><span class="pre">%X</span></code> (uppercase X) to output
+uppercase instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%m</span></code> Invokes the next format argument, which must be a function, on
+the stream passed to <a class="reference internal" href="#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%%</span></code> Outputs a single <code class="docutils literal notranslate"><span class="pre">%</span></code> character.</p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>The format Module<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a reference entry for each item exported from the
+Format module.</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="io:format:format">
+<code class="sig-name descname">format</code> <em class="property">Generic function</em><a class="headerlink" href="#io:format:format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs a control string to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>format <em>stream</em> <em>control-string</em> #rest <em>arguments</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>. The stream to
+which formatted output should be sent.</p></li>
+<li><p><strong>control-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>. A string
+containing format directives.</p></li>
+<li><p><strong>arguments</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Sends output to <em>stream</em> according to the format directives in
+<em>control-string</em>. Each directive consumes one argument from
+<em>arguments</em>. See <a class="reference internal" href="#control-strings">Control strings</a> for a description of the
+control strings that can be used.</p>
+<p>The <em>control-string</em> contents that are not part of any directive are
+output directly to <em>stream</em>, as if by the Streams module’s <a class="reference internal" href="streams.html#io:streams:write"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write</span></code></a>
+function.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="io:format:format([byte-string])">
+<code class="sig-name descname">format(&lt;byte-string&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#io:format:format([byte-string])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs a control string to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+<li><p><strong>control-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>arguments</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>There is one method for <a class="reference internal" href="#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a>, and it is specialized to
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="io:format:format-to-string">
+<code class="sig-name descname">format-to-string</code> <em class="property">Generic function</em><a class="headerlink" href="#io:format:format-to-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a formatted string based on a format control string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>format-to-string <em>control-string</em> #rest <em>arguments</em> =&gt; <em>result</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>control-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>arguments</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Calls <code class="docutils literal notranslate"><span class="pre">format</span></code> to produce output according to <em>control-string</em>
+and returns the output as a string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="io:format:format-to-string([byte-string])">
+<code class="sig-name descname">format-to-string(&lt;byte-string&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#io:format:format-to-string([byte-string])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a formatted string based on a format control string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>control-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>arguments</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Values</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>result</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>There is one method for <a class="reference internal" href="#io:format:format-to-string"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format-to-string</span></code></a>. The <em>control-string</em>
+argument must be a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>. Result is a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="io:format:print-message">
+<code class="sig-name descname">print-message</code> <em class="property">Generic function</em><a class="headerlink" href="#io:format:print-message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints an object to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Prints <code class="docutils literal notranslate"><span class="pre">object</span></code> to <code class="docutils literal notranslate"><span class="pre">stream</span></code>.</p>
+<p>Methods for this function should print objects as a message, as
+opposed to printing them in any form intending to represent Dylan
+data, literal syntax, and so on.</p>
+<p>For example, printing a condition object with this function
+presents the condition as an error message, but printing the
+condition object with the <a class="reference internal" href="print.html#io:print:print"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print</span></code></a> function from the Print module
+prints the condition in some form such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">Simple</span><span class="o">-</span><span class="n">error</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>See the individual methods for the details of how this function
+prints various objects. This function exists to define the behavior
+of the <code class="docutils literal notranslate"><span class="pre">%s</span></code> format directive and to allow users the ability to
+extend the <code class="docutils literal notranslate"><span class="pre">%s</span></code> directive. Users should have little need to call
+this function directly.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="io:format:print-message([condition])">
+<code class="sig-name descname">print-message(&lt;condition&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#io:format:print-message([condition])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a condition to a stream as an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>condition</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Prints <code class="docutils literal notranslate"><span class="pre">condition</span></code> as an error message, as described for the
+Dylan <code class="docutils literal notranslate"><span class="pre">%s</span></code> format directive. You should not specialize the
+<a class="reference internal" href="#io:format:print-message"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-message</span></code></a> protocol for subclasses of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>, but
+instead extend the <a class="reference internal" href="#io:format:print-message"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-message</span></code></a> protocol to new condition
+objects by specializing methods on <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">report-condition</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This doesn’t actually work. Fix.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="io:format:print-message([symbol])">
+<code class="sig-name descname">print-message(&lt;symbol&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#io:format:print-message([symbol])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a symbol to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>print-message <em>symbol</em> <em>stream</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>symbol</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>.</p></li>
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+<p>Prints <code class="docutils literal notranslate"><span class="pre">symbol</span></code> to <code class="docutils literal notranslate"><span class="pre">stream</span></code> by converting it to a string with the
+<a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a> function and then writing the string with the <a class="reference internal" href="streams.html#io:streams:write"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write</span></code></a>
+function from the Streams module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="io:format:print-message([string]or[character])">
+<code class="sig-name descname">print-message(&lt;string&gt; or &lt;character&gt;)</code> <em class="property">Sealed Method</em><a class="headerlink" href="#io:format:print-message([string]or[character])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints an object to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>print-message <em>object</em> <em>stream</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">type-union(&lt;string&gt;,</span> <span class="pre">&lt;character&gt;)</span></code>.</p></li>
+<li><p><strong>stream</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Prints <em>object</em> to <em>stream</em> by calling the <a class="reference internal" href="streams.html#io:streams:write"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write</span></code></a> function
+from the Streams module.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="The io Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="format-out.html" class="btn btn-neutral float-right" title="The format-out Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The simple-format Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The simple-profiling Module" href="simple-profiling.html" />
+    <link rel="prev" title="The machine-words Module" href="machine-words.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The common-dylan Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The simple-format Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The common-dylan Library</a></li>
+      <li class="breadcrumb-item active">The simple-format Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/common-dylan/simple-format.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-simple-format-module">
+<h1>The simple-format Module<a class="headerlink" href="#the-simple-format-module" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>simple-format</cite> module provides a subset of the functionality of the
+<a class="reference internal" href="../io/format.html"><span class="doc">format</span></a>, <a class="reference internal" href="../io/format-out.html"><span class="doc">format-out</span></a>, <a class="reference internal" href="../io/print.html"><span class="doc">print</span></a>, and <a class="reference internal" href="../io/standard-io.html"><span class="doc">standard-io</span></a> modules, for
+programs that just need to do simple output to the console without pulling in
+the full <a class="reference internal" href="../io/index.html"><span class="doc">IO</span></a> library.</p>
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:simple-format:format-to-string">
+<code class="sig-name descname">format-to-string</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:simple-format:format-to-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a formatted string constructed from its arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>format-to-string <em>format-string</em> #rest <em>format-arguments</em> =&gt; <em>string</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>format-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>format-arguments</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Conditions</dt>
+<dd class="field-even"><p>This function signals an error of type <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-error&gt;</span></code></a> if any of the
+format directives in <em>format-string</em> are invalid.</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Returns a formatted string constructed from its arguments, which
+include a <em>format-string</em> of formatting directives and a series of
+<em>format-arguments</em> to be formatted according to those directives.</p>
+<p>The <em>format-string</em> must be a Dylan format string as described on
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Messages"><code class="xref drm docutils literal notranslate"><span class="pre">pages</span> <span class="pre">112–114</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">DRM</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="common-dylan:simple-format:format-out">
+<code class="sig-name descname">format-out</code> <em class="property">Function</em><a class="headerlink" href="#common-dylan:simple-format:format-out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats its arguments to the standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>format-out <em>format-string</em> #rest <em>format-arguments</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>format-string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p></li>
+<li><p><strong>format-arguments</strong> – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Formats its arguments to the standard output.</p>
+<p>This function writes directly to the console using the underlying OS
+facilities rather than using the <a class="reference internal" href="../io/standard-io.html#io:standard-io:*standard-output*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*standard-output*</span></code></a> stream defined
+by the <a class="reference internal" href="../io/standard-io.html"><span class="doc">standard-io</span></a> module in the <a class="reference internal" href="../io/index.html"><span class="doc">IO</span></a> library. For example, on Unix systems this writes to file
+descriptor 1 via the <code class="docutils literal notranslate"><span class="pre">write</span></code> C function.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="machine-words.html" class="btn btn-neutral float-left" title="The machine-words Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simple-profiling.html" class="btn btn-neutral float-right" title="The simple-profiling Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

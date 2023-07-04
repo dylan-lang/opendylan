@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The coloring-stream Library &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The command-line-parser Library" href="../command-line-parser/index.html" />
+    <link rel="prev" title="The table-extensions Module" href="../collections/table-extensions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The coloring-stream Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-coloring-stream-module">The coloring-stream Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#text-attributes">Text Attributes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#text-intensity">Text Intensity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#text-colors">Text Colors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The coloring-stream Library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/coloring-stream/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-coloring-stream-library">
+<h1>The coloring-stream Library<a class="headerlink" href="#the-coloring-stream-library" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">coloring-stream</span></code> module provides a means for writing text to
+the console or terminal with colors and varying intensity.</p>
+<p>On Unix, this is typically done via ANSI codes.  Windows support is
+yet to be implemented.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>It is implemented as a <a class="reference internal" href="../io/streams.html#io:streams:[wrapper-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapper-stream&gt;</span></code></a>, so it can wrap any
+given stream. While it can be created via <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a>, it is easiest
+to just call <a class="reference internal" href="#coloring-stream:coloring-stream:colorize-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">colorize-stream</span></code></a> on a stream to get back a
+<a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a> wrapper that can be used to output color.</p>
+<p>If the underlying stream doesn’t support color, then the returned
+<a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a> will silently drop all text attributes.</p>
+<p>Once you have a <a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>, you can set text attributes
+by writing instances of <a class="reference internal" href="#coloring-stream:coloring-stream:[text-attributes]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code></a>. Text attributes
+are created with <a class="reference internal" href="#coloring-stream:coloring-stream:text-attributes"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">text-attributes</span></code></a>. Text can have a foreground
+color, a background color and an intensity:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">error-attributes</span> <span class="o">=</span> <span class="n">text-attributes</span><span class="p">(</span><span class="k">foreground:</span> <span class="no">$color-red</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">blinding-attributes</span> <span class="o">=</span> <span class="n">text-attributes</span><span class="p">(</span><span class="k">foreground:</span> <span class="no">$color-green</span><span class="p">,</span>
+                                          <span class="k">background:</span> <span class="no">$color-red</span><span class="p">,</span>
+                                          <span class="k">intensity:</span> <span class="no">$bright-intensity</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To reset text back to the defaults, use the predefined
+<a class="reference internal" href="#coloring-stream:coloring-stream:$reset-attributes"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$reset-attributes</span></code></a> constant.</p>
+<p>Text attributes can be stored and used repeatedly. This lets you set up
+some stylized text attributes and re-use them.</p>
+<p>The text attributes can be written to the stream in two different ways:</p>
+<ul class="simple">
+<li><p>Via <a class="reference internal" href="../io/format.html#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a></p></li>
+<li><p>Via <a class="reference internal" href="../io/print.html#io:print:print"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print</span></code></a> or <a class="reference internal" href="../io/print.html#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a></p></li>
+</ul>
+<p>Once you have a <a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>, then you can write colorized
+text to it with <a class="reference internal" href="../io/format.html#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">error-attributes</span> <span class="o">=</span> <span class="n">text-attributes</span><span class="p">(</span><span class="k">foreground:</span> <span class="no">$color-red</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">colorize-stream</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">);</span>
+<span class="n">format</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="s">&quot;%=Error:%= %s&quot;</span><span class="p">,</span> <span class="n">error-attributes</span><span class="p">,</span> <span class="no">$reset-attributes</span><span class="p">,</span> <span class="n">error-message</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This is implemented by providing an implementation of <a class="reference internal" href="../io/print.html#io:print:print"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print</span></code></a>
+specialized on <a class="reference internal" href="#coloring-stream:coloring-stream:[text-attributes]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code></a> and <a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>.</p>
+<p>This can be used directly as well:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">error-attributes</span> <span class="o">=</span> <span class="n">text-attributes</span><span class="p">(</span><span class="k">foreground:</span> <span class="no">$color-red</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">colorize-stream</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="n">error-attributes</span><span class="p">,</span> <span class="n">cs</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;Error:&quot;</span><span class="p">,</span> <span class="n">cs</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="no">$reset-attributes</span><span class="p">,</span> <span class="n">cs</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="sc">&#39; &#39;</span><span class="p">,</span> <span class="n">cs</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="n">error-message</span><span class="p">,</span> <span class="n">cs</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-coloring-stream-module">
+<h2>The coloring-stream Module<a class="headerlink" href="#the-coloring-stream-module" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:[coloring-stream]">
+<code class="sig-name descname">&lt;coloring-stream&gt;</code> <em class="property">Abstract Class</em><a class="headerlink" href="#coloring-stream:coloring-stream:[coloring-stream]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../io/streams.html#io:streams:[wrapper-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapper-stream&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a> is the abstract wrapper stream
+that is used to determine whether or not a stream supports
+color output to avoid having to check at every write.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:colorize-stream">
+<code class="sig-name descname">colorize-stream</code> <em class="property">Generic function</em><a class="headerlink" href="#coloring-stream:coloring-stream:colorize-stream" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>colorize-stream (stream #key force-ansi?) =&gt; (coloring-stream)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="../io/streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+<li><p><strong>force-ansi?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coloring-stream</strong> – An instance of <a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Wrap a <em>stream</em> with an appropriate instance of
+<a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>. It uses <a class="reference internal" href="#coloring-stream:coloring-stream:stream-supports-color?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">stream-supports-color?</span></code></a>
+to determine whether or not the underlying stream supports
+color output.</p>
+<p>When <em>force-ansi?</em> is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>, then the usual checks are skipped
+and a coloring stream that generates ANSI output is created.
+This is useful when outputting to a string prior to writing the
+text to <a class="reference internal" href="../io/standard-io.html#io:standard-io:*standard-output*"><code class="xref dylan dylan-var docutils literal notranslate"><span class="pre">*standard-output*</span></code></a> or when writing a network server
+where the user may have an ANSI-capable client.</p>
+<p>When called on a <a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>, if <em>force-ansi?</em> is
+set and the stream is not an ANSI coloring stream, then the stream
+will be unwrapped and a new ANSI coloring stream wrapper will
+be created. Otherwise, calling <code class="docutils literal notranslate"><span class="pre">colorize-stream</span></code> on a
+<a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a> will return the same stream.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">colorize-stream</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Or, using <code class="docutils literal notranslate"><span class="pre">force-ansi?</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">text</span>
+  <span class="o">=</span> <span class="n">with-output-to-string</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;byte-string-stream&gt;</span><span class="p">)</span>
+      <span class="k">let</span> <span class="n">force-ansi?</span> <span class="o">=</span> <span class="n">stream-supports-color?</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">);</span>
+      <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">colorize-stream</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="k">force-ansi?:</span> <span class="n">force-ansi?</span><span class="p">);</span>
+      <span class="p">...</span>
+    <span class="k">end</span> <span class="n">with-output-to-string</span><span class="p">;</span>
+<span class="n">write</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:stream-supports-color?">
+<code class="sig-name descname">stream-supports-color?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#coloring-stream:coloring-stream:stream-supports-color?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stream-supports-color? (stream) =&gt; (well?)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="../io/streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>well?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Return whether or not the underlying stream supports color
+output.</p>
+<p>This checks that:</p>
+<ul class="simple">
+<li><p>The stream is a <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:stream-console?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">stream-console?</span></code></a> is true. (On Unix, this means that <code class="docutils literal notranslate"><span class="pre">isatty</span></code>
+is true for the stream.)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">TERM</span></code> environment variable is not <code class="docutils literal notranslate"><span class="pre">&quot;dumb&quot;</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">EMACS</span></code> environment variable is not <code class="docutils literal notranslate"><span class="pre">&quot;t&quot;</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:stream-supports-ansi-color?">
+<code class="sig-name descname">stream-supports-ansi-color?</code> <em class="property">Open Generic function</em><a class="headerlink" href="#coloring-stream:coloring-stream:stream-supports-ansi-color?" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stream-supports-ansi-color? (stream) =&gt; (well?)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream</strong> – An instance of <a class="reference internal" href="../io/streams.html#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>well?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Return whether or not the underlying stream might support
+ANSI color output, assuming that the underlying stream
+supports color output at all.</p>
+<p>On Unix, this will always return <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p>
+<p>On Windows, this attempts to detect situations where ANSI
+output would be permissible, such as running within an
+alternate console window like ConEMU.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This does NOT check to see if the stream actually
+supports coloring. It is meant to be used in conjunction
+with <a class="reference internal" href="#coloring-stream:coloring-stream:stream-supports-color?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">stream-supports-color?</span></code></a>.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="text-attributes">
+<h3>Text Attributes<a class="headerlink" href="#text-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:[text-attributes]">
+<code class="sig-name descname">&lt;text-attributes&gt;</code> <em class="property">Class</em><a class="headerlink" href="#coloring-stream:coloring-stream:[text-attributes]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>background</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;text-color&gt;)</span></code>.</p></li>
+<li><p><strong>foreground</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;text-color&gt;)</span></code>.</p></li>
+<li><p><strong>intensity</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;text-intensity&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Instances of <code class="docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code> are used for representing the
+desired text appearance. They can be passed to <a class="reference internal" href="../io/format.html#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a> when
+writing to a <a class="reference internal" href="#coloring-stream:coloring-stream:[coloring-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;coloring-stream&gt;</span></code></a>.</p>
+<p><em>background</em> and <em>foreground</em>, if given, should be one of the color
+constants like <a class="reference internal" href="#coloring-stream:coloring-stream:$color-red"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$color-red</span></code></a>, <a class="reference internal" href="#coloring-stream:coloring-stream:$color-green"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$color-green</span></code></a>, etc.</p>
+<p><em>intensity</em>, if given, should be one of <a class="reference internal" href="#coloring-stream:coloring-stream:$bright-intensity"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$bright-intensity</span></code></a>,
+<a class="reference internal" href="#coloring-stream:coloring-stream:$dim-intensity"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$dim-intensity</span></code></a> or <a class="reference internal" href="#coloring-stream:coloring-stream:$normal-intensity"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$normal-intensity</span></code></a>.</p>
+<p>Values that are omitted are set to the default values for the terminal.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:text-attributes">
+<code class="sig-name descname">text-attributes</code> <em class="property">Function</em><a class="headerlink" href="#coloring-stream:coloring-stream:text-attributes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>text-attributes (#key foreground background intensity) =&gt; (attributes)</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>foreground</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;text-color&gt;)</span></code>.</p></li>
+<li><p><strong>background</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;text-color&gt;)</span></code>.</p></li>
+<li><p><strong>intensity</strong> (<em>#key</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;text-intensity&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attributes</strong> – An instance of <a class="reference internal" href="#coloring-stream:coloring-stream:[text-attributes]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p><code class="docutils literal notranslate"><span class="pre">text-attributes</span></code> provides an easy wrapper for creating instances
+of <a class="reference internal" href="#coloring-stream:coloring-stream:[text-attributes]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code></a>.</p>
+<p><em>background</em> and <em>foreground</em>, if given, should be one of the color
+constants like <a class="reference internal" href="#coloring-stream:coloring-stream:$color-red"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$color-red</span></code></a>, <a class="reference internal" href="#coloring-stream:coloring-stream:$color-green"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$color-green</span></code></a>, etc.</p>
+<p><em>intensity</em>, if given, should be one of <a class="reference internal" href="#coloring-stream:coloring-stream:$bright-intensity"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$bright-intensity</span></code></a>,
+<a class="reference internal" href="#coloring-stream:coloring-stream:$dim-intensity"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$dim-intensity</span></code></a> or <a class="reference internal" href="#coloring-stream:coloring-stream:$normal-intensity"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$normal-intensity</span></code></a>.</p>
+<p>Values that are omitted are set to the default values for the terminal.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">error-attributes</span> <span class="o">=</span> <span class="n">text-attributes</span><span class="p">(</span><span class="k">foreground:</span> <span class="no">$color-red</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$reset-attributes">
+<code class="sig-name descname">$reset-attributes</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$reset-attributes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#coloring-stream:coloring-stream:[text-attributes]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>A predefined constant to reset the text back to the default attributes.</p>
+<p>This is equivalent to <code class="docutils literal notranslate"><span class="pre">text-attributes(intensity:</span> <span class="pre">$normal-intensity)</span></code>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="text-intensity">
+<h4>Text Intensity<a class="headerlink" href="#text-intensity" title="Permalink to this headline">¶</a></h4>
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$bright-intensity">
+<code class="sig-name descname">$bright-intensity</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$bright-intensity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$dim-intensity">
+<code class="sig-name descname">$dim-intensity</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$dim-intensity" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all terminals support dimmed text.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$normal-intensity">
+<code class="sig-name descname">$normal-intensity</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$normal-intensity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="text-colors">
+<h4>Text Colors<a class="headerlink" href="#text-colors" title="Permalink to this headline">¶</a></h4>
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-black">
+<code class="sig-name descname">$color-black</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-black" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-blue">
+<code class="sig-name descname">$color-blue</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-blue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-cyan">
+<code class="sig-name descname">$color-cyan</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-cyan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-default">
+<code class="sig-name descname">$color-default</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-green">
+<code class="sig-name descname">$color-green</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-green" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-magenta">
+<code class="sig-name descname">$color-magenta</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-magenta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-red">
+<code class="sig-name descname">$color-red</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-red" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-white">
+<code class="sig-name descname">$color-white</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-white" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="coloring-stream:coloring-stream:$color-yellow">
+<code class="sig-name descname">$color-yellow</code> <em class="property">Constant</em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-yellow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../collections/table-extensions.html" class="btn btn-neutral float-left" title="The table-extensions Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../command-line-parser/index.html" class="btn btn-neutral float-right" title="The command-line-parser Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The table-extensions Module &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The coloring-stream Library" href="../coloring-stream/index.html" />
+    <link rel="prev" title="The set Module" href="set.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The collections Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collectors.html">The collectors Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plists.html">The plists Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="set.html">The set Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The table-extensions Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basics">Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hash-functions">Hash functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weak-tables">Weak tables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">The table-extensions Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The collections Library</a></li>
+      <li class="breadcrumb-item active">The table-extensions Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/collections/table-extensions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-table-extensions-module">
+<h1>The table-extensions Module<a class="headerlink" href="#the-table-extensions-module" title="Permalink to this headline">¶</a></h1>
+<p>The Collections library’s <em>table-extensions</em> module extends the Dylan
+language’s standard table features.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Open Dylan provides a slightly different table implementation
+from that described by the DRM. See <a class="reference internal" href="../language-extensions/language-differences.html"><span class="doc">Language Differences</span></a>
+for details of these differences.</p>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>The <em>table-extensions</em> module exports the classes <a class="reference internal" href="#collections:table-extensions:[string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code></a> and
+<a class="reference internal" href="#collections:table-extensions:[case-insensitive-string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;case-insensitive-string-table&gt;</span></code></a>; the type <a class="reference internal" href="#collections:table-extensions:[hash-state]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code></a>; the
+constructor macro <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">table</span></code>; the generic function <a class="reference internal" href="#collections:table-extensions:remove-all-keys!"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">remove-all-keys!</span></code></a>
+and two methods thereon; and the functions <a class="reference internal" href="#collections:table-extensions:collection-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">collection-hash</span></code></a>,
+<a class="reference internal" href="#collections:table-extensions:sequence-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">sequence-hash</span></code></a>, <a class="reference internal" href="#collections:table-extensions:string-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">string-hash</span></code></a>, <a class="reference internal" href="#collections:table-extensions:values-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">values-hash</span></code></a>,
+<a class="reference internal" href="#collections:table-extensions:case-insensitive-string-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-string-hash</span></code></a>, and <a class="reference internal" href="#collections:table-extensions:case-insensitive-equal"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-equal</span></code></a>.</p>
+<p>The <a class="reference internal" href="#collections:table-extensions:[string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code></a> class is a class of tables that use strings
+for keys. <a class="reference internal" href="#collections:table-extensions:[case-insensitive-string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;case-insensitive-string-table&gt;</span></code></a> is similar, but the keys
+are considered to be case insensitive.</p>
+<p>The <a class="reference internal" href="#collections:table-extensions:[hash-state]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code></a> type implements <em>hash states</em>. A hash state is
+defined by the DRM, page 123, as “an implementation-dependent type that
+is associated with a hash id and can be used by the implementation to
+determine whether the hash id has been invalidated.” See pages 122–123
+of the DRM for more details.</p>
+<p>The various hash functions and the <a class="reference internal" href="#collections:table-extensions:case-insensitive-equal"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-equal</span></code></a>
+equivalence predicate are convenient building blocks for creating new
+table classes and hash functions.</p>
+</div>
+<div class="section" id="hash-functions">
+<h2>Hash functions<a class="headerlink" href="#hash-functions" title="Permalink to this headline">¶</a></h2>
+<p>Different hash functions are not required to return the same hash code
+for equal or even identical objects. For instance,</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">collection-hash</span><span class="p">(#(),</span> <span class="nb">object-hash</span><span class="p">,</span> <span class="nb">object-hash</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>is not guaranteed to return the same values as</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">sequence-hash</span><span class="p">(#(),</span> <span class="nb">object-hash</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Furthermore, <a class="reference internal" href="#collections:table-extensions:collection-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">collection-hash</span></code></a> with <code class="docutils literal notranslate"><span class="pre">ordered:</span> <span class="pre">#t</span></code> is not
+guaranteed to return the same hash code as <a class="reference internal" href="#collections:table-extensions:collection-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">collection-hash</span></code></a> with
+<code class="docutils literal notranslate"><span class="pre">ordered:</span> <span class="pre">#f</span></code>. Such a requirement would render the <code class="docutils literal notranslate"><span class="pre">ordered:</span></code>
+keyword useless.</p>
+</div>
+<div class="section" id="weak-tables">
+<h2>Weak tables<a class="headerlink" href="#weak-tables" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan allows all general instances of the built-in class
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a> to be <em>weak</em>. See <a class="reference internal" href="../language-extensions/weak-tables.html"><span class="doc">weak tables</span></a> of
+this volume for information about weakness.</p>
+<p>You can create weak tables with the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a> class’s <em>weak:</em>
+init-keyword. The legal values for this keyword are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;key&quot;</span></code> Creates a table with weak keys. When there are no longer any
+strong references to a key, the table entry of which it is part
+becomes eligible for garbage collection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;value&quot;</span></code> Creates a table with weak values. When there are no longer
+any strong references to a value, the table entry of which it is a
+part becomes eligible for garbage collection.</p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> Creates a table with strong keys and values. This is the default
+value.</p></li>
+</ul>
+<div class="section" id="id1">
+<h3>The table-extensions Module<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This section contains a reference description for each item exported
+from the module <em>table-extensions</em>.</p>
+<dl class="class">
+<dt class="dylan-api" id="collections:table-extensions:[string-table]">
+<code class="sig-name descname">&lt;string-table&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#collections:table-extensions:[string-table]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table class that uses strings for keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The <code class="docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code> class is the class of tables that use
+instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> for their keys. It is an error to use a
+key that is not an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+<p>Keys are compared with the equivalence predicate <code class="docutils literal notranslate"><span class="pre">\=</span></code>.</p>
+<p>The elements of the table are instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p>
+<p>Modifying the key once it has been used to add an element to a
+<code class="docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code> results in undefined behavior.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="collections:table-extensions:[case-insensitive-string-table]">
+<code class="sig-name descname">&lt;case-insensitive-string-table&gt;</code> <em class="property">Sealed Class</em><a class="headerlink" href="#collections:table-extensions:[case-insensitive-string-table]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table class that uses case-insensitive strings for keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The <code class="docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code> class is the class of tables that use
+instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> for their keys. It is an error to use a
+key that is not an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+<p>Keys are compared with the equivalence predicate
+<a class="reference internal" href="#collections:table-extensions:case-insensitive-equal"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-equal</span></code></a>.</p>
+<p>The elements of the table are instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p>
+<p>Modifying the key once it has been used to add an element to a
+<code class="docutils literal notranslate"><span class="pre">&lt;case-insensitive-string-table&gt;</span></code> results in undefined behavior.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="collections:table-extensions:[hash-state]">
+<code class="sig-name descname">&lt;hash-state&gt;</code> <em class="property">Class</em><a class="headerlink" href="#collections:table-extensions:[hash-state]" title="Permalink to this definition">¶</a></dt>
+<dd><p>A hash state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Anything that the Dylan Reference Manual describes as a <em>hash
+state</em> is an instance of this type.</p>
+<p>Examples of hash states include the second argument and second
+return value of <a class="reference internal" href="../language-extensions/language-differences.html#dylan:dylan:object-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">object-hash</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="collections:table-extensions:collection-hash">
+<code class="sig-name descname">collection-hash</code> <em class="property">Function</em><a class="headerlink" href="#collections:table-extensions:collection-hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes the elements of a collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>collection-hash <em>key-hash-function</em> <em>elt-hash-function</em> <em>collection</em> <em>initial-state</em> #key <em>ordered</em> =&gt; <em>hash-id</em> <em>hash-state</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>key-hash-function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>elt-hash-function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;collection&gt;</span></code></a>.</p></li>
+<li><p><strong>initial-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+<li><p><strong>ordered</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>result-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Hashes every element of <em>collection</em> using <em>key-hash-function</em> on
+the keys and <em>elt-hash-function</em> on the elements, and merges the
+resulting hash codes in order.</p>
+<p>The <em>ordered</em> keyword is passed on to <a class="reference internal" href="../language-extensions/language-differences.html#dylan:dylan:merge-hash-ids"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">merge-hash-ids</span></code></a>.</p>
+<p>The functions <em>key-hash-function</em> and <em>elt-hash-function</em> must be
+suitable for use as hash functions. See page <a class="reference external" href="https://opendylan.org/books/drm/Tables#XREF-1049"><code class="xref drm docutils literal notranslate"><span class="pre">123</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">DRM</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="collections:table-extensions:sequence-hash">
+<code class="sig-name descname">sequence-hash</code> <em class="property">Function</em><a class="headerlink" href="#collections:table-extensions:sequence-hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes the elements of a sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>sequence-hash <em>elt-hash-function</em> <em>sequence</em> <em>initial-state</em> #key <em>ordered</em> =&gt; <em>hash-id</em> <em>result-state</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>elt-hash-function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>sequence</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>initial-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+<li><p><strong>ordered</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>result-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Hashes every element of <em>sequence</em> using <em>elt-hash-function</em>, and
+merges the resulting hash codes in order.</p>
+<p>The function <em>elt-hash-function</em> must be suitable for use as a hash
+function. See page <a class="reference external" href="https://opendylan.org/books/drm/Tables#XREF-1049"><code class="xref drm docutils literal notranslate"><span class="pre">123</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">DRM</span></code></a>.</p>
+<p>The <em>ordered</em> keyword is passed on to <a class="reference internal" href="../language-extensions/language-differences.html#dylan:dylan:merge-hash-ids"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">merge-hash-ids</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="collections:table-extensions:values-hash">
+<code class="sig-name descname">values-hash</code> <em class="property">Function</em><a class="headerlink" href="#collections:table-extensions:values-hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes the values passed to it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>values-hash <em>elt-hash-function</em> <em>initial-state</em> #rest <em>arguments</em> =&gt; <em>hash-id</em> <em>result-state</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>elt-hash-function</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>hash-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+<li><p><strong>initial-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+<li><p><strong>arguments</strong> (<em>#rest</em>) – Instances of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>result-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Hashes every object in <em>arguments</em> using <em>elt-hash-function</em>, and
+merges the resulting hash codes in order.</p>
+<p>The function <em>elt-hash-function</em> must be suitable for use as a hash
+function. See page <a class="reference external" href="https://opendylan.org/books/drm/Tables#XREF-1049"><code class="xref drm docutils literal notranslate"><span class="pre">123</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">DRM</span></code></a>.</p>
+<p>The <em>ordered</em> keyword is passed on to <a class="reference internal" href="../language-extensions/language-differences.html#dylan:dylan:merge-hash-ids"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">merge-hash-ids</span></code></a>.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="collections:table-extensions:string-hash">
+<code class="sig-name descname">string-hash</code> <em class="property">Function</em><a class="headerlink" href="#collections:table-extensions:string-hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>string-hash <em>string</em> <em>initial-state</em> =&gt; <em>hash-id</em> <em>result-state</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>initial-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>result-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Produces a hash code for a string, using the equivalence predicate
+<code class="docutils literal notranslate"><span class="pre">\=</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="collections:table-extensions:case-insensitive-string-hash">
+<code class="sig-name descname">case-insensitive-string-hash</code> <em class="property">Function</em><a class="headerlink" href="#collections:table-extensions:case-insensitive-string-hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes a string, without considering case information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>case-insensitive-string-hash <em>string</em> <em>initial-state</em> =&gt; <em>hash-id</em> <em>result-state</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>string</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>initial-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hash-id</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>result-state</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Produces a hash code for a string using the equivalence predicate
+<a class="reference internal" href="#collections:table-extensions:case-insensitive-equal"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-equal</span></code></a>, which does not consider the case of
+the characters in the strings it compares.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#collections:table-extensions:case-insensitive-equal"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-equal</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt class="dylan-api" id="collections:table-extensions:case-insensitive-equal">
+<code class="sig-name descname">case-insensitive-equal</code> <em class="property">Function</em><a class="headerlink" href="#collections:table-extensions:case-insensitive-equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two strings for equality, ignoring case differences between
+them.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>case-insensitive-equal <em>string1</em> <em>string2</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>string1</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+<li><p><strong>string2</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boolean</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Compares <em>string1</em> and <em>string2</em> for equality, ignoring any case
+differences between them. Returns true if they are equal and false
+otherwise.</p>
+<p>The function has the same behavior as Dylan’s standard method on <em>=</em> for
+sequences, except that when comparing alphabetical characters, it
+ignores any case differences.</p>
+<p>This function is used as an equivalence predicate by
+<a class="reference internal" href="#collections:table-extensions:case-insensitive-string-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-string-hash</span></code></a>.</p>
+<p>This function uses <em>as-uppercase</em> or <em>as-lowercase</em> to convert the
+characters in its string arguments.</p>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>The <em>case-insensitive-equal</em> function returns true if passed the
+following strings:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;The Cat SAT ON the Mat&quot;</span>
+<span class="s">&quot;The cat sat on the Mat&quot;</span>
+</pre></div>
+</div>
+<p>Conversely, the standard method on <em>=</em> returns false when passed those
+strings.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#collections:table-extensions:case-insensitive-string-hash"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">case-insensitive-string-hash</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="collections:table-extensions:remove-all-keys!">
+<code class="sig-name descname">remove-all-keys!</code> <em class="property">Open Generic function</em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all keys from a collection and leaves it empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>remove-all-keys! <em>collection</em> =&gt; <em>collection</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Modifies <em>collection</em> by removing all its keys and elements, and leaves
+it empty.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To empty collections that are not instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>, use <em>size-setter</em>.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="collections:table-extensions:remove-all-keys!([mutable-explicit-key-collection])">
+<code class="sig-name descname">remove-all-keys!(&lt;mutable-explicit-key-collection&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!([mutable-explicit-key-collection])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all keys from a collection and leaves it empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>remove-all-keys! <em>collection</em> =&gt; <em>collection</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Modifies <em>collection</em> by removing all its keys and elements, and
+leaves it empty. This method implements the generic function by
+making repeated calls to <code class="docutils literal notranslate"><span class="pre">remove-key!</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To empty collections that are not instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>, use <em>size-setter</em>.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="collections:table-extensions:remove-all-keys!([table])">
+<code class="sig-name descname">remove-all-keys!(&lt;table&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!([table])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all keys from a table and leaves it empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>remove-all-keys! <em>table</em> =&gt; <em>table</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>table</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p></li>
+<li><p><strong>table</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Modifies <em>table</em> by removing all its keys and elements, and leaves
+it empty.</p>
+<p>This method does not use <code class="docutils literal notranslate"><span class="pre">remove-key!</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To empty collections that are not instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#mutable-explicit-key-collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;mutable-explicit-key-collection&gt;</span></code></a>, use <em>size-setter</em>.</p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="collections:table-extensions:tabling">
+<code class="sig-name descname">tabling</code> <em class="property">Function Macro</em><a class="headerlink" href="#collections:table-extensions:tabling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a table and populates it with keys and values.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p><pre class="literal-block">tabling( [ <cite>class</cite>, ] <cite>key</cite> =&gt; <cite>value</cite>, ...)</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>class</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a>. Optional.</p></li>
+<li><p><strong>key</strong> – An expression.</p></li>
+<li><p><strong>value</strong> – An expression.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> – A new instance of <em>class</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Creates a table of type <em>class</em> and populates it with <em>key</em>/<em>value</em>
+pairs. If <em>class</em> is omitted, creates a table of type <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">my-table</span> <span class="o">=</span> <span class="n">tabling</span><span class="p">(</span><span class="ss">#&quot;red&quot;</span> <span class="p">=&gt;</span> <span class="s">&quot;stop&quot;</span><span class="p">,</span> <span class="ss">#&quot;green&quot;</span> <span class="p">=&gt;</span> <span class="s">&quot;go&quot;</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">my-table</span> <span class="o">=</span> <span class="n">tabling</span><span class="p">(</span><span class="nc">&lt;string-table&gt;</span><span class="p">,</span> <span class="s">&quot;red&quot;</span> <span class="p">=&gt;</span> <span class="s">&quot;stop&quot;</span><span class="p">,</span> <span class="s">&quot;green&quot;</span> <span class="p">=&gt;</span> <span class="s">&quot;go&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="set.html" class="btn btn-neutral float-left" title="The set Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../coloring-stream/index.html" class="btn btn-neutral float-right" title="The coloring-stream Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

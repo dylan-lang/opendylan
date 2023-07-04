@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parser Expansions &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Alternative Curry Syntax" href="alternative-curry-syntax.html" />
+    <link rel="prev" title="Macro System Extensions" href="macro-system-extensions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Dylan Language Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="define-function.html">Function Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numbers.html">Integers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Parser Expansions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Dylan Language Extensions</a></li>
+      <li class="breadcrumb-item active">Parser Expansions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/language-extensions/parser-expansions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="parser-expansions">
+<h1>Parser Expansions<a class="headerlink" href="#parser-expansions" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a highly experimental extension. It is not
+well specified, is not supported by any of the editor integrations
+or syntax highlighters, and may change or disappear in the future.</p>
+</div>
+<p>The syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#:&lt;name&gt;:&lt;text&gt;</span>
+</pre></div>
+</div>
+<p>gets transformed, setter-like, into:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;-</span><span class="n">parser</span><span class="p">(</span><span class="o">&lt;</span><span class="n">text</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;text&gt;</span></code> part can be either <em>delimited</em> or <em>undelimited</em>. Undelimited
+text can contain anything but commas, semicolons, brackets of any kind, and
+whitespace. All the following are valid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#:http://opendylan.org/</span>
+<span class="c1">#:time:12:30am</span>
+<span class="c1">#:date:12/3/2000</span>
+<span class="c1">#:file:D:\dylan\sources\</span>
+<span class="c1">#:mailto:dylan-lang@googlegroups.com</span>
+</pre></div>
+</div>
+<p>In the delimited form, you have a choice of delimiters: <code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">(...)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">[...]</span></code>, <code class="docutils literal notranslate"><span class="pre">{...}</span></code>, <code class="docutils literal notranslate"><span class="pre">|...|</span></code>, <code class="docutils literal notranslate"><span class="pre">`...`</span></code>, <code class="docutils literal notranslate"><span class="pre">'...'</span></code>. Within the delimiters,
+only the matching close delimiter must be escaped. The selection allows you to
+choose the delimiter requiring least escaping for the enclosed data. The text
+(less the delimiters) is passed to the parsing function. Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#:file:&quot;C:\Program Files\Open Dylan\.&quot;</span>
+<span class="c1">#:html:{&lt;html&gt;</span>
+  <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">Foo</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">body</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s2">&quot;#FFFFFF&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>An example parser:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">html-parser</span>
+    <span class="p">(</span><span class="n">text</span> <span class="p">::</span> <span class="nc">&lt;byte-string&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">doc</span> <span class="p">::</span> <span class="nc">&lt;html-document&gt;</span><span class="p">)</span>
+   <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;html-document&gt;</span><span class="p">,</span> <span class="k">text:</span> <span class="n">text</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If an appropriate function isn’t defined, you get a standard unbound variable
+reference message indicating the # literal.</p>
+<p>Note that there is no escape processing except that the end delimiter may be
+escaped with a backslash and <em>the escape character itself is not removed</em>. For
+example, <code class="docutils literal notranslate"><span class="pre">#:file:&quot;C:\foo\&quot;</span></code> is an error because the end delimiter is escaped
+and therefore the hash literal is unterminated. <code class="docutils literal notranslate"><span class="pre">#:file:&quot;C:\foo\&quot;&quot;</span></code> results
+in the literal string <code class="docutils literal notranslate"><span class="pre">C:\foo\&quot;</span></code> being passed to the parser.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="macro-system-extensions.html" class="btn btn-neutral float-left" title="Macro System Extensions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="alternative-curry-syntax.html" class="btn btn-neutral float-right" title="Alternative Curry Syntax" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

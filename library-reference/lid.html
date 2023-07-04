@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LID File Format &mdash; Dylan Library Reference</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="The c-ffi Library" href="c-ffi/index.html" />
+    <link rel="prev" title="String Literal Syntax" href="language-extensions/string-literals.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Dylan Library Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language-extensions/index.html">Dylan Language Extensions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LID File Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lid-files">LID files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#standard-lid-keywords">Standard LID Keywords</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#library">Library:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files">Files:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#synopsis">Synopsis:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keywords">Keywords:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#author">Author:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#major-version">Major-Version:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#minor-version">Minor-Version:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comment">Comment:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#open-dylan-s-lid-extensions">Open Dylan’s LID extensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-foreign-files-and-resource-files">Specifying foreign files and resource files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c-source-files">C-Source-Files:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c-header-files">C-Header-Files:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c-object-files">C-Object-Files:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rc-files">RC-Files:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c-libraries">C-Libraries:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-compilation-details">Specifying compilation details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lid">LID:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jam-includes">Jam-Includes:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#target-type">Target-Type:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#executable">Executable:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#base-address">Base-Address:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linker-options">Linker-Options:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#file-naming-conventions">File naming conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-example">Application example</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collections/index.html">The collections Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line-parser/index.html">The command-line-parser Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-dylan/index.html">The common-dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dood/index.html">The DOOD library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dylan/index.html">The dylan Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash-algorithms/index.html">The hash-algorithms Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/index.html">The io Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging/index.html">The logging Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network/index.html">The network Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regular-expressions/index.html">The regular-expressions Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sql/index.html">The sql Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strings/index.html">The strings Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="system/index.html">The system Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win32/index.html">The Win32 API Libraries</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Dylan Library Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">LID File Format</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/lid.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="lid-file-format">
+<h1>LID File Format<a class="headerlink" href="#lid-file-format" title="Permalink to this headline">¶</a></h1>
+<p>The DRM defines an <a class="reference external" href="https://opendylan.org/books/drm/Dylan_Interchange_Format"><code class="xref drm docutils literal notranslate"><span class="pre">interchange</span> <span class="pre">format</span> <span class="pre">for</span> <span class="pre">Dylan</span> <span class="pre">source</span> <span class="pre">files</span></code></a>, but does not define an interchange format for
+Dylan libraries.  Without such an agreed format, it would be difficult to
+import and build libraries developed using another Dylan implementation.</p>
+<p>The Library Interchange Description (LID) format solves this problem. It allows
+you to describe Dylan library sources in a form that any Dylan environment
+should be able to understand.  Open Dylan adopted the LID format to make it
+easier to port applications from one environment to another.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>LID is a convention, and not an extension to the Dylan language.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Open Dylan environment can convert LID files to its own
+internal project file format, the <code class="docutils literal notranslate"><span class="pre">.hdp</span></code> file. It can also save project
+files as LID files with the <strong>File &gt; Save As</strong> command in the project
+window.</p>
+</div>
+<div class="section" id="lid-files">
+<h2>LID files<a class="headerlink" href="#lid-files" title="Permalink to this headline">¶</a></h2>
+<p>LID works by supplementing each set of library sources with a LID file.
+A <em>LID file</em> describes a Dylan library using a set of keyword
+statements. Together, these statements provide enough information to
+specify and locate the information necessary to build a library
+from its sources. This means all Dylan libraries designed for interchange
+consist of at least two files: a LID file, and one or more files
+containing the library source code.</p>
+<p>Thus a LID file performs a similar function to the <em>makefile</em> used in
+some C and C++ development environments.</p>
+<p>LID files have the file extension <code class="docutils literal notranslate"><span class="pre">.lid</span></code>.</p>
+<p>A LID file consists of a series of keyword/value statements, just like
+the Dylan <a class="reference external" href="https://opendylan.org/books/drm/Dylan_Interchange_Format"><code class="xref drm docutils literal notranslate"><span class="pre">source</span> <span class="pre">file</span> <span class="pre">interchange</span> <span class="pre">format</span></code></a>.</p>
+<p>Note that LID keywords are not case-sensitive.</p>
+</div>
+<div class="section" id="standard-lid-keywords">
+<h2>Standard LID Keywords<a class="headerlink" href="#standard-lid-keywords" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we describe the standard LID keywords.</p>
+<div class="section" id="library">
+<h3>Library:<a class="headerlink" href="#library" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Library</span><span class="o">:</span> <span class="s">*library-name*</span>
+</pre></div>
+</div>
+<p>Names the Dylan library being described. The <em>library-name</em> must be the
+name of the Dylan library that the LID file describes. This keyword is
+required in every LID file, and it may appear only once per LID file.</p>
+</div>
+<div class="section" id="files">
+<h3>Files:<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Files</span><span class="o">:</span> <span class="s">*file-designators*</span>
+</pre></div>
+</div>
+<p>Associates a set of files with the library named by the <em>Library:</em>
+keyword. This keyword can appear one or more times per LID file. Every
+file specified is considered to be associated with the library.</p>
+<p>A file designator is something that can be mapped to a concrete file
+name. Only one file designator can appear per line of the LID file. See
+<a class="reference internal" href="#file-naming-conventions">File naming conventions</a> for a description of the format of file
+designators and how they are mapped to concrete file names.</p>
+<p>The order in which the designated source files are specified with the
+<em>Files:</em> keyword in the LID file determines the initialization order
+across the files within the defined library.</p>
+<p>All the files must be specified relative to the same folder (directory) as
+the LID file.</p>
+</div>
+<div class="section" id="synopsis">
+<h3>Synopsis:<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Synopsis</span><span class="o">:</span> <span class="s">*arbitrary text*</span>
+</pre></div>
+</div>
+<p>A concise description of the library.</p>
+</div>
+<div class="section" id="keywords">
+<h3>Keywords:<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Keywords</span><span class="o">:</span> <span class="s">*comma-separated phrases*</span>
+</pre></div>
+</div>
+<p>Any number of phrases, separated by commas, that are relevant to the
+description or use of the library.</p>
+</div>
+<div class="section" id="author">
+<h3>Author:<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Author</span><span class="o">:</span> <span class="s">*arbitrary text*</span>
+</pre></div>
+</div>
+<p>The name of the library’s author.</p>
+</div>
+<div class="section" id="major-version">
+<h3>Major-Version:<a class="headerlink" href="#major-version" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Major-Version</span><span class="o">:</span> <span class="s">*number*</span>
+</pre></div>
+</div>
+<p>The current major version number of the library.</p>
+</div>
+<div class="section" id="minor-version">
+<h3>Minor-Version:<a class="headerlink" href="#minor-version" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Minor-Version</span><span class="o">:</span> <span class="s">*number*</span>
+</pre></div>
+</div>
+<p>The current minor version number of the library.</p>
+</div>
+<div class="section" id="description">
+<h3>Description:<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Description</span><span class="o">:</span> <span class="s">*arbitrary text*</span>
+</pre></div>
+</div>
+<p>A description of the library. The intention of this keyword is to
+provide a fuller, less concise description than that given by the
+<em>Synopsis:</em> keyword.</p>
+</div>
+<div class="section" id="comment">
+<h3>Comment:<a class="headerlink" href="#comment" title="Permalink to this headline">¶</a></h3>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Comment</span><span class="o">:</span> <span class="s">*arbitrary text*</span>
+</pre></div>
+</div>
+<p>Any additional comments about the library.</p>
+</div>
+</div>
+<div class="section" id="open-dylan-s-lid-extensions">
+<h2>Open Dylan’s LID extensions<a class="headerlink" href="#open-dylan-s-lid-extensions" title="Permalink to this headline">¶</a></h2>
+<p>This section contains extensions to LID that Open Dylan supports.</p>
+<div class="section" id="specifying-foreign-files-and-resource-files">
+<h3>Specifying foreign files and resource files<a class="headerlink" href="#specifying-foreign-files-and-resource-files" title="Permalink to this headline">¶</a></h3>
+<p>The following keywords allow you to specify that files of foreign source
+code and resource files are a part of the library.</p>
+<div class="section" id="c-source-files">
+<h4>C-Source-Files:<a class="headerlink" href="#c-source-files" title="Permalink to this headline">¶</a></h4>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Source-Files</span><span class="o">:</span> <span class="s">*c-source-files*</span>
+</pre></div>
+</div>
+<p>Identifies one or more C source files which are to be included as part
+of the library. Dylan environments copy these files to their build area
+and ensure that they are compiled by the appropriate batch file. The
+filenames specified must include the <code class="docutils literal notranslate"><span class="pre">.c</span></code> suffix.</p>
+</div>
+<div class="section" id="c-header-files">
+<h4>C-Header-Files:<a class="headerlink" href="#c-header-files" title="Permalink to this headline">¶</a></h4>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Header-Files</span><span class="o">:</span> <span class="s">*c-header-files*</span>
+</pre></div>
+</div>
+<p>Identifies one or more C header files included as part of the library.
+Dylan environments copy these files to their build area and ensure that
+they are compiled by the appropriate batch file. Any files specified
+using the <em>C-Source-Files:</em> or <em>RC-Files:</em> keywords depend on these
+header files in order to decide when they need to be recompiled. The
+file names given here must include the <code class="docutils literal notranslate"><span class="pre">.h</span></code> suffix.</p>
+</div>
+<div class="section" id="c-object-files">
+<h4>C-Object-Files:<a class="headerlink" href="#c-object-files" title="Permalink to this headline">¶</a></h4>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Object-Files</span><span class="o">:</span> <span class="s">*c-object-files*</span>
+</pre></div>
+</div>
+<p>Identifies one or more C object files included as part of the library.
+Dylan environments copy these files to their build area and ensure that
+they are compiled by the appropriate batch file and included in the
+final output as <code class="docutils literal notranslate"><span class="pre">.DLL</span></code> or <code class="docutils literal notranslate"><span class="pre">.EXE</span></code> files. The file names given here must
+include the <code class="docutils literal notranslate"><span class="pre">.obj</span></code> suffix on Windows or <code class="docutils literal notranslate"><span class="pre">.o</span></code> on other platforms, except
+when using this keyword in conjunction with a static library.</p>
+<p>In some situations, a static library needs to be copied into the build area
+and linked into the project. This is typically when writing a binding for
+an external library written in C. In this situation, the <code class="docutils literal notranslate"><span class="pre">C-Object-Files</span></code>
+keyword may be useful.</p>
+</div>
+<div class="section" id="rc-files">
+<h4>RC-Files:<a class="headerlink" href="#rc-files" title="Permalink to this headline">¶</a></h4>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">RC-Files</span><span class="o">:</span> <span class="s">*resource-files*</span>
+</pre></div>
+</div>
+<p>Identifies one or more resource files to be included as part of the
+library. Dylan environments copy these files to their build area and
+ensure that they are compiled by the appropriate batch file. The
+resulting resource object files are included in the <code class="docutils literal notranslate"><span class="pre">.DLL</span></code> or <code class="docutils literal notranslate"><span class="pre">.EXE</span></code>
+built for the library. The file names given here must include the <code class="docutils literal notranslate"><span class="pre">.rc</span></code>
+suffix.</p>
+</div>
+<div class="section" id="c-libraries">
+<span id="lid-c-libraries"></span><h4>C-Libraries:<a class="headerlink" href="#c-libraries" title="Permalink to this headline">¶</a></h4>
+<p>LID file keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Libraries</span><span class="o">:</span> <span class="s">*c-lib-files*</span>
+</pre></div>
+</div>
+<p>Identifies one or more C libraries to be included in the link phase when
+building the binary for the library. Paths to search for libraries can also be
+added with this keyword. Arbitrary linker options cannot be specified using
+this keyword.</p>
+<p>On Windows, the value for this keyword is passed directly to the linker.
+However, on Unix and macOS, the requirements are a bit more stringent
+and the arguments should be passed one per line and be one of the following:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">-L</span> <span class="pre">path</span></code>:</dt><dd><p>Add <em>path</em> to the search path for shared libraries.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-llibrary</span></code>:</dt><dd><p>Link against the specified shared library. This should be either in the
+regular linker search path or have a path specified via a <code class="docutils literal notranslate"><span class="pre">-L</span></code> flag.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">library.a</span></code>:</dt><dd><p>Link against the specified static library.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This may cause a problem if you are using this to link a static
+library that hasn’t been built with <code class="docutils literal notranslate"><span class="pre">-fPIC</span></code> into a shared library.</p>
+<p>In general, you don’t want to use this keyword to link a static library
+into a shared library since this keyword propagates to dependent libraries
+as discussed below.</p>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-F</span> <span class="pre">path</span></code>:</dt><dd><p>Add <em>path</em> to the search path for frameworks. <strong>(macOS only)</strong></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-framework</span> <span class="pre">framework</span></code>:</dt><dd><p>Link against the specified shared library. This should be either in the
+regular linker search path or have a path specified via a <code class="docutils literal notranslate"><span class="pre">-F</span></code> flag.
+<strong>(macOS only)</strong></p>
+</dd>
+</dl>
+<p>Unlike the other keywords described in this section, the <em>C-Libraries:</em>
+keyword propagates to dependent libraries. For example, suppose library
+A uses library B, and the LID file for library B specifies</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Libraries</span><span class="o">:</span> <span class="s">foo.lib</span>
+</pre></div>
+</div>
+<p>In this case, both library A and library B are linked against <em>foo.lib</em>.</p>
+</div>
+</div>
+<div class="section" id="specifying-compilation-details">
+<h3>Specifying compilation details<a class="headerlink" href="#specifying-compilation-details" title="Permalink to this headline">¶</a></h3>
+<p>The following keywords control aspects of compilation for the library.</p>
+<div class="section" id="lid">
+<h4>LID:<a class="headerlink" href="#lid" title="Permalink to this headline">¶</a></h4>
+<p>LID keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">LID</span><span class="o">:</span> <span class="s">*file-name.lid*</span>
+</pre></div>
+</div>
+<p>Specifies the name of a LID file to process and includes the settings
+contained in that file into the current LID file.</p>
+<p>This is commonly used to share definitions and settings between platform- or
+OS-specific LID files.</p>
+</div>
+<div class="section" id="jam-includes">
+<span id="lid-jam-includes"></span><h4>Jam-Includes:<a class="headerlink" href="#jam-includes" title="Permalink to this headline">¶</a></h4>
+<p>LID keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Jam-Includes</span><span class="o">:</span> <span class="s">*file-name.jam*</span>
+</pre></div>
+</div>
+<p>Specifies the name of a JAM file to process. This is typically used
+when integrating with a third party library and needing custom flags
+for the C compiler or linker.</p>
+<p>An example JAM (for a library, not an executable) file might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs gtk+-3.0` ;
+  CCFLAGS += `pkg-config --cflags gtk+-3.0` ;
+}
+</pre></div>
+</div>
+<p>The use of backticks <code class="docutils literal notranslate"><span class="pre">`...`</span></code> will execute the command enclosed
+within and return the output of that command.</p>
+</div>
+<div class="section" id="target-type">
+<h4>Target-Type:<a class="headerlink" href="#target-type" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Target-Type</span><span class="o">:</span> <span class="s">*dll or executable*</span>
+</pre></div>
+</div>
+<p>Specifies whether to generate a shared library (a.k.a, dynamic-link library) or
+an executable binary. Possible values are <code class="docutils literal notranslate"><span class="pre">dll</span></code> or <code class="docutils literal notranslate"><span class="pre">executable</span></code>.</p>
+<p>If no target type is specified, Open Dylan builds an executable when the
+library is specified directly on the compiler command line, or a shared library
+if the library is only pulled in as a dependency.</p>
+</div>
+<div class="section" id="executable">
+<h4>Executable:<a class="headerlink" href="#executable" title="Permalink to this headline">¶</a></h4>
+<p>LID keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Executable</span><span class="o">:</span> <span class="s">*name*</span>
+</pre></div>
+</div>
+<p>Specifies the name of the binary (that is, shared library or executable) file
+to be generated for this library.</p>
+<p>The suffix (<em>.DLL</em>, <em>.EXE</em>, <em>.so</em>) should not be included in the <em>name</em> since
+the appropriate suffix is determined based on the platform.</p>
+<p>If this keyword is not specified, the compiler generates a default name
+for the executable from the name of the library. With some library
+names, particularly when you are building a DLL, you may need to specify
+this keyword to override the default name and avoid conflicts with other
+DLLs from a third party.</p>
+</div>
+<div class="section" id="base-address">
+<h4>Base-Address:<a class="headerlink" href="#base-address" title="Permalink to this headline">¶</a></h4>
+<p>LID keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Base-Address</span><span class="o">:</span> <span class="s">*address*</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This keyword is only used on Windows and is ignored on other
+platforms.</p>
+</div>
+<p>Specifies the base address of the DLL built from this Dylan library. The
+<em>address</em> must be a hexadecimal value. For convenience, you can use
+either Dylan (<code class="docutils literal notranslate"><span class="pre">#xNNNNNNNN</span></code>) or C (<code class="docutils literal notranslate"><span class="pre">0xNNNNNNNN</span></code>) notations when
+specifying the address.</p>
+<p>This base address is ignored when building a <code class="docutils literal notranslate"><span class="pre">.EXE</span></code> file.</p>
+<p>If this keyword is not specified, the compiler will compute a default
+base address for the library. However, it is possible for more than one
+library to end up with the same default base address. If an application
+uses any of these libraries, all but one of them will have to be
+relocated when the application starts. This process is automatic, but
+cuts down on the amount of sharing, increases your application’s memory
+footprint, and slows down load time. In such circumstances, you may want
+to give one or more libraries an explicit base address using this
+keyword.</p>
+</div>
+<div class="section" id="linker-options">
+<h4>Linker-Options:<a class="headerlink" href="#linker-options" title="Permalink to this headline">¶</a></h4>
+<p>LID keyword</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Linker-Options</span><span class="o">:</span> <span class="s">*options*</span>
+</pre></div>
+</div>
+<p>Specifies additional options and libraries to be passed to the linker
+when building this binary. Unlike the <em>C-Libraries:</em> keyword, the
+options and libraries specified here apply only to this Dylan library;
+they are not propagated to any libraries which use this library.</p>
+</div>
+</div>
+</div>
+<div class="section" id="file-naming-conventions">
+<h2>File naming conventions<a class="headerlink" href="#file-naming-conventions" title="Permalink to this headline">¶</a></h2>
+<p>In practice, importing a source distribution into a Dylan program
+involves unpacking the source distribution into its own subtree and then
+informing the environment of the location of the tree root. The
+environment then walks the entire subtree locating LID files, which
+describe the libraries in the distribution by giving a name to, and
+designating the source files associated with, each library.</p>
+<p>Importing a Dylan program into the environment in this way requires two
+things:</p>
+<ol class="arabic simple">
+<li><p>That the LID files in the distribution can be identified.</p></li>
+<li><p>That the file designators supplied to the <em>Files:</em> keyword in LID files
+can be mapped to the corresponding source filenames on disk.</p></li>
+</ol>
+<p>If you are importing files from a platform that does not insist on, or
+conventionally use, standard filename suffixes to identify the filetype
+(such as MacOS), then you must rename your source files as follows:</p>
+<ul class="simple">
+<li><p>LID files must be given filenames with the suffix <code class="docutils literal notranslate"><span class="pre">.lid</span></code>.</p></li>
+<li><p>Dylan source files must be given filenames with the suffix <code class="docutils literal notranslate"><span class="pre">.dylan</span></code>.</p></li>
+</ul>
+<p>The file designators that appear in LID files may be a string of
+characters of any length, constructed from the set of hyphen,
+underscore, and the mixed-case alphanumeric characters. Note that you do
+not have to specify the source filename suffix as part of the filename
+designator. This ensures that the LID files themselves do not need to be
+edited when importing source code from a platform, such as MacOS, that
+does not insist on particular filename suffixes to specify the file
+type.</p>
+<p>The name of a LID file is not significant, and in particular need not be
+the same as the library name. Hierarchical directory structure can be
+used to organize multi-library systems as long as the files directly
+associated with each library are in a single directory.</p>
+</div>
+<div class="section" id="application-example">
+<h2>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h2>
+<p>This section contains an example of a complete Dylan application that
+uses a generic factorial calculation routine to return the value of the
+factorial of 100. Two libraries are defined: the <em>factorial</em> library
+provides an implementation of the generic factorial routine, and the
+<em>factorial-application</em> library provides a method that calls the generic
+routine and returns the appropriate result.</p>
+<p>File: <em>fact.lid</em>. LID file describing the components of the <em>factorial</em>
+library.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Library</span><span class="o">:</span> <span class="s">factorial</span>
+<span class="na">Synopsis</span><span class="o">:</span> <span class="s">Provides a naive implementation of the factorial</span>
+<span class="s">          function</span>
+<span class="na">Keywords</span><span class="o">:</span> <span class="s">factorial, integer, simple, recursive</span>
+<span class="na">Files</span><span class="o">:</span> <span class="s">library</span>
+<span class="s">       fact</span>
+</pre></div>
+</div>
+<p>File: <em>library.dylan</em>. Defines the <em>factorial</em> library and its one
+module.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span> <span class="s">dylan-user</span>
+
+<span class="k">define</span> <span class="nb">library</span> <span class="n">factorial</span>
+  <span class="k">use</span> <span class="n">dylan</span><span class="p">;</span>
+  <span class="k">export</span> <span class="n">factorial</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">module</span> <span class="n">factorial</span>
+  <span class="k">export</span> <span class="n">fact</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>File: <em>fact.dylan</em>. Defines the method for calculating a factorial.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span> <span class="s">factorial</span>
+
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">fact</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="mi">1</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+  <span class="n">n</span> <span class="o">*</span> <span class="n">fact</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>File: <em>app.lid</em>. LID file describing the components of the
+<em>factorial-application</em> library.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Library</span><span class="o">:</span> <span class="s">factorial-application</span>
+<span class="na">Synopsis</span><span class="o">:</span> <span class="s">Computes factorial 100</span>
+<span class="na">Files</span><span class="o">:</span> <span class="s">library</span>
+<span class="s">       app</span>
+<span class="na">Start-Module</span><span class="o">:</span> <span class="s">factorial-application</span>
+<span class="na">Start-Function</span><span class="o">:</span> <span class="s">main</span>
+</pre></div>
+</div>
+<p>File: <em>library.dylan</em>. Defines the <em>factorial-application</em> library and its
+one module.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span> <span class="s">dylan-user</span>
+
+<span class="k">define</span> <span class="nb">library</span> <span class="n">factorial-application</span>
+  <span class="k">use</span> <span class="n">dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">factorial</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">library</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">module</span> <span class="n">factorial-application</span>
+  <span class="k">use</span> <span class="n">dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">factorial</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">module</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>File: <em>app.dylan</em>. Defines a routine that calls the factorial routine.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span> <span class="s">factorial-application</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">(</span><span class="k">#rest</span> <span class="n">ignore</span><span class="p">)</span>
+  <span class="n">fact</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The following example demonstrates how files of foreign source code and
+resource files can be integrated into a Dylan library:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Library</span><span class="o">:</span> <span class="s">app-with-foreign-code</span>
+<span class="na">Synopsis</span><span class="o">:</span> <span class="s">Uses some C code and resources</span>
+<span class="na">Files</span><span class="o">:</span> <span class="s">dylan-code</span>
+<span class="na">C-Source-Files</span><span class="o">:</span> <span class="s">first.c</span>
+<span class="s">  second.c</span>
+<span class="na">C-Header-Files</span><span class="o">:</span> <span class="s">headers.h</span>
+<span class="na">RC-Files</span><span class="o">:</span> <span class="s">extra-resources.rc</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="language-extensions/string-literals.html" class="btn btn-neutral float-left" title="String Literal Syntax" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="c-ffi/index.html" class="btn btn-neutral float-right" title="The c-ffi Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
