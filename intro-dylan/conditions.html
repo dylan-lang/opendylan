@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conditions &mdash; An Introduction to Dylan</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Copyright" href="copyright.html" />
+    <link rel="prev" title="Modules &amp; Libraries" href="modules-libraries.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            An Introduction to Dylan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Conditions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#signaling">Signaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handlers">Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recovery">Recovery</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#returning-from-signal">Returning from <code class="docutils literal notranslate"><span class="pre">signal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restart-handlers">Restart handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#blocks">Blocks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#blocks-and-conditions">Blocks and conditions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">An Introduction to Dylan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Conditions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/conditions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="conditions">
+<h1>Conditions<a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h1>
+<p>Dylan offers sophisticated exception handling, allowing programs
+to recover smoothly from error conditions. Like C++, Dylan represents
+errors with objects. Dylan also supports advisory warnings and
+potentially correctable errors.</p>
+<p>When something unusual happens, a program can <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> a
+<a class="reference external" href="https://opendylan.org/books/drm/Signalers_Conditions_and_Handlers"><code class="xref drm docutils literal notranslate"><span class="pre">condition</span></code></a>. <a class="reference external" href="https://opendylan.org/books/drm/Signalers_Conditions_and_Handlers"><code class="xref drm docutils literal notranslate"><span class="pre">Handlers</span></code></a> specify how to react to various
+sorts of conditions.</p>
+<div class="section" id="signaling">
+<h2>Signaling<a class="headerlink" href="#signaling" title="Permalink to this headline">¶</a></h2>
+<p>Unlike the exceptions of C++ or Java, signaling a condition does <em>not</em> itself
+cause the current function or block to exit. Instead, calling the <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a>
+function is just like calling any other function. The <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function just
+locates an appropriate handler and calls it normally.</p>
+<p>One consequence of this is that a handler can signal another condition in a very
+straightforward manner. For example, imagine a program that searches for a
+person by name, and if it cannot find one, it searches for a pet by the same
+name, and if it cannot find the pet either, it breaks into the debugger. Given
+an unknown name, you might see the following backtrace:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">break({condition</span> <span class="pre">&lt;key-not-found-error&gt;:</span> <span class="pre">&quot;Toby&quot;})</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handle-no-pet-found({condition</span> <span class="pre">&lt;key-not-found-error&gt;:</span> <span class="pre">&quot;Toby&quot;})</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">signal({condition</span> <span class="pre">&lt;key-not-found-error&gt;:</span> <span class="pre">&quot;Toby&quot;})</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">element(*pets*,</span> <span class="pre">&quot;Toby&quot;)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find-pet(&quot;Toby&quot;)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handle-no-person-found({condition</span> <span class="pre">&lt;key-not-found-error&gt;:</span> <span class="pre">&quot;Toby&quot;})</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">signal({condition</span> <span class="pre">&lt;key-not-found-error&gt;:</span> <span class="pre">&quot;Toby&quot;})</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">element(*people*,</span> <span class="pre">&quot;Toby&quot;)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find-person-or-pet(&quot;Toby&quot;)</span></code></p></li>
+</ol>
+<p>Here you can see that each failure signals a new condition, but the program never
+backs out of a function call; it just keeps going, leaving the history of
+conditions for you to examine.</p>
+</div>
+<div class="section" id="handlers">
+<h2>Handlers<a class="headerlink" href="#handlers" title="Permalink to this headline">¶</a></h2>
+<p>A function establishes a handler with the <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let_handler"><code class="xref drm docutils literal notranslate"><span class="pre">let</span> <span class="pre">handler</span></code></a>
+statement. The handler remains in effect until the function exits. Other
+functions called by the first can establish new handlers. When the
+<a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function looks for a handler, it looks for the most recently
+established handler that fits the condition.</p>
+<p>In the example above, there are two handlers: <code class="docutils literal notranslate"><span class="pre">handle-no-person-found</span></code> and
+<code class="docutils literal notranslate"><span class="pre">handle-no-pet-found</span></code>. Both handlers are for the <code class="docutils literal notranslate"><span class="pre">&lt;key-not-found-error&gt;</span></code>
+condition. Let us assume that the <code class="docutils literal notranslate"><span class="pre">find-person-or-pet</span></code> function established
+the <code class="docutils literal notranslate"><span class="pre">handle-no-person-found</span></code> handler and that the <code class="docutils literal notranslate"><span class="pre">find-pet</span></code> function
+established the <code class="docutils literal notranslate"><span class="pre">handle-no-pet-found</span></code> handler. Since <code class="docutils literal notranslate"><span class="pre">handle-no-pet-found</span></code>
+was established later, it was the one chosen and called by <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> in frame
+3.</p>
+<p>The code to establish the handlers may have looked like this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="nb">handler</span> <span class="nc">&lt;key-not-found-error&gt;</span> <span class="o">=</span> <span class="n">handle-no-pet-found</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A handler can be a normal function, but it can also be a local method or bare
+method, complete with access to local variables.</p>
+</div>
+<div class="section" id="recovery">
+<h2>Recovery<a class="headerlink" href="#recovery" title="Permalink to this headline">¶</a></h2>
+<p>Dylan’s condition system allows it to offer a couple of useful error recovery
+techniques.</p>
+<div class="section" id="returning-from-signal">
+<h3>Returning from <code class="docutils literal notranslate"><span class="pre">signal</span></code><a class="headerlink" href="#returning-from-signal" title="Permalink to this headline">¶</a></h3>
+<p>Because a <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> call is just like any other function call, it can return
+values. It returns whatever values the handler function returns. In the above
+example, <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> never returns because we break into the debugger, and the
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#element"><code class="xref drm docutils literal notranslate"><span class="pre">element</span></code></a> function wouldn’t do anything with the value if it did return, but
+your own code could call <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> and handle any return values appropriately.</p>
+<p>This technique allows you to use conditions as a sort of callback. You can
+establish a condition handler that returns a rarely-needed value, and another
+deeply nested function could retrieve that value if needed by signaling that
+condition and then taking the return value of the <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function.</p>
+</div>
+<div class="section" id="restart-handlers">
+<h3>Restart handlers<a class="headerlink" href="#restart-handlers" title="Permalink to this headline">¶</a></h3>
+<p>You can recover from a problem by returning a fall-back value from the
+<a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function, but that technique has limitations. It does not provide
+much encapsulation or allow for complicated recovery information, and the
+recovery information has to be processed locally.</p>
+<p>Another way to return recovery information is through the use of a
+<a class="reference external" href="https://opendylan.org/books/drm/Exception_Handling#IX-941"><code class="xref drm docutils literal notranslate"><span class="pre">restart</span></code></a>. A restart is a condition that includes recovery information.
+But unlike most conditions, this condition provides a solution instead of
+indicating a problem. A restart handler — which may be established anywhere
+useful — can use the information included in the restart to work around the
+problem.</p>
+<p>For example, if the <code class="docutils literal notranslate"><span class="pre">find-pet</span></code> function above does not succeed, the
+<code class="docutils literal notranslate"><span class="pre">handle-no-pet-found</span></code> function could create a new goldfish object and signal a
+<code class="docutils literal notranslate"><span class="pre">&lt;possible-new-pet&gt;</span></code> restart, returning the goldfish. The callers of
+<code class="docutils literal notranslate"><span class="pre">find-pet</span></code> would establish a handler for that restart. The restart handler
+established by the <code class="docutils literal notranslate"><span class="pre">find-person-or-pet</span></code> function would probably ignore the
+goldfish and signal a different condition instead, but other callers may
+establish different restart handlers with the appropriate behavior.</p>
+<p>Regardless, when the restart handler finishes, it returns, and then its caller
+returns, and so on until the original <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function returns, at which
+point the program resumes work where it left off. You cannot use restart
+handlers or conditions to escape the program’s normal flow of control. For that,
+Dylan offers blocks.</p>
+</div>
+</div>
+<div class="section" id="blocks">
+<h2>Blocks<a class="headerlink" href="#blocks" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> is a group of statements. As with
+other control structures, it may return a value. A simple block
+might appear as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span> <span class="p">()</span>
+  <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">end</span>
+<span class="c1">// =&gt; 2</span>
+</pre></div>
+</div>
+<p>But in addition to returning a value normally, a <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> can use a <a class="reference external" href="https://opendylan.org/books/drm/Nonlocal_Exits_and_Cleanup_Clauses#IX-469"><code class="xref drm docutils literal notranslate"><span class="pre">nonlocal</span>
+<span class="pre">exit</span></code></a>. This allows the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> to exit at any time, optionally returning a value.
+In some ways it is similar to the C++ <code class="docutils literal notranslate"><span class="pre">goto</span></code> statement, the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement,
+or the POSIX <code class="docutils literal notranslate"><span class="pre">longjmp</span></code> function. To use a nonlocal exit,
+specify a name in the parentheses following a <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> statement. Dylan
+binds this name to an <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#IX-2064"><code class="xref drm docutils literal notranslate"><span class="pre">exit</span> <span class="pre">variable</span></code></a> which can be
+called from anywhere within the block or the functions it calls. The
+following block returns either <code class="docutils literal notranslate"><span class="pre">&quot;Weird!&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;All's</span> <span class="pre">well.&quot;</span></code>,
+depending on the color of the sky.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span> <span class="p">(</span><span class="n">finished</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">sky-is-green</span><span class="p">())</span>
+    <span class="n">finished</span><span class="p">(</span><span class="s">&quot;Weird!&quot;</span><span class="p">);</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="s">&quot;All&#39;s well.&quot;</span>
+<span class="k">end</span> <span class="nb">block</span>
+</pre></div>
+</div>
+<p>Many programs need to dispose of resources or perform other cleanup work when
+exiting a block. The block may contain optional <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">afterwards</span></code></a> and <code class="docutils literal notranslate"><span class="pre">cleanup</span></code>
+clauses. Neither affects the block’s return value. The <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">afterwards</span></code></a> clause
+executes if the block ends normally without using its nonlocal exit, and the
+<code class="docutils literal notranslate"><span class="pre">cleanup</span></code> clause executes when the block ends whether it ends normally or via
+nonlocal exit.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open-input-file</span><span class="p">();</span>
+<span class="nb">block</span> <span class="p">(</span><span class="n">return</span><span class="p">)</span>
+  <span class="k">let</span> <span class="p">(</span><span class="n">errorcode</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">=</span> <span class="n">read-data</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">errorcode</span><span class="p">)</span>
+    <span class="n">return</span><span class="p">(</span><span class="n">errorcode</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+  <span class="n">process-data</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="k">afterwards</span>
+  <span class="n">report-success</span><span class="p">();</span>
+<span class="k">cleanup</span>
+  <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="blocks-and-conditions">
+<h3>Blocks and conditions<a class="headerlink" href="#blocks-and-conditions" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">afterwards</span></code></a> and <code class="docutils literal notranslate"><span class="pre">cleanup</span></code> clauses, a block may also
+contain any number of <code class="docutils literal notranslate"><span class="pre">exception</span></code> clauses. The exception clauses establish handlers for
+a condition much like the <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let_handler"><code class="xref drm docutils literal notranslate"><span class="pre">let</span> <span class="pre">handler</span></code></a> statement, but before they run the
+handler calls the block’s exit procedure and takes a nonlocal exit. In other
+words, it takes a short cut out of the normal flow of control. The <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a>
+function that signaled the condition never returns to its caller. Instead, the
+program resumes execution after the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a>.</p>
+<p>The end result is similar to the <code class="docutils literal notranslate"><span class="pre">try...catch...finally</span></code> statements of C++ or
+Java:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open-input-file</span><span class="p">();</span>
+<span class="nb">block</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">data</span> <span class="o">=</span> <span class="n">read-data</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+  <span class="n">process-data</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="k">cleanup</span>
+  <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="nb">exception</span> <span class="p">(</span><span class="nb">error</span> <span class="p">::</span> <span class="nc">&lt;file-error&gt;</span><span class="p">)</span>
+  <span class="n">report-problem</span><span class="p">(</span><span class="nb">error</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can use a block with a restart to abort some work entirely and fall back to
+the data supplied by the restart object, neatly circumventing the problem mentioned
+at the end of the <a class="reference internal" href="#restart-handlers">Restart handlers</a> section above:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open-input-file</span><span class="p">();</span>
+<span class="nb">block</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">data</span> <span class="o">=</span> <span class="n">read-data</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+  <span class="n">process-data</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="k">cleanup</span>
+  <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="nb">exception</span> <span class="p">(</span><span class="n">restart</span> <span class="p">::</span> <span class="nc">&lt;fallback-data-restart&gt;</span><span class="p">)</span>
+  <span class="n">process-data</span><span class="p">(</span><span class="n">restart</span><span class="p">.</span><span class="n">fallback-data</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules-libraries.html" class="btn btn-neutral float-left" title="Modules &amp; Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="copyright.html" class="btn btn-neutral float-right" title="Copyright" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

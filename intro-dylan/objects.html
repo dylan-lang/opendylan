@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Objects &mdash; An Introduction to Dylan</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Multiple Dispatch" href="multiple-dispatch.html" />
+    <link rel="prev" title="Methods &amp; Generic Functions" href="methods-generic-functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            An Introduction to Dylan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-classes">Built-In Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getters-and-setters">Getters and Setters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-functions-and-objects">Generic Functions and Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initializers">Initializers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#abstract-classes-and-overriding-make">Abstract Classes and Overriding Make</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditions.html">Conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">An Introduction to Dylan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Objects</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/objects.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="objects">
+<h1>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h1>
+<p>The features of Dylan’s object system don’t map directly onto the
+features found in C++. Dylan handles access control using
+<a class="reference external" href="https://opendylan.org/books/drm/Modules"><code class="xref drm docutils literal notranslate"><span class="pre">modules</span></code></a>, not <code class="docutils literal notranslate"><span class="pre">private</span></code> declarations within
+individual classes. Standard Dylan has no destructors, but instead relies
+upon the garbage collector to recover memory and on <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a>/cleanup
+to recover lexically scoped resources. Dylan objects don’t even have real
+member functions.</p>
+<p>Dylan’s object system is at least as powerful as that of C++. Multiple
+inheritance works smoothly, constructors are rarely needed and there’s
+no such thing as object slicing. Alternative constructs replace the
+missing C++ features. Quick and dirty classes can be turned into clean
+classes with little editing of existing code.</p>
+<p>Before starting, temporarily set aside any low-level expertise in
+C++. Dylan differs enough that such knowledge can actually interfere
+with the initial learning process.</p>
+<div class="section" id="built-in-classes">
+<h2>Built-In Classes<a class="headerlink" href="#built-in-classes" title="Permalink to this headline">¶</a></h2>
+<p>Dylan has a large variety of built-in classes. Several of these
+represent primitive data types, such as <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>
+and <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a>. A few represent
+actual language-level entities, such as <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a>
+and <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. Most of the others
+implement collection classes, similar to those found in C++’s
+Standard Template Library. A few of the most important classes are
+shown here:</p>
+<table class="table-striped docutils align-default" id="id1">
+<caption><span class="caption-text">Several Standard Dylan Classes</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Primitive Types</p></th>
+<th class="head"><p>Collections</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#pair"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a></p></td>
+<td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#deque"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;deque&gt;</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>The built-in collection classes include a number of common data
+structures. Arrays, tables, vectors, ranges and deques should be
+provided by all Dylan implementations. The language specification
+also standardizes strings and byte-strings.</p>
+<p>Not all the built-in classes may be subclassed. This allows the
+compiler to heavily optimize code dealing with basic numeric types and
+certain common collections. The programmer may also mark classes as
+<a class="reference external" href="https://opendylan.org/books/drm/Sealing"><code class="xref drm docutils literal notranslate"><span class="pre">sealed</span></code></a>, restricting how and where they may be subclassed.</p>
+</div>
+<div class="section" id="slots">
+<h2>Slots<a class="headerlink" href="#slots" title="Permalink to this headline">¶</a></h2>
+<p>Objects have <a class="reference external" href="https://opendylan.org/books/drm/Slots"><code class="xref drm docutils literal notranslate"><span class="pre">slots</span></code></a>, which resemble data
+members in C++ or fields in Java. Like
+variables, slots are bound to values; they don’t actually contain
+their data. A simple Dylan class shows how slots are declared:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;vehicle&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">serial-number</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">owner</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The above code would be quick and convenient to write while building a
+prototype, but it could be improved. The slots have no declared types
+so they default to <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>, and they don’t specify default values
+so they default to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.  The following snippet fixes both problems:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;vehicle&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">serial-number</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">sn:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">owner</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">owner:</span><span class="p">,</span>  <span class="c1">// optional</span>
+    <span class="k">init-value:</span> <span class="s">&quot;Northern Motors&quot;</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;vehicle&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The type declarations work just like type declarations anywhere
+else in Dylan; they limit a binding to objects of a given class or of
+one of its subclasses, and they let the compiler optimize. The new
+keywords describe how the slots get their initial values. (The keyword
+<code class="docutils literal notranslate"><span class="pre">init-function</span></code> may also be used; it must be followed
+by a function with no arguments and the appropriate return type.)</p>
+<p>To create a vehicle object using the new class declaration, a
+programmer could write one of the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">sn:</span> <span class="mi">1000000</span><span class="p">)</span>
+<span class="nb">make</span><span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">sn:</span> <span class="mi">2000000</span><span class="p">,</span> <span class="k">owner:</span> <span class="s">&quot;Sal&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the first example, <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> returns a vehicle
+with the specified serial number and the default owner. In the second
+example, <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> sets both slots using the keyword
+arguments.</p>
+<p>Only one of <code class="docutils literal notranslate"><span class="pre">required-init-keyword</span></code>, <code class="docutils literal notranslate"><span class="pre">init-value</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">init-function</span></code> may be specified. However, <code class="docutils literal notranslate"><span class="pre">init-keyword</span></code>
+may be paired with either of the latter two if desired. More
+than one slot may be initialized by a given keyword.</p>
+<p>Dylan also provides for the equivalent of C++ <code class="docutils literal notranslate"><span class="pre">static</span></code>
+members, plus several other useful allocation schemes. See
+the <a class="reference external" href="https://opendylan.org/books/drm/">DRM</a> for the full details.</p>
+</div>
+<div class="section" id="getters-and-setters">
+<h2>Getters and Setters<a class="headerlink" href="#getters-and-setters" title="Permalink to this headline">¶</a></h2>
+<p>An object’s slots are accessed using two functions: a getter and
+a setter. By default, the getter function has the same name as the
+slot, and the setter function appends “<code class="docutils literal notranslate"><span class="pre">-setter</span></code>”.
+These functions may be invoked as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">owner</span><span class="p">(</span><span class="n">sample-vehicle</span><span class="p">);</span>  <span class="c1">// returns owner</span>
+<span class="n">owner-setter</span><span class="p">(</span><span class="s">&quot;Faisal&quot;</span><span class="p">,</span> <span class="n">sample-vehicle</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Dylan also provides some convenient “syntactic sugar”
+for these two functions. They may also be written as:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">sample-vehicle</span><span class="p">.</span><span class="n">owner</span><span class="p">;</span>  <span class="c1">// returns owner</span>
+<span class="n">sample-vehicle</span><span class="p">.</span><span class="n">owner</span> <span class="o">:=</span> <span class="s">&quot;Faisal&quot;</span><span class="p">;</span>
+<span class="n">owner</span><span class="p">(</span><span class="n">sample-vehicle</span><span class="p">)</span> <span class="o">:=</span> <span class="s">&quot;Faisal&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generic-functions-and-objects">
+<span id="generic-functions-objects"></span><h2>Generic Functions and Objects<a class="headerlink" href="#generic-functions-and-objects" title="Permalink to this headline">¶</a></h2>
+<p>Generic functions, introduced in <a class="reference internal" href="methods-generic-functions.html"><span class="doc">Methods and Generic functions</span></a>, provide the equivalent of C++ member
+functions. In the simplest case, just declare a generic function which
+dispatches on the first parameter.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">generic</span> <span class="n">tax</span> <span class="p">(</span><span class="n">v</span> <span class="p">::</span> <span class="nc">&lt;vehicle&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">tax-in-dollars</span> <span class="p">::</span> <span class="nc">&lt;float&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">tax</span> <span class="p">(</span><span class="n">v</span> <span class="p">::</span> <span class="nc">&lt;vehicle&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">tax-in-dollars</span> <span class="p">::</span> <span class="nc">&lt;float&gt;</span><span class="p">)</span>
+  <span class="mf">100.00</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="c1">//=== Two new subclasses of vehicle</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;car&gt;</span> <span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;truck&gt;</span> <span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">capacity</span><span class="p">,</span> <span class="k">required-init-keyword:</span> <span class="k">tons:</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="c1">//=== Two new &quot;tax&quot; methods</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">tax</span> <span class="p">(</span><span class="n">c</span> <span class="p">::</span> <span class="nc">&lt;car&gt;</span> <span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">tax-in-dollars</span> <span class="p">::</span> <span class="nc">&lt;float&gt;</span><span class="p">)</span>
+  <span class="mf">50.00</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">tax</span> <span class="p">(</span><span class="n">t</span> <span class="p">::</span> <span class="nc">&lt;truck&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">tax-in-dollars</span> <span class="p">::</span> <span class="nc">&lt;float&gt;</span><span class="p">)</span>
+  <span class="c1">// standard vehicle tax plus $10/ton</span>
+  <span class="nb">next-method</span><span class="p">()</span> <span class="o">+</span> <span class="n">t</span><span class="p">.</span><span class="n">capacity</span> <span class="o">*</span> <span class="mf">10.00</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">tax</span></code> could be invoked as
+<code class="docutils literal notranslate"><span class="pre">tax(v)</span></code> or <code class="docutils literal notranslate"><span class="pre">v.tax</span></code>, because it
+only has one argument. Generic functions with two or more arguments
+must be invoked in the usual Dylan fashion; no syntactic sugar exists
+to make them look like C++ member functions.</p>
+<p>The version of tax for <code class="docutils literal notranslate"><span class="pre">&lt;truck&gt;</span></code> objects
+calls a special function named <a class="reference external" href="https://opendylan.org/books/drm/Method_Dispatch#HEADING-50-32"><code class="xref drm docutils literal notranslate"><span class="pre">next-method</span></code></a>. This
+function invokes the next most specific method of a generic function;
+in this case, the method for <code class="docutils literal notranslate"><span class="pre">&lt;vehicle&gt;</span></code>
+objects.  Parameters to the current method get passed along
+automatically.</p>
+<p>Technically, <code class="docutils literal notranslate"><span class="pre">next-method</span></code> is a special parameter to a method, and
+may be passed explicitly using <code class="docutils literal notranslate"><span class="pre">#next</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">tax</span>
+    <span class="p">(</span><span class="n">t</span> <span class="p">::</span> <span class="nc">&lt;truck&gt;</span><span class="p">,</span> <span class="k">#next</span> <span class="nb">next-method</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">tax-in-dollars</span> <span class="p">::</span> <span class="nc">&lt;float&gt;</span><span class="p">)</span>
+  <span class="c1">// standard vehicle tax plus $10/ton</span>
+  <span class="nb">next-method</span><span class="p">()</span> <span class="o">+</span> <span class="n">t</span><span class="p">.</span><span class="n">capacity</span> <span class="o">*</span> <span class="mf">10.00</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Dylan’s separation of classes and generic functions provides some
+interesting design ideas. Classes no longer need to “contain”
+their member functions; it’s possible to write a new generic
+function without touching the class definition. For example, a module
+handling traffic simulations and one handling municipal taxes could
+each have many generic functions involving vehicles, but both could
+use the same vehicle class.</p>
+<p>Slots in Dylan may also be replaced by programmer-defined accessor
+functions, all without modifying existing clients of the class. The
+DRM describes numerous ways to accomplish the change; several should
+be apparent from the preceding discussion. This flexibility frees
+programmers from creating functions like <code class="docutils literal notranslate"><span class="pre">GetOwnerName</span></code> and
+<code class="docutils literal notranslate"><span class="pre">SetOwnerName</span></code>, not to mention the corresponding private member
+variables and constructor code.</p>
+<p>For even more creative uses of generic functions and the Dylan object
+model, see the chapter on <a class="reference internal" href="multiple-dispatch.html"><span class="doc">Multiple Dispatch</span></a>.</p>
+</div>
+<div class="section" id="initializers">
+<h2>Initializers<a class="headerlink" href="#initializers" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> function handles much of the
+drudgery of object construction. It processes keywords and initializes
+slots. Programmers may, however, customize this process by adding
+methods to the generic function <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#initialize"><code class="xref drm docutils literal notranslate"><span class="pre">initialize</span></code></a>. For
+example, if vehicle serial numbers must be at least seven digits:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">initialize</span> <span class="p">(</span><span class="n">v</span> <span class="p">::</span> <span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">#key</span><span class="p">)</span>
+  <span class="nb">next-method</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">serial-number</span> <span class="o">&lt;</span> <span class="mi">1000000</span><span class="p">)</span>
+    <span class="nb">error</span><span class="p">(</span><span class="s">&quot;Bad serial number!&quot;</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#initialize"><code class="xref drm docutils literal notranslate"><span class="pre">initialize</span></code></a> methods are called after regular
+slot initialization. They typically perform error checking or calculate
+derived slot values. <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#initialize"><code class="xref drm docutils literal notranslate"><span class="pre">initialize</span></code></a> methods must specify <code class="docutils literal notranslate"><span class="pre">#key</span></code> in their
+parameter lists.</p>
+<p>It’s possible to access the values of slot keywords from <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#initialize"><code class="xref drm docutils literal notranslate"><span class="pre">initialize</span></code></a>
+methods, and even to specify additional keywords in the class declaration. See
+the <a class="reference external" href="https://opendylan.org/books/drm/Instance_Creation_and_Initialization">Instance Creation and Initialization</a> in the
+DRM for further details.</p>
+</div>
+<div class="section" id="abstract-classes-and-overriding-make">
+<h2>Abstract Classes and Overriding Make<a class="headerlink" href="#abstract-classes-and-overriding-make" title="Permalink to this headline">¶</a></h2>
+<p>Abstract classes define the interface, not the implementation,
+of an object. There are no direct instances of an abstract class.
+Concrete classes actually implement their interfaces. Every abstract
+class will typically have one or more concrete subclasses. For example,
+if plain vanilla vehicles shouldn’t exist, <code class="docutils literal notranslate"><span class="pre">&lt;vehicle&gt;</span></code> could
+be defined as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="nc">&lt;vehicle&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="c1">// ...as before</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The addition of <a class="reference external" href="https://opendylan.org/books/drm/Classes#IX-568"><code class="xref drm docutils literal notranslate"><span class="pre">abstract</span></code></a> above prevents the creation of direct instances
+of <code class="docutils literal notranslate"><span class="pre">&lt;vehicle&gt;</span></code>. At the moment, calling
+<a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> on this class would result in an error.
+However, a programmer may add a method to <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> which allows the
+intelligent creation of vehicles based on some criteria, thus making
+<code class="docutils literal notranslate"><span class="pre">&lt;vehicle&gt;</span></code> an <a class="reference external" href="https://opendylan.org/books/drm/Classes#IX-570"><code class="xref drm docutils literal notranslate"><span class="pre">instantiable</span></code></a> <a class="reference external" href="https://opendylan.org/books/drm/Classes#IX-568"><code class="xref drm docutils literal notranslate"><span class="pre">abstract</span></code></a> class”:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">make</span>
+    <span class="p">(</span><span class="nb">class</span> <span class="o">==</span> <span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">keys</span><span class="p">,</span> <span class="k">#key</span> <span class="n">big?</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">vehicle</span> <span class="p">::</span> <span class="nc">&lt;vehicle&gt;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">big?</span><span class="p">)</span>
+    <span class="nb">apply</span><span class="p">(</span><span class="nb">make</span><span class="p">,</span> <span class="nc">&lt;truck&gt;</span><span class="p">,</span> <span class="k">tons:</span> <span class="mi">2</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="nb">apply</span><span class="p">(</span><span class="nb">make</span><span class="p">,</span> <span class="nc">&lt;car&gt;</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">make</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A number of new features appear in the parameter list. The expression
+<code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">==</span> <span class="pre">&lt;vehicle&gt;</span></code> specifies a <a class="reference external" href="https://opendylan.org/books/drm/Singletons"><code class="xref drm docutils literal notranslate"><span class="pre">singleton</span></code></a> dispatch,
+meaning this method will be called only if <code class="docutils literal notranslate"><span class="pre">class</span></code> is exactly
+<code class="docutils literal notranslate"><span class="pre">&lt;vehicle&gt;</span></code>, not a subclass such as <code class="docutils literal notranslate"><span class="pre">&lt;car&gt;</span></code>.  Singleton dispatch
+is discussed in the chapter on <a class="reference internal" href="multiple-dispatch.html"><span class="doc">Multiple Dispatch</span></a>.  The use of <code class="docutils literal notranslate"><span class="pre">#rest</span></code> and <code class="docutils literal notranslate"><span class="pre">#key</span></code> in the same
+parameter list means all keyword arguments will be stored in the
+<code class="docutils literal notranslate"><span class="pre">keys</span></code> parameter but if <code class="docutils literal notranslate"><span class="pre">big?</span></code> is passed it will be bound to the
+variable by the same name.  The new make method could be invoked in
+any of the following fashions:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+<span class="nb">make</span><span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">sn:</span> <span class="n">x</span><span class="p">,</span> <span class="k">big?:</span> <span class="l">#f</span><span class="p">);</span> <span class="c1">//=&gt; car</span>
+<span class="nb">make</span><span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">sn:</span> <span class="n">x</span><span class="p">,</span> <span class="k">big?:</span> <span class="l">#t</span><span class="p">);</span> <span class="c1">//=&gt; truck</span>
+<span class="nb">make</span><span class="p">(</span><span class="nc">&lt;vehicle&gt;</span><span class="p">,</span> <span class="k">sn:</span> <span class="n">x</span><span class="p">);</span>           <span class="c1">//=&gt; car</span>
+</pre></div>
+</div>
+<p>Methods added to <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> don’t actually need to create new objects. Dylan
+officially allows them to return existing objects. This can be used to
+manage lightweight shared objects, such as the “flyweights” or “singletons”
+described by Gamma, et al., in
+<a class="reference external" href="https://en.wikipedia.org/wiki/Design_Patterns">Design Patterns</a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="methods-generic-functions.html" class="btn btn-neutral float-left" title="Methods &amp; Generic Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="multiple-dispatch.html" class="btn btn-neutral float-right" title="Multiple Dispatch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

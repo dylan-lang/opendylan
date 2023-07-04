@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Methods &amp; Generic Functions &mdash; An Introduction to Dylan</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Objects" href="objects.html" />
+    <link rel="prev" title="Expressions &amp; Variables" href="expressions-variables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            An Introduction to Dylan
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods &amp; Generic Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parameters-parameter-lists">Parameters &amp; Parameter Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#return-values">Return Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bare-methods">Bare Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#local-methods">Local Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-functions">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keyword-arguments">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rest-arguments">Rest Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-lists-and-generic-functions">Parameter Lists and Generic Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditions.html">Conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">An Introduction to Dylan</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Methods &amp; Generic Functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/methods-generic-functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="methods-generic-functions">
+<h1>Methods &amp; Generic Functions<a class="headerlink" href="#methods-generic-functions" title="Permalink to this headline">¶</a></h1>
+<p>Dylan <a class="reference external" href="https://opendylan.org/books/drm/Functions_Overview#IX-763"><code class="xref drm docutils literal notranslate"><span class="pre">methods</span></code></a> correspond roughly to the
+functions found in C++. They take zero or more named parameters,
+but also return zero or more named return values. A minimal Dylan method
+might look like the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">hello-world</span> <span class="p">()</span>
+  <span class="n">format-out</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>This method has no parameters and an unspecified return value. It
+could return any number of values of any type. In order to make the
+above code more clear, the function could be rewritten as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">hello-world</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">format-out</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>There have been two changes. The function now officially returns
+no values whatsoever. Also note that <code class="docutils literal notranslate"><span class="pre">end</span></code> has been
+replaced by <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">method</span></code> which could in turn be
+rewritten as <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">method</span> <span class="pre">hello-world</span></code>. In general,
+Dylan permits all the obvious combinations of keywords and labels to
+follow an end statement.</p>
+<div class="section" id="parameters-parameter-lists">
+<h2>Parameters &amp; Parameter Lists<a class="headerlink" href="#parameters-parameter-lists" title="Permalink to this headline">¶</a></h2>
+<p>Dylan methods declare parameters in a fashion similar to that of
+many languages, except for the fact that parameters may
+optionally be untyped. Both of the following methods are legal:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">foo</span> <span class="p">(</span><span class="n">x</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">method</span> <span class="n">bar</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span> <span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Both <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> have
+one typed and one untyped parameter, but neither has a well-defined
+return value (or actually does anything). As in C, each typed parameter
+must have its own type declaration; there’s no syntax for saying
+“the last three parameters are all integers”.</p>
+<p>Functions with the <code class="docutils literal notranslate"><span class="pre">#rest</span></code> keyword in their parameter list accept a variable
+number of arguments.  Thus, the declaration for C’s <code class="docutils literal notranslate"><span class="pre">printf</span></code> function would
+appear something like the following in Dylan:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">printf</span> <span class="p">(</span><span class="n">format-string</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">arguments</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="c1">// Print the format string, extracting one at a time from &quot;arguments&quot;.</span>
+  <span class="c1">// Note that Dylan actually allows us to verify the types of variables,</span>
+  <span class="c1">// preventing those nasty printf errors, such as using %d instead of %ld.</span>
+  <span class="c1">// ...</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">printf</span>
+</pre></div>
+</div>
+<p>Note that Dylan makes no provision for passing variables by
+reference in the Pascal sense, or for passing pointers to variables.
+parameter names are simply bound to whatever values are passed, and may
+be rebound like regular variables. This means that there’s no way to
+write a <code class="docutils literal notranslate"><span class="pre">swap</span></code> function in Dylan.  (It may be done using
+macros). However, the following function works just fine, because it
+modifies the internal state of another
+object:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">sell</span> <span class="p">(</span><span class="n">car</span> <span class="p">::</span> <span class="nc">&lt;car&gt;</span><span class="p">,</span> <span class="n">new-owner</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">credit-check</span><span class="p">(</span><span class="n">new-owner</span><span class="p">))</span>
+    <span class="n">car</span><span class="p">.</span><span class="n">owner</span> <span class="o">:=</span> <span class="n">new-owner</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="nb">error</span><span class="p">(</span><span class="s">&quot;Bad credit!&quot;</span><span class="p">);</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If this sounds unclear, reread the chapter on <a class="reference internal" href="expressions-variables.html"><span class="doc">variables and expressions</span></a>.</p>
+</div>
+<div class="section" id="return-values">
+<h2>Return Values<a class="headerlink" href="#return-values" title="Permalink to this headline">¶</a></h2>
+<p>Because Dylan methods can’t have “output” parameters, they’re allowed
+considerably more flexibility when it comes to return values. Methods
+may return more than one value. As with parameters, these values may
+be typed or untyped. All return values <em>must</em> be named.</p>
+<p>A Dylan method – or any other control construct – returns
+the value of the last expression in its body.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">foo</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">sample</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+  <span class="s">&quot;Sample string.&quot;</span>    <span class="c1">// return string</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">bar</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">my-untyped-value</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">weekend-day?</span><span class="p">(</span><span class="n">today</span><span class="p">()))</span>
+    <span class="s">&quot;Let&#39;s party!&quot;</span>  <span class="c1">// return string</span>
+  <span class="k">else</span>
+    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;excuse&gt;</span><span class="p">)</span>  <span class="c1">// return object</span>
+  <span class="k">end</span> <span class="k">if</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">moby</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">sample</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">,</span> <span class="n">my-untyped-value</span><span class="p">)</span>
+  <span class="nb">values</span><span class="p">(</span><span class="n">foo</span><span class="p">(),</span> <span class="n">bar</span><span class="p">())</span>    <span class="c1">// return both!</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">baz</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">moby</span><span class="p">();</span>  <span class="c1">// assign both</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bare-methods">
+<h2>Bare Methods<a class="headerlink" href="#bare-methods" title="Permalink to this headline">¶</a></h2>
+<p>Nameless methods may be declared inline. Such <a class="reference external" href="https://opendylan.org/books/drm/Functions_Overview#IX-773"><code class="xref drm docutils literal notranslate"><span class="pre">bare</span> <span class="pre">methods</span></code></a> are
+typically used as parameters to other methods.  For example, the
+following code fragment squares each element of a list using the built
+in <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map"><code class="xref drm docutils literal notranslate"><span class="pre">map</span></code></a> function and a bare method:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">square-list</span> <span class="p">(</span><span class="n">numbers</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">out</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span>
+  <span class="nb">map</span><span class="p">(</span><span class="nb">method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">end</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map"><code class="xref drm docutils literal notranslate"><span class="pre">map</span></code></a> function takes each element of
+the list <code class="docutils literal notranslate"><span class="pre">numbers</span></code> and applies the anonymous method. It
+then builds a new list using the resulting values and returns it.
+The method <code class="docutils literal notranslate"><span class="pre">square-list</span></code> might be invoked as
+follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">square-list</span><span class="p">(#(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="c1">// =&gt; #(1, 4, 9, 16)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="local-methods">
+<h2>Local Methods<a class="headerlink" href="#local-methods" title="Permalink to this headline">¶</a></h2>
+<p>Local methods resemble bare methods but have names. They are
+declared within other methods, often as private utility routines.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">sum-squares</span> <span class="p">(</span><span class="k">in</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">sum-of-element-squares</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">)</span>
+  <span class="k">local</span> <span class="nb">method</span> <span class="n">square</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+          <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+        <span class="k">end</span><span class="p">,</span>
+        <span class="nb">method</span> <span class="n">sum</span> <span class="p">(</span><span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span>
+          <span class="nb">reduce1</span><span class="p">(</span><span class="n">\+</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="k">end</span><span class="p">;</span>
+  <span class="n">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="k">in</span><span class="p">))</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Local methods can outlive the invocation of the
+function which created them. parameters of the parent function remain
+bound in a local method, allowing some interesting techniques:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">build-put</span> <span class="p">(</span><span class="n">string</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">res</span> <span class="p">::</span> <span class="nc">&lt;function&gt;</span><span class="p">)</span>
+  <span class="k">local</span> <span class="nb">method</span> <span class="n">string-putter</span><span class="p">()</span>
+          <span class="n">format-out</span><span class="p">(</span><span class="n">string</span><span class="p">);</span>
+        <span class="k">end</span><span class="p">;</span>
+  <span class="n">string-putter</span>   <span class="c1">// return local method</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">print-hello</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="n">build-put</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span>
+  <span class="n">f</span><span class="p">()</span>  <span class="c1">// print &quot;Hello!&quot;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Local functions which contain references to local variables that are
+outside of the local function’s own scope are known as
+<a class="reference external" href="https://opendylan.org/books/drm/Functions_Overview#IX-777"><code class="xref drm docutils literal notranslate"><span class="pre">closures</span></code></a>.  In the above example, <code class="docutils literal notranslate"><span class="pre">string-putter</span></code> “closes
+over” (or captures the binding of) the variable named <code class="docutils literal notranslate"><span class="pre">string</span></code>.</p>
+</div>
+<div class="section" id="generic-functions">
+<span id="id1"></span><h2>Generic Functions<a class="headerlink" href="#generic-functions" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference external" href="https://opendylan.org/books/drm/generic function"><code class="xref drm docutils literal notranslate"><span class="pre">generic</span> <span class="pre">function</span></code></a> represents zero or more
+similar methods. Every method created by means of
+<a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_method"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">method</span></code></a> is automatically contained
+within the generic function of the same name. For example, a
+programmer could define three methods named <code class="docutils literal notranslate"><span class="pre">display</span></code>,
+each of which acted on a different data type:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">display</span> <span class="p">(</span><span class="n">i</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">)</span>
+  <span class="n">write</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">,</span> <span class="n">integer-to-string</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">display</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+  <span class="n">write</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">display</span> <span class="p">(</span><span class="n">f</span> <span class="p">::</span> <span class="nc">&lt;float&gt;</span><span class="p">)</span>
+  <span class="n">write</span><span class="p">(</span><span class="vg">*standard-output*</span><span class="p">,</span> <span class="n">float-to-string</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>When a program calls <code class="docutils literal notranslate"><span class="pre">display</span></code>, Dylan examines
+all three methods. Depending on the type of the argument to
+<code class="docutils literal notranslate"><span class="pre">display</span></code>, Dylan invokes one of the above methods.
+If no method matches the actual parameters, an error occurs.</p>
+<p>In C++, this process occurs only at compile time. (It’s called
+operator overloading.) In Dylan, calls to <code class="docutils literal notranslate"><span class="pre">display</span></code>
+may be resolved either at compile time or while the program is actually
+executing. This makes it possible to define methods like:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">display</span> <span class="p">(</span><span class="n">c</span> <span class="p">::</span> <span class="nc">&lt;collection&gt;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">item</span> <span class="k">in</span> <span class="n">c</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>  <span class="c1">// runtime dispatch</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This method extracts objects of unknown type from a collection,
+and attempts to invoke the generic function <code class="docutils literal notranslate"><span class="pre">display</span></code>
+on each of them. Since there’s no way for the compiler
+to know what type of objects the collection actually contains, it
+must generate code to identify and invoke the proper method at
+runtime. If no applicable method can be found, the Dylan runtime
+environment throws an exception.</p>
+<p>Generic functions may also be declared explicitly, allowing the
+programmer to exercise control over what sort of methods are added.
+For example, the following declaration limits all <code class="docutils literal notranslate"><span class="pre">display</span></code>
+methods to a single parameter and no return values:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">generic</span> <span class="n">display</span> <span class="p">(</span><span class="n">thing</span> <span class="p">::</span> <span class="nc">&lt;object&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+</pre></div>
+</div>
+<p>Generic functions are explained in greater detail in the chapter on
+<a class="reference internal" href="multiple-dispatch.html"><span class="doc">multiple dispatch</span></a>.</p>
+</div>
+<div class="section" id="keyword-arguments">
+<h2>Keyword Arguments<a class="headerlink" href="#keyword-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Functions may accept keyword arguments,
+extra parameters which are identified by a label rather than by their
+position in the argument list. Keyword arguments are often used in a
+fashion similar to default parameter values
+in C++, and they are always optional.</p>
+<p>The following hypothetical method might print records to an output device:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">print-records</span>
+    <span class="p">(</span><span class="n">records</span> <span class="p">::</span> <span class="nc">&lt;collection&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">init-codes</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">lines-per-page</span> <span class="o">=</span> <span class="mi">66</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">send-init-codes</span><span class="p">(</span><span class="n">init-codes</span><span class="p">)</span>
+  <span class="c1">// ...print the records</span>
+<span class="k">end</span> <span class="nb">method</span>
+</pre></div>
+</div>
+<p>The arguments following <code class="docutils literal notranslate"><span class="pre">#key</span></code> are keyword arguments. You could call this
+method in several ways:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">print-records</span><span class="p">(</span><span class="n">recs</span><span class="p">);</span>
+<span class="n">print-records</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="k">lines-per-page:</span> <span class="mi">65</span><span class="p">);</span>
+<span class="n">print-records</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="k">lines-per-page:</span> <span class="mi">120</span><span class="p">,</span> <span class="k">init-codes:</span> <span class="s">&quot;***42</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first line calls the method without using any of the keyword arguments. The
+second line uses one of the keyword arguments and the third uses both. Note
+that the order of the keyword arguments does not matter.</p>
+<p>With all three calls, the <code class="docutils literal notranslate"><span class="pre">init-codes</span></code> and <code class="docutils literal notranslate"><span class="pre">lines-per-page</span></code> variables are
+available in the body of the method, even though keyword arguments are omitted
+in two of the calls. When a keyword argument is omitted, it is given the default
+value specified in the method definition. Therefore, in the first call, the
+<code class="docutils literal notranslate"><span class="pre">lines-per-page</span></code> variable has the value <code class="docutils literal notranslate"><span class="pre">66</span></code>, and in the first and second
+calls, the <code class="docutils literal notranslate"><span class="pre">init-codes</span></code> variable has the value <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+<p>Programmers have quite a bit of flexibility in specifying keyword arguments.</p>
+<ul class="simple">
+<li><p>The default value specifier (e.g. the <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">66</span></code> above) may be omitted, in
+which case <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> is used.</p></li>
+<li><p>The type of the keyword argument may be specified or omitted, just as with
+regular arguments.</p></li>
+<li><p>The keyword name can be different from the variable name used in the body of
+the method—a handy tool for preventing name conflicts.</p></li>
+<li><p>The default value specifier can be a complex expression, and it can even use
+earlier parameters.</p></li>
+<li><p>The keyword arguments allowed or required by each method can be specified by
+the generic function. For more on this, see <a class="reference internal" href="#parameter-lists-and-generic-functions">Parameter Lists and Generic
+Functions</a> below.</p></li>
+</ul>
+<p>The following method uses some of these features:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">subseq</span>
+    <span class="p">(</span><span class="n">seq</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">start</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="k">end:</span> <span class="n">_end</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span> <span class="o">=</span> <span class="n">seq</span><span class="p">.</span><span class="nb">size</span><span class="p">)</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">_end</span><span class="p">,</span> <span class="s">&quot;start is after end&quot;</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Firstly, the <code class="docutils literal notranslate"><span class="pre">start:</span></code> and <code class="docutils literal notranslate"><span class="pre">end:</span></code> keyword arguments are both specialized as
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. The caller can only supply integers for these parameters.
+Secondly, the <code class="docutils literal notranslate"><span class="pre">start:</span></code> keyword argument is associated with the <code class="docutils literal notranslate"><span class="pre">start</span></code>
+variable in the body of the method as usual, but because the Dylan language
+does not allow a variable named <code class="docutils literal notranslate"><span class="pre">end</span></code>, that keyword argument is instead
+associated with the <code class="docutils literal notranslate"><span class="pre">_end</span></code> variable. Finally, if the <code class="docutils literal notranslate"><span class="pre">end:</span></code> keyword argument
+were omitted, the value of the <code class="docutils literal notranslate"><span class="pre">_end</span></code> variable would be the size of the
+<code class="docutils literal notranslate"><span class="pre">seq</span></code> argument.</p>
+</div>
+<div class="section" id="rest-arguments">
+<h2>Rest Arguments<a class="headerlink" href="#rest-arguments" title="Permalink to this headline">¶</a></h2>
+<p>An argument list can also include <code class="docutils literal notranslate"><span class="pre">#rest</span></code>, which is used with a variable name:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">format</span> <span class="p">(</span><span class="n">format-string</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">format-parameters</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">method</span>
+</pre></div>
+</div>
+<p>Any extra arguments are passed to the body of the method as a
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> in the specified variable. For example, if the above method
+were called like so:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Today will be %s with a high of %d.&quot;</span><span class="p">,</span> <span class="s">&quot;cloudy&quot;</span><span class="p">,</span> <span class="mi">52</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">format-parameters</span></code> variable in the body of the method would have the
+value <code class="docutils literal notranslate"><span class="pre">#[&quot;cloudy&quot;,</span> <span class="pre">52]</span></code>.</p>
+</div>
+<div class="section" id="parameter-lists-and-generic-functions">
+<h2>Parameter Lists and Generic Functions<a class="headerlink" href="#parameter-lists-and-generic-functions" title="Permalink to this headline">¶</a></h2>
+<p>A generic function restricts the parameter lists of its methods, but methods
+can expand on the generic function’s parameter list if the generic function
+allows it. This section describes how that works. It is a little more advanced
+than rest of this introduction, so you may want to skip this section for now
+and refer back to it later.</p>
+<p>We described the <code class="docutils literal notranslate"><span class="pre">#key</span></code> and <code class="docutils literal notranslate"><span class="pre">#rest</span></code> parameter list tokens above. The
+<code class="docutils literal notranslate"><span class="pre">#key</span></code> token may also be used by itself, e.g., <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">method</span> <span class="pre">foo</span> <span class="pre">(arg,</span>
+<span class="pre">#key)</span></code>. And there is a third parameter list token, <code class="docutils literal notranslate"><span class="pre">#all-keys</span></code>, that
+indicates that a method permits other keyword arguments than those listed.
+These features are only useful when working with a generic function and its
+family of methods. When used together, these tokens must appear in the order
+<code class="docutils literal notranslate"><span class="pre">#rest</span></code>, <code class="docutils literal notranslate"><span class="pre">#key</span></code>, <code class="docutils literal notranslate"><span class="pre">#all-keys</span></code>.</p>
+<p>The table below shows the different kinds of parameter lists that a generic
+function can have, and what effect each has on the parameter lists of the
+methods that it contains.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" rowspan="2"><p>Generic function’s parameter list</p></th>
+<th class="head" colspan="4"><p>Methods’ parameter lists</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">#key</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">#all-keys</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">#rest</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+<td><p>Forbidden</p></td>
+<td><p>Forbidden</p></td>
+<td><p>Forbidden</p></td>
+<td><p>Forbidden</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key)</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Allowed</p></td>
+<td><p>Allowed</p></td>
+<td><p>Allowed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b)</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Required</p></td>
+<td><p>Allowed</p></td>
+<td><p>Allowed</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key,</span> <span class="pre">#all-keys)</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Allowed</p></td>
+<td><p>Automatic</p></td>
+<td><p>Allowed</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">#all-keys)</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Required</p></td>
+<td><p>Automatic</p></td>
+<td><p>Allowed</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#rest</span> <span class="pre">r)</span></code></p></td>
+<td><p>Forbidden</p></td>
+<td><p>Forbidden</p></td>
+<td><p>Forbidden</p></td>
+<td><p>Required</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>Required:</dt><dd><p>Each method must have this element in its parameter list.</p>
+</dd>
+<dt>Allowed:</dt><dd><p>Each method may have this element in its parameter list, but is not
+required to.</p>
+</dd>
+<dt>Forbidden:</dt><dd><p>No method may have this element in its parameter list.</p>
+</dd>
+<dt>Automatic:</dt><dd><p>Each method effectively has <code class="docutils literal notranslate"><span class="pre">#all-keys</span></code> in its parameter list, even if
+it is not present.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>This table shows the different kinds of parameter lists that a method can have,
+what the <code class="docutils literal notranslate"><span class="pre">r</span></code> variable contains for each, and which keywords are permitted by
+each. It is a run-time error to call a method with a keyword argument that it
+does not permit.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 17%" />
+<col style="width: 25%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Method’s parameter list</p></th>
+<th class="head"><p>Contents of <code class="docutils literal notranslate"><span class="pre">r</span></code></p></th>
+<th class="head"><p>Permits <code class="docutils literal notranslate"><span class="pre">a:</span></code> and <code class="docutils literal notranslate"><span class="pre">b:</span></code></p></th>
+<th class="head"><p>Permits other keywords</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x)</span></code></p></td>
+<td><p>—</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key)</span></code></p></td>
+<td><p>—</p></td>
+<td><p>If next method permits</p></td>
+<td><p>If next method permits</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b)</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Yes</p></td>
+<td><p>If next method permits</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key,</span> <span class="pre">#all-keys)</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">#all-keys)</span></code></p></td>
+<td><p>—</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#rest</span> <span class="pre">r)</span></code></p></td>
+<td><p>Extra arguments</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#rest</span> <span class="pre">r,</span> <span class="pre">#key)</span></code></p></td>
+<td><p>Keywords/values</p></td>
+<td><p>If next method permits</p></td>
+<td><p>If next method permits</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#rest</span> <span class="pre">r,</span> <span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b)</span></code></p></td>
+<td><p>Keywords/values</p></td>
+<td><p>Yes</p></td>
+<td><p>If next method permits</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#rest</span> <span class="pre">r,</span> <span class="pre">#key,</span> <span class="pre">#all-keys)</span></code></p></td>
+<td><p>Keywords/values</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">#rest</span> <span class="pre">r,</span> <span class="pre">#key</span> <span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">#all-keys)</span></code></p></td>
+<td><p>Keywords/values</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>Extra arguments:</dt><dd><p>The local variable <code class="docutils literal notranslate"><span class="pre">r</span></code> is set to a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> containing all the
+arguments passed to the method beyond the required arguments (i.e., the
+sequence will not contain <code class="docutils literal notranslate"><span class="pre">x</span></code>).</p>
+</dd>
+<dt>Keywords/values:</dt><dd><p>The local variable <code class="docutils literal notranslate"><span class="pre">r</span></code> is set to a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> containing all the
+keywords and values passed to the method. The first element of the
+sequence is one of the keywords, the second is the corresponding value,
+the third is another keyword, the fourth is its corresponding value, etc.</p>
+</dd>
+<dt>If next method permits:</dt><dd><p>The method only permits a keyword if some other applicable method permits
+it. In other words, it permits all the keywords in the <a class="reference external" href="https://opendylan.org/books/drm/Method_Dispatch#HEADING-50-32"><code class="xref drm docutils literal notranslate"><span class="pre">next-method</span></code></a>
+chain, effectively inheriting them. This rule is handy when you want to
+allow for future keywords that make sense within a particular family of
+related classes but you do not want to be overly permissive.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>To illustrate the “next method” rule, say we have the following definitions:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;shape&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">draw</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;shape&gt;</span><span class="p">,</span> <span class="k">#key</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;polygon&gt;</span> <span class="p">(</span><span class="nc">&lt;shape&gt;</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;triangle&gt;</span> <span class="p">(</span><span class="nc">&lt;polygon&gt;</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;ellipse&gt;</span> <span class="p">(</span><span class="nc">&lt;shape&gt;</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;circle&gt;</span> <span class="p">(</span><span class="nc">&lt;ellipse&gt;</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">draw</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;polygon&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">sides</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">method</span> <span class="n">draw</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;triangle&gt;</span><span class="p">,</span> <span class="k">#key</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">draw</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;ellipse&gt;</span><span class="p">,</span> <span class="k">#key</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+<span class="k">define</span> <span class="nb">method</span> <span class="n">draw</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;circle&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">radius</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">draw</span></code> methods for <code class="docutils literal notranslate"><span class="pre">&lt;polygon&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;triangle&gt;</span></code> permit the <code class="docutils literal notranslate"><span class="pre">sides:</span></code>
+keyword. The method for <code class="docutils literal notranslate"><span class="pre">&lt;triangle&gt;</span></code> permits <code class="docutils literal notranslate"><span class="pre">sides:</span></code> because the method for
+<code class="docutils literal notranslate"><span class="pre">&lt;polygon&gt;</span></code> objects also applies to <code class="docutils literal notranslate"><span class="pre">&lt;triangle&gt;</span></code> objects and that method
+permits <code class="docutils literal notranslate"><span class="pre">sides:</span></code>.</p>
+<p>However, the <code class="docutils literal notranslate"><span class="pre">draw</span></code> method for <code class="docutils literal notranslate"><span class="pre">&lt;circle&gt;</span></code> only permits the <code class="docutils literal notranslate"><span class="pre">radius:</span></code>
+keyword, because the <code class="docutils literal notranslate"><span class="pre">draw</span></code> method for <code class="docutils literal notranslate"><span class="pre">&lt;polygon&gt;</span></code> does not apply to
+<code class="docutils literal notranslate"><span class="pre">&lt;circle&gt;</span></code> objects — the two classes branch off separately from <code class="docutils literal notranslate"><span class="pre">&lt;shape&gt;</span></code>.</p>
+<p>Finally, the method for <code class="docutils literal notranslate"><span class="pre">&lt;ellipse&gt;</span></code> does not permit the <code class="docutils literal notranslate"><span class="pre">radius:</span></code> keyword
+because, while a circle is a kind of ellipse, an ellipse is <em>not</em> a kind of
+circle. <code class="docutils literal notranslate"><span class="pre">&lt;circle&gt;</span></code> does not inherit from <code class="docutils literal notranslate"><span class="pre">&lt;ellipse&gt;</span></code> and the <code class="docutils literal notranslate"><span class="pre">draw</span></code> method
+for <code class="docutils literal notranslate"><span class="pre">&lt;circle&gt;</span></code> objects does not apply to <code class="docutils literal notranslate"><span class="pre">&lt;ellipse&gt;</span></code> objects.</p>
+<p>For more information on keyword arguments, especially their use
+with <a class="reference internal" href="#generic-functions"><span class="std std-ref">generic functions</span></a>, see the DRM.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="expressions-variables.html" class="btn btn-neutral float-left" title="Expressions &amp; Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="objects.html" class="btn btn-neutral float-right" title="Objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

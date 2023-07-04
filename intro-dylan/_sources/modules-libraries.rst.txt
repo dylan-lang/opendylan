@@ -1,0 +1,159 @@
+*******************
+Modules & Libraries
+*******************
+
+Modules and libraries provide the structure of a Dylan program. Modules
+represent namespaces and control access to objects and functions.
+Libraries contain modules, and act as units of compilation in a Dylan
+program.
+
+Simple Modules
+==============
+
+Modules import names (or bindings) from other modules and export names
+for use by other modules. The names that may be imported/exported are
+the module-level (also called "global") variables such as those created
+by :drm:`define variable`, :drm:`define class`, :drm:`define generic`, etc.
+
+The dependencies between modules must form a directed, acyclic
+graph. Two modules may not use each other, and no circular dependencies
+may exist. A sample module containing the vehicle classes from earlier
+chapters might look like this:
+
+.. code-block:: dylan
+
+    define module vehicles
+      use dylan;
+      export
+        <vehicle>,
+          serial-number,
+          owner, owner-setter,
+          tax,
+        <car>,
+        <truck>,
+          capacity;
+    end module;
+
+Like all normal modules, this one uses the ``dylan`` module, which
+contains all of the standard built-in functions and classes. In turn,
+the ``vehicles`` module exports all three of the vehicle classes, the
+generic function ``tax``, several getter functions and a single
+setter function.
+
+To control access to a slot, export some combination of its getter and
+setter functions. To make a slot public, export both. To make it
+read-only, export just the getter function. To make it private, export
+neither. In the above example, the slot ``serial-number`` is read-only,
+while the slot ``owner`` is read/write.
+
+Note that when a module adds a method to an imported generic function,
+the change affects all modules using that function. :drm:`define method`
+adds the new method to the existing generic function object, which may
+be referenced by any module importing its binding. The module that
+originally defined the generic function may prevent this behavior by
+"sealing" it over specific argument types.
+
+Import Options
+==============
+
+Dylan allows very precise control over how bindings are imported from
+other modules. For example, individual bindings may be imported by
+name. They may be renamed, either one at a time, or by adding a prefix
+to all of a module's names at once. Some or all of them may be
+re-exported immediately. See the DRM for specific examples.
+
+Dylan's import system has a number of advantages. Name conflicts
+occur rarely. Programmers don't need to define or maintain function
+prototypes. There's no need for header files. Modules may
+also provide different interfaces to the same objects -- one module
+exports a complete interface, which another module imports, redefines
+and re-exports.
+
+Libraries
+=========
+
+Libraries contain modules. For example, the ``dylan``
+library contains the ``dylan`` module
+described earlier, the ``extensions`` module, and
+possibly several other implementation-dependent modules. Note that
+a library and a module may share the same name. Modules with the
+same name may also appear in more than one library.
+
+By default, a Dylan environment provides a library called
+``dylan-user`` for the convenience of the programmer.
+This is typically used for short, single library programs which
+depend only on modules found in the Dylan library.
+
+Additionally, every library contains an implicit module, also
+known as ``dylan-user``, which imports all of the
+modules found in the ``dylan`` library. This may be
+used for single module programs. Many Dylan environments, however,
+use it to bootstrap new library definitions. The vehicle library,
+for example, might be defined as follows in a ``dylan-user``
+module:
+
+.. code-block:: dylan
+
+    define library vehicles
+      use dylan;            // This is the library!
+      export                // These are modules.
+        vehicles,           // (Defined above.)
+        traffic-simulation,
+        crash-testing,
+        inspection;         // (Hypothetical.)
+    end library vehicles;
+
+This library could in turn be imported by another library:
+
+.. code-block:: dylan
+
+    define library vehicle-application
+      use dylan;
+      use my-gui-classes;
+      use vehicles;
+    end;
+
+Libraries import other libraries and export modules, whereas
+modules import other modules and export variables. In general, a
+module may import any module found in its own library or exported
+from a library imported by its own library. The following module, for
+example, could belong to the ``vehicle-application`` library.
+
+.. code-block:: dylan
+
+    define module sample-module
+      // module name         source library
+      use dylan;          // dylan
+      use extensions;     // dylan
+      use menus;          // my-gui-classes
+      use vehicles;       // vehicles
+      use inspection;     // vehicles
+    end module;
+
+Sealing
+=======
+
+Classes and generic functions may be :drm:`sealed <sealing>`, preventing code
+in other libraries from subclassing objects or adding methods to generic
+functions. This allows the compiler optimize more effectively. Both classes and
+generic functions are sealed by default.
+
+To allow code in other libraries to subclass a given class,
+declare it as ``open``:
+
+.. code-block:: dylan
+
+    define open class <sample> (<object>) end;
+
+To allow other libraries to add methods to a generic function,
+use a similar syntax:
+
+.. code-block:: dylan
+
+    define open generic sample-function (o :: <object>) => ();
+
+A third form, :drm:`define sealed domain`, partially
+seals a generic function, disallowing only some additions from outside
+a library.
+
+For more information on sealing, see :drm:`"Sealing" in the DRM <sealing>`.
