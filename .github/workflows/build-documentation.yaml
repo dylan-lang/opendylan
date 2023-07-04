@@ -9,10 +9,6 @@ on:
     paths:
       - 'documentation/**/*.rst'
       - 'documentation/**/conf.py'
-  pull_request:
-    paths:
-      - 'documentation/**/*.rst'
-      - 'documentation/**/conf.py'
 
   # This enables the Run Workflow button on the Actions tab.
   workflow_dispatch:
@@ -23,6 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
+
     steps:
       - uses: actions/checkout@v3
         with:
