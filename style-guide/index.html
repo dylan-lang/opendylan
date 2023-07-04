@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dylan Style Guide &mdash; Style Guide 1.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Style Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Dylan Style Guide</a><ul>
+<li><a class="reference internal" href="#purpose-of-this-document">Purpose of this document</a></li>
+<li><a class="reference internal" href="#controversial-comments">Controversial comments</a></li>
+<li><a class="reference internal" href="#line-length">Line Length</a></li>
+<li><a class="reference internal" href="#consistency">Consistency</a></li>
+<li><a class="reference internal" href="#naming">Naming</a></li>
+<li><a class="reference internal" href="#dot-notation">Dot notation</a></li>
+<li><a class="reference internal" href="#symbols-versus-keywords">Symbols versus keywords</a></li>
+<li><a class="reference internal" href="#end-words">End words</a></li>
+<li><a class="reference internal" href="#semicolons">Semicolons</a></li>
+<li><a class="reference internal" href="#general-indentation">General indentation</a></li>
+<li><a class="reference internal" href="#operators-on-newline">Operators on newline</a><ul>
+<li><a class="reference internal" href="#calls">Calls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#if-then-else">if then else</a></li>
+<li><a class="reference internal" href="#let">let</a></li>
+<li><a class="reference internal" href="#select-and-case">select and case</a></li>
+<li><a class="reference internal" href="#macros">Macros</a></li>
+<li><a class="reference internal" href="#for-loop">for loop</a></li>
+<li><a class="reference internal" href="#local-methods">Local methods</a></li>
+<li><a class="reference internal" href="#parameter-lists">Parameter lists</a></li>
+<li><a class="reference internal" href="#return-values">Return values</a></li>
+<li><a class="reference internal" href="#method-constants">Method constants</a></li>
+<li><a class="reference internal" href="#generic-function-definitions">Generic function definitions</a></li>
+<li><a class="reference internal" href="#class-definitions">Class definitions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Style Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Dylan Style Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="dylan-style-guide">
+<h1>Dylan Style Guide<a class="headerlink" href="#dylan-style-guide" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#purpose-of-this-document" id="id1">Purpose of this document</a></p></li>
+<li><p><a class="reference internal" href="#controversial-comments" id="id2">Controversial comments</a></p></li>
+<li><p><a class="reference internal" href="#line-length" id="id3">Line Length</a></p></li>
+<li><p><a class="reference internal" href="#consistency" id="id4">Consistency</a></p></li>
+<li><p><a class="reference internal" href="#naming" id="id5">Naming</a></p></li>
+<li><p><a class="reference internal" href="#dot-notation" id="id6">Dot notation</a></p></li>
+<li><p><a class="reference internal" href="#symbols-versus-keywords" id="id7">Symbols versus keywords</a></p></li>
+<li><p><a class="reference internal" href="#end-words" id="id8">End words</a></p></li>
+<li><p><a class="reference internal" href="#semicolons" id="id9">Semicolons</a></p></li>
+<li><p><a class="reference internal" href="#general-indentation" id="id10">General indentation</a></p></li>
+<li><p><a class="reference internal" href="#operators-on-newline" id="id11">Operators on newline</a></p></li>
+<li><p><a class="reference internal" href="#if-then-else" id="id12">if then else</a></p></li>
+<li><p><a class="reference internal" href="#let" id="id13">let</a></p></li>
+<li><p><a class="reference internal" href="#select-and-case" id="id14">select and case</a></p></li>
+<li><p><a class="reference internal" href="#macros" id="id15">Macros</a></p></li>
+<li><p><a class="reference internal" href="#for-loop" id="id16">for loop</a></p></li>
+<li><p><a class="reference internal" href="#local-methods" id="id17">Local methods</a></p></li>
+<li><p><a class="reference internal" href="#parameter-lists" id="id18">Parameter lists</a></p></li>
+<li><p><a class="reference internal" href="#return-values" id="id19">Return values</a></p></li>
+<li><p><a class="reference internal" href="#method-constants" id="id20">Method constants</a></p></li>
+<li><p><a class="reference internal" href="#generic-function-definitions" id="id21">Generic function definitions</a></p></li>
+<li><p><a class="reference internal" href="#class-definitions" id="id22">Class definitions</a></p></li>
+</ul>
+</div>
+<div class="section" id="purpose-of-this-document">
+<h2>Purpose of this document<a class="headerlink" href="#purpose-of-this-document" title="Permalink to this headline">¶</a></h2>
+<p>This document describes a coding style that the Dylan group recommends.
+There are still some areas of disagreement, and there is still room to
+change this style guide. In some places the Dylan book group decided to
+use a different style, which is noted in this guide.</p>
+</div>
+<div class="section" id="controversial-comments">
+<h2>Controversial comments<a class="headerlink" href="#controversial-comments" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>scott thinks that matching definition names (e.g., <em>end class &lt;bolt&gt;</em>)
+are a bad idea because they are hard to maintain in the face of
+name changes.</p></li>
+<li><p>keith likes long case slot specifications always, but jonathan is
+willing to abbreviate in groups.</p></li>
+<li><p>keith thinks its ok to have parameters on same line as function name
+with return values on the next line (but jonathan disagrees). Dylan
+book does not split a line between the parameter list and return
+values.</p></li>
+<li><p>haahr claims that there is no space after function name in a function
+definition. we need to chase this up. Dylan book has a space after
+function name in a function definition.</p></li>
+<li><p>scott uses <code class="docutils literal notranslate"><span class="pre">%</span></code> prefixes on slot accessors that have short (or
+“unqualified” names) that are not part of the exported API. Dylan
+book does not do this.</p></li>
+<li><p>6 character rule seems like overkill (but jonathan thinks that it
+does help in practice but is willing to get rid of it to simplify the
+pretty printing rules).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_</span></code> is a weird notation, but does have precendent in syntax-case and
+prolog for dont care. keith likes the return values to be named for
+better documentation. Dylan book names return values.</p></li>
+<li><p>tucker disagrees with consistency rule. he thinks that there should
+be a consistent style on where you break and how you indent, but he
+disagrees that that means you have to break there on all the similar
+nearby statements, even when they don’t need it.</p></li>
+</ul>
+</div>
+<div class="section" id="line-length">
+<h2>Line Length<a class="headerlink" href="#line-length" title="Permalink to this headline">¶</a></h2>
+<p>Lines should be kept to a <em>reasonable</em> length. Small monitors are rare
+these days so a strict 80 column rule is no longer necessary, even
+considering side-by-side diffs or split screen editing. However,
+please try to keep lines short in general, unless it requires
+unnatural contortions, because it is often easier to read that
+way. Use your judgement.</p>
+</div>
+<div class="section" id="consistency">
+<h2>Consistency<a class="headerlink" href="#consistency" title="Permalink to this headline">¶</a></h2>
+<p>Formatting style should be consistent.</p>
+<p>A broader pattern I tend to go for is consistency of indentation within
+a group of forms. If the shape of one or two forms in a group force a
+long-form indentation I’ll often reformat the rest to give them a
+consistent look. For example, here is a sequence of <code class="docutils literal notranslate"><span class="pre">let</span></code> bindings.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">abigmobynamewithabiginitialization</span>
+  <span class="o">=</span> <span class="mi">123456789</span> <span class="o">*</span> <span class="mi">123456789</span> <span class="o">*</span> <span class="mi">123456789</span> <span class="o">*</span> <span class="mi">123456789</span><span class="p">;</span>
+
+<span class="k">let</span> <span class="n">a-tiny-name</span>
+  <span class="o">=</span> <span class="mi">123456789</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here is another examples of a group, a bunch of generic function
+definitions forming a protocol:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">//// Match protocol.</span>
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">match</span>
+  <span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">fragment</span><span class="p">,</span> <span class="n">more-patterns</span><span class="p">,</span> <span class="n">more-fragments</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">fail</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">();</span>
+
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">match-empty</span>
+  <span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">more-patterns</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">fail</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">();</span>
+
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">folds-separator?</span>
+  <span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="naming">
+<h2>Naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h2>
+<p>Naming is hard.  There is no single rule that works for everything.
+Here are some rules that should always be followed:</p>
+<ul>
+<li><p>Follow the <a class="reference external" href="http://opendylan.org/books/drm/Naming_Conventions">naming conventions in the Dylan Reference Manual</a>.</p></li>
+<li><p>Use lowercase, not uppercase or mixed case.</p>
+<p>Example:  <code class="docutils literal notranslate"><span class="pre">join-segments</span></code> not <code class="docutils literal notranslate"><span class="pre">JoinSegments</span></code> or <code class="docutils literal notranslate"><span class="pre">JOIN-SEGMENTS</span></code></p>
+</li>
+<li><p>Use dash (hyphen, -) to separate words in a name, not underscore
+(_).</p>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">run-jobs</span></code> not <code class="docutils literal notranslate"><span class="pre">run_jobs</span></code></p>
+</li>
+<li><p>Prefix a name with percent (e.g., <code class="docutils literal notranslate"><span class="pre">%do-scary-stuff</span></code>) to indicate
+an “internal” function.  This roughly signals to the caller “you’d
+better know what you’re doing”.</p></li>
+</ul>
+<p>Here are some hints for naming things in Dylan.  These are guidelines
+only and need not be strictly followed:</p>
+<ul>
+<li><p>Within each Dylan module there is a single namespace for all
+bindings, whether they’re variables, functions, constants, classes,
+or macros, so full names are to be preferred.</p></li>
+<li><p>Use verb-noun to name functions.  Slot names are a notable exception
+to this rule.  See next item.</p></li>
+<li><p>Naming slots poses some special challenges, perhaps best explained
+with an example.  This might be the naive implementation of an
+abstract <code class="docutils literal notranslate"><span class="pre">&lt;request&gt;</span></code> class for a high-level networking library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>define abstract class &lt;request&gt; (&lt;object&gt;)
+  slot client, init-keyword: client:;
+  slot time-received, init-keyword: time-received:;
+  ...
+end;
+</pre></div>
+</div>
+<p>The problem is that both “client” and “time-received” are fairly
+reasonable names for local variables so they could easily be
+shadowed accidentally.  Also, they’re probably too short and general
+to be exported.  Common practice would be to do something like this
+instead:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>define abstract class &lt;request&gt; (&lt;object&gt;)
+  slot request-client, init-keyword: client:;
+  slot request-time-received, init-keyword: time-received:;
+  ...
+end;
+</pre></div>
+</div>
+<p>This leads to code such as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">request</span><span class="o">.</span><span class="n">request</span><span class="o">-</span><span class="n">client</span> <span class="p">:</span><span class="o">=</span> <span class="o">...</span><span class="p">;</span>
+<span class="n">foo</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">request</span><span class="o">-</span><span class="n">time</span><span class="o">-</span><span class="n">received</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>which may look odd at first due to the duplication of “request”, but
+this is an accepted pattern.</p>
+<p>(Note that this pattern may not work for mixin classes, but there is
+likely a better name anyway in such cases.)</p>
+<p>There’s an additional wrinkle when a subclass gets involved:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Bad (breaks abstraction)
+define class &lt;http-request&gt; (&lt;request&gt;)
+  slot http-request-headers, init-keyword: headers:;
+  ...
+end;
+</pre></div>
+</div>
+<p>Note that naming the slot <code class="docutils literal notranslate"><span class="pre">http-request-headers</span></code> would break
+abstraction because the caller now has to know which slots are in
+<code class="docutils literal notranslate"><span class="pre">&lt;request&gt;</span></code> and which are in <code class="docutils literal notranslate"><span class="pre">&lt;http-request&gt;</span></code> and prefix them
+appropriately.  So instead it is better to use the same prefix for a
+whole group of classes, in this case “request-“:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Good (consistent prefix)
+define class &lt;http-request&gt; (&lt;request&gt;)
+  slot request-headers, init-keyword: headers:;
+  ...
+end;
+</pre></div>
+</div>
+</li>
+<li><p>Use a plural noun to name variables bound to collections.</p>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">*cats*</span></code></p>
+</li>
+<li><p>Do not include the type in the name.  This way it won’t be necessary
+to change the name if the implementation type changes.</p>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">*frobnoids*</span></code> not <code class="docutils literal notranslate"><span class="pre">*frobnoid-list*</span></code></p>
+</li>
+</ul>
+</div>
+<div class="section" id="dot-notation">
+<h2>Dot notation<a class="headerlink" href="#dot-notation" title="Permalink to this headline">¶</a></h2>
+<p>Use for stateless property accessors that return a single value.</p>
+<p>I now tend to use dot notation quite widely for any logical “property
+access”, even if computed. That is, <code class="docutils literal notranslate"><span class="pre">foo.size</span></code> is acceptable but the
+imperative <code class="docutils literal notranslate"><span class="pre">foo.initialize</span></code> and <code class="docutils literal notranslate"><span class="pre">foo.close</span></code> aren’t for me.</p>
+</div>
+<div class="section" id="symbols-versus-keywords">
+<h2>Symbols versus keywords<a class="headerlink" href="#symbols-versus-keywords" title="Permalink to this headline">¶</a></h2>
+<p>Use keywords only for keyword parameters. Do this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;file-stream&gt;</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>instead of this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;file-stream&gt;</span><span class="p">,</span> <span class="k">direction:</span> <span class="k">input:</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>It’s reasonable to use keyword syntax to specify a received keyword, for
+example in a slot specification or in a parameter list:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">slot</span> <span class="n">point-x</span><span class="p">,</span> <span class="k">init-keyword:</span> <span class="k">x:</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="end-words">
+<h2>End words<a class="headerlink" href="#end-words" title="Permalink to this headline">¶</a></h2>
+<p>“End words” are the optional one or two words that follow <code class="docutils literal notranslate"><span class="pre">end</span></code> in
+statements. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">...</span> <span class="n">end</span> <span class="k">if</span>
+<span class="n">define</span> <span class="n">method</span> <span class="n">foo</span> <span class="o">...</span> <span class="n">end</span> <span class="n">method</span>
+<span class="k">with</span><span class="o">-</span><span class="nb">open</span><span class="o">-</span><span class="n">file</span> <span class="o">...</span> <span class="n">end</span> <span class="k">with</span><span class="o">-</span><span class="nb">open</span><span class="o">-</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>End words should be used sparingly because they add to the verbosity
+of the code and add a small maintenance burden. They can be useful to
+improve readability of deeply nested code or very long functions
+because the compiler warns if they don’t match the begin
+word. However, sometimes this indicates a need to break the code into
+multiple (possibly local) functions.</p>
+<p>Recommended usage:</p>
+<ul>
+<li><p>Use end words if the beginning of the block they terminate is
+distant and/or the function is deeply nested.</p></li>
+<li><p>Always use one end word for top-level definitions, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">end</span> <span class="n">function</span>
+</pre></div>
+</div>
+<p>but not this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">end</span> <span class="n">function</span> <span class="n">foo</span>
+</pre></div>
+</div>
+<p>Leave off the trailing function name because it adds little value,
+it is easy to forget to fix it when renaming the function, and it
+causes useless hits when searching the code.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="semicolons">
+<h2>Semicolons<a class="headerlink" href="#semicolons" title="Permalink to this headline">¶</a></h2>
+<p>Last expression can go without semicolon only where the value is used.
+This is actually a useful little practice since if you want to add a
+form to the end of a body whose value is significant you’re forced to
+think a little more.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">empty?</span> <span class="p">(</span><span class="nb">vector</span> <span class="p">::</span> <span class="nc">&lt;vector&gt;</span><span class="p">)</span>
+  <span class="nb">vector</span><span class="p">.</span><span class="nb">size</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">empty?</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="nb">add</span> <span class="p">(</span><span class="nb">vector</span> <span class="p">::</span> <span class="nc">&lt;vector&gt;</span><span class="p">,</span> <span class="n">object</span><span class="p">)</span>
+  <span class="k">let</span> <span class="n">new-vector</span> <span class="p">::</span> <span class="nc">&lt;vector&gt;</span>
+    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nb">vector</span><span class="p">.</span><span class="n">class-for-copy</span><span class="p">,</span> <span class="k">size:</span> <span class="nb">vector</span><span class="p">.</span><span class="nb">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nb">replace-subsequence!</span><span class="p">(</span><span class="n">new-vector</span><span class="p">,</span> <span class="nb">vector</span><span class="p">);</span>
+  <span class="n">new-vector</span><span class="p">[</span><span class="nb">vector</span><span class="p">.</span><span class="nb">size</span><span class="p">]</span> <span class="o">:=</span> <span class="n">object</span><span class="p">;</span>
+  <span class="n">new-vector</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">add</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="general-indentation">
+<h2>General indentation<a class="headerlink" href="#general-indentation" title="Permalink to this headline">¶</a></h2>
+<p>Avoid boxing your code and having big right column:</p>
+<p><strong>No:</strong></p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">yukyukyukyukyukyukyuk</span> <span class="p">(</span><span class="n">blahblahblahblahblah</span> <span class="p">::</span> <span class="nc">&lt;foo&gt;</span><span class="p">,</span>
+                                     <span class="n">tolosetrack</span> <span class="p">::</span> <span class="nc">&lt;bar&gt;</span><span class="p">,</span>
+                                     <span class="n">concerned?</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">yukyukyukyukyukyukyuk</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Yes:</strong></p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">yukyukyukyukyukyukyuk</span>
+    <span class="p">(</span><span class="n">blahblahblahblahblah</span> <span class="p">::</span> <span class="nc">&lt;foo&gt;</span><span class="p">,</span> <span class="n">tolosetrack</span> <span class="p">::</span> <span class="nc">&lt;bar&gt;</span><span class="p">,</span>
+     <span class="n">concerned?</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">yukyukyukyukyukyukyuk</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Use two space indentation:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span>
+  <span class="n">tell-da-world</span><span class="p">(</span><span class="n">bigfish</span><span class="p">,</span> <span class="n">smallpond</span><span class="p">);</span>
+  <span class="n">world</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operators-on-newline">
+<h2>Operators on newline<a class="headerlink" href="#operators-on-newline" title="Permalink to this headline">¶</a></h2>
+<p>In long expressions where line breaks are necessary, put operators on
+a new line and indent two spaces:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">supercalifragilisticexpealidocious</span>
+  <span class="o">|</span> <span class="n">wasthatashovelfull</span>
+  <span class="o">|</span> <span class="n">ofraisensorsyrup</span>
+
+<span class="n">superfragilisticespealidoscious</span>
+  <span class="o">:=</span> <span class="n">somereallylongexpressionthatdoesnotfitabove</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">variable</span> <span class="n">lilgirlscryalldatime</span>
+  <span class="o">=</span> <span class="n">bigboysdontcry</span><span class="p">;</span>
+
+<span class="k">let</span> <span class="n">superfragilisticespealidoscious</span>
+  <span class="o">=</span> <span class="n">someexpressionthatclearlydoesnotfitabove</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="calls">
+<h3>Calls<a class="headerlink" href="#calls" title="Permalink to this headline">¶</a></h3>
+<p>Usually is on same line with arguments single spaced and no space
+between the function and its argument list:</p>
+<p><strong>Yes:</strong></p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">funkie</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+
+<span class="n">longfunkiefunctionnamesuperfraligistic</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Function name up to 6 characters keep parens on same line:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">values</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
+       <span class="n">sequence</span><span class="p">.</span><span class="nb">size</span><span class="p">,</span>
+       <span class="n">sequence-next-state</span><span class="p">,</span>
+       <span class="n">sequence-finished-state?</span><span class="p">,</span>
+       <span class="n">sequence-current-key</span><span class="p">,</span>
+       <span class="n">stretchy-vector-current-element</span><span class="p">,</span>
+       <span class="n">stretchy-vector-current-element-setter</span><span class="p">,</span>
+       <span class="n">identity-copy-state</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Function name more than 6 characters break to newline:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">redirect-computations!</span>
+  <span class="p">(</span><span class="n">old-c</span><span class="p">,</span> <span class="n">new-c</span><span class="p">,</span> <span class="n">previous-computations</span><span class="p">,</span> <span class="n">next-computations</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>More arguments:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">redirect-computations!</span>
+  <span class="p">(</span><span class="n">old-c</span><span class="p">,</span> <span class="n">new-c</span><span class="p">,</span> <span class="n">previous-computations</span><span class="p">,</span> <span class="n">next-computations</span><span class="p">,</span>
+   <span class="n">areallylongidthatrequireswrappingtheargs</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="if-then-else">
+<h2>if then else<a class="headerlink" href="#if-then-else" title="Permalink to this headline">¶</a></h2>
+<p>General case:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+  <span class="k">then</span> <span class="n">statements</span> <span class="p">...</span>
+<span class="k">else</span>
+  <span class="k">else</span> <span class="n">statements</span> <span class="p">...</span>
+<span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Abbreviated use:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span> <span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="let">
+<h2>let<a class="headerlink" href="#let" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">let</span></code> statements should generally have the smallest scope necessary.
+They do not increase the indentation level:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">xxxxx</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">yyyyy</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="n">f!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+<span class="n">inc!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+<span class="n">z</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-and-case">
+<h2>select and case<a class="headerlink" href="#select-and-case" title="Permalink to this headline">¶</a></h2>
+<p>The aligned <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code>’s help make the cases stand out:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">case</span>
+  <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="n">test</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="p">=&gt;</span> <span class="n">grovel</span><span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">src-index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dst-index</span><span class="p">);</span>
+  <span class="k">otherwise</span>
+    <span class="p">=&gt;</span> <span class="nb">vector</span><span class="p">[</span><span class="n">dst-index</span><span class="p">]</span> <span class="o">:=</span> <span class="n">item</span><span class="p">;</span>
+       <span class="n">grovel</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">src-index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dst-index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">end</span> <span class="k">case</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Abbreviated use:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">case</span>
+  <span class="vg">*blue?*</span>   <span class="p">=&gt;</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="vg">*yellow?*</span> <span class="p">=&gt;</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">case</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Long expression:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="p">(</span><span class="n">supercalifragilisticexbealidocious</span>
+        <span class="o">+</span> <span class="n">someexpressionthatclearlydoesnotfitabove</span><span class="p">)</span>
+  <span class="mi">1</span> <span class="p">=&gt;</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="mi">2</span> <span class="p">=&gt;</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">select</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="macros">
+<h2>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">collecting</span>
+  <span class="p">{</span> <span class="n">collecting</span> <span class="p">()</span> <span class="nt">?body</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="n">collecting</span> <span class="p">(</span><span class="n">_collector</span><span class="p">)</span>
+           <span class="nt">?body</span><span class="p">;</span>
+           <span class="n">collected</span><span class="p">(</span><span class="n">_collector</span><span class="p">)</span>
+         <span class="k">end</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="n">collecting</span> <span class="p">(</span><span class="nb">as</span> <span class="nt">?expression</span><span class="p">)</span> <span class="nt">?body</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="n">collecting</span> <span class="p">(</span><span class="n">_collector</span> <span class="nb">as</span> <span class="nt">?expression</span><span class="p">)</span>
+           <span class="nt">?body</span><span class="p">;</span>
+           <span class="n">collected</span><span class="p">(</span><span class="n">_collector</span><span class="p">)</span>
+         <span class="k">end</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="n">collecting</span> <span class="p">(</span><span class="nt">?vars</span><span class="p">)</span> <span class="nt">?body</span> <span class="k">end</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?vars</span><span class="p">;</span>
+         <span class="nt">?body</span> <span class="p">}</span>
+<span class="k">vars:</span>
+  <span class="p">{</span> <span class="nt">?var</span><span class="p">,</span> <span class="p">...</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="nt">?var</span><span class="p">;</span> <span class="p">...</span> <span class="p">}</span>
+  <span class="p">{</span> <span class="p">}</span>
+    <span class="p">=&gt;</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="for-loop">
+<h2>for loop<a class="headerlink" href="#for-loop" title="Permalink to this headline">¶</a></h2>
+<p>Put each iteration clause on a line by itself:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">elementincollectionnumberone</span> <span class="k">in</span> <span class="n">collection1</span><span class="p">,</span>
+     <span class="n">elementincollectionnumbertwo</span> <span class="k">in</span> <span class="n">collection2</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="k">for</span>
+</pre></div>
+</div>
+<p>If the iteration clauses are utterly trivial, they may be on one line:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">f</span> <span class="k">in</span> <span class="n">foo</span><span class="p">,</span> <span class="n">b</span> <span class="k">in</span> <span class="n">bar</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="k">for</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="local-methods">
+<h2>Local methods<a class="headerlink" href="#local-methods" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">method</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="k">local</span> <span class="nb">method</span> <span class="n">strip</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+          <span class="p">...</span>
+        <span class="k">end</span> <span class="nb">method</span> <span class="n">strip</span><span class="p">,</span>
+        <span class="nb">method</span> <span class="n">chars</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+          <span class="p">...</span>
+        <span class="k">end</span> <span class="nb">method</span> <span class="n">chars</span><span class="p">;</span>
+  <span class="n">strip</span><span class="p">(</span><span class="n">chars</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Tight for space:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">method</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="k">local</span>
+    <span class="nb">method</span> <span class="n">strip</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="p">...</span>
+    <span class="k">end</span> <span class="nb">method</span> <span class="n">strip</span><span class="p">,</span>
+    <span class="nb">method</span> <span class="n">chars</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="p">...</span>
+    <span class="k">end</span> <span class="nb">method</span> <span class="n">chars</span><span class="p">;</span>
+  <span class="n">strip</span><span class="p">(</span><span class="n">chars</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Abbreviated use:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">method</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="k">local</span> <span class="n">strip</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">,</span>
+        <span class="n">chars</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">...</span> <span class="k">end</span><span class="p">;</span>
+  <span class="n">strip</span><span class="p">(</span><span class="n">chars</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A single recursive method:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">method</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="k">local</span> <span class="n">stripchars</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="p">...</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="n">stripchars</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameter-lists">
+<h2>Parameter lists<a class="headerlink" href="#parameter-lists" title="Permalink to this headline">¶</a></h2>
+<p>Right after function name:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">vector</span> <span class="p">(</span><span class="k">#rest</span> <span class="n">rest</span><span class="p">)</span>
+  <span class="n">rest</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">vector</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Indentation, style A:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">union</span>
+    <span class="p">(</span><span class="n">seq-1</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">,</span> <span class="n">seq-2</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">test</span> <span class="o">=</span> <span class="n">\==</span><span class="p">)</span>
+  <span class="nb">remove-duplicates</span><span class="p">(</span><span class="nb">concatenate</span><span class="p">(</span><span class="n">seq-1</span><span class="p">,</span> <span class="n">seq-2</span><span class="p">),</span> <span class="k">test:</span> <span class="n">test</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">union</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Optional parameters: Use the same aesthetic applied to indenting
+operators continued across lines, indent #key names as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">print</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="nc">&lt;multiple-value-combination&gt;</span><span class="p">,</span>
+     <span class="k">#key</span> <span class="n">stream</span> <span class="o">=</span> <span class="vg">*standard-output*</span><span class="p">,</span> <span class="n">verbose?</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span> <span class="o">=</span> <span class="l">#t</span><span class="p">,</span>
+          <span class="n">depth</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">))</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">print</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="return-values">
+<h2>Return values<a class="headerlink" href="#return-values" title="Permalink to this headline">¶</a></h2>
+<p>No semicolon.</p>
+<p>Parenthesis notation.</p>
+<p>If both parameter list and return values fit on the first line:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">past?</span> <span class="p">(</span><span class="n">time</span> <span class="p">::</span> <span class="nc">&lt;offset&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">)</span>
+  <span class="n">time</span><span class="p">.</span><span class="n">total-seconds</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">past?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If parameter list and return values do not both fit on the first line:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">element-setter</span>
+    <span class="p">(</span><span class="n">new-value</span><span class="p">,</span> <span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">,</span> <span class="n">key</span> <span class="p">::</span> <span class="nc">&lt;small-integer&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">new-value</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">element-setter</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If parameter list and return values do not both fit on the same line:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">decode-total-seconds</span>
+    <span class="p">(</span><span class="n">time</span> <span class="p">::</span> <span class="nc">&lt;time-of-day&gt;</span><span class="p">)</span>
+      <span class="p">=&gt;</span> <span class="p">(</span><span class="n">hour</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="nb">min</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">sec</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">)</span>
+  <span class="n">decode-total-seconds</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">total-seconds</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">decode-total-seconds</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">convert-expressions</span>
+    <span class="p">(</span><span class="n">env</span> <span class="p">::</span> <span class="nc">&lt;environment&gt;</span><span class="p">,</span> <span class="n">argument-forms</span><span class="p">)</span>
+      <span class="p">=&gt;</span> <span class="p">(</span><span class="nb">first</span> <span class="p">::</span> <span class="nc">&lt;computation&gt;</span><span class="p">,</span> <span class="nb">last</span> <span class="p">::</span> <span class="nc">&lt;computation&gt;</span><span class="p">,</span> <span class="n">temporaries</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">convert-expressions</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Optional parameters split across a line:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">fill!</span>
+    <span class="p">(</span><span class="n">sequence</span> <span class="p">::</span> <span class="nc">&lt;mutable-sequence&gt;</span><span class="p">,</span> <span class="n">value</span> <span class="p">::</span> <span class="nc">&lt;object&gt;</span><span class="p">,</span>
+       <span class="k">#key</span> <span class="k">start:</span> <span class="nb">first</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="k">end:</span> <span class="nb">last</span><span class="p">)</span>
+         <span class="p">=&gt;</span> <span class="p">(</span><span class="n">sequence</span> <span class="p">::</span> <span class="nc">&lt;mutable-sequence&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">fill!</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Complicated cases</p>
+<p>The following is preferred:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">\&lt;</span>
+    <span class="p">(</span><span class="n">a</span> <span class="p">::</span> <span class="nc">&lt;double-float&gt;</span><span class="p">,</span> <span class="n">b</span> <span class="p">::</span> <span class="nc">&lt;ratio&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">res</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">&lt;</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;double-float&gt;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">\&lt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Over this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">\&lt;</span> <span class="p">(</span><span class="n">a</span> <span class="p">::</span> <span class="nc">&lt;double-float&gt;</span><span class="p">,</span> <span class="n">b</span> <span class="p">::</span> <span class="nc">&lt;ratio&gt;</span><span class="p">)</span>
+    <span class="p">=&gt;</span> <span class="p">(</span><span class="n">res</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">&lt;</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;double-float&gt;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">\&lt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Use other return value name to convey more meaning if possible.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">reverse!</span> <span class="p">(</span><span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">reverse!</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">munge</span> <span class="p">(</span><span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">new-list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">generic</span> <span class="n">munge!</span> <span class="p">(</span><span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="nb">list</span> <span class="p">::</span> <span class="nc">&lt;list&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">_</span></code> for poetry impaired or where the function name corresponds
+exactly to the return value name</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="nb">first</span> <span class="p">(</span><span class="n">s</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">keys</span><span class="p">,</span> <span class="k">#key</span> <span class="n">default</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="nb">first</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="method-constants">
+<h2>Method constants<a class="headerlink" href="#method-constants" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="nb">curry</span>
+  <span class="o">=</span> <span class="nb">method</span> <span class="p">(...)</span> <span class="p">=&gt;</span> <span class="p">(...)</span>
+      <span class="p">...</span>
+    <span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generic-function-definitions">
+<h2>Generic function definitions<a class="headerlink" href="#generic-function-definitions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="nb">choose</span>
+    <span class="p">(</span><span class="n">pred</span> <span class="p">::</span> <span class="nc">&lt;function&gt;</span><span class="p">,</span> <span class="n">seq</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">elts</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="nb">choose-by</span>
+    <span class="p">(</span><span class="n">pred</span> <span class="p">::</span> <span class="nc">&lt;function&gt;</span><span class="p">,</span> <span class="n">test-seq</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">,</span> <span class="n">val-seq</span> <span class="p">::</span> <span class="n">sequence&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">_</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-definitions">
+<h2>Class definitions<a class="headerlink" href="#class-definitions" title="Permalink to this headline">¶</a></h2>
+<p>Lots of direct superclasses:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;z&gt;</span>
+    <span class="p">(</span><span class="nc">&lt;a&gt;</span><span class="p">,</span> <span class="nc">&lt;b&gt;</span><span class="p">,</span> <span class="nc">&lt;c&gt;</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;z&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Long slot initializations:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;entry-state&gt;</span> <span class="p">(</span><span class="nc">&lt;temporary&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">name</span><span class="p">,</span> <span class="k">init-keyword:</span> <span class="k">name:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">me-block</span><span class="p">,</span> <span class="k">init-keyword:</span> <span class="k">block:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">exits</span> <span class="p">::</span> <span class="nc">&lt;stretchy-vector&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;stretchy-vector&gt;</span><span class="p">),</span>
+    <span class="k">init-keyword:</span> <span class="k">exits:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
