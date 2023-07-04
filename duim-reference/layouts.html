@@ -1,0 +1,2203 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DUIM-Layouts Library &mdash; DUIM Reference 1.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="DUIM-Gadgets Library" href="gadgets.html" />
+    <link rel="prev" title="DUIM-Graphics Library" href="graphics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DUIM Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DUIM-Layouts Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-class-hierarchy-for-duim-layouts">The class hierarchy for DUIM-Layouts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-layout-class-and-its-subclasses">The &lt;layout&gt; class and its subclasses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subclasses-of-layout">Subclasses of &lt;layout&gt;</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#duim-layouts-module">DUIM-Layouts Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frames.html">DUIM-Frames Library</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DUIM Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DUIM-Layouts Library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/layouts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="duim-layouts-library">
+<h1>DUIM-Layouts Library<a class="headerlink" href="#duim-layouts-library" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The DUIM-Layouts library contains interfaces that define a number of
+layouts for use in your GUI applications, as well as the necessary
+functions, generic functions, and macros for creating, manipulating, and
+calculating them automatically. The library contains a single module,
+<em>duim-layouts</em>, from which all the interfaces described in this chapter
+are exposed. <a class="reference internal" href="#duim-layouts-module">DUIM-Layouts Module</a> contains
+complete reference entries for each exposed interface.</p>
+<p>Layouts are sheet objects that determine how the interface elements are
+presented on the screen. A layout object takes a number of children,
+expressed as a vector, and lays out those children according to certain
+constraints. Each child of a layout must be an instance of a DUIM class.</p>
+</div>
+<div class="section" id="the-class-hierarchy-for-duim-layouts">
+<h2>The class hierarchy for DUIM-Layouts<a class="headerlink" href="#the-class-hierarchy-for-duim-layouts" title="Permalink to this headline">¶</a></h2>
+<p>This section presents an overview of the available classes of layout,
+and describes the class hierarchy present.</p>
+<div class="section" id="the-layout-class-and-its-subclasses">
+<h3>The &lt;layout&gt; class and its subclasses<a class="headerlink" href="#the-layout-class-and-its-subclasses" title="Permalink to this headline">¶</a></h3>
+<p>The base class for the majority of DUIM layouts is the <a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a> class,
+which is itself a subclass of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>. All other layout-oriented
+classes are subclasses of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p>
+<p>The immediate subclasses of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a> that are exposed by the
+DUIM-Layouts library are shown in <a class="reference internal" href="#the-class-hierarchy-for-duim-layouts">The class hierarchy for
+DUIM-Layouts</a>. Only <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;basic-composite-pane&gt;</span></code>, <a class="reference internal" href="#duim-layouts:duim-layouts:[leaf-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-pane&gt;</span></code></a>,
+and <a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a> have any subclasses defined. See <a class="reference internal" href="#subclasses-of-layout">Subclasses of
+&lt;layout&gt;</a> for details of the subclasses of <a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a>.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Overall class hierarchy for the DUIM-Layouts library</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 36%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>&lt;sheet&gt;</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;basic-composite-pane&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p>&lt;single-child-composite-pane&gt;</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>&lt;multiple-child-composite-pane&gt;</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>&lt;layout&gt;</p></td>
+<td><p>See <a class="reference internal" href="#subclasses-of-layout">Subclasses of &lt;layout&gt;</a></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;leaf-pane&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p>&lt;null-pane&gt;</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;drawing-pane&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>&lt;simple-pane&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;top-level-sheet&gt;</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>All the actual layouts provided by the DUIM-Layouts library are
+subclasses of the base <a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a> class, and are described in
+<a class="reference internal" href="#subclasses-of-layout">Subclasses of &lt;layout&gt;</a>. In addition, a number of
+different types of pane are supplied by the DUIM-Layouts library.</p>
+<ul class="simple">
+<li><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;basic-composite-pane&gt;</span></code> This is a basic type of pane that is used to
+create any sheet that can contain children. It has two subclasses, one used
+for sheets that take only a single child, and one for sheets that can take
+several children.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[drawing-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;drawing-pane&gt;</span></code></a> This type of pane is used to create sheets on which
+geometric objects are drawn, for example, using the function provided by the
+DUIM-Geometry module or the DUIM-Graphics module. For more information on
+these modules, see <a class="reference internal" href="geom.html"><span class="doc">DUIM-Geometry Library</span></a>, and <a class="reference internal" href="graphics.html"><span class="doc">DUIM-Graphics Library</span></a>, respectively.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[top-level-sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;top-level-sheet&gt;</span></code></a> This class is used for any sheets that are at the
+top level of the hierarchy of windows on the screen: that is, there is no
+other sheet that is the parent of an instance of <a class="reference internal" href="#duim-layouts:duim-layouts:[top-level-sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;top-level-sheet&gt;</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[leaf-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-pane&gt;</span></code></a> In contrast to <a class="reference internal" href="#duim-layouts:duim-layouts:[top-level-sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;top-level-sheet&gt;</span></code></a>, an instance of
+<a class="reference internal" href="#duim-layouts:duim-layouts:[leaf-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-pane&gt;</span></code></a> cannot have any children, and is at the end of the
+hierarchy of windows on the screen.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[simple-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code></a> This class is the most basic type of pane, and is
+used when no other more suitable class is available.</p></li>
+</ul>
+</div>
+<div class="section" id="subclasses-of-layout">
+<h3>Subclasses of &lt;layout&gt;<a class="headerlink" href="#subclasses-of-layout" title="Permalink to this headline">¶</a></h3>
+<p>The subclasses of <a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a> are shown in <a class="reference internal" href="#subclasses-of-the-layout-class"><span class="std std-ref">Subclasses of the &lt;layout&gt; class</span></a></p>
+<span id="subclasses-of-the-layout-class"></span><table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Subclasses of the &lt;layout&gt; class</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 43%" />
+<col style="width: 34%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>&lt;layout&gt;</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;row-layout&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>&lt;column-layout&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;fixed-layout&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>&lt;pinboard-layout&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>&lt;stack-layout&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>&lt;table-layout&gt;</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p>&lt;grid-layout&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p>The layouts provided by DUIM fall roughly into two categories:</p>
+<ul class="simple">
+<li><p>Layout classes that calculate the position and size of their children
+for you, subject to some constraints.</p></li>
+<li><p>Layout classes that let you specify precisely the position of their
+children, and, optionally, the size of the children as well.</p></li>
+</ul>
+<p>The classes of layout available are as follows:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a> This class lays out its children in a single
+column, with all its children left-aligned by default.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a> This class lays out its children in a single row.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a> This class lays out its children one on top of
+another, aligned at the top left corner by default. It is
+specifically for windows that contain a number of layouts, only one
+of which is visible at any one time, such as property sheets, tab
+controls, or wizards.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a> This class lays out its children in a table,
+according to a specified number of rows and columns.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[pinboard-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pinboard-layout&gt;</span></code></a> This does not constrain the position of its
+children in any way. It is up to you to position each child individually,
+like pins on a pinboard.</p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[fixed-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-layout&gt;</span></code></a> This class is like <a class="reference internal" href="#duim-layouts:duim-layouts:[pinboard-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pinboard-layout&gt;</span></code></a>, in that you
+must specify the position of each child. Unlike <a class="reference internal" href="#duim-layouts:duim-layouts:[pinboard-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pinboard-layout&gt;</span></code></a>,
+however, you must also specify the size of each child.</p></li>
+</ul>
+<p>In addition to the basic types of layout described above, a subclass of
+<a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a> is provided, as follows:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[grid-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;grid-layout&gt;</span></code></a> This is a specialized version of <a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a>,
+in which all the cells in the table are forced to be the same size.</p></li>
+</ul>
+<div class="figure align-center" id="id3">
+<img alt="_images/layouts-3.png" src="_images/layouts-3.png" />
+<p class="caption"><span class="caption-text">Column, row, and pinboard layouts</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="duim-layouts-module">
+<h2>DUIM-Layouts Module<a class="headerlink" href="#duim-layouts-module" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a complete reference of all the interfaces that
+are exported from the <em>duim-layouts</em> module.</p>
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:allocate-space">
+<code class="sig-name descname">allocate-space</code> <em class="property">Open Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:allocate-space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocates space within a layout for its children.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>allocate-space <em>pane</em> <em>width height</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>Allocates space within a layout for its children. During the space
+allocation pass, a composite pane arranges its children within the
+available space and allocates space to them according to their space
+requirements and its own composition rules by calling <a class="reference internal" href="#duim-layouts:duim-layouts:allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">allocate-space</span></code></a>
+on each of the child panes. For example, <a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a> arranges
+all its children in a vertical column. The <em>width</em> and <em>height</em> arguments
+are the width and height of <em>pane</em> in device units, that is, pixels. These
+arguments give the amount of space into which all children must fit.</p>
+<p>This function actually calls <a class="reference internal" href="#duim-layouts:duim-layouts:do-allocate-space"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">do-allocate-space</span></code></a> to perform the
+calculations.  Client code may specialize <a class="reference internal" href="#duim-layouts:duim-layouts:do-allocate-space"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">do-allocate-space</span></code></a>, but
+not call it. Call <a class="reference internal" href="#duim-layouts:duim-layouts:allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">allocate-space</span></code></a> instead.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:do-allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">do-allocate-space</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[basic-user-pane]">
+<code class="sig-name descname">&lt;basic-user-pane&gt;</code> <em class="property">Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[basic-user-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of basic user panes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapping-layout-pane&gt;</span></code></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>region</strong> – An instance of type <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a>. Default value: :const`$nowhere`.</p></li>
+<li><p><strong>transform</strong> – An instance of type <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[transform]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform&gt;</span></code></a>. Default value: <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:$identity-transform"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$identity-transform</span></code></a>.</p></li>
+<li><p><strong>port</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;port&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>style-descriptor</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;object&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>help-context</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#object-table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object-table&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">make(&lt;object-table&gt;)</span></code>.</p></li>
+<li><p><strong>help-source</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#object-table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object-table&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">make(&lt;object-table&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of basic user panes. This is the class that gets subclassed by
+<a class="reference internal" href="#duim-layouts:duim-layouts:definepane"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">pane</span></code></a>.</p>
+<p>You specify where on the screen the pane is to be displayed using the
+<em>region:</em> init-keyword. The region specified should be relative to the
+top left corner of the pane’s parent, since the pane must be displayed
+within the confines of its parent.</p>
+<p>If you wish the location of the pane to be transformed in some way, use
+the <em>transform:</em> init-keyword.</p>
+<p>If you wish to use a port other than the default port, use the <em>port:</em>
+init-keyword.</p>
+<p>You can specify the appearance for text in the pane using the
+<em>style-descriptor:</em> init-keyword.</p>
+<p>The <em>help-source:</em> and <em>help-context:</em> keywords let you specify pointers
+to valid information available in any online help you supply with your
+application. The <em>help-context:</em> keyword should specify a context-ID
+present in the online help. This context-ID identifies the help topic
+that is applicable to the current pane. The <em>help-source:</em> init-keyword
+identifies the source file in which the help topic identified by
+<em>help-context:</em> can be found. A list of context-IDs should be provided
+by the author of the online help system.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:definepane"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">pane</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[column-layout]">
+<code class="sig-name descname">&lt;column-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[column-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of column layouts.</p>
+<dl class="field-list">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>spacing</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>y-spacing</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>equalize-heights?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>equalize-widths?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>x-alignment</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">one-of(#&quot;left&quot;,</span> <span class="pre">#&quot;right&quot;,</span> <span class="pre">#&quot;center&quot;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;left&quot;</span></code>.</p></li>
+<li><p><strong>ratios</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(limited(&lt;sequence&gt;),</span> <span class="pre">of:</span> <span class="pre">&lt;integer&gt;))</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>y-ratios</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(limited(&lt;sequence&gt;),</span> <span class="pre">of:</span> <span class="pre">&lt;integer&gt;))</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of column layouts. A column layout arranges its children in a
+column, automatically calculating the size and placement of each child
+within the specified parameters.</p>
+<div class="figure align-center">
+<img alt="_images/layouts-4.png" src="_images/layouts-4.png" />
+</div>
+<p>Three buttons arranged in a column layout</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">border:</span></code> init-keyword provides a border of whitespace around the
+children in the layout, and the value of this init-keyword represents
+the size of the border in pixels. This basically has the same effect as
+using the macro <a class="reference internal" href="gadgets.html#duim:duim-gadgets:with-border"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-border</span></code></a> around the layout, except it
+uses a simpler syntax.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">spacing:</span></code> or <code class="docutils literal notranslate"><span class="pre">y-spacing:</span></code> init-keywords let you specify how much
+vertical space should be inserted, in pixels, between the children of
+the layout. These two init-keywords can be used interchangeably.</p>
+<p>If true, <code class="docutils literal notranslate"><span class="pre">equalize-heights?:</span></code> ensures that all the children of the
+layout have the same height.</p>
+<p>If true, <code class="docutils literal notranslate"><span class="pre">equalize-widths?:</span></code> ensures that all the children of the layout
+have the same width.</p>
+<p>By default, all the children of a column layout are left-aligned. You
+can specify that they should be right or center-aligned using the
+<code class="docutils literal notranslate"><span class="pre">x-alignment:</span></code> keyword.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ratios:</span></code> or <code class="docutils literal notranslate"><span class="pre">y-ratios:</span></code> init-keywords let you specify the
+proportion of the total layout that should be taken up by each
+individual child. These two init-keywords can be used interchangeably.</p>
+<p>The value passed to <code class="docutils literal notranslate"><span class="pre">ratios:</span></code> needs to be a sequence of as many integers
+as there are children in the layout. Each child is then allocated the
+appropriate portion of vertical space in the layout. For example, if the
+value <code class="docutils literal notranslate"><span class="pre">#(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code> is specified for the <code class="docutils literal notranslate"><span class="pre">ratios:</span></code> init-keyword of a
+column layout containing three children, then the first child would
+claim a sixth of the available vertical space, the second child would
+claim a third of the vertical space, and the third child would claim
+half the vertical space, as shown in the diagram below.</p>
+<div class="figure align-center">
+<img alt="" src="_images/layouts-5.png" />
+</div>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;column-layout&gt;</span><span class="p">,</span>
+             <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span>
+                                   <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span><span class="p">),</span>
+                              <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span>
+                                   <span class="k">label:</span> <span class="s">&quot;World&quot;</span><span class="p">))</span>
+             <span class="k">spacing:</span> <span class="mi">100</span><span class="p">,</span>
+             <span class="k">x-alignment:</span> <span class="ss">#&quot;right&quot;</span><span class="p">,</span>
+             <span class="k">ratios:</span> <span class="p">#(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)));</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[grid-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;grid-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:vertically"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">vertically</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:compose-space">
+<code class="sig-name descname">compose-space</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:compose-space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the amount of space required for a specified child of a
+composite pane.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>compose-space <em>pane</em> #key <em>width height</em> =&gt; <em>space-req</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the amount of space required for <em>pane</em>, which is a child of
+a composite pane. During the space composition pass, a composite pane will
+typically ask each of its children how much space it requires by calling
+<code class="docutils literal notranslate"><span class="pre">compose-space</span></code>. They answer by returning instances of
+<a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>. The composite pane then forms its own space
+requirement by composing the space requirements of its children according
+to its own rules for laying out its children.</p>
+<p>The value returned by <code class="docutils literal notranslate"><span class="pre">compose-space</span></code> is an instance of
+<a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a> that represents how much space <em>pane</em>
+requires.</p>
+<p>The <em>width</em> and <em>height</em> arguments are real numbers that the
+<code class="docutils literal notranslate"><span class="pre">compose-space</span></code> method for a pane may use as “recommended” values for the
+width and height of the pane. These are used to drive top-down layout.</p>
+<p>This function actually calls <a class="reference internal" href="#duim-layouts:duim-layouts:do-compose-space"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">do-compose-space</span></code></a> to perform the
+space calculations. Client code may specialize <a class="reference internal" href="#duim-layouts:duim-layouts:do-compose-space"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">do-compose-space</span></code></a>
+but should not call it. Call <code class="docutils literal notranslate"><span class="pre">compose-space</span></code> instead.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:do-compose-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">do-compose-space</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:current-pane">
+<code class="sig-name descname">current-pane</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:current-pane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current pane.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>current-pane =&gt; <em>pane</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Returns the current pane: that is, the pane that has the mouse focus.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:definepane">
+<code class="sig-name descname">define pane</code> <em class="property">Defining Macro</em><a class="headerlink" href="#duim-layouts:duim-layouts:definepane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a new class of DUIM pane.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p>define pane <em>name</em> ({<em>supers</em> },*) {<em>slots-and-panes</em> } end</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – A Dylan name <em>bnf</em>.</p></li>
+<li><p><strong>supers</strong> – A Dylan name <em>bnf</em>.</p></li>
+<li><p><strong>slots-and-panes</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This macro lets you define a new class of DUIM pane.</p>
+<p>The <em>name</em> argument represents the name of the new class of pane, and
+<em>supers</em> is a list of zero or more superclasses for the new class.
+Multiple superclass names are separated by commas.</p>
+<p>The <em>slots-and-panes</em> argument represents the slot information for the
+new class, together with any init-keywords and default values that the
+slots should take.</p>
+<p>Panes are sheets which represent a “useful unit” in a GUI. There is no
+protocol class called <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pane&gt;</span></code>.</p>
+<ol class="upperalpha simple">
+<li><p>In most cases (such as when defining a frame using <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">frame</span></code>),
+a pane class groups existing gadgets (or panes) to form effectively a
+new gadget, without actually creating a new class of <a class="reference internal" href="gadgets.html#duim:duim-gadgets:[gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code></a>.</p></li>
+<li><p>Sometimes, a pane class implements some complex output-only sheet.</p></li>
+<li><p>Sometimes, a pane class implements the <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a> part of a <cite>&lt;gadgets.htm#34543&gt;</cite>.</p></li>
+</ol>
+<p>In general, a pane is best described as a <em>concrete</em> sheet.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">pane</span> <span class="nc">&lt;my-pane&gt;</span> <span class="p">()</span>
+  <span class="nb">slot</span> <span class="n">my-layout</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">layout:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">my-exit-buttons</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">exit-buttons:</span><span class="p">;</span>
+<span class="k">end</span> <span class="n">pane</span> <span class="nc">&lt;my-pane&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="frames.html#duim:duim-frames:defineframe"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">frame</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:do-allocate-space">
+<code class="sig-name descname">do-allocate-space</code> <em class="property">Open Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:do-allocate-space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by <a class="reference internal" href="#duim-layouts:duim-layouts:allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">allocate-space</span></code></a> to calculate space
+requirements for a pane.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>do-allocate-space <em>pane width height</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>This function is called by <a class="reference internal" href="#duim-layouts:duim-layouts:allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">allocate-space</span></code></a> to
+calculate space requirements for a pane. When calculating space
+requirements for classes of pane you have defined yourself, you should
+add methods to this function, but not call it directly. Call
+<a class="reference internal" href="#duim-layouts:duim-layouts:allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">allocate-space</span></code></a> instead.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:allocate-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">allocate-space</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:do-compose-space">
+<code class="sig-name descname">do-compose-space</code> <em class="property">Open Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:do-compose-space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by <a class="reference internal" href="#duim-layouts:duim-layouts:compose-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">compose-space</span></code></a> to calculate space
+requirements for a child.</p>
+<dl class="field-list">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>do-compose-space <em>pane</em> #key <em>width height</em> =&gt; <em>space-req</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>This function is called by <a class="reference internal" href="#duim-layouts:duim-layouts:compose-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">compose-space</span></code></a> to
+calculate space requirements for a child. When calculating space
+requirements for children in classes of pane you have defined yourself,
+you should specialize this function by adding methods for it. However,
+you should not call <code class="docutils literal notranslate"><span class="pre">do-compose-space</span></code> explicitly: call
+<a class="reference internal" href="#duim-layouts:duim-layouts:compose-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">compose-space</span></code></a> instead.</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>Assume that you have defined a new class of scroll bar as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;my-scroll-bar&gt;</span> <span class="p">(</span><span class="nc">&lt;scroll-bar&gt;</span><span class="p">,</span> <span class="nc">&lt;leaf-pane&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;test-scroll-bar&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A new method for do-compose-space can be defined as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">do-compose-space</span>
+    <span class="p">(</span><span class="n">pane</span> <span class="p">::</span> <span class="nc">&lt;my-scroll-bar&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">space-req</span> <span class="p">::</span> <span class="nc">&lt;space-requirement&gt;</span><span class="p">)</span>
+  <span class="k">select</span> <span class="p">(</span><span class="n">gadget-orientation</span><span class="p">(</span><span class="n">pane</span><span class="p">))</span>
+    <span class="ss">#&quot;horizontal&quot;</span> <span class="p">=&gt;</span>
+      <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;space-requirement&gt;</span><span class="p">,</span>
+           <span class="k">width:</span> <span class="n">width</span> <span class="o">|</span> <span class="mi">50</span><span class="p">,</span>
+           <span class="k">min-width:</span> <span class="mi">50</span><span class="p">,</span>
+           <span class="k">max-width:</span> <span class="no">$fill</span><span class="p">,</span>
+           <span class="k">height:</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="ss">#&quot;vertical&quot;</span> <span class="p">=&gt;</span>
+      <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;space-requirement&gt;</span><span class="p">,</span>
+           <span class="k">width:</span> <span class="mi">10</span><span class="p">,</span>
+           <span class="k">height:</span> <span class="n">height</span> <span class="o">|</span> <span class="mi">50</span><span class="p">,</span>
+           <span class="k">min-height:</span> <span class="mi">50</span><span class="p">,</span>
+           <span class="k">max-height:</span> <span class="no">$fill</span><span class="p">);</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">do-compose-space</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:compose-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">compose-space</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[drawing-pane]">
+<code class="sig-name descname">&lt;drawing-pane&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[drawing-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of drawing panes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>display-function</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;function&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of drawing panes. This is a pane that provides event handling
+and a drawing surface. Note that a drawing pane can be wrapped around a
+layout pane to provide a medium for all the children of the layout pane.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">display-function:</span></code> init-keyword defines the display function for the
+pane. This gets called by the <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:handle-repaint"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">handle-repaint</span></code></a> method for
+<a class="reference internal" href="#duim-layouts:duim-layouts:[simple-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:handle-repaint"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">handle-repaint</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:pane-display-function"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pane-display-function</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[simple-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="constant">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:$fill">
+<code class="sig-name descname">$fill</code> <em class="property">Constant</em><a class="headerlink" href="#duim-layouts:duim-layouts:$fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for width and height init-keywords for layout panes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Value</dt>
+<dd class="field-even"><p>100000</p>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This constant is used as the default value for any <code class="docutils literal notranslate"><span class="pre">width:</span></code> and
+<code class="docutils literal notranslate"><span class="pre">height:</span></code> init-keywords in layout panes.</p>
+<p>These defaults gives the intuitive behavior that specifying only the
+width or height of a pane causes it to be allocated at least that much
+space, and it may be given extra space if there is extra space in the
+layout. This default behavior can be changed if either the <code class="docutils literal notranslate"><span class="pre">min-width:</span></code>
+or <code class="docutils literal notranslate"><span class="pre">min-height:</span></code> init-keywords are specified explicitly.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="dcs.html#duim-dcs:duim-dcs:make"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">make</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[fixed-layout]">
+<code class="sig-name descname">&lt;fixed-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[fixed-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of fixed layouts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The class of fixed layouts. Fixed layouts are similar to pinboard
+layouts, in that the positioning and geometry of the children of a fixed
+layout are entirely determined by the programmer. You can place children
+at any point in a fixed layout, and the layout does not attempt to
+calculate an optimum position or size for any of them.</p>
+<p>Fixed layouts differ from pinboard layouts, however, in that any
+children placed in a fixed layout are left at exactly the size and
+position that they were created: pinboard layouts leave the positions of
+any children alone, but constrains the sizes of the children to obey any
+constraints they have been given.</p>
+<p>Fixed layouts are most useful if you know exactly what size and position
+every child in the layout should be.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[pinboard-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pinboard-layout&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[grid-layout]">
+<code class="sig-name descname">&lt;grid-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[grid-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of grid layouts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>cell-space-requirement</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of grid layouts. A grid layout arranges its children in a
+grid, automatically calculating the size and placement of each child
+within the specified parameters.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cell-space-requirement:</span></code> init-keyword lets you specify the
+preferred space requirement for any individual cell in the grid layout.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:horizontally">
+<code class="sig-name descname">horizontally</code> <em class="property">Statement Macro</em><a class="headerlink" href="#duim-layouts:duim-layouts:horizontally" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lays out a series of gadgets horizontally.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p>horizontally ([<em>options</em> ]) {<em>panes</em> }+ end</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>options</strong> – Dylan arguments <em>bnf</em>.</p></li>
+<li><p><strong>panes</strong> – One or more occurrences of Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This macro lays a series of gadgets out horizontally, creating the
+necessary layouts for you automatically.</p>
+<p>The <em>options</em> are passed directly to the row layout, and thus can be any
+legitimate combinations of init-keywords for <a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a>. If no
+options are specified, then the default values for row layout are used.</p>
+<p>The <em>panes</em> argument consists of a number of Dylan expressions, each of
+which creates an instance of a gadget or layout that is to be included
+in the horizontal layout.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="n">horizontally</span> <span class="p">()</span>
+          <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span><span class="p">);</span>
+          <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;World&quot;</span><span class="p">)</span>
+        <span class="k">end</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:tabling"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">tabling</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:vertically"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">vertically</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[layout]">
+<code class="sig-name descname">&lt;layout&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The superclass class of all layout classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>space-requirement</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>. Required.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Required.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Required.</p></li>
+<li><p><strong>min-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><strong>min-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><strong>max-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>.</p></li>
+<li><p><strong>max-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>.</p></li>
+<li><p><strong>resizable?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#t</span></code>.</p></li>
+<li><p><strong>fixed-width?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>fixed-height?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of layouts. This is the basic class from which all other forms
+of layout inherit. You cannot create direct instances of this class.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">space-requirement:</span></code> init-keyword describes the space required for
+the layout. It is generally calculated automatically based on the values
+of the various width and height init-keywords, and the class of layout
+that is being created.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">width:</span></code>, <code class="docutils literal notranslate"><span class="pre">height:</span></code>, <code class="docutils literal notranslate"><span class="pre">min-width:</span></code>, <code class="docutils literal notranslate"><span class="pre">min-height:</span></code>, <code class="docutils literal notranslate"><span class="pre">max-width:</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">max-height:</span></code> init-keywords between them describe the configuration
+of the layout. The default values for these init-keywords (where
+applicable) are set such that the layout always fills the available
+space in any given direction.</p>
+<p>Finally, three init-keywords are available that control how the layout
+is affected when the frame containing it is resized. All three
+init-keywords take boolean values. You can specify whether a layout is
+resizeable using the <code class="docutils literal notranslate"><span class="pre">resizable?:</span></code> init-keyword. If <code class="docutils literal notranslate"><span class="pre">fixed-width?:</span></code> or
+<code class="docutils literal notranslate"><span class="pre">fixed-height?:</span></code> are true, then the layout cannot be resized in the
+appropriate direction. Setting both to <code class="docutils literal notranslate"><span class="pre">#t</span></code> is equivalent to setting
+resizeable?: to <code class="docutils literal notranslate"><span class="pre">#f</span></code>. Different subclasses of layout restrict the
+values of these init-keywords in different ways, such that, for
+instance, a row layout has a fixed height.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[grid-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;grid-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[pinboard-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pinboard-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:layout-border">
+<code class="sig-name descname">layout-border</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:layout-border" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the amount of whitespace around the children in a layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>layout-border <em>layout</em> =&gt; <em>border</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>layout</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">type-union(&lt;row-layout&gt;,</span> <span class="pre">&lt;column-layout&gt;,</span> <span class="pre">&lt;table-layout&gt;,</span> <span class="pre">&lt;grid-layout&gt;,</span> <span class="pre">&lt;stack-layout&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the amount of whitespace, in pixels, around the children in
+<em>layout</em>.</p>
+<p>Note that this function does not apply to pinboard layouts, because the
+positioning of the children in a pinboard layout is completely in the
+control of the programmer.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:layout-border-setter"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">layout-border-setter</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:layout-border-setter">
+<code class="sig-name descname">layout-border-setter</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:layout-border-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the amount of whitespace around the children in a layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>layout-border <em>border</em> <em>layout</em> =&gt; <em>border</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>layout</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">type-union(&lt;row-layout&gt;,</span> <span class="pre">&lt;column-layout&gt;,</span> <span class="pre">&lt;table-layout&gt;,</span> <span class="pre">&lt;grid-layout&gt;,</span> <span class="pre">&lt;stack-layout&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Sets the amount of whitespace, in pixels, around the children in
+<em>layout</em>.</p>
+<p>You can also set this value a layout is created using the <code class="docutils literal notranslate"><span class="pre">border:</span></code>
+init-keyword.</p>
+<p>Note that this function does not apply to pinboard layouts, because the
+positioning of the children in a pinboard layout is completely in the
+control of the programmer.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:layout-border"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">layout-border</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:layout-equalize-heights?">
+<code class="sig-name descname">layout-equalize-heights?</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:layout-equalize-heights?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the children of the specified layout are all the same
+height.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>layout-equalize-heights? <em>layout</em> =&gt; <em>equal?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>layout</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">type-union(&lt;row-layout&gt;,</span> <span class="pre">&lt;column-layout&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>equal?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns true if the children of <em>layout</em> are all the same height. The
+layout must be either a row or a column layout.</p>
+<p>You can only set this value when a layout is created, using the
+<code class="docutils literal notranslate"><span class="pre">equalize-heights?:</span></code> init-keyword. There is no equivalent setter
+function.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:layout-equalize-widths?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">layout-equalize-widths?</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:layout-equalize-widths?">
+<code class="sig-name descname">layout-equalize-widths?</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:layout-equalize-widths?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the children of the specified layout are all the same
+width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>layout-equalize-widths? <em>layout</em> =&gt; <em>equal?</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>layout</strong> – An instance of type type-union(&lt;row-layout&gt;, &lt;column-layout&gt;)``.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>equal?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns true if the children of <em>layout</em> are all the same width. The
+layout must be either a row or a column layout.</p>
+<p>You can only set this value when a layout is created, using the
+<code class="docutils literal notranslate"><span class="pre">equalize-widths?:</span></code> init-keyword. There is no equivalent setter
+function.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:layout-equalize-heights?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">layout-equalize-heights?</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[leaf-pane]">
+<code class="sig-name descname">&lt;leaf-pane&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[leaf-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of leaf panes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>The class of leaf panes. These are sheets that live at the leaf of the
+sheet tree that obeys the layout protocols.</p>
+<p>Subclass this class if you want to create a basic leaf pane.</p>
+<ul class="simple">
+<li><p>If you want to do output to it, mix in one of the
+<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet-with-medium-mixin&gt;</span></code> classes.</p></li>
+<li><p>If you want to do input from it, min in one of the
+<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet-with-event-queue&gt;</span></code> classes.</p></li>
+<li><p>If you want to repaint it, mix in one of the
+<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet-with-repainting-mixin&gt;</span></code> classes.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:make([space-requirement])">
+<code class="sig-name descname">make(&lt;space-requirement&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#duim-layouts:duim-layouts:make([space-requirement])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an instance of <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>make <em>space-requirement-class</em> #key <em>width min-width max-width height min-height max-height</em> =&gt; <em>space-req</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>space-requirement-class</strong> – The class <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>.</p></li>
+<li><p><strong>min-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>width</em>.</p></li>
+<li><p><strong>max-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>width</em>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>.</p></li>
+<li><p><strong>min-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>height</em>.</p></li>
+<li><p><strong>max-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>height</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Creates an instance of <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p>
+<p>The various width and height arguments let you control the values of
+corresponding init-keywords to <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>, thereby
+control the width and height of a layout under various circumstances. See
+<a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>, for a full description of this behavior.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[multiple-child-composite-pane]">
+<code class="sig-name descname">&lt;multiple-child-composite-pane&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[multiple-child-composite-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of composite panes that can have multiple children.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The class of composite panes that can have multiple children. Subclass
+this class if you want to create a class of pane that can have more than
+one child.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[single-child-composite-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;single-child-composite-pane&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[null-pane]">
+<code class="sig-name descname">&lt;null-pane&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[null-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of null panes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[leaf-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;leaf-pane&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The class of null panes. This class acts as a filler: use it when you
+need to “fill space” somewhere in a complex layout.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="gadgets.html#duim:duim-gadgets:[spacing]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;spacing&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="gadgets.html#duim:duim-gadgets:with-spacing"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-spacing</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:pane-display-function">
+<code class="sig-name descname">pane-display-function</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:pane-display-function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the function used to display the specified pane.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>pane-display-function <em>pane</em> =&gt; <em>pane-display-function</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Keyword pane-display-function</dt>
+<dd class="field-odd"><p>An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;function&gt;)</span></code>.</p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p><p>Returns the function used to display <em>pane</em>, where <em>pane</em> is any pane that
+can have a <code class="docutils literal notranslate"><span class="pre">display-function:</span></code> init-keyword specified. The <em>value</em>
+returned by <em>pane-display-function</em> is the value of the
+<code class="docutils literal notranslate"><span class="pre">display-function:</span></code> init-keyword.</p>
+<p>The display function gets called by the <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:handle-repaint"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">handle-repaint</span></code></a> method for
+<a class="reference internal" href="#duim-layouts:duim-layouts:[simple-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code></a> and <a class="reference internal" href="#duim-layouts:duim-layouts:[drawing-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;drawing-pane&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[drawing-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;drawing-pane&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:pane-layout">
+<code class="sig-name descname">pane-layout</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:pane-layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the layout that contains the specified pane in <a class="reference internal" href="#duim-layouts:duim-layouts:definepane"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">pane</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>pane-layout <em>pane</em> =&gt; <em>layout-pane</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layout-pane</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the layout that contains the specified pane in <a class="reference internal" href="#duim-layouts:duim-layouts:definepane"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">pane</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:definepane"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">pane</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[pinboard-layout]">
+<code class="sig-name descname">&lt;pinboard-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[pinboard-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of pinboard layouts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stretchable?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of pinboard layouts. Unlike other types of layout, pinboard
+layouts are unusual in that the positioning and geometry of the children
+of a pinboard layout are entirely determined by the programmer. You can
+place children at any point in a pinboard layout, and the pinboard
+layout does not attempt to calculate an optimum position or size for any
+of them.</p>
+<div class="figure align-center" id="id4">
+<img alt="_images/layouts-6.png" src="_images/layouts-6.png" />
+<p class="caption"><span class="caption-text">Three buttons arranged in a pinboard layout</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>A pinboard layout leaves the subsequent positions of any children placed
+in the layout alone. However, the size of each child is constrained
+according to any constraints that have been specified for those
+children. Compare this to fixed layouts, where the sizes of any children
+are not constrained in this way.</p>
+<p>Because the size of a pinboard layout’s children are constrained,
+pinboard layouts are most useful for placing sheets randomly in a
+layout, since DUIM ensures that the sheets remain a sensible size for
+their contents.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">stretchable?:</span></code> is true, then the pinboard layout can be resized
+dynamically as its parent is resized (for instance, by the user resizing
+a window on screen).</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[fixed-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;fixed-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:relayout-children">
+<code class="sig-name descname">relayout-children</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:relayout-children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lays out the children of the specified sheet again.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>relayout-children <em>sheet</em> #key <em>port-did-it?</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>port-did-it?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Lays out the children of <em>sheet</em> again.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:relayout-parent"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">relayout-parent</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:relayout-parent">
+<code class="sig-name descname">relayout-parent</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:relayout-parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lays out the parent of the specified sheet again.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>relayout-parent <em>sheet</em> #key <em>width height</em> =&gt; ()</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p>Lays out the parent of <em>sheet</em> again. If <em>width</em> and <em>height</em> are
+specified, then the parent is laid out in accordance with these
+dimensions.</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:relayout-children"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">relayout-children</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[row-layout]">
+<code class="sig-name descname">&lt;row-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[row-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of row layouts.</p>
+<dl class="field-list">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>x-spacing</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>spacing</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>equalize-heights?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>equalize-widths?</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>y-alignment</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">one-of(#&quot;top&quot;,</span> <span class="pre">#&quot;bottom&quot;,</span> <span class="pre">#&quot;center&quot;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;top&quot;</span></code>.</p></li>
+<li><p><strong>x-ratios</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;sequence&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>ratios</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;sequence&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of row layouts. A row layout arranges its children in a row,
+automatically calculating the size and placement of each child within
+the specified parameters.</p>
+<div class="figure align-center" id="id5">
+<img alt="_images/layouts-7.png" src="_images/layouts-7.png" />
+<p class="caption"><span class="caption-text">Three buttons arranged in a row layout</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">border:</span></code> init-keyword provides a border of whitespace around the
+children in the layout, and the value of this init-keyword represents
+the size of the border in pixels. This basically has the same effect as
+using the macro <a class="reference internal" href="gadgets.html#duim:duim-gadgets:with-border"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-border</span></code></a> around the layout, except it
+uses a simpler syntax.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">spacing:</span></code> or <code class="docutils literal notranslate"><span class="pre">x-spacing:</span></code> init-keywords let you specify how much
+horizontal space, in pixels, should be inserted between the children of
+the layout. These two init-keywords can be used interchangeably.</p>
+<p>If true, <code class="docutils literal notranslate"><span class="pre">equalize-heights?:</span></code> ensures that all the children of the
+layout have the same height.</p>
+<p>If true, <code class="docutils literal notranslate"><span class="pre">equalize-widths?:</span></code> ensures that all the children of the layout
+have the same width.</p>
+<p>By default, all the children of a row layout are aligned at the top. You
+can specify that they should be aligned at the bottom, or in the center,
+using the <code class="docutils literal notranslate"><span class="pre">y-alignment:</span></code> keyword.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ratios:</span></code> or <code class="docutils literal notranslate"><span class="pre">x-ratios:</span></code> init-keywords let you specify the
+proportion of the total layout that should be taken up by each
+individual child. These two init-keywords can be used interchangeably.</p>
+<p>The value passed to <code class="docutils literal notranslate"><span class="pre">ratios:</span></code> needs to be a sequence of as many integers
+as there are children in the layout. Each child is then allocated the
+appropriate portion of horizontal space in the layout. For example, if
+the value <code class="docutils literal notranslate"><span class="pre">#(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code> is specified for the <code class="docutils literal notranslate"><span class="pre">ratios:</span></code> init-keyword of a
+row layout containing three children, then the first child would claim a
+sixth of the available horizontal space, the second child would claim a
+third of the horizontal space, and the third child would claim half the
+horizontal space, as shown in the diagram below.</p>
+<div class="figure align-center">
+<img alt="_images/layouts-8.png" src="_images/layouts-8.png" />
+</div>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>To make a row of buttons that are all the same size:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;row-layout&gt;</span><span class="p">,</span>
+             <span class="k">equalize-widths?:</span> <span class="l">#t</span><span class="p">,</span>
+             <span class="k">children:</span> <span class="n">buttons</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:horizontally"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">horizontally</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[grid-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;grid-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[simple-pane]">
+<code class="sig-name descname">&lt;simple-pane&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[simple-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of simple panes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>display-function</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;function&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of simple panes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">display-function:</span></code> init-keyword defines the display function for
+the pane. This gets called by the <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:handle-repaint"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">handle-repaint</span></code></a> method for
+<a class="reference internal" href="#duim-layouts:duim-layouts:[simple-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code></a>.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[drawing-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;drawing-pane&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:handle-repaint"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">handle-repaint</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:pane-display-function"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pane-display-function</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[single-child-composite-pane]">
+<code class="sig-name descname">&lt;single-child-composite-pane&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[single-child-composite-pane]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of composite panes that can only have one child.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>The class of composite panes that can only have one child.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[multiple-child-composite-pane]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;multiple-child-composite-pane&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[space-requirement]">
+<code class="sig-name descname">&lt;space-requirement&gt;</code> <em class="property">Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[space-requirement]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of all space requirement objects.</p>
+<dl class="field-list">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>.</p></li>
+<li><p><strong>min-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>width</em>.</p></li>
+<li><p><strong>max-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>width</em>.</p></li>
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>.</p></li>
+<li><p><strong>min-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>height</em>.</p></li>
+<li><p><strong>max-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: <em>height</em>.</p></li>
+<li><p><strong>label</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">type-union(&lt;string&gt;,</span> <span class="pre">&lt;image&gt;)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of all space requirement objects. This type of object is used
+to reserve space when it is required in a layout in order to accommodate
+gadgets or other layouts.</p>
+<p>The various init-keywords let you constrain the width and height of the
+object in a variety of ways.</p>
+<p>If no init-keywords are specified, the object returned tries to fill all
+the available space.</p>
+<p>Specifying <code class="docutils literal notranslate"><span class="pre">width:</span></code> or <code class="docutils literal notranslate"><span class="pre">height:</span></code> specifies the preferred width or height
+of the object.</p>
+<p>Specifying any of the <code class="docutils literal notranslate"><span class="pre">min-</span></code> or <code class="docutils literal notranslate"><span class="pre">max-</span></code> init-keywords lets you minimum
+and maximum width or height for the object.</p>
+<p>The following inequalities hold for all widths and heights:</p>
+<p><code class="docutils literal notranslate"><span class="pre">min-height:</span> <span class="pre">&lt;=</span> <span class="pre">height:</span> <span class="pre">&lt;=</span> <span class="pre">max-height:</span></code>
+<code class="docutils literal notranslate"><span class="pre">min-width:</span> <span class="pre">&lt;=</span> <span class="pre">width:</span> <span class="pre">&lt;=</span> <span class="pre">max-width:</span></code></p>
+<p>If either <code class="docutils literal notranslate"><span class="pre">min-width:</span></code> or <code class="docutils literal notranslate"><span class="pre">min-height:</span></code> is 0, the object is “infinitely
+shrinkable” in that direction. If either <code class="docutils literal notranslate"><span class="pre">max-width:</span></code> or <code class="docutils literal notranslate"><span class="pre">max-height:</span></code>
+is <a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a>, the object is “infinitely
+stretchable” in that direction. The latter is a particularly useful way
+of ensuring that objects fill the available width, and can be used, say,
+to ensure that a series of buttons fill the entire width of the layout
+that they occupy.</p>
+<p>An example of the use of <code class="docutils literal notranslate"><span class="pre">max-width:</span></code> to force the size of a button to
+fit the available space can be found in the entry for <a class="reference internal" href="gadgets.html#duim:duim-gadgets:[button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">label:</span></code> init-keyword specifies a label which is measured to give
+the preferred width and height.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-height</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-max-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-max-height</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-max-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-max-width</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-min-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-min-height</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-min-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-min-width</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-width</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>Given the following definition of a button class:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;basic-test-button&gt;</span> <span class="p">(</span><span class="nc">&lt;leaf-pane&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;basic-test-button&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The following method for <a class="reference internal" href="#duim-layouts:duim-layouts:do-compose-space"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">do-compose-space</span></code></a>
+creates the necessary space requirements to accommodate the new button
+class in a layout.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">do-compose-space</span>
+    <span class="p">(</span><span class="n">pane</span> <span class="p">::</span> <span class="nc">&lt;basic-test-button&gt;</span><span class="p">,</span> <span class="k">#key</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">space-req</span> <span class="p">::</span> <span class="nc">&lt;space-requirement&gt;</span><span class="p">)</span>
+   <span class="n">ignore</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+   <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;space-requirement&gt;</span><span class="p">,</span>
+        <span class="k">width:</span> <span class="mi">40</span><span class="p">,</span>
+        <span class="k">height:</span> <span class="mi">15</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">do-compose-space</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:$fill"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$fill</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement?">
+<code class="sig-name descname">space-requirement?</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement?" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the specified object is a space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement? <em>object</em> =&gt; <em>boolean</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>object</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boolean</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns true if <em>object</em> is an instance of <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement-height">
+<code class="sig-name descname">space-requirement-height</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement-height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the preferred height of the specified space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement-height <em>sheet</em> <em>space-req</em> =&gt; <em>height</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns preferred the height of <em>space-req</em>. This is the value of the
+<code class="docutils literal notranslate"><span class="pre">height:</span></code> init-keyword that was passed when the object was created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-max-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-max-height</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-min-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-min-height</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement-max-height">
+<code class="sig-name descname">space-requirement-max-height</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement-max-height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the maximum allowed height of the specified space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement-max-height <em>sheet</em> <em>space-req</em> =&gt; <em>max-height</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the maximum allowed height of <em>space-req</em>. This is the value of
+the <code class="docutils literal notranslate"><span class="pre">max-height:</span></code> init-keyword that was passed when the object was
+created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-height</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-min-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-min-height</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement-max-width">
+<code class="sig-name descname">space-requirement-max-width</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement-max-width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the maximum allowed width of the specified space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement-max-width <em>sheet</em> <em>space-req</em> =&gt; <em>max-width</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the maximum allowed width of <em>space-req</em>. This is the value of
+the <code class="docutils literal notranslate"><span class="pre">max-width:</span></code> init-keyword that was passed when the object was
+created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-min-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-min-width</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-width</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement-min-height">
+<code class="sig-name descname">space-requirement-min-height</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement-min-height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the minimum allowed height of the specified space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement-min-height <em>sheet</em> <em>space-req</em> =&gt; <em>min-height</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min-height</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the minimum allowed height of <em>space-req</em>. This is the value of
+the <code class="docutils literal notranslate"><span class="pre">min-height:</span></code> init-keyword that was passed when the object was
+created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-height</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-max-height"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-max-height</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement-min-width">
+<code class="sig-name descname">space-requirement-min-width</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement-min-width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the minimum allowed width of the specified space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement-min-width <em>sheet</em> <em>space-req</em> =&gt; <em>min-width</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min-width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the minimum allowed width of <em>space-req</em>. This is the value of
+the <code class="docutils literal notranslate"><span class="pre">min-width:</span></code> init-keyword that was passed when the object was
+created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-max-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-max-width</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-width</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:space-requirement-width">
+<code class="sig-name descname">space-requirement-width</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:space-requirement-width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the preferred width of the specified space requirement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>space-requirement-width <em>sheet</em> <em>space-req</em> =&gt; <em>width</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sheet</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>space-req</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[space-requirement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;space-requirement&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the preferred width of <em>space-req</em>. This is the value of the
+<code class="docutils literal notranslate"><span class="pre">width:</span></code> init-keyword that was passed when the object was created.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-max-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-max-width</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:space-requirement-min-width"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">space-requirement-min-width</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[stack-layout]">
+<code class="sig-name descname">&lt;stack-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[stack-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of stack layouts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>mapped-page</strong> – An instance of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of stack layouts. Stack layouts position all of their children
+at the top-left one on top of the other. The layout sizes itself to be
+large enough to fit the largest child. They are primarily useful for
+creating layouts that simulate sets of several pages where only one
+child is visible at a time, and all the others are withdrawn, and are
+used to control the layout of elements such as tab controls or wizard
+frames. To make a new page appear, you withdraw the current page, and
+then map the new page. The new page is automatically the correct size
+and in the correct position.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">border:</span></code> init-keyword provides a border of whitespace around the
+children in the layout, and the value of this init-keyword represents
+the size of the border in pixels. This basically has the same effect as
+using the macro <a class="reference internal" href="gadgets.html#duim:duim-gadgets:with-border"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-border</span></code></a> around the layout, except it
+uses a simpler syntax.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mapped-page:</span></code> init-keyword allows you to assign a page to be mapped
+onto the screen when a stack layout is first created. If it is not
+specified, then the first page in the stack layout is mapped.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[grid-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;grid-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:stack-layout-mapped-page">
+<code class="sig-name descname">stack-layout-mapped-page</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:stack-layout-mapped-page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently mapped page for a stack layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stack-layout-mapped-page <em>stack-layout</em> =&gt; <em>page</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stack-layout</strong> – An instance of <a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page</strong> – An instance of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the currently mapped <em>page</em> for the specified <em>stack-layout</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:stack-layout-mapped-page-setter">
+<code class="sig-name descname">stack-layout-mapped-page-setter</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:stack-layout-mapped-page-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the mapped page for a stack layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>stack-layout-mapped-page <em>page</em> <em>stack-layout</em> =&gt; <em>page</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>page</strong> – An instance of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>stack-layout</strong> – An instance of <a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page</strong> – An instance of <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Sets the mapped page for the specified <em>stack-layout</em> to <em>page</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:table-contents">
+<code class="sig-name descname">table-contents</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:table-contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of the specified table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>table-contents <em>table</em> =&gt; <em>contents</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>table</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contents</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Returns the contents of <em>table</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:table-contents-setter"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">table-contents-setter</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="generic-function">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:table-contents-setter">
+<code class="sig-name descname">table-contents-setter</code> <em class="property">Generic function</em><a class="headerlink" href="#duim-layouts:duim-layouts:table-contents-setter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the contents of the specified table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature</dt>
+<dd class="field-odd"><p>table-contents-setter <em>contents table</em> =&gt; <em>contents</em></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>contents</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+<li><p><strong>table</strong> – An instance of type <a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contents</strong> – An instance of type <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion</dt>
+<dd class="field-even"><p>Sets the contents of <em>table</em>.</p>
+</dd>
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:table-contents"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">table-contents</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[table-layout]">
+<code class="sig-name descname">&lt;table-layout&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[table-layout]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of table layouts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>border</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>rows</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;integer&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>columns</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;integer&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>contents</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">limited(&lt;sequence&gt;,</span> <span class="pre">of:</span> <span class="pre">limited(&lt;sequence&gt;,</span> <span class="pre">of:</span> <span class="pre">&lt;sheet&gt;))</span></code>.</p></li>
+<li><p><strong>x-spacing</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>y-spacing</strong> – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. Default value: 0.</p></li>
+<li><p><strong>x-ratios</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;sequence&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>y-ratios</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;sequence&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>x-alignment</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">one-of(#&quot;left&quot;,</span> <span class="pre">#&quot;right&quot;,</span> <span class="pre">#&quot;center&quot;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;left&quot;</span></code>.</p></li>
+<li><p><strong>y-alignment</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">one-of(#&quot;top&quot;,</span> <span class="pre">#&quot;bottom&quot;,</span> <span class="pre">#&quot;center&quot;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;top&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of table layouts.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">border:</span></code> init-keyword provides a border of whitespace around the
+children in the layout, and the value of this init-keyword represents
+the size of the border in pixels. This basically has the same effect as
+using the macro <a class="reference internal" href="gadgets.html#duim:duim-gadgets:with-border"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-border</span></code></a> around the layout, except it
+uses a simpler syntax.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rows:</span></code> and <code class="docutils literal notranslate"><span class="pre">columns:</span></code> init-keywords are used to specify the number
+of rows and columns for the table layout.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">contents:</span></code> init-keyword is used to specify the contents of each
+cell of the table. It should consist of a sequence of sequences of
+sheets. If <code class="docutils literal notranslate"><span class="pre">contents:</span></code> is not specified, you should supply the children
+of the table with a number of rows and columns. You should not supply
+both children and rows and columns, however.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">x-spacing:</span></code> and <code class="docutils literal notranslate"><span class="pre">y-spacing:</span></code> init-keywords let you specify how much
+vertical and horizontal space should be inserted, in pixels, between the
+children of the layout.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">x-ratios:</span></code> and <code class="docutils literal notranslate"><span class="pre">y-ratios:</span></code> init-keywords let you specify the
+proportion of the total horizontal and vertical space that should be
+taken up by each individual child.</p>
+<p>The value passed to <code class="docutils literal notranslate"><span class="pre">x-ratios:</span></code> needs to be a sequence of as many
+integers as there are columns of children in the layout. The value
+passed to <code class="docutils literal notranslate"><span class="pre">y-ratios:</span></code> needs to be a sequence of as many integers as
+there are rows of children in the layout. Each child is then allocated
+the appropriate portion of horizontal and vertical space in the layout,
+according to the combination of the values for these two keywords.</p>
+<p>The two init-keywords can be used on their own, or together, as
+described in the examples below.</p>
+<p>For example, if the value <code class="docutils literal notranslate"><span class="pre">#(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code> is specified for the <code class="docutils literal notranslate"><span class="pre">x-ratios:</span></code>
+init-keyword of a table layout containing three columns of children,
+then the first column would claim a sixth of the available horizontal
+space, the second column would claim a third of the horizontal space,
+and the third column would claim half the horizontal space, as shown in
+the diagram below.</p>
+<div class="figure align-center">
+<img alt="_images/layouts-9.png" src="_images/layouts-9.png" />
+</div>
+<p>Alternatively, if the value <code class="docutils literal notranslate"><span class="pre">#(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code> is specified for the
+<code class="docutils literal notranslate"><span class="pre">y-ratios:</span></code> init-keyword of a table layout containing three rows of
+children, then the first row would claim a sixth of the available
+vertical space, the second row would claim a third of the vertical
+space, and the third row would claim half the vertical space, as shown
+in the diagram below.</p>
+<div class="figure align-center">
+<img alt="_images/layouts-10.png" src="_images/layouts-10.png" />
+</div>
+<p>Finally, if both the <code class="docutils literal notranslate"><span class="pre">x-ratios:</span></code> and <code class="docutils literal notranslate"><span class="pre">y-ratios:</span></code> init-keywords are
+specified, then each child in the layout is affected individually, as
+shown in the diagram below.</p>
+<div class="figure align-center">
+<img alt="_images/layouts-11.png" src="_images/layouts-11.png" />
+</div>
+<p>By default, all the children of a table layout are left-aligned. You can
+specify that they should be right or center-aligned using the
+<code class="docutils literal notranslate"><span class="pre">x-alignment:</span></code> keyword.</p>
+<p>By default, all the children of a table layout are aligned at the top.
+You can specify that they should be aligned at the bottom, or in the
+center, using the <code class="docutils literal notranslate"><span class="pre">y-alignment:</span></code> keyword.</p>
+</p>
+</dd>
+<dt class="field-even">Operations</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:table-contents"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">table-contents</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:table-contents-setter"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">table-contents-setter</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*t*</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;vector&gt;</span><span class="p">,</span> <span class="k">size:</span> <span class="mi">9</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">from</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">9</span><span class="p">)</span>
+  <span class="vg">*t*</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="n">format-to-string</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;table-layout&gt;</span><span class="p">,</span>
+             <span class="k">x-spacing:</span> <span class="mi">10</span><span class="p">,</span> <span class="k">y-spacing:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="k">children:</span> <span class="vg">*t*</span><span class="p">,</span> <span class="k">columns:</span> <span class="mi">3</span><span class="p">));</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[grid-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;grid-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[row-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[stack-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:tabling"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">tabling</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:tabling">
+<code class="sig-name descname">tabling</code> <em class="property">Statement Macro</em><a class="headerlink" href="#duim-layouts:duim-layouts:tabling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lays out a series of gadgets in a table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p>tabling ([<em>options</em> ]) {<em>panes</em> }+ end</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>options</strong> – Dylan arguments <em>bnf</em>.</p></li>
+<li><p><strong>panes</strong> – One or more occurrences of Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This macro lays a series of gadgets out in a table, creating the
+necessary layouts for you automatically.</p>
+<p>The <em>options</em> are passed directly to the table layout, and thus can be
+any legitimate combinations of init-keywords for
+<a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a>. If no options are specified, then
+the default values for table layout are used.</p>
+<p>The <em>panes</em> argument consists of a number of Dylan expressions, each of
+which creates an instance of a gadget or layout that is to be included
+in the vertical layout.</p>
+</p>
+</dd>
+<dt class="field-even">See also</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:horizontally"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">horizontally</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[table-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:vertically"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">vertically</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:[top-level-sheet]">
+<code class="sig-name descname">&lt;top-level-sheet&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#duim-layouts:duim-layouts:[top-level-sheet]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class of top level sheets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Superclasses</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a></p>
+</dd>
+<dt class="field-even">Init-Keywords</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>display</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;display&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>frame</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;frame&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>frame-manager</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;frame-manager&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>container</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;object&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+<li><p><strong>container-region</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">false-or(&lt;region&gt;)</span></code>. Default value: <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>The class of top level sheets.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">container:</span></code> and <code class="docutils literal notranslate"><span class="pre">container-region:</span></code> init-keywords are for use in
+embedded frames, such as OLE objects in HTML browser windows. The
+<code class="docutils literal notranslate"><span class="pre">container:</span></code> init-keyword denotes the container itself, and
+<code class="docutils literal notranslate"><span class="pre">container-region:</span></code> is used to specify the region of the screen in which
+the container appears. Note that the container referred to is a native
+window system object.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="macro">
+<dt class="dylan-api" id="duim-layouts:duim-layouts:vertically">
+<code class="sig-name descname">vertically</code> <em class="property">Statement Macro</em><a class="headerlink" href="#duim-layouts:duim-layouts:vertically" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lays out a series of gadgets vertically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call</dt>
+<dd class="field-odd"><p>vertically ([<em>options</em> ]) {<em>panes</em> }+ end</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>options</strong> – Dylan arguments <em>bnf</em>.</p></li>
+<li><p><strong>panes</strong> – One or more occurrences of Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion</dt>
+<dd class="field-odd"><p><p>This macro lays a series of gadgets out vertically, creating the
+necessary column layout for you automatically.</p>
+<p>The <em>options</em> are passed directly to the column layout, and thus can be
+any legitimate combinations of init-keywords for <a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a>.
+If no options are specified, then the default values for table layout are
+used.</p>
+<p>The <em>panes</em> argument consists of a number of Dylan expressions, each of
+which creates an instance of a gadget or layout that is to be included
+in the vertical layout.</p>
+</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="n">vertically</span> <span class="p">(</span><span class="k">border:</span> <span class="mi">5</span><span class="p">,</span> <span class="k">equalize-widths:</span> <span class="l">#t</span><span class="p">)</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span><span class="p">);</span>
+  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;World&quot;</span><span class="p">)</span>
+<span class="k">end</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">See also</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:[column-layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:horizontally"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">horizontally</span></code></a></p></li>
+<li><p><a class="reference internal" href="#duim-layouts:duim-layouts:tabling"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">tabling</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="graphics.html" class="btn btn-neutral float-left" title="DUIM-Graphics Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gadgets.html" class="btn btn-neutral float-right" title="DUIM-Gadgets Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

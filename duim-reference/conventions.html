@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conventions in this Manual &mdash; DUIM Reference 1.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="DUIM-Geometry Library" href="geom.html" />
+    <link rel="prev" title="Copyright" href="copyright.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DUIM Reference
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Conventions in this Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#audience-goals-and-purpose">Audience, goals, and purpose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-code-fragments">Example code fragments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-structure">Module structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spread-point-arguments-to-functions">Spread point arguments to functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#immutability-of-objects">Immutability of objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#behavior-of-interfaces">Behavior of interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#specialized-arguments-to-generic-functions">Specialized arguments to generic functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#macros-that-expand-into-calls-to-advertised-functions">Macros that expand into calls to advertised functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#terminology-pertaining-to-error-conditions">Terminology pertaining to error conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frames.html">DUIM-Frames Library</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DUIM Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Conventions in this Manual</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/conventions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="conventions-in-this-manual">
+<h1>Conventions in this Manual<a class="headerlink" href="#conventions-in-this-manual" title="Permalink to this headline">¶</a></h1>
+<p>This chapter describes the conventions used in this manual and in the
+DUIM software itself.</p>
+<div class="section" id="audience-goals-and-purpose">
+<h2>Audience, goals, and purpose<a class="headerlink" href="#audience-goals-and-purpose" title="Permalink to this headline">¶</a></h2>
+<p>This manual is intended for programmers using DUIM, and forms a complete
+reference for the Application Programmer’s Interface (API) for DUIM. You
+should also see <a class="reference external" href="http://opendylan.org/documentation/building-with-duim/">Building Applications using DUIM</a> for a description of
+how to start building applications using DUIM. At some points, the API
+also includes lower-level layers, which DUIM programmers are free to
+specialize.</p>
+<p>The DUIM library is a set of interfaces that allow you to create
+graphical user interfaces (GUIs) for your application using Dylan code.</p>
+<p>In this document, we may refer to two different audiences. A <em>user</em> is a
+person who uses an application program that was written using DUIM. A
+DUIM <em>programmer</em> is a person who writes application programs using
+DUIM. Generally, this manual assumes that you, the reader, are the
+programmer.</p>
+</div>
+<div class="section" id="example-code-fragments">
+<h2>Example code fragments<a class="headerlink" href="#example-code-fragments" title="Permalink to this headline">¶</a></h2>
+<p>Throughout this manual, example code fragments are provided at suitable
+points in the documentation. These provide short illustrations of how to
+use the interfaces being described. If you wish, you can run these
+examples interactively by typing them into the Dylan Playground.</p>
+<p>A number of additional, longer examples are provided as part of the
+Harlequin Dylan installation, and are installed on your hard disk
+automatically. You can look at these examples and load them into the
+environment by clicking on the examples button in the main window of the
+Harlequin Dylan environment.</p>
+<p>Longer examples are also provided and discussed fully in the <em>Building
+Applications using DUIM</em>, which you should refer to for an introduction
+to building DUIM applications.</p>
+</div>
+<div class="section" id="module-structure">
+<h2>Module structure<a class="headerlink" href="#module-structure" title="Permalink to this headline">¶</a></h2>
+<p>The functionality of DUIM is provided via a number of modules. Each
+chapter of this manual indicates what module its API is exported from.</p>
+<p>The <em>duim</em> module is the main API module, which contains the variables
+for the API-level functions available.</p>
+<p>The <a class="reference internal" href="geom.html"><span class="doc">DUIM-Geometry Library</span></a> module provides basic support for coordinate
+geometry. This allows the position of elements in a window object to be
+determined correctly.</p>
+<p>The <a class="reference internal" href="ext-geom.html"><span class="doc">DUIM-Extended-Geometry Library</span></a> module provides more extensive support for
+co-ordinate geometry that is only required for more specialist uses.</p>
+<p>The <a class="reference internal" href="dcs.html"><span class="doc">DUIM-DCs Library</span></a> module provides color support to the DUIM library.</p>
+<p>The <a class="reference internal" href="sheets.html"><span class="doc">DUIM-Sheets Library</span></a> module provides basic support for sheets. Sheets are
+the basic unit of window applications, and can be nested hierarchically
+to build up a complete user interface.</p>
+<p>The <a class="reference internal" href="graphics.html"><span class="doc">DUIM-Graphics Library</span></a> module provides support for graphics drawing</p>
+<p>The <a class="reference internal" href="layouts.html"><span class="doc">DUIM-Layouts Library</span></a> module provides support for a layout protocol that
+makes it easy to create and layout groups of related elements in a given
+interface. This module can handle layout problems such as the spacing
+and justification of a group of elements automatically.</p>
+<p>The <a class="reference internal" href="gadgets.html"><span class="doc">DUIM-Gadgets Library</span></a> module provides all the gadgets available for use in
+the DUIM library. Gadgets are the sheet objects that make up any user
+interface, and the DUIM library supplies all the gadgets you will need
+in your applications.</p>
+<p>The <a class="reference internal" href="frames.html"><span class="doc">DUIM-Frames Library</span></a> module provides support for frames. A DUIM frame is a
+combination of a set of nested sheets, together with an event loop that
+describes the behavior of the elements in those sheets. DUIM frames can
+be used to specify whether a given user interface is displayed in an
+application as a dialog box, or a more straightforward window, or as a
+task wizard, and so on.</p>
+<p>The Dylan Playground should be used when you just want to experiment
+with DUIM code fragments without creating modules of your own. For real
+application code, of course, you should define your own modules and
+libraries and use the appropriate library code required by your
+application.</p>
+</div>
+<div class="section" id="spread-point-arguments-to-functions">
+<h2>Spread point arguments to functions<a class="headerlink" href="#spread-point-arguments-to-functions" title="Permalink to this headline">¶</a></h2>
+<p>Many functions that take point arguments come in two forms: <em>structured</em>
+and <em>spread</em>. Functions that take structured point arguments take the
+argument as a single <em>point</em> object. Functions that take spread point
+arguments take a pair of arguments that correspond to the <em>x</em> and <em>y</em>
+coordinates of the point.</p>
+<p>Functions that take structured point arguments, or return structured
+point values have an asterisk in their name, for example, <code class="docutils literal notranslate"><span class="pre">draw-line*</span></code>
+.</p>
+</div>
+<div class="section" id="immutability-of-objects">
+<h2>Immutability of objects<a class="headerlink" href="#immutability-of-objects" title="Permalink to this headline">¶</a></h2>
+<p>Most DUIM objects are <em>immutable</em>, that is, at the API level none of
+their components can be modified once the object is created. Examples of
+immutable objects include all of the members of the <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> classes,
+pens, brushes, colors, and text styles. Since immutable objects by
+definition never change, functions in the DUIM API can safely capture
+immutable objects without first copying them. This also allows DUIM to
+cache immutable objects. Any <em>make</em> methods that return immutable
+objects are free to either create and return a new object, or return an
+already existing object.</p>
+<p>A few DUIM objects are <em>mutable</em>. Some components of mutable objects
+can be modified once the object has been created, usually via setter
+functions.</p>
+<p>In DUIM, object immutability is maintained at the class level.
+Throughout this specification, the immutability or mutability of a class
+will be explicitly specified.</p>
+<p>Some immutable classes also allow <em>interning</em>. A class is said to be
+interning if it guarantees that two instances that are equivalent will
+always be <code class="docutils literal notranslate"><span class="pre">==</span></code>. For example, the class <code class="docutils literal notranslate"><span class="pre">&lt;text-style&gt;</span></code> is interned, so
+calling <code class="docutils literal notranslate"><span class="pre">make-text-style</span></code> twice with the same arguments would return
+identical values.</p>
+<p>In some rare cases, DUIM <em>will</em> modify objects that are members of
+immutable classes. Such objects are referred to as being <em>volatile</em>.
+Extreme care must be take with volatile objects. For example, objects of
+class <em>&lt;bounding-box&gt;</em> are often volatile.</p>
+<div class="section" id="behavior-of-interfaces">
+<h3>Behavior of interfaces<a class="headerlink" href="#behavior-of-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>Any interfaces that take or return mutable objects can be classified in
+a few different ways.</p>
+<p>Most functions <em>do not capture</em> their mutable input objects, that is,
+these functions will either not store the objects at all, or will copy
+any mutable objects before storing them, or perhaps store only some of
+the components of the objects. Later modifications to those objects will
+not affect the internal state of DUIM.</p>
+<p>Some functions <em>may capture</em> their mutable input objects. That is, it is
+not specified whether the mutable inputs to these functions will or will
+not be captured. For such functions, you should assume that these
+objects will be captured and must not modify these objects capriciously.
+Furthermore, the behavior is undefined if these objects are later
+modified.</p>
+<p>Some functions that return mutable objects are guaranteed to create
+<em>fresh outputs</em>. These objects can be modified without affecting the
+internal state of DUIM.</p>
+<p>Functions that return mutable objects that are not fresh objects fall
+into two categories:</p>
+<ul class="simple">
+<li><p>Those that return <em>read-only state</em></p></li>
+<li><p>Those that return <em>read/write state</em></p></li>
+</ul>
+<p>If a function returns read-only state, programmers must not modify that
+object; doing so might corrupt the state of DUIM. If a function returns
+read/write state, the modification of that object is part of the DUIM
+interface, and you are free to modify the object in ways that make
+sense.</p>
+</div>
+</div>
+<div class="section" id="specialized-arguments-to-generic-functions">
+<h2>Specialized arguments to generic functions<a class="headerlink" href="#specialized-arguments-to-generic-functions" title="Permalink to this headline">¶</a></h2>
+<p>Unless otherwise stated, this manual uses the following convention for
+specifying which arguments to generic functions are specialized:</p>
+<ul class="simple">
+<li><p>If the generic function is a <code class="docutils literal notranslate"><span class="pre">-setter</span></code> function, the second argument
+is the one that is intended to be specialized.</p></li>
+<li><p>If the generic function is a “mapping” function (such as <code class="docutils literal notranslate"><span class="pre">do-sheets</span></code>),
+the second argument (the object that specifies what is being
+mapped over) is the one that is specialized. The first argument (the
+functional argument) is not intended to be specialized.</p></li>
+<li><p>Otherwise, the first argument is the one that is intended to be
+specialized.</p></li>
+</ul>
+</div>
+<div class="section" id="macros-that-expand-into-calls-to-advertised-functions">
+<h2>Macros that expand into calls to advertised functions<a class="headerlink" href="#macros-that-expand-into-calls-to-advertised-functions" title="Permalink to this headline">¶</a></h2>
+<p>Many macros that take a “body” argument expand into a call to an
+advertised function that takes a functional argument. This functional
+argument will execute the supplied body. For a macro named
+<code class="docutils literal notranslate"><span class="pre">with-environment</span></code>, the function is generally named
+<code class="docutils literal notranslate"><span class="pre">do-with-environment</span></code>. For example, <code class="docutils literal notranslate"><span class="pre">with-drawing-options</span></code> might
+be defined as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">macro</span> <span class="n">with-drawing-options</span>
+  <span class="p">{</span> <span class="n">with-drawing-options</span>
+    <span class="p">(</span><span class="nt">?medium</span><span class="o">:</span><span class="nb">name</span><span class="p">,</span> <span class="k">#rest</span> <span class="nt">?keys</span><span class="o">:</span><span class="nb">*</span><span class="p">)</span> <span class="nt">?body</span><span class="o">:</span><span class="nb">body</span> <span class="k">end</span> <span class="p">}</span>
+      <span class="p">=&gt;</span> <span class="p">{</span> <span class="k">begin</span>
+             <span class="k">let</span> <span class="n">with-drawing-options-body</span> <span class="o">=</span>
+               <span class="nb">method</span> <span class="p">(</span><span class="nt">?medium</span><span class="p">)</span> <span class="nt">?body</span> <span class="k">end</span><span class="p">;</span>
+             <span class="n">do-with-drawing-options</span><span class="p">(</span><span class="nt">?medium</span><span class="p">,</span>
+               <span class="n">with-drawing-options-body</span><span class="p">,</span> <span class="nt">?keys</span><span class="p">)</span>
+           <span class="k">end</span> <span class="p">}</span>
+<span class="k">end</span> <span class="nb">macro</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">do-with-drawing-options</span>
+    <span class="p">(</span><span class="n">medium</span> <span class="p">::</span> <span class="nc">&lt;medium&gt;</span><span class="p">,</span> <span class="nb">function</span><span class="p">,</span> <span class="k">#rest</span> <span class="n">options</span><span class="p">)</span>
+  <span class="nb">apply</span><span class="p">(</span><span class="n">merge-drawing-options-into-medium</span><span class="p">,</span> <span class="n">medium</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
+  <span class="nb">function</span><span class="p">(</span><span class="n">medium</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="terminology-pertaining-to-error-conditions">
+<h2>Terminology pertaining to error conditions<a class="headerlink" href="#terminology-pertaining-to-error-conditions" title="Permalink to this headline">¶</a></h2>
+<p>When this documentation specifies that it “is an error” for some
+situation to occur, this means that:</p>
+<ul class="simple">
+<li><p>No valid DUIM program should cause this situation to occur.</p></li>
+<li><p>If this situation does occur, the effects and results are undefined.</p></li>
+<li><p>DUIM often tries to detect such an error, but it might not.</p></li>
+</ul>
+<p>When this manual specifies that some argument “must be a <em>type</em> ” or
+uses the phrase “the <em>type</em> argument”, this means that it is an
+error if the argument is not of the specified <em>type</em>. DUIM tries to
+detect such type errors, but it might not always be successful.</p>
+<p>When this documentation says that “an error is signalled” in some
+situation, this means that:</p>
+<ul class="simple">
+<li><p>If the situation occurs, DUIM will signal an error using <code class="docutils literal notranslate"><span class="pre">error</span></code> or
+<code class="docutils literal notranslate"><span class="pre">cerror</span></code>.</p></li>
+<li><p>Valid DUIM programs may rely on the fact that an error will be
+signalled.</p></li>
+</ul>
+<p>When this manual states that “a condition is signalled” in a given
+situation, this is the same as saying that “an error is signalled”, with
+the exception that the condition will be signalled using <code class="docutils literal notranslate"><span class="pre">signal</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">error</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="copyright.html" class="btn btn-neutral float-left" title="Copyright" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="geom.html" class="btn btn-neutral float-right" title="DUIM-Geometry Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
