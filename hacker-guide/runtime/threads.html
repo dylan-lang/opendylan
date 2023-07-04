@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compiler Support for Threads &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Startup" href="startup.html" />
+    <link rel="prev" title="Name Mangling" href="mangling.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Runtime</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="object-representation.html">Object Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special-features.html">Special Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mangling.html">Name Mangling</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compiler Support for Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/index.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The Runtime</a></li>
+      <li class="breadcrumb-item active">Compiler Support for Threads</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/runtime/threads.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="compiler-support-for-threads">
+<h1>Compiler Support for Threads<a class="headerlink" href="#compiler-support-for-threads" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dylan-portability-interface">
+<h2>Dylan Portability Interface<a class="headerlink" href="#dylan-portability-interface" title="Permalink to this headline">¶</a></h2>
+<p>The Threads Library is designed for implementation using
+different threads APIs from common operating systems, including Unix
+and Windows. Harlequin’s implementation of the library is designed
+to be directly portable onto these operating systems. This portability
+is achieved by using primitive operations defined within our runtime
+system. Each primitive operation must be implemented specially for each
+operating system.</p>
+<p>The set of portable primitive operations is collectively called the
+<em>portability layer</em>. The Dylan compiler has special knowledge of the
+portability layer via primitive function definitions and some
+specialized emit methods for flow-graph node types which are specific to
+threads.</p>
+<div class="section" id="portability-and-runtime-layers">
+<h3>Portability and Runtime Layers<a class="headerlink" href="#portability-and-runtime-layers" title="Permalink to this headline">¶</a></h3>
+<p>The design assumes that each of the concrete classes of the
+Threads Library (<code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code>) corresponds with an equivalent
+lower-level feature provided directly by either the operating system or
+the runtime system. The Dylan objects which are instances of these
+classes are implemented as <em>containers</em> for handles corresponding to
+low-level (non-Dylan) objects. The Dylan objects contain normal Dylan
+slots too, and these are directly manipulated by the Dylan library.
+However, the slots containing the low-level handles may only be
+manipulated via primitive function calls. For each of the classes,
+primitive functions are defined to both create and destroy the low-level
+handles, as well as to perform the basic functions of the class, such as
+<em>wait-for</em> and <em>release</em>. The platform-specific implementation of these
+primitive functions is free to choose any representation for these
+handles, provided that it is the same shape as a Dylan slot (which is
+equivalent to C’s <em>void *</em>).</p>
+<p>As with all Dylan objects, the container objects defined by the threads
+library are subject to automatic memory management, and possible
+relocation by the garbage collector. The contents of the container slots
+will be copied during such a relocation — but the values they contain
+will not be subject to garbage collection or relocation themselves.</p>
+<p>The portability layer provides no direct support for the <em>dynamic-bind</em>
+operation. The library implements a <em>dynamic variable</em> as a thread-local
+variable via the high-level Dylan constructs <em>define thread variable</em> and
+<em>block … cleanup</em> to manage the creation and deletion of new bindings.</p>
+<p>The portability layer includes support for conditional update of atomic
+variables, as well as assignment. The implementation mechanism for these
+is not defined, but it is hoped that many platforms will provide direct
+hardware support for this operation. Where hardware support is not
+available, the low-level implementation may choose to use a lock to
+protect conditional updates and assignments, as a fall back option. It
+is assumed that atomic variables may always be read as normal variables.</p>
+<p><a class="reference internal" href="#implementations-of-dylan-thread-interfaces">Implementations of Dylan Thread Interfaces</a>
+shows the expected mapping between the concrete Dylan classes and
+low-level operating system features, for three of the most popular
+general-purpose operating systems.</p>
+</div>
+<div class="section" id="implementations-of-dylan-thread-interfaces">
+<h3>Implementations of Dylan Thread Interfaces<a class="headerlink" href="#implementations-of-dylan-thread-interfaces" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 32%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dylan Interface</p></th>
+<th class="head"><p>Unix Implementation</p></th>
+<th class="head"><p>Win32 Implementation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></p></td>
+<td><p>thread</p></td>
+<td><p>thread</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code></p></td>
+<td><p>mutex</p></td>
+<td><p>critical region</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></p></td>
+<td><p>mutex</p></td>
+<td><p>critical region</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code></p></td>
+<td><p>semaphore</p></td>
+<td><p>semaphore</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code></p></td>
+<td><p>condition variable</p></td>
+<td><p>event</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dynamic</span> <span class="pre">variable</span></code></p></td>
+<td><p>thread-local variable</p></td>
+<td><p>thread-local variable</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">conditional-update!</span></code></p></td>
+<td><p>mutex</p></td>
+<td><p>exchange instruction
+(using a guard value
+as a lock);</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dylan-types-for-threads-portability">
+<h3>Dylan Types for Threads Portability<a class="headerlink" href="#dylan-types-for-threads-portability" title="Permalink to this headline">¶</a></h3>
+<p>Three Dylan types merit discussion for their use with portability
+primitives: <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code>.  Objects that are
+instances of the <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code> classes have
+slots which contain lower-level objects that are specific to the Dylan
+runtime or operating system.</p>
+<p>&lt;thread&gt;</p>
+<p>[Class]</p>
+<p>A Dylan object of class <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code> contains two OS handles. One of these
+represents the underlying OS thread, and the other may be used by
+implementations to contain the current status of the thread, as an aid
+to the implementation of the join state.</p>
+<p>&lt;portable-container&gt;</p>
+<p>[Class]</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code> class is used by the implementation as a
+superclass for all the concrete synchronization classes (<code class="docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code>). Each
+<code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code> object contains an OS handle, which is available
+to the runtime for storing any OS-specific data. Subclasses may provide
+additional slots.</p>
+<p>Various classes of Dylan objects are passed through the portability
+interface, and hence require description in terms of lower level
+languages. <a class="reference internal" href="#correspondence-between-dylan-types-and-c-types">Correspondence Between Dylan Types and C
+Types</a> maps the layout of these Dylan objects onto
+their C equivalents, which are used by runtime-specific implementations
+of the portability layer.</p>
+<p>In general, all Dylan types can be thought of as equivalent to the C
+type <code class="docutils literal notranslate"><span class="pre">D</span></code>, which is in turn equivalent to the C type <code class="docutils literal notranslate"><span class="pre">void*</span></code>. Of
+course, runtime-specific implementations of the portability layer must
+have access to relevant fields of the Dylan objects on which they
+operate. The type definitions in <a class="reference internal" href="#correspondence-between-dylan-types-and-c-types">Correspondence Between Dylan Types
+and C Types</a> give implementations access to fields
+needed for specific types. These definitions are not necessarily
+complete descriptions of the Dylan objects, however. The objects may
+contain additional fields that are not of interest to the portability
+layer, and subclasses may add additional fields of their own.</p>
+</div>
+<div class="section" id="correspondence-between-dylan-types-and-c-types">
+<h3>Correspondence Between Dylan Types and C Types<a class="headerlink" href="#correspondence-between-dylan-types-and-c-types" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 18%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dylan Type</p></th>
+<th class="head"><p>C Type</p></th>
+<th class="head"><p>C Type Definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p></td>
+<td><p><em>D</em></p></td>
+<td><p><em>typedef void* D;</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></td>
+<td><p><em>DINT</em></p></td>
+<td><p><em>platform specific (size of void*)</em></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a></p></td>
+<td><p><em>DFN</em></p></td>
+<td><p><em>typedef D(*DFN)(D, int, …);</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a></p></td>
+<td><p><em>SOV*</em></p></td>
+<td><p><em>typedef struct _sov {
+* *D class;
+* *DINT size;</em>
+<em>D data[ ];</em>
+<em>} SOV;</em></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a></p></td>
+<td><p><em>B_STRING*</em></p></td>
+<td><p><em>typedef struct _bst {
+* *D class;
+* *DINT size;</em>
+<em>char data[ ];</em>
+<em>} B_STRING;</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">false-or(&lt;byte-string&gt;)</span></code></p></td>
+<td><p><em>D_NAME</em></p></td>
+<td><p><em>typedef void* D_NAME;</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code></p></td>
+<td><p><em>CONTAINER*</em></p></td>
+<td><p><em>typedef struct _ctr {
+* *D class;
+* *void* handle;</em>
+<em>} CONTAINER;</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></p></td>
+<td><p><em>D_THREAD*</em></p></td>
+<td><p><em>typedef struct _dth {
+* *D class;
+* *void* handle1;</em>
+<em>void* handle2;</em>
+<em>} D_THREAD;</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="compiler-support-for-the-portability-interface">
+<h2>Compiler Support for the Portability Interface<a class="headerlink" href="#compiler-support-for-the-portability-interface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-compiler-flow-graph">
+<h3>The Compiler Flow Graph<a class="headerlink" href="#the-compiler-flow-graph" title="Permalink to this headline">¶</a></h3>
+<p>The front end of the compiler parses Dylan source code and produces an
+intermediate representation, the Implicit Continuation Representation
+(ICR). The ICR is a directed acyclic graph (DAG) of Dylan objects. A
+<em>leaf</em> in the ICR represents a basic computational object, such as a
+variable (of class <code class="docutils literal notranslate"><span class="pre">&lt;variable-leaf&gt;</span></code>) or a function (of class
+<code class="docutils literal notranslate"><span class="pre">&lt;function-leaf&gt;</span></code>). A <em>node</em> in the ICR represents an operation such as
+assignment (class <code class="docutils literal notranslate"><span class="pre">&lt;assignment&gt;</span></code>), conditional execution (class <code class="docutils literal notranslate"><span class="pre">&lt;if&gt;</span></code>),
+or a reference to a leaf (class <code class="docutils literal notranslate"><span class="pre">&lt;reference&gt;</span></code>).</p>
+<p>In mapping Dylan code to the ICR, the compiler uses a set of
+<em>converters</em>, which perform syntactic pattern matching against
+fragments of Dylan code and generate the ICR corresponding to the
+matched code. For example, when the compiler encounters a top-level
+variable definition (introduced by the Dylan <em>define variable</em>
+construct), the converter for <em>define variable</em> creates a new instance
+of <code class="docutils literal notranslate"><span class="pre">&lt;global-variable-leaf&gt;</span></code> in the ICR to represent this variable and to
+record data such as its name, initial value, and typing information.</p>
+<p>The back end of the compiler traverses the flow graph and emits code in
+the target language for compiler output. Methods in the back end
+specialize on node and leaf classes to enable them to produce the
+appropriate output.</p>
+</div>
+<div class="section" id="compiler-support-for-atomic-and-fluid-variables">
+<h3>Compiler Support for Atomic and Fluid Variables<a class="headerlink" href="#compiler-support-for-atomic-and-fluid-variables" title="Permalink to this headline">¶</a></h3>
+<p>The portability layer provides support for atomic variable access and
+for Dylan fluid variables (implemented as thread-local variables).
+Atomic variables and thread variables are directly represented in the
+flow graph, where they are subject to dataflow analysis. The variables
+themselves appear as leaves in the graph.</p>
+<p>Because both atomic and fluid variables need special treatment when they
+are accessed, the back end must emit output that is different from that
+for accessing other kinds of variables. The compiler defines two
+specialized classes of leaf for the ICR, <code class="docutils literal notranslate"><span class="pre">&lt;atomic-global-variable-leaf&gt;</span></code>
+(corresponding to atomic variables) and <code class="docutils literal notranslate"><span class="pre">&lt;fluid-global-variable-leaf&gt;</span></code>
+(corresponding to fluid variables). These are subclasses of
+<code class="docutils literal notranslate"><span class="pre">&lt;global-variable-leaf&gt;</span></code> and therefore inherit general characteristics
+of leaves that represent variables.</p>
+<p>ICR leaves representing both atomic and fluid variables are created by
+the converter for <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code>. When the compiler encounters a
+definition of an atomic variable (introduced by the <code class="docutils literal notranslate"><span class="pre">define</span>
+<span class="pre">atomic-variable</span></code> construct), the converter for <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code> creates
+an instance of <code class="docutils literal notranslate"><span class="pre">&lt;atomic-global-variable-leaf&gt;</span></code> in the ICR. When the
+compiler encounters a definition of a fluid variable (introduced by the
+<code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">fluid-variable</span></code> construct), the converter creates an instance of
+<code class="docutils literal notranslate"><span class="pre">&lt;fluid-global-variable-leaf&gt;</span></code>.</p>
+<p>The operations of reading, writing, and conditionally updating atomic
+variables and of reading and writing fluid variables are not represented
+by primitive functions. Instead, they are represented directly in the
+flow graph. They are implemented by specializing methods on the leaf
+classes that represent atomic and fluid variables.</p>
+</div>
+<div class="section" id="compiler-support-for-primitives">
+<h3>Compiler Support for Primitives<a class="headerlink" href="#compiler-support-for-primitives" title="Permalink to this headline">¶</a></h3>
+<p>When the compiler constructs the flow graph, it represents a function
+call as a node in the ICR. Just as the compiler distinguishes atomic and
+fluid variables by means of specialized leaf classes, so it
+distinguishes calls to primitive functions of the portability interface
+by means of a specialized node class.</p>
+<p>A function call is an operation on several components: the function
+object, the arguments, and the destination for returned values. When the
+compiler encounters a regular Dylan call, which typically appears as a
+call to a generic function, it represents the call in the ICR as a node
+of class <code class="docutils literal notranslate"><span class="pre">&lt;combination&gt;</span></code>.</p>
+<p>However, the compiler contains a table of the primitive functions in the
+portability interface. Before creating an ICR node to represent a
+function call, the compiler looks up the function being called in the
+table of primitives. If the function appears in the table, the compiler
+creates an ICR node of class <code class="docutils literal notranslate"><span class="pre">&lt;primitive-combination&gt;</span></code>.</p>
+<p>When the back end traverses the flow graph, methods specialized on the
+node class <code class="docutils literal notranslate"><span class="pre">&lt;primitive-combination&gt;</span></code> emit calls to primitive functions.</p>
+</div>
+</div>
+<div class="section" id="support-for-dylan-language-features">
+<h2>Support for Dylan Language Features<a class="headerlink" href="#support-for-dylan-language-features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="interfacing-to-foreign-code">
+<h3>Interfacing to Foreign Code<a class="headerlink" href="#interfacing-to-foreign-code" title="Permalink to this headline">¶</a></h3>
+<p>It is intended that threads created by the Dylan library may
+inter-operate with code written in other languages with no special
+constraints. Dylan is interfaced with other languages via a Foreign
+Language Interface (<em>FLI</em>), which acts as a barrier between Dylan
+conventions and the <em>neutral</em> conventions of the platform. The FLI is
+responsible for:</p>
+<ol class="arabic simple">
+<li><p>mapping between Dylan and foreign data types,</p></li>
+<li><p>converting between Dylan and foreign calling conventions</p></li>
+<li><p>maintaining the Dylan dynamic environment</p></li>
+<li><p>maintaining any support necessary for garbage collection (such as
+ensuring that all Dylan values can be traced).</p></li>
+</ol>
+<p>The first and second of these require no significant extensions to
+support multiple threads, since these are inherently computations which
+have no effect on any thread other than the one performing the
+computation.</p>
+<p>There is a requirement that the dynamic environment for each thread is
+stored in a thread-local variable. Since the environment is stored in
+this way, its value is preserved across calls into foreign code, and it
+will still be valid if the foreign code calls back into Dylan. The
+techniques described in [MG95] for maintaining the dynamic environment
+across foreign calls are therefore directly appropriate to a
+multi-threaded implementation too.</p>
+<p>If an object is passed to foreign code with dynamic extent, then it is
+sufficient to ensure that the object is referenced from the current
+stack, which the garbage collector will scan conservatively. In a
+multi-threaded implementation, the garbage collector will scan all the
+stacks conservatively, so there is no requirement to maintain a
+thread-global data structure.</p>
+<p>If an object is passed with indefinite extent, then it must be recorded
+in a table. The table may be maintained by the runtime system, by means
+of suitable primitive functions to add and remove references. There are
+potentially synchronization problems associated with multiple threads
+manipulating a global data structure — but the runtime system
+implementation is free to choose whether to have separate tables for
+each thread, or whether to have a global table with an associated lock
+to guard accesses. Either technique is possible — but Harlequin have not
+yet implemented this feature.</p>
+<p>One further consideration is the interaction of the Dylan threads
+library itself with foreign components:</p>
+<p>If foreign code is not designed for multiple threads (for instance,
+because it uses global data structures, and doesn’t synchronize
+updates), then the code may fail if it is invoked from multiple Dylan
+threads. However, this problem is not related to the Dylan
+implementation, since it would fail if called from multiple threads
+created by any means. The solution is to modify the foreign component to
+make it thread safe.</p>
+<p>If foreign code is designed for use with multiple threads, then it is
+valid for it to use the synchronization facilities of the Dylan library
+(by calling back into Dylan, to invoke the Threads Library
+synchronization functions). Alternatively, it may use its own methods
+for synchronization, provided that these are not incompatible with the
+methods provided by the operating system. This is valid whenever it has
+been possible to implement the runtime system support for threads
+directly in terms of operating system features, and it is anticipated
+that this will always be true if the operating system supports threads.
+Typically, foreign code is expected to make direct use of operating
+system threads facilities.</p>
+<p>However, a problem may arise if a thread is created in foreign code, and
+the new thread then calls back into Dylan. In this case, the Dylan
+thread library itself will not be able to find an existing <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code>
+object corresponding to the current thread, and the fluid variables for
+the current thread will not have been correctly initialized. Worse
+still, the garbage collector may not have enough information to locate
+the roots of the thread. Harlequin have not yet allowed for this in
+their implementation, but they have an anticipated solution.</p>
+<p>It is possible to detect that a thread has never been executing on the
+Dylan side of the FLI before because it will have an uninitialized
+(zero) value for its thread-local dynamic environment variable. This can
+be checked at a call-in in the stub function which implements the FLI.
+Once such a thread has been detected, appropriate initialization steps
+can be taken. A function in the runtime system can be called to register
+the stack of the thread for root tracing; the dynamic environment can be
+set to point to a suitable value on the stack; finally a new Dylan
+<code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code> object can be allocated and initialized with
+<code class="docutils literal notranslate"><span class="pre">primitive-initialize-current-thread</span></code> (as for the first thread).</p>
+</div>
+<div class="section" id="finalization">
+<h3>Finalization<a class="headerlink" href="#finalization" title="Permalink to this headline">¶</a></h3>
+<p>As has been discussed, the Dylan synchronization objects are implemented
+as wrappers around lower-level operating system structures. The Dylan
+objects are subject to garbage collection, and their memory will be
+automatically freed by the garbage collector at an undefined point in
+the program. But the low-level structures are not Dylan objects and must
+be explicitly freed when the Dylan container is collected (primitive
+functions are provided for this purpose). However, the core language of
+Dylan provides no <em>finalization</em> mechanism to invoke cleanup code when
+objects are reclaimed. Harlequin’s implementation of the Threads
+Library strictly requires this, but it is not yet implemented. It is
+intended to provide finalization support for Dylan with a new garbage
+collector which is currently under development.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mangling.html" class="btn btn-neutral float-left" title="Name Mangling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="startup.html" class="btn btn-neutral float-right" title="Startup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

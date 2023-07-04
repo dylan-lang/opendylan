@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Object Representation &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Calling Convention" href="calling-convention.html" />
+    <link rel="prev" title="The Runtime" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Runtime</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Object Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special-features.html">Special Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mangling.html">Name Mangling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/index.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The Runtime</a></li>
+      <li class="breadcrumb-item active">Object Representation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/runtime/object-representation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="object-representation">
+<h1>Object Representation<a class="headerlink" href="#object-representation" title="Permalink to this headline">¶</a></h1>
+<p>Harlequin’s implementation achieves dynamic typing of Dylan objects by
+associating the type with an object based on tagging.</p>
+<p>In many circumstances, the Dylan compiler can statically determine the
+type of an object. This knowledge can be used to select an alternative
+representation which is more efficient than the canonical
+representation. For example, the canonical representation of a double
+float object in Dylan is as a pointer to heap-allocated storage which
+contains the IEEE bit pattern of the double float in addition to a
+reference to the Dylan class object <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>. The compiler may
+choose to represent the value as a direct bit pattern, wherever this
+does not violate the semantics of the program.</p>
+<div class="section" id="tagging-scheme">
+<h2>Tagging Scheme<a class="headerlink" href="#tagging-scheme" title="Permalink to this headline">¶</a></h2>
+<p>All Dylan values are represented as data of the same size, the size of a
+pointer. The bit pattern of these values contains tag bits which
+indicate whether the value is actually a pointer, or whether it is a
+direct value. Since there are three major groups (integers, characters
+and everything else), the representation for all platforms is to use two
+bits.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tag Bits</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>00</p></td>
+<td><p>Heap Allocated</p></td>
+</tr>
+<tr class="row-odd"><td><p>01</p></td>
+<td><p>Integers</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>Characters</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>Unicode Characters</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="integers-and-characters">
+<h2>Integers and Characters<a class="headerlink" href="#integers-and-characters" title="Permalink to this headline">¶</a></h2>
+<p>Integers and characters are represented as direct values, using the tag
+bits as the only indication of type. The tagging scheme uses the least
+significant two bits. With this scheme, a character or integer is
+converted to its untagged representation by arithmetic right shifting by
+two bits. Similarly the conversion from an untagged to a tagged
+representation is to shift left and add in the tag bits.</p>
+<p>Operations on these values (e.g., addition, or other arithmetic
+operations) are always performed on the untagged representation. This is
+sub-optimal, because it is possible to perform arithmetic operations
+directly on the tagged values. It is planned to improve this mechanism
+at a later date, along with a revision of the tagging scheme.</p>
+</div>
+<div class="section" id="boxed-objects">
+<h2>Boxed Objects<a class="headerlink" href="#boxed-objects" title="Permalink to this headline">¶</a></h2>
+<p>Apart from integers and characters, all Dylan objects are indirectly
+represented as <em>boxed</em> values (that is, they are pointers to heap
+allocated boxes). The runtime system is responsible for ensuring that
+these boxed values are appropriately tagged, because the runtime system
+provides the allocation service, and must ensure appropriate alignment.</p>
+<p>Boxed objects are dynamically identified by their first slot, which is
+an identification wrapper. This identification wrapper (itself a boxed
+Dylan object) contains a pointer to the class of the object it is
+wrapping, as well as some encoded information for the garbage collector
+about which slots should be traced.</p>
+<div class="figure align-center">
+<img alt="../_images/runtime-2.png" src="../_images/runtime-2.png" />
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Boxed Objects<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Note that two indirections are necessary to find the class of an object.
+In practice, this is a rare operation, because almost all dynamic class
+testing within Dylan is implicit, and the implementation can use the
+wrapper for these implicit tests. Note that there is potentially a
+many-to-one correspondence between wrapper objects and class objects.</p>
+<p>The Dylan compiler builds literal boxed objects statically whenever it
+can. In practice, this will include most function objects apart from
+closures, virtually all wrappers, and most class objects, as well as
+strings, symbols, and literal vectors and lists.</p>
+</div>
+<div class="section" id="variably-sized-objects">
+<h2>Variably Sized Objects<a class="headerlink" href="#variably-sized-objects" title="Permalink to this headline">¶</a></h2>
+<p>Variably sized objects, such as strings, vectors and arrays, are boxed
+objects which contain a <em>repeated slot</em>. The repeated slot is
+implemented as a variably sized data area preceded by a normal slot
+containing the size of the variably sized data represented as a tagged
+integer. The size slot is used at the Dylan language level to determine
+the size of the array. There is also a special encoding for it in the
+tracing data of the wrapper so that the memory manager knows how to
+trace the repeated data. For example, an instance of the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>
+<em>“foo”</em> is represented as in:.</p>
+<div class="figure align-center" id="id2">
+<img alt="../_images/runtime-3.png" src="../_images/runtime-3.png" />
+<p class="caption"><span class="caption-text">An Instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="function-objects">
+<h2>Function Objects<a class="headerlink" href="#function-objects" title="Permalink to this headline">¶</a></h2>
+<p>Dylan provides two built-in classes of functions: <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#generic-function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;generic-function&gt;</span></code></a>
+and <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#method"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code></a>. These both obey the same general purpose calling
+convention, but also support specialized calling conventions (described
+below) which the compiler may use depending on the detail of its
+knowledge about the function being called, and the circumstances. Slots
+in the function object point to the code which implements each
+convention.</p>
+<p>All functions also have a slot which encodes the number of required
+parameters the function accepts, and whether the function accepts
+optional or keyword parameters. Another slot in each function object
+contains a vector of the types which are acceptable for each required
+parameter. These slots are used for consistency checking of the
+arguments.</p>
+<p>Generic functions have further slots which support the method
+dispatching process — including a slot which contains a vector of all
+the methods belonging to the generic function, and a slot which contains
+a cache of sorted applicable methods for combinations of arguments which
+have been processed before.</p>
+<p>Methods may be closures, in which case a slot in the method object
+contains the environment for the method, which is represented as a
+vector of closed-over variables. If the variable is known actually to be
+constant, then the constant value is stored directly in the vector.
+Alternatively, if there is any possibility of an assignment to the
+variable, then the value is stored with an extra indirection to a <em>value
+cell</em>, which may be shared between many closures with related
+environments.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="The Runtime" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="calling-convention.html" class="btn btn-neutral float-right" title="Calling Convention" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

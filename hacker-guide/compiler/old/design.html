@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compiler Design (Old) &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="next" title="Compiler Internals (Old)" href="internals.html" />
+    <link rel="prev" title="Notes, Warnings and Errors" href="../notes-warnings-errors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">DFMC, The Dylan Flow Machine Compiler</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compiler Design (Old)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../runtime/index.html">The Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../topics/index.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+      <li class="breadcrumb-item active">Compiler Design (Old)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/compiler/old/design.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="compiler-design-old">
+<h1>Compiler Design (Old)<a class="headerlink" href="#compiler-design-old" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="adding-a-dfm-computation">
+<h2>Adding a DFM computation<a class="headerlink" href="#adding-a-dfm-computation" title="Permalink to this headline">¶</a></h2>
+<p>What you have to do to add a new node class to the DFM:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Add it to <code class="docutils literal notranslate"><span class="pre">flow-graph/computation.dylan</span></code>, and ensure that you export</dt><dd><p>it from <code class="docutils literal notranslate"><span class="pre">flow-graph/flow-graph-library</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><p>Create the converters to generate it.  Likely in conversion, but
+some nodes are only created by optimizations.</p></li>
+<li><p>Make sure all the back ends handle it.  This includes, at least:</p>
+<ul>
+<li><p>c-back-end</p></li>
+<li><p>debug-back-end – the printer</p></li>
+<li><p>all native back ends</p></li>
+</ul>
+</li>
+<li><p>In addition, it would be good to add any invariant checks to
+<code class="docutils literal notranslate"><span class="pre">flow-graph/checker.dylan.</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="dfm-block-constructs">
+<h2>DFM block constructs<a class="headerlink" href="#dfm-block-constructs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bind-exit">
+<h3>bind-exit<a class="headerlink" href="#bind-exit" title="Permalink to this headline">¶</a></h3>
+<p>First, let’s look at an example of bind-exit.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span> <span class="p">(</span><span class="n">exit</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="mi">13</span> <span class="k">end</span><span class="p">;</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="p">[</span><span class="n">BIND-EXIT</span> <span class="k">entry-state:</span> <span class="n">&amp;t1</span> <span class="k">body:</span> <span class="n">L1</span> <span class="k">exit-to:</span> <span class="n">L0</span><span class="p">]</span>
+  <span class="k">L1:</span>
+  <span class="n">t4</span> <span class="o">:=</span> <span class="n">^42</span>
+  <span class="n">t12</span> <span class="o">:=</span> <span class="n">exit</span> <span class="k">entry-state:</span> <span class="n">&amp;t1</span> <span class="k">value:</span> <span class="n">t4</span>
+  <span class="n">t6</span> <span class="o">:=</span> <span class="n">^13</span>
+  <span class="n">end-exit-block</span> <span class="k">entry-state:</span> <span class="n">&amp;t1</span>
+  <span class="k">L0:</span>
+  <span class="n">t7</span> <span class="o">:=</span> <span class="p">[</span><span class="n">MERGE</span> <span class="n">t2</span> <span class="n">t6</span><span class="p">]</span>
+  <span class="n">return</span> <span class="n">t7</span>
+</pre></div>
+</div>
+<p>(That’s before register assignment, to make the difference in the
+temporaries used in the merge node clear.)</p>
+<p>The &lt;bind-exit&gt; node establishes the place the exit jumps to, an
+&lt;entry-state&gt;.  This is communicated to &lt;exit&gt; and &lt;end-exit-block&gt;
+through the temporary t1.  The temporary returned by the &lt;bind-exit&gt;
+is set by the exit procedure.</p>
+<p>(The printing code shows up one inconsistency:  the temporary generated
+by the &lt;bind-exit&gt; node is actually not live after that point.  It’s
+live only if the exit procedure is taken.  On the other hand, the
+entry-state is live after that point.  Perhaps which temporary is the
+generated one from a &lt;bind-exit&gt; node should be exchanged.)</p>
+<p>The merge node combines the two temporaries that could contain the
+result of the &lt;merge&gt; node – t2 by exiting, t6 by falling through.
+The &lt;end-exit-block&gt; node exists for at least two purposes:  to
+possibly bash the exit procedure or entry state in order to prevent
+calls outside of its dynamic scope and to stop a thread in the
+execution engine.  It references the entry state in order that it can
+be found from the &lt;bind-exit&gt; node.</p>
+<p>Before we see the compiled code, here’s the DFM code after register
+allocation:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span> <span class="p">(</span><span class="n">exit</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="mi">13</span> <span class="k">end</span><span class="p">;</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="p">[</span><span class="n">BIND-EXIT</span> <span class="k">entry-state:</span> <span class="n">&amp;t0</span> <span class="k">body:</span> <span class="n">L1</span> <span class="k">exit-to:</span> <span class="n">L0</span><span class="p">]</span>
+  <span class="k">L1:</span>
+  <span class="n">t1</span> <span class="o">:=</span> <span class="n">^42</span>
+  <span class="n">t3</span> <span class="o">:=</span> <span class="n">exit</span> <span class="k">entry-state:</span> <span class="n">&amp;t0</span> <span class="k">value:</span> <span class="n">t1</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="n">^13</span>
+  <span class="n">end-exit-block</span> <span class="k">entry-state:</span> <span class="n">&amp;t0</span>
+  <span class="k">L0:</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="p">[</span><span class="n">MERGE</span> <span class="n">t2</span> <span class="n">t2</span><span class="p">]</span>
+  <span class="n">return</span> <span class="n">t2</span>
+</pre></div>
+</div>
+<p>And this is the C code:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">block</span> <span class="p">(</span><span class="n">exit</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="mi">13</span> <span class="n">end</span><span class="p">;</span> <span class="o">=&gt;</span>
+  <span class="n">D</span> <span class="n">L4988I</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">D</span> <span class="n">T0</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T2</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T1</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T3</span><span class="p">;</span>
+
+    <span class="n">T0</span> <span class="o">=</span> <span class="n">dNprimitive_make_bind_exit_frame</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">dNprimitive_frame_destination</span><span class="p">(</span><span class="n">T0</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="n">T2</span> <span class="o">=</span> <span class="n">dNprimitive_frame_return_value</span><span class="p">(</span><span class="n">T0</span><span class="p">);</span>
+      <span class="k">goto</span> <span class="n">L0</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="nl">L1</span><span class="p">:</span>
+    <span class="n">T1</span> <span class="o">=</span> <span class="n">I</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+    <span class="n">dNprimitive_nlx</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span> <span class="n">T1</span><span class="p">);</span>
+  <span class="nl">L0</span><span class="p">:</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">T2</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>The only gotcha (other than how setjmp works in C) is that the emission
+engine knows that there’s no point in generating code for the stuff
+that follows an &lt;exit&gt; node;  it’s a primitive form of dead code
+elimination.  So that’s why the <code class="docutils literal notranslate"><span class="pre">t2</span> <span class="pre">:=</span> <span class="pre">^13</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;end-exit-block&gt;</span></code>
+nodes are not emitted.</p>
+<p>The call to dNprimitive_nlx unwinds all &lt;unwind-protect&gt; frames on the
+way back to the entry state marked by T0.  Eventually, (unless some
+cleanup calls another exit procedure) it will longjmp to the site of
+the setjmp.  The second argument to dNprimitive_nlx is shoved into the
+dNprimitive_frame_return_value of the entry state.</p>
+<p>On the other hand, if we omit the call to the exit procedure (or if
+there’s some control flow path which falls through, or if it isn’t
+inlined, as it was above), the generated code is:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">block</span> <span class="p">(</span><span class="n">exit</span><span class="p">)</span> <span class="mi">13</span> <span class="n">end</span><span class="p">;</span> <span class="o">=&gt;</span>
+  <span class="n">D</span> <span class="n">L1502I</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">D</span> <span class="n">T0</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T1</span><span class="p">;</span>
+
+    <span class="n">T0</span> <span class="o">=</span> <span class="n">dNprimitive_make_bind_exit_frame</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">dNprimitive_frame_destination</span><span class="p">(</span><span class="n">T0</span><span class="p">)))</span> <span class="p">{</span>
+      <span class="n">T1</span> <span class="o">=</span> <span class="n">dNprimitive_frame_return_value</span><span class="p">(</span><span class="n">T0</span><span class="p">);</span>
+      <span class="k">goto</span> <span class="n">L0</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="nl">L1</span><span class="p">:</span>
+    <span class="n">T1</span> <span class="o">=</span> <span class="n">I</span><span class="p">(</span><span class="mi">13</span><span class="p">);</span>
+    <span class="cm">/* invalidate T0 */</span>
+  <span class="nl">L0</span><span class="p">:</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">T1</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that the call just falls through from the assignment to T1 to the
+return;  no jump need take place.</p>
+<p>The comment about invalidating reflects something I think we should
+do, but haven’t done yet, which is ensure that the exit procedure is
+bashed when we leave the block.  Bashing a single slot should be
+sufficient.</p>
+</div>
+<div class="section" id="unwind-protect">
+<h3>unwind-protect<a class="headerlink" href="#unwind-protect" title="Permalink to this headline">¶</a></h3>
+<p>Now, let’s consider the DFM code for an unwind-protect:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span> <span class="p">()</span> <span class="n">xxx</span><span class="p">()</span> <span class="k">cleanup</span> <span class="n">yyy</span><span class="p">()</span> <span class="k">end</span><span class="p">;</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="p">[</span><span class="n">UNWIND-PROTECT</span> <span class="k">entry-state:</span> <span class="n">t0</span> <span class="k">body:</span> <span class="n">L1</span> <span class="k">cleanup:</span> <span class="n">L2</span> <span class="k">next:</span> <span class="n">L0</span><span class="p">]</span>
+  <span class="k">L1:</span>
+  <span class="n">t1</span> <span class="o">:=</span> <span class="n">^xxx</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLx</span> <span class="n">t1</span><span class="p">()]</span>
+  <span class="n">end-protected-block</span> <span class="k">entry-state:</span> <span class="n">t0</span>
+  <span class="k">L0:</span>
+  <span class="n">return</span> <span class="n">t2</span>
+  <span class="k">L2:</span>
+  <span class="n">t3</span> <span class="o">:=</span> <span class="n">^yyy</span>
+  <span class="p">[</span><span class="n">CALLx</span> <span class="n">t3</span><span class="p">()]</span>
+  <span class="n">end-cleanup-block</span> <span class="k">entry-state:</span> <span class="n">t0</span>
+</pre></div>
+</div>
+<p>I think this code is pretty straight-forward, at least in terms of the
+data flow graph.  Note that t2 is live in the code outside the block
+statement.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">block</span> <span class="p">()</span> <span class="n">xxx</span><span class="p">()</span> <span class="n">cleanup</span> <span class="n">yyy</span><span class="p">()</span> <span class="n">end</span><span class="p">;</span> <span class="o">=&gt;</span>
+  <span class="n">D</span> <span class="n">L2437I</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">D</span> <span class="n">T0</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T1</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T2</span><span class="p">;</span>
+    <span class="n">D</span> <span class="n">T3</span><span class="p">;</span>
+
+    <span class="n">T0</span> <span class="o">=</span> <span class="n">dNprimitive_make_unwind_protect_frame</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">dNprimitive_frame_destination</span><span class="p">(</span><span class="n">T0</span><span class="p">)))</span>
+      <span class="k">goto</span> <span class="n">L2</span><span class="p">;</span>
+  <span class="nl">L1</span><span class="p">:</span>
+    <span class="n">T1</span> <span class="o">=</span> <span class="n">dNxxx</span><span class="p">;</span>
+    <span class="n">T2</span> <span class="o">=</span> <span class="n">CALL0</span><span class="p">(</span><span class="n">T1</span><span class="p">);</span>
+  <span class="nl">L2</span><span class="p">:</span>
+    <span class="n">T3</span> <span class="o">=</span> <span class="n">dNyyy</span><span class="p">;</span>
+    <span class="n">CALL0</span><span class="p">(</span><span class="n">T3</span><span class="p">);</span>
+    <span class="n">dNprimitive_continue_unwind</span><span class="p">();</span>
+  <span class="nl">L0</span><span class="p">:</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">T2</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dNprimitive_continue_unwind</span></code> just returns in this case.  If the
+cleanup clause were invoked by an exit procedure, it would have set a
+flag in the frame indicating that it continues non-local-exiting.  The
+important thing to see is that the decision about whether to fall
+through from the cleanup clause into the code outside the block is
+made by <code class="docutils literal notranslate"><span class="pre">dNprimitive_continue_unwind</span></code>, based on dynamic information.</p>
+</div>
+<div class="section" id="final-notes">
+<h3>Final notes<a class="headerlink" href="#final-notes" title="Permalink to this headline">¶</a></h3>
+<p>Finally, note that a block with both an exit procedure (bind-exit) and
+a cleanup clause (unwind-protect) is simply a bind-exit wrapped around
+an unwind-protect.</p>
+</div>
+<div class="section" id="optimizations">
+<h3>Optimizations<a class="headerlink" href="#optimizations" title="Permalink to this headline">¶</a></h3>
+<p>Lots of optimizations can be done.  Off the top of my head:</p>
+<ul class="simple">
+<li><p>Code following an <code class="docutils literal notranslate"><span class="pre">&lt;exit&gt;</span></code> is dead;  it should be dead-code
+eliminated in the DFM.</p></li>
+<li><p>If an <code class="docutils literal notranslate"><span class="pre">&lt;exit&gt;</span></code> is inlined and there are no <code class="docutils literal notranslate"><span class="pre">&lt;unwind-protect&gt;</span></code> nodes
+between it and the <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code>, it can be turned into a control
+transfer.</p></li>
+<li><p>If there are no <code class="docutils literal notranslate"><span class="pre">&lt;exit&gt;</span></code> nodes for a given <code class="docutils literal notranslate"><span class="pre">&lt;entry-state&gt;</span></code>, the
+<code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code> node can be removed.</p></li>
+</ul>
+<p>An invalid optimization that had been suggested was to merge nested
+<code class="docutils literal notranslate"><span class="pre">&lt;unwind-protect&gt;</span></code>  nodes without intervening <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code> nodes
+with a test in the merged cleanup to determine whether the inner cleanup
+is still active. This isn’t valid because then the inner cleanup is no
+longer protected by the outer cleanup.</p>
+</div>
+</div>
+<div class="section" id="dfm-local-assignment">
+<h2>DFM local assignment<a class="headerlink" href="#dfm-local-assignment" title="Permalink to this headline">¶</a></h2>
+<p>We really want the DFM to be a <cite>single assignment</cite> form.  That is,
+all temporaries should be defined and then never mutated.  We want
+this because it makes many optimizations (common sub-expression
+elimination, inlining, etc) significantly easier.  See the usual set
+of SSA papers for details;  I can dig up references.</p>
+<p>On the other hand, Dylan has assignment to locals, and we model locals
+with temporaries.  Since the DFM doesn’t have cycles (loops), we could
+replace assignments <em>to variables which aren’t closed over</em> with
+new temporaries, in the same way as SSA code is usually generated.
+But all the interesting cases in Dylan are when assigned variables are
+closed over, especially because they’re assigned to in loop bodies.</p>
+<p>Instead, based on Keith’s suggestion, I map our Dylan-esque DFM into
+one that matches how ML, at the language level, with references
+(mutable variables):  all temporaries which are assigned to are
+replaced with temporaries referring to boxed values.</p>
+<p>The current approach:</p>
+<p>I introduced three primitives:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">make-box</span> <span class="n">t</span> <span class="p">=&gt;</span> <span class="n">box</span>             <span class="c1">// create a box, containing t</span>
+<span class="n">get-box-value</span> <span class="n">box</span> <span class="p">=&gt;</span> <span class="n">t</span>        <span class="c1">// return the value inside the box</span>
+<span class="n">set-box-value!</span> <span class="n">box</span> <span class="n">t</span> <span class="p">=&gt;</span> <span class="n">t</span>     <span class="c1">// set the value inside the box</span>
+</pre></div>
+</div>
+<p>There is a new compiler pass (eliminate-assignments) which traverses a
+DFM graph and does the rewriting.</p>
+<p>Here’s an example of what happens:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span> <span class="n">a</span> <span class="o">:=</span> <span class="mi">42</span><span class="p">;</span> <span class="n">a</span> <span class="k">end</span><span class="p">;</span> <span class="p">=&gt;</span> <span class="c1">// before</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t0</span> <span class="o">:=</span> <span class="n">^13</span>
+  <span class="n">t1</span> <span class="o">:=</span> <span class="n">^42</span>
+  <span class="n">@a</span> <span class="o">:=</span> <span class="n">t1</span>
+  <span class="n">return</span> <span class="n">t0</span>
+
+<span class="k">begin</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span> <span class="n">a</span> <span class="o">:=</span> <span class="mi">42</span><span class="p">;</span> <span class="n">a</span> <span class="k">end</span><span class="p">;</span> <span class="p">=&gt;</span> <span class="c1">// after</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t0</span> <span class="o">:=</span> <span class="n">^13</span>
+  <span class="n">t1</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">primitive-make-box</span><span class="p">(</span><span class="n">t0</span><span class="p">)]</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="n">^42</span>
+  <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">primitive-set-box-value!</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)]</span>
+  <span class="n">t3</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">primitive-get-box-value</span><span class="p">(</span><span class="n">t1</span><span class="p">)]</span> <span class="c1">// tail call</span>
+  <span class="n">return</span> <span class="n">t3</span>
+</pre></div>
+</div>
+<p>The eliminate-assignments pass should happen before any of the
+<cite>interesting</cite> optimizations, and should never need to be done twice
+on the same piece of code.</p>
+<p>What remains to be done:</p>
+<p>We probably want to turn these primitives into DFM computations before
+trying to do any optimizations on them.</p>
+<p>make-box currently allocates the boxed cell in the heap.  It should
+really allocate the cell either a closure or stack frame, depending on
+whether the box has dynamic extent.  If the temporary the box is bound
+to (t1 in the example above) is only used as with get-box-value and
+set-box-value!, then we know that the box has the same extent as that
+temporary.  I’m don’t think that all optimizations will preserve that
+property, but it will probably be maintained most of the time.</p>
+<p>When we have temporaries which aren’t closed over, most of the time we
+should be able to do SSA-like elimination of assignments, rewriting
+them by introducing new temporaries.  For example, assignment inside a
+conditional can produce something like this</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">if</span> <span class="p">(</span><span class="n">p?</span><span class="p">)</span> <span class="n">a</span> <span class="o">:=</span> <span class="mi">2</span> <span class="k">else</span> <span class="k">end</span><span class="p">;</span> <span class="n">a</span> <span class="k">end</span><span class="p">;</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="n">^1</span>
+  <span class="n">t8</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">primitive-make-box</span><span class="p">(</span><span class="n">t2</span><span class="p">)]</span>
+  <span class="n">t9</span> <span class="o">:=</span> <span class="n">^p?</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">t9</span><span class="p">)</span> <span class="n">goto</span> <span class="n">L1</span> <span class="k">else</span> <span class="n">goto</span> <span class="n">L2</span>
+  <span class="k">L1:</span>
+  <span class="n">t13</span> <span class="o">:=</span> <span class="n">^2</span>
+  <span class="n">t11</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">primitive-set-box-value!</span><span class="p">(</span><span class="n">t8</span><span class="p">,</span> <span class="n">t13</span><span class="p">)]</span>
+  <span class="k">L0:</span>
+  <span class="p">[</span><span class="n">MERGE</span> <span class="n">t11</span> <span class="n">t14</span><span class="p">]</span>
+  <span class="n">t10</span> <span class="o">:=</span> <span class="p">[</span><span class="n">PRIMOP</span> <span class="n">primitive-get-box-value</span><span class="p">(</span><span class="n">t8</span><span class="p">)]</span> <span class="c1">// tail call</span>
+  <span class="n">return</span> <span class="n">t10</span>
+  <span class="k">L2:</span>
+  <span class="n">t14</span> <span class="o">:=</span> <span class="n">^&amp;</span><span class="l">#f</span>
+  <span class="n">goto</span> <span class="n">L0</span>
+</pre></div>
+</div>
+<p>but that should be easy to turn into</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+<span class="n">t1</span> <span class="o">:=</span> <span class="n">^p?</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="n">goto</span> <span class="n">L1</span> <span class="k">else</span> <span class="n">goto</span> <span class="n">L2</span>
+<span class="k">L1:</span>
+<span class="n">t2</span> <span class="o">:=</span> <span class="n">^2</span>
+<span class="k">L0:</span>
+<span class="n">t4</span> <span class="o">:=</span> <span class="p">[</span><span class="n">MERGE</span> <span class="n">t2</span> <span class="n">t3</span><span class="p">]</span>
+<span class="n">return</span> <span class="n">t4</span>
+<span class="k">L2:</span>
+<span class="n">t3</span> <span class="o">:=</span> <span class="n">^1</span>
+<span class="n">goto</span> <span class="n">L0</span>
+</pre></div>
+</div>
+<p>This sort of optimization, in the absence of cycles, is pretty easy.
+It may be more work making it happen for loops built up from tail
+calls, but still not as bad as SSA conversion in general.</p>
+</div>
+<div class="section" id="dfm-multiple-values">
+<h2>DFM multiple values<a class="headerlink" href="#dfm-multiple-values" title="Permalink to this headline">¶</a></h2>
+<p>To represent multiple values, there’s a new temporary class in the
+DFM, &lt;multiple-value-temporary&gt;.  Multiple values temporaries are not
+interchangeable with other temporaries;  maybe we should introduce a
+&lt;simple-temporary&gt; class for non-multiple-value temporaries, but we
+can do that later.  In the debugging print code, MV temporaries print
+with a * in front of them.</p>
+<p>A multiple value temporary is the result of any computation which can
+produce multiple values, notably a call.</p>
+<p>In order to produce efficient code, we have imposed the requirement that
+at most one MV temporary is live at a time (per thread).  This allows
+us to allocate space for all MV temporaries ahead of time, as part of
+the calling convention, in the <cite>multiple value area</cite>.  It is
+generally best to think of the multiple value area, which is used to
+pass multiple values across calls, as a single multiple valued
+register, which we allocate to the live MV temporary.</p>
+<p>When there really is more than one live MV temporary, we must spill
+and unspill uses.  One of the important optimizations is to reduce
+these spills when the number of values in a MV temporary is known, by
+extracting them into normal temporaries and repackaging them as an MV
+temporary when needed as one.</p>
+<p>A multiple value temporary has slots which describe the number of
+required values and whether there are rest values.  Types need to be
+incorporated here, just as with other temporaries.  There’s also a
+slot for a normal temporary, which is used when spilling the multiple
+value temporary.</p>
+<p>To manipulate multiple values, there are five new computation classes:</p>
+<blockquote>
+<div><p>&lt;values&gt;</p>
+<blockquote>
+<div><p>super: &lt;computation&gt;
+slots: fixed-values, rest-value</p>
+<p>Creates a <code class="docutils literal notranslate"><span class="pre">&lt;multiple-value-temporary&gt;</span></code> from a set of single value
+temporaries.  For now, a <code class="docutils literal notranslate"><span class="pre">&lt;values&gt;</span></code> node comes from a converter
+for the <cite>function macro</cite> values;  in the future, there should
+be only one <code class="docutils literal notranslate"><span class="pre">&lt;values&gt;</span></code> node created directly, and the rest created
+by inlining the function values from the Dylan library.  (A
+similar change needs to be made for <code class="docutils literal notranslate"><span class="pre">&lt;apply&gt;</span></code>.)</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t0</span> <span class="o">:=</span> <span class="n">^1</span>
+  <span class="n">t1</span> <span class="o">:=</span> <span class="n">^2</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="n">^3</span>
+  <span class="n">*t3</span> <span class="o">:=</span> <span class="p">[</span><span class="nb">VALUES</span> <span class="n">t0</span> <span class="n">t1</span> <span class="n">t2</span><span class="p">]</span>
+  <span class="n">return</span> <span class="n">*t3</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&lt;extract-single-value&gt;</p>
+<blockquote>
+<div><p>super: &lt;computation&gt;
+slots: multiple-values, index, rest-vector?</p>
+<p>Produces a single-valued temporary from an MV temporary.  The
+index is used to select which multiple value is extracted;  the
+indices are numbered from 0.  If rest-vector? is true, a vector
+of the values from index on is returned, rather than just the
+index.  (Perhaps that should be a different &lt;computation&gt; class.)</p>
+<p>These very commonly follow calls, extracting the single value.
+They should also appear based on optimizations of let bindings.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">())</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t0</span> <span class="o">:=</span> <span class="n">^f</span>
+  <span class="n">t1</span> <span class="o">:=</span> <span class="n">^g</span>
+  <span class="n">*t2</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLx</span> <span class="n">t1</span><span class="p">()]</span>
+  <span class="n">t3</span> <span class="o">:=</span> <span class="n">*t2</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">*t4</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLx</span> <span class="n">t0</span><span class="p">(</span><span class="n">t3</span><span class="p">)]</span> <span class="c1">// tail call</span>
+  <span class="n">return</span> <span class="n">*t4</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&lt;multiple-value-call&gt;</p>
+<blockquote>
+<div><p>super: &lt;function-call&gt;</p>
+<p>Like an &lt;apply&gt; with no fixed arguments and a MV temporary as the
+single (last) argument.  Constructed from <code class="docutils literal notranslate"><span class="pre">let</span></code> declarations
+which bind multiple values.  (This could be used for all lets, but
+I wanted to wait with that until the multiple value optimizations
+were in place.)</p>
+<p>The most important optimization with these nodes is to upgrade
+the calls to &lt;simple-call&gt; or &lt;apply&gt; with the shape of the
+MV temporary argument is know.  If it’s not known, the simplest
+code generation strategy is to extract all of the temporary
+values and transform the call into an &lt;apply&gt;.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span> <span class="k">let</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="n">f</span><span class="p">();</span> <span class="n">g</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">end</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t3</span> <span class="o">:=</span> <span class="o">^</span><span class="p">[</span><span class="n">XEP</span> <span class="n">lambda</span> <span class="mi">741</span> <span class="p">[</span><span class="mi">743</span><span class="p">]</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+    <span class="n">t0</span> <span class="o">:=</span> <span class="n">^g</span>
+    <span class="n">*t1</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLx</span> <span class="n">t0</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)]</span> <span class="c1">// tail call</span>
+    <span class="n">return</span> <span class="n">*t1</span>
+  <span class="k">end</span> <span class="n">lambda</span><span class="p">]</span>
+  <span class="n">t0</span> <span class="o">:=</span> <span class="n">^f</span>
+  <span class="n">*t1</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLx</span> <span class="n">t0</span><span class="p">()]</span>
+  <span class="n">*t2</span> <span class="o">:=</span> <span class="p">[</span><span class="n">MV-CALLx</span> <span class="n">t3</span><span class="p">(</span><span class="n">*t1</span><span class="p">)]</span> <span class="c1">// tail call</span>
+  <span class="n">return</span> <span class="n">*t2</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&lt;multiple-value-spill&gt;
+&lt;multiple-value-unspill&gt;</p>
+<blockquote>
+<div><p>super: &lt;temporary-transfer&gt;</p>
+<p>These instructions turn an MV temporary into a single-value
+temporary and vice-versa, for the purpose of maintaining the
+property that a single MV temporary is live at a time.  As much as
+possible, we should try to avoid these instructions in generated
+code, which can be done when we know we’re dealing with a fixed
+number of values.</p>
+<p>These computations are only generated by the mandatory compiler
+pass <code class="docutils literal notranslate"><span class="pre">spill-multiple-values</span></code>, which should run after all
+optimizations have happened.  (The reason that it should run
+afterwards is the spill code can defeat other optimizations and
+other optimizations can get rid of the need to spill.)</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span> <span class="p">()</span> <span class="n">f</span><span class="p">()</span> <span class="k">afterwards</span> <span class="n">g</span><span class="p">()</span> <span class="k">end</span> <span class="p">=&gt;</span>
+  <span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
+  <span class="n">t0</span> <span class="o">:=</span> <span class="n">^f</span>
+  <span class="n">*t1</span> <span class="o">:=</span> <span class="p">[</span><span class="n">CALLx</span> <span class="n">t0</span><span class="p">()]</span>
+  <span class="n">t3</span> <span class="o">:=</span> <span class="p">[</span><span class="n">MV-SPILL</span> <span class="n">*t1</span><span class="p">]</span>
+  <span class="n">t2</span> <span class="o">:=</span> <span class="n">^g</span>
+  <span class="p">[</span><span class="n">CALLx</span> <span class="n">t2</span><span class="p">()]</span>
+  <span class="n">*t4</span> <span class="o">:=</span> <span class="p">[</span><span class="n">MV-UNSPILL</span> <span class="n">t3</span><span class="p">]</span>
+  <span class="n">return</span> <span class="n">*t4</span>
+</pre></div>
+</div>
+<p>The reason the spill is needed is that the call to g tramples over
+the multiple value area.</p>
+</div></blockquote>
+</div></blockquote>
+<p>In the C run time, there’s an extra data structure, MV, as follows:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_mv</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+  <span class="n">D</span>   <span class="n">value</span><span class="p">[</span><span class="n">VALUES_MAX</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">MV</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>There’s one global such thing (Preturn_values), and one per bind-exit
+or unwind-protect frame, used for the return value that’s being passed
+around.  The ones that live in those frames should probably be
+shortened to some small number of values (2? 4? 8?) and evacuate to
+the heap if more multiple values are stored;  it’s pretty rare, I
+expect, for a large number of values to appear in an unwind-protect
+frame, or to be passed back with an exit procedure.</p>
+<p>The C code generated for all of these is pretty stupid right now,
+calling out to primitives in all cases, so I won’t bother to present
+it.  I want to get to the task of optimizing multiple values soon.  I
+think that a little bit of optimization will go a long way here.</p>
+<p>In the native run-time, we’ll pass the first few multiple values and
+(if there is one) the count in registers.  Tony can describe that far
+better than I can.</p>
+</div>
+<div class="section" id="define-compilation-pass-macro">
+<h2>define compilation-pass macro<a class="headerlink" href="#define-compilation-pass-macro" title="Permalink to this headline">¶</a></h2>
+<p>NOTE: this is currently not used at all - it had been dropped before
+going open source, but in general I (hannes) believe it is a good
+idea (and plan to revive it), thus I keep the documentation.</p>
+<p>I’ve now replaced the old mechanism for specifying compilation passes
+in the DFM compiler (setting the vector <em>compilation-passes</em> in
+compile.dylan) with a declarative system, based around a macro, define
+compilation-pass.</p>
+<p>The macro is exported by dfmc-common, so every module should have it.
+The basic idea is that you put a compilation-pass definition in the
+same place as you define the main entry point for a compiler-pass;
+the definition includes things about the pass, such as when its run,
+how it is called, and if it should cause other passes to run.</p>
+<p>First, a simple example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">compilation-pass</span> <span class="n">eliminate-assignments</span><span class="p">,</span>
+  <span class="k">visit:</span> <span class="n">functions</span><span class="p">,</span>
+  <span class="k">mandatory?:</span> <span class="l">#t</span><span class="p">,</span>
+  <span class="k">before:</span> <span class="n">analyze-calls</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This defines a pass named <cite>eliminate-assignments</cite>, which runs before
+analyze-calls is run;  it is possible to use arbitrarily many before:
+options.  The mandatory option declares that the pass is part of
+optimization level 0;  that is, it’s always run.</p>
+<p>The <cite>visit: functions</cite> option says that the function is called for
+every function in the form being compiled.  The default is
+<cite>visit: top-level-forms</cite>, which corresponds to the previous behavior.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">compilation-pass</span> <span class="n">try-inlining</span><span class="p">,</span>
+  <span class="k">visit:</span> <span class="n">computations</span><span class="p">,</span>
+  <span class="k">optimization:</span> <span class="n">medium</span><span class="p">,</span>
+  <span class="k">after:</span> <span class="n">analyze-calls</span><span class="p">,</span>
+  <span class="k">before:</span> <span class="n">single-value-propagation</span><span class="p">,</span>
+  <span class="k">triggered-by:</span> <span class="n">analyze-calls</span><span class="p">,</span>
+  <span class="k">trigger:</span> <span class="n">analyze-calls</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <cite>visit: computations</cite> option says that every computation (in the
+top-level and all nested lambdas) is passed to the pass’s function.
+The after: option is like before: in reverse.</p>
+<p>The trigger: option runs the named pass if the pass being defined
+reports that it changed anything.  If the triggered pass has already
+run, then it is queued to run again;  if the triggered pass is
+disabled or of a higher optimization level than currently being used,
+it’s not run.  Triggered-by: is trigger: in reverse.</p>
+<p>A pass function reports that it changed something by returning any
+non-false value.</p>
+<p>Full catalog of options:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>visit:             What things to pass to the pass’s function:</dt><dd><p>top-level-forms    Just the top-level function.
+functions          Every function.
+computations       Every computation in every function.</p>
+</dd>
+<dt>optimization:      What level of optimization to run this pass for?</dt><dd><p>(Choices:  mandatory, low, medium, high.)</p>
+</dd>
+</dl>
+<p>mandatory?:        Always run this pass;  overrides optimization:.</p>
+<p>before:            Run this pass before the named one.
+after:             Run this pass after the named one.</p>
+<p>trigger:           If this pass changed something, run the named pass.
+triggered-by:      If the named pass changes something, run this pass.</p>
+<p>print-before?:     Print the DFM code before calling the pass.
+print-after?:      Print the DFM code after the pass is done.
+print?:            Same as print-before?: #t and print-after?: #t.</p>
+<p>check-before?:     Call ensure-invariants before calling the pass.
+check-after?:      Call ensure-invariants after the pass is done.
+check?:            Same as check-before?: #t and check-after?: #t.</p>
+<p>back-end:          Turn pass on for the named back end. (Default: all)
+exclude-back-end:  Turn pass off for the named back end. (Default: none.)</p>
+<p>disabled?:         Turn pass off;  overrides everything else.</p>
+</div></blockquote>
+<p>Convenience functions:</p>
+<blockquote>
+<div><p>trace-pass(pass-name)
+untrace-pass(pass-name)</p>
+<blockquote>
+<div><p>Turns on (or off) printing and checking (both before and after)
+for the pass.</p>
+</div></blockquote>
+<p>untrace-passes()</p>
+<blockquote>
+<div><p>Calls untrace-pass for all traced passes.</p>
+</div></blockquote>
+</div></blockquote>
+<p>Global state:</p>
+<p>The thread-variable <code class="docutils literal notranslate"><span class="pre">*back-end*</span></code> is used with the options back-end: and
+exclude-back-end:.</p>
+<p>The thread-variable <code class="docutils literal notranslate"><span class="pre">*trace-compilation-passes*</span></code> will print a message
+about each pass as it runs, and report when one pass triggers another.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../notes-warnings-errors.html" class="btn btn-neutral float-left" title="Notes, Warnings and Errors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="internals.html" class="btn btn-neutral float-right" title="Compiler Internals (Old)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="prev" title="Release Check-list" href="topics/making-a-release.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime/index.html">The Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/index.html">Topics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/glossary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>canonical sources</dt><dd><p>only meaningful in reference to a particular compiler database or
+compilation context. The set of sources from which the information
+in the database was derived.</p>
+</dd>
+<dt>compilation context</dt><dd><p>the in-memory representation of an open compiler database. Consists
+of a connection to a disk database, a reference to the owning project,
+and a collection of caches for pre-loaded/pre-computed information.</p>
+</dd>
+<dt>compiler database</dt><dd><p>a file or set of files containing information derived from
+compiling a project. A project can have multiple compiler databases,
+corresponding to different target machines, compiler settings, or
+even different versions of the project sources. The project manager is
+responsible for managing the collection of project databases and
+telling the compilation system which database to use.</p>
+</dd>
+<dt>component</dt><dd><p>a native DLL or EXE file.</p>
+</dd>
+<dt>DFMC</dt><dd><p>the Dylan Flow Machine Compiler, the intermediate representation on
+which type inference and optimization (dispatch, inline, dynamic
+extent, common subexpression elimination, constant folding, dead
+code removal) is done. Source of data and control flow elements is
+in <em>dfmc/flow-graph</em>.</p>
+</dd>
+<dt>execution context</dt><dd><p>the compiler-derived information about a process, such as the
+namespaces of known runtime components, installed definitions, etc.
+Initialized from the compilation contexts of the preloaded runtime
+components and subsequently updated by interactive execution.</p>
+</dd>
+<dt>HARP</dt><dd><p>Harlequin Abstract RISC Machine, the native back-end of Open Dylan.
+On this representation register allocation etc is done: input DFM,
+output: assembly. Source is in <em>harp</em> subdirectory.</p>
+</dd>
+<dt>interactive execution</dt><dd><p>a mechanism for exploratory programming by which the user can
+execute Dylan forms in an existing process. May allow “out of
+language” operations such as addition of new variables to existing
+modules, redefinition of classes, constants, overriding sealing
+restrictions, etc. Forms to be executed can come from a project or
+from an interactor.</p>
+</dd>
+<dt>project</dt><dd><p>a development environment object representing a Dylan program under
+development. It corresponds to a Dylan library, but it exists before
+the compiler is ever invoked. It is used by the compiler only to
+identify a library in interactions with the project manager.</p>
+</dd>
+<dt>project manager</dt><dd><p>the part of the development environment charged with managing
+projects. The project manager is a client of the compilation system,
+i.e. it is the project manager which is expected to invoke many of the
+functions in this API.</p>
+</dd>
+<dt>runtime component</dt><dd><p>a runtime manager object representing a component loaded into a
+tethered process.</p>
+</dd>
+<dt>interactor</dt><dd><p>a mechanism by which a user can type in source records for
+interactive execution without modifying project sources.</p>
+</dd>
+<dt>runtime manager</dt><dd><p>the part of the development environment charged with controlling
+the runtime. The compilation system is a client of the runtime
+manager, i.e. the compilation system will invoke runtime manager
+functions as needed to effect interactive execution.</p>
+</dd>
+<dt>source record</dt><dd><p>smallest unit of source suitable for compilation. Consists of a
+stream of characters and a module name. Contains complete top-level
+forms (i.e. top-level forms may not be split across source records).</p>
+</dd>
+<dt>tether</dt><dd><p>a runtime manager object representing a debuggable process on the
+runtime. Sometimes referred to as an “access-path”, but I’m staying
+away from that term because it seems to be used differently in
+different documents.</p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="topics/making-a-release.html" class="btn btn-neutral float-left" title="Release Check-list" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

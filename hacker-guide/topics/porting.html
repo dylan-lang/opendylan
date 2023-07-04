@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porting to a New Target Platform &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="The PPML library" href="ppml.html" />
+    <link rel="prev" title="Debugging" href="debugging.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime/index.html">The Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Porting to a New Target Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ppml.html">The PPML library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Topics</a></li>
+      <li class="breadcrumb-item active">Porting to a New Target Platform</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/topics/porting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="porting-to-a-new-target-platform">
+<h1>Porting to a New Target Platform<a class="headerlink" href="#porting-to-a-new-target-platform" title="Permalink to this headline">¶</a></h1>
+<div class="alert alert-block alert-warning admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a work in progress, as we work through doing a new port.</p>
+</div>
+<div class="section" id="naming-your-target">
+<h2>Naming Your Target<a class="headerlink" href="#naming-your-target" title="Permalink to this headline">¶</a></h2>
+<p>A target name typically consists of the CPU type and the OS name, separated
+by a hyphen.  Due to using the hyphen as a separator, the CPU type and OS name
+should not include a hyphen.</p>
+<p>Example target names are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">arm-linux</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppc-darwin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x86-win32</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x86_64-linux</span></code></p></li>
+</ul>
+<p>CPU types are typically:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;arm&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;ppc&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86_64&quot;</span></code></p></li>
+</ul>
+<p>OS names are typically:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;linux&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;darwin&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;freebsd&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#&quot;win32&quot;</span></code></p></li>
+</ul>
+<div class="alert alert-block alert-warning admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Some existing targets are poorly named.  We may attempt to
+rename <code class="docutils literal notranslate"><span class="pre">#&quot;win32&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">#&quot;windows&quot;</span></code> in the future.</p>
+</div>
+<div class="alert alert-block alert-warning admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We do not yet have a strategy in place for targets which
+are not for a particular CPU and OS type. Examples of these would be
+emscripten, the JVM, and Google’s Native Client.</p>
+</div>
+</div>
+<div class="section" id="new-registry">
+<h2>New Registry<a class="headerlink" href="#new-registry" title="Permalink to this headline">¶</a></h2>
+<p>The registry is how we map library names to the actual project files that
+should be built to provide that library.  This lets us provide per-platform
+implementations of libraries as required.</p>
+<p>The registry can be found within <code class="docutils literal notranslate"><span class="pre">sources/registry</span></code>.</p>
+<p>The easiest way to do this is to copy an existing directory and modify it
+as needed. If you are doing a port to a Unix-like platform, this should be
+pretty straightforward to copy from one of the Linux definitions.</p>
+</div>
+<div class="section" id="system-library">
+<h2>System Library<a class="headerlink" href="#system-library" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new-lid-and-definitions">
+<h3>New LID and definitions<a class="headerlink" href="#new-lid-and-definitions" title="Permalink to this headline">¶</a></h3>
+<p>You will need to create a new <code class="docutils literal notranslate"><span class="pre">.lid</span></code> file to point to the per-platform
+files for the new target.  You will also need a <code class="docutils literal notranslate"><span class="pre">*-operating-system.dylan</span></code>
+file to provide a couple of definitions.</p>
+<p>There are plenty of examples of this within <code class="docutils literal notranslate"><span class="pre">sources/system</span></code> for the
+currently supported target platforms.</p>
+</div>
+<div class="section" id="magic-numbers">
+<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
+<p>The system library requires some magic numbers for accessing struct members
+defined within the standard C library.</p>
+<p>To do this, compile <code class="docutils literal notranslate"><span class="pre">sources/system/dump-magic-numbers.c</span></code> for your target
+platform and execute it on the target.  This will generate a Dylan file that
+you can add to the system library.</p>
+</div>
+</div>
+<div class="section" id="c-back-end">
+<h2>C Back-End<a class="headerlink" href="#c-back-end" title="Permalink to this headline">¶</a></h2>
+<p>If the new processor type is a 64 bit processor, you will
+want to update the C back-end appropriately:</p>
+<ul class="simple">
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">sources/dfmc/c-back-end/c-back-end.dylan</span></code></p></li>
+<li><p>Update the definition of <code class="docutils literal notranslate"><span class="pre">back-end-word-size</span></code></p></li>
+</ul>
+<p>You will also need to do a couple of edits to the C run-time:</p>
+<ul class="simple">
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">sources/lib/run-time/run-time.*</span></code>, looking for
+usages of <code class="docutils literal notranslate"><span class="pre">__x86_64__</span></code></p></li>
+</ul>
+<div class="alert alert-block alert-info admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We should improve this code within the C run-time.</p>
+</div>
+<p>Additionally, there are some mappings involving <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_TARGET_PLATFORM</span></code>
+in <code class="docutils literal notranslate"><span class="pre">sources/lib/run-time/Makefile.in</span></code> that will need to be updated.</p>
+</div>
+<div class="section" id="llvm-back-end">
+<h2>LLVM Back-End<a class="headerlink" href="#llvm-back-end" title="Permalink to this headline">¶</a></h2>
+<p>The per-platform configurations for the LLVM back-end can be found
+within <code class="docutils literal notranslate"><span class="pre">sources/dfmc/llvm-back-end/llvm-targets.dylan</span></code>.</p>
+<p>When adding a new CPU type, add a new abstract back-end for the CPU with
+the appropriate data layout and word size.</p>
+<p>When adding a new OS type, add a new abstract back-end for the OS.</p>
+<p>After that, you can create the new target back-end that inherits from the
+appropriate CPU and OS specific abstract back-ends.  You may need to
+override the data layout if a different ABI is required.</p>
+<div class="alert alert-block alert-info admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Someone should document how to correctly determine the
+appropriate data layout to use.</p>
+</div>
+<p>Be sure to invoke <code class="docutils literal notranslate"><span class="pre">register-back-end</span></code> correctly with your new back-end
+class.</p>
+<p>Additionally, as with the C back-end, there are some mappings involving
+<code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_TARGET_PLATFORM</span></code> in <code class="docutils literal notranslate"><span class="pre">sources/lib/run-time/Makefile.in</span></code>
+that will need to be updated.</p>
+<p><em>This isn’t completely written yet.</em></p>
+</div>
+<div class="section" id="build-scripts">
+<h2>Build Scripts<a class="headerlink" href="#build-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Build scripts are partially documented within <a class="reference internal" href="../build-system.html"><span class="doc">Jam-based Build System</span></a>.
+The existing build scripts can be found within <code class="docutils literal notranslate"><span class="pre">sources/jamfiles</span></code>.</p>
+<p>You will want to copy an existing one and make whatever changes are
+required. When targeting a Unix-like platform, much of the logic is
+already shared within <code class="docutils literal notranslate"><span class="pre">sources/jamfiles/posix-build.jam</span></code>.</p>
+<p>You should also add your new build script to <code class="docutils literal notranslate"><span class="pre">sources/jamfiles/Makefile.in</span></code>
+so that it gets installed.</p>
+</div>
+<div class="section" id="autoconf">
+<h2>Autoconf<a class="headerlink" href="#autoconf" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">configure.ac</span></code> script handles detecting a target platform and
+setting some appropriate variables within the build system. There
+is a large block that deals with checking the <code class="docutils literal notranslate"><span class="pre">$host</span></code> (set up
+by <code class="docutils literal notranslate"><span class="pre">AC_CANONICAL_TARGET</span></code>) and configuring things appropriately.</p>
+<p>After updating <code class="docutils literal notranslate"><span class="pre">configure.ac</span></code>, be sure to re-run <code class="docutils literal notranslate"><span class="pre">autogen.sh</span></code>
+to create an updated <code class="docutils literal notranslate"><span class="pre">configure</span></code> script before re-running
+<code class="docutils literal notranslate"><span class="pre">configure</span></code>.</p>
+</div>
+<div class="section" id="performing-a-cross-build">
+<h2>Performing a Cross-Build<a class="headerlink" href="#performing-a-cross-build" title="Permalink to this headline">¶</a></h2>
+<p>In the examples below, we will use <code class="docutils literal notranslate"><span class="pre">arm-linux</span></code> as the example.</p>
+<div class="section" id="preparing-the-garbage-collector">
+<h3>Preparing the Garbage Collector<a class="headerlink" href="#preparing-the-garbage-collector" title="Permalink to this headline">¶</a></h3>
+<p>Currently, most ports of Open Dylan will probably be using the Boehm
+garbage collector rather than MPS.  An easy way to get the required
+files is to install the Boehm GC on the target platform and then
+copy the include and library files back to the build machine being
+used to perform cross-compilation.</p>
+<p>If you intend to start with MPS, you will need to ensure that the MPS
+has been ported to the target platform first. This is an undertaking
+that is outside the scope of this document.</p>
+</div>
+<div class="section" id="building-the-run-time">
+<h3>Building the Run-Time<a class="headerlink" href="#building-the-run-time" title="Permalink to this headline">¶</a></h3>
+<p>You can cross-compile the run-time by going to <code class="docutils literal notranslate"><span class="pre">sources/lib/run-time</span></code>
+and running <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>, however, you will need to pass some special
+flags to <code class="docutils literal notranslate"><span class="pre">make</span></code>:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">CC</span></code></dt><dd><p>This should point to your cross-compiler, along with any special
+compilation flags that are required, such as the include paths
+for the garbage collector, or target CPU flags.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_TARGET_PLATFORM</span></code></dt><dd><p>This should be the name of the target platform for which you are
+cross-compiling.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_INSTALL</span></code></dt><dd><p>This points to the path to the installation of Open Dylan which
+you will be using to perform cross-compilation.</p>
+</dd>
+</dl>
+<p>An example command line might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">CC</span><span class="o">=</span><span class="s2">&quot;arm-linux-gnueabihf-gcc -I/path/to/gc/include&quot;</span> \
+  <span class="n">OPEN_DYLAN_TARGET_PLATFORM</span><span class="o">=</span><span class="n">arm</span><span class="o">-</span><span class="n">linux</span> \
+  <span class="n">OPEN_DYLAN_USER_INSTALL</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">opendylan</span><span class="o">-</span><span class="n">current</span> \
+  <span class="n">clean</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-custom-build-script">
+<h3>Creating a Custom Build Script<a class="headerlink" href="#creating-a-custom-build-script" title="Permalink to this headline">¶</a></h3>
+<p>When cross-compiling, it is best to set up a custom Jam build
+script which can be passed to the <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>.  This will
+allow you to customize important parts of the build configuration.</p>
+<p>An example custom script might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CC = /opt/arm-linux/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc ;
+GC_CFLAGS = -I/opt/arm-linux/gc/include -DGC_USE_BOEHM -DGC_THREADS ;
+GC_LFLAGS = -L/opt/arm-linux/gc/lib -lgc ;
+
+include $(SYSTEM_BUILD_SCRIPTS)/arm-linux-build.jam ;
+</pre></div>
+</div>
+<p>This just overrides the default values for some variables and then
+includes the system-provided build script for <code class="docutils literal notranslate"><span class="pre">arm-linux</span></code>.</p>
+</div>
+<div class="section" id="cross-building-a-test-application">
+<h3>Cross-Building a Test Application<a class="headerlink" href="#cross-building-a-test-application" title="Permalink to this headline">¶</a></h3>
+<p>Assuming that you’ve cross-compiled and installed a copy of the
+run-time into the version of Open Dylan that you’re using for
+cross-compilation, this is an easy step:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OPEN_DYLAN_TARGET_PLATFORM</span><span class="o">=</span><span class="n">arm</span><span class="o">-</span><span class="n">linux</span> \
+  <span class="n">dylan</span><span class="o">-</span><span class="n">compiler</span> <span class="o">-</span><span class="n">build</span><span class="o">-</span><span class="n">script</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">custom</span><span class="o">-</span><span class="n">build</span><span class="o">.</span><span class="n">jam</span> \
+    <span class="o">-</span><span class="n">build</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+</pre></div>
+</div>
+<p>This should create a build of the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> application
+in the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory. This directory can be copied to the
+target machine and executed. Hopefully it runs correctly. If not,
+now is the time to start debugging.</p>
+</div>
+<div class="section" id="cross-building-the-dylan-compiler">
+<h3>Cross-Building the Dylan Compiler<a class="headerlink" href="#cross-building-the-dylan-compiler" title="Permalink to this headline">¶</a></h3>
+<p>This is no different from building the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> application
+except that now you are building <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OPEN_DYLAN_TARGET_PLATFORM</span><span class="o">=</span><span class="n">arm</span><span class="o">-</span><span class="n">linux</span> \
+  <span class="n">dylan</span><span class="o">-</span><span class="n">compiler</span> <span class="o">-</span><span class="n">build</span><span class="o">-</span><span class="n">script</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">custom</span><span class="o">-</span><span class="n">build</span><span class="o">.</span><span class="n">jam</span> \
+    <span class="o">-</span><span class="n">build</span> <span class="n">dylan</span><span class="o">-</span><span class="n">compiler</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-without-a-cross-compiler">
+<h3>Building without a Cross-Compiler<a class="headerlink" href="#building-without-a-cross-compiler" title="Permalink to this headline">¶</a></h3>
+<p>When you don’t have an actual cross-compiler when porting
+to a new platform, the recommended solution is to use a shared
+file system and custom compiler scripts.</p>
+<ul class="simple">
+<li><p>Set up a file system that is shared between the build host
+and the target host.</p></li>
+<li><p>On the build host, create a script for running the C compiler via ssh
+on the target host.</p></li>
+<li><p>Use this custom script to build the run-time library.</p></li>
+<li><p>Set up a custom build script as described above and use it
+to compile a test application and the Dylan compiler.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="debugging.html" class="btn btn-neutral float-left" title="Debugging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ppml.html" class="btn btn-neutral float-right" title="The PPML library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DFMC, The Dylan Flow Machine Compiler &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Notes, Warnings and Errors" href="notes-warnings-errors.html" />
+    <link rel="prev" title="Jam-based Build System" href="../build-system.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DFMC, The Dylan Flow Machine Compiler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime/index.html">The Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/index.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DFMC, The Dylan Flow Machine Compiler</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/compiler/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="dfmc-the-dylan-flow-machine-compiler">
+<h1>DFMC, The Dylan Flow Machine Compiler<a class="headerlink" href="#dfmc-the-dylan-flow-machine-compiler" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notes-warnings-errors.html">Notes, Warnings and Errors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#status-of-this-library">Status of this Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#philosophy">Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#program-condition-hierarchy">Program Condition Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#reporting-a-program-condition">Reporting a Program Condition</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#source-locations">Source Locations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#defining-a-new-program-condition">Defining a new Program Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#ppml-pretty-print-markup-language">PPML, Pretty Print Markup Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#filtering-of-program-conditions">Filtering of Program Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#how-warnings-are-displayed-and-recorded">How Warnings Are Displayed and Recorded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#responding-to-a-program-condition">Responding to a Program Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#future-work">Future Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#the-dfmc-conditions-api-reference">The DFMC-CONDITIONS API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#definers-for-new-program-conditions">Definers for new Program Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#program-conditions">Program Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#program-condition-slots">Program Condition Slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#signaling-program-conditions">Signaling Program Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#preserving-program-conditions">Preserving Program Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#recovery-and-restarting">Recovery and Restarting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#subnotes">Subnotes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#printing-program-conditions">Printing Program Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#unclassified-api">Unclassified API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Not yet fully updated:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="old/design.html">Compiler Design (Old)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="old/design.html#adding-a-dfm-computation">Adding a DFM computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/design.html#dfm-block-constructs">DFM block constructs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="old/design.html#bind-exit">bind-exit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="old/design.html#unwind-protect">unwind-protect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="old/design.html#final-notes">Final notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="old/design.html#optimizations">Optimizations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="old/design.html#dfm-local-assignment">DFM local assignment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/design.html#dfm-multiple-values">DFM multiple values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/design.html#define-compilation-pass-macro">define compilation-pass macro</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="old/internals.html">Compiler Internals (Old)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-management">dfmc-management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-reader">dfmc-reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-definitions">dfmc-definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#excursion-into-run-time-and-compile-time">Excursion into run-time and compile-time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-macro-expander">dfmc-macro-expander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-convert">dfmc-convert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-modeling">dfmc-modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-flow-graph">dfmc-flow-graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-typist">dfmc-typist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="old/internals.html#dfmc-optimization">dfmc-optimization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../build-system.html" class="btn btn-neutral float-left" title="Jam-based Build System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="notes-warnings-errors.html" class="btn btn-neutral float-right" title="Notes, Warnings and Errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

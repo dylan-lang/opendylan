@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startup &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Runtime Manager" href="../runtime-manager/index.html" />
+    <link rel="prev" title="Compiler Support for Threads" href="threads.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Runtime</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="object-representation.html">Object Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special-features.html">Special Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mangling.html">Name Mangling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/index.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">The Runtime</a></li>
+      <li class="breadcrumb-item active">Startup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/runtime/startup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="startup">
+<h1>Startup<a class="headerlink" href="#startup" title="Permalink to this headline">¶</a></h1>
+<p>When a Dylan library (either a shared library/DLL or executable) is
+loaded, a number of initialization tasks need to take place:</p>
+<ul class="simple">
+<li><p>The Dylan run-time facilities, including the garbage collector and
+the main thread’s thread environment block (TEB), need to be
+initialized if they haven’t already been.</p></li>
+<li><p>The final addresses of any <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a> objects referenced by the
+library need to be resolved, and data locations that reference
+symbols need to be patched to point to the resolved addresses. This
+is part of the “for-system” initialization.</p></li>
+<li><p>Top-level forms in each of the library’s source files need to be
+evaluated. This is the “for-user” initialization.</p></li>
+</ul>
+<p>The following describes how Dylan libraries are initialized under the
+different compiler back-ends.</p>
+<div class="section" id="llvm">
+<h2>LLVM<a class="headerlink" href="#llvm" title="Permalink to this headline">¶</a></h2>
+<p>Initialization for programs compiled by the LLVM back-end relies on
+constructor functions, provided on most platforms to support (among
+other things) C++ constructors. The LLVM linker makes use of two
+different constructor priorities, system (priority 0) and user
+(priority 65535).</p>
+<p>The first constructor generated at system priority within the
+<code class="docutils literal notranslate"><span class="pre">_glue.bc</span></code> file generated for the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library is a call to
+<code class="docutils literal notranslate"><span class="pre">_Init_Run_Time</span></code>, a C function defined in
+<code class="docutils literal notranslate"><span class="pre">sources/lib/run-time/llvm-runtime-init.c</span></code> to initialize the garbage
+collector and other system facilities needed by the Dylan run-time.</p>
+<p>For each compile unit that requires it, a constructor at system
+priority is generated to do for-system initialization:</p>
+<ul class="simple">
+<li><p>When <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a> resolution is required, a call to
+<code class="docutils literal notranslate"><span class="pre">primitive-symbol-fixup</span></code> is generated, passing a table of symbols
+to resolve and reference addresses to patch.</p></li>
+<li><p>If there are any system initializers in the compile unit, calls to
+these are also generated. These normally only occur when a class
+definition depends on non-static values.</p></li>
+</ul>
+<p>The remaining for-user initialization is done in the per-library
+startup glue function, named <code class="docutils literal notranslate"><span class="pre">_Init_</span></code><em>mangled-library-name</em>, where
+<em>mangled-library-name</em> is the Dylan library name transformed by name
+mangling. This function, generated in <code class="docutils literal notranslate"><span class="pre">_glue.bc</span></code> by <code class="docutils literal notranslate"><span class="pre">emit-gluefile</span></code>
+in <code class="docutils literal notranslate"><span class="pre">sources/dfmc/llvm-linker/llvm-gluefile.dylan</span></code>, does the following:</p>
+<ol class="arabic simple">
+<li><p>For all libraries except the Dylan library, checks whether the
+<code class="docutils literal notranslate"><span class="pre">*argv*</span></code> runtime variable is initialized, and exits if it is not</p></li>
+<li><p>Checks a flag to see if the library initialization has already been
+done, and exits if it has</p></li>
+<li><p>Sets the initialization flag</p></li>
+<li><p>Calls the library startup glue functions of all libraries
+(except for the Dylan library) referenced by this one.</p></li>
+<li><p>Calls the library’s self-init function, named
+<code class="docutils literal notranslate"><span class="pre">_Init_</span></code><em>mangled-library-name</em><code class="docutils literal notranslate"><span class="pre">_X</span></code>, which in turn calls each
+of the for-user init functions for each compile-unit in the
+library. These contain the code generated for all of the top-level
+forms.</p></li>
+<li><p>For the Dylan library only, the self-init function also calls the
+<code class="docutils literal notranslate"><span class="pre">%install-boot-symbols</span></code> function defined in
+<code class="docutils literal notranslate"><span class="pre">sources/dylan/symbol-table.dylan</span></code>.</p></li>
+</ol>
+<p>The startup glue function is called from a global constructor at user
+priority. For the Dylan library, its execution is not delayed until
+the <code class="docutils literal notranslate"><span class="pre">*argv*</span></code> variable is initialized (as it is for other
+libraries). This ensures that the <code class="docutils literal notranslate"><span class="pre">%install-boot-symbols</span></code> is
+performed before other libraries’ symbol resolution begins.</p>
+<p>For executables, execution begins at the usual <code class="docutils literal notranslate"><span class="pre">main</span></code> entry
+point. The <code class="docutils literal notranslate"><span class="pre">main</span></code> function, generated in <code class="docutils literal notranslate"><span class="pre">_main.bc</span></code> by
+<code class="docutils literal notranslate"><span class="pre">emit-gluefile</span></code> in <code class="docutils literal notranslate"><span class="pre">sources/dfmc/llvm-linker/llvm-gluefile.dylan</span></code>,
+simply stores its <code class="docutils literal notranslate"><span class="pre">argc</span></code> and <code class="docutils literal notranslate"><span class="pre">argv</span></code> arguments in <code class="docutils literal notranslate"><span class="pre">*argc*</span></code> and
+<code class="docutils literal notranslate"><span class="pre">*argv*</span></code> runtime variables and calls the library startup glue
+function.</p>
+<p>The combination of these mechanisms results in the following execution
+order:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_Init_Run_Time</span></code> is called from a Dylan-library system-priority
+constructor.</p></li>
+<li><p>The symbol fixups for the Dylan library are performed (using the
+slower <code class="docutils literal notranslate"><span class="pre">primitive-resolve-symbol</span></code>).</p></li>
+<li><p>The for-user (top-level form) initializations for the Dylan library
+are performed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%install-boot-symbols</span></code> is called, enabling the faster symbol
+resolver.</p></li>
+<li><p>Symbol fixups and other for-system initializations for other
+libraries are performed via their system-priority constructors.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">main</span></code> entry point of the executable is entered, setting the
+<code class="docutils literal notranslate"><span class="pre">*argc*</span></code> and <code class="docutils literal notranslate"><span class="pre">*argv*</span></code> runtime variables.</p></li>
+<li><p>The for-user (top-level form) initializations are performed for the
+other libraries in dependency order.</p></li>
+<li><p>Any new libraries subsequently loaded using <code class="docutils literal notranslate"><span class="pre">load-library</span></code> will
+be initialized via constructors (system-priority first, then
+user-priority).</p></li>
+</ol>
+</div>
+<div class="section" id="harp-win32">
+<h2>HARP (Win32)<a class="headerlink" href="#harp-win32" title="Permalink to this headline">¶</a></h2>
+<p>When a Win32 DLL compiled by the Open Dylan HARP back-end is loaded,
+execution starts at <em>mangled-library-name</em><code class="docutils literal notranslate"><span class="pre">Dll&#64;12</span></code>, where
+<em>mangled-library-name</em> is the Dylan library name transformed by name
+mangling. This entry point, generated for each library by
+<code class="docutils literal notranslate"><span class="pre">emit-executable-entry-points</span></code> in
+<code class="docutils literal notranslate"><span class="pre">sources/dfmc/harp-native-cg/linker.dylan</span></code>, stores the address of
+the library’s glue function, named <code class="docutils literal notranslate"><span class="pre">_Init_</span></code><em>mangled-library-name</em>, into the
+<code class="docutils literal notranslate"><span class="pre">_init_dylan_library</span></code> variable and branches to <code class="docutils literal notranslate"><span class="pre">_DylanDllEntry&#64;12</span></code>.</p>
+<p>A <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682583%28v=vs.85%29.aspx">DllMain entry point</a>
+receives three arguments: the module handle of the DLL, a reason code,
+and a flag that indicates whether the DLL was loaded statically or
+dynamically. The <code class="docutils literal notranslate"><span class="pre">_DylanDllEntry&#64;12</span></code> routine, generated in <code class="docutils literal notranslate"><span class="pre">sources/harp/x86-windows-rtg/ffi-barrier.dylan</span></code>, looks at the reason
+code to determine what to do:</p>
+<ul class="simple">
+<li><p>For process attach, the routine:</p>
+<ol class="arabic simple">
+<li><p>Stores the module handle in a DLL-local <code class="docutils literal notranslate"><span class="pre">_module_hInstance</span></code> variable.</p></li>
+<li><p>Allocates and initializes the TEB and GC-TEB, and initializes the
+garbage collector by calling <code class="docutils literal notranslate"><span class="pre">dylan_init_memory_manager</span></code>
+and <code class="docutils literal notranslate"><span class="pre">dylan_mm_register_thread</span></code> (<code class="docutils literal notranslate"><span class="pre">DxDYLAN.dll</span></code> only).</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">_dylan_initialize</span></code> (described below)</p></li>
+</ol>
+</li>
+<li><p>For thread attach, the routine clears the TLV vector slot of the TEB
+(<code class="docutils literal notranslate"><span class="pre">DxDYLAN.dll</span></code> only).</p></li>
+<li><p>For thread detach, the routine:</p>
+<ol class="arabic simple">
+<li><p>Deregisters the thread by calling
+<code class="docutils literal notranslate"><span class="pre">dylan_mm_deregister_thread_from_teb</span></code> (<code class="docutils literal notranslate"><span class="pre">DxDYLAN.dll</span></code> only).</p></li>
+<li><p>Dealocates the TEB (<code class="docutils literal notranslate"><span class="pre">DxDYLAN.dll</span></code> only)</p></li>
+</ol>
+</li>
+<li><p>For process detach,</p>
+<ol class="arabic simple">
+<li><p>Deregisters the main thread by calling
+<code class="docutils literal notranslate"><span class="pre">dylan_mm_deregister_thread_from_teb</span></code> (<code class="docutils literal notranslate"><span class="pre">DxDYLAN.dll</span></code> only).</p></li>
+<li><p>Deinitializes the garbage collector by calling
+<code class="docutils literal notranslate"><span class="pre">dylan_shut_down_memory_manager</span></code> (<code class="docutils literal notranslate"><span class="pre">DxDYLAN.dll</span></code> only).</p></li>
+</ol>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">_dylan_initialize</span></code> function (generated in
+<code class="docutils literal notranslate"><span class="pre">sources/harp/native-rtg/ffi-barrier.dylan</span></code>):</p>
+<ol class="arabic simple">
+<li><p>Calls the runtime’s <code class="docutils literal notranslate"><span class="pre">init_dylan_data</span></code> function, which:</p>
+<ol class="arabic simple">
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">primitive_fixup_unimported_dylan_data</span></code></p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">primitive_fixup_imported_dylan_data</span></code></p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">primitive_register_traced_roots</span></code></p></li>
+</ol>
+</li>
+<li><p>Sets the FFI barrier state to <code class="docutils literal notranslate"><span class="pre">$inside-dylan</span></code>.</p></li>
+<li><p>Calls <code class="docutils literal notranslate"><span class="pre">dylan_init_thread_local</span></code> (which tail-calls the
+<code class="docutils literal notranslate"><span class="pre">dylan_init_thread</span></code> C function defined in
+<code class="docutils literal notranslate"><span class="pre">sources/lib/run-time/exceptions.c</span></code>) passing a pointer to the
+<code class="docutils literal notranslate"><span class="pre">call_init_dylan</span></code> function. This function in turn is called as an
+MPS trampoline.</p></li>
+<li><p>Resets the FFI barrier state to <code class="docutils literal notranslate"><span class="pre">$outside-dylan</span></code>.</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">call_init_dylan</span></code> function retrieves the value of the
+<code class="docutils literal notranslate"><span class="pre">_init_dylan_library</span></code> variable (pointing to a library startup glue
+function) and performs an indirect call.</p>
+<p>Similarly, an Win32 executable starts execution at
+<em>mangled-library-name</em><code class="docutils literal notranslate"><span class="pre">Exe</span></code>. This routine, which is also generated by
+<code class="docutils literal notranslate"><span class="pre">emit-executable-entry-points</span></code>, stores the address of
+<code class="docutils literal notranslate"><span class="pre">_Init_</span></code><em>mangled-library-name</em> in the
+<code class="docutils literal notranslate"><span class="pre">_init_dylan_library</span></code> variable and branches to <code class="docutils literal notranslate"><span class="pre">dylan_main</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="threads.html" class="btn btn-neutral float-left" title="Compiler Support for Threads" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../runtime-manager/index.html" class="btn btn-neutral float-right" title="Runtime Manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

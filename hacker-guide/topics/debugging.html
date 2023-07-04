@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debugging &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Porting to a New Target Platform" href="porting.html" />
+    <link rel="prev" title="Method Dispatch" href="method-dispatch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime/index.html">The Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ppml.html">The PPML library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Topics</a></li>
+      <li class="breadcrumb-item active">Debugging</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/topics/debugging.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="debugging">
+<h1>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="debugging-a-compiler-crash-or-internal-error">
+<h2>Debugging a Compiler Crash or Internal Error<a class="headerlink" href="#debugging-a-compiler-crash-or-internal-error" title="Permalink to this headline">¶</a></h2>
+<p>When the compiler generates an internal error or directly crashes, using
+gdb or lldb is a great way to find out more about what has gone wrong.</p>
+<p>See <a class="reference external" href="http://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a> for general information on debugging
+applications written with Open Dylan.</p>
+<p>An internal error from the compiler will often look something like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Internal</span> <span class="n">error</span><span class="p">:</span> <span class="n">ELEMENT</span> <span class="n">outside</span> <span class="n">of</span> <span class="nb">range</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>To find out what is happening, run the compiler under gdb or lldb,
+and set a breakpoint on <code class="docutils literal notranslate"><span class="pre">Kdisplay_conditionYcommand_linesVenvironment_commandsI</span></code>.
+Doing so will allow you to see the stack trace at the time of the internal
+error.</p>
+</div>
+<div class="section" id="dumping-dfm-output">
+<h2>Dumping DFM Output<a class="headerlink" href="#dumping-dfm-output" title="Permalink to this headline">¶</a></h2>
+<p>DFM is a relatively readable intermediate language used by the
+compiler.  It can be useful for debugging the compiler, but also for
+optimizing Dylan code in general since it shows (for example) where
+the compiler wasn’t able to optimize method dispatch.</p>
+<p>The main point you need to know is to add the <code class="docutils literal notranslate"><span class="pre">-dfm</span></code> flag when you
+invoke <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>.  This will generate DFM output files in
+your <code class="docutils literal notranslate"><span class="pre">_build/build/</span></code> directory.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="method-dispatch.html" class="btn btn-neutral float-left" title="Method Dispatch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="porting.html" class="btn btn-neutral float-right" title="Porting to a New Target Platform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

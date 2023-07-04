@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Check-list &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Glossary" href="../glossary.html" />
+    <link rel="prev" title="The PPML library" href="ppml.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Open Dylan Hacker's Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime/index.html">The Runtime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ppml.html">The PPML library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Open Dylan Hacker's Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Topics</a></li>
+      <li class="breadcrumb-item active">Release Check-list</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/topics/making-a-release.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="release-check-list">
+<h1>Release Check-list<a class="headerlink" href="#release-check-list" title="Permalink to this headline">¶</a></h1>
+<p>There are a number of manual steps involved in making an Open Dylan release and
+it’s easy to forget one or two. Hopefully we can automate some of these but for
+now here is a manual check-list.</p>
+<ol class="arabic">
+<li><p>Tell <a class="reference external" href="https://matrix.to/#/#dylan-lang_general:gitter.im">the Matrix channel</a> that you plan to build
+a release.</p></li>
+<li><p>Update submodules to the latest stable version tags and document the version
+number changes in the release notes. This command may help:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">foreach</span> <span class="o">--</span><span class="n">quiet</span> <span class="s1">&#39;echo -n &quot;$name &quot;; git describe --always --tags $sha1&#39;</span>
+</pre></div>
+</div>
+<p>What “stable” means isn’t well-defined; use your discretion. The important
+point is that libraries are bundled with the release so people may use them
+without explicitly requesting a specific version. Therefore they shouldn’t
+be allowed to get too stale.</p>
+</li>
+<li><p>Test on supported platforms.</p>
+<ul class="simple">
+<li><p>Do a 3-stage boostrap: make distclean, autogen.sh, configure, make, make
+install, make dist.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code> and if anything fails that is not marked <code class="docutils literal notranslate"><span class="pre">EXPECTED</span> <span class="pre">TO</span>
+<span class="pre">FAIL</span></code>, fix the problem or discuss with others how to proceed.</p></li>
+<li><p>As a smoke test, verify that the “hello world” instructions in <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/README.md">README.md</a> work on
+each platform.</p></li>
+</ul>
+<p><strong>TODO:</strong> This should be done automatically by GitHub CI. See
+<a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yaml">https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yaml</a>
+which currently only runs on Ubuntu.</p>
+</li>
+<li><p>Update the version number in the sources</p>
+<ul class="simple">
+<li><p>In the release-info library</p></li>
+<li><p>In the configure.ac file</p></li>
+<li><p>Do a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">grep</span> <span class="pre">2019.\\d</span></code> to see if anything else needs to be updated.</p></li>
+</ul>
+</li>
+<li><p>Update version numbers in <code class="docutils literal notranslate"><span class="pre">build/unix/release-with-batteries.sh</span></code>
+to the latest stable versions of the relevant software (Clang+LLVM,
+the Boehm-Demers-Weiser garbage collector, and libunwind).</p></li>
+<li><p>Update the release notes if necessary. <em>Don’t actually create the release
+yet, until the release notes have been committed.</em></p>
+<p>To determine what to put in the Contributors section of the notes, this
+command is useful (but modify the tag argument):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">log</span> <span class="o">--</span><span class="nb">format</span><span class="o">=</span><span class="n">short</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">merges</span> <span class="n">v2019</span><span class="o">.</span><span class="mf">1.0</span><span class="o">..</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span> <span class="o">|</span> <span class="n">grep</span> <span class="s1">&#39;^Author: &#39;</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">c</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">n</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a draft release on GitHub</p>
+<p>This step is primarily to create the release tag in the git repo.</p>
+<p>On <a class="reference external" href="https://github.com/dylan-lang/opendylan/releases">https://github.com/dylan-lang/opendylan/releases</a> click the “Draft a
+release” button and create a release with name similar to “Open Dylan
+2019.1”, tag similar to “v2019.1.0”, any description you like, and make sure
+the “This is a pre-release” box is checked.</p>
+<p>The major version is always the current year, the minor version is a number
+starting at 1 for the current year, and the patch version starts at 0.</p>
+</li>
+<li><p>Build the binaries for supported platforms</p>
+<p>It’s best to build the release from a clean checkout to be sure that no
+uncommitted files become part of the release tarball. In particular, the
+entire “sources” directory is copied into the release, so any uncommitted
+files or a “_build” directory could be copied.</p>
+<p>On unix platforms:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive https://github.com/dylan-lang/opendylan
+$ cd opendylan
+$ git co v2019.1.0      # the tag you created above
+$ ./build/unix/release-with-batteries.sh
+</pre></div>
+</div>
+<p>Use the previous release as the bootstrap compiler so that we can be sure
+that works.  If it doesn’t work, then opendylan/BUILDING.rst must be updated
+to indicate which version <strong>can</strong> be used to bootstrap the compiler.</p>
+<p>Ask Peter Housel to build the Windows release. :-)</p>
+</li>
+<li><p>Upload the binaries to GitHub</p>
+<p>Edit the release created previously and upload the binaries. Do <strong>not</strong>
+uncheck the “This is a pre-release” checkbox yet.</p>
+</li>
+<li><p>Test the tarballs</p>
+<p>In your own branch, modify the <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yaml#L28">libraries-test-suite.yaml workflow</a>
+to explicitly specify the new release version and tag so that it will be
+installed and tested on a clean machine on multiple platforms. You’ll have
+to go to your fork in the GitHub UI, click on Actions, and find the workflow
+runs.</p>
+</li>
+<li><p>Upload binaries to opendylan.org</p>
+<p>The binaries go in <code class="docutils literal notranslate"><span class="pre">/var/www/opendylan.org/downloads/opendylan/YYYY.n/</span></code>.
+abeaumont, cgay, and housel have access currently. (It’s nice to have a
+backup on a server that we own.)</p>
+</li>
+<li><p>Update the <a class="reference external" href="https://github.com/dylan-lang/website/blob/master/source/download/index.rst">Downloads</a>
+page.</p></li>
+<li><p>Announce the release. Check previous announcements for ideas, but no need to
+slavishly copy the format.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="mailto:dylan-lang&#37;&#52;&#48;googlegroups&#46;com">dylan-lang<span>&#64;</span>googlegroups<span>&#46;</span>com</a></p></li>
+<li><p>&#64;DylanLanguage on Twitter (housel)</p></li>
+<li><p>&#64;DylanLang on fosstodon.org (cgay)</p></li>
+<li><p><a class="reference external" href="https://www.reddit.com/r/dylanlang/">https://www.reddit.com/r/dylanlang/</a></p></li>
+</ul>
+</li>
+</ol>
+<div class="section" id="post-release-tasks">
+<h2>Post-release Tasks<a class="headerlink" href="#post-release-tasks" title="Permalink to this headline">¶</a></h2>
+<p>These items aren’t urgent but should be done after each release.</p>
+<ol class="arabic">
+<li><p>Bump the OD version to something plausible, like 2023.1pre. <a class="reference external" href="https://github.com/dylan-lang/opendylan/pull/1465">Example pull
+request</a>.</p></li>
+<li><p>Create a file in which to put the release notes for the next version. See
+the above example pull request.</p></li>
+<li><p>Update other packages</p>
+<ul class="simple">
+<li><p>archlinux – <a class="reference external" href="https://aur.archlinux.org/packages/opendylan/">https://aur.archlinux.org/packages/opendylan/</a></p></li>
+<li><p>debian</p></li>
+<li><p>homebrew</p></li>
+</ul>
+</li>
+<li><p>Update play.opendylan.org to the new version. Requires cgay for now, but
+basically change the opendylan link to point to the new release, restart
+the playground, and compile an example so the next build goes fast.</p></li>
+<li><p>Update the <a class="reference external" href="https://github.com/dylan-lang/install-opendylan/">install-opendylan GitHub Action</a> to use the new
+release by default. Normally this just involves changing the default
+values for the “version” and “tag” inputs.</p>
+<p><strong>Setting the new version as the default too quickly may be a bad idea.
+People can explicitly upgrade to it whenever they want by changing their
+CI to explicitly specify the new release.</strong></p>
+</li>
+<li><p>Update <a class="reference external" href="https://en.wikipedia.org/wiki/Dylan_(programming_language)">the Wikipedia page</a> with the
+latest release version and date.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ppml.html" class="btn btn-neutral float-left" title="The PPML library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../glossary.html" class="btn btn-neutral float-right" title="Glossary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+/* Underline and better spacing under object type name */
+dt.dylan-api {
+  width: 100%;
+  padding-top: 1em;
+  padding-bottom: 0.4em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid;
+}
+
+/* Make the headerlink less obnoxiously visible */
+a.headerlink {
+  color: silver;
+}
+
+/* Improve appearance of the documented object type */
+em.property {
+  float: right;
+  font-style: normal;
+}
+
+/* work around unreported bug where lists within a field list body
+   get an incorrect line height */
+.rst-content td.field-body ul {
+    line-height: initial;
+}
