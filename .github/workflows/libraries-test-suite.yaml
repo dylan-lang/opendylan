@@ -3,10 +3,14 @@ name: libraries-test-suite
 on:
   push:
     # all branches
+    paths-ignore:
+      - 'documentation/**'
   pull_request:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'documentation/**'
 
   # This enables the Run Workflow button on the Actions tab.
   workflow_dispatch:
