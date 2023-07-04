@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delivering Dylan Applications &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="The Interactive Editor" href="editopt.html" />
+    <link rel="prev" title="Dispatch Optimization Coloring in the Editor" href="coloring.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Getting Started with the Open Dylan IDE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Delivering Dylan Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-a-release-folder">Building a release folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-run-time-library-installer">Using the run-time library installer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-the-run-time-library-dlls">About the run-time library DLLs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Getting Started with the Open Dylan IDE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Delivering Dylan Applications</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/delivery.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="delivering-dylan-applications">
+<span id="index-0"></span><h1>Delivering Dylan Applications<a class="headerlink" href="#delivering-dylan-applications" title="Permalink to this headline">¶</a></h1>
+<p>Applications you have written using Open Dylan need access to
+Open Dylan’s run-time libraries in order to run. This applies to
+all applications, whether executables or DLLs. The run-time libraries
+are normal Win32 DLLs, stored in the top-level installation folder
+<em>Redistributable</em>.</p>
+<p>When you run an application on a machine where Open Dylan is
+installed, the libraries will be found in <em>Redistributable</em>, whether
+you run the application from the command line or from within the
+Open Dylan environment using commands such as <strong>Application &gt; Start</strong>.</p>
+<p>But to deliver your Dylan application to a customer or other third
+party, you will need to include in your distribution the Open Dylan
+run-time libraries that the application uses.</p>
+<p>This chapter discusses two methods of delivering Dylan applications with
+the necessary run-time libraries: using the environment to build a
+Release folder, and using Open Dylan’s stand-alone run-time library
+installer.</p>
+<div class="section" id="building-a-release-folder">
+<h2>Building a release folder<a class="headerlink" href="#building-a-release-folder" title="Permalink to this headline">¶</a></h2>
+<p>To create a single folder containing everything necessary for your
+application to run on a customer’s machine, use the <strong>Project &gt; Make
+Release</strong> command in the project window.</p>
+<p>This command takes the compiled application files associated with the
+project, and whichever Open Dylan run-time libraries (DLLs) are
+necessary for the application to run, and copies them into the <em>Release</em>
+subfolder of the project’s own folder.</p>
+<p>You can then distribute the entire <em>Release</em> folder as a stand-alone
+application. Read the Open Dylan license agreement for details of
+the legal side of redistributing the Open Dylan run-time libraries.</p>
+</div>
+<div class="section" id="using-the-run-time-library-installer">
+<h2>Using the run-time library installer<a class="headerlink" href="#using-the-run-time-library-installer" title="Permalink to this headline">¶</a></h2>
+<p>An alternative to building a single release folder is to use Open
+Dylan’s run-time library installer, a self-extracting executable that
+installs all the Open Dylan run-time libraries (DLLs) in a central
+location.</p>
+<p>The default location is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Common</span> <span class="n">Files</span>\<span class="n">Harlequin</span>\<span class="n">System</span>
+</pre></div>
+</div>
+<p>The run-time library installer also sets the PATH environment variable
+to include this folder.</p>
+<p>Your distributable application should then consist of a copy of your
+compiled application files from the project’s <em>Bin</em> folder, and the
+run-time installer.</p>
+<p>The run-time library installer is included on CD-ROM editions of
+Open Dylan, and can also be downloaded from Harlequin’s World Wide
+Web site. You can distribute the run-time installer to customers, or
+allow them to download it themselves.</p>
+</div>
+<div class="section" id="about-the-run-time-library-dlls">
+<h2>About the run-time library DLLs<a class="headerlink" href="#about-the-run-time-library-dlls" title="Permalink to this headline">¶</a></h2>
+<p>The run-time library DLLs have 8.3 format names and include a version
+number. This version number will be incremented for new releases of the
+run-time libraries.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="coloring.html" class="btn btn-neutral float-left" title="Dispatch Optimization Coloring in the Editor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="editopt.html" class="btn btn-neutral float-right" title="The Interactive Editor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

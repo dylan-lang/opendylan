@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fixing Bugs &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Programming in Open Dylan" href="model.html" />
+    <link rel="prev" title="Quick Start" href="quick-start.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Getting Started with the Open Dylan IDE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fixing Bugs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rebuilding-the-application">Rebuilding the application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problems-at-compile-time">Problems at compile time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#controlling-the-compiler-s-treatment-of-warnings">Controlling the compiler’s treatment of warnings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#problems-at-run-time">Problems at run time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#searching-the-stack-backtrace-for-the-cause-of-the-error">Searching the stack backtrace for the cause of the error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browsing-local-variables">Browsing local variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browsing-definitions">Browsing definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixing-the-error">Fixing the error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-the-saved-game-back-in">Loading the saved game back in</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Getting Started with the Open Dylan IDE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Fixing Bugs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/expanding.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="fixing-bugs">
+<h1>Fixing Bugs<a class="headerlink" href="#fixing-bugs" title="Permalink to this headline">¶</a></h1>
+<p>Though we can play Reversi, we cannot save games in progress and resume
+play at a later date. In this section, we add a save feature to the
+game, available through <strong>Save</strong>, <strong>Save As</strong> and <strong>Open</strong> commands on the
+<strong>File</strong> menu. (If you look at the version of Reversi we have at the
+moment, you will see that those items are disabled.)</p>
+<p>The code we will add to implement the save feature has a small bug that
+we must correct before the feature will work properly. In doing so, we
+will see the editor, debugger, and browser tools.</p>
+<div class="section" id="rebuilding-the-application">
+<h2>Rebuilding the application<a class="headerlink" href="#rebuilding-the-application" title="Permalink to this headline">¶</a></h2>
+<p>There is another prepared Dylan source file with the changes we need to
+implement the game-saving facility.</p>
+<p>In the Reversi project window, go to the Sources page and select
+<em>piece-shapes.dylan</em>.</p>
+<p>Choose <strong>Project &gt; Insert File</strong>.</p>
+<p>The Insert File into Project dialog appears.</p>
+<p>In the dialog, select <em>saving.dylan</em> and click <strong>Open</strong>.</p>
+<p>Open Dylan puts <em>saving.dylan</em> below <em>piece-shapes.dylan</em> in the
+list of project sources.</p>
+<p>Now we can rebuild the executable Reversi application.</p>
+<p>Choose <strong>Project &gt; Build</strong> in the Reversi project window.</p>
+<p>Open Dylan builds the application again.</p>
+<p>If you are still running Reversi when you choose <strong>Project &gt; Build</strong>, you
+will be asked to confirm that you want to stop running it and go ahead
+with the build.</p>
+<p>Towards the end of the build, the link warning dialog appears again,
+asking whether we want to link the application executable despite there
+being serious warnings. Again, we do want to link the application.</p>
+<p>Click <strong>Yes</strong> in the link warning dialog.</p>
+<p>Notice the message in the status bar at the bottom of the Reversi
+project window after rebuilding Reversi:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Build</span> <span class="n">completed</span><span class="o">.</span> <span class="mi">5</span> <span class="n">serious</span> <span class="n">warnings</span><span class="p">,</span> <span class="mi">1</span> <span class="n">warning</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>In the next section, we look at what serious warnings and warnings are,
+and how the environment helps us deal with them.</p>
+</div>
+<div class="section" id="problems-at-compile-time">
+<h2>Problems at compile time<a class="headerlink" href="#problems-at-compile-time" title="Permalink to this headline">¶</a></h2>
+<p>In this section we look at how the compiler handles problems that it
+comes across in a project’s source code. When we rebuilt Reversi in
+<a class="reference internal" href="#rebuilding-the-application">Rebuilding the application</a>, the compiler
+discovered nine problems in the project’s source code. It reported those
+problems and divided them into two categories: serious warnings and
+warnings.</p>
+<p id="index-0">The compiler issues a <em>serious warning</em> for code that would lead to an
+exception at run time if it was executed. Among the causes of serious
+warnings are Dylan syntax errors, references to undefined bindings, and
+calls to functions with the wrong number or type of arguments.</p>
+<p id="index-1">For code with only cosmetic problems, such as a method definition that
+ends with <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">class</span></code> instead of <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">method</span></code>, the compiler issues
+a <em>warning</em>.</p>
+<p id="index-2">You can see a table of any warnings or serious warnings that were
+generated the last time a project was compiled by choosing the Warnings
+page in the project window. After a build where there were warnings or
+serious warnings, like this one, the Warnings page is selected
+automatically.</p>
+<div class="figure align-center" id="id3">
+<img alt="_images/warnings2-0b1.png" src="_images/warnings2-0b1.png" />
+<p class="caption"><span class="caption-text">The project window’s Warnings page.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>The table has four columns:</p>
+<ul class="simple">
+<li><p>Source Shows the source code location of the problem that caused the
+warning or serious warning. The column has the form {<em>file name</em>
+}:{<em>line number</em> }.</p></li>
+<li><p>Library Shows the library containing the source code that caused the
+warning.</p></li>
+<li><p>Owner Shows the problem area that caused the warning.</p></li>
+<li><p>Warning Shows the warning or serious warning message.</p></li>
+</ul>
+<p>The items in the table are sorted lexically by the Source column value.
+Warnings and serious warnings without associated source locations have
+empty Source fields, and appear at the top of the list. (To sort the
+table by the values in another column, click on that column’s header.)</p>
+<p>Each warning or serious warning is linked to the source definition that
+caused it. We can select individual warnings and serious warnings to
+learn more about the problems they are describing.</p>
+<p>Select the first item in the Source column, a serious warning in
+<em>saving.dylan</em> at line 20.</p>
+<p>We can now see the full text of the serious warning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Serious</span> <span class="n">warning</span> <span class="n">at</span> <span class="n">saving</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span>
+<span class="n">Unexpected</span> <span class="n">token</span> <span class="s2">&quot;define&quot;</span><span class="o">.</span>
+</pre></div>
+</div>
+<p id="index-3">If we double-click on an item, Open Dylan opens the appropriate
+source file in an editor window, and positions the insertion point at
+the line containing the problem. If the problem spans a range of lines,
+the entire range is highlighted in the editor. Likewise, if the problem
+is an undefined binding, the binding in question is highlighted.</p>
+<p>Double-click on the same item.</p>
+<p>An editor window appears.</p>
+<p>Notice how the editor separates each definition in a source file with a
+gray line. Printed in the middle of each line is the name of the
+definition below it. These code separators also appear above top-level
+expressions wrapped with <em>begin</em> … <em>end</em>.</p>
+<p>The code separators are just a visual aid, and are not part of the file
+itself. If you opened the source file in a different editor you would
+not see the separators. They are ignored by the compiler.</p>
+<p>When you add a new definition, or a new <em>begin</em> … <em>end</em> top-level form,
+the code separators will only be updated if you manually refresh the
+editor window (<strong>View &gt; Refresh</strong>), move the cursor past an existing
+separator, or perform some other operation that forces the editor to
+redisplay.</p>
+<div class="figure align-center" id="id4">
+<img alt="_images/editor.png" src="_images/editor.png" />
+<p class="caption"><span class="caption-text">The Open Dylan editor.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>Now we can see the cause of the first serious warning. A semi-colon is
+missing from the end of the definition of <em>number-for-piece</em> in
+<em>saving.dylan</em>. The missing semi-colon makes the definitions of
+<em>number-for-piece</em> and <em>piece-for-number</em> run into one another instead
+of being separate.</p>
+<p>As it turns out, all the other serious warnings that were reported were
+caused by this single missing semi-colon. The compiler could not parse
+the definitions of <em>number-for-piece</em> and <em>piece-for-number</em>. The
+compiler skips over such source code and does not generate object code
+for it.</p>
+<p>This means that any subsequent references to <em>number-for-piece</em> and
+<em>piece-for-number</em> in the source code would be references to name
+bindings that are never defined in the compiled application. Lines 32,
+50, 59, and 73 referred to one or the other of these names, which
+triggered the serious warnings.</p>
+<p>Add the missing semi-colon so that the last line of the definition
+<em>number-for-piece</em> appears as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">end</span> <span class="n">method</span> <span class="n">number</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">piece</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>While we are editing the file, we can fix the non-serious warning. It is
+caused by a mismatched <code class="docutils literal notranslate"><span class="pre">end</span></code> clause in <em>reversi-game-write-data</em>. It is
+a method, but the <code class="docutils literal notranslate"><span class="pre">end</span></code> clause says <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">class</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">method</span></code>.</p>
+<p>Locate the definition of the <em>reversi-game-write-data</em> method in
+<em>saving.dylan</em>.</p>
+<p>Change the last line of the definition so that it appears as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">end</span> <span class="n">method</span> <span class="n">reversi</span><span class="o">-</span><span class="n">game</span><span class="o">-</span><span class="n">write</span><span class="o">-</span><span class="n">data</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Choose <strong>File &gt; Save</strong> in the editor.</p>
+<p>Open Dylan saves the file, first making a backup of the previous
+version in <em>saving.dylan~</em> —that is, in a file of the same name, but
+with an extra character in the file extension, a tilde (~), to show that
+it is a backup file.</p>
+<p>Having attended to the cause of the serious warnings and warnings, we
+can rebuild the application and try out the new version.</p>
+<p>Choose <strong>Project &gt; Build</strong>.</p>
+<p>You can choose this in either the editor or the project window.</p>
+<p>Notice the status bar in the Reversi project window after the build is
+complete:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Build</span> <span class="n">completed</span> <span class="k">with</span> <span class="n">no</span> <span class="n">warnings</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>As well as removing the serious warning our semi-colon correction
+addressed, all the other serious warnings that were follow-on effects of
+the missing semi-colon have gone away. In addition, the single ordinary
+warning was removed by the <em>end</em> -clause fix.</p>
+<div class="section" id="controlling-the-compiler-s-treatment-of-warnings">
+<span id="index-4"></span><h3>Controlling the compiler’s treatment of warnings<a class="headerlink" href="#controlling-the-compiler-s-treatment-of-warnings" title="Permalink to this headline">¶</a></h3>
+<p>We have seen that serious warnings are caused by code that, if executed,
+would lead to a run-time exception. Some programming language compilers
+would refuse to link an executable file or DLL for such code, on the
+grounds that the code ought to be fixed before it is executed.</p>
+<p>In Open Dylan, we can choose to go ahead and link in this
+situation. The choice is controlled from the main window, under the
+Build page of the <strong>Options &gt; Environment Options</strong> dialog.</p>
+<p>The option “Always link, even if there are serious warnings” forces the
+compiler to link an executable file or DLL for a project regardless of
+any serious warnings. We can also choose “Ask whether to link if there
+are serious warnings”, and “Don’t link if there are serious warnings”.
+“Ask whether to link if there are serious warnings” is the default
+setting.</p>
+</div>
+</div>
+<div class="section" id="problems-at-run-time">
+<span id="id1"></span><h2>Problems at run time<a class="headerlink" href="#problems-at-run-time" title="Permalink to this headline">¶</a></h2>
+<p>Now we have taken a brief look at how Open Dylan treats
+compile-time problems, we will look at how it lets us debug problems
+that only emerge as exceptions at run time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The numbered example steps in this section lead us through a
+possible debugging scenario. In places the example is a little
+unrealistic. This is because usually you are familiar with at least some
+of the code you are debugging, and also because the main purpose of the
+example is to introduce features of Open Dylan.</p>
+</div>
+<p>With the rebuilt version of Reversi that compiled with no warnings,
+start a new game, with <strong>Application &gt; Start</strong>.</p>
+<p>After a couple of moves, save the new game by choosing <strong>File &gt; Save</strong> in
+the Reversi window.</p>
+<p>The Save dialog appears.</p>
+<p>Choose a file to save into, and click <strong>Save</strong>.</p>
+<p>An application error dialog appears.</p>
+<div class="figure align-center" id="id5">
+<span id="dylan-runtime-application-error"></span><img alt="_images/error2-0.png" src="_images/error2-0.png" />
+<p class="caption"><span class="caption-text">A Dylan run-time application error.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>The dialog appeared because the Open Dylan debugger caught an
+unhandled Dylan exception in the Reversi application. Something is wrong
+with the game-saving code. We must start up a debugger window to see
+what went wrong.</p>
+<p>Choose Debug reversi.exe and click <strong>OK</strong> to enter the debugger.</p>
+<p>The Open Dylan debugger appears. We discuss the debugger in detail
+in <a class="reference internal" href="debug.html"><span class="doc">Debugging and Interactive Development</span></a>.</p>
+<p>In its uppermost pane, the debugger shows the error that it caught. It
+will be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dylan</span> <span class="n">error</span><span class="p">:</span> <span class="o">*</span><span class="n">n</span><span class="o">*</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">of</span> <span class="nb">type</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">class</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BYTE</span><span class="o">-</span><span class="n">CHARACTER</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>where <em>n</em> is either 0, 1, or 2. (The value depends on the state of the
+game when we saved it. The reason for this will become clear shortly.)</p>
+<p>In the left-hand pane beneath the message, there is a tree item for the
+main thread of the Reversi application. This tells us that the
+exception was raised in that thread. (In Reversi’s case, there happens
+to be only one thread, but other applications might have multiple
+threads, and knowing the thread that raised the exception is useful. See
+<a class="reference internal" href="debug.html"><span class="doc">Debugging and Interactive Development</span></a> for more information about debugger options.)</p>
+<p>When expanded, the tree item shows the current state of the call stack
+for Reversi’s main thread. When the debugger is invoked on a thread,
+it pauses execution in that thread. So when we expand the tree we see
+the stack almost exactly as it was at the moment that the debugger was
+invoked.</p>
+<p id="index-5">The reason why what we see is <em>almost</em> exactly what the stack was like
+at the moment the debugger was invoked is that the stack pane normally
+filters out a lot of call frames that the Open Dylan run-time
+system creates. Because these are not frames that the running
+application creates directly, most of the time they are of no interest,
+and so it is convenient to hide them. You can change the filtering with
+the drop-down list available directly above the thread pane in the
+debugger. The default filter setting is “Filtered visible frames”.</p>
+<div class="figure align-center" id="id6">
+<img alt="_images/errstack2-0.png" src="_images/errstack2-0.png" />
+<p class="caption"><span class="caption-text">The Reversi application stack after a game-saving error.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>Each item in the list is a call frame on the stack for the thread being
+debugged. We call this list of call frames a stack backtrace or simply a
+<em>backtrace</em>.</p>
+<p id="index-6">The backtrace shows frames in the order they were created, with the most
+recent at the top of the list. The frames are represented by the names
+of the functions whose call created them, and are accompanied by an icon
+denoting the sort of call it was. See <a class="reference internal" href="debug.html#call-frames"><span class="std std-ref">Call frames</span></a> for details
+of the icons and their meanings, but note for now that the green arrow
+icon represents the current location of the stack pointer—that is, the
+call at which the thread was paused.</p>
+<div class="section" id="searching-the-stack-backtrace-for-the-cause-of-the-error">
+<span id="searching-stack-backtrace-for-cause"></span><h3>Searching the stack backtrace for the cause of the error<a class="headerlink" href="#searching-the-stack-backtrace-for-the-cause-of-the-error" title="Permalink to this headline">¶</a></h3>
+<p>In this section we examine the backtrace and see what events led up to
+the unhandled exception.</p>
+<p>Looking at the top of the backtrace, we can see that the most recent
+call activity in the Reversi main thread concerned catching the
+unhandled exception and invoking the debugger. The calls to
+<code class="docutils literal notranslate"><span class="pre">primitive_invoke_debugger</span></code>, <code class="docutils literal notranslate"><span class="pre">default-handler</span></code>, and <code class="docutils literal notranslate"><span class="pre">error</span></code> were
+all part of this. But if we move down the backtrace to the point below
+the call to <code class="docutils literal notranslate"><span class="pre">error</span></code>, we can examine the sequence of calls that led to
+the unhandled exception and find out how to fix the error.</p>
+<p>The first interesting call for us is the one to <code class="docutils literal notranslate"><span class="pre">write-element</span></code>. This
+is the last of the calls appearing in the stack frame that Reversi made
+before the unhandled exception.</p>
+<ol class="arabic">
+<li><p>Select the call frame for <code class="docutils literal notranslate"><span class="pre">write-element</span></code>.</p>
+<p>The source code definition of <code class="docutils literal notranslate"><span class="pre">write-element</span></code> appears in the pane
+opposite. This source code pane is read only; if we wanted to edit a
+definition shown in it we would click on the Edit Source (<img alt="image0" src="_images/editsrc.png" />)
+button above the source code pane, which would open the file containing
+the definition in an editor window.</p>
+<p>Looking at the source code for <code class="docutils literal notranslate"><span class="pre">write-element</span></code>, the green arrow icon
+points to an assignment to <code class="docutils literal notranslate"><span class="pre">sb.buffer-next</span></code>. Here, the green arrow is
+showing the point at which execution would resume in that call frame if
+the application’s execution was continued. What we do not know is
+whether the preceding call, to <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>, returned. It may
+be that the call failed (because the arguments were not what
+<code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> was expecting) or that it succeeded but does not
+appear in the stack pane because of the default filtering.</p>
+<p>To work out what has happened, we can examine the stack pane filtering
+with the filtering drop-down list.</p>
+</li>
+<li><p>Choose “Filtered frames” from the stack pane filtering drop-down list
+(which by default is set to “Filtered visible frames”).
+The stack pane updates itself.</p></li>
+</ol>
+<p id="index-7">The six settings available from the stack pane filtering drop-down list
+provide a quick way of changing what you view in the stack pane:</p>
+<dl class="simple">
+<dt>All frames</dt><dd><p>Shows all frames in the thread being debugged.</p>
+</dd>
+<dt>All visible frames</dt><dd><p>Shows all the frames in the thread that are part of the module’s
+context, in this case the reversi module’s context, which includes
+calls to any functions imported from other modules.</p>
+</dd>
+<dt>All local frames</dt><dd><p>Shows all frames defined in the current (reversi) module.</p>
+</dd>
+<dt>Filtered frames</dt><dd><p>Shows a filtered list of function calls in the thread
+being debugged.</p>
+</dd>
+<dt>Filtered visible frames</dt><dd><p>Shows a filtered list of function calls in the current module plus
+calls to functions imported from any other modules used.</p>
+</dd>
+<dt>Filtered local frames</dt><dd><p>Shows a filtered list of function calls from the current module only.</p>
+</dd>
+</dl>
+<p>The “Filtered…” settings do not, by default, show foreign function
+calls, cleanup frames, and frames of unknown type, whereas the “All…”
+settings show everything. You can set the filtering rules using <strong>View &gt;
+Debugger Options…</strong>, see <a class="reference internal" href="debug.html#stack-options"><span class="std std-ref">Stack options</span></a> for details.</p>
+<div class="figure align-center" id="id7">
+<img alt="_images/unfilterederrstack2-0.png" src="_images/unfilterederrstack2-0.png" />
+<p class="caption"><span class="caption-text">Stack pane showing call frames from all modules.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>So the question is whether the call to <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> failed, or
+whether it succeeded, but comes from a module that Reversi does not
+explicitly use. The stack pane now shows a frame for the call to
+<code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>. The name has the suffix
+<code class="docutils literal notranslate"><span class="pre">streams-internals:streams</span></code>. This means that <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> is a
+name from the <code class="docutils literal notranslate"><span class="pre">streams-internals</span></code> module of the <code class="docutils literal notranslate"><span class="pre">streams</span></code> library.</p>
+<p>This <em>name</em>:<em>module</em>:<em>library</em> form of printing Dylan names is used in
+a number of different places in Open Dylan. It shows that <em>name</em> is
+not part of the module, or module and library, that a tool is currently
+focused on. (The debugger and browser both have a toolbar pop-up where
+you can change the current module.)</p>
+<p>Returning to our example, we now know that <code class="docutils literal notranslate"><span class="pre">write-element</span></code>’s call to
+<code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> succeeded, because it created a call frame. We can
+see that <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> is now the last frame on the stack before
+the call to <code class="docutils literal notranslate"><span class="pre">error</span></code>.</p>
+<ol class="arabic" start="3">
+<li><p>Select the call frame for <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>.</p>
+<p>The green arrow in the source code definition for <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>
+points to an assignment containing a call to <code class="docutils literal notranslate"><span class="pre">byte-char-to-byte</span></code>.
+Notice that this call does not appear in the backtrace. Because the
+backtrace is now showing call frames from all modules, we know that the
+exception must have been raised while attempting to call this function,
+before a call frame was created for it.</p>
+<p>Since the error dialog told us that the exception was caused by
+something being of the wrong type, there is a good chance that the value
+of <em>elt</em>, the argument to <code class="docutils literal notranslate"><span class="pre">byte-char-to-byte</span></code>, is of the wrong type.
+Notice too that <em>elt</em> ‘s type is not specified in the signature of
+<code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>.</p>
+<p>We need to know the value passed to <em>elt</em>. We can find out by expanding
+the <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> call frame: a call frame preceded by a <em>+</em> can
+be expanded to show the values of its arguments and local variables.</p>
+</li>
+<li><p>Expand the call frame for <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>.</p>
+<p>We can now see the value that was passed for <em>elt</em>. It is an integer
+value, either 0, 1, or 2. It is this value that caused the error that
+occurred. This is the message again:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dylan</span> <span class="n">error</span><span class="p">:</span> <span class="o">*</span><span class="n">n</span><span class="o">*</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">of</span> <span class="nb">type</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">class</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BYTE</span><span class="o">-</span><span class="n">CHARACTER</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>where <em>n</em> is either 0, 1, or 2.</p>
+<p>Our next task is to find out why <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> was sent an
+integer instead of a byte character. To do this, we can simply move down
+the backtrace and examine earlier calls.</p>
+</li>
+<li><p>Select the call frame for <code class="docutils literal notranslate"><span class="pre">write-element</span></code>.</p>
+<p>We can see here that the value passed to <em>elt</em> in <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>
+is the value of one of <code class="docutils literal notranslate"><span class="pre">write-element</span></code> ‘s parameters, also called <em>elt</em>.</p>
+<p>We need to move further down the stack to the <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code>
+call.</p>
+</li>
+<li><p>Select the call frame for <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code>.</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code> method takes an instance of
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> and an instance of <code class="docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code> as arguments. A
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance is what the application uses to represent the
+state of the board during a game. A <code class="docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code> is what Reversi is
+using to write the state of the board out into a file that can be
+re-loaded later.</p>
+<p>We can see that this method calls <code class="docutils literal notranslate"><span class="pre">reversi-board-squares</span></code> on the
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance and then iterates over the value returned,
+apparently writing each element to the stream with
+<code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>. (Notice that <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>
+does not appear on the stack—this is because it contains only a tail
+call to <code class="docutils literal notranslate"><span class="pre">write-element</span></code>, and so is optimized away.)</p>
+<p>We are closing in on the bug. It is looking like the value representing
+the Reversi board squares (<em>squares</em> ), and the file stream the squares
+are being written to (<em>stream</em> ), have incompatible element types, with
+the squares being represented by integers, and the file stream being
+composed of byte characters.</p>
+</div>
+<div class="section" id="browsing-local-variables">
+<span id="id2"></span><h3>Browsing local variables<a class="headerlink" href="#browsing-local-variables" title="Permalink to this headline">¶</a></h3>
+<p>In this section we use the Open Dylan browser to help confirm the
+cause of the unhandled Dylan exception.</p>
+<p>Expand the call frame for <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code>.</p>
+<p>We can now see the values of the local variables in this frame. The
+arguments are listed first: <em>board</em> and <em>stream</em>, followed by the
+<em>squares</em> sequence and iteration variable <em>square</em>.</p>
+<div class="figure align-center" id="id8">
+<img alt="_images/locvars.png" src="_images/locvars.png" />
+<p class="caption"><span class="caption-text">Local variables in the <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code> call frame.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>The notation</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">board</span> <span class="o">=</span> <span class="p">{</span><span class="nc">&lt;reversi-board&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>means that <em>board</em> is an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> —an actual
+instance in the paused application. The curly braces mean that this is
+an instance of the class rather than the class definition itself.</p>
+<p>We can look at this <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance in the <em>browser</em>, which
+allows us to examine the contents and properties of all kinds of things
+we come across in Open Dylan.</p>
+<p>Double-click on the <em>board</em> item.</p>
+<p>The browser appears.</p>
+<div class="figure align-center" id="id9">
+<img alt="_images/firstbrowse.png" src="_images/firstbrowse.png" />
+<p class="caption"><span class="caption-text">Browsing an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>The browser shows us in its Object field that we are browsing an
+instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>. Like the debugger, the browser uses the
+curly braces notation to depict an <em>instance</em> of a class as opposed to
+its definition.</p>
+<p>The browser presents information in property pages. In the page selected
+by default, we see the names of the slots in the instance and the values
+they had when the exception occurred. The property pages that the
+browser shows depend on what it is browsing; the set of pages for a
+class definition is quite different from that for a method definition,
+for example.</p>
+<p>However, the browser always provides a General page. The General page
+gives an overview of the currently browsed object.</p>
+<p>Choose the General page.</p>
+<p>The fields on the General page for our <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> value tell us
+that it is an instance of type <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> and that it has two
+slots. The third field, Source, is labeled “n/a” for “not applicable”.
+The Source field shows a source file name for anything the compiler saw
+during compilation, such as a definition. We are browsing an instance,
+not a compiler record, so it is not relevant to associate the instance
+with a source location. For more on the browser’s distinction between
+run-time and compile-time objects, see
+<a class="reference internal" href="browsing.html#browsing-project-source-runtime-contexts"><span class="std std-ref">Browsing a project in source and run-time contexts</span></a>.</p>
+<p>Choose the Contents page.</p>
+<p>If we double-click on items on the Contents page, the browser moves on
+to browsing them.</p>
+<p>Double-click on the <em>reversi-board-squares</em> item.</p>
+<div class="figure align-center" id="id10">
+<img alt="_images/collsquares.png" src="_images/collsquares.png" />
+<p class="caption"><span class="caption-text">Browsing the elements of a collection.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>Now we can see the elements of the <em>reversi-board-squares</em> collection.</p>
+<p>Click on the Back (<img alt="image1" src="_images/brow-left.png" />) button to return to browsing <em>board</em>, the
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance.</p>
+<p>Going back to the bug we are tracking down, two more useful pieces of
+information have emerged from seeing the <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance in
+the browser.</p>
+<p>First, we can tell from the Contents page, which shows the slot values
+in the instance, that the call to <em>reversi-board-squares</em> in
+<code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code>, below, is clearly just a call to the
+default accessor on the <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> slot of the same name.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">reversi-board-write-data</span>
+    <span class="p">(</span><span class="n">board</span> <span class="p">::</span> <span class="nc">&lt;reversi-board&gt;</span><span class="p">,</span> <span class="n">stream</span> <span class="p">::</span> <span class="nc">&lt;file-stream&gt;</span><span class="p">)</span>
+<span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">squares</span> <span class="o">=</span> <span class="n">reversi-board-squares</span><span class="p">(</span><span class="n">board</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">square</span> <span class="k">from</span> <span class="mi">0</span> <span class="k">below</span> <span class="nb">size</span><span class="p">(</span><span class="n">squares</span><span class="p">))</span>
+    <span class="n">reversi-square-write-data</span><span class="p">(</span><span class="n">squares</span><span class="p">[</span><span class="n">square</span><span class="p">],</span> <span class="n">stream</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">for</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">reversi-board-write-data</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Second, we can see that the <em>reversi-board-squares</em> slot holds a
+sequence, and that the sequence does not have an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> element
+type.</p>
+<p>So we still do not know where the integer that caused the exception came
+from. However, we have yet to check what goes on in
+<code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>; perhaps that method is converting the
+elements in the <em>reversi-board-squares</em> sequence into integers?</p>
+</div>
+<div class="section" id="browsing-definitions">
+<h3>Browsing definitions<a class="headerlink" href="#browsing-definitions" title="Permalink to this headline">¶</a></h3>
+<p>In this section, we browse the definition of <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>
+to see whether it converts the board squares into integers.</p>
+<p>To browse the definition, we have the option of locating it on the
+project window Definitions page or (more efficiently) moving it directly
+in the browser.</p>
+<p>Delete the text in the browser’s Object field and type
+<code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code> in its place.</p>
+<p>Press Return.</p>
+<p>The browser switches to the definition of the
+<code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code> method. When we browse a definition as
+opposed to an instance, the browser usually shows a larger set of
+property pages that supply a lot of information about the definition and
+the relationships between it and other definitions in a project. The
+default property page here is the Source page, which shows the source
+code for the method.</p>
+<p>Here is the code:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">reversi-square-write-data</span>
+  <span class="p">(</span><span class="n">square</span> <span class="p">::</span> <span class="nc">&lt;piece&gt;</span><span class="p">,</span> <span class="n">stream</span> <span class="p">::</span> <span class="nc">&lt;file-stream&gt;</span><span class="p">)</span>
+<span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">write-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">number-for-piece</span><span class="p">(</span><span class="n">square</span><span class="p">));</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">reversi-square-write-data</span>
+</pre></div>
+</div>
+<p>So <em>number-for-piece</em> is most likely returning the integer value that
+was passed to <code class="docutils literal notranslate"><span class="pre">write-element</span></code> (and that we can see on the stack as the
+<em>elt</em> local variable). The square value has type <code class="docutils literal notranslate"><span class="pre">&lt;piece&gt;</span></code> —this, then,
+is the element type of the sequence used to represent the state of the
+board.</p>
+<p>Browse the definition of <code class="docutils literal notranslate"><span class="pre">number-for-piece</span></code>.</p>
+<p>You can do this either by typing the name into the Object field, or by
+clicking on the name on the Source page and selecting <em>Browse</em> from the
+right-click popup menu.</p>
+<p>The definition of <code class="docutils literal notranslate"><span class="pre">number-for-piece</span></code> completes the story. It is here
+that the board square representations are converted into integers. This
+is where the integer that caused the exception came from.</p>
+</div>
+<div class="section" id="fixing-the-error">
+<h3>Fixing the error<a class="headerlink" href="#fixing-the-error" title="Permalink to this headline">¶</a></h3>
+<p>In this section, we fix the Reversi project source code to eliminate the
+cause of the exception we have been tracking down.</p>
+<p>This is what we have learned about the error so far:</p>
+<ul>
+<li><p>It occurred when trying to save a Reversi game.</p></li>
+<li><p>It was caused in a call to <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code>, which attempted to
+pass an integer to <em>byte-char-to-byte</em>, a method which expects an
+instance of <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> method received the integer from
+<code class="docutils literal notranslate"><span class="pre">write-element</span></code>, which received the integer from
+<code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code> method uses the <code class="docutils literal notranslate"><span class="pre">number-for-piece</span></code>
+method to translate board square representations (type <code class="docutils literal notranslate"><span class="pre">&lt;piece&gt;</span></code> )
+into instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. The <code class="docutils literal notranslate"><span class="pre">&lt;piece&gt;</span></code> values are either <code class="docutils literal notranslate"><span class="pre">#f</span></code>
+(no piece on this square), <code class="docutils literal notranslate"><span class="pre">#&quot;white&quot;</span></code> (a white piece on this square),
+or <code class="docutils literal notranslate"><span class="pre">#&quot;black&quot;</span></code> (a black piece on this square); those values are
+translated into 0, 1, and 2 respectively. That is why <em>n</em> could have
+been either 0, 1, or 2 in the error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dylan</span> <span class="n">error</span><span class="p">:</span> <span class="o">*</span><span class="n">n</span><span class="o">*</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">of</span> <span class="nb">type</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">class</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BYTE</span><span class="o">-</span><span class="n">CHARACTER</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>So the value of <em>n</em> depends on the state of the first square to be
+written.</p>
+<p>In addition:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">write-element</span></code> generic function is from the Open Dylan
+Streams library. It is part of that library’s protocol for writing to
+streams.</p></li>
+<li><p>The stack shows that the <code class="docutils literal notranslate"><span class="pre">write-element</span></code> method tried to coerce an
+integer to a byte character, and that the attempt failed.</p></li>
+</ul>
+<p>So we know that Reversi is trying to write integer values to a file
+stream with a <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code> element type, and the exception occurs
+during the attempt to coerce an integer into a byte character.</p>
+<p>We could simply change the file stream’s element type to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<p>In fact, we have not yet looked at the call that created the file
+stream. That call is <code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>.</p>
+<p>Return to the debugger and select the call frame for
+<code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>.</p>
+<p>As expected, the source pane shows that the file stream is created with
+an element type of <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code>. The relevant code fragment is:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">file-stream</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;file-stream&gt;</span><span class="p">,</span> <span class="k">locator:</span> <span class="n">file</span><span class="p">,</span>
+                       <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">,</span>
+                       <span class="k">element-type:</span> <span class="nc">&lt;byte-character&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Click the Edit Source (<img alt="image2" src="_images/editsrc.png" />) button above the source code pane.</p>
+<p>An editor window opens on <em>saving.dylan</em>.</p>
+<p>We now have <em>saving.dylan</em> in the editor, and the insertion point is
+positioned at the start of the definition for <code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>.
+We can make the change to <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>, but should first check
+<code class="docutils literal notranslate"><span class="pre">reversi-game-load-game</span></code>, the method that loads games saved by
+<code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>, to see what sort of file-stream elements it
+expects to read back.</p>
+<p>That definition is located directly below that of
+<code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>. It shows that the file-stream element type
+expected is <code class="docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code>.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">file-stream</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;file-stream&gt;</span><span class="p">,</span> <span class="k">locator:</span> <span class="n">file</span><span class="p">,</span>
+                       <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">,</span>
+                       <span class="k">element-type:</span> <span class="nc">&lt;byte&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The class <code class="docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code> is actually a constant value, defined:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="nc">&lt;byte&gt;</span> <span class="o">=</span> <span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">min:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">max:</span> <span class="mi">255</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>So there is no harm in changing the <code class="docutils literal notranslate"><span class="pre">element-type:</span></code> argument in
+<code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>’s call to <code class="docutils literal notranslate"><span class="pre">make</span></code> from <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code> to
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (because 0, 1, and 2 are all within the defined range for
+<code class="docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code>), but for symmetry we may as well change it to <code class="docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code>.</p>
+<p>Fix the definition of <code class="docutils literal notranslate"><span class="pre">reversi-game-save-game</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">element-type:</span></code> keyword in the call to <code class="docutils literal notranslate"><span class="pre">make</span></code> on <code class="docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code>
+should take <code class="docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code>, not <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code>.</p>
+<p>Choose <strong>File &gt; Save</strong> in the editor.</p>
+<p>Before we can rebuild the application we need to stop the current
+version running.</p>
+<p>Choose <strong>Application &gt; Stop</strong> in the editor.</p>
+<p>A dialog appears asking you to confirm that you want to stop the
+application.</p>
+<p>Click <strong>OK</strong>.</p>
+<p>Rebuild the application with <strong>Project &gt; Build</strong>.</p>
+<p>Start the application again, and try to save a game.</p>
+<p>The save operation now works without raising an unhandled exception.</p>
+</div>
+<div class="section" id="loading-the-saved-game-back-in">
+<h3>Loading the saved game back in<a class="headerlink" href="#loading-the-saved-game-back-in" title="Permalink to this headline">¶</a></h3>
+<p>The next step is to test the code for loading a saved game. To test this
+we need to change the state of the board from what it was like when we
+saved the game.</p>
+<p>Clear the Reversi board by clicking <strong>New Game</strong> in the Reversi
+application.</p>
+<p>Choose <strong>File &gt; Open</strong> in the Reversi application, select the file you
+saved the game into, and click <strong>Open</strong>.</p>
+<p>Reversi now shows the state of the game you saved earlier.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quick-start.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="model.html" class="btn btn-neutral float-right" title="Programming in Open Dylan" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

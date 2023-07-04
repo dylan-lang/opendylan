@@ -1,0 +1,1470 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debugging and Interactive Development &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Remote Debugging" href="remotedbg.html" />
+    <link rel="prev" title="Learning More About an Application" href="browsing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Getting Started with the Open Dylan IDE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Debugging and Interactive Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-debugger">The debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugger-panes">Debugger panes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#context-pane">Context pane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stack-pane">Stack pane</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#thread-titles">Thread titles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#call-frames">Call frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-variables-and-call-parameters">Local variables and call parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#source-pane">Source pane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction-pane">Interaction pane</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#keeping-debugger-windows-up-to-date">Keeping debugger windows up to date</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#controlling-execution">Controlling execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#starting-and-stopping-applications">Starting and stopping applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pausing-and-resuming-execution-of-applications">Pausing and resuming execution of applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restarting-applications">Restarting applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interacting-with-applications">Interacting with applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-techniques">Debugging techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-executables">Debugging executables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-dlls">Debugging DLLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-ole-components">Debugging OLE components</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#restarts">Restarts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choosing-an-application-thread-to-debug">Choosing an application thread to debug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changing-the-debugger-layout">Changing the debugger layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interacting-with-an-application">Interacting with an application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#about-the-interaction-pane">About the interaction pane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-an-interactive-session-with-an-application">Starting an interactive session with an application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction-basics-using-the-dylan-playground">Interaction basics using the Dylan playground</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-example-interaction-with-reversi">An example interaction with Reversi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-access-to-local-variables-and-arguments-on-the-stack">Interactive access to local variables and arguments on the stack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#effects-of-interactive-changes-to-application-threads">Effects of interactive changes to application threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction-pane-commands">Interaction pane commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-active-project">The active project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#breakpoints">Breakpoints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-breakpoints-work">How breakpoints work</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-breakpoints-on-functions">Setting breakpoints on functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-breakpoints-on-lines-of-code">Setting breakpoints on lines of code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browsing-a-project-s-breakpoints">Browsing a project’s breakpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#breakpoint-commands-on-the-shortcut-menu">Breakpoint commands on the shortcut menu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#breakpoint-commands-on-the-application-and-go-menus">Breakpoint commands on the Application and Go menus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#breakpoint-options">Breakpoint options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stepping">Stepping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-over">Step over</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-into">Step into</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-out">Step out</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-client-server-applications">Debugging client/server applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exporting-a-bug-report-or-a-compiler-warnings-report">Exporting a bug report or a compiler warnings report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugger-options">Debugger options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stack-options">Stack options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exceptions-options">Exceptions options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#miscellaneous-options">Miscellaneous options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#just-in-time-debugging">Just-in-time debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Getting Started with the Open Dylan IDE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Debugging and Interactive Development</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/debug.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="debugging-and-interactive-development">
+<h1>Debugging and Interactive Development<a class="headerlink" href="#debugging-and-interactive-development" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter, we look more closely at Open Dylan’s debugger
+tool.</p>
+<div class="section" id="the-debugger">
+<span id="index-0"></span><h2>The debugger<a class="headerlink" href="#the-debugger" title="Permalink to this headline">¶</a></h2>
+<p>The debugger is a tool for browsing and interacting with a paused
+application thread. Any thread in an application can be viewed in the
+debugger (or you can use separate debugger windows for different
+threads). You can consider the debugger a specialized version of the
+browser that browses paused application threads.</p>
+<p>The debugger provides standard debugging facilities like stepping and
+breakpoints. It also provides a graphical interface for browsing the
+state of the control stack in a paused application thread, allowing you
+to examine local variables and arguments in each stack frame.</p>
+<p>You can also use the debugger’s interaction pane to interact with a
+paused application thread. Simply enter Dylan code at a prompt, and the
+code is executed in the context of the paused thread.</p>
+</div>
+<div class="section" id="debugger-panes">
+<h2>Debugger panes<a class="headerlink" href="#debugger-panes" title="Permalink to this headline">¶</a></h2>
+<p>We now take a look at the basic debugger window panes.</p>
+<p>The easiest way to bring up the debugger is to choose <strong>Application &gt;
+Debug</strong> in the project tool. This starts the application, then pauses its
+main thread and opens the debugger window on that thread. We can
+demonstrate this now with Reversi. If you are already running that
+application, exit it now.</p>
+<p>Choose <strong>Application &gt; Debug</strong> in the Reversi project window.</p>
+<div class="figure align-center" id="id7">
+<img alt="_images/debugger.png" src="_images/debugger.png" />
+<p class="caption"><span class="caption-text">The debugger.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>The debugger has four panes: the context pane, the stack pane, the
+source pane, and the interaction pane.</p>
+<div class="section" id="context-pane">
+<h3>Context pane<a class="headerlink" href="#context-pane" title="Permalink to this headline">¶</a></h3>
+<p>The pane at the top of the debugger is the <em>context</em> pane. The context
+pane gives an overview of the state of the application thread to which
+the debugger is attached. You can hide the context pane by using <strong>View &gt;
+Context Window</strong>.</p>
+<div class="figure align-center" id="id8">
+<img alt="_images/dbgctxt.png" src="_images/dbgctxt.png" />
+<p class="caption"><span class="caption-text">The debugger’s context pane.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>Here, the application stopped because there is a breakpoint on the call
+to <em>play-reversi</em> in <em>start-reversi.dylan</em>. That is the function call
+that starts the application running. The rules for what appears in the
+context pane are as follows.</p>
+<p>If you paused the application yourself, by choosing <strong>Application &gt;
+Pause</strong>, or by clicking the pause toolbar button (<img alt="image0" src="_images/pause.png" />), the
+message “User requested pause” appears in the context pane of all open
+debugger windows.</p>
+<p>If the application paused because of some other event,</p>
+<ul class="simple">
+<li><p>the context pane for the debugger on the thread that caused the pause
+shows a message explaining why that thread paused the application.</p></li>
+<li><p>the context pane in all other open debuggers shows the message
+“Stopped in Thread <em>x</em>”, where <em>x</em> is the name of the thread that
+has stopped.</p></li>
+</ul>
+<p>Often the message describes an unhandled Dylan error or breakpoint. The
+message could also describe an out-of-language error (for example in
+foreign code) or one of a number of application events upon which you
+can ask the debugger to pause the application, such as when a library is
+loaded. You can see a list of possible exceptions and the actions that
+will be taken upon them in the Debugger Options dialog. See
+<a class="reference internal" href="#id5">Debugger options</a>.</p>
+</div>
+<div class="section" id="stack-pane">
+<h3>Stack pane<a class="headerlink" href="#stack-pane" title="Permalink to this headline">¶</a></h3>
+<p>The <em>stack</em> pane shows the thread’s control stack at the moment it was
+paused, with certain call frames filtered out. It depicts the stack in a
+tree view. We call this a <em>stack backtrace</em> or <em>backtrace</em>.</p>
+<p>When a debugger window opens, the stack pane opens in expanded form,
+showing the backtrace details. You can expand and collapse the backtrace
+in the normal way for a tree view, by clicking <em>+</em> or <em>-</em> symbols. In
+addition, the menu commands <strong>View &gt; Expand</strong>, <strong>View &gt; Expand All</strong>,
+<strong>View &gt; Collapse</strong>, and <strong>View &gt; Collapse All</strong> control expansion.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The stack pane may not always contain exactly what you expect to
+see. First, a function call you expect to see might have been optimized
+away during compilation. Second, because the stack pane filters out
+certain call frames by default, a frame you are looking for may only
+become visible when you change the filtering settings. By default, only
+frames for Dylan functions defined in or imported into the thread’s
+current module appear in the stack pane. This default setting is
+indicated by “Filtered visible frames”, which appears in the stack pane
+filtering drop-down list (see <a class="reference internal" href="expanding.html#searching-stack-backtrace-for-cause"><span class="std std-ref">Searching the stack backtrace for the cause of the error</span></a>
+for information about the drop-down list settings).</p>
+</div>
+<p>Choose the <strong>View &gt; Debugger Options</strong> dialog’s Stack page in the debugger
+window to control the filtering rules. See <a class="reference internal" href="#id6">Stack options</a> for details.</p>
+<p>You can select any item shown in a backtrace and right-click to produce
+a pop-up menu. The menu allows you to carry out other operations on
+them, such as browsing their values or editing their source code
+representation. Double-clicking an item opens it in the browser.</p>
+<div class="section" id="thread-titles">
+<h4>Thread titles<a class="headerlink" href="#thread-titles" title="Permalink to this headline">¶</a></h4>
+<p>The root node in the backtrace is the number and title of the thread.
+Threads are assigned titles using the following scheme:</p>
+<ul class="simple">
+<li><p>Thread <em>x</em> : “<em>name</em> “.</p></li>
+<li><p>A Dylan thread that has a name. The name is a string.</p></li>
+<li><p>Thread <em>x</em> : Anonymous thread</p></li>
+<li><p>A Dylan thread that has no name.</p></li>
+<li><p>Thread <em>x</em> : Foreign thread</p></li>
+<li><p>Any non-Dylan thread.</p></li>
+</ul>
+<p>The initial thread in a Dylan application is always called Thread 1:
+“Main thread”. Each subsequently created thread is assigned an integer
+number by incrementing the value used for the previous thread, and a
+title derived according to the scheme above.</p>
+<p>In Reversi, there is only one thread, the main thread.</p>
+</div>
+<div class="section" id="call-frames">
+<span id="id1"></span><h4>Call frames<a class="headerlink" href="#call-frames" title="Permalink to this headline">¶</a></h4>
+<p>Under the root node, at the first level of expansion, the stack pane
+lists the call frames in the backtrace. The most recently executed call
+frame is listed first.</p>
+<p>Each call frame is represented by the name of the function or method
+whose call created the frame. If you select a name, the source code
+associated with it (if any) appears in the pane opposite. See
+<a class="reference internal" href="#source-pane">Source pane</a> for details of this pane.</p>
+<p>Beside each frame name is an icon indicating the sort of call that
+created the frame:</p>
+<div class="figure align-center">
+<img alt="_images/blue-m.png" src="_images/blue-m.png" />
+</div>
+<p>This was a call to a method selected through run-time dispatch.</p>
+<div class="figure align-center">
+<img alt="_images/grey-f.png" src="_images/grey-f.png" />
+</div>
+<p>This was a direct call, either to a method whose dispatch details were
+all worked out at compile time, or to a method constant (a function).</p>
+<div class="figure align-center">
+<img alt="_images/grey-question.png" src="_images/grey-question.png" />
+</div>
+<p>This was a call to a foreign (non-Dylan) function. Some of the calls
+that the Dylan run-time system makes are foreign calls.</p>
+<div class="figure align-center">
+<img alt="_images/green-arrow.png" src="_images/green-arrow.png" />
+</div>
+<p>This arrow denotes the position of the stack pointer in the thread. It
+will always be at the top of the list of frames.</p>
+<p>When debugging, be aware that some function call frames may be optimized
+away by, for example, inlining or tail-call optimization. This is
+particularly important to note if you are compiling in Production mode,
+where more optimization occurs than in Interactive Development mode.</p>
+<p>The debugger also hides certain stack frames concerned with activities
+like method dispatch, since these are of no interest in debugging user
+applications.</p>
+<p>You can filter other frames out of the backtrace if you wish, according
+either to their type or to their names. For instance, you can filter out
+all foreign call frames or all frames whose names contain a particular
+string. See <a class="reference internal" href="#id6">Stack options</a>.</p>
+<div class="figure align-center" id="id9">
+<img alt="_images/dbgbak.png" src="_images/dbgbak.png" />
+<p class="caption"><span class="caption-text">The debugger’s stack pane.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="local-variables-and-call-parameters">
+<h4>Local variables and call parameters<a class="headerlink" href="#local-variables-and-call-parameters" title="Permalink to this headline">¶</a></h4>
+<p>Some call frames shown in the backtrace can be expanded one level
+further. At this final level of expansion, the pane shows the values of
+the local variable bindings, including the values that were passed as
+parameters in the call. Bindings are listed in the order in which they
+were created, so the parameter bindings appear first.</p>
+<p>The bindings, preceded by a yellow star icon (<img alt="image1" src="_images/yellow-star.png" />), are shown in
+the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">name</span><span class="o">*</span> <span class="o">=</span> <span class="o">*</span><span class="n">value</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>Where <em>value</em> is displayed in a summarizing notation, which defaults to
+the value’s class enclosed in curly braces if there is no simple printed
+representation. For example, basic numeric types, strings, booleans, and
+sequences thereof can be printed literally, but an instance of
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-frame&gt;</span></code> cannot.</p>
+</div>
+</div>
+<div class="section" id="source-pane">
+<h3>Source pane<a class="headerlink" href="#source-pane" title="Permalink to this headline">¶</a></h3>
+<p id="index-1">The debugger’s source pane shows a source code definition for the method
+or function that created the call frame that is currently selected in
+the stack pane.</p>
+<p>A text field above the source pane shows the location on disk of the
+source file containing the definition. If you click the Edit Source
+(<img alt="image2" src="_images/editsrc.png" />) button, Open Dylan opens the source file in an editor
+window, with the insertion point placed at the start of the definition.</p>
+<p>If the debugger cannot locate the source code for the method or function
+that created the selected call frame, or if you select a local variable
+or the backtrace’s root node, the debugger leaves the source pane empty,
+writes “No source available” in the field above the source pane, and
+makes the Edit Source button unavailable.</p>
+<p id="index-2">The source pane shows the same green arrow (<img alt="image3" src="_images/green-arrow.png" />) seen in the stack
+pane. This <em>current location</em> arrow shows the point to which execution
+within that call frame had proceeded before the application was paused.
+(Thus the current location arrow that you see in the source pane for the
+top-most call frame in the stack pane is the most accurate depiction of
+the point at which execution was paused.)</p>
+<p>Often, the arrow is located at a point where a function has called
+another function that has not yet returned, or at the point at which
+execution will resume when a function returns.</p>
+<div class="figure align-center" id="id10">
+<img alt="_images/source.png" src="_images/source.png" />
+<p class="caption"><span class="caption-text">The current location arrow in the debugger’s source pane.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p>The line at which the arrow is located is not always precisely correct,
+because optimizations carried out by the compiler may have produced
+object code that does not correspond to the source code in a way that
+can be easily depicted in this pane. The chance of imprecision is
+increased when compiling a project in Production mode.</p>
+<p>In our example, the arrow appears at the start of the definition of the
+<em>play-reversi</em> method. This shows that execution paused at the beginning
+of the execution of <em>play-reversi</em>.</p>
+</div>
+<div class="section" id="interaction-pane">
+<span id="index-3"></span><h3>Interaction pane<a class="headerlink" href="#interaction-pane" title="Permalink to this headline">¶</a></h3>
+<p>The interaction pane allows you to enter Dylan expressions for
+evaluation in the context of the paused thread. (In some language
+implementations, an interaction tool like this is called a <em>listener</em>.)</p>
+<p>See <a class="reference internal" href="#interacting-with-an-application">Interacting with an application</a> for a discussion of interaction.</p>
+<p>The interaction pane also logs thread events that the debugger noticed
+(such as DLL loading) and debugging messages explicitly output by the
+thread (for example via the Dylan library’s
+<em>debug-message</em> function in the <code class="docutils literal notranslate"><span class="pre">simple-debugging</span></code> module).</p>
+<p>The pane does not collect ordinary output from the application being
+debugged. Such output continues to go to its ordinary destination, such
+as the standard output.</p>
+</div>
+</div>
+<div class="section" id="keeping-debugger-windows-up-to-date">
+<h2>Keeping debugger windows up to date<a class="headerlink" href="#keeping-debugger-windows-up-to-date" title="Permalink to this headline">¶</a></h2>
+<p>It can be costly to keep all the panes of open debugger windows up to
+date. For this reason, Open Dylan only refreshes the information in
+debugger windows in certain circumstances.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the following descriptions, a window being “refreshed” can
+also mean the window being displayed for the first time, with up-to-date
+contents, if it has not yet been displayed.</p>
+</div>
+<ul class="simple">
+<li><p>If an application thread pauses and a debugger window appears (or
+comes to the foreground), the debugger window for that thread is
+refreshed automatically.</p></li>
+</ul>
+<p>Threads pause when: there is an unhandled Dylan error in the thread,
+there was an out-of-language error in the thread, execution in the
+thread reached a breakpoint or step point, or the thread reached the end
+of an interactive evaluation.</p>
+<ul class="simple">
+<li><p>If you issue the pause command (<strong>Application &gt; Pause</strong> or</p></li>
+<li><p>If you issue the pause command from the project window or editor, the
+debugger for the application’s main thread is refreshed.</p></li>
+</ul>
+<p>In all of these circumstances, any other open debugger windows will not
+be refreshed unless you choose <strong>View &gt; Refresh</strong> in them. If you choose
+<strong>View &gt; Refresh All Debuggers</strong>, Open Dylan updates every open
+debugger window.</p>
+<p>The Misc page of the debugger’s <strong>View &gt; Debugger Options</strong> dialog
+contains the option “Refresh all open debuggers when entering debugger”.
+By default, this option is not set. When turned on, the rules above are
+ignored and every open debugger window is refreshed whenever the
+application pauses.</p>
+</div>
+<div class="section" id="controlling-execution">
+<span id="index-4"></span><h2>Controlling execution<a class="headerlink" href="#controlling-execution" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Application</strong> menu, shared by the debugger, editor, and project
+windows, contains a set of commands for controlling the execution of an
+application or DLL. Some toolbar buttons provide shortcuts to these
+commands.</p>
+<p>In a project window, the commands on the <strong>Application</strong> menu act upon the
+executable application (.EXE file) or DLL that was last built for that
+project. The command selects the application or DLL depending on the
+target file type setting on the <em>Project &gt; Settings</em> dialog’s Link page.</p>
+<p>In a debugger window, the commands act upon the application that created
+the thread being debugged. In an editor window, the commands act upon
+the application of the active project. (Note that the <strong>Application</strong> menu
+is not available in the editor if the source file being edited is not
+part of the active project—the project whose name is visible in the main
+window’s drop-down list. See <a class="reference internal" href="#the-active-project">The active project</a> for more details.)</p>
+<div class="section" id="starting-and-stopping-applications">
+<span id="index-5"></span><h3>Starting and stopping applications<a class="headerlink" href="#starting-and-stopping-applications" title="Permalink to this headline">¶</a></h3>
+<p><strong>Application &gt; Start</strong> (or the toolbar start/resume button (<img alt="image4" src="_images/start.png" />))
+executes the application with which the window is associated.</p>
+<p>After you have started executing an application, the <strong>Application &gt;
+Start</strong> command is never available again until you stop the application
+with <strong>Application &gt; Stop</strong>, or until the application terminates
+normally.</p>
+<p><strong>Application &gt; Stop</strong> (or the toolbar stop button (<img alt="image5" src="_images/stopbutton.png" />)) terminates
+the process of the application with which the window is associated.
+Before terminating the process, Open Dylan asks you to confirm that
+you want to do so. This helps reduce the chance of an accidental
+termination that loses valuable application state.</p>
+<p>After you have stopped an application in this way, you can start it
+again with <strong>Application &gt; Start</strong>.</p>
+</div>
+<div class="section" id="pausing-and-resuming-execution-of-applications">
+<span id="index-6"></span><h3>Pausing and resuming execution of applications<a class="headerlink" href="#pausing-and-resuming-execution-of-applications" title="Permalink to this headline">¶</a></h3>
+<p><strong>Application &gt; Pause</strong> (or the toolbar pause button (<img alt="image6" src="_images/pause.png" />)) pauses
+the execution of the application with which the window is associated.</p>
+<p>When an application is paused, you can browse and debug its threads or
+interact with it. Choose <strong>Application &gt; Resume</strong> (or the toolbar
+start/resume button (<img alt="image7" src="_images/start.png" />)) to resume execution.</p>
+<p>You should normally only use <strong>Application &gt; Resume</strong> when the application
+stopped because you paused it or it reached a breakpoint (both of which
+are out-of-language events, that is, events not described completely in
+terms of the Dylan language). If the application stopped because of an
+unhandled condition or a call to <em>break</em> (both in-language events), you
+should instead use the items on the <strong>Thread</strong> menu to signal a Dylan
+restart. See <a class="reference internal" href="#restarts">Restarts</a> for information on the <strong>Thread</strong> menu.</p>
+<p>If you use <strong>Application &gt; Resume</strong> to continue from an in-language event,
+your application may signal further errors because you did not use the
+(in-language) restart mechanism to deal with the existing error.</p>
+<p>Any Dylan restarts which were available before you resumed the
+application should still be available, so you can continue by signalling
+a restart as before. See <a class="reference internal" href="#restarts">Restarts</a> for more details.</p>
+</div>
+<div class="section" id="restarting-applications">
+<h3>Restarting applications<a class="headerlink" href="#restarting-applications" title="Permalink to this headline">¶</a></h3>
+<p><strong>Application &gt; Restart</strong> restarts the application with which the window
+is associated. There is no toolbar shortcut button for this command.</p>
+<p>This command is only available if the application is already running.
+Since restarting an application logically consists of stopping it and
+starting it again, choosing this command is equivalent to choosing
+<strong>Application &gt; Stop</strong>, then <strong>Application &gt; Start</strong>.</p>
+</div>
+<div class="section" id="interacting-with-applications">
+<span id="index-7"></span><h3>Interacting with applications<a class="headerlink" href="#interacting-with-applications" title="Permalink to this headline">¶</a></h3>
+<p><strong>Application &gt; Interact</strong> (or the toolbar interact button (<img alt="image8" src="_images/interact.png" />))
+pauses the execution of the application with which the window is
+associated and opens a debugger window on it. The behavior is exactly
+the same as <strong>Application &gt; Debug</strong> (see <a class="reference internal" href="#id2">Debugging techniques</a>)
+except the stack and source panes of the debugger window are hidden.</p>
+<p>See <a class="reference internal" href="#interacting-with-an-application">Interacting with an application</a> for a discussion of interaction.</p>
+</div>
+</div>
+<div class="section" id="debugging-techniques">
+<span id="id2"></span><h2>Debugging techniques<a class="headerlink" href="#debugging-techniques" title="Permalink to this headline">¶</a></h2>
+<p>Because of the different characteristics of executable (EXE) files,
+DLLs, and OLE components, in each case there is a slightly different
+technique for invoking the debugger. This section covers these
+techniques. Debugging a client/server application is discussed in
+<a class="reference internal" href="#debugging-client-server-applications">Debugging client/server applications</a>.</p>
+<div class="section" id="debugging-executables">
+<span id="index-8"></span><h3>Debugging executables<a class="headerlink" href="#debugging-executables" title="Permalink to this headline">¶</a></h3>
+<p>Use <strong>Application &gt; Debug</strong> (or the toolbar debug button (<img alt="image9" src="_images/debug.png" />)) and
+<strong>Application &gt; Interact</strong> (or the toolbar interact button (<img alt="image10" src="_images/interact.png" />))
+to debug an executable (EXE) application.</p>
+<p>These commands start the executable associated with the window, then
+pause its main thread and open a debugger window on that thread. If the
+application is already running, these commands pause the application in
+its current state.</p>
+<p>If you want to start an application up in the debugger, so that you can
+examine its initial state, you want the application’s library and the
+libraries it uses to initialize completely before the debugger pauses
+it. To do this, you need to specify the application’s <em>start function</em>.
+A start function is a function that the application calls upon startup
+to set things running, such as a call to start an event loop in a
+windowing application. See <a class="reference internal" href="projects.html#start-function"><span class="std std-ref">The project start function</span></a> for details.</p>
+<p>You can specify a start function on the Debug page of the <strong>Project &gt;
+Settings…</strong> dialog. When you use <strong>Application &gt; Debug</strong> or <strong>Application &gt;
+Interact</strong>, the environment places a temporary breakpoint on the start
+function so that the application starts and then enters the debugger on
+entry to the start function. For this reason, the expression that calls
+the start function should appear after all definitions in the project,
+so that all definitions will be accessible in the debugger.</p>
+<p>If the project does not specify a start function, the application will
+enter the debugger after all expressions are executed and the main
+thread is about to exit. In this case, the debugger is entered as the
+application has finished, which is not normally very useful. If you
+always specify a start function, you can pause the application at a more
+useful point.</p>
+</div>
+<div class="section" id="debugging-dlls">
+<span id="index-9"></span><h3>Debugging DLLs<a class="headerlink" href="#debugging-dlls" title="Permalink to this headline">¶</a></h3>
+<p>Debugging DLLs is similar to debugging executable (EXE) applications (see
+<a class="reference internal" href="#debugging-executables">Debugging executables</a> above), but there are a couple of differences.</p>
+<p>One difference is that DLLs may not have a start function. Without a
+start function, there is nothing for the environment to place a
+breakpoint upon in order to pause the DLL’s execution and enter the
+debugger.</p>
+<p>Nonetheless, for debugging it is still useful to be able to pause the
+DLL once it has initialized completely but before it exits. To do this,
+simply remove the name in the Start Function section of the <strong>Project &gt;
+Settings…</strong> dialog’s Debug page. Then, when you choose <strong>Application &gt;
+Debug</strong> or <strong>Application &gt; Interact</strong>, the debugger lets the DLL execute
+all its top-level expressions, and pauses the DLL just as its main
+thread is about to exit. This gives you access to all the definitions
+and state that the DLL creates.</p>
+<p>If the DLL does have a start function, simply specify it and the
+<strong>Application &gt; Debug</strong> and <strong>Application &gt; Interact</strong> commands will work as
+they do for EXE applications: the environment adds a breakpoint on the
+start function, and on entry to the function the DLL’s main thread is
+paused and a debugger window is opened on it.</p>
+<p>Another consideration is that it is not normally possible to execute a
+DLL directly; instead, you start an EXE that calls it. The environment
+normally handles this issue for you, by using a small EXE that takes the
+target DLL name as a command-line argument, loads it (causing all its
+top-level expressions to be executed), and exits. When you choose
+<strong>Application &gt; Start</strong>, <strong>Application &gt; Debug</strong>, or <strong>Application &gt;
+Interact</strong> the environment runs the EXE. The point at which the EXE is
+paused again depends on whether you supply a start function.</p>
+<p>Alternatively, you can supply your own EXE in the Executable field of
+the <strong>Project &gt; Settings…</strong> dialog’s Debug page. The <strong>Application &gt; Start</strong>,
+<strong>Application &gt; Debug</strong>, and <strong>Application &gt; Interact</strong> commands then
+call your EXE and behave in the same way as if your EXE was the
+project target file. That is to say, execution of the EXE proceeds
+without intervention from the debugger until the DLL loads. Only then
+will the debugger be in a position to pause the DLL. (Again, the point
+at which the pause occurs depends on whether you specify a start
+function.)</p>
+</div>
+<div class="section" id="debugging-ole-components">
+<h3>Debugging OLE components<a class="headerlink" href="#debugging-ole-components" title="Permalink to this headline">¶</a></h3>
+<p>To debug in-process OLE servers and OLE controls, which must be built as
+DLLs, you can use the same debugging processes as described in
+<a class="reference internal" href="#debugging-dlls">Debugging DLLs</a>.</p>
+<p>If you want to test your server or control in a container application,
+simply enter the name of the application executable in the Executable
+field of the <strong>Project &gt; Settings…</strong> dialog’s Debug page. This executable
+could be any OLE container, such as WordPad. The <strong>Application &gt; Start</strong>,
+<strong>Application &gt; Debug</strong>, and <strong>Application &gt; Interact</strong> commands then
+execute the container executable. Execution proceeds normally until the
+code of the OLE server or control is executed; only then will the
+debugger be able to intervene either by pausing when the server or
+control loads or when a start function is called.</p>
+<p>In the case of an OLE compound document server, of course, the debugger
+will only be able to act if you choose to insert an instance of your OLE
+server object into your test container application.</p>
+</div>
+</div>
+<div class="section" id="restarts">
+<span id="index-10"></span><h2>Restarts<a class="headerlink" href="#restarts" title="Permalink to this headline">¶</a></h2>
+<p>The debugger provides a way to signal any restart for which a handler is
+available at a given point in application execution. Restarts are part
+of the Dylan language’s condition system, and are explained in chapter 7
+of the DRM.</p>
+<p>You can use the debugger to signal a restart if your application has
+entered the debugger due to a condition having been signalled but not
+handled, or due to it reaching a breakpoint. You cannot do so if the
+application has paused because you used <strong>Application &gt; Pause</strong>. (Use
+<strong>Application &gt; Resume</strong> to restart your application in that case.)</p>
+<p>To select a restart to be signalled, choose <strong>Thread &gt; Continue…</strong>, which
+displays a dialog listing all available restarts.</p>
+<p>For convenience, there are two other menu items for signalling <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a>
+restarts, which are defined to mean “terminate the current computation”.</p>
+<p><strong>Thread &gt; Abort</strong> signals the innermost available <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restart—that
+is, it aborts as little as possible—whereas <strong>Thread &gt; Abort All</strong> signals
+the outermost <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restart—that is, it aborts as much as possible.</p>
+<p>Although the meaning of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restarts is part of the Dylan
+language, your application must provide handlers to implement them. If
+you are using DUIM for your application’s GUI, note that DUIM frames
+normally provide <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> handlers in the event loop, so that aborting
+while processing an event will proceed to process the next event. See
+the DUIM documentation for <em>start-frame</em> and <em>start-dialog</em>.</p>
+</div>
+<div class="section" id="choosing-an-application-thread-to-debug">
+<span id="index-11"></span><h2>Choosing an application thread to debug<a class="headerlink" href="#choosing-an-application-thread-to-debug" title="Permalink to this headline">¶</a></h2>
+<p>As we noted earlier, each application thread can have its own debugger
+or you can use one debugger window to view various threads one at a
+time. The command we have seen so far, <strong>Application &gt; Debug</strong>, debugs
+only the application’s main thread. To debug another thread in the
+application, choose <strong>Go &gt; Threads</strong> from the debugger, project window, or
+editor. From the debugger window you can also use <strong>Thread &gt; Select
+Thread…</strong>. To bring up multiple debugger windows, use <strong>Window &gt; New
+Window</strong> from an existing debugger.</p>
+<p>The <strong>Go &gt; Threads</strong> command launches a browser on the application itself,
+treating it as an object consisting of one or more threads whose states
+are visible in a table. If you browse a particular thread, Open
+Dylan refreshes the existing debugger window to display the thread or
+opens a debugger window if none already exists.</p>
+<p>You can then debug a thread from the table by double clicking, or by
+using the right-click popup menu. This action stops the thread if it is
+running, and opens a debugger window on it.</p>
+</div>
+<div class="section" id="changing-the-debugger-layout">
+<span id="index-12"></span><h2>Changing the debugger layout<a class="headerlink" href="#changing-the-debugger-layout" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan lays out the debugger window to suit the situation. If
+you choose <strong>Application &gt; Interact</strong>, the debugger uses its interaction
+layout. In this layout, the interaction pane is maximized and the stack
+and source panes do not appear at all. This layout hosts interactive
+sessions and is sometimes casually referred to as “the interactor”.</p>
+<p>If the debugger was invoked because of an error or because you chose
+<strong>Application &gt; Debug</strong> or <strong>Application &gt; Pause</strong>, the interaction pane
+will be a small pane below the stack and source panes.</p>
+<p>You can change the automatic layout using <strong>View &gt; Interacting Layout</strong>
+and <strong>View &gt; Debugging Layout</strong>. You can also hide or show the context
+window using <strong>View &gt; Context Window</strong>.</p>
+</div>
+<div class="section" id="interacting-with-an-application">
+<span id="index-13"></span><h2>Interacting with an application<a class="headerlink" href="#interacting-with-an-application" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan allows you to interact with your applications.
+Interaction consists of executing Dylan expressions and definitions in
+the context of a paused application thread. Open Dylan also offers
+the <em>Dylan playground</em>, a facility for interactive Dylan programming
+experiments outside the context of application development.</p>
+<p>To explain the things you can do interactively, this section includes
+two examples. One uses the Dylan playground and the other uses the
+Reversi application. First, however, we discuss the interaction pane, a
+debugger pane that hosts interactive sessions.</p>
+<div class="section" id="about-the-interaction-pane">
+<span id="index-14"></span><h3>About the interaction pane<a class="headerlink" href="#about-the-interaction-pane" title="Permalink to this headline">¶</a></h3>
+<p>The debugger’s interaction pane provides a prompt (where you can enter
+Dylan expressions and definitions for execution. The prompt is a
+question mark (<em>?</em> ).</p>
+<p>The interaction pane is similar to what some other languages call a
+<em>listener</em> tool, and it provides the “read-eval-print” model of
+interaction that is standard in those tools. However, in Open Dylan
+interactions, the “eval” phase is not really evaluation. It consists of
+compiling your code and then sending the compiled code to the paused
+application thread itself, where it is executed, modifying the state of
+the thread accordingly. This means that you can interactively add
+features to an application and even redefine parts of it, all while the
+application is still running.</p>
+<p>The size of the interaction pane differs according to the situation. See
+<a class="reference internal" href="#changing-the-debugger-layout">Changing the debugger layout</a> for details of the
+different layouts and how to change them.</p>
+</div>
+<div class="section" id="starting-an-interactive-session-with-an-application">
+<h3>Starting an interactive session with an application<a class="headerlink" href="#starting-an-interactive-session-with-an-application" title="Permalink to this headline">¶</a></h3>
+<p>The simplest way to start interacting with an application is to choose
+<strong>Application &gt; Interact</strong> or click the interact toolbar button (<img alt="image11" src="_images/interact.png" />).
+This starts the application if necessary, and then pauses it.</p>
+<p>If the application was started afresh, the pause occurs at the same
+point as it would with <strong>Application &gt; Debug</strong> (see <a class="reference internal" href="#debugging-executables">Debugging
+executables</a>). Otherwise the application is paused in
+its current state. A debugger window then opens on the paused thread.</p>
+</div>
+<div class="section" id="interaction-basics-using-the-dylan-playground">
+<span id="id3"></span><h3>Interaction basics using the Dylan playground<a class="headerlink" href="#interaction-basics-using-the-dylan-playground" title="Permalink to this headline">¶</a></h3>
+<p id="index-15">The Dylan playground allows you to carry out interactive Dylan
+programming experiments. The playground is a pre-built Dylan application
+that you can start from the main window using the Open Playground button
+(<img alt="image12" src="_images/playground.png" />), or with the menu command <strong>Tools &gt; Open Playground</strong> from
+any Open Dylan window. The playground has its own project, which
+also opens when you start it.</p>
+<p>Start the playground with <strong>Tools &gt; Open Playground</strong> in any open window.</p>
+<p>Upon opening the playground, its project window appears. Then the
+playground application starts automatically and enters the debugger. The
+debugger window has a large interaction pane, and no visible stack or
+source panes. This is the debugger’s <em>interaction layout</em>. (We can
+change the layout to the normal debugging layout with <strong>View &gt; Debugging
+Layout</strong>.)</p>
+<p>One of the simplest things we can do in the interaction pane is to use
+it as a desktop calculator.</p>
+<p>Enter <em>56 - 24;</em> at the interaction pane prompt.</p>
+<p>Make sure to include the terminating semi-colon, and to include spaces
+between the numbers and the <em>-</em> sign:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? 56 - 24;
+=&gt; $0 = 32
+?
+</pre></div>
+</div>
+<p>Here, text entered after the <em>?</em> represents interaction pane input, and
+text after the <em>=&gt;</em> represents interaction pane output.</p>
+<p>Any compilation warnings resulting from typing errors are displayed in
+the interaction pane itself.</p>
+<p>The interaction pane offers a history facility which allows us to refer
+to previous interaction results. Each value returned by an interactive
+expression is bound to a name, which we can then use in subsequent
+expressions. We call these bindings history variables. They are named
+using a dollar sign ($) suffixed with an integer. To keep the history
+variable names unique, the integer suffix increments each time a new
+history variable is created. So far, our one result was assigned to the
+history variable <em>$0</em>.</p>
+<p>We can add the value bound to <em>$0</em> to itself.</p>
+<p>Enter <em>$0 + $0;</em> at the interaction pane prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? $0 + $0;
+=&gt; $1 = 64
+?
+</pre></div>
+</div>
+<p>This expression produces the expected result of 64 and creates a new
+history variable, <em>$1</em>, bound to that result.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>History variable values are local to the debugger in which they
+were created, so you cannot refer to a history variable from any other
+debugger’s interaction pane.</p>
+</div>
+<p>We can define new classes and methods interactively simply by entering
+their definitions.</p>
+<p>Enter the following definition of <code class="docutils literal notranslate"><span class="pre">&lt;my-class&gt;</span></code> at the interaction pane
+prompt.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;my-class&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">my-slot</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;my-class&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can hit Return to format your input in multi-line form where
+you prefer. (An expression is only evaluated when you hit Return after a
+semicolon.)</p>
+</div>
+<p>The output in the interaction pane is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? define class &lt;my-class&gt; (&lt;object&gt;)
+slot my-slot :: &lt;integer&gt;
+end class &lt;my-class&gt;;
+=&gt; No values
+</pre></div>
+</div>
+<p>Enter <em>&lt;my-class&gt;;</em> at the interaction pane prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? &lt;my-class&gt;;
+=&gt; $2 = {&lt;class&gt;: &lt;my-class&gt;}
+?
+</pre></div>
+</div>
+<p id="index-16">Return values in the interactor are “live”. You can use the shortcut
+(right-click) menu to perform a variety of useful operations on them.</p>
+<p>The <strong>Show Contents</strong> command allows you to browse the contents of values
+within the interaction pane itself. What you see depends on the type of
+the value; with a class, each slot name and slot value is listed. Each
+slot value is bound to new history variable so you can refer to it in
+future interactive expressions.</p>
+<p>Right-click over <em>$2 = {&lt;class&gt;: &lt;my-class&gt;}</em> and choose <strong>Show Contents</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>=&gt; $2 = {&lt;class&gt;: &lt;my-class&gt;}
+? Contents of {&lt;class&gt;: &lt;my-class&gt;}
+=&gt; {&lt;class&gt;: &lt;my-class&gt;} is a &lt;class&gt;
+$3 = instance?-iep : &#39;\\&lt;-49&gt;&#39;
+$4 = debug-name : &quot;&lt;my-class&gt;&quot;
+$5 = class-implementation-class : {&lt;implementation-class&gt;}
+$6 = class-subtype-bit : 0
+$7 = class-module : {&lt;module&gt;}
+?
+</pre></div>
+</div>
+<p>For the duration of the interactive session with a project,
+interactively created definitions, objects, and any resultant warnings
+are layered onto the project’s compiler database. During an interactive
+session, these items will be available in the project window and
+browser. You can think of them as being like any definition or object,
+with the exception that they do not come from a source file.</p>
+<p>Enter <em>define variable *obj* = make(&lt;my-class&gt;);</em> at the interaction
+pane prompt.</p>
+<p>In the playground’s project window, go to the Definitions page.</p>
+<p>Expand <em>library dylan-playground</em> and then <em>module dylan-playground</em>.</p>
+<p id="index-17">Three definitions are listed under <em>module dylan-playground</em> : one for
+<em>*obj*</em>, one for <code class="docutils literal notranslate"><span class="pre">&lt;my-class&gt;</span></code>, one for the <em>my-slot</em> accessor, one
+for its getter, and one for the method <em>main</em>. Thus we see two
+interactively created definitions alongside one definition created at
+compile time.</p>
+<div class="figure align-center" id="id11">
+<img alt="_images/interact-objs.png" src="_images/interact-objs.png" />
+<p class="caption"><span class="caption-text">Interactively created definitions alongside a compile-time definition.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<p>We can also use the interactor to make a GUI window by using the Dylan
+User Interface Manager (DUIM) capabilities. For example:</p>
+<p>At the interaction pane prompt, enter:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+             <span class="k">label:</span> <span class="s">&quot;Hello World! This is my DUIM window.&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The code is compiled and run and a DUIM window opens.</p>
+<div class="figure align-center" id="id12">
+<img alt="_images/duimhello.png" src="_images/duimhello.png" />
+<p class="caption"><span class="caption-text">Window created interactively with the Dylan User Interface Manager.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<p>For more information about creating GUI interfaces with Open Dylan,
+see the <em>Building Applications Using DUIM</em> and <em>DUIM Reference</em> manuals.</p>
+</div>
+<div class="section" id="an-example-interaction-with-reversi">
+<span id="example-interaction-reversi"></span><h3>An example interaction with Reversi<a class="headerlink" href="#an-example-interaction-with-reversi" title="Permalink to this headline">¶</a></h3>
+<p>In the following example we interact with the Reversi application after
+first making a few moves.</p>
+<p>Open the Reversi project, and choose <strong>Application &gt; Start</strong>.</p>
+<p>If you were following the <strong>Application &gt; Debug</strong> example earlier in this
+chapter, you could simply choose <strong>Application &gt; Resume</strong> instead of
+starting Reversi again.</p>
+<p>Make some moves on the board.</p>
+<p>Choose <strong>Application &gt; Interact</strong>.</p>
+<p>A debugger window appears, in the interaction layout of a large
+interaction pane and no stack or source panes.</p>
+<p>Now we are ready to write Dylan code interactively. Note that because
+<strong>Application &gt; Interact</strong> pauses the application, we are not interacting
+with a running application. The only way the state of the application
+changes is through our interactions. So we must choose <strong>Application &gt;
+Resume</strong> to see interactive changes in effect.</p>
+<p>As an example, we can change the shape of the pieces on the board by
+setting the value of the variable <em>*reversi-piece-shape*</em> instead of
+by going to Reversi’s <strong>Options</strong> menu.</p>
+<p>Enter <em>*reversi-piece-shape* := #”triangle”;</em> at the interaction pane
+prompt.</p>
+<p>Choose <strong>Application &gt; Resume</strong>.</p>
+<p>Make a few moves on the Reversi board.</p>
+<p>The new moves are shown in triangular pieces, as well as any previous
+moves that have repainted after being obscured by other windows. To see
+only triangular pieces, minimize and restore the board or resize it.</p>
+</div>
+<div class="section" id="interactive-access-to-local-variables-and-arguments-on-the-stack">
+<h3>Interactive access to local variables and arguments on the stack<a class="headerlink" href="#interactive-access-to-local-variables-and-arguments-on-the-stack" title="Permalink to this headline">¶</a></h3>
+<p>Interactive expressions can refer to variables from the debugger’s
+current stack backtrace, simply by using their name. Before referring to
+a variable, you must select the stack frame that contains the variables
+you want to use. This is so the debugger can resolve any ambiguities
+arising when local variables in different stack frames have the same
+name.</p>
+<p>For example, with this backtrace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="p">]</span> <span class="n">go</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="p">[</span><span class="o">-</span><span class="p">]</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">[</span><span class="o">-</span><span class="p">]</span> <span class="n">ready</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you select the stack frame for the call to <em>go</em>, evaluating the
+expression <em>x + y</em> yields the result 9. But if you select the stack
+frame for the call to <em>set</em>, evaluating the expression <em>x + y</em> yields
+the result 32.</p>
+</div>
+<div class="section" id="effects-of-interactive-changes-to-application-threads">
+<h3>Effects of interactive changes to application threads<a class="headerlink" href="#effects-of-interactive-changes-to-application-threads" title="Permalink to this headline">¶</a></h3>
+<p>As stated in <a class="reference internal" href="#about-the-interaction-pane">About the interaction pane</a>, because the interaction pane
+compiles and executes the code you enter in the context of the paused
+thread to which the debugger is connected, it is possible to define new
+bindings, redefine existing bindings, and get and set values in an
+application. You can then resume execution to test your changes.</p>
+<p>The level of optimization that occurred when the application was
+originally built does, however, affect the kinds of things you can do
+interactively. It is best to compile a project in Interactive
+Development mode if you want to define and redefine classes and methods
+interactively. Even in that mode you may encounter some restrictions,
+particularly when trying to make changes in system libraries.</p>
+<p>As noted in <a class="reference internal" href="#an-example-interaction-with-reversi">An example interaction with Reversi</a>, the results of compiling
+interactive changes to threads are added to a temporary layer of the compiler
+database for the application’s project. This allows you to browse the
+effects of your changes while the application remains running, but these
+changes are not saved to disk in the compiler database file, nor are
+they saved in the project source code files. When you stop or close an
+application, Open Dylan removes the interactive layer
+automatically. (This is one of the reasons why you are asked to confirm
+when you choose <strong>Application &gt; Stop</strong>.)</p>
+</div>
+<div class="section" id="interaction-pane-commands">
+<span id="index-18"></span><h3>Interaction pane commands<a class="headerlink" href="#interaction-pane-commands" title="Permalink to this headline">¶</a></h3>
+<p>The debugger’s interaction pane accepts various commands. You can get a
+list of available commands, and documentation for each command, with the
+<em>:help</em> command.</p>
+<dl>
+<dt><strong>:help</strong></dt><dd><p><em>Interaction command</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">help</span>
+<span class="p">:</span><span class="n">help</span> <span class="o">*</span><span class="n">command</span><span class="o">-</span><span class="n">name</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>The first form prints a list of interaction commands in the interaction
+pane. The second form prints documentation on a command from the list.</p>
+</dd>
+<dt><strong>:in</strong></dt><dd><p><em>Interaction command</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="ow">in</span> <span class="o">*</span><span class="n">module</span><span class="o">-</span><span class="n">name</span><span class="o">*</span> <span class="o">*</span><span class="p">[</span><span class="o">*</span> <span class="p">:</span><span class="o">*</span><span class="n">library</span><span class="o">-</span><span class="n">name</span><span class="o">*</span> <span class="o">*</span><span class="p">]</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>Sets the context in the interaction pane. The current library is the
+default if not otherwise specified. Using this command is equivalent to
+using the context drop-down list on the debugger/interactor toolbar.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="the-active-project">
+<span id="active-project"></span><span id="index-19"></span><h2>The active project<a class="headerlink" href="#the-active-project" title="Permalink to this headline">¶</a></h2>
+<p>All tools in Open Dylan need to know with which project they are
+associated. A project window is, naturally, always associated with the
+project it describes. A browser window is associated with the project
+from which the object it is currently browsing came. A debugger window
+is associated with the project of the application to which it is
+connected.</p>
+<p>These associations are fairly natural, but the situation for editor
+windows is slightly more complicated. An editor window can be editing a
+source file that is part of more than one open project. If we choose
+<strong>Project &gt; Build</strong> in the editor window of a source file that appears in
+two open projects, how does Open Dylan know which project to
+rebuild?</p>
+<p>The answer is that the editor has an <em>active project</em>. This is the
+project whose name is visible in the drop-down list in the main window.
+You can change the active project by changing the setting in the list.
+The active project is always one of the projects that have been
+explicitly opened—that is, one for which there is a project window.</p>
+<p>The editor also uses the active project to determine two other things.
+First, the editor shows breakpoint information in its leftmost column
+for source files in the active project <strong>only</strong>. Second, the <strong>Project</strong>,
+<strong>Build</strong>, and <strong>Application</strong> menus are disabled in editor windows on
+source files that are not part of the active project.</p>
+<p>A project can become the active project automatically as well as by
+being set explicitly in the main window’s drop-down list. The main
+window’s <strong>Options &gt; Environment Options…</strong> dialog has two options on the
+General page controlling when projects become active automatically:
+“Project becomes active when opened” and “Project becomes active when
+application started”.</p>
+</div>
+<div class="section" id="breakpoints">
+<span id="index-20"></span><h2>Breakpoints<a class="headerlink" href="#breakpoints" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan allows you to set breakpoints on application code from
+within any window. Breakpoints allow you to pause an application at a
+predefined point in execution, in order to examine it in a debugger
+window. You can set breakpoints on Dylan code lines in a source code
+file or on suitable generic functions, methods, and functions.</p>
+<p>Non-pausing breakpoints are also available. These breakpoints do not
+pause the thread when execution reaches them, but simply log a message
+in the debugger interaction pane to say they have been reached. To
+distinguish breakpoints that pause the application from non-pausing
+breakpoints, we sometimes call them <em>pausing</em> breakpoints.</p>
+<p>You can set, disable, and clear breakpoints from any Open Dylan
+tool that has an <strong>Application</strong> menu. In addition, you can use the
+shortcut (right-click) menu to do the same on any selected method in the
+project window or browser. Finally, you can set breakpoints on lines of
+code in the editor and on the browser Source page.</p>
+<p>It is possible for the same code to be shown with different sets of
+breakpoints in different contexts. When looking at source in the browser
+or debugger, the set of breakpoints shown is that for the project being
+browsed. Within the editor, the set of breakpoints shown is that for the
+active project.</p>
+<div class="section" id="how-breakpoints-work">
+<h3>How breakpoints work<a class="headerlink" href="#how-breakpoints-work" title="Permalink to this headline">¶</a></h3>
+<p>A breakpoint forces a pause in application execution, which we call a
+<em>break</em>. When a thread within an application attempts to execute an
+item of code that has a breakpoint on it, Open Dylan pauses the
+application and opens a debugger window on the thread that reached the
+breakpoint.</p>
+<p>There are also non-pausing breakpoints that print a message in the
+debugger’s interaction pane. Generally, when we refer to breakpoints, we
+mean the pausing kind.</p>
+<p>Breakpoints can be either enabled or disabled. Enabled breakpoints are
+shown with a solid red octagon icon, while disabled breakpoints are
+shown with a hollow red octagon.</p>
+<p>When you first set a breakpoint, it is enabled. You can disable a
+breakpoint if you do not want it to cause a break next time you run the
+application. If you decide that you never want the application to break
+at that point again, you can clear the breakpoint to remove it
+completely.</p>
+<p>When Open Dylan encounters a breakpoint, it prints the breakpoint
+location in the debugger’s context pane, and also (if the breakpoint
+option <em>Print Message</em> is checked) adds it to the debugger’s interaction
+pane. See <a class="reference internal" href="#id4">Breakpoint options</a>.</p>
+<p>Breakpoints are associated with the application’s project, rather than
+the compiled application itself. This means breakpoints only have an
+effect if the application is executing under debugger control within the
+development environment, via <strong>Application &gt; Start</strong> and similar commands.</p>
+<p>When you set a breakpoint in a function that is in a used library, the
+breakpoint does not go into the project that owns the function, but
+instead into the project you are browsing—or the active project, if in
+the editor.</p>
+</div>
+<div class="section" id="setting-breakpoints-on-functions">
+<h3>Setting breakpoints on functions<a class="headerlink" href="#setting-breakpoints-on-functions" title="Permalink to this headline">¶</a></h3>
+<p>You can set breakpoints on generic functions and their methods. The
+application will break to the debugger on entry to the function.</p>
+<p>To set a breakpoint on an individual method, select it on either the
+project window Definitions or Sources page, or in the browser’s Methods
+page. Bring up the shortcut (right-click) menu and choose <strong>Set
+Breakpoint</strong>.</p>
+<p>The simplest way to set a breakpoint on all the methods of a generic
+function is to choose <strong>Application &gt; New Breakpoint</strong>, and enter the
+name of the generic function in the dialog that appears. The application
+will break to the debugger whenever any method on that generic function
+is called.</p>
+</div>
+<div class="section" id="setting-breakpoints-on-lines-of-code">
+<h3>Setting breakpoints on lines of code<a class="headerlink" href="#setting-breakpoints-on-lines-of-code" title="Permalink to this headline">¶</a></h3>
+<p>You can set breakpoints on lines of code in source code files. The
+application will break to the debugger when it executes that line of
+code, or, depending on the way the code has been compiled, as near as
+possible to that line.</p>
+<p>You can set a breakpoint on a line of code in any tool that can show you
+it. The editor is the obvious tool to use, but you can also breakpoint
+lines of code that you can see in the debugger’s source pane or the
+browser’s Source page.</p>
+<p>To set a breakpoint in any of these situations, click on the leftmost
+column of the line you wish to breakpoint. You can only do this for
+lines showing an underscore character in the leftmost column.</p>
+<p>When you set the breakpoint, a solid red circle appears to show that it
+is an enabled pausing breakpoint. You can toggle the breakpoint between
+enabled and disabled by clicking on the circle. You can also use the
+shortcut (right-click) menu to manipulate breakpoints on lines of code.
+See <a class="reference internal" href="#breakpoint-commands-on-the-shortcut-menu">Breakpoint commands on the shortcut menu</a>.</p>
+</div>
+<div class="section" id="browsing-a-project-s-breakpoints">
+<h3>Browsing a project’s breakpoints<a class="headerlink" href="#browsing-a-project-s-breakpoints" title="Permalink to this headline">¶</a></h3>
+<p>You can see all of a project’s breakpoints in the project window’s
+Breakpoints page. This shows the location of the breakpoint (the name of
+the function or the line of the source code file),</p>
+<p>You can also manipulate any breakpoint here by selecting it and using
+the commands on the shortcut (right-click) menu. See <a class="reference internal" href="#breakpoint-commands-on-the-shortcut-menu">Breakpoint
+commands on the shortcut menu</a>.</p>
+</div>
+<div class="section" id="breakpoint-commands-on-the-shortcut-menu">
+<h3>Breakpoint commands on the shortcut menu<a class="headerlink" href="#breakpoint-commands-on-the-shortcut-menu" title="Permalink to this headline">¶</a></h3>
+<p>In some situations you can right-click to produce the shortcut menu,
+which contains several breakpoint manipulation commands. These are:</p>
+<ul class="simple" id="index-21">
+<li><p>When you are browsing the project breakpoints in the project window’s
+Breakpoints page.</p></li>
+<li><p>When you have selected a method in the project window’s Definitions
+or Sources page.</p></li>
+<li><p>When you are browsing a generic function and have selected a method
+in the browser’s Methods page.</p></li>
+<li><p>When your mouse pointer is over a breakpoint icon in the leftmost
+column of either the editor window, the debugger source pane, or the
+browser Source page.</p></li>
+<li><p>When your mouse pointer is over an underscore in the leftmost column
+of either the editor window, the debugger source pane, or the browser
+Source page.</p></li>
+</ul>
+<p>Underscores show lines where you could add a breakpoint.</p>
+<p>The commands available on the shortcut menu depend on the context. The
+complete list of commands follows.</p>
+<dl>
+<dt>“Trace”</dt><dd><p>Sets a trace point for the selected function. When you set a trace
+point for a function and then run and pause the application, the
+nesting levels of recursive calls and their subsequent output are
+printed to the debugger’s interaction pane. This allows you to see
+the values of the function’s arguments and the associated result
+values.</p>
+</dd>
+<dt>“Untrace”</dt><dd><p>Removes the trace point for the selected function.</p>
+</dd>
+<dt>“Untrace All”</dt><dd><p>Removes all trace points for the current project.</p>
+</dd>
+<dt>“Run to Cursor”</dt><dd><p>Only available in the debugger. Sets a temporary pausing breakpoint
+at the line the mouse pointer is on, then starts the application or
+resumes the application if it was paused. The application runs until
+that line is reached, at which point the application enters the
+debugger and the breakpoint is cleared.</p>
+<p>Temporary breakpoints are denoted by a solid green circle.</p>
+</dd>
+<dt>“Set Breakpoint”</dt><dd><p>Sets an enabled pausing breakpoint at the line the mouse pointer is
+on.</p>
+</dd>
+<dt>“Clear Breakpoint”</dt><dd><p>Removes any breakpoint at the line the mouse pointer is on.</p>
+</dd>
+<dt>Edit Breakpoint Options…</dt><dd><p>Pops up a dialog for editing breakpoint options. See <a class="reference internal" href="#id4">Breakpoint
+options</a>.</p>
+<p>The dialog appears even if a breakpoint did not exist on the function
+or line.</p>
+</dd>
+<dt>Breakpoint Enabled?</dt><dd><p>A toggle for enabling and disabling the breakpoint at the line where
+the mouse pointer is.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="breakpoint-commands-on-the-application-and-go-menus">
+<h3>Breakpoint commands on the Application and Go menus<a class="headerlink" href="#breakpoint-commands-on-the-application-and-go-menus" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>Application</strong> and <strong>Go</strong> menus available in the project window,
+editor, and debugger contains several breakpoint manipulation commands.</p>
+<p>The <strong>Go &gt; Breakpoints</strong> command, chosen from the project window, shows
+the Breakpoints page. Chosen from the debugger, it raises the project
+window for the application being debugged and shows its Breakpoints
+page. Chosen from the editor, it raises the project window for the
+active project (see <a class="reference internal" href="projects.html#start-function"><span class="std std-ref">The project start function</span></a>) and shows its Breakpoints page.</p>
+<p>The <strong>Application &gt; New Breakpoint</strong> command sets a breakpoint on a
+generic function (and all its methods) or a non-generic function. It
+produces a dialog into which you enter the name you wish to breakpoint.</p>
+<p>The <strong>Application &gt; Enable All Breakpoints</strong> command sets enables all
+disabled breakpoints. <strong>Application &gt; Disable All Breakpoints</strong> disables
+all enabled breakpoints.</p>
+</div>
+<div class="section" id="breakpoint-options">
+<span id="id4"></span><h3>Breakpoint options<a class="headerlink" href="#breakpoint-options" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>Edit Breakpoint Options…</strong> dialog, available from the shortcut
+(right-click) menu, contains the following sections.</p>
+<ul class="simple">
+<li><p>“Enabled” Check item for toggling whether a breakpoint is enabled or
+disabled. A disabled breakpoint does not affect the application’s
+execution. New breakpoints are enabled by default.</p></li>
+<li><p>“Pause application”</p></li>
+<li><p>Check item for toggling whether the breakpoint pauses the application
+when it is encountered.</p></li>
+<li><p>New breakpoints pause the application by default.</p></li>
+<li><p>If you turn pausing off, the non-pausing breakpoint simply logs a
+message in the debugger interaction pane whenever it was reached.
+This kind of breakpoint is shown with a solid yellow triangle when
+enabled and a hollow yellow triangle when disabled.</p></li>
+<li><p>“Print message”</p></li>
+<li><p>Check box for toggling whether the breakpoint prints any message in
+the debugger’s interaction pane when it is encountered. By default a
+new breakpoint does print a message.</p></li>
+<li><p>“Message text” Text field for entering some identifying message to be
+associated with the breakpoint (if any). The text is used in debugger
+messages referring to the breakpoint. This field is not available if
+<em>Print message</em> is not checked.</p></li>
+<li><p>“One shot” Check box for toggling whether the breakpoint is temporary
+or permanent. Temporary breakpoints are removed after they have been
+encountered. By default, new breakpoints are permanent.</p></li>
+<li><p>The shortcut (right-click) menu’s <em>Run to Cursor</em> command creates
+temporary breakpoints.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="stepping">
+<span id="index-22"></span><h2>Stepping<a class="headerlink" href="#stepping" title="Permalink to this headline">¶</a></h2>
+<p>After pausing an application, the debugger allows you to continue its
+execution in small steps, after which control returns to the debugger.
+There are three stepping commands: Step Over, Step Out, and Step Into.</p>
+<p>Each command makes all application threads begin executing again. The
+application executes until the thread belonging to the debugger that
+issued the stepping command reaches the destination of the “step”. At
+that point, all threads pause and control returns to the debugger.</p>
+<p>The steps relate to functions on the control stack for a particular
+thread. The steps are defined at the level of source code, not object
+code. This means that stepping operations in an application that was
+compiled in Production mode can sometimes work in unexpected ways,
+because of optimizations carried out by the compiler.</p>
+<p>To step through in a particular application thread, issue the stepping
+command in the debugger on that thread. The commands are available on
+the debugger’s <strong>Thread</strong> menu as well as on toolbar buttons.</p>
+<p>The following sections give examples to illustrate what the three
+stepping commands do.</p>
+<div class="section" id="step-over">
+<h3>Step over<a class="headerlink" href="#step-over" title="Permalink to this headline">¶</a></h3>
+<p>Choosing <strong>Thread &gt; Step Over</strong> in a debugger “steps over” the next
+function call that occurs in that debugger’s thread, executing the call
+in full and then returning control to the debugger. The command operates
+in the context of the currently selected call frame in the debugger’s
+stack pane.</p>
+<p>Consider this stack backtrace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="p">]</span> <span class="n">Thread</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Main thread&quot;</span>
+<span class="o">|</span><span class="n">image13</span><span class="o">|</span> <span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">concerto</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">opus</span>
+</pre></div>
+</div>
+<p>The selected frame is <em>concerto</em>, the source code for which looks like
+this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">concerto</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">first-movement</span><span class="p">(</span><span class="ss">#&quot;moderato&quot;</span><span class="p">);</span>
+  <span class="n">|image14|</span> <span class="n">second-movement</span><span class="p">(</span><span class="ss">#&quot;adagio-sostenuto&quot;</span><span class="p">);</span>
+  <span class="n">third-movement</span><span class="p">(</span><span class="ss">#&quot;allegro-scherzando&quot;</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Where execution was paused in the call to <em>second-movement</em>. Choosing
+<strong>Thread &gt; Step Over</strong> runs through the entire execution of
+<em>second-movement</em> before returning control to the debugger.</p>
+<p><strong>Thread &gt; Step Over</strong> does an implied <strong>Thread &gt; Step Out</strong> too, so that if
+when you choose <strong>Thread &gt; Step Over</strong> there is no more code, it steps out
+rather than continuing the application no longer under the debugger. See
+<a class="reference internal" href="#step-out">Step out</a> for details of <strong>Thread &gt; Step Out</strong>.</p>
+</div>
+<div class="section" id="step-into">
+<h3>Step into<a class="headerlink" href="#step-into" title="Permalink to this headline">¶</a></h3>
+<p>Choosing <strong>Thread &gt; Step Into</strong> in a debugger “steps into” the next
+function call that occurs in that debugger’s thread, and then returns
+control to the debugger before the function begins to execute. This
+command is not sensitive to the debugger’s selected call frame.</p>
+<p>Typically, this command causes a new frame to appear at the top of the
+stack.</p>
+<p><strong>Thread &gt; Step Into</strong> does an implied <strong>Thread &gt; Step Over</strong> (and hence an
+implied <strong>Thread &gt; Step Out</strong> ), so that if you when choose <strong>Thread &gt; Step
+Into</strong> and there is nothing to step into, it acts like a <strong>Thread &gt; Step
+Over</strong> (or a <strong>Thread &gt; Step Out</strong> once you leave the function). See
+<a class="reference internal" href="#step-over">Step over</a> for details of <strong>Thread &gt; Step Over</strong> and <a class="reference internal" href="#step-out">Step out</a> for
+details of <strong>Thread &gt; Step Out</strong>.</p>
+</div>
+<div class="section" id="step-out">
+<h3>Step out<a class="headerlink" href="#step-out" title="Permalink to this headline">¶</a></h3>
+<p>Choosing <strong>Thread &gt; Step Out</strong> in a debugger “steps out” of the current
+function call, that is, it resumes execution of the application until a
+function returns, and then passes control back to the debugger.</p>
+<p>This command is sensitive to the debugger’s selected call frame: it
+always steps out of the function running in that frame.</p>
+<p>Consider this stack backtrace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="p">]</span> <span class="n">Thread</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Main thread&quot;</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">presto</span> <span class="p">()</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">allegro</span> <span class="p">()</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">moderato</span> <span class="p">()</span>
+<span class="o">|</span><span class="n">image15</span><span class="o">|</span> <span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">andante</span> <span class="p">()</span> <span class="o">&lt;&lt;&lt;&lt;</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">adagietto</span> <span class="p">()</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">adagio</span> <span class="p">()</span>
+<span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="o">--</span> <span class="n">largo</span> <span class="p">()</span>
+</pre></div>
+</div>
+<p>The selected frame is <em>andante</em>. Choosing <strong>Thread &gt; Step Out</strong> resumes
+execution of the thread until <em>andante</em> returns.</p>
+</div>
+</div>
+<div class="section" id="debugging-client-server-applications">
+<span id="index-23"></span><h2>Debugging client/server applications<a class="headerlink" href="#debugging-client-server-applications" title="Permalink to this headline">¶</a></h2>
+<p>If you have a client/server application, where both the client
+application and server application are written in Dylan, you can debug
+them in parallel.</p>
+<p>Start by opening both projects in the environment. It is not possible to
+run two instances of the environment, with one debugging the client and
+the other debugging the server: if any libraries are shared between the
+applications, both environment instances will attempt to lock the
+compiler database files for those libraries. Since all applications
+ultimately use the Dylan library, and most share other libraries—not the
+least of which in this case being networking libraries—using two
+Open Dylan processes is never a practical debugging method.</p>
+<p>This is not a disadvantage. By running both client and server in one
+Open Dylan, you can be debugging in the client, and then when the
+client invokes the server you can smoothly start debugging that instead.
+This can be very useful for tracking down synchronization bugs.</p>
+<p>Once you have both projects open, you can start both applications up.
+Note that by default the action of starting a project will switch the
+active project, so the last project you start will be the active one by
+default. You can change this behavior in the main window with <strong>Options &gt;
+Environment Options…</strong> so that the active project does not switch in this
+situation. See <a class="reference internal" href="#the-active-project">The active project</a> for more information.</p>
+<p>If you need to rebuild a library shared between the client and server,
+you need to stop both running applications, since Windows forbids
+writing to a DLL that is currently in use.</p>
+<p>Be careful when setting breakpoints if the client and server library
+share source files. If you set a breakpoint when editing a shared file,
+the breakpoint will be set in the editor’s active project. You can
+change the active project using the drop-down list in the main window.</p>
+<p>Breakpoints set in other windows’ source pages (such as in the browser)
+act on the project associated with that window. Note that this makes it
+possible to set breakpoints in both the client and the server so that
+the debugger correctly opens up on the appropriate project as the
+breakpoints are reached. However, you cannot set the same breakpoint in
+both projects at once. Instead you have to go into each project and set
+the breakpoint separately.</p>
+</div>
+<div class="section" id="exporting-a-bug-report-or-a-compiler-warnings-report">
+<span id="index-24"></span><h2>Exporting a bug report or a compiler warnings report<a class="headerlink" href="#exporting-a-bug-report-or-a-compiler-warnings-report" title="Permalink to this headline">¶</a></h2>
+<p>You can save a formatted bug report or compiler warnings report for an
+application by choosing <strong>File &gt; Export…</strong> in the debugger or project
+window. The bug report includes a stack backtrace for all threads in the
+application, while the compiler warnings report contains the same
+information provided in the project window’s Warnings page.</p>
+<p>The Export… dialog gives you the option of saving the report as either
+text HTML. If you choose to save the report to a file, an editor window
+automatically opens to show the file. The saved report contains a
+section for user-supplied information into which you can type
+supplemental text.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is <strong>not</strong> a facility for saving backtraces for any bugs you
+find in the Open Dylan environment. The debugger cannot introspect
+on the development environment’s threads.</p>
+</div>
+<div class="figure align-center" id="id13">
+<img alt="_images/export.png" src="_images/export.png" />
+<p class="caption"><span class="caption-text">The Export… dialog.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="debugger-options">
+<span id="index-25"></span><span id="id5"></span><h2>Debugger options<a class="headerlink" href="#debugger-options" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>View &gt; Debugger Options</strong> command brings up a dialog that controls
+the options for the debugger. This dialog has three property pages:
+Stack, Exceptions, and Misc. The options on these pages apply on a
+per-thread basis—you can have different settings for different threads’
+debuggers.</p>
+<div class="section" id="stack-options">
+<span id="index-26"></span><span id="id6"></span><h3>Stack options<a class="headerlink" href="#stack-options" title="Permalink to this headline">¶</a></h3>
+<p>The Stack page controls the filtering of stack frames from the
+debugger’s backtrace pane.</p>
+<p>Show stack frames of types</p>
+<ul class="simple">
+<li><p>Check the boxes to show any of the following frame types: “Dylan
+function calls”, “Foreign function calls”, “Cleanup frames”, and
+“Unknown stack frame types”. By default, only “Dylan function calls”
+is selected.</p></li>
+<li><p>The selections made here correspond to the “Filtered” rules used in
+the filtering drop-down list. If you change the types of stack frames
+to be shown after filtering, the new filtering rules are applied by
+the filtering drop-down list selections when you next invoke a
+debugger window. The new rules also persist between sessions.</p></li>
+</ul>
+<p>Show stack frames from modules</p>
+<ul class="simple">
+<li><p>Choose one of “Current module” (show frames whose corresponding
+definitions are defined in the current module only), “Current module
+and imported from used modules” (show frames from the current module
+and the modules it uses; the default), and “All modules” (show frames
+from all modules in the thread).</p></li>
+<li><p>These three options correspond to the “local”, “visible” and “all”
+statements in the filtering drop-down list.</p></li>
+</ul>
+<p>Show stack frames matching</p>
+<ul class="simple">
+<li><p>Enter a string in the “Include” text box; only frame names including
+this string will be shown in backtraces.</p></li>
+<li><p>Enter a string in the “Exclude” text box; frame names including this
+string will be excluded from backtraces.</p></li>
+</ul>
+</div>
+<div class="section" id="exceptions-options">
+<h3>Exceptions options<a class="headerlink" href="#exceptions-options" title="Permalink to this headline">¶</a></h3>
+<p>The Exceptions page controls the action taken when a particular
+exception occurs in the thread. Use the Action list to select an action.</p>
+<p>The possible actions are:</p>
+<ul class="simple">
+<li><p>Ignore Throw the exception away and allow the application to
+continue.</p></li>
+<li><p>Report Write the message into the debugger’s interaction pane and
+continue.</p></li>
+<li><p>Debug Pause the application. Update the debugger for the thread that
+signalled the exception. Write the message into a log. Activate any
+other debugger panels, but without updating them automatically. Allow
+an arbitrary amount of debugging and continue executing the
+application once <strong>Application &gt; Resume</strong> is selected.</p></li>
+</ul>
+</div>
+<div class="section" id="miscellaneous-options">
+<h3>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this headline">¶</a></h3>
+<p>The Misc page presents miscellaneous, high-level debugger options.</p>
+<ul class="simple">
+<li><p>Use a new debugger for each thread</p></li>
+<li><p>When checked, uses a new debugger window for each new thread you
+choose to debug.</p></li>
+<li><p>Confirm before entering the debugger after an error</p></li>
+<li><p>When checked (the default), presents an application error dialog
+asking if you want to abort the current application, continue with a
+selected restart, debug the application or exit the application. See
+<a class="reference internal" href="expanding.html#dylan-runtime-application-error"><span class="std std-ref">A Dylan run-time application error.</span></a>.</p></li>
+</ul>
+<p>Expand stack backtrace when first opening debugger</p>
+<ul class="simple">
+<li><p>When checked (the default), expands the stack backtrace one level, to
+show stack frames. Otherwise just shows the application’s thread
+number and title.</p></li>
+<li><p>Expand first stack frame when refreshing debugger</p></li>
+<li><p>When checked (the default), the debugger displays the first stack in
+expanded form and selects the code whenever a debugger appears or is
+refreshed.</p></li>
+</ul>
+<p>Refresh all open debuggers when entering debugger</p>
+<ul class="simple">
+<li><p>When checked, refreshes stack information in all threads’ open
+debugger windows upon entry to the debugger by any one thread.
+Otherwise only the debugger window for the thread that has entered
+the debugger will be refreshed. This option is not checked by
+default.</p></li>
+</ul>
+<p>Open debugger window on pause button</p>
+<ul class="simple">
+<li><p>When checked (the default), clicking the toolbar Pause button or
+choosing <strong>Application &gt; Pause</strong> causes the application to enter the
+debugger as well as pausing execution. Otherwise these actions only
+cause the application’s execution to be paused. This option is
+checked by default.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="just-in-time-debugging">
+<span id="index-27"></span><h2>Just-in-time debugging<a class="headerlink" href="#just-in-time-debugging" title="Permalink to this headline">¶</a></h2>
+<p id="index-28">The Windows operating system has the built-in capability to perform
+“just-in-time” debugging. Just-in-time, or JIT, debugging is where an
+application crashes while not running under a debugger, and the
+operating system arranges to start up an available debugger and attach
+it to the crashed process in order to obtain a backtrace. The system
+registry contains an entry for the debugger that should be invoked when
+this happens. Open Dylan is capable of acting as a JIT debugger; during
+the installation process you have the opportunity to install Open Dylan
+as your machine’s default debugger.</p>
+<p>If you set Open Dylan up as your JIT debugger, it is simple to make
+a connection to the Open Dylan debugger “just in time”. When the
+application signals an error, and that error is unhandled, the operating
+system displays a dialog giving you a chance to attach to a debugger. If
+you then click <strong>Debug</strong> in the dialog, the Open Dylan debugger can
+attach to the application.</p>
+<p>That is the procedure for console applications. Attaching the debugger
+to a DUIM application takes slightly longer. DUIM applications have a
+<em>default-handler</em> method that displays a standard dialog describing the
+unhandled Dylan error, and offering the chance to terminate the
+application (<em>Yes</em> button), ignore the error (<em>No</em> button), or debug the
+application (<em>Cancel</em> button). This is the dialog that we saw in
+<a class="reference internal" href="expanding.html#problems-at-run-time"><span class="std std-ref">Problems at run time</span></a>.</p>
+<p>To attach the debugger in this situation, click <strong>Cancel</strong>. Because the
+application is not running under a debugger already, the error falls
+through to be caught by the operating system. At this point, the
+operating system displays its dialog and you can click <strong>Debug</strong> to make
+the Open Dylan debugger attach.</p>
+<p>Once the debugger attaches successfully, another dialog appears, asking
+whether you would like to open a project. If the crashed process is a
+Dylan application for which you have a project, you should take this
+opportunity to open the related project before you start your debugging.</p>
+<p>It is not strictly necessary to open a project, since the debugger will
+still be able to use whatever debugging information is available in the
+executable file itself in order to provide a backtrace. But it is worth
+opening a project because you can then browse the source code or the
+definitions in the project, and use the interactor to evaluate Dylan
+expressions.</p>
+<p>(Of course, if the crashed application is not a Dylan application at
+all, and also does not contain any embedded Dylan components, then you
+will not be able to open a project.)</p>
+<p>Once you have made your selection and have clicked <em>OK</em>, the Open
+Dylan debugger window appears. The debugger provides a full description
+of the state of the program at the point of the crash. You can then
+start to debug the application in the normal way.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="browsing.html" class="btn btn-neutral float-left" title="Learning More About an Application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="remotedbg.html" class="btn btn-neutral float-right" title="Remote Debugging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

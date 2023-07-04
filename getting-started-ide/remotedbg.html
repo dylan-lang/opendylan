@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Debugging &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Dispatch Optimization Coloring in the Editor" href="coloring.html" />
+    <link rel="prev" title="Debugging and Interactive Development" href="debug.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Getting Started with the Open Dylan IDE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Remote Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-dylan-application-on-a-remote-machine">Running a Dylan application on a remote machine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-program-and-debugging-server-on-the-remote-machine">Installing the program and debugging server on the remote machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-the-debugging-server">Starting the debugging server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-an-application-remotely">Starting an application remotely</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#attaching-to-running-processes">Attaching to running processes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Getting Started with the Open Dylan IDE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Remote Debugging</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/remotedbg.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="remote-debugging">
+<span id="index-0"></span><h1>Remote Debugging<a class="headerlink" href="#remote-debugging" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="running-a-dylan-application-on-a-remote-machine">
+<h2>Running a Dylan application on a remote machine<a class="headerlink" href="#running-a-dylan-application-on-a-remote-machine" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan offers a facility for running, debugging, and interacting
+with a Dylan application, DLL, or OLE control (“program” hereafter)
+running on a remote machine—that is, a networked machine other than
+the one running the Open Dylan IDE.</p>
+<p>The ability to do these things on the remote machine is a simple
+extension of the standard features described in <a class="reference internal" href="debug.html"><span class="doc">Debugging and Interactive Development</span></a>,
+which covers debugging and interaction techniques. The techniques for
+running, debugging, and interacting with a program are exactly the same
+as for the local machine, but there are a few initial configuration
+issues to cover.</p>
+<div class="section" id="installing-the-program-and-debugging-server-on-the-remote-machine">
+<span id="index-1"></span><h3>Installing the program and debugging server on the remote machine<a class="headerlink" href="#installing-the-program-and-debugging-server-on-the-remote-machine" title="Permalink to this headline">¶</a></h3>
+<p>To do anything with a Dylan program on a remote machine, the program has
+to be installed there. It may be there already—if, for instance, you are
+working with another Dylan developer—but if it is not, you must install
+the program on that machine.</p>
+<p>To install the debugging server and your program on a remote machine,
+perform these steps on the target machine:</p>
+<ol class="arabic">
+<li><p>Install the Open Dylan runtime system.</p>
+<p>The runtime installer executable, the name of which begins “<em>hdrun</em> …”,
+resides in the <em>Extras</em> folder at the top-level of your Dylan CD-ROM.</p>
+</li>
+<li><p>Install the debugging server application.</p>
+<p>The debugging server installer executable, the name of which begins with
+“<em>hddbg</em> …”, also resides in the <em>Extras</em> folder.</p>
+</li>
+<li><p>Copy the <em>bin</em> folder for your project onto the remote machine.</p></li>
+</ol>
+</div>
+<div class="section" id="starting-the-debugging-server">
+<span id="index-2"></span><h3>Starting the debugging server<a class="headerlink" href="#starting-the-debugging-server" title="Permalink to this headline">¶</a></h3>
+<p>Whenever you try to invoke the program on the remote machine, Open
+Dylan expects to be able to talk to the debugging server application on
+the remote machine. If this server is not running on the remote machine,
+it is not possible to run the Dylan program there either.</p>
+<p>The debugging server must be started manually on the remote machine
+itself, so it is worth installing it there. (See <a class="reference internal" href="#installing-the-program-and-debugging-server-on-the-remote-machine">Installing the program
+and debugging server on the remote machine</a> for information about using
+the debugging server installer.) Of course, if the remote machine already
+has the Open Dylan installed on it, you do not need to install the debugging
+server.</p>
+<p>To start the debugging server choose <strong>Start &gt; Programs &gt; Open Dylan &gt;
+Start Debug Server</strong>. You can also invoke it with
+<em>debugger-server.exe</em>, which is available in the <em>Bin</em> subfolder of the
+Open Dylan installation folder.</p>
+<p>If the debugging server starts up correctly, a Open Dylan Debugger
+Server window opens. The window provides up-to-date information about
+active local debugger processes and remote connections. The upper pane
+of the window shows all locally running processes being debugged on
+remote machines, and the lower pane shows the remote machines that are
+connected to the server. A status bar at the bottom of the window
+displays a summary.</p>
+<p>You can set (and later change) a password for the debugging server by
+using the <strong>Change Password</strong> button on the Debugger Server window. The
+password can be anything. By default, no password is required.</p>
+<p>To exit the Debugging Server, click the <strong>Exit</strong> button or simply close
+the window.</p>
+<p>At this point, you can return to the machine running the Open Dylan
+IDE, where you will be ready to run Dylan programs remotely.</p>
+</div>
+<div class="section" id="starting-an-application-remotely">
+<h3>Starting an application remotely<a class="headerlink" href="#starting-an-application-remotely" title="Permalink to this headline">¶</a></h3>
+<p>Running and debugging an application on a remote machine is identical in
+almost every respect to using your local machine. You can use the three
+menu items <strong>Application &gt; Start</strong>, <strong>Application &gt; Debug</strong> and
+<strong>Application &gt; Interact</strong> to launch the application in the normal way.
+The only difference is that for remote startup you must specify a remote
+machine in the project’s debug settings.</p>
+<ol class="arabic">
+<li><p>Select <strong>Project &gt; Settings…</strong> and select the Debug page.</p>
+<p>In the “Remote machine” section, an option box displays the name of the
+machine on which the project’s application is to be run. By default, the
+selection will be the local machine. Before you can select a remote
+machine, you must first establish a debugging connection.</p>
+</li>
+<li><p>Click the <strong>Open New Connection…</strong> button.</p></li>
+<li><p>In the dialog that appears, enter the network address of the machine to
+which you wish to connect, and enter the password for the debugging
+server (if one is set), and click <strong>OK</strong>.</p>
+<p>The address is whatever the Windows operating system needs to identify
+the machine on the network. A computer hostname is likely to be
+sufficient.</p>
+<p>The password is the password established when you first started the
+debugging server (see <a class="reference internal" href="#starting-the-debugging-server">Starting the debugging server</a>).</p>
+<p>If the connection is successful, the newly connected machine is added to
+those listed in the “Remote machine” option box. You can now select this
+machine.</p>
+<p>If the connection does not succeed, you should ensure that you have
+successfully started the debug server program on the remote machine.
+(See <a class="reference internal" href="#starting-the-debugging-server">Starting the debugging server</a> above.)</p>
+</li>
+<li><p>Select the remote machine in the option box.</p>
+<p>Having selected a remote machine, you must also ensure that Open
+Dylan can locate the program (EXE or DLL) on the filesystem of the
+remote machine.</p>
+</li>
+<li><p>Specify the path to the program in the “Command line” section of the
+Debug page.</p>
+<p>The path should be fully qualified, including the name of the remote
+machine. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="n">spiral</span>\<span class="n">c_drive</span>\<span class="n">apps</span>\<span class="n">reversi</span>\<span class="n">release</span>\<span class="n">reversi</span><span class="o">.</span><span class="n">exe</span>
+</pre></div>
+</div>
+<p>where <em>spiral</em> is a machine name, and <em>c_drive</em> is the share name of
+the drive containing the program <em>release</em> folder.</p>
+</li>
+</ol>
+<p>You are now ready to run and debug the application remotely.
+<strong>Application &gt; Start</strong> starts your application running on the remote
+machine. All the usual debugging and interaction facilities will now be
+available.</p>
+<p>Details about the connection to a remote machine are stored and saved
+with the project. Open Dylan tries to re-establish the remote
+connection automatically when you next open and try to run the project.</p>
+</div>
+</div>
+<div class="section" id="attaching-to-running-processes">
+<span id="index-3"></span><h2>Attaching to running processes<a class="headerlink" href="#attaching-to-running-processes" title="Permalink to this headline">¶</a></h2>
+<p>The three commands <strong>Application &gt; Start</strong>, <strong>Application &gt; Debug</strong> and
+<strong>Application &gt; Interact</strong> are all used to launch a program from within
+Open Dylan. But if the program is running already, perhaps even
+before you started up the Open Dylan environment, the environment
+does not know about the process and therefore it has no visible presence
+in the environment.</p>
+<p>Open Dylan allows you to “attach” to such a running process, thereby
+bringing it under Open Dylan’s control just as if it had been started
+by the environment. It is very simple to do this:</p>
+<ol class="arabic">
+<li><p>Open the project whose application, DLL, or control is running.</p></li>
+<li><p>Choose <strong>Application &gt; Attach…</strong> from the project window, or choose
+<strong>Tools &gt; Attach Debugger…</strong> from the main window.</p>
+<p>A dialog listing all available running processes appears.</p>
+</li>
+<li><p>Select the process to which you want to attach, and click <strong>OK</strong>.</p></li>
+</ol>
+<p>After a few moments, the debugger attaches to the running process, and
+all the normal debugging and interaction facilities become available,
+just as with <strong>Application &gt; Start</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Open Dylan does not currently offer any facility for
+detaching from a process. Once it has been attached to the Open
+Dylan debugger, and all of your debugging work is finished, you will
+need to close the program down using the <strong>Application &gt; Stop</strong> command.</p>
+</div>
+<p>The process to which you attach need not be running on the local
+machine. You can also attach to a process that is running on a remote
+machine provided that the debugging server application (see
+<a class="reference internal" href="#starting-the-debugging-server">Starting the debugging server</a>) is running on that machine. The process
+list dialog has an option box that allows you to select the machine whose
+process list you want to view. There is also an <strong>Open New Connection…</strong>
+button for creating new connections to remote machines, which works in
+the same way as described in <a class="reference internal" href="#starting-an-application-remotely">Starting an application remotely</a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="debug.html" class="btn btn-neutral float-left" title="Debugging and Interactive Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="coloring.html" class="btn btn-neutral float-right" title="Dispatch Optimization Coloring in the Editor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

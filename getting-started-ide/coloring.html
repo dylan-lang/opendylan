@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dispatch Optimization Coloring in the Editor &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Delivering Dylan Applications" href="delivery.html" />
+    <link rel="prev" title="Remote Debugging" href="remotedbg.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Getting Started with the Open Dylan IDE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dispatch Optimization Coloring in the Editor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-dispatch-optimizations">About dispatch optimizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimization-coloring">Optimization coloring</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#editing-colored-source-code">Editing colored source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#effect-of-compilation-mode-on-dispatch-optimizations">Effect of compilation mode on dispatch optimizations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dispatch-optimization-colors-and-their-meanings">Dispatch optimization colors and their meanings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#optimizing-the-reversi-application">Optimizing the Reversi application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Getting Started with the Open Dylan IDE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Dispatch Optimization Coloring in the Editor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/coloring.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="dispatch-optimization-coloring-in-the-editor">
+<h1>Dispatch Optimization Coloring in the Editor<a class="headerlink" href="#dispatch-optimization-coloring-in-the-editor" title="Permalink to this headline">¶</a></h1>
+<p>This chapter is about source-code coloring in the editor that shows
+where and how optimizations have taken place.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optimization work is best done in Production mode.
+See <a class="reference internal" href="projects.html#project-settings"><span class="std std-ref">Project settings</span></a>.</p>
+</div>
+<div class="section" id="about-dispatch-optimizations">
+<span id="index-0"></span><h2>About dispatch optimizations<a class="headerlink" href="#about-dispatch-optimizations" title="Permalink to this headline">¶</a></h2>
+<p>When you call a generic function in Dylan, the method that will be
+executed has to be selected from the set of methods defined on that
+generic function.</p>
+<p>The method is selected by comparing the types of the arguments passed in
+the generic function call to the parameter lists of the methods
+available; the method whose parameter list is closest to the types of
+the arguments passed in the call is the one that will be selected. (Note
+that there may be situations where no one method is more applicable than
+another, or even where there is no applicable method at all. These
+situations, which may be detected either at compile time or at run time,
+signal an error.)</p>
+<p>The process of selecting the right method to call is known as <em>method
+dispatch</em>. The algorithm for selecting a method is described in Chapter
+6 of the DRM.</p>
+<p>Method dispatch can, in principle, occur entirely at run time; but in
+some circumstances, the Open Dylan compiler can work out at compile
+time precisely which method needs to be called, and so optimize away the
+need for run-time dispatch, making delivered applications faster.
+Depending on the circumstances, these <em>dispatch optimizations</em> can
+consist of replacing the generic function call with a direct call to the
+correct method; replacing the generic function call with a class slot
+access; or inlining the call completely.</p>
+</div>
+<div class="section" id="optimization-coloring">
+<span id="index-1"></span><h2>Optimization coloring<a class="headerlink" href="#optimization-coloring" title="Permalink to this headline">¶</a></h2>
+<p>When you compile a project, the Open Dylan compiler records the
+kinds of optimizations it performed for each source code file in the
+project. It also records cases where compile-time optimization was for
+one reason or another not possible.</p>
+<p>The Open Dylan editor provides a way to see this information, by
+choosing <strong>View &gt; Color Dispatch Optimizations</strong>. This command colors a
+source code file so that you can see where the compiler managed to
+optimize method dispatch, and also places where you may be able to make
+changes that will make dispatch optimizations possible next time you
+compile the project.</p>
+<p>For instance, you will see a generic function call colored in blue where
+the compiler worked out the exact method to call and emitted a direct
+call to that method in the compiled code. <a class="reference internal" href="#dispatch-optimization-colors"><span class="std std-ref">Dispatch optimization colors and their meanings</span></a>
+contains a full list of colors and their meanings.</p>
+<div class="section" id="editing-colored-source-code">
+<h3>Editing colored source code<a class="headerlink" href="#editing-colored-source-code" title="Permalink to this headline">¶</a></h3>
+<p>Dispatch optimization coloring in a file shows only what the compiler
+achieved the last time you compiled the project containing the file. If
+you edit colored source code, the changes you make could affect the
+optimizations the compiler can carry out upon it the next time you
+compile the project.</p>
+<p>For this reason, when <strong>View &gt; Color Dispatch Optimizations</strong> is on and
+you edit a colored line, the editor resets the entire line to black. All
+the other lines in the file keep their color.</p>
+<p>In this situation, you can re-color the line by doing <strong>View &gt; Refresh</strong>.
+Note that once you have edited the text, the coloring information may no
+longer fit it, but you may still find it useful. Alternatively you may
+prefer to turn off coloring altogether once the coloring information for
+part of the file has been invalidated.</p>
+</div>
+<div class="section" id="effect-of-compilation-mode-on-dispatch-optimizations">
+<h3>Effect of compilation mode on dispatch optimizations<a class="headerlink" href="#effect-of-compilation-mode-on-dispatch-optimizations" title="Permalink to this headline">¶</a></h3>
+<p>The Open Dylan compiler tries to optimize method dispatch whether
+compiling a project in Interactive Development mode or in Production
+mode. Because the compiler does more optimization in Production mode,
+you will see more coloring information after a Production-mode build.</p>
+</div>
+<div class="section" id="dispatch-optimization-colors-and-their-meanings">
+<span id="dispatch-optimization-colors"></span><h3>Dispatch optimization colors and their meanings<a class="headerlink" href="#dispatch-optimization-colors-and-their-meanings" title="Permalink to this headline">¶</a></h3>
+<p>The following table shows the colors used to indicate different kinds of
+dispatch optimization.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 44%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Color</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Recommended Action</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Magenta</p></td>
+<td><p>Call not optimized because
+the compiler could not
+determine all the applicable
+methods.</p></td>
+<td><p>Happens when the generic
+function is open. Where
+possible, turn open
+protocols into sealed
+protocols.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Red</p></td>
+<td><p>Call not optimized despite
+the compiler finding all the
+applicable methods.</p>
+<p>Can happen when the type of
+an argument is not specific
+enough.</p>
+</td>
+<td><p>Where possible, add type
+specializers to the
+bindings of the
+arguments to the call.</p></td>
+</tr>
+<tr class="row-even"><td><p>Blue</p></td>
+<td><p>Call optimized. The compiler
+found the appropriate method,
+and emitted a direct call to
+it.</p></td>
+<td><p>None required.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Green</p></td>
+<td><p>Call optimized. The compiler
+found that this call was an
+access to a slot whose
+position in a class is fixed.
+It replaced the function call
+with (faster) code to access
+that slot value.</p></td>
+<td><p>None required.</p></td>
+</tr>
+<tr class="row-even"><td><p>Dark Gray</p></td>
+<td><p>Call optimized. The compiler
+inlined the code of the
+appropriate method.</p></td>
+<td><p>None required.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Light Gray</p></td>
+<td><p>This code was eliminated
+completely. The compiler
+either determined that this
+call would never be made or
+that it would not make any
+difference to the outcome of
+other code with which it was
+associated, or it managed to
+evaluate the call directly.</p></td>
+<td><p>None required. (Unless
+the code should have
+been called.)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Where possible, add type specializers to the bindings of the arguments
+to the call.</p>
+</div>
+</div>
+<div class="section" id="optimizing-the-reversi-application">
+<h2>Optimizing the Reversi application<a class="headerlink" href="#optimizing-the-reversi-application" title="Permalink to this headline">¶</a></h2>
+<p>In this section we look at the dispatch optimization color information
+for part of the Reversi application and see what we can do to optimize
+it.</p>
+<p>Before doing that, we should build the Reversi application in Production
+mode so we know that the application has been optimized as much as
+possible.</p>
+<p>Open the Reversi project.</p>
+<ol class="arabic simple">
+<li><p>Choose <strong>Project &gt; Settings</strong> and, on the Compile page, set the
+compilation mode to “Production mode”.</p></li>
+<li><p>Choose <strong>Project &gt; Clean Build</strong>.</p></li>
+<li><p>When the build is complete, go to the Sources page and open the file
+<em>game.dylan</em>.</p></li>
+</ol>
+<p>An editor window showing <em>game.dylan</em> appears.</p>
+<ol class="arabic simple">
+<li><p>In the editor window, turn on the <strong>View &gt; Color Dispatch
+Optimizations</strong> check item.</p></li>
+</ol>
+<p>We can now see color information showing how dispatch optimizations were
+or were not carried out during the last build.</p>
+<ol class="arabic simple">
+<li><p>Go to the definition of the method <code class="docutils literal notranslate"><span class="pre">&lt;reversi-game&gt;</span></code>.</p></li>
+</ol>
+<p>You can use <strong>Edit &gt; Find</strong> or the “binoculars” toolbar button to do this.</p>
+<p>This is the definition of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-game&gt;</span></code> :</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;reversi-game&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">reversi-game-board</span> <span class="p">::</span> <span class="nc">&lt;reversi-board&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;reversi-board&gt;</span><span class="p">);</span>
+  <span class="nb">slot</span> <span class="n">%player</span> <span class="p">::</span> <span class="nc">&lt;player&gt;</span> <span class="o">=</span> <span class="ss">#&quot;black&quot;</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">player:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">%players</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">players:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">black-algorithm</span> <span class="p">::</span> <span class="nc">&lt;algorithm&gt;</span> <span class="o">=</span> <span class="n">default-algorithm-for-player</span><span class="p">(</span><span class="ss">#&quot;black&quot;</span><span class="p">),</span>
+    <span class="k">init-keyword:</span> <span class="k">black-algorithm:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">white-algorithm</span> <span class="p">::</span> <span class="nc">&lt;algorithm&gt;</span> <span class="o">=</span> <span class="n">default-algorithm-for-player</span><span class="p">(</span><span class="ss">#&quot;white&quot;</span><span class="p">),</span>
+    <span class="k">init-keyword:</span> <span class="k">white-algorithm:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">reversi-game-update-callback</span> <span class="p">::</span> <span class="nc">&lt;function&gt;</span> <span class="o">=</span> <span class="nb">always</span><span class="p">(</span><span class="l">#f</span><span class="p">),</span>
+    <span class="k">init-keyword:</span> <span class="k">update-callback:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">reversi-game-message-function</span> <span class="p">::</span> <span class="nb">false-or</span><span class="p">(</span><span class="nc">&lt;function&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="l">#f</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">message-function:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;reversi-game&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>There are three different colorings in this definition. The call to the
+function <em>always</em>, a Dylan language built-in function, is in light
+gray. That means the call has been eliminated completely from the
+compiled application. A call to the function <em>always</em> is defined to
+return a function object that always returns the value passed in the
+call to <em>always</em>. So here, the function object would always return <code class="docutils literal notranslate"><span class="pre">#f</span></code>.
+Unsurprisingly, the compiler evaluated this call completely, avoiding
+the need for run-time method dispatch.</p>
+<p>The two calls to <em>default-algorithm-for-player</em>, a Reversi application
+method from <em>algorithms.dylan</em>, are colored in blue, signifying that
+the compiler managed to determine precisely which method to call, and
+inserted a direct call to that method in the compiled application.
+Again, the need for run-time method dispatch was averted.</p>
+<p>Investigation shows that there is only one method on
+<em>default-algorithm-for-player</em>, which makes blue optimization simple
+here. The generic function for <em>default-algorithm-for-player</em> is defined
+implicitly, in the single <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">method</span> <span class="pre">default-algorithm-for-player</span></code>
+call. Recall from the DRM (chapter 6) that implicitly defined generic
+functions are sealed by default. That fact allows the compiler to conclude
+that this method is the only method there will ever be on
+<em>default-algorithm-for-player</em>, making the optimization possible.</p>
+<p>The third coloring is magenta, in the call to <code class="docutils literal notranslate"><span class="pre">make</span></code> on
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>, in the <em>reversi-game-board</em> slot definition. Here,
+then, is a generic function call that was not optimized. Magenta
+coloring means that for this call to <code class="docutils literal notranslate"><span class="pre">make</span></code>, the compiler could not
+determine the complete set of methods from which it could attempt to
+select the appropriate method to call. We will now make changes to the
+Reversi sources to optimize this call.</p>
+<p>The problem here is that the compiler cannot be sure that additional
+methods on <code class="docutils literal notranslate"><span class="pre">make</span></code> might not be added at run time. By defining a sealed
+domain on make for <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>, we can clear this up.</p>
+<ol class="arabic simple">
+<li><p>Add the following to <em>game.dylan</em> :</p></li>
+</ol>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">sealed</span> <span class="nb">domain</span> <span class="nb">make</span><span class="p">(</span><span class="nb">subclass</span><span class="p">(</span><span class="nc">&lt;reversi-board&gt;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>With this information, the compiler knows it has access to the complete
+set of methods on <code class="docutils literal notranslate"><span class="pre">make</span></code> for this class, and therefore can attempt to do
+the method selection itself.</p>
+<p>We can recompile the application to see what effect our change has had.</p>
+<ol class="arabic simple">
+<li><p>Save <em>game.dylan</em> with <strong>File &gt; Save</strong>.</p></li>
+<li><p>Rebuild the application, and refresh the color information for
+<em>game.dylan</em> with <strong>View &gt; Refresh</strong>.</p></li>
+</ol>
+<p>The refreshed coloring shows the call to <code class="docutils literal notranslate"><span class="pre">make</span></code> on <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> in
+the <em>reversi-game-board</em> slot definition in light gray. This coloring
+means that the compiler determined which <code class="docutils literal notranslate"><span class="pre">make</span></code> method to call, computed
+the result of the call—a <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> object—and inlined the
+object.</p>
+<p>Looking further down <em>game.dylan</em>, notice that the definition of
+<em>reversi-game-size-setter</em> also calls <code class="docutils literal notranslate"><span class="pre">make</span></code> on <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>, a
+call that is also colored light gray.</p>
+<p>We can now look at other possible optimizations in <em>game.dylan</em>.</p>
+<ol class="arabic simple">
+<li><p>Go to the definition of the method <em>initialize-board</em>.</p></li>
+</ol>
+<p>The definition of <em>initialize-board</em> is:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">initialize-board</span> <span class="p">(</span><span class="n">board</span> <span class="p">::</span> <span class="nc">&lt;reversi-board&gt;</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">squares</span> <span class="o">=</span> <span class="n">reversi-board-squares</span><span class="p">(</span><span class="n">board</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">square</span> <span class="k">from</span> <span class="mi">0</span> <span class="k">below</span> <span class="nb">size</span><span class="p">(</span><span class="n">squares</span><span class="p">))</span>
+    <span class="n">squares</span><span class="p">[</span><span class="n">square</span><span class="p">]</span> <span class="o">:=</span> <span class="l">#f</span>
+  <span class="k">end</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">piece</span> <span class="k">in</span> <span class="n">initial-pieces</span><span class="p">(</span><span class="n">board</span><span class="p">))</span>
+    <span class="k">let</span> <span class="n">square</span> <span class="o">=</span> <span class="n">piece</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">squares</span><span class="p">[</span><span class="n">square</span><span class="p">]</span> <span class="o">:=</span> <span class="n">piece</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">initialize-board</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In this method there is a green-colored call to <em>reversi-board-squares</em>
+on the parameter <em>board</em>, an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>. Green
+coloring denotes an access to a slot whose position in a class is fixed.
+This optimization was possible because the <em>reversi-board-squares</em>
+method is just the implicitly defined accessor for the slot
+<em>reversi-board-squares</em> :</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;reversi-board&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">reversi-board-size</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span> <span class="o">=</span> <span class="no">$default-board-size</span><span class="p">,</span>
+    <span class="k">init-keyword:</span> <span class="k">size:</span><span class="p">;</span>
+  <span class="nb">slot</span> <span class="n">reversi-board-squares</span> <span class="p">::</span> <span class="nc">&lt;sequence&gt;</span> <span class="o">=</span> <span class="p">#[];</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;reversi-board&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The compiler achieved this optimization because it knew three things.
+First, it knew that the generic function implicitly defined by the
+accessor method was sealed. (As normal Dylan methods, accessor methods
+implicitly define a generic function if one does not already exist; such
+a generic function is sealed because implicitly defined generic
+functions are sealed by default.) Second, the compiler knew the type of
+<em>board</em> in the call to the accessor method. Third, the compiler knew
+that the class <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> was sealed, because classes are sealed
+by default.</p>
+<p>We can now move on to some other optimization. The call <em>size(squares)</em>
+in <em>initialize-board</em> is colored in magenta. There are several similar
+magenta colorings in <em>game.dylan</em>, where the compiler could not
+optimize a method call on the value returned from
+<em>reversi-board-squares</em> : calls to <em>element</em>, <em>element-setter</em>,
+<em>empty?</em>, and <em>size</em>. In all cases this is because the type of
+<em>reversi-board-squares</em> is <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>, which is an open class.</p>
+<p>We could seal domains on <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> to get optimizations here. But the
+DRM defines <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> as an open class, and it is not good practice
+to seal protocols that do not belong to your library or libraries.
+However, we can change the type of <em>reversi-board-squares</em> to be in a
+domain which is already sealed. Changing the slot type to
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a> gives us a sealed type as well as preserving
+the protocol in use, so that we do not have to change any of the calls
+being made.</p>
+<ol class="arabic simple">
+<li><p>Go to the definition of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>.</p></li>
+<li><p>Change the type of <em>reversi-board-squares</em> to be
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a>.</p></li>
+<li><p>Save <em>game.dylan</em> with <strong>File &gt; Save</strong>.</p></li>
+<li><p>Rebuild the application, and refresh the color information for
+<em>game.dylan</em> with <strong>View &gt; Refresh</strong>.</p></li>
+<li><p>Go back to the definition of <em>initialize-board</em>.</p></li>
+</ol>
+<p>The <em>size(squares)</em> call is now colored green. Green coloring means the
+compiler determined that the call was equivalent to a slot
+access—particularly, an access to slot having a fixed offset from the
+memory address at which its class is located. The compiler removed the
+need for run-time method dispatch by replacing the call with code to
+access the location that would contain the slot value.</p>
+<p>This particular optimization was possible because <em>size</em> is a slot
+accessor for instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a>, and, of course,
+because <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#simple-object-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-object-vector&gt;</span></code></a> is sealed.</p>
+<p>You could examine the effects of this change on other calls that use the
+return value of <em>reversi-board-squares</em>. Some calls turn blue. Some
+calls to <em>element-setter</em> remain magenta because the compiler does not
+know the type of the index. Constraining the type of the index would
+improve such a call, turning it blue or even dark gray (inlined).</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="remotedbg.html" class="btn btn-neutral float-left" title="Remote Debugging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="delivery.html" class="btn btn-neutral float-right" title="Delivering Dylan Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

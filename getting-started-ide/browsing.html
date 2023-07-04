@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning More About an Application &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Debugging and Interactive Development" href="debug.html" />
+    <link rel="prev" title="Creating and Using Projects" href="projects.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Getting Started with the Open Dylan IDE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Learning More About an Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-browser">The browser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#similarities-between-the-browser-and-world-wide-web-browsers">Similarities between the browser and World Wide Web browsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compiler-databases-and-the-browser">Compiler databases and the browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browsing-a-project-in-source-and-run-time-contexts">Browsing a project in source and run-time contexts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-reversi">Browsing Reversi</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-source-page">The Source page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-general-page">The General page</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#navigation-in-the-browser">Navigation in the browser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#moving-from-one-object-to-another">Moving from one object to another</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-history-feature">Using the history feature</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-a-project-s-library">Browsing a project’s library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#namespace-issues-in-the-browser">Namespace issues in the browser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-run-time-values-of-variables-and-constants">Browsing run-time values of variables and constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-local-variables-and-parameters-on-the-stack">Browsing local variables and parameters on the stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-paused-application-threads">Browsing paused application threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keeping-browser-displays-up-to-date">Keeping browser displays up to date</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-property-pages">List of property pages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Getting Started with the Open Dylan IDE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Learning More About an Application</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/browsing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="learning-more-about-an-application">
+<h1>Learning More About an Application<a class="headerlink" href="#learning-more-about-an-application" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter, we examine the browser in detail.</p>
+<div class="section" id="the-browser">
+<span id="index-0"></span><h2>The browser<a class="headerlink" href="#the-browser" title="Permalink to this headline">¶</a></h2>
+<p>The Open Dylan browser is a tool for examining the contents and
+properties of the different kinds of objects we deal with in Open
+Dylan.</p>
+<p>In the browser, the term “object” has a broader sense than is usual in
+Dylan. Not only can we examine objects in the sense of Dylan class
+instances, but we can also browse libraries, modules, and even running
+applications, their threads, and run-time values in those threads.</p>
+<div class="section" id="similarities-between-the-browser-and-world-wide-web-browsers">
+<h3>Similarities between the browser and World Wide Web browsers<a class="headerlink" href="#similarities-between-the-browser-and-world-wide-web-browsers" title="Permalink to this headline">¶</a></h3>
+<p>The way the browser works is similar to a World Wide Web browser. Just
+as a web browser shows one page of HTML at a time, the browser describes
+the properties of one object at a time. And just as an HTML page can
+contain links to other pages, object descriptions in the browser can
+refer to other browsable objects. To browse them, you simply
+double-click on their names.</p>
+<p>The browser has a history mechanism just like a web browser, allowing
+you to move back and forth between objects you have browsed by clicking
+on Back (<img alt="image0" src="_images/brow-left.png" />) and Forward (<img alt="image1" src="_images/brow-right.png" />) toolbar buttons.</p>
+</div>
+<div class="section" id="compiler-databases-and-the-browser">
+<h3>Compiler databases and the browser<a class="headerlink" href="#compiler-databases-and-the-browser" title="Permalink to this headline">¶</a></h3>
+<p>The browser gets some of its information from the compiler database for
+the project. See <a class="reference internal" href="model.html#compiler-databases"><span class="std std-ref">Compiler databases</span></a> and
+<a class="reference internal" href="model.html#source-database-runtime-views"><span class="std std-ref">Source, database, and run-time views</span></a> for details of how compiler databases
+are derived, and how they fit in to the overall view of a project that
+Open Dylan presents.</p>
+</div>
+<div class="section" id="browsing-a-project-in-source-and-run-time-contexts">
+<span id="browsing-project-source-runtime-contexts"></span><h3>Browsing a project in source and run-time contexts<a class="headerlink" href="#browsing-a-project-in-source-and-run-time-contexts" title="Permalink to this headline">¶</a></h3>
+<p>The browser allows you to look at projects in both source and run-time
+contexts. That is, the browser can show you information gathered from
+the source code representation of a project and also information
+gathered from a running instantiation of the application or DLL that you
+have built from that project.</p>
+<p>You can look at the static relationships between source code definitions
+(for example, the superclass and subclass relationships between the
+classes a project defines) as well as the dynamic properties of run-time
+values (for example, the value of a local variable in a stack frame).</p>
+<p>In the first case, you are looking at information taken from the
+project’s compiler database, and in the second, you are looking at
+information taken from the application as it runs.</p>
+<p>The browser matches run-time objects up with their source code
+definitions to make as much information as possible available when
+browsing. For instance, if you select a local variable on the stack in
+the debugger, and choose the shortcut (right-click) menu’s <em>Browse Type</em>
+command, the browser is able to locate the source code definition of the
+variable’s class.</p>
+</div>
+</div>
+<div class="section" id="browsing-reversi">
+<h2>Browsing Reversi<a class="headerlink" href="#browsing-reversi" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we use the Open Dylan browser to explore Reversi.</p>
+<p>If it is not already open, open the Reversi project.</p>
+<p>Go to the Reversi project’s Definitions page.</p>
+<p>Note that the project window’s Definitions page will only contain
+information if that project has already been built. That is because,
+like the browser, the project window gets this list of definitions from
+the project’s compiler database.</p>
+<p>The Definitions page will be the starting point for our browsing work.
+We are going to browse definitions in Reversi, and examine the
+relationships between them.</p>
+<p>Expand “library reversi”, and then “module reversi”.</p>
+<p>Double-click on <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> in the list of definitions.</p>
+<p>To find this definition easily, you can use the Definitions page’s popup
+list to show only Classes.</p>
+<p>The browser appears.</p>
+<div class="figure align-center" id="id1">
+<img alt="_images/browser.png" src="_images/browser.png" />
+<p class="caption"><span class="caption-text">The Open Dylan browser.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>The browser arranges information about objects in a set of property
+pages, with the set of pages available varying according to the type of
+object being browsed. Though we do not describe all the possible pages
+here, nearly all have clear meanings. See <a class="reference internal" href="#list-of-property-pages">List of property pages</a>
+for a summary of the pages available in the browser. (Some of these
+pages also appear in the project window.)</p>
+<p>We now take a look at some of the pages available for <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code>
+.</p>
+<div class="section" id="the-source-page">
+<h3>The Source page<a class="headerlink" href="#the-source-page" title="Permalink to this headline">¶</a></h3>
+<p>The browser provides a Source page for any object that has a definition
+in source code. For <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code>, we can see the source code
+definition in <em>board.dylan</em> that created it.</p>
+<p>The Source page shows the definition in a read-only source code pane. If
+we wanted to edit the definition, we could click the Edit Source
+(<img alt="image2" src="_images/editsrc.png" />) button above the source code pane. That would open an editor
+window on <em>board.dylan</em>, with the insertion point positioned at the
+start of the definition of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code>.</p>
+<p>For objects that have a representation in the project sources, the
+Source page will always be the first page that you see when the browser
+displays the object for the first time.</p>
+<p>We now move on to look at some of the other pages of information about
+<code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code>.</p>
+</div>
+<div class="section" id="the-general-page">
+<h3>The General page<a class="headerlink" href="#the-general-page" title="Permalink to this headline">¶</a></h3>
+<p>The browser provides a General page for every object it can browse. The
+General page gives an overview of the object being browsed: its name,
+the type of object it is, the source file containing its definition (if
+any), and so on.</p>
+<p>Select the <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> definition’s General page.</p>
+<p>The General page for <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> shows that it is a class from
+the source file <em>board.dylan</em>, that it is defined in the <em>reversi</em>
+module of the <em>reversi</em> library, and that it has two slots.</p>
+<div class="figure align-center" id="id2">
+<img alt="_images/browgen.png" src="_images/browgen.png" />
+<p class="caption"><span class="caption-text">General details about the <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> class definition.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="navigation-in-the-browser">
+<h2>Navigation in the browser<a class="headerlink" href="#navigation-in-the-browser" title="Permalink to this headline">¶</a></h2>
+<p>This section explains how to navigate through objects in the browser,
+and explains the browser history mechanism.</p>
+<div class="section" id="moving-from-one-object-to-another">
+<h3>Moving from one object to another<a class="headerlink" href="#moving-from-one-object-to-another" title="Permalink to this headline">¶</a></h3>
+<p>The object information displayed in browser pages often has its own
+properties and contents that we might also want to browse. With a simple
+double-click on the information we are interested in, we can move on to
+browsing other objects.</p>
+<p>Go to <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> ‘s Superclasses page.</p>
+<p>The Superclasses page shows a class’s superclasses in a tree view. In
+this case, we see a single expandable item, the class <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code>,
+meaning that <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code> is <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> ‘s only superclass.</p>
+<p>If we want to browse the definition of <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code>, all we need to
+do is double-click on it.</p>
+<p>Double-click on <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code>.</p>
+<p>The browser switches to browsing the definition of the class
+<code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code>. The default view is again the Source page.</p>
+<p>Select the Superclasses page again.</p>
+<p>The Superclasses page now shows the four superclasses of <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code>.
+Notice that the superclass names are not directly visible in the
+current module (<em>reversi</em>, as selected in the toolbar pop-up) and so
+are qualified. For example, <code class="docutils literal notranslate"><span class="pre">&lt;standard-input-mixin&gt;</span></code> appears as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">standard</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="n">mixin</span><span class="o">&gt;</span><span class="p">:</span><span class="n">duim</span><span class="o">-</span><span class="n">sheets</span><span class="o">-</span><span class="n">internals</span><span class="p">:</span><span class="n">duim</span><span class="o">-</span><span class="n">sheets</span>
+</pre></div>
+</div>
+<p>We see more about this in <a class="reference internal" href="#namespace-issues-in-the-browser">Namespace issues in the browser</a>.</p>
+<p>We could continue traversing the class hierarchy by double-clicking on a
+superclass name to browse that class definition in its own right, or, by
+clicking on the <em>+</em> signs, we could expand the names to reveal their
+superclasses.</p>
+</div>
+<div class="section" id="using-the-history-feature">
+<span id="index-1"></span><h3>Using the history feature<a class="headerlink" href="#using-the-history-feature" title="Permalink to this headline">¶</a></h3>
+<p>As soon as the browser has displayed more than one object, its history
+feature is enabled. You can access the browser history by choosing an
+object from the Object combo box, or from the <em>Go</em> menu. In addition,
+the Back (<img alt="image3" src="_images/brow-left.png" />) and Forward (<img alt="image4" src="_images/brow-right.png" />) buttons allow you to
+navigate the browser history.</p>
+<p>Choose <strong>Go &gt; Back</strong> or click on the Back button.</p>
+<p>The browser returns to browsing the <code class="docutils literal notranslate"><span class="pre">&lt;reversi-square&gt;</span></code> definition.</p>
+<p>Notice that the browser remembers which property page you were browsing.</p>
+</div>
+</div>
+<div class="section" id="browsing-a-project-s-library">
+<span id="index-2"></span><h2>Browsing a project’s library<a class="headerlink" href="#browsing-a-project-s-library" title="Permalink to this headline">¶</a></h2>
+<p>To browse the current project’s library definition, choose <strong>Go &gt;
+Library</strong> or the Browse Library (<img alt="image5" src="_images/library.png" />) button.</p>
+<p>Click the Browse Library button.</p>
+<p>The browser switches to the Reversi project’s library definition. We see
+the usual General and Source page, as well as Warnings, Usage,
+Definitions, and Names.</p>
+<p>The Warnings and Definitions pages are the same as those that we see in
+project windows. The Names page provides views of all the Dylan names in
+the library, with a variety of possible constraints.</p>
+<p>The Usage page gives a tree view of the library usage relationships for
+the current library. The first level of expansion shows the names of the
+libraries that Reversi uses. Expanding those library names shows the
+libraries they use, and so on.</p>
+</div>
+<div class="section" id="namespace-issues-in-the-browser">
+<span id="index-3"></span><h2>Namespace issues in the browser<a class="headerlink" href="#namespace-issues-in-the-browser" title="Permalink to this headline">¶</a></h2>
+<p>Move through the browser history to find the <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code> object
+again.</p>
+<p>Go to its Superclasses page.</p>
+<p>We saw this page in <a class="reference internal" href="#moving-from-one-object-to-another">Moving from one object to another</a>.  There, we
+said that the special naming format used for the superclasses here
+meant that they were not part of the <em>current module</em> of the <em>current
+library</em>.</p>
+<p>To the browser, the current module is whatever module name is selected
+in the drop-down list box above the Object field (currently <em>reversi</em> )
+and the current library is the library defined by the project.</p>
+<p>Change the selected value in the drop-down list to <em>dylan:dylan</em>.</p>
+<p>The name <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code> in the Object list changes to
+<code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;:duim-layouts:duim-layouts</span></code>.</p>
+<p>This new representation of the <code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code> name says that
+<code class="docutils literal notranslate"><span class="pre">&lt;simple-pane&gt;</span></code> is found in the <em>duim-layouts</em> module of the
+<em>duim-layouts</em> library. This browser uses this special <em>name</em> :<em>module</em>
+:<em>library</em> naming format whenever <em>name</em> is not exported by the current
+module of the current library.</p>
+<p>By changing the list setting to <em>dylan:dylan</em>, we told the browser that
+any name not in the <em>dylan</em> module of the <em>dylan</em> library should be
+printed using the special suffix.</p>
+<p>The browser’s ability to display names from other modules than the
+current module in an unambiguous fashion is important, because while
+browsing you may come across names not defined in your library. The
+browser needs to be able to make it clear when a name is not from the
+current library and module.</p>
+</div>
+<div class="section" id="browsing-run-time-values-of-variables-and-constants">
+<span id="index-4"></span><h2>Browsing run-time values of variables and constants<a class="headerlink" href="#browsing-run-time-values-of-variables-and-constants" title="Permalink to this headline">¶</a></h2>
+<p>You can browse the values of variables and constants in running
+applications. The browser shows the run-time value of a variable or
+constant in its Values page. Simply browse the definition of the
+variable or constant by double-clicking on it in the project’s
+Definitions page.</p>
+<p>The values are shown in a table. Thread variables (variables local to a
+particular application thread) are shown with an entry for each thread
+containing a variable of that name. Constants and global variables only
+ever have one value across all threads, so this is shown as a single
+table entry entitled “All threads”. You can update the value shown in
+the browser with <strong>View &gt; Refresh</strong>.</p>
+<p>We will browse Reversi’s <em>*reversi-piece-shape*</em> variable to show how
+we can monitor the value of a variable while an application is running.
+That variable stores the current shape of the pieces being used on the
+Reversi board. By default, Reversi uses circular pieces.</p>
+<p>Start the Reversi application.</p>
+<p>In the Reversi project window’s Definitions page, double-click on the
+variable <em>*reversi-piece-shape*</em>.</p>
+<p>In the browser, choose the Values page.</p>
+<div class="figure align-center" id="id3">
+<img alt="_images/values.png" src="_images/values.png" />
+<p class="caption"><span class="caption-text">Browsing values in a running application thread.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>The value of <em>*reversi-piece-shape*</em> is shown as <em>#”circle”</em> for all
+threads. This is what we expected. Reversi has only a single thread, and
+we expected some value that would represent a circle.</p>
+<p>Choose <strong>Options &gt; Squares</strong> in the running Reversi application.</p>
+<p>Choose <strong>View &gt; Refresh</strong> in the browser.</p>
+<div class="figure align-center" id="id4">
+<img alt="_images/values-square.png" src="_images/values-square.png" />
+<p class="caption"><span class="caption-text">Updated variable value after changing state of application.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>The value is now <em>#”square”</em>. This reflects the internal change to the
+variable that our menu selection caused.</p>
+</div>
+<div class="section" id="browsing-local-variables-and-parameters-on-the-stack">
+<span id="index-5"></span><h2>Browsing local variables and parameters on the stack<a class="headerlink" href="#browsing-local-variables-and-parameters-on-the-stack" title="Permalink to this headline">¶</a></h2>
+<p>You can browse the contents of the local variables and function
+parameter values in call frames, as seen in the debugger. These are
+values on the stack in a paused application thread. Simply double-click
+on one in the debugger stack pane, and the browser will display its
+contents. See <a class="reference internal" href="expanding.html#browsing-local-variables"><span class="std std-ref">Browsing local variables</span></a> for
+an example of browsing local variable and parameter values.</p>
+</div>
+<div class="section" id="browsing-paused-application-threads">
+<span id="index-6"></span><h2>Browsing paused application threads<a class="headerlink" href="#browsing-paused-application-threads" title="Permalink to this headline">¶</a></h2>
+<p>Browsing functionality for paused application threads is done in the
+debugger, not the browser. Think of the debugger as a specialized
+browser for paused application threads.</p>
+<p>However, you can browse a list of current application threads in the
+browser, along with a text message describing their state, by choosing
+<strong>Go &gt; Threads</strong> in the project window, editor, or debugger.</p>
+<p>If you double-click on a thread name in that list, Open Dylan opens
+a debugger window on the thread, or, if it already exists, raises the
+debugger window for the thread, thus pausing the application. Once in
+the debugger, you can browse the local variables and parameters in call
+frames in the usual way. See <a class="reference internal" href="#browsing-run-time-values-of-variables-and-constants">Browsing run-time values of variables
+and constants</a>.</p>
+</div>
+<div class="section" id="keeping-browser-displays-up-to-date">
+<span id="index-7"></span><h2>Keeping browser displays up to date<a class="headerlink" href="#keeping-browser-displays-up-to-date" title="Permalink to this headline">¶</a></h2>
+<p>Because the browser shows values either gathered at a point in program
+execution or during compilation, there are opportunities for the
+information displayed on a browser page to get out of date:</p>
+<ul class="simple">
+<li><p>If you are browsing a definition and you have edited its source, you
+must recompile it to ensure that the compiler database is up to date.</p></li>
+<li><p>Even when you have recompiled a definition, you must make sure that
+the browser display is refreshed with <strong>View &gt; Refresh</strong>.</p></li>
+<li><p>If you are browsing a run-time object, that object might have since
+changed. Refresh the browser display with <strong>View &gt; Refresh</strong> to make
+sure you are seeing the most up-to-date value.</p></li>
+</ul>
+</div>
+<div class="section" id="list-of-property-pages">
+<span id="index-8"></span><h2>List of property pages<a class="headerlink" href="#list-of-property-pages" title="Permalink to this headline">¶</a></h2>
+<p>The following is a list of property pages supported in the browser. Some
+of these pages can also be seen in the project window.</p>
+<ul class="simple">
+<li><p>Breakpoints The breakpoints specified for a project.</p></li>
+<li><p>Contents The slot names and values of a run-time instance.</p></li>
+<li><p>Definitions The names of the Dylan language definitions created by a
+module, library or project.</p></li>
+<li><p>DLLs The DLLs currently loaded while debugging. You can sort them by
+version or by file location.</p></li>
+<li><p>Elements The keys and elements of a collection instance.</p></li>
+<li><p>General The properties of the object (name, type, location).</p></li>
+<li><p>Hierarchy The hierarchy of a DUIM sheet, layout or frame.</p></li>
+<li><p>Keywords The initialization keywords for a class.</p></li>
+<li><p>Libraries The list of libraries in the project.</p></li>
+<li><p>Memory The object’s memory in the application, shown in bytes.</p></li>
+<li><p>Methods The methods of a generic function, or the methods
+specializing on a class. You can show either methods defined directly
+on the class or all methods applicable to the class.</p></li>
+<li><p>Names The names defined in a module or library. Includes details of
+from where a name was imported, and whether a name is exported. You
+can filter to show local names only (that is, names created by the
+module or library rather than imported from elsewhere), exported
+names only (which can be both local and imported), or all names
+(local and imported).</p></li>
+<li><p>Slots The slots of a class.</p></li>
+<li><p>Source The source code for a source form, with breakpoints shown.</p></li>
+<li><p>Sources The source files contained in a project, and their contents.</p></li>
+<li><p>Subclasses The subclass hierarchy of a class.</p></li>
+<li><p>Superclasses The superclass hierarchy of a class.</p></li>
+<li><p>Threads The threads in an application, with priorities, status, and
+other properties.</p></li>
+<li><p>Usage The used and client definitions for a source form.</p></li>
+<li><p>Values The run-time values of constants and variables.</p></li>
+<li><p>Warnings The compiler warnings associated with a source form.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="projects.html" class="btn btn-neutral float-left" title="Creating and Using Projects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="debug.html" class="btn btn-neutral float-right" title="Debugging and Interactive Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
