@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running and Debugging CORBA Applications &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using the Dylan IDL Compiler" href="scepter.html" />
+    <link rel="prev" title="Creating CORBA Projects" href="projects.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running and Debugging CORBA Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-client-server-applications-in-the-ide">Debugging client/server applications in the IDE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#browsing-for-supported-corba-operations">Browsing for supported CORBA operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orb-runtime">ORB runtime</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#implicit-activation">Implicit activation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#port-assignment">Port assignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poa-threading">POA threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#orb-runtime-switches">ORB runtime switches</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Running and Debugging CORBA Applications</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rundebug.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="running-and-debugging-corba-applications">
+<h1>Running and Debugging CORBA Applications<a class="headerlink" href="#running-and-debugging-corba-applications" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="debugging-client-server-applications-in-the-ide">
+<h2>Debugging client/server applications in the IDE<a class="headerlink" href="#debugging-client-server-applications-in-the-ide" title="Permalink to this headline">¶</a></h2>
+<p>The following text is a quotation from the Open Dylan manual Getting
+Started with Open Dylan. See Chapter 6 of that manual for general
+information about running, debugging, and interacting with
+applications.</p>
+<p>If you have a client/server application, where both the client
+application and server application are written in Dylan, you can debug
+them in parallel.</p>
+<p>Start by opening both projects in the environment. It is not possible
+to run two instances of the environment, with one debugging the client
+and the other debugging the server: if any libraries are shared
+between the applications, both environment instances will attempt to
+lock the compiler database files for those libraries. Since all
+applications ultimately use the Dylan library, and most share other
+libraries — not the least of which in this case being networking
+libraries — using two Open Dylan processes is never a practical
+debugging method.</p>
+<p>This is not a disadvantage. By running both client and server in one
+Open Dylan instance, you can be debugging in the client, and then when
+the client invokes the server you can smoothly start debugging that
+instead. This can be very useful for tracking down synchronization
+bugs.</p>
+<p>Once you have both projects open, you can start both applications
+up. Note that by default the action of starting a project will switch
+the active project, so the last project you start will be the active
+one by default. You can change this behavior in the main window with
+<span class="menuselection">Options ‣ Environment Options…</span> so that the active
+project does not switch in this situation. See “The active project” on
+page 111 [of Getting Started with Open Dylan] for more information.</p>
+<p>If you need to rebuild a library shared between the client and server,
+you need to stop both running applications, since Windows forbids
+writing to a DLL that is currently in use.</p>
+<p>Be careful when setting breakpoints if the client and server library
+share source files. If you set a breakpoint when editing a shared
+file, the breakpoint will be set in the editor’s active project. You
+can change the active project using the popup in the main window.</p>
+<p>Breakpoints set in other windows’ source pages (such as in the
+browser) act on the project associated with the window. Note that this
+makes it possible to set breakpoints in both the client and the server
+so that the debugger correctly opens up on the appropriate project as
+the breakpoints are reached. However, you cannot set the same
+breakpoint in both projects at once. Instead you have to go into each
+project and set the breakpoint separately.</p>
+</div>
+<div class="section" id="browsing-for-supported-corba-operations">
+<h2>Browsing for supported CORBA operations<a class="headerlink" href="#browsing-for-supported-corba-operations" title="Permalink to this headline">¶</a></h2>
+<p>Until we have a CORBA reference manual for Open Dylan, you can work
+out what CORBA PIDL operations are available to Dylan applications
+using the <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> library by using the browser in the
+development environment.</p>
+<ol class="arabic">
+<li><p>In a CORBA project window, go to the <span class="guilabel">Libraries</span> page.</p></li>
+<li><p>Double-click on the <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> item.</p>
+<p>This browses the library <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code>.</p>
+</li>
+<li><p>In the browser, go to the <span class="guilabel">Definitions</span> page.</p></li>
+<li><p>Double-click on the <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">dylan-orb:dylan-orb</span></code> item.</p>
+<p>This browses the <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> library’s <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> module.</p>
+</li>
+<li><p>Go to the <span class="guilabel">Names</span> page.</p></li>
+</ol>
+<p>Having done this you can see the names in the module. Use the pop-up
+list to show only the locally exported names — the names exported from
+this module.</p>
+<p>The locally exported names contain the PIDL translations into Dylan as
+well as various Dylan protocols for using CORBA. These are the names
+that the browser’s <span class="guilabel">Module</span> column shows were imported from
+the <code class="docutils literal notranslate"><span class="pre">corba-protocol</span></code> module of the <code class="docutils literal notranslate"><span class="pre">corba-protocol</span></code> library.</p>
+</div>
+<div class="section" id="orb-runtime">
+<h2>ORB runtime<a class="headerlink" href="#orb-runtime" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="implicit-activation">
+<h3>Implicit activation<a class="headerlink" href="#implicit-activation" title="Permalink to this headline">¶</a></h3>
+<p>Servants may be returned from operations and if the POA ID Assignment
+policy is set to <code class="docutils literal notranslate"><span class="pre">#&quot;System-ID&quot;</span></code>, then they are automatically
+converted to object references. For instance, instead of</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">as</span><span class="p">(</span><span class="nc">&lt;account&gt;</span><span class="p">,</span> <span class="n">create-reference</span><span class="p">(</span><span class="n">poa</span><span class="p">,</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;demo-account&gt;</span><span class="p">,</span> <span class="p">...)))</span>
+</pre></div>
+</div>
+<p>you can simply use:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;demo-account&gt;</span><span class="p">,</span> <span class="p">...)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="port-assignment">
+<h3>Port assignment<a class="headerlink" href="#port-assignment" title="Permalink to this headline">¶</a></h3>
+<p>Socket port numbers are assigned dynamically, by default. If you wish
+to use the original (late 1990s era) fixed port number of the Open
+Dylan ORB, specify the following on the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">ORBport</span> <span class="mi">3672</span>
+</pre></div>
+</div>
+<p>As of version 2.0, this port number is reserved for use by the Open
+Dylan ORB’s Implementation Repository (which sadly does not
+exist). However, you can still explicitly select a port number, for
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">ORBport</span> <span class="mi">9999</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="poa-threading">
+<h3>POA threading<a class="headerlink" href="#poa-threading" title="Permalink to this headline">¶</a></h3>
+<p>The Open Dylan ORB has one request processing thread per POA, by
+default. You can set the number of request processing threads when
+creating a POA by using the thread policy, for example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">thread-policy</span><span class="o">:</span> <span class="s">4</span>
+</pre></div>
+</div>
+<p>This creates a pool of four worker threads that service requests
+dispatched to that POA. Therefore, up to four requests could be
+processed concurrently. In such a situation the underlying application
+code that is called from the POA must be multi-thread safe.</p>
+</div>
+<div class="section" id="orb-runtime-switches">
+<h3>ORB runtime switches<a class="headerlink" href="#orb-runtime-switches" title="Permalink to this headline">¶</a></h3>
+<p>The full set of command line arguments that the Dylan ORB supports is
+listed below. When running the application under the control of Open
+Dylan, these command-line options can be set using the
+<span class="guilabel">Debug</span> page of the <span class="menuselection">Project ‣ Settings…</span>
+dialog, in the <span class="guilabel">Arguments</span> field of the <span class="guilabel">Command
+Line</span> section.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBtrace</span></code></dt><dd><p>Turns on debug messages inside the ORB. These are mainly internal
+debugging messages, but may help you to understand what is going on
+inside the ORB, or help you report problems to the Open Dylan
+developers.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBdebug</span></code></dt><dd><p>Suppresses handling of application implementation errors in server
+code. That is, instead of them being translated into CORBA
+exceptions for transmission to the client, they are left unhandled
+in the server so that they can be debugged.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBport</span></code> number</dt><dd><p>Sets default socket port for listening. The default port number
+registered with IANA for <code class="docutils literal notranslate"><span class="pre">lispworks-orb</span></code> is 3672.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBid</span></code> name</dt><dd><p>Sets name of ORB.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBno-co-location</span></code></dt><dd><p>Suppresses co-location optimization. That is, forces the ORB to
+always use sockets and IIOP marshalling even when it might have
+detected an in-process server.</p>
+</dd>
+</dl>
+<p>The next command line options are concerned with the initial services offered by the ORB.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBname-service-file</span></code> <em>filename</em></dt><dd><p>Sets <em>filename</em> containing IOR for name service. The string in the
+file is converted to an object reference and returned by</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">CORBA/ORB/ResolveInitialServices</span><span class="p">(</span><span class="s">&quot;NameService&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This option persists from session to session via the Windows Registry.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBname-service</span></code> <em>ior</em></dt><dd><p>Sets <em>ior</em> for the name service (takes precedence over file-based
+alternative above). The string is converted to an object reference
+and returned by</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">CORBA/ORB/ResolveInitialServices</span><span class="p">(</span><span class="s">&quot;NameService&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This option persists from session to session via the Windows Registry.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBinterface-repository-file</span></code> <em>filename</em></dt><dd><p>Sets <em>filename</em> containing IOR for interface repository. The string
+in the file is converted to an object reference and returned by</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">CORBA/ORB/ResolveInitialServices</span><span class="p">(</span><span class="s">&quot;InterfaceRepository&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This option persists from session to session via the Windows Registry.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBinterface-repository</span></code> <em>ior</em></dt><dd><p>Sets <em>ior</em> for the interface repository (takes precedence over
+file-based alternative above). The string is converted to an object
+reference and returned by</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">CORBA/ORB/ResolveInitialServices</span><span class="p">(</span><span class="s">&quot;InterfaceRepository&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This option persists from session to session via the Windows Registry.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-ORBsettings</span></code></dt><dd><p>Prints out a list of the configuration options to the standard output.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="projects.html" class="btn btn-neutral float-left" title="Creating CORBA Projects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scepter.html" class="btn btn-neutral float-right" title="Using the Dylan IDL Compiler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

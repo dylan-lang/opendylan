@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Tutorial &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setting up the Bank Example" href="bank-setup.html" />
+    <link rel="prev" title="About Open Dylan CORBA" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-this-chapter">About this chapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-corba-based-hello-world">A CORBA-based Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-projects">Creating the projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-the-interface">Defining the interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generating-stub-skeleton-protocol-code-from-idl">Generating stub, skeleton, protocol code from IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-browsing-detour">A browsing detour</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-the-client">Implementing the client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#initializing-the-orb">Initializing the ORB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-an-object-reference">Obtaining an object reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invoking-an-operation">Invoking an operation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complete-code-for-the-client">Complete code for the client</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-the-server">Implementing the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-note-on-terminology">A note on terminology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-the-servers-corba-objects">Implementing the server’s CORBA objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#orb-and-object-initialization">ORB and object initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complete-code-for-the-server">Complete code for the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-and-testing-the-application">Building and testing the application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="quick-start-tutorial">
+<h1>Quick Start Tutorial<a class="headerlink" href="#quick-start-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-this-chapter">
+<h2>About this chapter<a class="headerlink" href="#about-this-chapter" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, we develop a simple example application that
+illustrates the basics of writing CORBA-based applications using Open
+Dylan.</p>
+<p>The aim of this chapter is to show the sort of coding involved in
+using CORBA with Open Dylan, and get a client/server application
+up and running quickly. It is not concerned so much with explaining
+how things work. Subsequent chapters go into more detail, using a
+deeper example, and explaining the approach we have taken to
+implementing the CORBA architecture for Dylan.</p>
+</div>
+<div class="section" id="a-corba-based-hello-world">
+<h2>A CORBA-based Hello World<a class="headerlink" href="#a-corba-based-hello-world" title="Permalink to this headline">¶</a></h2>
+<p>This chapter’s example is an implementation of the standard Hello
+World application, using Dylan and CORBA. In this version of Hello
+World, a client application asks a server application for a
+string. When the client receives the string, it prints it to the
+standard output, and then exits.</p>
+<p>These are the basic steps we will take to create this application:</p>
+<ol class="arabic">
+<li><p>Create the projects.</p>
+<p>We use the Open Dylan IDE New Project wizard to create client and
+server CORBA projects.</p>
+</li>
+<li><p>Define the interface.</p>
+<p>We define the interface to the server using OMG’s Interface
+Definition Language (IDL).</p>
+</li>
+<li><p>Implement the client.</p></li>
+<li><p>Implement the server.</p></li>
+<li><p>Build and test the application.</p></li>
+</ol>
+</div>
+<div class="section" id="creating-the-projects">
+<h2>Creating the projects<a class="headerlink" href="#creating-the-projects" title="Permalink to this headline">¶</a></h2>
+<p>In this section we create projects for the client and server parts of
+our CORBA-based Hello World application.</p>
+<p>To create these projects we use the New Project wizard. For CORBA
+projects, the wizard can create either a client project, a server
+project, or both at once. Since we are writing both the client and the
+server, we are going to ask the wizard to create both our projects at
+once.</p>
+<ol class="arabic">
+<li><p>Select <span class="menuselection">File ‣ New…</span> from the Open Dylan main
+window, or click the New Project button on the toolbar.</p>
+<p>The New Project wizard appears.</p>
+<p>We are going to choose “CORBA Client and/or Server” as the project
+type. In the wizard, a CORBA project is a project defined relative
+to an IDL file. The IDL file is a file containing a declaration of
+the CORBA interfaces that the server implements and the client
+accesses, written in OMG’s Interface Definition Language.</p>
+</li>
+<li><p>Select “CORBA Client and/or Server” in the Project type section.</p></li>
+<li><p>Click <span class="guilabel">Next</span>.</p>
+<p>The wizard moves to a second page.</p>
+<div class="figure align-default" id="id1">
+<img alt="_images/getstart-new-project.png" src="_images/getstart-new-project.png" />
+<p class="caption"><span class="caption-text">The CORBA project page in the New Project wizard</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>The second page, shown in Figure 2.1, has several options for
+building CORBA projects. This is where we can specify whether to
+create a client project, a server project, or both. We can also
+choose an IDL file to base projects upon, or let the wizard create
+an empty one that we can edit after the projects themselves have
+been created.</p>
+<p>If you choose a CORBA IDL file on which to base the project, by
+default the file is copied into the project folder that you choose
+on the next page (or is left there if it is already in that
+folder). You can explicitly choose to leave an existing IDL file
+where it is and the generated projects will refer to it.</p>
+<p>For the sake of this example, however, we will let the wizard
+generate a blank IDL file for us, and then we will write the IDL by
+hand.</p>
+</li>
+<li><p>Uncheck the “Use existing IDL file” check box.</p></li>
+<li><p>Check the “Client” box and the “Server” box.</p>
+<p>Next to the “Client” and “Server” check boxes are options for the
+kind of supporting code we want to generate. Like other IDL
+compilers, Open Dylan’s can create CORBA client stub and server
+skeleton code from IDL declarations. This stub and skeleton code,
+which is generated in the form of separate libraries, takes care of
+the details of communication between CORBA clients and servers.</p>
+<p>The IDL compiler (which we call Scepter) also generates a protocol
+library that represents the spirit of the IDL declarations in
+Dylan, using generic function declarations, class declarations, and
+so on.</p>
+<p>The protocol library is the public interface to the service
+provided by the servers and used by the clients, and is used by the
+stub and skeleton code libraries. On the server side, the protocol
+defines what you must implement by extending the skeleton
+implementation in the normal way, by adding methods, subclassing,
+and so on. On the client side, you use the protocol to invoke
+operations on the CORBA objects you have implemented in the server.</p>
+<p>We will see more about protocol, stub, and skeleton libraries in
+<a class="reference internal" href="bank-idl.html"><span class="doc">Writing and Compiling IDL</span></a>.</p>
+</li>
+<li><p>Make sure the “Client using” setting is “protocol and stubs” and
+the “Server using” setting is “protocol, stubs, and skeletons”.</p>
+<p>The wizard will set up the client and server projects so that, when
+they are built, the IDL compiler will be invoked automatically to
+read the IDL and create stub, skeleton, and protocol projects.</p>
+</li>
+<li><p>Click <span class="guilabel">Next</span>.</p>
+<p>The wizard moves to a third page. This page is the wizard’s
+standard page for entering the project name and location.</p>
+<p>On this page we enter the name used to create the client and server
+projects. Because the wizard is going to create two projects, it
+uses the name we enter as the stem of each project name, and adds a
+suffix to identify the project as a client (<code class="docutils literal notranslate"><span class="pre">-client</span></code>) or server
+(<code class="docutils literal notranslate"><span class="pre">-server</span></code>).</p>
+</li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">my-hello-world</span></code> into the <span class="guilabel">Name</span> field.</p>
+<p>From this name, the wizard generates projects called
+My-Hello-World-Client and My-Hello-World-Server.</p>
+</li>
+<li><p>Click <span class="guilabel">Advanced…</span></p>
+<p>The <span class="guilabel">Advanced Project Settings</span> dialog appears.</p>
+</li>
+<li><p>Change the “Windows Subsystem” setting to “Windows Console” and
+click OK.</p>
+<p>This step is necessary because the application is going to run in
+console mode, that is, without windowing.</p>
+</li>
+<li><p>Click <span class="guilabel">Next</span>.</p>
+<p>The wizard moves to a fourth page. This page is the wizard’s
+standard page for specifying how you want to choose libraries for
+your project.</p>
+</li>
+<li><p>Select the “Minimal” option.</p>
+<p>The choice of “Minimal” makes the Hello World projects use only two
+libraries: the <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> library, which provides the Dylan
+language and basic extensions, and the <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> library, which
+provides the Open Dylan ORB implementation.</p>
+</li>
+<li><p>Click <span class="guilabel">Next</span>.</p>
+<p>The wizard moves to a fifth and final page. This page is the
+wizard’s standard page for entering source file header keywords.</p>
+</li>
+<li><p>Make any header keyword changes you want.</p></li>
+<li><p>Click <span class="guilabel">Finish</span>.</p></li>
+</ol>
+<p>The client and server projects are now fully defined. After you click
+Finish, the wizard creates the appropriate project files on disk. Then
+two project windows appear: one for the client project,
+My-Hello-World-Client, and one for the server project,
+My-Hello-World-Server.</p>
+</div>
+<div class="section" id="defining-the-interface">
+<h2>Defining the interface<a class="headerlink" href="#defining-the-interface" title="Permalink to this headline">¶</a></h2>
+<p>In this section we declare the IDL interface that the Hello World
+client and server will communicate across. This is the usual first
+step in developing a CORBA-based application in Dylan.</p>
+<p>We declare the interface in a single file that must have the extension
+<code class="docutils literal notranslate"><span class="pre">.idl</span></code>. Recall that when creating the client and server projects, we
+unchecked the “Use existing IDL file” option on the second wizard
+page. Instead of letting the client and server projects refer to an
+existing IDL file, the wizard created a dummy file into which we can
+write our IDL interface.</p>
+<p>Both the client and server projects point to the dummy IDL file via a
+file called <code class="file docutils literal notranslate"><span class="pre">my-hello-world.spec</span></code>. Spec files, or Open Dylan
+Tool Specification files, contain special information for building
+projects. The file <code class="file docutils literal notranslate"><span class="pre">my-hello-world.spec</span></code> is part of each project’s list
+of sources, but it is a different file in each project.</p>
+<ol class="arabic">
+<li><p>Double-click on <code class="file docutils literal notranslate"><span class="pre">my-hello-world.spec</span></code> in the Sources page of either
+project window.</p>
+<p>The spec file opens in an editor window.</p>
+<p>The client project’s spec file looks like this:</p>
+<div class="highlight-dylan-lid notranslate"><div class="highlight"><pre><span></span><span class="na">Origin</span><span class="o">:</span> <span class="s">OMG-IDL</span>
+<span class="na">Idl-File</span><span class="o">:</span> <span class="s">..\my-hello-world.idl</span>
+<span class="na">Stubs</span><span class="o">:</span> <span class="s">yes</span>
+</pre></div>
+</div>
+<p>The server project’s spec file looks like this:</p>
+<div class="highlight-dylan-lid notranslate"><div class="highlight"><pre><span></span><span class="na">Origin</span><span class="o">:</span> <span class="s">OMG-IDL</span>
+<span class="na">Idl-File</span><span class="o">:</span> <span class="s">..\my-hello-world.idl</span>
+<span class="na">Skeletons</span><span class="o">:</span> <span class="s">yes</span>
+</pre></div>
+</div>
+<p>Both spec files contain an <code class="docutils literal notranslate"><span class="pre">Idl-File:</span></code> keyword statement saying
+that the file <code class="file docutils literal notranslate"><span class="pre">my-hello-world.idl</span></code>, which is in the parent
+folder of both My-Hello-World-Client and My-Hello-World-Server,
+should be compiled along with each project’s Dylan sources. We can
+ignore the other details for the moment.</p>
+</li>
+<li><p>Choose <span class="menuselection">File ‣ Open…</span> in either project window,
+and navigate to the project’s parent folder containing
+<code class="file docutils literal notranslate"><span class="pre">my-hello-world.idl</span></code>.</p>
+<p>Hint: clicking the General tab in either the client or server project
+window shows where the project resides on your machine.</p>
+</li>
+<li><p>Select <code class="file docutils literal notranslate"><span class="pre">my-hello-world.idl</span></code> and click Open.</p>
+<p>The dummy IDL file opens in an editor window.</p>
+<p>The dummy IDL file initially contains only a comment and no IDL
+declarations. We must write these ourselves. For Hello World, the IDL
+is simply:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>interface world {
+  <span class="nb">string</span> hello();
+};
+</pre></div>
+</div>
+<p>This IDL declaration says there are CORBA objects of a kind called
+<code class="docutils literal notranslate"><span class="pre">world</span></code>, and that there is an operation called <code class="docutils literal notranslate"><span class="pre">hello</span></code> on
+<code class="docutils literal notranslate"><span class="pre">world</span></code> objects that takes no arguments and returns a
+string. Servers implement <code class="docutils literal notranslate"><span class="pre">world</span></code> and clients call <code class="docutils literal notranslate"><span class="pre">hello</span></code> on
+instances of <code class="docutils literal notranslate"><span class="pre">world</span></code>.</p>
+</li>
+<li><p>Enter the IDL declaration above into the <code class="file docutils literal notranslate"><span class="pre">my-hello-world.idl</span></code>
+file.</p></li>
+<li><p>Save <code class="file docutils literal notranslate"><span class="pre">my-hello-world.idl</span></code> with <span class="menuselection">File ‣ Save</span>.</p></li>
+</ol>
+<p>Now that we have written the IDL, we can run the IDL compiler over it
+to produce stub, skeleton, and protocol code for the client and server
+parts of the application.</p>
+<div class="section" id="generating-stub-skeleton-protocol-code-from-idl">
+<h3>Generating stub, skeleton, protocol code from IDL<a class="headerlink" href="#generating-stub-skeleton-protocol-code-from-idl" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways of generating the stub, skeleton, and protocol code
+for a CORBA application. We can either run the IDL compiler on the
+command-line, or we can run it within the Open Dylan development
+environment. The second option is more convenient given that we are
+already using the environment.</p>
+<ol class="arabic">
+<li><p>Go to the project window for the My-Hello-World-Client project.</p>
+<p>Simply building the project in the normal way is enough to invoke
+the IDL compiler. This convenience is thanks to the spec file in
+the project Sources list: when the build gets to the spec file, the
+build system looks in it to see what to do with it. The spec file
+in My-Hello-World-Client states with the <code class="docutils literal notranslate"><span class="pre">Origin:</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Idl-File:</span></code> keywords that there is a OMG IDL file to compile, and
+with the <code class="docutils literal notranslate"><span class="pre">Stubs:</span></code> keyword that a project containing client stub
+code should be generated.</p>
+<p>If we build My-Hello-World-Client now, the IDL compiler will read
+the IDL file and create the stubs code. Meanwhile the rest of the
+Dylan code in the project is also compiled.</p>
+</li>
+<li><p>Select <span class="menuselection">Project ‣ Build</span> from the project window’s menu.</p>
+<p>The spec file in My-Hello-World-Server is similar, but asks for
+skeletons instead of stubs.</p>
+</li>
+<li><p>Select <span class="menuselection">Project ‣ Build</span> in the
+My-Hello-World-Server project window.</p></li>
+</ol>
+<p>After the build, each project’s Sources page is updated to include new
+subprojects. The subprojects are as follows.</p>
+<p>In the client project:</p>
+<dl class="simple">
+<dt>My-Hello-World-Stubs</dt><dd><p>The stubs project contains implementation glue code that enables a
+client application to call a CORBA object in a server application
+over a network, using a Dylan protocol generated from the IDL.</p>
+</dd>
+</dl>
+<p>In the server project:</p>
+<dl class="simple">
+<dt>My-Hello-World-Skeletons</dt><dd><p>The skeletons project contains implementation glue code that
+enables server applications implementing CORBA objects to be called
+over a network by the Dylan protocol functions generated from
+the IDL.</p>
+</dd>
+</dl>
+<p>In addition, a protocol subproject appears in both the stubs and the skeletons projects:</p>
+<dl class="simple">
+<dt>My-Hello-World-Protocol</dt><dd><p>The protocol project contains open classes and generic functions,
+representing the spirit of the IDL declarations in Dylan. It is
+used in clients to call operations on CORBA objects in a server,
+and in a server as the basis of the implementation of those
+objects.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="a-browsing-detour">
+<h3>A browsing detour<a class="headerlink" href="#a-browsing-detour" title="Permalink to this headline">¶</a></h3>
+<p>The next step would be to implement the client and server. But it is
+instructive to take a brief detour and look at what is inside the new
+projects that we gained by compiling our small IDL file.</p>
+<ol class="arabic">
+<li><p>Go to the My-Hello-World-Client project window and select the Sources
+page.</p></li>
+<li><p>Expand the My-Hello-World-Stubs subproject.</p>
+<p>As expected, the My-Hello-World-Stubs project contains the protocol
+project, My-Hello-World-Protocol.</p>
+</li>
+<li><p>Expand the My-Hello-World-Protocol subproject.</p>
+<p>The <code class="file docutils literal notranslate"><span class="pre">my-hello-world-protocol.dylan</span></code> file contains the
+automatically generated Dylan protocol representing our IDL for
+Hello World.</p>
+</li>
+<li><p>Expand the <code class="file docutils literal notranslate"><span class="pre">my-hello-world-protocol.dylan</span></code> file.</p></li>
+<li><p>Double-click on the generic function for <code class="docutils literal notranslate"><span class="pre">world/hello</span></code>.</p>
+<p>The browser appears.</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/getstart-browsing.png" src="_images/getstart-browsing.png" />
+<p class="caption"><span class="caption-text">A Dylan generic function mapped from an IDL declaration.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>Notice how the Dylan code has been mapped from the IDL. An IDL
+operation whose full name was <code class="docutils literal notranslate"><span class="pre">world::hello</span></code> has been mapped to a
+Dylan open generic function whose name is <code class="docutils literal notranslate"><span class="pre">world/hello</span></code>. The
+mapping rules are part of what is called an IDL binding for
+Dylan. There is a draft standard for the Dylan IDL binding in
+<a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a>.</p>
+</li>
+<li><p>Select the browser’s Methods page.</p></li>
+<li><p>Double-click on the only method listed.</p></li>
+</ol>
+<p>The browser now shows the source of the method that takes care of
+bundling up arguments into a request and invoking the ORB in order to
+send it to the server. This method was generated automatically from
+the IDL, and “just works” — you do not have to worry about it, or
+other such methods that the compiler generates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the compiler will regenerate these files if the IDL is
+changed, you should not edit them by hand.</p>
+</div>
+</div>
+</div>
+<div class="section" id="implementing-the-client">
+<h2>Implementing the client<a class="headerlink" href="#implementing-the-client" title="Permalink to this headline">¶</a></h2>
+<p>In this section we implement the client side of the Hello World
+application.</p>
+<p>The basic requirements for a client are to initialize an ORB, then
+obtain references to the CORBA objects that it wants to invoke
+operations upon. The client can then proceed with execution in the
+normal way; as necessary, it can invoke the operations on the CORBA
+objects to which it has references.</p>
+<div class="section" id="initializing-the-orb">
+<h3>Initializing the ORB<a class="headerlink" href="#initializing-the-orb" title="Permalink to this headline">¶</a></h3>
+<p>The first thing our client needs to do is to initialize the Open Dylan
+ORB. CORBA provides a standard operation for this, called
+<code class="docutils literal notranslate"><span class="pre">orb_init</span></code>. This is just one of many operations that ORBs must
+offer. The name is an IDL-style name (in fact it is a pseudo-IDL or
+PIDL name) that is mapped to Dylan just like the IDL we wrote for
+Hello World earlier. In the Open Dylan ORB this operation is
+invoked as <code class="docutils literal notranslate"><span class="pre">corba/orb-init</span></code>.</p>
+<p>An ORB initialization call looks like this:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">orb</span> <span class="o">=</span> <span class="n">corba/orb-init</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">corba/&lt;arg-list&gt;</span><span class="p">),</span>
+                         <span class="s">&quot;Open Dylan ORB&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ignore the arguments for the moment — they are explained in
+Chapter 5. The call returns an object of class <code class="docutils literal notranslate"><span class="pre">corba/&lt;orb&gt;</span></code>. We need
+to keep our ORB reference around, so we bind this value to the name
+<code class="docutils literal notranslate"><span class="pre">orb</span></code>.</p>
+</div>
+<div class="section" id="obtaining-an-object-reference">
+<h3>Obtaining an object reference<a class="headerlink" href="#obtaining-an-object-reference" title="Permalink to this headline">¶</a></h3>
+<p>The next thing our client needs to do is to get a reference to a CORBA
+object implementing Hello World. Recall from <a class="reference internal" href="#defining-the-interface">Defining the interface</a>
+that our IDL defined CORBA objects of a kind called <code class="docutils literal notranslate"><span class="pre">world</span></code>:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>interface world {
+  <span class="nb">string</span> hello();
+}
+</pre></div>
+</div>
+<p>The client needs a reference to a <code class="docutils literal notranslate"><span class="pre">world</span></code> object. An object
+reference is just CORBA’s way of allowing CORBA objects to be
+identified and communicated with. Once our client has a reference to a
+<code class="docutils literal notranslate"><span class="pre">world</span></code> object it can call the <code class="docutils literal notranslate"><span class="pre">hello</span></code> operation and get the string it
+needs to print out.</p>
+<p>There is more to say about object references and how they are
+obtained. For now, all we need to know is one way that clients can
+obtain object references is by reading them from files, where servers
+have placed them in a string form — a so-called <em>stringified object
+reference</em>. The client can get the string and convert it into a Dylan
+object that represents object references. To do this, it uses a Dylan
+ORB utility called <code class="docutils literal notranslate"><span class="pre">corba/orb/file-to-object</span></code>.</p>
+<p>Thus, given a shared file <code class="file docutils literal notranslate"><span class="pre">hello.ior</span></code>, located as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">:</span>\<span class="n">temp</span>\<span class="n">hello</span><span class="o">.</span><span class="n">ior</span>
+</pre></div>
+</div>
+<p>Our client can get a reference as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">world</span> <span class="o">=</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;world&gt;</span><span class="p">,</span>
+               <span class="n">corba/orb/file-to-object</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="s">&quot;c:</span><span class="se">\\</span><span class="s">temp</span><span class="se">\\</span><span class="s">hello.ior&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">corba/orb/file-to-object</span></code> method could have been implemented as
+follows using the standard ORB utility <code class="docutils literal notranslate"><span class="pre">corba/orb/string-to-object</span></code>,
+but <code class="docutils literal notranslate"><span class="pre">corba/orb/file-to-object</span></code> is provided as a convenience.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">corba/orb/file-to-object</span> <span class="p">(</span><span class="n">orb</span> <span class="p">::</span> <span class="n">corba/&lt;orb&gt;</span><span class="p">,</span>
+                                        <span class="n">file</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">object</span><span class="p">)</span>
+  <span class="n">with-open-file</span><span class="p">(</span><span class="n">stream</span> <span class="o">=</span> <span class="n">file</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">)</span>
+    <span class="n">corba/orb/string-to-object</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">,</span>
+                                       <span class="n">stream-contents</span><span class="p">(</span><span class="n">stream</span><span class="p">)));</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">world</span> <span class="pre">...</span></code> expression takes the name of the shared file,
+and passes it (and the ORB value we obtained earlier) to the helper
+method <code class="docutils literal notranslate"><span class="pre">file-to-object</span></code>. The <code class="docutils literal notranslate"><span class="pre">file-to-object</span></code> method calls
+<code class="docutils literal notranslate"><span class="pre">corba/orb/string-to-object</span></code> to obtain the reference and make a
+Dylan object representing it. Then the returned Dylan object is
+coerced into an instance of the class <code class="docutils literal notranslate"><span class="pre">&lt;world&gt;</span></code>. That class is one
+of the protocol library classes generated from the IDL, and was
+intended to represent world objects in Dylan. (In fact the object is
+coerced to be an instance of an internal concrete subclass of
+<code class="docutils literal notranslate"><span class="pre">&lt;world&gt;</span></code> — <code class="docutils literal notranslate"><span class="pre">&lt;world&gt;</span></code> is just the public protocol class.)</p>
+<p>The extra backslashes in the file name string serve as escape
+characters.</p>
+</div>
+<div class="section" id="invoking-an-operation">
+<h3>Invoking an operation<a class="headerlink" href="#invoking-an-operation" title="Permalink to this headline">¶</a></h3>
+<p>Our client has now initialized the ORB and obtained the <code class="docutils literal notranslate"><span class="pre">world</span></code>
+object reference it required. It is ready to invoke the <code class="docutils literal notranslate"><span class="pre">hello</span></code>
+operation and receive the string that it needs to print out.</p>
+<p>Because all the initialization work is complete, this step is
+trivial. We simply call the <code class="docutils literal notranslate"><span class="pre">hello</span></code> operation directly, and let the
+underlying stub code deal with the business of sending the request to
+the server and receiving the response.</p>
+<p>The IDL for hello was translated into the Dylan protocol library,
+My-Hello-World-Protocol, as <code class="docutils literal notranslate"><span class="pre">world/hello</span></code>. Though in IDL the operation
+did not have any arguments, when calling it from the Dylan client we
+do need to pass the reference of the CORBA object we are invoking the
+operation upon, since ORBs need to know which object, of perhaps many
+the client has references to, is actually being called.</p>
+<p>The call is therefore simply:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">world/hello</span><span class="p">(</span><span class="n">world</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The implementation of the client is therefore complete after the
+following call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">world/hello</span><span class="p">(</span><span class="n">world</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>This code gets the string and then prints it to the standard output.</p>
+</div>
+<div class="section" id="complete-code-for-the-client">
+<h3>Complete code for the client<a class="headerlink" href="#complete-code-for-the-client" title="Permalink to this headline">¶</a></h3>
+<p>The following code is the complete implementation of the client. Enter
+it into the file my-hello-world-client.dylan in the
+My-Hello-World-Client project.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span>   <span class="s">corba-hello-world-client</span>
+<span class="na">Synopsis</span><span class="o">:</span> <span class="s">Distributed Hello World</span>
+<span class="na">Author</span><span class="o">:</span>   <span class="s">Jason Trenouth</span>
+<span class="na">Copyright</span><span class="o">:</span>    <span class="s">Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.</span>
+<span class="s">              All rights reserved.</span>
+<span class="na">License</span><span class="o">:</span>      <span class="s">See License.txt in this distribution for details.</span>
+<span class="na">Warranty</span><span class="o">:</span>     <span class="s">Distributed WITHOUT WARRANTY OF ANY KIND</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="no">$hello-world-ior-file</span> <span class="o">=</span> <span class="s">&quot;hello.ior&quot;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">orb</span> <span class="o">=</span> <span class="n">corba/orb-init</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">corba/&lt;arg-list&gt;</span><span class="p">),</span> <span class="s">&quot;Open Dylan ORB&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">world</span> <span class="o">=</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;world&gt;</span><span class="p">,</span> <span class="n">corba/orb/file-to-object</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="no">$hello-world-ior-file</span><span class="p">));</span>
+  <span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">world/hello</span><span class="p">(</span><span class="n">world</span><span class="p">));</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+
+<span class="k">begin</span>
+  <span class="n">main</span><span class="p">();</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="implementing-the-server">
+<h2>Implementing the server<a class="headerlink" href="#implementing-the-server" title="Permalink to this headline">¶</a></h2>
+<p>In this section we implement the server side of the Hello World application.</p>
+<p>There are two parts to implementing a server. We need to implement the
+CORBA objects that the server offers, and we also need to perform ORB
+initialization and other administrative tasks that get the server
+ready to service potential clients.</p>
+<div class="section" id="a-note-on-terminology">
+<h3>A note on terminology<a class="headerlink" href="#a-note-on-terminology" title="Permalink to this headline">¶</a></h3>
+<p>CORBA objects are what CORBA servers implement and provide to CORBA
+clients. In CORBA, an object is basically a collection of code that
+supports an interface declared as an IDL interface .</p>
+<p>Because server applications are typically not much more than the
+infrastructural wrapper around the code that implements the CORBA
+object, it is often convenient to talk of a server as if it is the
+CORBA object, or a collection of CORBA objects. Here and elsewhere, we
+occasionally use the term “CORBA object” where “server” might also be
+applicable.</p>
+</div>
+<div class="section" id="implementing-the-servers-corba-objects">
+<h3>Implementing the server’s CORBA objects<a class="headerlink" href="#implementing-the-servers-corba-objects" title="Permalink to this headline">¶</a></h3>
+<p>According to the IDL we wrote, the server is supposed to provide
+<code class="docutils literal notranslate"><span class="pre">world</span></code> objects, which have an operation called <code class="docutils literal notranslate"><span class="pre">hello</span></code>. How do we
+implement <code class="docutils literal notranslate"><span class="pre">world</span></code> and <code class="docutils literal notranslate"><span class="pre">hello</span></code> in the server?</p>
+<p>An IDL interface, such as <code class="docutils literal notranslate"><span class="pre">world</span></code>, is represented in Dylan using a
+class. Operations in an interface are represented as methods on the
+class representing the interface.</p>
+<p>The server skeletons library we generated by compiling our IDL file
+contains the underlying CORBA framework for <code class="docutils literal notranslate"><span class="pre">world</span></code> objects. This
+framework is represented by the <code class="docutils literal notranslate"><span class="pre">&lt;world-servant&gt;</span></code> Dylan class.</p>
+<p>A <em>servant</em> is the CORBA way of connecting a request to an object
+implementation. In this case the mapping will be one-to-one: a servant
+will be the object implementation. However, many objects could be
+implemented by one servant, or conversely, many servants could
+implement a single object. These more complicated applications of
+servants need not concern us now.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;world-servant&gt;</span></code> class is a subclass of <code class="docutils literal notranslate"><span class="pre">&lt;world&gt;</span></code> (again from
+the protocol library) and another class that provides CORBA
+functionality. By extending <code class="docutils literal notranslate"><span class="pre">&lt;world-servant&gt;</span></code> we provide a Dylan
+implementation of world and inherit the CORBA functionality that our
+objects will need in order to communicate with their clients:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;world-implementation&gt;</span> <span class="p">(</span><span class="nc">&lt;world-servant&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>As noted in <a class="reference internal" href="#invoking-an-operation">Invoking an operation</a>, the <code class="docutils literal notranslate"><span class="pre">hello</span></code> operation
+name was mapped into Dylan as the <code class="docutils literal notranslate"><span class="pre">world/hello</span></code> generic function,
+defined on <code class="docutils literal notranslate"><span class="pre">&lt;world&gt;</span></code>. To implement <code class="docutils literal notranslate"><span class="pre">hello</span></code>, we write a <code class="docutils literal notranslate"><span class="pre">world/hello</span></code>
+method on <code class="docutils literal notranslate"><span class="pre">&lt;world-implementation&gt;</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">world/hello</span>
+    <span class="p">(</span><span class="n">world</span> <span class="p">::</span> <span class="nc">&lt;world-implementation&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">hello</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+  <span class="s">&quot;Hello World!&quot;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This method returns the string that will be passed back to the
+client. With this, the Dylan implementation of the <code class="docutils literal notranslate"><span class="pre">world</span></code>
+object type we described in IDL is complete.</p>
+</div>
+<div class="section" id="orb-and-object-initialization">
+<h3>ORB and object initialization<a class="headerlink" href="#orb-and-object-initialization" title="Permalink to this headline">¶</a></h3>
+<p>The other part of writing the server is to perform the initializations
+necessary for the server to ready itself for CORBA-based interactions
+with a client.</p>
+<p>Some of this coding is similar to what we did on the client side. The
+first thing we do is initialize, and get a reference to, the Open
+Dylan ORB. This step is exactly the same as on the client side:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">orb</span> <span class="o">=</span> <span class="n">corba/orb-init</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">corba/&lt;arg-list&gt;</span><span class="p">),</span>
+                         <span class="s">&quot;Open Dylan ORB&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next, we can make an instance of the object (servant) class:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">impl</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;world-implementation&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To make this object instance accessible to clients using CORBA, it has
+to be visible in the CORBA world, not just in the Dylan server
+application that instantiated it. To do this we use an object adapter
+— part of an ORB that deals with activating CORBA objects and
+connecting them to the outside world.</p>
+<p>The Open Dylan ORB supports CORBA’s portable object adapter (POA)
+standard. To start the business of activating our <code class="docutils literal notranslate"><span class="pre">world</span></code> object, we
+get a reference to the POA:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">poa</span> <span class="o">=</span> <span class="n">corba/orb/resolve-initial-references</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="s">&quot;RootPOA&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This is another call to a standard CORBA operation. The operation
+<code class="docutils literal notranslate"><span class="pre">resolve_initial_references</span></code> takes an ORB reference and a list of
+string names for CORBA services, and returns object references for
+them.</p>
+<p>The name used in the call above is the Dylan translation of the
+pseudo-IDL name <code class="docutils literal notranslate"><span class="pre">CORBA::ORB::resolve_initial_references</span></code>. The call
+resolves the name <code class="docutils literal notranslate"><span class="pre">&quot;RootPOA&quot;</span></code>, which is the standard name for the
+basic POA service, into an object reference.</p>
+<p>The next step is to get the POA to create a reference for our world
+object instance that can be given to a client. There are several ways
+to get object references from a POA; this is one of them:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">world</span> <span class="o">=</span> <span class="n">portableserver/poa/servant-to-reference</span><span class="p">(</span><span class="n">poa</span><span class="p">,</span> <span class="n">impl</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Next, we want to publish the reference where the client can find
+it. Recall that the client looks for the reference in
+c:temphello.ior , expecting to find a string there to translate back
+into a reference with the ORB utility
+<code class="docutils literal notranslate"><span class="pre">corba/orb/file-to-object</span></code>. The ORB also offers the opposite
+operation, available in Dylan as <code class="docutils literal notranslate"><span class="pre">corba/orb/object-to-file</span></code>, Thus
+the next piece of code is:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">corba/orb/object-to-file</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="s">&quot;c:</span><span class="se">\\</span><span class="s">temp</span><span class="se">\\</span><span class="s">hello.ior&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">corba/orb/object-to-file</span></code> method could have been defined using
+the standard ORB operation <code class="docutils literal notranslate"><span class="pre">corba/orb/object-to-string</span></code> as follows,
+but <code class="docutils literal notranslate"><span class="pre">corba/orb/object-to-file</span></code> is provided by the Dylan ORB as a
+convenience.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">corba/orb/object-to-file</span> <span class="p">(</span><span class="n">orb</span> <span class="p">::</span> <span class="n">corba/&lt;orb&gt;</span><span class="p">,</span>
+                                        <span class="n">file</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">,</span>
+                                        <span class="n">object</span> <span class="p">::</span> <span class="n">corba/&lt;object&gt;</span><span class="p">)</span>
+  <span class="n">with-open-file</span><span class="p">(</span><span class="n">stream</span> <span class="o">=</span> <span class="n">file</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;output&quot;</span><span class="p">)</span>
+    <span class="n">write</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">corba/orb/object-to-string</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="n">object</span><span class="p">));</span>
+  <span class="k">end</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Next, we have to allow the POA manager managing this POA to start
+processing requests. (A POA manager is an object that allows us to
+control the operation of a POA.) We use these standard POA calls:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">manager</span> <span class="o">=</span> <span class="n">portableserver/poa/the-poamanager</span><span class="p">(</span><span class="n">poa</span><span class="p">);</span>
+<span class="n">portableserver/poamanager/activate</span><span class="p">(</span><span class="n">manager</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally, on the servant side we need to set the ORB running to receive
+client requests:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">corba/orb/run</span><span class="p">(</span><span class="n">orb</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="complete-code-for-the-server">
+<h3>Complete code for the server<a class="headerlink" href="#complete-code-for-the-server" title="Permalink to this headline">¶</a></h3>
+<p>The following code is the complete implementation of the server. Enter
+it into the file <code class="file docutils literal notranslate"><span class="pre">my-hello-world-server.dylan</span></code> in the
+My-Hello-World-Server project.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span>   <span class="s">corba-hello-world-server</span>
+<span class="na">Synopsis</span><span class="o">:</span> <span class="s">Distributed Hello World</span>
+<span class="na">Author</span><span class="o">:</span>   <span class="s">Jason Trenouth</span>
+<span class="na">Copyright</span><span class="o">:</span>    <span class="s">Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.</span>
+<span class="s">              All rights reserved.</span>
+<span class="na">License</span><span class="o">:</span>      <span class="s">See License.txt in this distribution for details.</span>
+<span class="na">Warranty</span><span class="o">:</span>     <span class="s">Distributed WITHOUT WARRANTY OF ANY KIND</span>
+
+<span class="k">define</span> <span class="nb">constant</span> <span class="no">$hello-world-ior-file</span> <span class="o">=</span> <span class="s">&quot;hello.ior&quot;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;world-implementation&gt;</span> <span class="p">(</span><span class="nc">&lt;world-servant&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">world/hello</span> <span class="p">(</span><span class="n">world</span> <span class="p">::</span> <span class="nc">&lt;world-implementation&gt;</span><span class="p">)</span>
+    <span class="p">=&gt;</span> <span class="p">(</span><span class="n">hello</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+  <span class="s">&quot;Hello World!&quot;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">orb</span> <span class="o">=</span> <span class="n">corba/orb-init</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">corba/&lt;arg-list&gt;</span><span class="p">),</span> <span class="s">&quot;Open Dylan ORB&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">poa</span> <span class="o">=</span> <span class="n">corba/orb/resolve-initial-references</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="s">&quot;RootPOA&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">impl</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;world-implementation&gt;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">world</span> <span class="o">=</span> <span class="n">portableserver/poa/servant-to-reference</span><span class="p">(</span><span class="n">poa</span><span class="p">,</span> <span class="n">impl</span><span class="p">);</span>
+  <span class="n">corba/orb/object-to-file</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="no">$hello-world-ior-file</span><span class="p">,</span> <span class="n">world</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">manager</span> <span class="o">=</span> <span class="n">portableserver/poa/the-poamanager</span><span class="p">(</span><span class="n">poa</span><span class="p">);</span>
+  <span class="n">portableserver/poamanager/activate</span><span class="p">(</span><span class="n">manager</span><span class="p">);</span>
+  <span class="n">corba/orb/run</span><span class="p">(</span><span class="n">orb</span><span class="p">);</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+
+<span class="k">begin</span>
+  <span class="n">main</span><span class="p">();</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="building-and-testing-the-application">
+<h2>Building and testing the application<a class="headerlink" href="#building-and-testing-the-application" title="Permalink to this headline">¶</a></h2>
+<p>In this section we build and test the completed CORBA-based Hello
+World application.</p>
+<p>Once you have replaced the dummy code in
+<code class="file docutils literal notranslate"><span class="pre">my-hello-world-client.dylan</span></code> with the code in section 2.5.4,
+and the dummy code in <code class="file docutils literal notranslate"><span class="pre">my-hello-world-server.dylan</span></code> with the
+code in section 2.6.4, the client and server applications are ready to
+build again.</p>
+<ol class="arabic">
+<li><p>Choose <span class="menuselection">Project ‣ Build</span> in the
+My-Hello-World-Client project.</p></li>
+<li><p>Choose <span class="menuselection">Project ‣ Build</span> the My-Hello-World-Server
+project.</p>
+<p>Now, you can run the application to test that it works. You need to
+run the server first so that it is waiting to receive calls from
+the client by the time the client makes its call.</p>
+</li>
+<li><p>Choose <span class="menuselection">Project ‣ Start</span> in the
+My-Hello-World-Server project.</p>
+<p>Wait until a console window appears. The server is now running.</p>
+</li>
+<li><p>Choose <span class="menuselection">Project ‣ Start</span> in the
+My-Hello-World-Client project.</p></li>
+</ol>
+<p>The client pops up another console window, into which it prints
+<code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code> before the development environment traps its exit and
+presents a confirmation dialog.</p>
+<p>Try quitting the client by clicking OK, and then running it
+repeatedly. Each time it gets a string from the same server, which
+keeps running all the while.</p>
+<p>An interesting exercise is to set breakpoints in the client and server
+code to trap the request and open debugger windows as the request
+passes from client to server.</p>
+<p>This concludes the first example.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="About Open Dylan CORBA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bank-setup.html" class="btn btn-neutral float-right" title="Setting up the Bank Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

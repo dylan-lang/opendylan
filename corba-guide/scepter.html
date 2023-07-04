@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using the Dylan IDL Compiler &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="An IDL Binding for Dylan" href="idl-app.html" />
+    <link rel="prev" title="Running and Debugging CORBA Applications" href="rundebug.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using the Dylan IDL Compiler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#general-usage">General usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-generation-options">Code generation options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preprocessor-options">Preprocessor options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#miscellaneous-options">Miscellaneous options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using the Dylan IDL Compiler</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scepter.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="using-the-dylan-idl-compiler">
+<h1>Using the Dylan IDL Compiler<a class="headerlink" href="#using-the-dylan-idl-compiler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Open Dylan IDL compiler, Scepter, is available as a standalone
+executable called <code class="file docutils literal notranslate"><span class="pre">console-scepter.exe</span></code>. The executable is
+available in the <code class="file docutils literal notranslate"><span class="pre">bin</span></code> subfolder of your top-level Open Dylan
+installation folder.</p>
+<p>The IDL compiler reads an IDL file and generates (up to) three Dylan
+projects from it. The projects contain stub and skeleton code. Each
+project defines one of the libraries specified in the <a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a>.</p>
+<p>The project’s name is identical to the name of the library which it
+defines. By default the projects are placed in subfolders of the
+current working folder called <code class="file docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="file docutils literal notranslate"><span class="pre">stubs</span></code>, and
+<code class="file docutils literal notranslate"><span class="pre">skeletons</span></code>.</p>
+</div>
+<div class="section" id="general-usage">
+<h2>General usage<a class="headerlink" href="#general-usage" title="Permalink to this headline">¶</a></h2>
+<p>The IDL compiler (<strong class="program">console-scepter.exe</strong>) is invoked from a
+console prompt. The general form of the command is:</p>
+<p><strong>console-scepter</strong> [<em>options</em>] &lt;<em>file</em>&gt;</p>
+<p>which compiles the IDL file <em>file</em>. Only one filename can be
+supplied. Options can be prefixed with the character <code class="docutils literal notranslate"><span class="pre">/</span></code> or
+<code class="docutils literal notranslate"><span class="pre">-</span></code>. Options that take a value must be separated from the value by a
+<code class="docutils literal notranslate"><span class="pre">:</span></code> character or whitespace.</p>
+<p>The following invocation compiles the file <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">-</span><span class="n">scepter</span> <span class="n">bank</span><span class="o">.</span><span class="n">idl</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-generation-options">
+<h2>Code generation options<a class="headerlink" href="#code-generation-options" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">/language:</span></code> <em>name</em></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">/language</span></code> option is deprecated, but is still supported for
+backward compatibility. It has been replaced with the <code class="docutils literal notranslate"><span class="pre">/back-end</span></code>
+option.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/back-end:</span></code> <em>name</em></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">/back-end</span></code> option selects which back-end the compiler should
+use on the IDL file. Two values are supported:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">dylan</span></code></dt><dd><p>This is the default value. The Dylan back-end generates Dylan
+protocol, stubs and skeletons libraries.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ir</span></code></dt><dd><p>This value causes the compiler to load the definitions in the
+IDL file into an Interface Repository. It will overwrite any
+definitions in the repository with the same scoped names. The
+compiler uses a call to the standard CORBA ORB operation
+<code class="docutils literal notranslate"><span class="pre">ResolveInitialReferences</span></code> to obtain a reference to the
+Interface Repository. Note that Open Dylan does not have its own
+Interface Repository, but you can use one supplied by a third
+party. You may use the <code class="docutils literal notranslate"><span class="pre">-ORBinterface-repository-file</span></code> and
+<code class="docutils literal notranslate"><span class="pre">-ORBinterface-repository</span></code> options (described in Section
+8.3.4, “ORB runtime switches”) to specify an object reference
+for <code class="docutils literal notranslate"><span class="pre">ResolveInitialReferences</span></code> to return.</p>
+</dd>
+</dl>
+<p>More than one <code class="docutils literal notranslate"><span class="pre">/back-end</span></code> option may be supplied if you want to
+load the IDL into an Interface Repository and generate Dylan code.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/parse</span></code></dt><dd><p>Parse the IDL file only. This option overrides <code class="docutils literal notranslate"><span class="pre">/back-end</span></code>.</p>
+</dd>
+</dl>
+<p>The following three options only apply to the Dylan back-end.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">/directory:</span></code> <em>dir</em></dt><dd><p>By default <strong class="program">console-scepter.exe</strong> puts the Dylan projects
+it generates into subfolders in the current working folder. You can
+force it to put the subfolders in another folder dir by using the
+<code class="docutils literal notranslate"><span class="pre">/directory</span></code> option.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/prefix:</span></code> <em>name</em></dt><dd><p>The default names for the subfolders are <code class="file docutils literal notranslate"><span class="pre">protocol</span></code>,
+<code class="file docutils literal notranslate"><span class="pre">stubs</span></code>, and and <code class="file docutils literal notranslate"><span class="pre">skeletons</span></code>. You may specify a prefix
+for these names with the <code class="docutils literal notranslate"><span class="pre">/prefix</span></code> option. This might be useful,
+for example, where you want to put the project subfolders from more
+than one IDL file into a common folder.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/stubs</span></code></dt><dd><p>By default <strong class="program">console-scepter.exe</strong> generates three libraries
+for each IDL file: a protocol library, a stubs library, and a
+skeletons library. However, you may not always want to generate
+both the stubs and skeletons libraries. For example if you are
+developing a client application you will only need the stubs
+library. The <code class="docutils literal notranslate"><span class="pre">/stubs</span></code> option causes
+<strong class="program">console-scepter.exe</strong> to generate only the protocol and
+stubs libraries.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="preprocessor-options">
+<h2>Preprocessor options<a class="headerlink" href="#preprocessor-options" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">/preprocess</span></code></dt><dd><p>Runs the preprocessor on the IDL file and displays the result on
+standard output. The preprocessor output is not compiled.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/define:</span></code> <em>name</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code> <em>value</em>]</dt><dd><p>Define the macro <em>name</em>. If the optional <em>value</em> is supplied, the
+name is defined to have that value.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/undefine:</span></code> <em>name</em></dt><dd><p>Undefine the macro <em>name</em>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/include:</span></code> <em>dir</em></dt><dd><p>Adds <em>dir</em> to the search path list which the preprocessor uses to
+find files mentioned in <code class="docutils literal notranslate"><span class="pre">#include</span></code> directives. More than one
+<code class="docutils literal notranslate"><span class="pre">/include</span></code> option may be supplied.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="miscellaneous-options">
+<h2>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">/help</span></code></dt><dd><p>Display the command-line usage message.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/version</span></code></dt><dd><p>Display version information.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/debugger</span></code></dt><dd><p>Enter a debugger if console-scepter crashes.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/case</span></code></dt><dd><p>By default console-scepter ignores case when recognizing keywords
+and identifiers, but this option requires the characters in
+identifiers and keywords to have exactly the same case as the
+identifer or keyword definition in order to be recognised.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/nowarnings</span></code></dt><dd><p>Suppress compilation warning messages.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/trace</span></code></dt><dd><p>Trace compilation stages.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>The following example would compile the bank demo IDL file. The
+generated projects are placed in subfolders called
+<code class="file docutils literal notranslate"><span class="pre">bank-protocol</span></code>, <code class="file docutils literal notranslate"><span class="pre">bank-stubs</span></code>, and <code class="file docutils literal notranslate"><span class="pre">bank-skeletons</span></code>
+in the current working folder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">-</span><span class="n">scepter</span> <span class="o">/</span><span class="n">prefix</span><span class="p">:</span><span class="n">bank</span> <span class="n">bank</span><span class="o">.</span><span class="n">idl</span>
+</pre></div>
+</div>
+<p>The next example would compile the bank demo IDL file and place the
+generated projects in the folders <code class="file docutils literal notranslate"><span class="pre">c:bank-clientprotocol</span></code>,
+<code class="file docutils literal notranslate"><span class="pre">c:bank-clientstubs</span></code> and <code class="file docutils literal notranslate"><span class="pre">c:bank-clientskeletons</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">-</span><span class="n">scepter</span> <span class="o">/</span><span class="n">language</span> <span class="n">dylan</span> <span class="o">/</span><span class="n">directory</span> <span class="n">c</span><span class="p">:</span>\<span class="n">bank</span><span class="o">-</span><span class="n">client</span> <span class="n">bank</span><span class="o">.</span><span class="n">idl</span>
+</pre></div>
+</div>
+<p>The following example loads the Interface Repository with the
+definitions in the Bank demo IDL file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">-</span><span class="n">scepter</span> <span class="o">/</span><span class="n">back</span><span class="o">-</span><span class="n">end</span> <span class="n">ir</span> <span class="n">bank</span><span class="o">.</span><span class="n">idl</span>
+</pre></div>
+</div>
+<p>You can generate the Dylan projects at the same time using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">-</span><span class="n">scepter</span> <span class="o">/</span><span class="n">back</span><span class="o">-</span><span class="n">end</span><span class="p">:</span><span class="n">ir</span> <span class="o">/</span><span class="n">back</span><span class="o">-</span><span class="n">end</span><span class="p">:</span><span class="n">dylan</span> <span class="n">bank</span><span class="o">.</span><span class="n">idl</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rundebug.html" class="btn btn-neutral float-left" title="Running and Debugging CORBA Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="idl-app.html" class="btn btn-neutral float-right" title="An IDL Binding for Dylan" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

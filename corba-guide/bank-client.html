@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Bank Client &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Bank Server" href="bank-server.html" />
+    <link rel="prev" title="Writing and Compiling IDL" href="bank-idl.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Bank Client</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">The bank client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-clients-perspective">The client’s perspective</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-for-implementing-the-bank-client">Requirements for implementing the bank client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-the-bank-clients-gui">Implementing the bank client’s GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-corba-initialization-for-the-bank-client">Implementing CORBA initialization for the bank client</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The Bank Client</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bank-client.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-bank-client">
+<h1>The Bank Client<a class="headerlink" href="#the-bank-client" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>The bank client<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, we design and implement a CORBA client, using Dylan
+and the Open Dylan ORB.</p>
+<p>Our client presents a graphical user interface to a bank object and
+its operations. We implement the user interface using DUIM, Open
+Dylan’s graphical interface programming toolkit. Since the primary
+motivation for this tutorial is to illustrate the use of CORBA, we
+focus less on the design of the graphical interface, and more on the
+method for interacting with CORBA objects.</p>
+</div>
+<div class="section" id="the-clients-perspective">
+<h2>The client’s perspective<a class="headerlink" href="#the-clients-perspective" title="Permalink to this headline">¶</a></h2>
+<p>From the client’s perspective, the IDL definition of a bank’s
+interface, together with some documentation, fully determines its
+functionality. This means that in writing the client we need only rely
+on the information in the documented IDL to be able to interact with a
+bank object. Knowing the IDL description, we can implement the client
+before our bank object implementation is available.</p>
+<p>The Bank-Protocol library, which was produced by the IDL compiler,
+Scepter, merely specifies the protocol for interacting with CORBA
+objects satisfying the interfaces in the IDL file
+<code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. The client-side implementation of this protocol
+resides the Bank-Stubs library. Any application that wants to act as a
+client with respect to some CORBA object matching an interface in the
+<code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> file should use the Bank-Stubs library.</p>
+<p>The Bank-Stubs library defines the following concrete classes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">account</span><span class="o">-</span><span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">checkingAccount</span><span class="o">-</span><span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">bank</span><span class="o">-</span><span class="n">reference</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>These classes subclass the following abstract classes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">account</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">checkingAccount</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">bank</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The class <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount-reference&gt;</span></code> is defined to
+inherit from <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account-reference&gt;</span></code>, matching the
+inheritance relationship in the IDL. Instances of these classes act as
+proxies for CORBA objects running on the server.</p>
+<p>The Bank-Stubs library also defines a concrete stub method,
+specialized on the appropriate proxy class, for each protocol function
+stemming from an IDL attribute or operation. When the client applies
+the generic function to a particular target proxy, the stub method
+communicates with the ORB to invoke the corresponding operation on the
+actual target object in the server. If the request succeeds, the stub
+method returns the result to the client. If the request fails, raising
+a CORBA user or system exception, the stub method raises the
+corresponding Dylan condition of the appropriate class. This condition
+can then be handled by the client code using standard Dylan
+constructs.</p>
+</div>
+<div class="section" id="requirements-for-implementing-the-bank-client">
+<h2>Requirements for implementing the bank client<a class="headerlink" href="#requirements-for-implementing-the-bank-client" title="Permalink to this headline">¶</a></h2>
+<p>There are two parts to implementing the bank client:</p>
+<ul class="simple">
+<li><p>Write the code to initialize the CORBA ORB, and obtain a reference
+to a bank server object.</p></li>
+<li><p>Write the code for the client’s GUI.</p></li>
+</ul>
+<p>We start with the GUI implementation.</p>
+</div>
+<div class="section" id="implementing-the-bank-clients-gui">
+<h2>Implementing the bank client’s GUI<a class="headerlink" href="#implementing-the-bank-clients-gui" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section assumes some basic knowledge of DUIM (Dylan User
+Interface Manager), Open Dylan’s window programming toolkit. See
+the manual Building Applications Using DUIM for details. However,
+you do not need to know about DUIM to follow the rest of the
+tutorial.</p>
+</div>
+<p>Since this demonstration principally concerns CORBA, and because we
+would like to revamp the look-and-feel of the demonstration
+occasionally, we no longer describe the GUI implementation in great
+detail. Instead only a brief outline of the current design is given.</p>
+<p>The bank client consists of one window that shows a table of retrieved
+accounts. Each row in the table shows the name, the current balance,
+and the overdraft limit (if applicable). CORBA operations are mapped
+on to menu items whose callbacks make the necessary requests.</p>
+<p>The bank client is implemented as a library:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">library</span> <span class="n">bank-client</span>
+  <span class="k">use</span> <span class="n">common-dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">dylan-orb</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">bank-stubs</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">duim</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="k">end</span> <span class="nb">library</span> <span class="n">bank-client</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>that defines a single module:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">module</span> <span class="n">bank-client</span>
+  <span class="k">use</span> <span class="n">common-dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">dylan-orb</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">bank-stubs</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">duim</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="k">end</span> <span class="nb">module</span> <span class="n">bank-client</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>(See <code class="file docutils literal notranslate"><span class="pre">library.dylan</span></code> and <code class="file docutils literal notranslate"><span class="pre">module.dylan</span></code> in the Bank-Client
+project.)</p>
+<p>Any application that wants to use the Open Dylan ORB should use the
+Dylan-ORB system library and module, in addition to any
+application-specific libraries. Because our application acts as a
+client of CORBA objects satisfying interfaces defined in the
+<code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> file, it also needs to uses the Bank-Stubs library and
+module. It also needs to use the DUIM library and module to construct
+the graphical user interface.</p>
+<p>The focal point of the bank client GUI is the <code class="docutils literal notranslate"><span class="pre">&lt;bank-frame&gt;</span></code> class
+defined by DUIM’s <code class="docutils literal notranslate"><span class="pre">frame-definer</span></code> macro. This maintains a set of
+account references and organizes the tabular layout of their details.</p>
+<p>Defining the callbacks attached to each menu item is
+straightforward. Recall that in DUIM, the argument passed to a
+callback is the gadget whose activation triggered that callback, and
+that the DUIM function <code class="docutils literal notranslate"><span class="pre">sheet-frame</span></code> can be used to return the
+enclosing frame of a gadget.</p>
+<p>The source code for the client GUI is in file <code class="file docutils literal notranslate"><span class="pre">bank-client.dylan</span></code>.</p>
+</div>
+<div class="section" id="implementing-corba-initialization-for-the-bank-client">
+<h2>Implementing CORBA initialization for the bank client<a class="headerlink" href="#implementing-corba-initialization-for-the-bank-client" title="Permalink to this headline">¶</a></h2>
+<p>Having written the client GUI we are now ready to set up the client’s
+CORBA environment. A client can only communicate with a CORBA object
+if it possesses a reference to that object. This raises the question
+of how the client obtains its initial object reference. The fact that
+some IDL operation may return an object reference is of no help here:
+without a reference to specify as its target, there is no way to
+invoke this operation.</p>
+<p>In more detail, before a client can enter the CORBA environment, it
+must first:</p>
+<ul class="simple">
+<li><p>Be initialized into the ORB.</p></li>
+<li><p>Get a reference to the ORB pseudo-object for use in future ORB operations.</p></li>
+<li><p>Get an initial reference to an actual object on the server.</p></li>
+</ul>
+<p>CORBA provides a standard set of operations, specified in pseudo IDL
+(PIDL), to initialize applications and obtain the appropriate object
+references.</p>
+<p>Operations providing access to the ORB reside in the <code class="docutils literal notranslate"><span class="pre">CORBA</span></code>
+module. (Like an IDL interface declaration, an IDL (or PIDL) module
+declaration defines a new namespace for the body of declarations it
+encloses. What it does not do is define a new type of CORBA object.)
+Operations providing access to CORBA features such as Object Adapters,
+the Interface Repository, the Naming Service, and other Object
+Services reside in the <code class="docutils literal notranslate"><span class="pre">ORB</span></code> interface defined within the <code class="docutils literal notranslate"><span class="pre">CORBA</span></code>
+module.</p>
+<p>To provide some flavor of PIDL, here is a fragment of the PIDL
+specification of <code class="docutils literal notranslate"><span class="pre">CORBA</span></code> that we rely on in our implementation of
+the bank client.</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>module CORBA {
+  interface Object {
+    boolean is_a (in <span class="nb">string</span> logical_type_id);
+    <span class="o">//</span> ...
+  };
+
+  interface ORB {
+    <span class="nb">string</span> object_to_string (in Object obj);
+    Object string_to_object (in <span class="nb">string</span> str);
+    <span class="o">//</span> ...
+  };
+
+  <span class="o">//</span> ...
+
+  typedef <span class="nb">string</span> ORBid;
+
+  typedef sequence <span class="o">&lt;</span><span class="nb">string</span><span class="o">&gt;</span> arg_list;
+
+  ORB ORB_init (inout arg_list argv, in ORBid orb_identifier);
+};
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Object</span></code> interface is implicitly inherited by all IDL
+interfaces, much as every Dylan class inherits from the class
+<a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. The <code class="docutils literal notranslate"><span class="pre">is_a</span></code> operation provides a test for inheritance —
+the <code class="docutils literal notranslate"><span class="pre">logical_type_id</span></code> is a string representation of an interface
+identifier. The operation returns true if the object is an instance of
+that interface, including if that interface is an ancestor of the most
+derived interface of that object.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ORB</span></code> operations <code class="docutils literal notranslate"><span class="pre">object_to_string</span></code> and <code class="docutils literal notranslate"><span class="pre">string_to_object</span></code>
+provide an invertible mapping from object references to their
+representations as strings.</p>
+<p>Notice that the CORBA operation <code class="docutils literal notranslate"><span class="pre">ORB_init</span></code> is defined outside the
+scope of any interface, providing a means of bootstrapping into the
+CORBA world. Calling <code class="docutils literal notranslate"><span class="pre">ORB_init</span></code> initializes the ORB, returning an
+<code class="docutils literal notranslate"><span class="pre">ORB</span></code> pseudo object that can be used as the target for further ORB
+operations.</p>
+<p>Like most other language bindings, the Dylan binding adopts the pseudo
+objects approach, in which these CORBA and ORB operations are accessed
+by applying the binding’s normal IDL mapping rules to the PIDL
+specification.</p>
+<p>In this tutorial, as in the Hello World example of Chapter 2, the
+client can obtain the initial object reference from a shared file, in
+which the server has published a reference to its implementation of
+the bank object, encoded as a string. After starting up, the client
+reads the file, decodes the string into an object reference (using the
+ORB utility operation <code class="docutils literal notranslate"><span class="pre">file_to_object</span></code>, which in turn uses
+<code class="docutils literal notranslate"><span class="pre">string_to_object</span></code>), and then uses this reference as the target of
+further operations.</p>
+<p>Alternatively, this demonstration can also use a Name Service to
+communicate the initial bank reference between the client and
+server. A Name Service acts as an intermediary, allowing the server to
+register a reference against name , and then allowing the client to
+query for the associated reference. To use the Name Service, pass
+<code class="docutils literal notranslate"><span class="pre">-location-service:naming-service</span></code> on the command line of the client.</p>
+<p>To change the command line arguments given to the program, choose the
+<span class="menuselection">Project ‣ Settings…</span> dialog and switch to the
+<span class="guilabel">Debug</span> tab page. By default the command line arguments for
+the Bank demo are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">ORBname</span><span class="o">-</span><span class="n">service</span><span class="o">-</span><span class="n">file</span> <span class="n">c</span><span class="p">:</span>\<span class="n">temp</span>\<span class="n">ns</span><span class="o">.</span><span class="n">ior</span> <span class="o">-</span><span class="n">location</span><span class="o">-</span><span class="n">service</span><span class="p">:</span><span class="n">shared</span><span class="o">-</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>which tells the ORB where the Name Service is, but that it should use
+a shared file to pass the initial Bank reference.</p>
+<p>Here is some the Dylan code that implements the initialization of the client:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">initialize-client</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">orb</span> <span class="o">=</span> <span class="n">CORBA/ORB-init</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">CORBA/&lt;arg-list&gt;</span><span class="p">),</span>
+                           <span class="s">&quot;Open Dylan ORB&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">get-location-service</span><span class="p">();</span>
+  <span class="nb">block</span> <span class="p">()</span>
+    <span class="k">let</span> <span class="n">bank</span> <span class="o">=</span> <span class="n">lookup-bank</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="n">ls</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">bank-frame</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;bank-frame&gt;</span><span class="p">,</span> <span class="k">bank:</span> <span class="n">bank</span><span class="p">);</span>
+    <span class="n">start-frame</span><span class="p">(</span><span class="n">bank-frame</span><span class="p">);</span>
+  <span class="nb">exception</span> <span class="p">(</span><span class="n">lookup-bank-failure</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="n">ls</span><span class="p">))</span>
+    <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Cannot locate the Bank. Click OK to Exit.&quot;</span><span class="p">);</span>
+  <span class="k">end</span> <span class="nb">block</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This method first initializes the Open Dylan ORB by calling the Dylan
+generic function <code class="docutils literal notranslate"><span class="pre">CORBA/ORB-init</span></code> corresponding to the PIDL
+<code class="docutils literal notranslate"><span class="pre">ORB_init</span></code> operation. (Note that the IDL module name <code class="docutils literal notranslate"><span class="pre">CORBA</span></code> forms
+a prefix of the Dylan operation name, and that IDL underscore “<code class="docutils literal notranslate"><span class="pre">_</span></code>”
+maps to a Dylan dash “<code class="docutils literal notranslate"><span class="pre">-</span></code>”.) The first argument to this call
+evaluates to an empty <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;arglist&gt;</span></code>. Passing an empty sequence
+instructs the <code class="docutils literal notranslate"><span class="pre">CORBA/ORB-init</span></code> function to ignore this argument and
+use the application’s command line arguments (if any) instead. The
+value of the second argument, <code class="docutils literal notranslate"><span class="pre">&quot;Open</span> <span class="pre">Dylan</span> <span class="pre">ORB&quot;</span></code>, merely identifies
+the ORB to use. The call returns an object of class <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;ORB&gt;</span></code>.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">get-location-service</span></code> reads the command line to see
+whether to look for a shared file or use a Name Service . It then
+passes this information to the function <code class="docutils literal notranslate"><span class="pre">lookup-bank</span></code>, which knows
+how to get a bank reference using either method. For example, for the
+shared file case <code class="docutils literal notranslate"><span class="pre">lookup-bank</span></code> does the following:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">lookup-bank</span> <span class="p">(</span><span class="n">orb</span> <span class="p">::</span> <span class="n">corba/&lt;orb&gt;</span><span class="p">,</span>
+                           <span class="n">location-service</span> <span class="o">==</span> <span class="ss">#&quot;shared-file&quot;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">bank</span> <span class="p">::</span> <span class="n">bankingdemo/&lt;bank&gt;</span><span class="p">)</span>
+  <span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;bank&gt;</span><span class="p">,</span> <span class="n">corba/orb/file-to-object</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span> <span class="no">$bank-ior-file</span><span class="p">))</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The constant <code class="docutils literal notranslate"><span class="pre">$bank-ior-file</span></code> is the name of the shared file used to
+pass the reference of the bank object from the server to the client.</p>
+<p>Invoking <code class="docutils literal notranslate"><span class="pre">CORBA/ORB/file-to-object</span></code> on this ORB, passing the shared
+file name, reconstitutes the IOR string contained in the file as an
+unspecific object reference of class <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;Object&gt;</span></code>. Calling the
+<code class="docutils literal notranslate"><span class="pre">as</span></code> method on this object reference narrows (that is, coerces) it
+to a more specific object reference of class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code>. (The <code class="docutils literal notranslate"><span class="pre">as</span></code> method, which is generated by the
+IDL compiler and defined in the Bank-Stubs library, employs an
+implicit call to the object’s <code class="docutils literal notranslate"><span class="pre">is_a</span></code> operation to check that the
+desired coercion is safe.)</p>
+<p>Finally, the resulting object reference <code class="docutils literal notranslate"><span class="pre">bank</span></code>, of class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code>, is used to make and start a new bank frame,
+displaying the initial GUI to the user.</p>
+<p>The full implementation of the client initialization can be found in
+the file <code class="file docutils literal notranslate"><span class="pre">init-client.dylan</span></code>.</p>
+<p>In this tutorial, as in the Hello World example of Chapter 2, the
+client obtains the initial object reference from a shared file, in
+which the server has published a reference to its implementation of
+the bank object, encoded as a string. After starting up, the client
+reads the file, decodes the string into an object reference (using the
+operation <code class="docutils literal notranslate"><span class="pre">string_to_object</span></code>), and then uses this reference as the
+target of further operations.</p>
+<p>Here is the remaining Dylan code that completes the implementation of
+the client:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">constant</span> <span class="no">$bank-ior-file</span> <span class="o">=</span> <span class="s">&quot;bank-demo.ior&quot;</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">method</span> <span class="n">file-as-string</span> <span class="p">(</span><span class="n">ior-file</span> <span class="p">::</span> <span class="nc">&lt;string&gt;</span><span class="p">)</span>
+  <span class="n">with-open-file</span><span class="p">(</span><span class="n">stream</span> <span class="o">=</span> <span class="n">ior-file</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">)</span>
+    <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;string&gt;</span><span class="p">,</span> <span class="n">read-to-end</span><span class="p">(</span><span class="n">stream</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span> <span class="nb">method</span><span class="p">;</span>
+
+<span class="k">begin</span>
+  <span class="k">let</span> <span class="n">orb</span> <span class="o">=</span> <span class="n">CORBA/ORB-init</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">CORBA/&lt;arg-list&gt;</span><span class="p">),</span>
+                           <span class="s">&quot;Open Dylan ORB&quot;</span><span class="p">);</span>
+  <span class="k">let</span> <span class="n">bank</span> <span class="o">=</span>
+    <span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;bank&gt;</span><span class="p">,</span>
+       <span class="n">CORBA/ORB/string-to-object</span><span class="p">(</span><span class="n">orb</span><span class="p">,</span>
+                                  <span class="n">file-as-string</span><span class="p">(</span><span class="no">$bank-ior-file</span><span class="p">)));</span>
+  <span class="k">let</span> <span class="n">bank-frame</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;bank-frame&gt;</span><span class="p">,</span> <span class="k">bank:</span> <span class="n">bank</span><span class="p">);</span>
+  <span class="n">start-frame</span><span class="p">(</span><span class="n">bank-frame</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The constant <code class="docutils literal notranslate"><span class="pre">$bank-ior-file</span></code> is the name of the shared file used to
+pass the reference of the bank object from the server to the client.</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">file-as-string</span></code> reads a file’s contents into a string.</p>
+<p>The top-level <code class="docutils literal notranslate"><span class="pre">begin</span> <span class="pre">...</span> <span class="pre">end</span></code> statement first initializes the Open
+Dylan ORB by calling the Dylan generic function <code class="docutils literal notranslate"><span class="pre">CORBA/ORB-init</span></code>
+corresponding to the PIDL <code class="docutils literal notranslate"><span class="pre">ORB_init</span></code> operation. (Notice that the IDL
+module name <code class="docutils literal notranslate"><span class="pre">CORBA</span></code> forms a prefix of the Dylan operation name, and
+that IDL underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>) maps to a Dylan dash (<code class="docutils literal notranslate"><span class="pre">-</span></code>).) The first
+argument to this call evaluates to an empty
+<code class="docutils literal notranslate"><span class="pre">CORBA/&lt;arglist&gt;</span></code>. Passing an empty sequence instructs the
+<code class="docutils literal notranslate"><span class="pre">CORBA/ORB-init</span></code> function to ignore this argument and use the
+application’s command line arguments (if any) instead. The value of
+the second argument, <code class="docutils literal notranslate"><span class="pre">&quot;Open</span> <span class="pre">Dylan</span> <span class="pre">ORB&quot;</span></code>, merely identifies the ORB
+to use. The call returns an object of class <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;ORB&gt;</span></code>.</p>
+<p>Invoking <code class="docutils literal notranslate"><span class="pre">CORBA/ORB/string-to-object</span></code> on this ORB, passing the
+string read from the shared file, reconstitutes the string as an
+unspecific object reference of class <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;Object&gt;</span></code>, using the
+ORB operation <code class="docutils literal notranslate"><span class="pre">string_to_object</span></code>. Calling the <code class="docutils literal notranslate"><span class="pre">as</span></code> method on this
+object reference narrows (that is, coerces) it to a more specific
+object reference of class <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code>. (The <code class="docutils literal notranslate"><span class="pre">as</span></code> method,
+which is generated by the IDL compiler and defined in the Bank-Stubs
+library, employs an implicit call to the object’s <code class="docutils literal notranslate"><span class="pre">is_a</span></code> operation
+to check that the desired coercion is safe.)</p>
+<p>Finally, the resulting object reference <code class="docutils literal notranslate"><span class="pre">bank</span></code>, of class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code>, is used to make and start a new bank frame,
+displaying the initial GUI to the user.</p>
+<p>The implementation of the client is now complete.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bank-idl.html" class="btn btn-neutral float-left" title="Writing and Compiling IDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bank-server.html" class="btn btn-neutral float-right" title="The Bank Server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

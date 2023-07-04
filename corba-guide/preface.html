@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preface &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About Open Dylan CORBA" href="intro.html" />
+    <link rel="prev" title="Developing Component Software with CORBA" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Preface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#product">Product</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parts">Parts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#audience">Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#standards-compliance">Standards compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#further-reading">Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Preface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/preface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="preface">
+<h1>Preface<a class="headerlink" href="#preface" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="product">
+<h2>Product<a class="headerlink" href="#product" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan  supports the Common Object Request Broker Architecture (CORBA)
+defined by Object Management Group, Inc. (OMG).</p>
+<p>The Open Dylan Object Request Broker (ORB) and supporting tools
+provide CORBA architecture functionality to Dylan programmers,
+combining standardized distributed system development with a
+state-of-the-art dynamic object-functional language.</p>
+</div>
+<div class="section" id="parts">
+<h2>Parts<a class="headerlink" href="#parts" title="Permalink to this headline">¶</a></h2>
+<p>The CORBA components included in Open Dylan are:</p>
+<ol class="arabic">
+<li><p>An IDL (Interface Definition Language) compiler</p>
+<p>This comes in two forms:</p>
+<ol class="arabic simple">
+<li><p>some DLLs linked into the Open Dylan development environment,
+and console Dylan compiler, to allow IDL files to be included in
+Dylan projects. This integrates CORBA into the Open Dylan
+project manager and build system.</p></li>
+<li><p>a standalone IDL compiler called <code class="docutils literal notranslate"><span class="pre">console-scepter</span></code></p></li>
+</ol>
+</li>
+<li><p>An ORB runtime library</p>
+<p>This consists of the <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> library and several of the
+libraries on which it depends.</p>
+</li>
+<li><p>Some example CORBA projects including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">corba-hello-world</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bank</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chat</span></code></p></li>
+</ul>
+<p>These are found in the <code class="docutils literal notranslate"><span class="pre">Examples</span></code> subfolder to the top-level Open
+Dylan installation folder on Windows, or in <code class="docutils literal notranslate"><span class="pre">sources/corba/demos</span></code>
+in the source repository.</p>
+</li>
+<li><p>This manual</p></li>
+</ol>
+</div>
+<div class="section" id="audience">
+<h2>Audience<a class="headerlink" href="#audience" title="Permalink to this headline">¶</a></h2>
+<p>This book is intended for use by application programmers who wish to
+build CORBA applications using Dylan. The book assumes that the reader
+is familiar with both the Dylan programming language and with building
+distributed applications using CORBA.</p>
+</div>
+<div class="section" id="standards-compliance">
+<h2>Standards compliance<a class="headerlink" href="#standards-compliance" title="Permalink to this headline">¶</a></h2>
+<p>The Open Dylan Dylan ORB currently conforms to the CORBA 2.0
+specification with some elements of CORBA 2.2, most notably the
+Portable Object Adapter (POA).</p>
+</div>
+<div class="section" id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>Many resources exist for those who want to learn about CORBA and
+distributed software development.</p>
+<p><a class="reference external" href="http://www.ciaranmchale.com/corba-explained-simply/">Ciaran McHale’s CORBA Explained Simply</a> is an
+excellent overview of CORBA concepts and the CORBA ecosystem. The
+<a class="reference external" href="http://www.ciaranmchale.com/corba-explained-simply/other-corba-resources.html">Other CORBA Resources</a>
+chapter of that book contains helpful links to CORBA books and other
+related resources.</p>
+<p>Michi Henning’s <a class="reference external" href="https://queue.acm.org/detail.cfm?id=1142044">The Rise and Fall of CORBA</a> outlines the history,
+including the successes and failures, of the CORBA standards.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Developing Component Software with CORBA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="intro.html" class="btn btn-neutral float-right" title="About Open Dylan CORBA" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

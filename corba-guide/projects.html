@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating CORBA Projects &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running and Debugging CORBA Applications" href="rundebug.html" />
+    <link rel="prev" title="The Bank Server" href="bank-server.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Creating CORBA Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-corba-projects">About CORBA projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Creating CORBA projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-orb-options">Setting ORB options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-role-of-spec-files-in-idl-compilation">The role of spec files in IDL compilation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-the-spec-file-affects-idl-compilation">How the spec file affects IDL compilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-information-for-corba-spec-files">Header information for CORBA spec files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#server-keywords-for-corba-spec-files">Server keywords for CORBA spec files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#client-keywords-for-corba-spec-files">Client keywords for CORBA spec files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-keywords-for-corba-spec-files">Other keywords for CORBA spec files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-idl-for-non-corba-work">Using IDL for non-CORBA work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Creating CORBA Projects</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/projects.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="creating-corba-projects">
+<h1>Creating CORBA Projects<a class="headerlink" href="#creating-corba-projects" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-corba-projects">
+<h2>About CORBA projects<a class="headerlink" href="#about-corba-projects" title="Permalink to this headline">¶</a></h2>
+<p>CORBA projects, such as those we saw in previous examples, are just
+Dylan projects whose executable or DLL can operate as a CORBA server
+or client. Servers and clients built from CORBA projects use the
+Open Dylan ORB to communicate with other CORBA-based applications
+across an interface specified in OMG IDL.</p>
+<p>The most noticeable distinction between a CORBA project and other
+projects is that a CORBA project contains a Open Dylan Tool
+Specification (spec) file which identifies an IDL file containing an
+IDL interface declaration.</p>
+<p>Additionally, CORBA projects use protocol, stubs or skeletons projects
+that are generated from an IDL file. The combination of these
+generated projects used in a CORBA project depends on whether it is a
+server or client project. Automatic generation of client stubs and
+server skeletons from an IDL file is the standard way of providing a
+transparent native-language interface for writing clients and servers
+that can communicate with one another across an IDL interface using
+CORBA.</p>
+</div>
+<div class="section" id="id1">
+<h2>Creating CORBA projects<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>To create a CORBA project with the New Project wizard:</p>
+<ol class="arabic">
+<li><p>Choose <span class="menuselection">File ‣ New…</span> from any window or click
+the New Project button in the main window.</p>
+<p>If you chose <span class="menuselection">File ‣ New…</span> from a project
+window, remember to uncheck the “Insert file into project?” box
+unless you intend your new project to be a subproject.</p>
+</li>
+<li><p>Select <span class="guilabel">Project</span> and click <span class="guilabel">OK</span>.</p>
+<p>The New Project wizard appears.</p>
+</li>
+<li><p>In the <span class="guilabel">Project Type</span> section, select <span class="guilabel">CORBA Client and/or Server</span> and click <span class="guilabel">Next</span>.</p>
+<p>The wizard’s CORBA options page appears.</p>
+<div class="figure align-default" id="id2">
+<img alt="_images/getstart-new-project.png" src="_images/getstart-new-project.png" />
+<p class="caption"><span class="caption-text">Selecting an IDL file.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</li>
+<li><p>In the <span class="guilabel">CORBA IDL file</span> section, choose an IDL file on
+which to base the project.</p>
+<p>The wizard copies the IDL file into the project folder which you
+choose on the next wizard page. If the IDL file is already in that
+folder, it is left there.</p>
+<p>Alternatively, the wizard can generate a blank IDL file for
+you. Uncheck the “Use existing IDL file” to make that happen. The
+blank IDL file will be written into the project folder you choose
+on the next wizard page. The IDL file will have the same name as
+the project, with the extension <code class="docutils literal notranslate"><span class="pre">.idl</span></code>.</p>
+</li>
+<li><p>In the <span class="guilabel">Projects to generate</span> section, choose whether to
+generate a client or server project, or both.</p>
+<p>The <span class="guilabel">Advanced…</span> button next to the client and server
+options produces a dialog containing several ORB-related
+options. See “Setting ORB options” on page 76 for details.</p>
+</li>
+<li><p>Click <span class="guilabel">Next</span>.</p>
+<p>The next page is the standard wizard page for naming a project and
+specifying its location. (See Chapter 4 of Getting Started with
+Open Dylan for details.)</p>
+<p>The project name you specify here is not used literally when the
+wizard creates the project or projects. Instead, if you chose to
+create a client project, the wizard creates a project called name
+<code class="docutils literal notranslate"><span class="pre">-client</span></code>, where name is the project name you specified. If you
+chose to create a server project, the project will be called name
+<code class="docutils literal notranslate"><span class="pre">-server</span></code>.</p>
+<p>Similarly, the project folder you specify is used as the overall
+project folder name, with the project files and sources for clients
+and servers in subfolders of the appropriate name. For a project
+folder <code class="docutils literal notranslate"><span class="pre">phat</span></code>, you get the following structure on disk (assuming
+you chose to create both client and server projects):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">phat</span>\
+  <span class="n">client</span>\
+  <span class="n">server</span>\
+</pre></div>
+</div>
+<p>If you chose to create a blank IDL file for your project by unchecking
+the “Use existing IDL file” box, your blank IDL file is created in the
+top-level project folder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">phat</span>\
+  <span class="n">client</span>\
+  <span class="n">server</span>\
+  <span class="n">phat</span><span class="o">.</span><span class="n">idl</span>
+</pre></div>
+</div>
+<p>The client and server projects themselves are created in subfolders
+of the top-level project folder called <code class="file docutils literal notranslate"><span class="pre">client</span></code> and <code class="file docutils literal notranslate"><span class="pre">server</span></code>.</p>
+</li>
+<li><p>Enter a project name and location, and click <span class="guilabel">Next</span>.</p>
+<p>The wizard moves on to the Use libraries page. This and the remaining wizard pages are as for ordinary projects.</p>
+</li>
+<li><p>Complete the remaining pages in the wizard to finish specifying the
+non-CORBA parts of your project or projects.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you choose to generate client and server projects, note that the
+project settings and library choices you make in the wizard will
+apply to both generated projects. If you want the two projects to
+have different settings or use different libraries, you must create
+both separately. The only exception to this is your choice of
+Advanced ORB Settings, which can be set differently for client and
+server projects in the “Projects to generate” section of the
+wizard’s CORBA options page. See “Setting ORB options” on page 76.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The interface projects (that is, the client stubs, server
+skeletons, and protocol projects that provide a static interface to
+the main project’s IDL) are not generated until you first build
+your client or server project. When you do so, the IDL compiler is
+invoked and the necessary interface projects are created
+automatically. See “How the spec file affects IDL compilation” on
+page 80 for details of what projects are generated and where.</p>
+</div>
+</div>
+<div class="section" id="setting-orb-options">
+<h2>Setting ORB options<a class="headerlink" href="#setting-orb-options" title="Permalink to this headline">¶</a></h2>
+<p>The Open Dylan ORB is supplied as a Dylan library called
+<code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code>, which both client and server CORBA projects use.</p>
+<p>You can modify the default behavior of the ORB that a client or server
+project will run on while you are specifying the project in the New
+Project wizard. To set ORB options:</p>
+<ol class="arabic">
+<li><p>Click the appropriate <span class="guilabel">Advanced…</span> button on the New
+Project wizard’s CORBA options page.</p>
+<p>A client and server can use different settings, so there are two
+<span class="guilabel">Advanced…</span> buttons: one for a server project and one
+for a client project.</p>
+<div class="figure align-default" id="id3">
+<img alt="_images/projects-advanced-orb.png" src="_images/projects-advanced-orb.png" />
+<p class="caption"><span class="caption-text">The Advanced ORB settings dialog</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>The options you set in the Advanced ORB Settings dialog are
+translated into command-line arguments and added to the Command
+Line in the <span class="menuselection">Project ‣ Settings…</span> dialog’s
+<span class="guilabel">Debug</span> page. This command-line specification what is
+used to invoke the EXE or DLL for the project when you choose
+<span class="menuselection">Application ‣ Start</span>, <span class="guilabel">Debug</span>, or
+<span class="guilabel">Interact</span>. Thus, the Advanced ORB Settings arguments
+are passed to the server or client for use by the underlying ORB.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Whether the ORB actually uses these settings is a different
+matter. Recall that, to initialize and gain an initial reference
+to an ORB, a client or server calls the <code class="docutils literal notranslate"><span class="pre">corba/orb-init</span></code>
+method. (The name is as mapped to Dylan from the pseudo-IDL
+<code class="docutils literal notranslate"><span class="pre">CORBA::ORB_init</span></code> operation.) If the client or server does not
+pass any arguments in this call, the ORB will use the arguments
+from the command-line. If some arguments are passed, those
+arguments will override the command-line arguments.</p>
+</div>
+</li>
+</ol>
+<p>The options available are as follows.</p>
+<dl>
+<dt>Trace ORB Operation</dt><dd><p>Turns on debug messages inside the ORB. These messages are mainly
+internal debugging messages, but may help you to understand what is
+going on inside the ORB, or help you report problems the Open Dylan
+maintainers.</p>
+<p>Corresponds to the ORB command-line argument <code class="docutils literal notranslate"><span class="pre">-ORBtrace</span></code>.</p>
+</dd>
+<dt>Suppress co-location optimization</dt><dd><p>Forces the ORB to always use sockets and IIOP for marshalling, even
+when it might have detected an in-process (that is, co-located)
+server that could be communicated with more directly.</p>
+<p>Corresponds to the ORB command-line argument <code class="docutils literal notranslate"><span class="pre">-ORBno-co-location</span></code>.</p>
+</dd>
+<dt>Debug server errors</dt><dd><p>Suppresses handling of application implementation errors in server
+code. That is, instead of the errors being translated into CORBA
+exceptions for transmission to the client, they are left unhandled
+in the server so that they can be debugged.</p>
+<p>Corresponds to the ORB command-line argument <code class="docutils literal notranslate"><span class="pre">-ORBdebug</span></code>.</p>
+</dd>
+<dt>Use alternative port number</dt><dd><p>Sets the default socket port for listening. The default port number
+registered with IANA for the Open Dylan ORB is 3672.</p>
+<p>Corresponds to the ORB command-line argument <code class="docutils literal notranslate"><span class="pre">-ORBport</span></code> port-number.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="the-role-of-spec-files-in-idl-compilation">
+<h2>The role of spec files in IDL compilation<a class="headerlink" href="#the-role-of-spec-files-in-idl-compilation" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan Tool Specification files, or spec files (extension:
+<code class="docutils literal notranslate"><span class="pre">.spec</span></code>), allow tools other than the Dylan compiler to be invoked on
+a project at build time. When the build encounters a spec file in a
+project’s sources list, it examines its contents and invokes the tool
+that the file specifies.</p>
+<p>In the Open Dylan implementation, you can use spec files to call the
+Open Dylan IDL compiler, Scepter, on an IDL file. This compilation
+occurs during an ordinary project build, along with the compilation of
+Dylan source files.</p>
+<p>Spec files are ASCII-format files that you can write or modify
+yourself. The following subsections describe the format for writing
+spec files for CORBA projects.</p>
+<p>To arrange for IDL compilation to occur during an ordinary project
+build, the spec file must be part of the project’s sources list. The
+New Project wizard inserts a spec file into CORBA projects
+automatically. The spec file has the same name as the project, with
+the extension <code class="docutils literal notranslate"><span class="pre">.spec</span></code>.</p>
+<p>The IDL compiler will not regenerate stubs, skeletons, or protocol
+projects if they are up to date with respect to the IDL source
+file. If a spec file is changed, this will force the IDL compiler to
+regenerate code from the IDL source even if the IDL source itself has
+not changed. This is necessary because some options in the spec file
+may cause the generated code to change, for example the <code class="docutils literal notranslate"><span class="pre">IDprefix:</span></code>
+keyword.</p>
+<p>Including the spec file in the project is useful because it brings all
+the build work for a CORBA project together into a single build. Also,
+by bringing the IDL file for the project under the control of Open
+Dylan’s project management system, you no longer have to worry about
+keeping the client stubs, server skeletons and protocol libraries up
+to date with any changes to the IDL – Open Dylan takes care of that.</p>
+<div class="section" id="how-the-spec-file-affects-idl-compilation">
+<h3>How the spec file affects IDL compilation<a class="headerlink" href="#how-the-spec-file-affects-idl-compilation" title="Permalink to this headline">¶</a></h3>
+<p>As we have seen in previous chapters, the IDL compiler is capable of
+generating client stubs, server skeletons, and protocol support
+projects from an IDL file. When there is a spec file in the project
+being compiled, any projects the IDL compiler generates automatically
+become subprojects of the main project.</p>
+<p>This automatic inclusion only occurs because of the spec file in the
+project. If you compiled the IDL file separately, using the IDL
+compiler on the command line (see Chapter 9, “Using the Dylan IDL
+Compiler”) the generated projects would not be made subprojects. You
+would have to add them to the main project by hand in order to make
+them subprojects.</p>
+<p>By default, the generated projects are placed in subfolders of the
+folder containing the IDL file. If you used the New Project wizard to
+create the project you are compiling, and you chose to generate a
+blank IDL file (by unchecking the “Use existing IDL file” box), the
+IDL file will have been generated in the top-level project folder, and
+thus the IDL compiler will put any projects it generates in subfolders
+of the top-level project folder. This very conveniently puts all
+subprojects associated with your main project under one folder.</p>
+<p>Again by default, the subproject folders are named <code class="docutils literal notranslate"><span class="pre">protocol</span></code>,
+<code class="docutils literal notranslate"><span class="pre">stubs</span></code> and <code class="docutils literal notranslate"><span class="pre">skeletons</span></code>. There are spec file options which allow
+some control over what the subfolders are called and also where they
+are located.</p>
+</div>
+<div class="section" id="header-information-for-corba-spec-files">
+<h3>Header information for CORBA spec files<a class="headerlink" href="#header-information-for-corba-spec-files" title="Permalink to this headline">¶</a></h3>
+<p>The first line of any spec file must contain the <code class="docutils literal notranslate"><span class="pre">Origin:</span></code>
+keyword. For describing IDL source files to CORBA projects, the value
+of this keyword must be <code class="docutils literal notranslate"><span class="pre">OMG-IDL</span></code>. Thus the first line of a spec
+file for IDL must be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Origin</span><span class="p">:</span> <span class="n">OMG</span><span class="o">-</span><span class="n">IDL</span>
+</pre></div>
+</div>
+<p>Also required in the header of this kind of spec file is the keyword
+<code class="docutils literal notranslate"><span class="pre">IDL-file:</span></code>, with a value that is a pathname for the IDL file that
+is to be compiled. The pathname is interpreted relative to the folder
+containing the spec file. As noted in Section 7.4.1, the folder
+containing the IDL file will be used to store any projects generated
+automatically from the IDL.</p>
+<p>Note that a spec file can describe only one IDL file. However,
+projects can contain more than one spec file.</p>
+<p>For example, this is the minimum spec file for describing an IDL file
+called <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> that is in the folder bank, a sibling folder
+of the folder containing the spec file.</p>
+<div class="highlight-dylan-lid notranslate"><div class="highlight"><pre><span></span><span class="na">Origin</span><span class="o">:</span>     <span class="s">OMG-IDL</span>
+<span class="na">IDL-file</span><span class="o">:</span>   <span class="s">..\bank\bank.idl</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="server-keywords-for-corba-spec-files">
+<h3>Server keywords for CORBA spec files<a class="headerlink" href="#server-keywords-for-corba-spec-files" title="Permalink to this headline">¶</a></h3>
+<p>To indicate that the CORBA project contains a server implementation
+for the IDL file, use the keyword <code class="docutils literal notranslate"><span class="pre">Skeletons:</span></code> with the value
+<code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p>
+<div class="highlight-dylan-lid notranslate"><div class="highlight"><pre><span></span><span class="na">Skeletons</span><span class="o">:</span> <span class="s">yes</span>
+</pre></div>
+</div>
+<p>This ensures that Scepter generates a server skeletons project from
+the IDL source. The server skeletons project is automatically made a
+subproject of the CORBA project.</p>
+</div>
+<div class="section" id="client-keywords-for-corba-spec-files">
+<h3>Client keywords for CORBA spec files<a class="headerlink" href="#client-keywords-for-corba-spec-files" title="Permalink to this headline">¶</a></h3>
+<p>To indicate that the CORBA project is a client of the service
+described by the IDL file, use the keyword <code class="docutils literal notranslate"><span class="pre">Stubs:</span></code> with the value
+<code class="docutils literal notranslate"><span class="pre">yes</span></code>. This ensures that Scepter compiler generates a client stubs
+project from the IDL source. The client stubs project is automatically
+made a subproject of the CORBA project.</p>
+<div class="highlight-dylan-lid notranslate"><div class="highlight"><pre><span></span><span class="na">Stubs</span><span class="o">:</span> <span class="s">yes</span>
+</pre></div>
+</div>
+<p>Sometimes, the CORBA client also needs to use the server skeletons
+code generated from the IDL source; for example, where the IDL defines
+a callback interface which the client must implement. In this case,
+you should also include the <code class="docutils literal notranslate"><span class="pre">Skeletons:</span></code> keyword in the spec file
+with the value <code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p>
+<div class="highlight-dylan-lid notranslate"><div class="highlight"><pre><span></span><span class="na">Stubs</span><span class="o">:</span> <span class="s">yes</span>
+<span class="na">Skeletons</span><span class="o">:</span> <span class="s">yes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-keywords-for-corba-spec-files">
+<h3>Other keywords for CORBA spec files<a class="headerlink" href="#other-keywords-for-corba-spec-files" title="Permalink to this headline">¶</a></h3>
+<p>The following keywords control other aspects of IDL compilation.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">directory:</span></code> directory</dt><dd><p>By default the IDL compiler puts the Dylan projects it generates
+into subdirectories/subfolders in the same directory/folder as the
+IDL source file. You can force it to put the
+subdirectories/subfolders in another elsewhere using this option.</p>
+<p>The directory can be an absolute or relative name. Relative names
+are resolved with respect to the directory/folder the spec file is
+in.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">prefix:</span></code> directory-prefix</dt><dd><p>The default names for the generated subdirectories/subfolders are
+<code class="file docutils literal notranslate"><span class="pre">protocol</span></code>, <code class="file docutils literal notranslate"><span class="pre">stubs</span></code>, and <code class="file docutils literal notranslate"><span class="pre">skeletons</span></code>.</p>
+<p>You can specify a prefix for these names with this <code class="docutils literal notranslate"><span class="pre">prefix:</span></code>
+option. The prefix will be appended with a leading <cite>-</cite> character.</p>
+<p>This might be useful when you want to put the project
+subdirectories/subfolders from more than one IDL file in a common
+location.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">include:</span></code> <em>directory</em></dt><dd><p>Adds <em>directory</em> to the search path list which the preprocessor uses
+to find files mentioned in <code class="docutils literal notranslate"><span class="pre">#include</span></code> directives.</p>
+<p>The directory can be an absolute or relative name. Relative names
+are resolved with respect to the directory/folder the spec file is
+in.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">case:</span></code> <code class="docutils literal notranslate"><span class="pre">yes</span></code> | <code class="docutils literal notranslate"><span class="pre">no</span></code></dt><dd><p>By default the IDL compiler ignores case when recognising keywords
+and identifiers, but when this option is set to <code class="docutils literal notranslate"><span class="pre">yes</span></code>, the
+characters in identifiers and keywords must have exactly the same
+case as the identifier or keyword definition in order to be
+recognized.</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">no</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">clean:</span></code> <code class="docutils literal notranslate"><span class="pre">yes</span></code> | <code class="docutils literal notranslate"><span class="pre">no</span></code></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">yes</span></code>, forces the IDL compiler to regenerate code irrespective
+of whether or not it thinks any generated code that exists is up to
+date with respect to the IDL source file.</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">no</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">protocol:</span>&#160;&#160; <span class="pre">yes</span> <span class="pre">|</span> <span class="pre">no</span></code></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">yes</span></code>, this option will ensure the IDL compiler generates the
+protocol library from the IDL source. The protocol project will be
+added as a subproject of the CORBA project. This option should be
+used by projects that wish to use the Dylan framework generated
+from the IDL source but not the stubs or skeletons code.</p>
+<p>Default value: <code class="docutils literal notranslate"><span class="pre">no</span></code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="using-idl-for-non-corba-work">
+<h2>Using IDL for non-CORBA work<a class="headerlink" href="#using-idl-for-non-corba-work" title="Permalink to this headline">¶</a></h2>
+<p>By default, when Scepter generates a stubs or skeletons project from
+an IDL file, it also generates a protocol project. The protocol
+project contains Dylan code mapped directly from the IDL file: open
+generic functions and open classes. The protocol project does not
+contain any low-level CORBA marshalling code, which is left to the
+stubs and skeletons projects.</p>
+<p>Thus the protocol project contains a pure Dylan protocol for
+implementing a piece of software according to an IDL contract. This
+can be useful for projects wishing to make use of the protocol without
+necessarily using an ORB for communication. For example, an
+application team might want to introduce the discipline of an IDL
+description early on in the project lifecycle so that development work
+on the clients and servers can proceed in parallel using dummy local
+implementations of the other components.</p>
+<p>To have Scepter generate a protocol project only, choose the
+appropriate option in the Projects to Generate area of the New Project
+wizard’s CORBA options page. Alternatively, after the project has been
+created you can modify the its spec file to use the <code class="docutils literal notranslate"><span class="pre">Protocol:</span></code>
+keyword with the value <code class="docutils literal notranslate"><span class="pre">yes</span></code>. Scepter will ensure the protocol
+project is generated, but will not generate the stubs or skeletons
+projects unless the <code class="docutils literal notranslate"><span class="pre">Stubs:</span></code> or <code class="docutils literal notranslate"><span class="pre">Skeletons:</span></code> keywords are also
+present and have the value <code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p>
+<p>The protocol project is automatically made a subproject of the CORBA
+project.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bank-server.html" class="btn btn-neutral float-left" title="The Bank Server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rundebug.html" class="btn btn-neutral float-right" title="Running and Debugging CORBA Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1045 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Bank Server &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Creating CORBA Projects" href="projects.html" />
+    <link rel="prev" title="The Bank Client" href="bank-client.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Bank Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-server">The server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-odbc-database">The ODBC database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-the-open-dylan-sql-odbc-library">Overview of the Open Dylan SQL-ODBC library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-corba-objects-in-a-server">Implementing CORBA objects in a server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#object-adapters">Object adapters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-servers-perspective">The server’s perspective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-for-implementing-the-bank-server">Requirements for implementing the bank server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-bank-server-gui">The bank server GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-bank-server-library-and-module">The bank server library and module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-the-servant-classes">Implementing the servant classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-the-servant-methods">Implementing the servant methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-corba-initialization-for-the-bank-server">Implementing CORBA initialization for the bank server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The Bank Server</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bank-server.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="the-bank-server">
+<h1>The Bank Server<a class="headerlink" href="#the-bank-server" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-server">
+<h2>The server<a class="headerlink" href="#the-server" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, we design and implement a CORBA server, using Dylan
+and the Open Dylan ORB.</p>
+<p>Our server presents an object-oriented interface to a bank object and
+its accounts. Because we want the bank’s account records to persist
+beyond the lifetime of the server, we store the account records in a
+Microsoft Access™ relational database. The server manipulates this
+database using Open Dylan’s SQL-ODBC library.</p>
+<p>Since the primary motivation for this tutorial is to illustrate the
+use of CORBA, we will not spend too much time on the use of the
+SQL-ODBC library. Instead, we concentrate on how to provide
+implementations of CORBA objects, and how to make those implementation
+available to the CORBA environment.</p>
+<p>A very small amount of SQL knowledge is assumed in early sections of
+this chapter.</p>
+</div>
+<div class="section" id="the-odbc-database">
+<h2>The ODBC database<a class="headerlink" href="#the-odbc-database" title="Permalink to this headline">¶</a></h2>
+<p>The folder <code class="file docutils literal notranslate"><span class="pre">Examplescorbabankbank-server</span></code> contains a prepared
+Microsoft Access database file <code class="file docutils literal notranslate"><span class="pre">bankDB.mdb</span></code> that the server uses
+to record account details.</p>
+<p>This database contains a single SQL table called <code class="docutils literal notranslate"><span class="pre">Accounts</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 41%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Balance</p></th>
+<th class="head"><p>Limit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Jack</p></td>
+<td><p>0</p></td>
+<td><p>NULL</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jill</p></td>
+<td><p>-100</p></td>
+<td><p>200</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">Accounts</span></code> table has three columns: <code class="docutils literal notranslate"><span class="pre">Name</span></code>, <code class="docutils literal notranslate"><span class="pre">Balance</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">Limit</span></code>. Each record in the table represents an account.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Name</span></code> column contains values of SQL type <code class="docutils literal notranslate"><span class="pre">string</span></code> that are
+used to uniquely identify account records.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Balance</span></code> column contains values of SQL type <code class="docutils literal notranslate"><span class="pre">long</span></code>,
+reflecting the current balance of each account.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Limit</span></code> column contains either the distinguished SQL value
+NULL that indicates an absent value, or a value of SQL type
+<code class="docutils literal notranslate"><span class="pre">long</span></code>, reflecting the overdraft limit of a checking account.</p></li>
+</ul>
+<p>Note that both accounts and checking accounts are stored as records in
+the same table. By convention, we interpret a record with a NULL
+<code class="docutils literal notranslate"><span class="pre">Limit</span></code> value an ordinary account. We interpret a record with a
+non-NULL, and thus integral, <code class="docutils literal notranslate"><span class="pre">Limit</span></code> value as a checking account
+with the given overdraft limit.</p>
+<p>For instance, the <code class="docutils literal notranslate"><span class="pre">Accounts</span></code> table above contains two records, one
+for Jack’s account and one for Jill’s checking account. (Recall that
+checking accounts can have negative balances while ordinary accounts
+cannot.)</p>
+</div>
+<div class="section" id="overview-of-the-open-dylan-sql-odbc-library">
+<h2>Overview of the Open Dylan SQL-ODBC library<a class="headerlink" href="#overview-of-the-open-dylan-sql-odbc-library" title="Permalink to this headline">¶</a></h2>
+<p>The SQL-ODBC library is built on top of a generic SQL library. The SQL
+library does not include the low-level code necessary to communicate
+with any particular database management system (DBMS): it simply
+provides a convenient high-level mechanism for integrating database
+operations into Dylan applications.</p>
+<p>The SQL library is designed to form the high-level part of
+implementation libraries that contain lower-level code to support a
+particular DBMS protocol, such as ODBC. The SQL-ODBC library is one
+such implementation library.</p>
+<p>The SQL library defines the following abstract classes:</p>
+<ul>
+<li><p>The abstract class <code class="docutils literal notranslate"><span class="pre">&lt;dbms&gt;</span></code> is used to identify a database
+management system.</p>
+<p>The SQL-ODBC library defines an instantiable subclass
+<code class="docutils literal notranslate"><span class="pre">&lt;odbc-dbms&gt;</span></code> of <code class="docutils literal notranslate"><span class="pre">&lt;user&gt;</span></code> for identifying the ODBC DBMS.</p>
+</li>
+<li><p>The abstract class <code class="docutils literal notranslate"><span class="pre">&lt;user&gt;</span></code> identifies users to a DBMS.</p>
+<p>Exactly what a user means depends on the DBMS. The <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a>
+method on <code class="docutils literal notranslate"><span class="pre">&lt;user&gt;</span></code> takes two keyword arguments, <code class="docutils literal notranslate"><span class="pre">user:</span></code> and <code class="docutils literal notranslate"><span class="pre">password:</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">user:</span></code> init-keyword takes an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>
+that should be a valid user name for the DBMS in question. The <code class="docutils literal notranslate"><span class="pre">password:</span></code>
+init-keyword should be the password that accompanies the user name.</p>
+<p>The SQL-ODBC library defines the instantiable subclass <code class="docutils literal notranslate"><span class="pre">&lt;odbc-user&gt;</span></code>
+of <code class="docutils literal notranslate"><span class="pre">&lt;user&gt;</span></code> for identifying a user to an ODBC DBMS.</p>
+</li>
+<li><p>The abstract class <code class="docutils literal notranslate"><span class="pre">&lt;database&gt;</span></code> identifies a database to a DBMS.</p>
+<p>Exactly what a database is depends on the DBMS in question. The
+SQL-ODBC library defines the class <code class="docutils literal notranslate"><span class="pre">&lt;odbc-database&gt;</span></code>, a subclass
+of <code class="docutils literal notranslate"><span class="pre">&lt;database&gt;</span></code>, whose instances identify databases to an ODBC
+DBMS. In particular, the <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> method on <code class="docutils literal notranslate"><span class="pre">&lt;odbc-database&gt;</span></code>
+accepts the <code class="docutils literal notranslate"><span class="pre">datasource-name:</span></code> keyword argument to specify the
+name of the ODBC datasource, as a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+</li>
+<li><p>The abstract class <code class="docutils literal notranslate"><span class="pre">&lt;connection&gt;</span></code> represents database connections.</p>
+<p>Instances of this class identify an execution context for executing
+SQL statements. The exact composition of a connection depends on the
+DBMS.</p>
+<p>The SQL-ODBC library defines the class <code class="docutils literal notranslate"><span class="pre">&lt;odbc-connection&gt;</span></code>, a
+subclass of <code class="docutils literal notranslate"><span class="pre">&lt;connection&gt;</span></code>. Instances of this class are created
+upon making a connection an ODBC database.</p>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;sql-statement&gt;</span></code> class represents SQL statements and their
+state.  This class has the init-keywords <code class="docutils literal notranslate"><span class="pre">text:</span></code>,
+<code class="docutils literal notranslate"><span class="pre">input-indicator:</span></code>, and <code class="docutils literal notranslate"><span class="pre">output-indicator:</span></code>.</p>
+<p>The required keyword <code class="docutils literal notranslate"><span class="pre">text:</span></code> expects a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> that contains
+the text of an SQL statement.  Host variables can be included in the
+statement by placing a question mark (<code class="docutils literal notranslate"><span class="pre">?</span></code>) at the point in the
+string at which the value of the host variable should be
+substituted. The optional keyword argument <code class="docutils literal notranslate"><span class="pre">output-indicator:</span></code>
+expects an instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. The output indicator is a
+substitution value to be used whenever the column of a retrieved
+record contains the SQL NULL value. The optional keyword
+<code class="docutils literal notranslate"><span class="pre">input-indicator:</span></code> expects an instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. The input
+indicator is a marker value used to identify SQL NULL values in host
+variables.</p>
+<p>The SQL library defines two convenient macros that we use in this
+tutorial: <code class="docutils literal notranslate"><span class="pre">with-dbms</span></code> and <code class="docutils literal notranslate"><span class="pre">with-connection</span></code>. Here is the form of
+a <code class="docutils literal notranslate"><span class="pre">with-dbms</span></code> call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-dbms</span> <span class="p">(</span><span class="n">dbms</span><span class="p">)</span>
+  <span class="c1">// body</span>
+<span class="k">end</span> <span class="n">with-dbms</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">with-dbms</span></code> statement macro considers dbms, which must be a
+general instance of class <code class="docutils literal notranslate"><span class="pre">&lt;dbms&gt;</span></code>, to be the DBMS in use throughout
+body. For example, if dbms is an instance of <code class="docutils literal notranslate"><span class="pre">&lt;odbc-dbms&gt;</span></code> and body
+contains a call to <code class="docutils literal notranslate"><span class="pre">connect</span></code>, then the call actually returns an
+<code class="docutils literal notranslate"><span class="pre">&lt;odbc-connection&gt;</span></code>.</p>
+<p>Here is the form of a <code class="docutils literal notranslate"><span class="pre">with-connection</span></code> call:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-connection</span> <span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+  <span class="c1">// body</span>
+<span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">with-connection</span></code> statement macro considers connection, which
+must be an instance of class <code class="docutils literal notranslate"><span class="pre">&lt;connection&gt;</span></code>, to be the default
+database connection in use throughout body . For instance, each call
+to <code class="docutils literal notranslate"><span class="pre">execute</span></code> an SQL statement within body uses connection by
+default, so that the call’s <code class="docutils literal notranslate"><span class="pre">connection:</span></code> keyword argument need not
+be supplied.</p>
+<p>A call to the generic function <code class="docutils literal notranslate"><span class="pre">connect</span></code> returns a new connection of
+class <code class="docutils literal notranslate"><span class="pre">&lt;connection&gt;</span></code> to the specified database database as the user
+user . The connection can be closed by a call to <code class="docutils literal notranslate"><span class="pre">disconnect</span></code>.</p>
+<p>A call to the generic function <code class="docutils literal notranslate"><span class="pre">execute(sql-statement,</span> <span class="pre">parameter:</span>
+<span class="pre">vector)</span></code> executes the SQL statement on the default connection. The
+(optional) <code class="docutils literal notranslate"><span class="pre">parameter:</span></code> argument supplies a vector of values to be
+substituted for any host variables appearing in the statement’s
+text. The n th entry of this vector determines the value of the n th
+host variable. Vector entries that equal the value of the statement’s
+<code class="docutils literal notranslate"><span class="pre">input-indicator:</span></code> keyword argument are sent as SQL NULL values.</p>
+<p>If the SQL statement is a <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statement, then the result of
+executing the statement (with <code class="docutils literal notranslate"><span class="pre">execute</span></code>) is a value of class
+<code class="docutils literal notranslate"><span class="pre">&lt;result-set&gt;</span></code>, which is itself a subclass of Dylan’s built in
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> class. Each element of a result set is a record and
+each element of a record is a value. The various Dylan collection
+protocols and functions work as you would expect on a result set. For
+the purpose of this tutorial, it suffices to think of a result set as
+a sequence of vectors.</p>
+<p>Just to illustrate the use of the SQL-ODBC library without worrying
+about the implementation of our CORBA server, here is a code fragment
+that might be used to extract the entries in the <code class="docutils literal notranslate"><span class="pre">Name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Balance</span></code> columns of the <code class="file docutils literal notranslate"><span class="pre">bankDB.mdb</span></code> database:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span>
+  <span class="o">//</span> choose the DBMS
+  let odbc<span class="o">-</span>dbms <span class="o">=</span> make(<span class="o">&lt;</span>odbc<span class="o">-</span>dbms<span class="o">&gt;</span>);
+  with<span class="o">-</span>dbms (odbc<span class="o">-</span>dbms)
+    <span class="o">//</span> identify the database
+    let database <span class="o">=</span> make(<span class="o">&lt;</span>database<span class="o">&gt;</span>, datasource<span class="o">-</span>name<span class="o">:</span> <span class="s2">&quot;bankDB&quot;</span>);
+
+    <span class="o">//</span> identify the user
+    let user <span class="o">=</span> make(<span class="o">&lt;</span>user<span class="o">&gt;</span>, user<span class="o">-</span>name<span class="o">:</span> <span class="s2">&quot;&quot;</span>, password<span class="o">:</span> <span class="s2">&quot;&quot;</span>);
+
+    <span class="o">//</span> establish a connection <span class="k">for</span> this database <span class="k">and</span> user
+    let connection <span class="o">=</span> connect(database, user);
+    with<span class="o">-</span>connection (connection) <span class="o">//</span> make it the default
+      let query1 <span class="o">=</span>               <span class="o">//</span> construct the query...
+        make(<span class="o">&lt;</span>sql<span class="o">-</span>statement<span class="o">&gt;</span>,
+             <span class="nb">text</span><span class="o">:</span> <span class="s2">&quot;select (Name, Balance) from Accounts&quot;</span>);
+
+       <span class="o">//</span> ... <span class="k">and</span> <span class="nb">execute</span> it on the default connection
+       let result<span class="o">-</span>set <span class="o">=</span> <span class="nb">execute</span>(query);
+
+       <span class="o">//</span> extract the first record
+       let first<span class="o">-</span>record <span class="o">=</span> result<span class="o">-</span>set[<span class="mi">0</span>];
+
+       <span class="o">//</span> extract the first field <span class="k">of</span> the first record.
+       let first<span class="o">-</span>name <span class="o">=</span> result<span class="o">-</span>set[<span class="mi">0</span>][<span class="mi">0</span>];
+       let first<span class="o">-</span>balance <span class="o">=</span> result<span class="o">-</span>set[<span class="mi">0</span>][<span class="mi">1</span>];
+       let second<span class="o">-</span>record <span class="o">=</span> result<span class="o">-</span>set[<span class="mi">1</span>];
+
+       <span class="o">//</span> ...
+    <span class="k">end</span> with<span class="o">-</span>connection;
+    disconnect(connection); <span class="o">//</span> disconnect from the database
+  <span class="k">end</span> with<span class="o">-</span>dbms;
+<span class="k">end</span>;
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementing-corba-objects-in-a-server">
+<h2>Implementing CORBA objects in a server<a class="headerlink" href="#implementing-corba-objects-in-a-server" title="Permalink to this headline">¶</a></h2>
+<p>A CORBA server has to provide an implementation object, called a
+servant, for each of the proxy objects that might be manipulated by a
+client. Our server needs to implement the initial <code class="docutils literal notranslate"><span class="pre">bank</span></code> servant,
+and then create new servants for each of the account objects created
+in response to <code class="docutils literal notranslate"><span class="pre">openAccount</span></code>, <code class="docutils literal notranslate"><span class="pre">openCheckingAccount</span></code> and
+<code class="docutils literal notranslate"><span class="pre">retrieveAccount</span></code> requests. Each of these servants needs to be
+registered in the CORBA environment and assigned an object reference,
+so that the ORB can direct incoming requests to the appropriate
+servant.</p>
+<p>In CORBA, the primary means for an object implementation to access ORB
+services such as object reference generation is via an object adapter.</p>
+<div class="section" id="object-adapters">
+<h3>Object adapters<a class="headerlink" href="#object-adapters" title="Permalink to this headline">¶</a></h3>
+<p>An object adapter is responsible for the following functions:</p>
+<ul class="simple">
+<li><p>Generation and interpretation of object references</p></li>
+<li><p>Registration of servants</p></li>
+<li><p>Mapping object references to the corresponding servants</p></li>
+<li><p>IDL method invocations, mediated by skeleton methods</p></li>
+<li><p>Servant activation and deactivation</p></li>
+</ul>
+<p>The Open Dylan ORB library provides an implementation of the Portable
+Object Adapter (POA). This object adapter forms part of the CORBA
+standard and, like the ORB, has an interface that is specified in
+pseudo IDL (PIDL). The Open Dylan interface to the POA conforms
+closely to the interface obtained by applying the Dylan mapping rules
+to the POA’s PIDL specification.</p>
+<p>A POA object manages the implementation of a collection of objects,
+associating object references with specific servants. While the ORB is
+an abstraction visible to both the client and server, POA objects are
+visible only to the server. User-supplied object implementations are
+registered with a POA and assigned object references. When a client
+issues a request to perform an operation on such an object reference,
+the ORB and POA cooperate to determine which servant the operation
+should be invoked on, and to perform the invocation as an upcall
+through a skeleton method.</p>
+<p>The POA allows several ways of using servants although it does not
+deal with the issue of starting the server process. Once started,
+however, there can be a servant started and ended for a single method
+call, a separate servant for each object, or a shared servant for all
+instances of the object type. It allows for groups of objects to be
+associated by means of being registered with different instances of
+the POA object and allows implementations to specify their own
+activation techniques. If the implementation is not active when an
+invocation is performed, the POA will start one.</p>
+<p>Unfortunately, the flexibility afforded by the POA means that its
+interface is complex and somewhat difficult to use. The example in
+this tutorial makes only elementary use of the POA.</p>
+<p>Here is the PIDL specification of the facilities of the POA that are
+used in this tutorial:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>module PortableServer {
+  native Servant;
+
+  interface POAManager {
+    exception AdapterInactive{};
+    void activate() raises (...);
+    ...
+  };
+
+  interface POA {
+    exception WrongAdapter {};
+    readonly attribute POAManager the_POAManager;
+    Object servant_to_reference(in Servant p_servant)
+      raises (...);
+    Servant reference_to_servant(in Object reference)
+      raises (WrongAdapter, ...);
+    ...
+  };
+};
+</pre></div>
+</div>
+<p>The POA-related interfaces are defined in a module separate from the
+<code class="docutils literal notranslate"><span class="pre">CORBA</span></code> module, called <code class="docutils literal notranslate"><span class="pre">PortableServer</span></code> . That module declares
+several interfaces, of which only the <code class="docutils literal notranslate"><span class="pre">POA</span></code> and <code class="docutils literal notranslate"><span class="pre">POAManager</span></code> are
+shown here.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">PortableServer</span></code> module specifies the type <code class="docutils literal notranslate"><span class="pre">Servant</span></code>. Values
+of type <code class="docutils literal notranslate"><span class="pre">Servant</span></code> represent language-specific implementations of
+CORBA interfaces. Since this type can only be determined by the
+programming language in question, it is merely declared as a <code class="docutils literal notranslate"><span class="pre">native</span></code> type in the PIDL.</p>
+<p>In the Dylan mapping, the <code class="docutils literal notranslate"><span class="pre">Servant</span></code> type maps to the abstract class
+<code class="docutils literal notranslate"><span class="pre">PortableServer/&lt;Servant&gt;</span></code>. User-defined Dylan classes that are
+meant to implement CORBA objects and be registered with a POA must
+inherit from this abstract class.</p>
+<p>Each <code class="docutils literal notranslate"><span class="pre">POA</span></code> object has an associated <code class="docutils literal notranslate"><span class="pre">POAManager</span></code> object. A POA
+manager encapsulates the processing state of the POA it is associated
+with. Using operations on the POA manager, an application can make
+requests for a POA to be queued or discarded, and can have the POA
+deactivated.</p>
+<p>A POA manager has two main processing states, holding and active ,
+that determine the capabilities of the associated POA and the handling
+of ORB requests received by that POA. Both the POA manager and its
+associated POA are initially in the holding state.</p>
+<p>When a POA is in the holding state, it simply queues requests received
+from the ORB without dispatching them to their implementation
+objects. In the active state, the POA receives and processes requests.</p>
+<p>Invoking the POA Manager’s <code class="docutils literal notranslate"><span class="pre">activate</span></code> operation causes it, and its
+associated POA, to enter the active state.</p>
+<p>A POA object provides two useful operations that map between object
+references and servants: <code class="docutils literal notranslate"><span class="pre">servant_to_reference</span></code> and
+<code class="docutils literal notranslate"><span class="pre">reference_to_servant</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">servant_to_reference</span></code> operation has two behaviors. If the given
+servant is not already active in the POA, then the POA generates a new
+object reference for that servant, records the association in the POA,
+and returns the reference. If the servant is already active in the
+POA, then the operation merely returns its associated object
+reference.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">reference_to_servant</span></code> operation returns the servant associated
+with a given object reference in the POA. If the object reference was
+not created by this POA, the operation raises the <code class="docutils literal notranslate"><span class="pre">WrongAdapter</span></code>
+exception.</p>
+</div>
+<div class="section" id="the-servers-perspective">
+<h3>The server’s perspective<a class="headerlink" href="#the-servers-perspective" title="Permalink to this headline">¶</a></h3>
+<p>From the perspective of the server, the Bank-Protocol library
+specifies the protocol that its servants must implement in order to
+satisfy the interfaces in the IDL <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. A partial
+implementation of this protocol resides in the Bank-Skeletons library
+generated by the IDL compiler. This library should be used by any
+application that wants to act as a server by providing an
+implementation for a CORBA object matching an interface in the
+<code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> file.</p>
+<p>The Bank-Skeletons library defines an abstract servant class for each
+of the protocol classes corresponding to an IDL interface. Each of
+these classes inherits from the abstract class
+<code class="docutils literal notranslate"><span class="pre">PortableServer/&lt;Servant&gt;</span></code>, allowing instances of these classes to
+be registered with a POA.</p>
+<p>A server provides an implementation of an abstract servant class by
+defining a concrete subclass of that class, called an implementation
+class, and defining methods, specialized on the implementation class,
+for each of the protocol functions corresponding to an IDL attribute
+or operation.</p>
+<p>The Bank-Skeletons library defines a concrete skeleton method,
+specialized on the appropriate abstract servant class, for each
+protocol function stemming from an IDL attribute or operation. When
+the POA receives a request from a client through the ORB it looks up
+the servant targeted by that request, and invokes the corresponding
+skeleton method on that servant. The skeleton method performs an
+upcall to the method that implements the protocol function for the
+implementation class of the servant. If the upcall succeeds, the
+skeleton method sends the result to the client. If the method raises a
+Dylan condition corresponding to a CORBA user or system exception, the
+skeleton method sends the CORBA exception back to the client.</p>
+</div>
+</div>
+<div class="section" id="requirements-for-implementing-the-bank-server">
+<h2>Requirements for implementing the bank server<a class="headerlink" href="#requirements-for-implementing-the-bank-server" title="Permalink to this headline">¶</a></h2>
+<p>As there were for the bank client, there are three parts to
+implementing the bank server:</p>
+<ul class="simple">
+<li><p>Write the code to initialize the CORBA ORB, set up the POA and POA
+manager, and get an initial object reference.</p></li>
+<li><p>Write the code for the CORBA objects that the server provides.</p></li>
+<li><p>Write the code for the server GUI.</p></li>
+</ul>
+<p>We start by writing the CORBA object code. As noted in Section 6.4,
+this entails writing concrete servant implementations.</p>
+<div class="section" id="the-bank-server-gui">
+<h3>The bank server GUI<a class="headerlink" href="#the-bank-server-gui" title="Permalink to this headline">¶</a></h3>
+<p>Since this demonstration principally concerns CORBA, and because we
+would like to revamp the look-and-feel of the demonstration
+occasionally, we do not describe the GUI implementation in great
+detail. Instead, only a brief outline of the current design is given.</p>
+<p>The bank server consists of one window that shows a table of raw
+account data. Each row in the table shows the name, the current
+balance, and the overdraft limit data.</p>
+<p>There is also a log window for viewing incoming requests. The full
+implementation of the server GUI can be found in the file
+<code class="file docutils literal notranslate"><span class="pre">server-frame.dylan</span></code>.</p>
+</div>
+<div class="section" id="the-bank-server-library-and-module">
+<h3>The bank server library and module<a class="headerlink" href="#the-bank-server-library-and-module" title="Permalink to this headline">¶</a></h3>
+<p>The bank server is implemented as a library:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">library</span> <span class="n">bank-server</span>
+  <span class="k">use</span> <span class="n">common-dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">dylan-orb</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">bank-skeletons</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">sql-odbc</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">duim</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="k">end</span> <span class="nb">library</span> <span class="n">bank-server</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>that defines a single module:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">module</span> <span class="n">bank-server</span>
+  <span class="k">use</span> <span class="n">common-dylan</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">dylan-orb</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">bank-skeletons</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">sql-odbc</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">duim</span><span class="p">;</span>
+  <span class="k">use</span> <span class="n">threads</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="k">end</span> <span class="nb">module</span> <span class="n">bank-server</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Like the client, our server needs to use the Dylan-ORB system library
+and module, in addition to its application specific libraries. Because
+the server provides implementations (or servants) for CORBA objects
+satisfying interfaces defined in the <code class="docutils literal notranslate"><span class="pre">bank.idl</span></code> file, it also needs
+to use the Bank-Skeletons library and module.</p>
+<p>Interoperating with ODBC requires the SQL-ODBC library and module.</p>
+<p>Finally, our implementation of the server makes non-essential use of
+the DUIM and Threads libraries and modules to present the user with a
+dialog to shutdown the server. The full source code for the server is
+in the <code class="file docutils literal notranslate"><span class="pre">bank-server.dylan</span></code> file.</p>
+</div>
+<div class="section" id="implementing-the-servant-classes">
+<h3>Implementing the servant classes<a class="headerlink" href="#implementing-the-servant-classes" title="Permalink to this headline">¶</a></h3>
+<p>The Bank-Skeletons library defines three abstract servant classes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BankingDemo</span><span class="o">&lt;</span><span class="n">account</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">checkingAccount</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">bank</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>These classes correspond to the IDL interfaces <code class="docutils literal notranslate"><span class="pre">account</span></code>,
+<code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code>, and <code class="docutils literal notranslate"><span class="pre">bank</span></code>.</p>
+<p>The class <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount-servant&gt;</span></code> is defined to
+inherit from <code class="docutils literal notranslate"><span class="pre">BankingDemo&lt;account-servant&gt;</span></code>, matching the
+inheritance relationship declared in the IDL.</p>
+<p>Each class inherits from the abstract class
+<code class="docutils literal notranslate"><span class="pre">PortableServer/&lt;Servant&gt;</span></code>. This allows instances of the class to be
+registered with a POA.</p>
+<p>In our implementation of the bank server, these servant classes are
+implemented by the following concrete subclasses:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">bank</span><span class="o">-</span><span class="n">implementation</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">account</span><span class="o">-</span><span class="n">implementation</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">checkingAccount</span><span class="o">-</span><span class="n">implementation</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;bank-implementation&gt;</span></code> class implements
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank-servant&gt;</span></code> by representing a bank as a connection
+to a database:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;bank-implementation&gt;</span> <span class="p">(</span><span class="n">BankingDemo/&lt;bank-servant&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">connection</span> <span class="p">::</span> <span class="nc">&lt;connection&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">connection:</span><span class="p">;</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">poa</span> <span class="p">::</span> <span class="n">PortableServer/&lt;POA&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">poa:</span><span class="p">;</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">name:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The bank implementation class includes the slot <code class="docutils literal notranslate"><span class="pre">poa</span></code> to record the
+POA in which the bank servant is active, so that servants representing
+accounts at the bank can be registered in the same POA.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;account-implementation&gt;</span></code> class implements <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account-servant&gt;</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;account-implementation&gt;</span>
+    <span class="p">(</span><span class="n">BankingDemo/&lt;account-servant&gt;</span><span class="p">)</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">bank</span> <span class="p">::</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">bank:</span><span class="p">;</span>
+  <span class="nb">constant</span> <span class="nb">slot</span> <span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">name:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;account-implementation&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>An instance of this class represents an account. The <code class="docutils literal notranslate"><span class="pre">bank</span></code> slot
+provides a connection to the database that holds the account’s
+record. The <code class="docutils literal notranslate"><span class="pre">name</span></code> slot identifies the record in the database.</p>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">&lt;checkingAccount-implementation&gt;</span></code> class implements
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount-servant&gt;</span></code> simply by inheriting from
+<code class="docutils literal notranslate"><span class="pre">&lt;account-implementation&gt;</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">class</span> <span class="nc">&lt;checkingAccount-implementation&gt;</span>
+  <span class="p">(</span><span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span>
+   <span class="n">BankingDemo/&lt;checkingAccount-servant&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementing-the-servant-methods">
+<h3>Implementing the servant methods<a class="headerlink" href="#implementing-the-servant-methods" title="Permalink to this headline">¶</a></h3>
+<p>The next step in implementing the server is to define methods,
+specialized on the implementation classes, for each of the protocol
+functions corresponding to an IDL attribute or operation.</p>
+<p>To support this, the abstract servant classes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">account</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">checkingAccount</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">bank</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>are defined to inherit, respectively, from the abstract protocol
+classes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">account</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">checkingAccount</span><span class="o">&gt;</span>
+<span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">bank</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>As a result, implementing a protocol function boils down to defining a
+concrete method for that function, where the method specializes on the
+implementation class of its target object. Recall that the target
+object of a protocol function is the first parameter to that function.</p>
+<p>We can now present the implementations of the protocol functions. The
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/account/name</span></code> method returns the value of the account’s
+<code class="docutils literal notranslate"><span class="pre">name</span></code> slot:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/account/name</span>
+    <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="nc">&lt;account-implementation&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">)</span>
+  <span class="n">account</span><span class="p">.</span><span class="n">name</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/account/name</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/balance</span></code> method retrieves the balance field
+from the corresponding record on the database by executing an SQL
+<code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statement:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/account/balance</span>
+    <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="nc">&lt;account-implementation&gt;</span><span class="p">)</span>
+    <span class="p">=&gt;</span> <span class="p">(</span><span class="n">balance</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                     <span class="k">text:</span> <span class="s">&quot;SELECT Balance FROM Accounts &quot;</span>
+                           <span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">result-set</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
+                             <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">));</span>
+    <span class="nb">as</span><span class="p">(</span><span class="n">CORBA/&lt;long&gt;</span><span class="p">,</span> <span class="n">result-set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/account/balance</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/balance</span></code> method increments the record’s
+balance field by executing an SQL <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> statement:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/account/credit</span>
+    <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span>
+     <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
+    <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">amount</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                     <span class="k">text:</span> <span class="s">&quot;UPDATE Accounts &quot;</span>
+                           <span class="s">&quot;SET Balance = Balance + ? &quot;</span>
+                           <span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">);</span>
+    <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">amount</span><span class="p">),</span>
+            <span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">));</span>
+  <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/account/credit</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/debit</span></code> method executes an SQL <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>
+statement that decrements the record’s balance field, provided the
+balance exceeds the desired amount:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/account/debit</span>
+    <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span> <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">amount</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                     <span class="k">text:</span> <span class="s">&quot;UPDATE Accounts &quot;</span>
+                           <span class="s">&quot;SET Balance = Balance - ? &quot;</span>
+                           <span class="s">&quot;WHERE Name = ? AND Balance &gt;= ?&quot;</span><span class="p">);</span>
+    <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
+            <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">amount</span><span class="p">),</span>
+                               <span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>
+                               <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">amount</span><span class="p">)));</span>
+  <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/account/debit</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/checkingAccount/limit</span></code> method is similar to the
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/account/balance</span></code> method defined above:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/checkingAccount/limit</span>
+    <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">)</span>
+    <span class="p">=&gt;</span> <span class="p">(</span><span class="n">limit</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                     <span class="k">text:</span> <span class="s">&quot;select Limit from Accounts &quot;</span>
+                           <span class="s">&quot;where Name = ?&quot;</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">result-set</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
+                             <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">));</span>
+    <span class="nb">as</span><span class="p">(</span><span class="n">CORBA/&lt;long&gt;</span><span class="p">,</span> <span class="n">result-set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">end</span> <span class="n">with-connection</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/checkingAccount/limit</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Because we defined <code class="docutils literal notranslate"><span class="pre">&lt;checkingAccount-implementation&gt;</span></code> to inherit
+from <code class="docutils literal notranslate"><span class="pre">&lt;account-implementation&gt;</span></code>, there is no need to re-implement
+the <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/balance</span></code> and <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/credit</span></code>
+methods for this implementation class. However, we do want to define a
+specialized <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/debit</span></code> method, to reflect that a
+checking account can be overdrawn up to its limit:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/account/debit</span>
+    <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">,</span>
+     <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">amount</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                     <span class="k">text:</span> <span class="s">&quot;UPDATE Accounts &quot;</span>
+                           <span class="s">&quot;SET Balance = Balance - ? &quot;</span>
+                           <span class="s">&quot;WHERE Name = ? AND (Balance + Limit) &gt;= ?&quot;</span><span class="p">);</span>
+    <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
+            <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">amount</span><span class="p">),</span>
+                               <span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span>
+                               <span class="n">amount</span><span class="p">)));</span>
+  <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/account/debit</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/name</span></code> method returns the value of the bank’s <code class="docutils literal notranslate"><span class="pre">name</span></code> slot:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/name</span>
+    <span class="p">(</span><span class="n">bank</span> <span class="p">::</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">)</span>
+  <span class="n">bank</span><span class="p">.</span><span class="n">name</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/name</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/openAccount</span></code> method illustrates how CORBA user exceptions are raised:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/openAccount</span>
+    <span class="p">(</span><span class="n">bank</span> <span class="p">::</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">,</span> <span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">existsAccount?</span><span class="p">(</span><span class="n">bank</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    <span class="nb">error</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">BankingDemo/bank/&lt;duplicateAccount&gt;</span><span class="p">));</span>
+  <span class="k">else</span>
+    <span class="k">begin</span>
+      <span class="n">with-connection</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+              <span class="k">text:</span> <span class="s">&quot;INSERT INTO Accounts(Name, Balance, Limit) &quot;</span>
+                    <span class="s">&quot;VALUES(?, ?, ?)&quot;</span><span class="p">,</span>
+              <span class="k">input-indicator:</span> <span class="l">#f</span><span class="p">);</span>
+        <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                   <span class="l">#f</span><span class="p">));</span>
+      <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+      <span class="k">let</span> <span class="n">new-account</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span>
+                             <span class="k">bank:</span> <span class="n">bank</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">);</span>
+      <span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
+         <span class="n">PortableServer/POA/servant-to-reference</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span>
+                                                 <span class="n">new-account</span><span class="p">));</span>
+    <span class="k">end</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/openAccount</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If the test <code class="docutils literal notranslate"><span class="pre">existsAccount?(bank,</span> <span class="pre">name)</span></code> succeeds, the call to</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">error</span> <span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">BankingDemo/bank/&lt;duplicateAccount&gt;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>raises a Dylan condition. (We omit the definition of
+<code class="docutils literal notranslate"><span class="pre">existsAccount?</span></code>, which can be found in the source.) Recall that the
+condition class <code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/&lt;duplicateAccount&gt;</span></code> corresponds to
+the IDL <code class="docutils literal notranslate"><span class="pre">duplicateAccount</span></code> exception. The POA that invoked this
+method in response to a client’s request will catch the condition and
+send the IDL <code class="docutils literal notranslate"><span class="pre">duplicateAccount</span></code> exception back to the client.</p>
+<p>If there is no existing account for the supplied name, the
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/openAccount</span></code> method creates a new record in the
+database by executing an SQL <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> statement, initializing the
+“Limit” field of this record with the SQL NULL value. (Recall that the
+presence of the NULL value serves to distinguish ordinary accounts
+from checking accounts on the database.)</p>
+<p>Finally, the method makes a new servant of class
+<code class="docutils literal notranslate"><span class="pre">&lt;account-implementation&gt;</span></code>, registers it with the bank’s POA with a
+call to <code class="docutils literal notranslate"><span class="pre">PortableServer/POA/servant-to-reference</span></code>, and narrows the
+resulting object reference to the more specific class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>, the class of object references to account
+objects, as required by the signature of the protocol function.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/openCheckingAccount</span></code> method is similar, except
+that it initializes the <code class="docutils literal notranslate"><span class="pre">Limit</span></code> field of the new account record with
+the desired overdraft limit, and registers a new servant of class
+<code class="docutils literal notranslate"><span class="pre">&lt;checkingAccount-implementation&gt;</span></code>, returning an object reference of
+class <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code>:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/openCheckingAccount</span>
+    <span class="p">(</span><span class="n">bank</span> <span class="p">::</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">,</span> <span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">,</span>
+     <span class="n">limit</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">checkingAccount</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">existsAccount?</span><span class="p">(</span><span class="n">bank</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    <span class="nb">error</span> <span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">BankingDemo/bank/&lt;duplicateAccount&gt;</span><span class="p">));</span>
+  <span class="k">else</span>
+    <span class="k">begin</span>
+      <span class="n">with-connection</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">let</span> <span class="n">limit</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">limit</span><span class="p">);</span>
+        <span class="k">let</span> <span class="n">query</span> <span class="o">=</span>
+          <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+              <span class="k">text:</span> <span class="s">&quot;INSERT INTO Accounts(Name, Balance, Limit) &quot;</span>
+                    <span class="s">&quot;VALUES(?, ?, ?)&quot;</span><span class="p">,</span>
+              <span class="k">input-indicator:</span> <span class="l">#f</span><span class="p">);</span>
+        <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                          <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="n">limit</span><span class="p">)));</span>
+      <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+      <span class="k">let</span> <span class="n">new-account</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">,</span>
+                             <span class="k">bank:</span> <span class="n">bank</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">);</span>
+      <span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">,</span>
+      <span class="n">PortableServer/POA/servant-to-reference</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span>
+                                              <span class="n">new-account</span><span class="p">));</span>
+     <span class="k">end</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/openCheckingAccount</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/retrieveAccount</span></code> method uses the <code class="docutils literal notranslate"><span class="pre">name</span></code>
+parameter to select the <code class="docutils literal notranslate"><span class="pre">Limit</span></code> field of an account record. If there
+is no record with that name, indicated by the query returning an empty
+result set, the method raises the CORBA user exception
+<code class="docutils literal notranslate"><span class="pre">nonExistentAccount</span></code> by signalling the corresponding Dylan error.</p>
+<p>Otherwise, the method uses the value of the <code class="docutils literal notranslate"><span class="pre">Limit</span></code> field to
+distinguish whether the account is an account or a current account,
+creating a new servant of the appropriate class:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/retrieveAccount</span>
+    <span class="p">(</span><span class="n">bank</span> <span class="p">::</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">,</span> <span class="n">name</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">account</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                  <span class="k">text:</span> <span class="s">&quot;SELECT Limit FROM Accounts &quot;</span>
+                        <span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">,</span>
+                  <span class="k">output-indicator:</span> <span class="l">#f</span><span class="p">);</span>
+    <span class="k">let</span> <span class="n">result-set</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+                          <span class="k">result-set-policy:</span>
+                            <span class="no">$scrollable-result-set-policy</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">empty?</span> <span class="p">(</span><span class="n">result-set</span><span class="p">))</span>
+      <span class="nb">error</span> <span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">BankingDemo/bank/&lt;nonExistentAccount&gt;</span><span class="p">));</span>
+    <span class="k">elseif</span> <span class="p">(</span><span class="n">result-set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+      <span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">,</span>
+      <span class="n">PortableServer/POA/servant-to-reference</span>
+        <span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">,</span>
+                        <span class="k">bank:</span> <span class="n">bank</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">)));</span>
+    <span class="k">else</span>
+      <span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
+      <span class="n">PortableServer/POA/servant-to-reference</span>
+        <span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span>
+                        <span class="k">bank:</span> <span class="n">bank</span><span class="p">,</span> <span class="k">name:</span> <span class="n">name</span><span class="p">)));</span>
+    <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+  <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/retrieveAccount</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>(Unlike the other queries in this example, this query is executed with
+<code class="docutils literal notranslate"><span class="pre">result-set-policy:</span> <span class="pre">$scrollable-result-set-policy</span></code> to ensure that
+testing the emptiness of the result set does not invalidate its
+records.)</p>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">closeAccount</span></code> removes the record of an account from
+the database by executing an SQL <code class="docutils literal notranslate"><span class="pre">delete</span></code> statement:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/closeAccount</span>
+    <span class="p">(</span><span class="n">bank</span> <span class="p">::</span> <span class="nc">&lt;bank-implementation&gt;</span><span class="p">,</span>
+     <span class="n">account-reference</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">()</span>
+  <span class="k">let</span> <span class="n">account</span>
+    <span class="o">=</span> <span class="n">Portableserver/POA/reference-to-servant</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span>
+                                           <span class="n">account-reference</span><span class="p">);</span>
+  <span class="n">with-connection</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">let</span> <span class="n">query</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
+                  <span class="k">text:</span> <span class="s">&quot;DELETE FROM Accounts &quot;</span>
+                        <span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">);</span>
+    <span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="k">parameters:</span> <span class="nb">vector</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">));</span>
+  <span class="k">end</span> <span class="n">with-connection</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">method</span> <span class="n">BankingDemo/bank/closeAccount</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note that we need to dereference the object reference <code class="docutils literal notranslate"><span class="pre">account</span></code> that
+is passed in as the parameter of the <code class="docutils literal notranslate"><span class="pre">BankingDemo/bank/closeAccount</span></code>
+operation. We call the <code class="docutils literal notranslate"><span class="pre">Portableserver/POA/reference-to-servant</span></code>
+operation of the POA to do so. Here, we make implicit use of our
+knowledge that, in our application, the server only encounters object
+references registered with its local POA. This assumption is not true
+in general.</p>
+</div>
+</div>
+<div class="section" id="implementing-corba-initialization-for-the-bank-server">
+<h2>Implementing CORBA initialization for the bank server<a class="headerlink" href="#implementing-corba-initialization-for-the-bank-server" title="Permalink to this headline">¶</a></h2>
+<p>To complete the implementation of the bank server we need to write the
+code that enters it into the CORBA environment. In detail, we need to:</p>
+<ul class="simple">
+<li><p>Initialize the server’s ORB</p></li>
+<li><p>Get a reference to the ORB pseudo-object for use in future ORB operations</p></li>
+<li><p>Get a reference to the POA pseudo-object for use in future POA operations</p></li>
+<li><p>Make a bank servant and register it with the POA</p></li>
+<li><p>Make the object reference of the bank servant available to the client</p></li>
+<li><p>Activate the POA to start processing incoming requests</p></li>
+<li><p>Prevent the process from exiting, providing availability</p></li>
+</ul>
+<p>To do this, we need to make use of some additional operations
+specified in the CORBA module:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>module CORBA {
+  <span class="o">///</span> ...
+  interface ORB {
+    <span class="o">//</span> ...
+    typedef <span class="nb">string</span> ObjectId;
+     exception InvalidName {};
+     Object resolve_initial_references (in ObjectId identifier)
+       raises (InvalidName);
+    void run();
+    void shutdown( in boolean wait_for_completion );
+  }
+}
+</pre></div>
+</div>
+<p>The CORBA standard specifies the ORB operation
+<code class="docutils literal notranslate"><span class="pre">resolve_initial_references</span></code>. This operation provides a portable
+method for applications to obtain initial references to a small set of
+standard objects (objects other than the initial ORB). These objects
+are identified by a mnemonic name, using a string knows as an
+<code class="docutils literal notranslate"><span class="pre">ObjectId</span></code>. For instance, the <code class="docutils literal notranslate"><span class="pre">ObjectID</span></code> for an initial POA object
+is <code class="docutils literal notranslate"><span class="pre">&quot;RootPOA&quot;</span></code>. (References to a select few other objects, such as
+the <code class="docutils literal notranslate"><span class="pre">&quot;Interface</span> <span class="pre">Repository&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;NamingService&quot;</span></code>, can also be
+obtained in this manner.)</p>
+<p>The ORB operation <code class="docutils literal notranslate"><span class="pre">resolve_initial_references</span></code> returns the object
+associated with an <code class="docutils literal notranslate"><span class="pre">ObjectId</span></code>, raising the exception <code class="docutils literal notranslate"><span class="pre">InvalidName</span></code>
+for an unrecognized <code class="docutils literal notranslate"><span class="pre">ObjectID</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">run</span></code> and <code class="docutils literal notranslate"><span class="pre">shutdown</span></code> operations are useful in multi-threaded
+programs, such as servers, which, apart from the main thread, need to
+run a separate request receiver thread for each POA.</p>
+<p>(A single-threaded application, such as a pure ORB client, does not
+generally need to use these operations.)</p>
+<p>A thread that calls an ORB’s <code class="docutils literal notranslate"><span class="pre">run</span></code> operation simply waits until it
+receives notification that the ORB has shut down.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">run</span></code> in a server’s main thread can then be used to ensure
+that the server process does not exit until the ORB has been
+explicitly shut down.</p>
+<p>Meanwhile, the <code class="docutils literal notranslate"><span class="pre">shutdown</span></code> operation instructs the ORB, and its
+object adapters, to shut down.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">wait_for_completion</span></code> parameter is <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, the operation
+blocks until all pending ORB processing has completed, otherwise it
+simply shuts down the ORB immediately.</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>define method initialize<span class="o">-</span>server ()
+  let location<span class="o">-</span>service <span class="o">=</span> get<span class="o">-</span>location<span class="o">-</span>service();
+
+  <span class="o">//</span> get reference to ORB
+  let orb <span class="o">=</span> CORBA<span class="o">/</span>ORB<span class="o">-</span>init(make(CORBA<span class="o">/&lt;</span>arg<span class="o">-</span><span class="nb">list</span><span class="o">&gt;</span>), <span class="s2">&quot;Open Dylan ORB&quot;</span>);
+
+  <span class="o">//</span> get reference to root POA, initially in the holding state
+  let RootPOA <span class="o">=</span> CORBA<span class="o">/</span>ORB<span class="o">/</span>resolve<span class="o">-</span>initial<span class="o">-</span>references(orb, <span class="s2">&quot;RootPOA&quot;</span>);
+
+  with<span class="o">-</span>dbms ($dbms)
+     <span class="o">//</span> connect to the database
+     let database <span class="o">=</span> make(<span class="o">&lt;</span>database<span class="o">&gt;</span>, datasource<span class="o">-</span>name<span class="o">:</span> $datasource<span class="o">-</span>name);
+     let user <span class="o">=</span>  make(<span class="o">&lt;</span>user<span class="o">&gt;</span>, user<span class="o">-</span>name<span class="o">:</span> $user<span class="o">-</span>name, password<span class="o">:</span> $user<span class="o">-</span>password);
+     let connection <span class="o">=</span> connect(database, user);
+
+     <span class="o">//</span> make the server frame, initialize <span class="k">and</span> refresh it.
+     let server<span class="o">-</span>frame <span class="o">=</span> make(<span class="o">&lt;</span>server<span class="o">-</span>frame<span class="o">&gt;</span>, connection<span class="o">:</span> connection);
+     server<span class="o">-</span>frame.refresh<span class="o">-</span>check<span class="o">-</span>button.gadget<span class="o">-</span>value <span class="o">:=</span> <span class="o">#</span>t;
+     refresh(server<span class="o">-</span>frame);
+
+     <span class="o">//</span>  make the bank servant
+     let bank <span class="o">=</span> make(<span class="o">&lt;</span>bank<span class="o">-</span>implementation<span class="o">&gt;</span>, connection<span class="o">:</span> connection,
+                     poa<span class="o">:</span> RootPOA, name<span class="o">:</span> <span class="s2">&quot;Dylan Bank&quot;</span>,
+                     server<span class="o">-</span>frame<span class="o">:</span> server<span class="o">-</span>frame);
+
+     <span class="o">//</span> get the servant<span class="s1">&#39;s object reference from the poa</span>
+<span class="s1">     let bank-reference = PortableServer/POA/servant-to-reference(bank.poa, bank);</span>
+
+<span class="s1">     // activate the bank&#39;</span>s POA using its POA manager.
+     let POAManager <span class="o">=</span> PortableServer<span class="o">/</span>POA<span class="o">/</span>the<span class="o">-</span>POAManager(bank.poa);
+     PortableServer<span class="o">/</span>POAManager<span class="o">/</span>activate(POAManager);
+
+     <span class="o">//</span> register the bank with the location service
+     register<span class="o">-</span>bank(orb, location<span class="o">-</span>service, bank<span class="o">-</span>reference);
+
+     <span class="o">//</span> create a separate thread to shut down the orb, unblocking the main thread.
+     make(<span class="o">&lt;</span>thread<span class="o">&gt;</span>,
+          <span class="k">function</span><span class="o">:</span> method ()
+                      start<span class="o">-</span>frame(server<span class="o">-</span>frame);
+                      CORBA<span class="o">/</span>ORB<span class="o">/</span>shutdown(orb, <span class="o">#</span>t);
+                    <span class="k">end</span> method);
+
+     <span class="o">//</span> block the main thread
+     CORBA<span class="o">/</span>ORB<span class="o">/</span>run(orb);
+
+     <span class="o">//</span> remove from location service
+     unregister<span class="o">-</span>bank(orb, location<span class="o">-</span>service, bank<span class="o">-</span>reference);
+
+     <span class="o">//</span> <span class="nb">close</span> the bank&#39;s connection.
+     disconnect(connection);
+  <span class="k">end</span> with<span class="o">-</span>dbms;
+<span class="k">end</span> method;
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">initialize-server</span></code> function first initializes the Open Dylan
+ORB by calling the Dylan generic function <code class="docutils literal notranslate"><span class="pre">CORBA/ORB-init</span></code>, just as
+we initialized the ORB in the client. The call returns a
+<code class="docutils literal notranslate"><span class="pre">CORBA/&lt;ORB&gt;</span></code> pseudo object.</p>
+<p>Invoking <code class="docutils literal notranslate"><span class="pre">CORBA/ORB/resolve-initial-references</span></code> on this ORB, passing
+the <code class="docutils literal notranslate"><span class="pre">ObjectID</span> <span class="pre">&quot;RootPOA&quot;</span></code>, returns a POA object of class
+<code class="docutils literal notranslate"><span class="pre">PortableServer/&lt;POA&gt;</span></code>. This is the CORBA standard method for
+obtaining the initial POA object. Note that RootPOA is initially in
+the holding state.</p>
+<p>Next, we connect to the database and use the connection to make a bank
+servant. We register the servant with the POA, RootPOA, and publish
+the resulting object reference, encoded as a string, according to the
+location-service requested in the command line arguments. By default
+this is via a shared file. However, if the following is specified on
+the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">location</span><span class="o">-</span><span class="n">service</span><span class="p">:</span><span class="n">naming</span><span class="o">-</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>then a Name Service is used instead. Use the ORB command line option
+<code class="docutils literal notranslate"><span class="pre">-ORBname-service</span></code> to specify the IOR of the Name Service. Be sure
+to use the same command line options for the client and the server or
+they will not find each other!</p>
+<p>We then obtain the POA Manager for the POA using the POA operation
+<code class="docutils literal notranslate"><span class="pre">PortableServer/POA/the-POAManager</span></code>. The call to
+<code class="docutils literal notranslate"><span class="pre">PortableServer/POAManager/activate</span></code> moves the POA out of the
+holding state, into the active state, ready to receive and process
+incoming requests.</p>
+<p>To prevent the server from exiting before having the chance to process
+any requests, we introduce a new thread. This thread waits until the
+user responds to a DUIM dialog and then proceeds to shut down the ORB
+with a CORBA standard call to <code class="docutils literal notranslate"><span class="pre">CORBA/ORB/shutdown</span></code>. Meanwhile,
+back in the main thread, the subsequent call to <code class="docutils literal notranslate"><span class="pre">CORBA/ORB/run</span></code>
+causes the main thread to block, waiting for notification that the ORB
+has shut down.</p>
+<p>Once the ORB has shut down, the main thread resumes, closes the
+connection to the bank, and exits, terminating the server application.</p>
+<p>The full implementation of the server initialization is in the file
+<code class="docutils literal notranslate"><span class="pre">init-server.dylan</span></code>.</p>
+<p>This completes the description of our implementation of the server.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bank-client.html" class="btn btn-neutral float-left" title="The Bank Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="projects.html" class="btn btn-neutral float-right" title="Creating CORBA Projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

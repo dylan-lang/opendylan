@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting up the Bank Example &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Writing and Compiling IDL" href="bank-idl.html" />
+    <link rel="prev" title="Quick Start Tutorial" href="getstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up the Bank Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-the-bank-example">About the bank example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-to-find-the-example-code">Where to find the example code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#odbc-requirements">ODBC requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#registering-the-database-with-odbc">Registering the database with ODBC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#registering-the-database-on-windows-10">Registering the database on Windows 10</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-bank-client-and-server">Building the Bank client and server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-server-and-client">Running the server and client</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Setting up the Bank Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bank-setup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="setting-up-the-bank-example">
+<h1>Setting up the Bank Example<a class="headerlink" href="#setting-up-the-bank-example" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-the-bank-example">
+<h2>About the bank example<a class="headerlink" href="#about-the-bank-example" title="Permalink to this headline">¶</a></h2>
+<p>Chapters 4, 5, and 6 of this guide present a deeper CORBA development
+example than the Hello World example we saw in chapter 2. The new
+example is a simple implementation of a bank. The architecture of the
+bank has three components:</p>
+<ul class="simple">
+<li><p>A database that provides persistent storage for the accounts managed
+by the bank.</p></li>
+<li><p>A CORBA server that represents the bank and provides an
+object-oriented interface to its accounts.</p></li>
+<li><p>A CORBA client that provides a graphical user interface to the bank.</p></li>
+</ul>
+<p>This application is a typical example of a three-tier application
+architecture comprising a database access layer, a business logic
+layer, and a user interface layer.</p>
+<p>Accounts are stored as records in a Microsoft Access™ relational
+database. The database is manipulated by the server using the
+Open Dylan SQL-ODBC library.</p>
+<p>The server provides a single CORBA object that represents the
+bank. This object manages a collection of CORBA objects that represent
+customer accounts. The bank has operations for opening and closing
+accounts, and for retrieving existing accounts from the database. In
+turn, accounts support operations for querying and updating their
+balance.</p>
+<p>The client initially contacts the server by obtaining a reference to
+the bank object from the Open Dylan ORB. It then presents the
+user with a graphical interface to the bank.</p>
+<p>In response to user requests, the interface invokes operations on the
+bank, obtaining further references to accounts created on the
+server. The client manages separate windows for the bank and each of
+the accounts that are active in the server.</p>
+<p>We will use the Open Dylan DUIM library to implement the client’s user
+interface.</p>
+</div>
+<div class="section" id="where-to-find-the-example-code">
+<h2>Where to find the example code<a class="headerlink" href="#where-to-find-the-example-code" title="Permalink to this headline">¶</a></h2>
+<p>The bank example code is available in the Open Dylan Examples menu,
+under the CORBA category. There is a Bank Client project and a Bank
+Server project.</p>
+<p>The same code is also available in the top-level Open Dylan
+installation folder, under <code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank</span></code>. This folder
+has several subfolders.</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank</span></code> contains the file
+<code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. This is the IDL file declaring the CORBA interface
+to the server.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank-client</span></code> contains the implementation
+of the client as project <code class="file docutils literal notranslate"><span class="pre">bank-client.hdp</span></code>.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank-server</span></code> contains the implementation
+of the server as project <code class="file docutils literal notranslate"><span class="pre">bank-server.hdp</span></code>. This folder also
+contains a ready made Microsoft Access database file
+<code class="file docutils literal notranslate"><span class="pre">bankDB.mdb</span></code>. The application uses this to record bank account
+details.</p></li>
+</ul>
+</div>
+<div class="section" id="odbc-requirements">
+<h2>ODBC requirements<a class="headerlink" href="#odbc-requirements" title="Permalink to this headline">¶</a></h2>
+<p>In order to run the example, you need to have ODBC version 3.0 (or
+higher) and an ODBC driver for Microsoft Access installed on the
+machine hosting the server application. You do not need a copy of
+Microsoft Access.</p>
+<p>Both ODBC 3.x and the Microsoft Access driver are available free for
+download from Microsoft Access Database Engine 2010 Redistributable
+download page,
+&lt;<a class="reference external" href="https://www.microsoft.com/en-us/download/details.aspx?id=13255">https://www.microsoft.com/en-us/download/details.aspx?id=13255</a>&gt;.</p>
+<p>This information may change in the future.</p>
+</div>
+<div class="section" id="registering-the-database-with-odbc">
+<h2>Registering the database with ODBC<a class="headerlink" href="#registering-the-database-with-odbc" title="Permalink to this headline">¶</a></h2>
+<p>So that the bank server can access the <code class="file docutils literal notranslate"><span class="pre">bank.mdb</span></code> database using
+ODBC, we need to register the database as an ODBC data source. This
+installation step also tells ODBC which driver to use when connecting
+to the database.</p>
+<p>To register the database in this way, ODBC drivers must be installed
+on the machine that will host the server.</p>
+<div class="section" id="registering-the-database-on-windows-10">
+<h3>Registering the database on Windows 10<a class="headerlink" href="#registering-the-database-on-windows-10" title="Permalink to this headline">¶</a></h3>
+<p>To register the <code class="file docutils literal notranslate"><span class="pre">bank.mdb</span></code> database with ODBC on Windows 10:</p>
+<ol class="arabic">
+<li><p>From the Windows <span class="guilabel">Start</span> menu, choose
+<span class="menuselection">Windows Administrative Tools ‣ ODBC Data Sources
+(32-bit)</span></p>
+<p>The ODBC Data Source Administrator appears.</p>
+</li>
+<li><p>Select the <span class="guilabel">User DSN</span> tab.</p></li>
+<li><p>Click <span class="guilabel">Add…</span>.</p></li>
+<li><p>Select <span class="guilabel">Microsoft Access Driver</span>
+from the list of available drivers.</p></li>
+<li><p>Click <span class="guilabel">Finish</span>.</p>
+<p>The ODBC Microsoft Access Setup dialog appears.</p>
+</li>
+<li><p>In the ODBC Microsoft Access Setup dialog, enter <code class="docutils literal notranslate"><span class="pre">bankDB</span></code>
+in the Data Source Name field.</p></li>
+<li><p>Click <span class="guilabel">Select…</span>.</p>
+<p>The Select Database dialog appears.</p>
+<p>We can now specify the database file name. The file is stored under
+the top-level Open Dylan installation folder, in the
+subfolder <code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank-server</span></code>.</p>
+</li>
+<li><p>In the Select Database dialog, browse until you reach the folder above.</p></li>
+<li><p>Select <code class="file docutils literal notranslate"><span class="pre">bankDB.mbd</span></code> from the list of available files, then
+click <span class="guilabel">OK</span> .</p></li>
+<li><p>Click <span class="guilabel">OK</span> again to close the ODBC Microsoft Access Setup
+dialog.</p></li>
+<li><p>Click <span class="guilabel">OK</span> to close the ODBC Data Source Administrator.</p>
+<p>We also need to ensure that the <code class="file docutils literal notranslate"><span class="pre">bank.mdb</span></code>
+file is writable.</p>
+</li>
+<li><p>Right-click on the file in a Windows Explorer window.</p></li>
+<li><p>Select <span class="guilabel">Properties</span> from the shortcut menu.</p></li>
+<li><p>Clear the Read-only attribute if it is checked, and click
+<span class="guilabel">OK</span>.</p></li>
+</ol>
+<p>The ODBC setup work for the demo is now complete. We can move on to
+building and running the demo itself.</p>
+</div>
+</div>
+<div class="section" id="building-the-bank-client-and-server">
+<h2>Building the Bank client and server<a class="headerlink" href="#building-the-bank-client-and-server" title="Permalink to this headline">¶</a></h2>
+<p>We can now build the client and server applications for the demo.</p>
+<ol class="arabic">
+<li><p>Start the Open Dylan environment.</p>
+<p>The client and server projects are available in the Examples
+dialog. Choose <span class="menuselection">Help ‣ Open Example Project…</span> from
+the main window.</p>
+</li>
+<li><p>In the Examples dialog, open the Bank-Client project.</p></li>
+<li><p>In the Bank-Client project window, choose <span class="menuselection">Project
+‣ Build</span>.</p>
+<p>The IDL compiler, Scepter, is invoked automatically during the
+build process. It compiles the file <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> to generate
+the source code for the protocol and stubs libraries.</p>
+</li>
+<li><p>Bring up the Examples dialog again, and open the Bank-Server project.</p></li>
+<li><p>In the Bank-Server project window, choose choose <span class="menuselection">Project
+‣ Build</span>.</p></li>
+</ol>
+</div>
+<div class="section" id="running-the-server-and-client">
+<h2>Running the server and client<a class="headerlink" href="#running-the-server-and-client" title="Permalink to this headline">¶</a></h2>
+<p>We can now run the bank demo for the first time.</p>
+<p>In the Bank-Server project window, choose <span class="menuselection">Application
+‣ Start</span> to run the server executable. The server is represented by
+an administration window with a raw table of the database contents, a
+log window for seeing requests, and a couple of menu items.</p>
+<p>Once you have finished interacting with the bank, click the close
+button in the top right-hand corner of this bank server window to
+exit. Do not do this yet.</p>
+<p>Once the server’s dialog has appeared, go to the Bank-Client project
+window and choose <span class="menuselection">Application ‣ Start</span> to run the
+executable for the client. A window presenting a GUI to the bank
+should appear.You can now interact with the bank to create new
+accounts, deposit amounts, and so on.</p>
+<p>Once you have finished interacting with the bank, click the close
+button in the top right-hand corner of the bank window to exit the
+client application. Then do the same for the server window.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getstart.html" class="btn btn-neutral float-left" title="Quick Start Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bank-idl.html" class="btn btn-neutral float-right" title="Writing and Compiling IDL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

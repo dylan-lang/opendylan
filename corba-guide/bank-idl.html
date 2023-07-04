@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing and Compiling IDL &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Bank Client" href="bank-client.html" />
+    <link rel="prev" title="Setting up the Bank Example" href="bank-setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Developing Component Software with CORBA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Writing and Compiling IDL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#writing-idl-for-a-corba-application">Writing IDL for a CORBA application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#idl-for-the-account-interface">IDL for the account interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#idl-for-the-checkingaccount-interface">IDL for the checkingAccount interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#idl-for-the-bank-interface">IDL for the bank interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-idl-for-a-corba-application">Compiling IDL for a CORBA application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#libraries-created-by-compiling-idl">Libraries created by compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#idl-files-in-dylan-projects">IDL files in Dylan projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compilation-steps">Compilation steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mapping-idl-to-dylan">Mapping IDL to Dylan</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-for-interfaces">Mapping for interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-for-basic-types">Mapping for basic types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-for-attributes">Mapping for attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-for-operations">Mapping for operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-for-exceptions">Mapping for exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Developing Component Software with CORBA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Writing and Compiling IDL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bank-idl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="writing-and-compiling-idl">
+<h1>Writing and Compiling IDL<a class="headerlink" href="#writing-and-compiling-idl" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="writing-idl-for-a-corba-application">
+<h2>Writing IDL for a CORBA application<a class="headerlink" href="#writing-idl-for-a-corba-application" title="Permalink to this headline">¶</a></h2>
+<p>The first step in developing a CORBA application is to define the
+interfaces to its distributed application objects. You define these
+interfaces using OMG’s Interface Definition Language (IDL).</p>
+<p>Essentially, the IDL specification of an interface lists the names and
+types of operations that:</p>
+<ul class="simple">
+<li><p>Any CORBA object, satisfying that interface, must support.</p></li>
+<li><p>Any CORBA client application, targeting such an object, may request.</p></li>
+</ul>
+<p>Our bank server application manages three types of CORBA object,
+representing accounts, checking accounts, and banks. We declare the
+interfaces to all three objects within the same CORBA module,
+<code class="docutils literal notranslate"><span class="pre">BankingDemo</span></code>:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>module BankingDemo {
+  interface account {
+    <span class="o">//</span> details follow
+  };
+
+  interface checkingAccount <span class="o">:</span> account {
+    <span class="o">//</span> details follow
+  };
+
+  interface bank {
+    <span class="o">//</span> details follow
+  };
+};
+</pre></div>
+</div>
+<p>The following subsections describe the IDL declarations for each of
+the three interfaces. You can find the complete IDL description for
+the bank demo in the Open Dylan Examples folder, under
+<code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank\bank.idl</span></code>.</p>
+<div class="section" id="idl-for-the-account-interface">
+<h3>IDL for the account interface<a class="headerlink" href="#idl-for-the-account-interface" title="Permalink to this headline">¶</a></h3>
+<p>This is the IDL definition of the interface to an <code class="docutils literal notranslate"><span class="pre">account</span></code> object.</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> in module BankingDemo
+interface account {
+  readonly attribute <span class="nb">string</span> name;
+
+  readonly attribute <span class="nb">long</span> balance;
+
+  void credit (in unsigned <span class="nb">long</span> amount);
+
+  exception refusal {<span class="nb">string</span> reason;};
+
+  void debit (in <span class="nb">long</span> amount)
+    raises (refusal);
+};
+</pre></div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">account</span></code> object’s <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is used to store the name
+of the account holder. The state of an account is recorded in the
+<code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute. To keep things simple, we use CORBA <code class="docutils literal notranslate"><span class="pre">long</span></code>
+values to represent the monetary amounts that we use to store account
+balances and to modify them with credits and debits.</p>
+<p>To prevent clients from directly altering the account’s <code class="docutils literal notranslate"><span class="pre">name</span></code> or
+<code class="docutils literal notranslate"><span class="pre">balance</span></code>, these attributes are declared as <code class="docutils literal notranslate"><span class="pre">readonly</span></code>
+attributes. The operations <code class="docutils literal notranslate"><span class="pre">credit</span></code> and <code class="docutils literal notranslate"><span class="pre">debit</span></code> are provided to
+allow updates to an account’s <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute.</p>
+<p>The operation <code class="docutils literal notranslate"><span class="pre">credit</span></code> adds a non-negative amount to the current
+account balance.</p>
+<p>Next is an exception declaration:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>exception refusal {<span class="nb">string</span> reason;};
+</pre></div>
+</div>
+<p>This declares a named exception, <code class="docutils literal notranslate"><span class="pre">refusal</span></code>, that the <code class="docutils literal notranslate"><span class="pre">debit</span></code>
+operation uses to signal errors. The <code class="docutils literal notranslate"><span class="pre">refusal</span></code> exception is declared
+to contain a <code class="docutils literal notranslate"><span class="pre">reason</span></code> field that documents the reason for failure
+using a <code class="docutils literal notranslate"><span class="pre">string</span></code>.</p>
+<p>The operation <code class="docutils literal notranslate"><span class="pre">debit</span></code> subtracts a given amount from the current
+account balance, as long as this does not make the account balance
+negative. Qualifying <code class="docutils literal notranslate"><span class="pre">debit</span></code> by the phrase <code class="docutils literal notranslate"><span class="pre">raises</span> <span class="pre">(refusal)</span></code>
+declares that invoking this operation might raise the exception
+<code class="docutils literal notranslate"><span class="pre">refusal</span></code>. This phrase is necessary because although a CORBA
+operation may raise any CORBA system exception, its declaration must
+specify any additional user-defined CORBA exceptions that it might
+raise.</p>
+<p>This completes the IDL declaration of the <code class="docutils literal notranslate"><span class="pre">account</span></code> interface.</p>
+</div>
+<div class="section" id="idl-for-the-checkingaccount-interface">
+<h3>IDL for the checkingAccount interface<a class="headerlink" href="#idl-for-the-checkingaccount-interface" title="Permalink to this headline">¶</a></h3>
+<p>Our application manages a second sort of bank account, called a
+checking account . While an ordinary <code class="docutils literal notranslate"><span class="pre">account</span></code> must maintain a
+positive balance, a <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> may be overdrawn up to an
+agreed limit. We use IDL’s notion of interface inheritance to capture
+the intuition that a checking account is just a special form of
+<code class="docutils literal notranslate"><span class="pre">account</span></code>:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> in module BankingDemo
+interface checkingAccount <span class="o">:</span> account {
+  readonly attribute <span class="nb">long</span> limit;
+};
+</pre></div>
+</div>
+<p>The declaration <code class="docutils literal notranslate"><span class="pre">checkingAccount</span> <span class="pre">:</span> <span class="pre">account</span></code> specifies that the
+interface <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> inherits all the operations and
+attributes declared in the <code class="docutils literal notranslate"><span class="pre">account</span></code> interface. The body of the
+definition states that a <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> also supports the
+additional <code class="docutils literal notranslate"><span class="pre">limit</span></code> attribute.</p>
+<p>The fact that <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> inherits some operations from
+<code class="docutils literal notranslate"><span class="pre">account</span></code> does not imply that the methods implementing those
+operations need to be inherited too. We will exploit this flexibility
+to provide a specialized <code class="docutils literal notranslate"><span class="pre">debit</span></code> method for <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code>s.</p>
+</div>
+<div class="section" id="idl-for-the-bank-interface">
+<h3>IDL for the bank interface<a class="headerlink" href="#idl-for-the-bank-interface" title="Permalink to this headline">¶</a></h3>
+<p>We can now design the interface of a bank object. The intention is
+that a bank associates customer names with accounts, with each name
+identifying at most one account. A client is able to open accounts for
+new customers and to retrieve both accounts and checking accounts for
+existing customers from the persistent store. If the client attempts
+to open a second account under the same name, the bank should refuse
+the request by raising an exception. Similarly, if the client attempts
+to retrieve an account for an unknown customer, the bank should reject
+the request by raising an exception.</p>
+<p>The IDL definition of the <code class="docutils literal notranslate"><span class="pre">bank</span></code> interface captures some of these
+requirements:</p>
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> in module BankingDemo
+interface bank {
+  readonly attribute <span class="nb">string</span> name;
+
+  exception duplicateAccount{};
+
+  account openAccount (in <span class="nb">string</span> name)
+    raises (duplicateAccount);
+
+  checkingAccount openCheckingAccount(in <span class="nb">string</span> name,
+                                      in <span class="nb">long</span> limit)
+    raises (duplicateAccount);
+
+  exception nonExistentAccount{};
+
+  account retrieveAccount(in <span class="nb">string</span> name)
+    raises (nonExistentAccount);
+
+  void closeAccount (in account account);
+};
+</pre></div>
+</div>
+<p>The name of a <code class="docutils literal notranslate"><span class="pre">bank</span></code> object is recorded in its <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute.</p>
+<p>The operation <code class="docutils literal notranslate"><span class="pre">openAccount</span></code> is declared to take a CORBA <code class="docutils literal notranslate"><span class="pre">string</span></code>
+and return an <code class="docutils literal notranslate"><span class="pre">account</span></code>. Because <code class="docutils literal notranslate"><span class="pre">account</span></code> is defined as an
+interface, and not a type, this means that the operation will return
+a reference to an <code class="docutils literal notranslate"><span class="pre">account</span></code> object. This illustrates an important
+distinction between ordinary values and objects in CORBA: while
+members of basic and constructed types are passed by value, objects
+are passed by reference.</p>
+<p>The qualification <code class="docutils literal notranslate"><span class="pre">raises</span> <span class="pre">(duplicateAccount)</span></code> specifies that
+<code class="docutils literal notranslate"><span class="pre">openAccount</span></code> can raise the user-defined exception
+<code class="docutils literal notranslate"><span class="pre">duplicateAccount</span></code>, instead of returning an account. (The exception
+<code class="docutils literal notranslate"><span class="pre">duplicateAccount</span></code> has no fields.)</p>
+<p>The operation <code class="docutils literal notranslate"><span class="pre">openCheckingAccount</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">openAccount</span></code>,
+but takes an additional argument, <code class="docutils literal notranslate"><span class="pre">limit</span></code>, which represents the
+account’s overdraft limit.</p>
+<p>The operation <code class="docutils literal notranslate"><span class="pre">retrieveAccount</span></code> looks up the account (or checking
+account), if any, associated with a customer <code class="docutils literal notranslate"><span class="pre">name</span></code>, and returns an
+object reference of interface <code class="docutils literal notranslate"><span class="pre">account</span></code>. The operation can raise the
+exception <code class="docutils literal notranslate"><span class="pre">nonExistentAccount</span></code> to indicate that there is no account
+under the supplied name.</p>
+<p>The last operation, <code class="docutils literal notranslate"><span class="pre">closeAccount</span></code>, closes an <code class="docutils literal notranslate"><span class="pre">account</span></code> by
+deleting it from the bank’s records.</p>
+<p>Because <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> inherits from <code class="docutils literal notranslate"><span class="pre">account</span></code>, a
+<code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> object can be used wherever an <code class="docutils literal notranslate"><span class="pre">account</span></code> object
+is expected, whether as the actual argument, or the result, of an
+operation. For instance, we can use <code class="docutils literal notranslate"><span class="pre">closeAccount</span></code> to close
+<code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> objects as well as <code class="docutils literal notranslate"><span class="pre">account</span></code> objects, and we can
+use <code class="docutils literal notranslate"><span class="pre">retrieveAccount</span></code> to fetch <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> objects as well
+as <code class="docutils literal notranslate"><span class="pre">account</span></code> objects.</p>
+</div>
+</div>
+<div class="section" id="compiling-idl-for-a-corba-application">
+<h2>Compiling IDL for a CORBA application<a class="headerlink" href="#compiling-idl-for-a-corba-application" title="Permalink to this headline">¶</a></h2>
+<p>Open Dylan includes an IDL compiler, Scepter, that it uses to check
+and compile IDL files into Dylan libraries. These libraries provide
+essential infrastructure for CORBA-based applications in Dylan.</p>
+<p>The libraries are built according to the specification in <a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a>. That document is a draft specification for
+a standard mapping from CORBA IDL to the Dylan language. Briefly, the
+specification states that:</p>
+<ul class="simple">
+<li><p>CORBA types are mapped to Dylan types and classes</p></li>
+<li><p>CORBA interfaces are mapped to Dylan classes</p></li>
+<li><p>CORBA interface inheritance is mapped to Dylan class inheritance</p></li>
+<li><p>CORBA attributes are mapped to Dylan getter and setter functions</p></li>
+<li><p>CORBA operations are mapped to Dylan generic functions</p></li>
+<li><p>CORBA exceptions are mapped to Dylan conditions</p></li>
+</ul>
+<p>IDL declarations are mapped to Dylan according to these rules. The
+resulting libraries provide a Dylan protocol equivalent to the IDL.</p>
+<div class="section" id="libraries-created-by-compiling-idl">
+<h3>Libraries created by compiling IDL<a class="headerlink" href="#libraries-created-by-compiling-idl" title="Permalink to this headline">¶</a></h3>
+<p>The IDL compiler can produce <em>skeleton</em>, <em>stub</em>, and <em>protocol</em>
+libraries from an IDL file. This, again, is as specified in
+<a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a>. The purpose of these libraries is to make writing
+CORBA applications easier, by providing a pre-built interface to CORBA
+operations.</p>
+<p>The skeletons or <em>server skeletons</em> library contains code for use by a
+CORBA server application, while the stubs or client stubs library
+contains code for use by a CORBA client application. In both cases,
+the code hides the details of CORBA communication from the
+application, allowing you to invoke operations in other CORBA objects
+without having to worry about where those objects are running. The
+stubs and skeletons act as proxies for the real, remote operations.</p>
+<p>The protocol library is a Dylan representation of the interface
+described in the IDL file. The Dylan representation is mapped from IDL
+according to the Dylan IDL binding, with open classes and open generic
+functions representing IDL interfaces and operations. As we saw in
+Chapter 2, “Quick Start Tutorial”, the protocol provides the basis for
+implementing clients and servers. The skeletons and the stubs library
+both use the protocol library and re-export the names from it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Typically a server project uses the client stubs library in
+addition to the skeletons and protocol library. This allows the
+server to make callbacks to the client.</p>
+</div>
+</div>
+<div class="section" id="idl-files-in-dylan-projects">
+<h3>IDL files in Dylan projects<a class="headerlink" href="#idl-files-in-dylan-projects" title="Permalink to this headline">¶</a></h3>
+<p>IDL files can be treated as part of Dylan projects, allowing the IDL
+interface to be compiled at the same time as the project’s Dylan
+sources. This is in fact the simplest way to manage a Dylan project
+that uses CORBA facilities.</p>
+<p>However, you do not include IDL files directly in the project. Rather,
+each IDL file that a project depends on is represented in the project
+by a corresponding Open Dylan Tool Specification (spec) file.</p>
+<p>The spec file indicates the path to the IDL file, and states which of
+the skeletons, stubs, and protocol libraries the project requires. The
+Open Dylan development environment uses the spec file to invoke
+the IDL compiler as part of the normal build process for the project.</p>
+<p>The Bank-Client and Bank-Server projects each contain a spec file for
+the <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> file. The Bank-Client project’s spec file,
+<code class="file docutils literal notranslate"><span class="pre">idl.spec</span></code>, requests that stubs and protocol libraries be
+generated. The Bank-Server project’s spec file requests that
+skeletons, stubs, and protocol libraries be generated. (This second
+spec file is also called <code class="file docutils literal notranslate"><span class="pre">idl.spec</span></code> but is a different file to the
+one in Bank-Client.)</p>
+<p>After building both the bank client and the bank server, there will be
+three new subfolders:</p>
+<dl class="simple">
+<dt><code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank\stubs</span></code></dt><dd><p>Contains the project <code class="docutils literal notranslate"><span class="pre">bank-stubs.hdp</span></code> that defines the Bank-Stubs
+library. This library is used by the implementation of the bank
+client. Its project is automatically added to <code class="docutils literal notranslate"><span class="pre">bank-client.hdp</span></code>
+as a subproject.</p>
+</dd>
+<dt><code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank\skeletons</span></code></dt><dd><p>Contains the project <code class="docutils literal notranslate"><span class="pre">bank-skeletons.hdp</span></code> that defines the
+Bank-Skeletons library. This library is used by the implementation
+of the bank server. Its project is automatically added to
+<code class="docutils literal notranslate"><span class="pre">bank-server.hdp</span></code> as a subproject.</p>
+</dd>
+<dt><code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank\protocol</span></code></dt><dd><p>Contains the project <code class="docutils literal notranslate"><span class="pre">bank-protocol.hdp</span></code> that defines the
+Bank-Protocol library. This library is shared by both the
+Bank-Skeletons and Bank-Stubs libraries, and added automatically to
+the projects of both.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="compilation-steps">
+<h3>Compilation steps<a class="headerlink" href="#compilation-steps" title="Permalink to this headline">¶</a></h3>
+<p>If you have not built the Bank-Client and Bank-Server projects yet,
+you should do so now.</p>
+<ol class="arabic">
+<li><p>Open the Bank-Client and Bank-Server projects from the CORBA
+section of the Examples dialog.</p>
+<p>You can bring up the Examples dialog by choosing
+<span class="menuselection">Help ‣ Open Example Project…</span>.</p>
+</li>
+<li><p>Choose <span class="menuselection">Project ‣ Build</span> in each project window.</p>
+<p>Notice how the stubs, skeletons, and protocol projects are
+generated and added automatically to the top-level client and
+server projects.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="mapping-idl-to-dylan">
+<h2>Mapping IDL to Dylan<a class="headerlink" href="#mapping-idl-to-dylan" title="Permalink to this headline">¶</a></h2>
+<p>To get an impression of the mapping from IDL to Dylan, we can take a
+look at the result of applying the mapping to the file
+<code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. The following Dylan definitions are taken from
+<code class="file docutils literal notranslate"><span class="pre">bank-protocol.dylan</span></code>, part of the Bank-Protocol project
+produced by compiling <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> IDL:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="n">BankingDemo/&lt;account&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/name</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/balance</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/credit</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
+     <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">();</span>
+
+<span class="k">define</span> <span class="nb">sealed</span> <span class="nb">class</span> <span class="n">BankingDemo/account/&lt;refusal&gt;</span>
+    <span class="p">(</span><span class="n">CORBA/&lt;user-exception&gt;</span><span class="p">)</span>
+  <span class="nb">slot</span> <span class="n">BankingDemo/account/refusal/reason</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">,</span>
+    <span class="k">required-init-keyword:</span> <span class="k">reason:</span><span class="p">;</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/debit</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span> <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">();</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="n">BankingDemo/&lt;checkingAccount&gt;</span>
+    <span class="p">(</span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/checkingAccount/limit</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="n">BankingDemo/&lt;bank&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/bank/name</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;bank&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">);</span>
+
+<span class="k">define</span> <span class="nb">sealed</span> <span class="nb">class</span> <span class="n">BankingDemo/bank/&lt;duplicateAccount&gt;</span>
+    <span class="p">(</span><span class="n">CORBA/&lt;user-exception&gt;</span><span class="p">)</span>
+<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>To provide some more intuition for the mapping scheme, the following
+subsections examine the Dylan counterparts of some of the more
+representative IDL declarations from the file <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. See
+<a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a> for the full mapping description.</p>
+<div class="section" id="mapping-for-interfaces">
+<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>The IDL interfaces <code class="docutils literal notranslate"><span class="pre">account</span></code>, <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> and <code class="docutils literal notranslate"><span class="pre">bank</span></code> map
+to the Dylan abstract classes <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code> .</p>
+<p>Dylan does not support nested namespaces, so in Dylan, the IDL scope
+identifier <code class="docutils literal notranslate"><span class="pre">BankingDemo</span></code> is prefixed to the name of each interface
+defined within its scope. This is how we get the Dylan class
+identifiers <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code>.</p>
+<p>Notice how IDL interface inheritance (<code class="docutils literal notranslate"><span class="pre">checkingAccount</span> <span class="pre">:</span> <span class="pre">account</span></code>)
+maps naturally onto Dylan class inheritance: the class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code> is defined as a subclass of
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>).</p>
+</div>
+<div class="section" id="mapping-for-basic-types">
+<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this headline">¶</a></h3>
+<p>The IDL types <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, and <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span></code> are mapped
+to the Dylan classes <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;string&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;long&gt;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">CORBA/&lt;unsigned-long&gt;</span></code>, which are simply aliases for the Dylan
+classes <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and a positive subset of
+<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+</div>
+<div class="section" id="mapping-for-attributes">
+<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this headline">¶</a></h3>
+<p>The read-only <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute of an IDL <code class="docutils literal notranslate"><span class="pre">account</span></code> gives rise
+to the Dylan generic function:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/balance</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If we had omitted the <code class="docutils literal notranslate"><span class="pre">readonly</span></code> keyword from the definition of the
+<code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute, the mapping would have introduced an
+additional generic <code class="docutils literal notranslate"><span class="pre">-setter</span></code> function:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/balance-setter</span>
+    <span class="p">(</span><span class="n">value</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">,</span> <span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">(</span><span class="n">value</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Recall that, in the IDL source, the <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute is declared
+within the definition, and thus the subordinate namespace, of the
+<code class="docutils literal notranslate"><span class="pre">BankingDemo</span></code> module and the <code class="docutils literal notranslate"><span class="pre">account</span></code> interface. Again, because
+Dylan does not support nested namespaces, the IDL scope identifiers
+<code class="docutils literal notranslate"><span class="pre">BankingDemo</span></code> and <code class="docutils literal notranslate"><span class="pre">account</span></code> are simply prefixed to the name of the
+attribute’s getter method, resulting in the Dylan function identifier
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/account/balance</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>More generally, the Dylan language IDL binding specifies that an
+IDL identifier is mapped to a Dylan identifier by appending
+together all the enclosing scope identifiers and the scoped
+identifier itself, separating the identifiers by forward slashes
+(<code class="docutils literal notranslate"><span class="pre">/</span></code>).</p>
+</div>
+</div>
+<div class="section" id="mapping-for-operations">
+<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this headline">¶</a></h3>
+<p>The IDL operation <code class="docutils literal notranslate"><span class="pre">credit</span></code> is mapped to the Dylan generic function:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/credit</span>
+    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
+     <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
+ <span class="p">=&gt;</span> <span class="p">();</span>
+</pre></div>
+</div>
+<p>In IDL, the <code class="docutils literal notranslate"><span class="pre">credit</span></code> operation is defined within the <code class="docutils literal notranslate"><span class="pre">account</span></code>
+interface, declaring it to be an operation on <code class="docutils literal notranslate"><span class="pre">account</span></code> objects. The
+Dylan language IDL binding adopts the convention that an operation’s
+target object should be passed as the first argument of the
+corresponding Dylan generic function. Thus the first parameter of the
+generic function <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/credit</span></code> is an object of class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>.</p>
+<p>The operation’s <code class="docutils literal notranslate"><span class="pre">in</span></code> and <code class="docutils literal notranslate"><span class="pre">inout</span></code> arguments become the remaining
+parameters of the corresponding Dylan generic function. In this case,
+the <code class="docutils literal notranslate"><span class="pre">credit</span></code> operation specifies a single <code class="docutils literal notranslate"><span class="pre">in</span></code> parameter, <code class="docutils literal notranslate"><span class="pre">in</span>
+<span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">amount</span></code>, that determines the second and only other
+parameter, <code class="docutils literal notranslate"><span class="pre">amount</span> <span class="pre">::</span> <span class="pre">CORBA/&lt;long&gt;</span></code>, of the
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/account/credit</span></code> generic function.</p>
+<p>The operation’s result type and any other parameters declared as
+<code class="docutils literal notranslate"><span class="pre">out</span></code> or <code class="docutils literal notranslate"><span class="pre">inout</span></code> become results of the corresponding Dylan
+generic function. In this case, because the result type of <code class="docutils literal notranslate"><span class="pre">credit</span></code>
+is <code class="docutils literal notranslate"><span class="pre">void</span></code>, and the operation has no <code class="docutils literal notranslate"><span class="pre">out</span></code> or <code class="docutils literal notranslate"><span class="pre">inout</span></code>
+parameters, <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/credit</span></code> has an empty result list.</p>
+</div>
+<div class="section" id="mapping-for-exceptions">
+<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this headline">¶</a></h3>
+<p>The IDL exception <code class="docutils literal notranslate"><span class="pre">refusal</span></code> maps onto the Dylan class
+<code class="docutils literal notranslate"><span class="pre">BankingDemo/account/&lt;refusal&gt;</span></code> . Its member, <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">reason;</span></code>,
+maps onto a slot <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/refusal/reason</span> <span class="pre">::</span>
+<span class="pre">CORBA/&lt;string&gt;</span></code>.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/&lt;refusal&gt;</span></code> is a subclass of
+<code class="docutils literal notranslate"><span class="pre">CORBA/&lt;user-exception&gt;</span></code> and, by inheritance, of Dylan
+<code class="docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code>. This means that CORBA user exceptions can be raised
+on the server, and handled in the client, using the standard Dylan
+condition mechanism.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bank-setup.html" class="btn btn-neutral float-left" title="Setting up the Bank Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bank-client.html" class="btn btn-neutral float-right" title="The Bank Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
