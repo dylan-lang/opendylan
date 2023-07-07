@@ -16,9 +16,9 @@ pair of tools for interactive development in Emacs.  This document describes
 these tools.
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
-   copyright
    hello-world
    source-registries
    managing-dependencies
@@ -32,3 +32,4 @@ these tools.
    environment-variables
    cross-compilation
    platform-specific
+   copyright

@@ -5,9 +5,6 @@ The finalization Module
 .. current-library:: common-dylan
 .. current-module:: finalization
 
-.. contents::
-   :local:
-
 Open Dylan provides a finalization interface in the *finalization*
 module of *common-dylan*. This section explains finalization, the
 finalization interface provided, and how to use the interface in

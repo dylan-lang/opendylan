@@ -7,6 +7,7 @@
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'dylan.domain',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx'    # eases linking to other document sets.
 ]
 

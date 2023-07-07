@@ -8,8 +8,6 @@ The operating-system Module
 The operating-system module is part of the System library. It provides
 an interface to some features of the host machine's operating system.
 
-.. contents::
-
 Manipulating environment information
 ------------------------------------
 

@@ -9,8 +9,6 @@ The ``date`` module is part of the System library and provides a
 machine-independent facility for representing and manipulating dates and
 date/time intervals.
 
-.. contents::
-
 
 Representing dates and times
 ----------------------------

@@ -28,10 +28,6 @@ call into Dylan; compiling such a description generates entry points
 compatible with C's calling conventions.
 
 
-.. contents::
-   :depth: 3
-
-
 Overview
 ========
 

@@ -59,10 +59,6 @@ jobs:
 
       - uses: ammaraskar/sphinx-action@master
         with:
-          docs-folder: "documentation/project-notebook"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
           docs-folder: "documentation/release-notes"
 
       - uses: ammaraskar/sphinx-action@master

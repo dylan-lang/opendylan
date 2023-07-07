@@ -1,2 +1,0 @@
-Exposing Dylan to C
-*******************

@@ -14,6 +14,7 @@ language. It provides a gentler introduction to Dylan than does the
 DRM, although it refers to the latter book frequently.
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
 
    why-dylan
