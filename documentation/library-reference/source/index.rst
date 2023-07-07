@@ -31,7 +31,6 @@ published Dylan packages.
    io/index
    network/index
    progress-stream/index
-   regular-expressions/index
    sql/index
    system/index
    t-lists/index
