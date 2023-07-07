@@ -30,7 +30,6 @@ published Dylan packages.
    dylan/index
    hash-algorithms/index
    io/index
-   logging/index
    network/index
    progress-stream/index
    regular-expressions/index
