@@ -24,7 +24,6 @@ published Dylan packages.
    c-ffi/index
    collections/index
    coloring-stream/index
-   command-line-parser/index
    common-dylan/index
    dood/index
    dylan/index
