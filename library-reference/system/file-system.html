@@ -53,18 +53,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">The system Library</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="date.html">The date Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locators.html">The locators Module</a></li>
@@ -116,34 +111,12 @@
            <div itemprop="articleBody">
              
   <div class="section" id="the-file-system-module">
-<h1><a class="toc-backref" href="#id6">The file-system Module</a><a class="headerlink" href="#the-file-system-module" title="Permalink to this headline">¶</a></h1>
+<h1>The file-system Module<a class="headerlink" href="#the-file-system-module" title="Permalink to this headline">¶</a></h1>
 <p>The File-System module is part of the System library and provides a
 generic interface to the file system of the local machine. Remotely
 mounted file systems are also accessible using this module.</p>
-<div class="contents topic" id="contents">
-<p class="topic-title">Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#the-file-system-module" id="id6">The file-system Module</a></p>
-<ul>
-<li><p><a class="reference internal" href="#types-specific-to-file-system-operations" id="id7">Types specific to file system operations</a></p></li>
-<li><p><a class="reference internal" href="#manipulating-files" id="id8">Manipulating files</a></p></li>
-<li><p><a class="reference internal" href="#manipulating-directories" id="id9">Manipulating directories</a></p></li>
-<li><p><a class="reference internal" href="#finding-out-file-system-information" id="id10">Finding out file system information</a></p></li>
-<li><p><a class="reference internal" href="#finding-out-file-information" id="id11">Finding out file information</a></p></li>
-<li><p><a class="reference internal" href="#file-system-locators" id="id12">File system locators</a></p></li>
-<li><p><a class="reference internal" href="#file-streams" id="id13">File streams</a></p>
-<ul>
-<li><p><a class="reference internal" href="#options-when-creating-file-streams" id="id14">Options when creating file streams</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#conditions" id="id15">Conditions</a></p></li>
-<li><p><a class="reference internal" href="#the-file-system-module-reference" id="id16">The FILE-SYSTEM module reference</a></p></li>
-</ul>
-</li>
-</ul>
-</div>
 <div class="section" id="types-specific-to-file-system-operations">
-<h2><a class="toc-backref" href="#id7">Types specific to file system operations</a><a class="headerlink" href="#types-specific-to-file-system-operations" title="Permalink to this headline">¶</a></h2>
+<h2>Types specific to file system operations<a class="headerlink" href="#types-specific-to-file-system-operations" title="Permalink to this headline">¶</a></h2>
 <p>The File-System module contains a number of types specifically designed
 for use by interfaces in the module.</p>
 <ul class="simple">
@@ -153,7 +126,7 @@ for use by interfaces in the module.</p>
 </ul>
 </div>
 <div class="section" id="manipulating-files">
-<h2><a class="toc-backref" href="#id8">Manipulating files</a><a class="headerlink" href="#manipulating-files" title="Permalink to this headline">¶</a></h2>
+<h2>Manipulating files<a class="headerlink" href="#manipulating-files" title="Permalink to this headline">¶</a></h2>
 <p>The File-System module contains a number of interfaces that let you
 perform standard file management operations on files already resident on
 the filesystem. You can rename, copy, or delete any file, and you can
@@ -169,7 +142,7 @@ set any available properties for the file.</p>
 </ul>
 </div>
 <div class="section" id="manipulating-directories">
-<h2><a class="toc-backref" href="#id9">Manipulating directories</a><a class="headerlink" href="#manipulating-directories" title="Permalink to this headline">¶</a></h2>
+<h2>Manipulating directories<a class="headerlink" href="#manipulating-directories" title="Permalink to this headline">¶</a></h2>
 <p>The File-System module contains a number of interfaces that let you
 create and delete directories. These can be used in conjunction with the
 file manipulation operations described in <a class="reference internal" href="#manipulating-files">Manipulating files</a> to
@@ -185,7 +158,7 @@ perform file management tasks at any position in the file system.</p>
 </ul>
 </div>
 <div class="section" id="finding-out-file-system-information">
-<h2><a class="toc-backref" href="#id10">Finding out file system information</a><a class="headerlink" href="#finding-out-file-system-information" title="Permalink to this headline">¶</a></h2>
+<h2>Finding out file system information<a class="headerlink" href="#finding-out-file-system-information" title="Permalink to this headline">¶</a></h2>
 <p>A number of functions return environment information regarding the
 directory structure of the file system. Each function takes no
 arguments, and returns a pathname or list of pathnames. The return
@@ -199,7 +172,7 @@ file-based operations relative to the directories involved.</p>
 </ul>
 </div>
 <div class="section" id="finding-out-file-information">
-<h2><a class="toc-backref" href="#id11">Finding out file information</a><a class="headerlink" href="#finding-out-file-information" title="Permalink to this headline">¶</a></h2>
+<h2>Finding out file information<a class="headerlink" href="#finding-out-file-information" title="Permalink to this headline">¶</a></h2>
 <p>Several interfaces in the File-System module allow you to interrogate
 files for information. You can find out whether a file exists, what its
 name is, or which directory it resides in, and you can find the current
@@ -213,7 +186,7 @@ properties of the file.</p>
 </ul>
 </div>
 <div class="section" id="file-system-locators">
-<h2><a class="toc-backref" href="#id12">File system locators</a><a class="headerlink" href="#file-system-locators" title="Permalink to this headline">¶</a></h2>
+<h2>File system locators<a class="headerlink" href="#file-system-locators" title="Permalink to this headline">¶</a></h2>
 <p>The module offers multiple classes that reference either a directory
 or a file within the file system.</p>
 <ul class="simple">
@@ -335,7 +308,7 @@ from module <cite>locators</cite>.</span><a class="headerlink" href="#id3" title
 </ul>
 </div>
 <div class="section" id="file-streams">
-<h2><a class="toc-backref" href="#id13">File streams</a><a class="headerlink" href="#file-streams" title="Permalink to this headline">¶</a></h2>
+<h2>File streams<a class="headerlink" href="#file-streams" title="Permalink to this headline">¶</a></h2>
 <p>File streams are intended only for accessing the contents of
 files. More general file handling facilities, such as renaming,
 deleting, moving, and parsing directory names, are provided by this
@@ -345,7 +318,7 @@ direct instances of <a class="reference internal" href="../io/streams.html#io:st
 a subclass determined by <a class="reference internal" href="../io/streams.html#io:streams:type-for-file-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">type-for-file-stream</span></code></a>. See
 <a class="reference internal" href="#make">make</a> and <a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a> below.</p>
 <div class="section" id="options-when-creating-file-streams">
-<h3><a class="toc-backref" href="#id14">Options when creating file streams</a><a class="headerlink" href="#options-when-creating-file-streams" title="Permalink to this headline">¶</a></h3>
+<h3>Options when creating file streams<a class="headerlink" href="#options-when-creating-file-streams" title="Permalink to this headline">¶</a></h3>
 <p>When creating file streams, you can supply the following init-keywords
 to <em>make</em> in addition to those described in <a class="reference internal" href="#file-streams">File streams</a>:</p>
 <ul class="simple">
@@ -434,7 +407,7 @@ or reading.</p></li>
 </div>
 </div>
 <div class="section" id="conditions">
-<h2><a class="toc-backref" href="#id15">Conditions</a><a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h2>
+<h2>Conditions<a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h2>
 <p>The conditions signaled by this module are:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a></p></li>
@@ -450,7 +423,7 @@ locator that signals the condition. This function can be used on the
 class <a class="reference internal" href="#system:file-system:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a> and its subclasses.</p>
 </div>
 <div class="section" id="the-file-system-module-reference">
-<h2><a class="toc-backref" href="#id16">The FILE-SYSTEM module reference</a><a class="headerlink" href="#the-file-system-module-reference" title="Permalink to this headline">¶</a></h2>
+<h2>The FILE-SYSTEM module reference<a class="headerlink" href="#the-file-system-module-reference" title="Permalink to this headline">¶</a></h2>
 <p>This section contains a reference entry for each item included in the
 File-System module.</p>
 <dl class="function">

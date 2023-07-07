@@ -9,8 +9,6 @@ The File-System module is part of the System library and provides a
 generic interface to the file system of the local machine. Remotely
 mounted file systems are also accessible using this module.
 
-.. contents::
-
 Types specific to file system operations
 ----------------------------------------
 

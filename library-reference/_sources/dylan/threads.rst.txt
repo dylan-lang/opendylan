@@ -12,8 +12,6 @@ provided by all common operating systems.
 All documented bindings are exported from the module *threads* in the *dylan*
 and *common-dylan* libraries.
 
-.. contents::
-
 Multi-thread semantics
 ======================
 

@@ -52,18 +52,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Win32 API Libraries</a><ul>
@@ -139,7 +134,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="the-win32-api-libraries">
-<span id="index-0"></span><h1><a class="toc-backref" href="#id1">The Win32 API Libraries</a><a class="headerlink" href="#the-win32-api-libraries" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>The Win32 API Libraries<a class="headerlink" href="#the-win32-api-libraries" title="Permalink to this headline">¶</a></h1>
 <p id="index-1">This document describes Open Dylan’s set of Win32 API interface
 libraries. These libraries provide a low-level Dylan interface to the
 Win32 API in Microsoft Windows.</p>
@@ -161,63 +156,8 @@ explains the name mapping scheme we used in the conversion, and provides
 a collection of tips for writing Dylan applications with the libraries.
 Finally, there is a list of items not supported in our versions of these
 libraries.</p>
-<div class="contents topic" id="contents">
-<p class="topic-title">Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#the-win32-api-libraries" id="id1">The Win32 API Libraries</a></p>
-<ul>
-<li><p><a class="reference internal" href="#supported-win32-libraries" id="id2">Supported Win32 libraries</a></p></li>
-<li><p><a class="reference internal" href="#content-and-organization-of-the-win32-api-libraries" id="id3">Content and organization of the Win32 API libraries</a></p>
-<ul>
-<li><p><a class="reference internal" href="#notes-on-the-translations" id="id4">Notes on the translations</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#naming-and-mapping-conventions" id="id5">Naming and mapping conventions</a></p>
-<ul>
-<li><p><a class="reference internal" href="#simple-naming-conventions" id="id6">Simple naming conventions</a></p></li>
-<li><p><a class="reference internal" href="#mapping-the-null-value" id="id7">Mapping the null value</a></p></li>
-<li><p><a class="reference internal" href="#mapping-c-types-onto-dylan-classes" id="id8">Mapping C types onto Dylan classes</a></p></li>
-<li><p><a class="reference internal" href="#creating-methods-from-windows-alias-functions" id="id9">Creating methods from Windows alias functions</a></p></li>
-<li><p><a class="reference internal" href="#mapping-c-structure-fields-onto-dylan-slot-names" id="id10">Mapping C structure fields onto Dylan slot names</a></p></li>
-<li><p><a class="reference internal" href="#handling-return-of-multiple-values" id="id11">Handling return of multiple values</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#defining-callback-functions" id="id12">Defining callback functions</a></p></li>
-<li><p><a class="reference internal" href="#error-messages" id="id13">Error messages</a></p></li>
-<li><p><a class="reference internal" href="#handling-dylan-conditions-in-a-win32-application" id="id14">Handling Dylan conditions in a Win32 application</a></p></li>
-<li><p><a class="reference internal" href="#dealing-with-the-c-function-winmain" id="id15">Dealing with the C function WinMain</a></p></li>
-<li><p><a class="reference internal" href="#combining-bit-mask-constants" id="id16">Combining bit mask constants</a></p></li>
-<li><p><a class="reference internal" href="#other-minor-details" id="id17">Other minor details</a></p></li>
-<li><p><a class="reference internal" href="#index-of-win32-names-excluded-from-the-dylan-libraries" id="id18">Index of Win32 names excluded from the Dylan libraries</a></p>
-<ul>
-<li><p><a class="reference internal" href="#characters" id="id19">Characters</a></p></li>
-<li><p><a class="reference internal" href="#a" id="id20">A</a></p></li>
-<li><p><a class="reference internal" href="#b" id="id21">B</a></p></li>
-<li><p><a class="reference internal" href="#c" id="id22">C</a></p></li>
-<li><p><a class="reference internal" href="#d" id="id23">D</a></p></li>
-<li><p><a class="reference internal" href="#e" id="id24">E</a></p></li>
-<li><p><a class="reference internal" href="#f" id="id25">F</a></p></li>
-<li><p><a class="reference internal" href="#g" id="id26">G</a></p></li>
-<li><p><a class="reference internal" href="#h" id="id27">H</a></p></li>
-<li><p><a class="reference internal" href="#l" id="id28">L</a></p></li>
-<li><p><a class="reference internal" href="#m" id="id29">M</a></p></li>
-<li><p><a class="reference internal" href="#n" id="id30">N</a></p></li>
-<li><p><a class="reference internal" href="#o" id="id31">O</a></p></li>
-<li><p><a class="reference internal" href="#p" id="id32">P</a></p></li>
-<li><p><a class="reference internal" href="#r" id="id33">R</a></p></li>
-<li><p><a class="reference internal" href="#s" id="id34">S</a></p></li>
-<li><p><a class="reference internal" href="#u" id="id35">U</a></p></li>
-<li><p><a class="reference internal" href="#v" id="id36">V</a></p></li>
-<li><p><a class="reference internal" href="#w" id="id37">W</a></p></li>
-<li><p><a class="reference internal" href="#y" id="id38">Y</a></p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
 <div class="section" id="supported-win32-libraries">
-<span id="index-2"></span><h2><a class="toc-backref" href="#id2">Supported Win32 libraries</a><a class="headerlink" href="#supported-win32-libraries" title="Permalink to this headline">¶</a></h2>
+<span id="index-2"></span><h2>Supported Win32 libraries<a class="headerlink" href="#supported-win32-libraries" title="Permalink to this headline">¶</a></h2>
 <p>Each Dylan library representing a portion of the Win32 API has a single
 module of the same name as the library itself. For example, the library
 Win32-Common has a module also called Win32-Common. An exception to this
@@ -268,7 +208,7 @@ Corresponds to <em>SHELLAPI.H</em> and <em>SHELL32.DLL</em>.</p></li>
 </ul>
 </div>
 <div class="section" id="content-and-organization-of-the-win32-api-libraries">
-<span id="index-3"></span><h2><a class="toc-backref" href="#id3">Content and organization of the Win32 API libraries</a><a class="headerlink" href="#content-and-organization-of-the-win32-api-libraries" title="Permalink to this headline">¶</a></h2>
+<span id="index-3"></span><h2>Content and organization of the Win32 API libraries<a class="headerlink" href="#content-and-organization-of-the-win32-api-libraries" title="Permalink to this headline">¶</a></h2>
 <p>The Open Dylan Win32 API libraries are modeled closely upon
 Microsoft’s Win32 C libraries. Most names available in the Dylan
 libraries are the same as those available in the C libraries, though of
@@ -284,7 +224,7 @@ and Windows 95/98.</p>
 libraries support, please inform the Open Dylan support team.</p>
 </div>
 <div class="section" id="notes-on-the-translations">
-<span id="index-4"></span><h3><a class="toc-backref" href="#id4">Notes on the translations</a><a class="headerlink" href="#notes-on-the-translations" title="Permalink to this headline">¶</a></h3>
+<span id="index-4"></span><h3>Notes on the translations<a class="headerlink" href="#notes-on-the-translations" title="Permalink to this headline">¶</a></h3>
 <p>The Win32-Common module re-exports some names from the C-FFI module that
 its user may need to use directly, without needing to use (or know
 about) the C-FFI module itself. These names are: <a class="reference internal" href="../c-ffi/index.html#c-ffi:c-ffi:null-pointer"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">null-pointer</span></code></a>,
@@ -300,12 +240,12 @@ names excluded from the Dylan libraries</a>.</p>
 </div>
 </div>
 <div class="section" id="naming-and-mapping-conventions">
-<span id="index-5"></span><h2><a class="toc-backref" href="#id5">Naming and mapping conventions</a><a class="headerlink" href="#naming-and-mapping-conventions" title="Permalink to this headline">¶</a></h2>
+<span id="index-5"></span><h2>Naming and mapping conventions<a class="headerlink" href="#naming-and-mapping-conventions" title="Permalink to this headline">¶</a></h2>
 <p>A Dylan application using the Win32 API will generally use the same API
 names as a C program would, with the following modifications for
 consistency with Dylan conventions.</p>
 <div class="section" id="simple-naming-conventions">
-<span id="index-6"></span><h3><a class="toc-backref" href="#id6">Simple naming conventions</a><a class="headerlink" href="#simple-naming-conventions" title="Permalink to this headline">¶</a></h3>
+<span id="index-6"></span><h3>Simple naming conventions<a class="headerlink" href="#simple-naming-conventions" title="Permalink to this headline">¶</a></h3>
 <p>Type names are enclosed in angle brackets. For example, <em>HANDLE</em> becomes
 <code class="docutils literal notranslate"><span class="pre">&lt;HANDLE&gt;</span></code>.</p>
 <p>Names of constants are prefixed by <em>$</em>. For example, <em>OPAQUE</em> becomes
@@ -319,7 +259,7 @@ obvious mapping that is more likely to cause confusion when switching
 between Dylan code and Windows documentation.</p>
 </div>
 <div class="section" id="mapping-the-null-value">
-<span id="index-7"></span><h3><a class="toc-backref" href="#id7">Mapping the null value</a><a class="headerlink" href="#mapping-the-null-value" title="Permalink to this headline">¶</a></h3>
+<span id="index-7"></span><h3>Mapping the null value<a class="headerlink" href="#mapping-the-null-value" title="Permalink to this headline">¶</a></h3>
 <p>In place of <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, there are several constants providing null values
 for frequently used types, such as <code class="docutils literal notranslate"><span class="pre">$NULL-HANDLE</span></code>, <code class="docutils literal notranslate"><span class="pre">NULL-RECT</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">$NULL-STRING</span></code>. Null values for other pointer types may be designated
@@ -331,7 +271,7 @@ not the same as <a class="reference external" href="https://opendylan.org/books/
 are not necessarily pointers.</p>
 </div>
 <div class="section" id="mapping-c-types-onto-dylan-classes">
-<span id="index-8"></span><h3><a class="toc-backref" href="#id8">Mapping C types onto Dylan classes</a><a class="headerlink" href="#mapping-c-types-onto-dylan-classes" title="Permalink to this headline">¶</a></h3>
+<span id="index-8"></span><h3>Mapping C types onto Dylan classes<a class="headerlink" href="#mapping-c-types-onto-dylan-classes" title="Permalink to this headline">¶</a></h3>
 <p>The multitude of integer data types in C code (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>,
 <code class="docutils literal notranslate"><span class="pre">unsigned</span></code>, <code class="docutils literal notranslate"><span class="pre">ULONG</span></code>, <code class="docutils literal notranslate"><span class="pre">DWORD</span></code>, <code class="docutils literal notranslate"><span class="pre">LRESULT</span></code>, and so on) are all
 designated as <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (or some appropriate subrange thereof) in
@@ -387,7 +327,7 @@ that the various handle types such as <code class="docutils literal notranslate"
 disjoint subclasses of <code class="docutils literal notranslate"><span class="pre">&lt;handle&gt;</span></code>, instead of all being equivalent.</p>
 </div>
 <div class="section" id="creating-methods-from-windows-alias-functions">
-<span id="index-9"></span><h3><a class="toc-backref" href="#id9">Creating methods from Windows alias functions</a><a class="headerlink" href="#creating-methods-from-windows-alias-functions" title="Permalink to this headline">¶</a></h3>
+<span id="index-9"></span><h3>Creating methods from Windows alias functions<a class="headerlink" href="#creating-methods-from-windows-alias-functions" title="Permalink to this headline">¶</a></h3>
 <p>Consider a Windows function called <em>Foo</em> which is an alias for either
 <em>FooA</em> (an 8-bit character version) or <em>FooW</em> (a 16-bit character
 version). In Dylan, only the name <em>Foo</em> will be defined, but it will be
@@ -398,7 +338,7 @@ initial implementation, both because the compiler is not ready to handle
 Unicode and because it will not work on Windows 95.)</p>
 </div>
 <div class="section" id="mapping-c-structure-fields-onto-dylan-slot-names">
-<span id="index-10"></span><h3><a class="toc-backref" href="#id10">Mapping C structure fields onto Dylan slot names</a><a class="headerlink" href="#mapping-c-structure-fields-onto-dylan-slot-names" title="Permalink to this headline">¶</a></h3>
+<span id="index-10"></span><h3>Mapping C structure fields onto Dylan slot names<a class="headerlink" href="#mapping-c-structure-fields-onto-dylan-slot-names" title="Permalink to this headline">¶</a></h3>
 <p>Because slot names are not in a separate name space in Dylan, the names
 of C structure fields will have the suffix <em>-value</em> added to form the
 name of the Dylan accessor function. For example, the C statement:</p>
@@ -415,7 +355,7 @@ apply to. The Dylan convention of <em>*…*</em> for global variables is not
 relevant since there are no global variables involved.</p>
 </div>
 <div class="section" id="handling-return-of-multiple-values">
-<span id="index-11"></span><h3><a class="toc-backref" href="#id11">Handling return of multiple values</a><a class="headerlink" href="#handling-return-of-multiple-values" title="Permalink to this headline">¶</a></h3>
+<span id="index-11"></span><h3>Handling return of multiple values<a class="headerlink" href="#handling-return-of-multiple-values" title="Permalink to this headline">¶</a></h3>
 <p>In cases where the C library function takes a pointer argument as a
 place to store a pointer, integer, or boolean value, the corresponding
 Dylan function uses multiple return values to return such output
@@ -439,7 +379,7 @@ where C code does:</p>
 </div>
 </div>
 <div class="section" id="defining-callback-functions">
-<span id="index-12"></span><h2><a class="toc-backref" href="#id12">Defining callback functions</a><a class="headerlink" href="#defining-callback-functions" title="Permalink to this headline">¶</a></h2>
+<span id="index-12"></span><h2>Defining callback functions<a class="headerlink" href="#defining-callback-functions" title="Permalink to this headline">¶</a></h2>
 <p>The Win32-common library provides a <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">callback</span></code> macro to make it
 easy to define callback functions without the application programmer
 needing to use the FFI <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">c-callable-wrapper</span></code> macro directly. It is
@@ -476,7 +416,7 @@ be <code class="docutils literal notranslate"><span class="pre">TRUE</span></cod
 implemented using <code class="docutils literal notranslate"><span class="pre">BOOL</span></code> instead.)</p>
 </div>
 <div class="section" id="error-messages">
-<span id="index-13"></span><h2><a class="toc-backref" href="#id13">Error messages</a><a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h2>
+<span id="index-13"></span><h2>Error messages<a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h2>
 <p>The Win32-Kernel library provides the following utility functions.</p>
 <span class="target" id="index-14"></span><dl class="function">
 <dt class="dylan-api" id="win32-kernel:win32-kernel:win32-error-message">
@@ -560,7 +500,7 @@ an error occurred. If an occurs, it is signaled using
 
 </div>
 <div class="section" id="handling-dylan-conditions-in-a-win32-application">
-<h2><a class="toc-backref" href="#id14">Handling Dylan conditions in a Win32 application</a><a class="headerlink" href="#handling-dylan-conditions-in-a-win32-application" title="Permalink to this headline">¶</a></h2>
+<h2>Handling Dylan conditions in a Win32 application<a class="headerlink" href="#handling-dylan-conditions-in-a-win32-application" title="Permalink to this headline">¶</a></h2>
 <p>The Win32-User library exports from its Win32-Default-Handler module a
 handler utility function called <a class="reference internal" href="#win32-user:win32-user:win32-last-handler"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">win32-last-handler</span></code></a>, defined on
 objects of class <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#serious-condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;serious-condition&gt;</span></code></a>.</p>
@@ -604,7 +544,7 @@ from the Functional Dylan-Extensions library and module, in the
 
 </div>
 <div class="section" id="dealing-with-the-c-function-winmain">
-<span id="index-16"></span><h2><a class="toc-backref" href="#id15">Dealing with the C function WinMain</a><a class="headerlink" href="#dealing-with-the-c-function-winmain" title="Permalink to this headline">¶</a></h2>
+<span id="index-16"></span><h2>Dealing with the C function WinMain<a class="headerlink" href="#dealing-with-the-c-function-winmain" title="Permalink to this headline">¶</a></h2>
 <p>In C, the programmer has to supply a <em>WinMain</em> function as the main
 program for a GUI application, but in Dylan there is no main program as
 such. The beginning of execution is indicated simply by a top-level
@@ -654,7 +594,7 @@ application might actually be run as part of another process.</p>
 <p>in the Open Dylan installation directory.</p>
 </div>
 <div class="section" id="combining-bit-mask-constants">
-<span id="index-17"></span><h2><a class="toc-backref" href="#id16">Combining bit mask constants</a><a class="headerlink" href="#combining-bit-mask-constants" title="Permalink to this headline">¶</a></h2>
+<span id="index-17"></span><h2>Combining bit mask constants<a class="headerlink" href="#combining-bit-mask-constants" title="Permalink to this headline">¶</a></h2>
 <p>Where C code would use the <em>|</em> operator to combine bit mask constants,
 Dylan code usually uses the <em>logior</em> function. However, a few such
 constants have values of type <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> when they will not fit in
@@ -680,7 +620,7 @@ controls <em>($CFM-…</em> and <em>$CFE-…)</em></p></li>
 </ul>
 </div>
 <div class="section" id="other-minor-details">
-<span id="index-18"></span><h2><a class="toc-backref" href="#id17">Other minor details</a><a class="headerlink" href="#other-minor-details" title="Permalink to this headline">¶</a></h2>
+<span id="index-18"></span><h2>Other minor details<a class="headerlink" href="#other-minor-details" title="Permalink to this headline">¶</a></h2>
 <p>The types <code class="docutils literal notranslate"><span class="pre">&lt;FARPROC&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;PROC&gt;</span></code> are defined as equivalent to
 <code class="docutils literal notranslate"><span class="pre">&lt;C-function-pointer&gt;</span></code>, so any C function wrapper object can be passed
 to a routine taking a <code class="docutils literal notranslate"><span class="pre">&lt;FARPROC&gt;</span></code> without needing to do any type
@@ -722,7 +662,7 @@ need to maintain that artificial distinction in Dylan.)</p>
 file field <em>RC-Files:</em>.</p>
 </div>
 <div class="section" id="index-of-win32-names-excluded-from-the-dylan-libraries">
-<span id="index-19"></span><h2><a class="toc-backref" href="#id18">Index of Win32 names excluded from the Dylan libraries</a><a class="headerlink" href="#index-of-win32-names-excluded-from-the-dylan-libraries" title="Permalink to this headline">¶</a></h2>
+<span id="index-19"></span><h2>Index of Win32 names excluded from the Dylan libraries<a class="headerlink" href="#index-of-win32-names-excluded-from-the-dylan-libraries" title="Permalink to this headline">¶</a></h2>
 <p>The names listed in the index below are excluded from the Open Dylan
 Win32 API libraries because they are obsolete.</p>
 <p>Functions for old-style metafiles (<em>CreateMetaFile</em>, <em>CloseMetaFile</em>,
@@ -742,14 +682,14 @@ functionality can be obtained by using Dylan extended integers. However,
 an interface to function <em>MulDiv</em> is provided, since it is an ordinary C
 function that is commonly used.</p>
 <div class="section" id="characters">
-<span id="index-20"></span><h3><a class="toc-backref" href="#id19">Characters</a><a class="headerlink" href="#characters" title="Permalink to this headline">¶</a></h3>
+<span id="index-20"></span><h3>Characters<a class="headerlink" href="#characters" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>_hread, _hwrite, _lclose, _lcreat, _llseek, _lopen, _lread,
 _lwrite</p>
 </div></blockquote>
 </div>
 <div class="section" id="a">
-<h3><a class="toc-backref" href="#id20">A</a><a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h3>
+<h3>A<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>AccessResource, AllocDSToCSAlias, AllocResource, AllocSelector,
 AnsiLowerBuff, AnsiNext, AnsiPrev, AnsiToOem, AnsiToOemBuff,
@@ -757,41 +697,41 @@ AnsiUpper, AnsiUpperBuff</p>
 </div></blockquote>
 </div>
 <div class="section" id="b">
-<h3><a class="toc-backref" href="#id21">B</a><a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h3>
+<h3>B<a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>BN_DBLCLK, BN_DISABLE, BN_DOUBLECLICKED, BN_HILITE, BN_PAINT,
 BN_PUSHED, BN_UNPUSHED, BS_USERBUTTON</p>
 </div></blockquote>
 </div>
 <div class="section" id="c">
-<h3><a class="toc-backref" href="#id22">C</a><a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
+<h3>C<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>CPL_INQUIRE, ChangeSelector, CloseComm, CloseSound, CopyLZFile,
 CountVoiceNotes</p>
 </div></blockquote>
 </div>
 <div class="section" id="d">
-<h3><a class="toc-backref" href="#id23">D</a><a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h3>
+<h3>D<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>DOS3Call, DefHookProc, DefineHandleTable, DeviceMode,
 DlgDirSelect, DlgDirSelectComboBox</p>
 </div></blockquote>
 </div>
 <div class="section" id="e">
-<h3><a class="toc-backref" href="#id24">E</a><a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h3>
+<h3>E<a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>EnumFonts, ERR_…, ExtDeviceMode</p>
 </div></blockquote>
 </div>
 <div class="section" id="f">
-<h3><a class="toc-backref" href="#id25">F</a><a class="headerlink" href="#f" title="Permalink to this headline">¶</a></h3>
+<h3>F<a class="headerlink" href="#f" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>FixBrushOrgEx, FlushComm, FreeModule, FreeProcInstance,
 FreeSelector</p>
 </div></blockquote>
 </div>
 <div class="section" id="g">
-<h3><a class="toc-backref" href="#id26">G</a><a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h3>
+<h3>G<a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>GCW_HBRBACKGROUND, GCW_HCURSOR, GCW_HICON, GWW_HINSTANCE,
 GWW_HWNDPARENT, GWW_ID, GWW_USERDATA, GetAspectRatioFilter,
@@ -813,53 +753,53 @@ GlobalWire</p>
 </div></blockquote>
 </div>
 <div class="section" id="h">
-<h3><a class="toc-backref" href="#id27">H</a><a class="headerlink" href="#h" title="Permalink to this headline">¶</a></h3>
+<h3>H<a class="headerlink" href="#h" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>HFILE, HFILE_ERROR</p>
 </div></blockquote>
 </div>
 <div class="section" id="l">
-<h3><a class="toc-backref" href="#id28">L</a><a class="headerlink" href="#l" title="Permalink to this headline">¶</a></h3>
+<h3>L<a class="headerlink" href="#l" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>LZDone, LZStart, LimitEmsPages, LocalCompact, LocalInit,
 LocalNotify, LocalShrink, LockSegment</p>
 </div></blockquote>
 </div>
 <div class="section" id="m">
-<h3><a class="toc-backref" href="#id29">M</a><a class="headerlink" href="#m" title="Permalink to this headline">¶</a></h3>
+<h3>M<a class="headerlink" href="#m" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>MAKEPOINT, MakeProcInstance, MoveTo</p>
 </div></blockquote>
 </div>
 <div class="section" id="n">
-<h3><a class="toc-backref" href="#id30">N</a><a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h3>
+<h3>N<a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>NetBIOSCall</p>
 </div></blockquote>
 </div>
 <div class="section" id="o">
-<h3><a class="toc-backref" href="#id31">O</a><a class="headerlink" href="#o" title="Permalink to this headline">¶</a></h3>
+<h3>O<a class="headerlink" href="#o" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>OemToAnsi, OemToAnsiBuff, OffsetViewportOrg, OffsetWindowOrg,
 OpenComm, OpenFile, OpenSound</p>
 </div></blockquote>
 </div>
 <div class="section" id="p">
-<h3><a class="toc-backref" href="#id32">P</a><a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h3>
+<h3>P<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>PM_NOYIELD, ProfClear, ProfFinish, ProfFlush, ProfInsChk,
 ProfSampRate, ProfSetup, ProfStart, ProfStop</p>
 </div></blockquote>
 </div>
 <div class="section" id="r">
-<h3><a class="toc-backref" href="#id33">R</a><a class="headerlink" href="#r" title="Permalink to this headline">¶</a></h3>
+<h3>R<a class="headerlink" href="#r" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>READ, READ_WRITE, ReadComm, RegCreateKey, RegEnumKey, RegOpenKey,
 RegQueryValue, RegSetValue</p>
 </div></blockquote>
 </div>
 <div class="section" id="s">
-<h3><a class="toc-backref" href="#id34">S</a><a class="headerlink" href="#s" title="Permalink to this headline">¶</a></h3>
+<h3>S<a class="headerlink" href="#s" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>SYSTEM_FIXED_FONT, ScaleViewportExt, ScaleWindowExt,
 SetBitmapDimension, SetCommEventMask, SetEnvironment,
@@ -873,19 +813,19 @@ SyncAllVoices</p>
 </div></blockquote>
 </div>
 <div class="section" id="u">
-<h3><a class="toc-backref" href="#id35">U</a><a class="headerlink" href="#u" title="Permalink to this headline">¶</a></h3>
+<h3>U<a class="headerlink" href="#u" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>UngetCommChar, UnhookWindowsHook, UnlockSegment</p>
 </div></blockquote>
 </div>
 <div class="section" id="v">
-<h3><a class="toc-backref" href="#id36">V</a><a class="headerlink" href="#v" title="Permalink to this headline">¶</a></h3>
+<h3>V<a class="headerlink" href="#v" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>ValidateCodeSegments, ValidateFreeSpaces</p>
 </div></blockquote>
 </div>
 <div class="section" id="w">
-<h3><a class="toc-backref" href="#id37">W</a><a class="headerlink" href="#w" title="Permalink to this headline">¶</a></h3>
+<h3>W<a class="headerlink" href="#w" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>WM_CTLCOLOR, WNetAddConnection, WNetCancelConnection, WRITE,
 WaitSoundState, WriteComm, WritePrivateProfileSection,
@@ -894,7 +834,7 @@ WriteProfileSection, WriteProfileString</p>
 </div></blockquote>
 </div>
 <div class="section" id="y">
-<h3><a class="toc-backref" href="#id38">Y</a><a class="headerlink" href="#y" title="Permalink to this headline">¶</a></h3>
+<h3>Y<a class="headerlink" href="#y" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Yield</p>
 </div></blockquote>

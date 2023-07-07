@@ -133,18 +133,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
@@ -175,7 +170,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="the-c-ffi-library">
-<span id="index-0"></span><h1><a class="toc-backref" href="#id1">The c-ffi Library</a><a class="headerlink" href="#the-c-ffi-library" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>The c-ffi Library<a class="headerlink" href="#the-c-ffi-library" title="Permalink to this headline">¶</a></h1>
 <p id="index-1">The C-FFI (<em>C foreign function interface</em>) library provides a means of
 interfacing a Dylan application with code written in the C language. The
 C-FFI library is available to applications as the module C-FFI in the
@@ -187,64 +182,8 @@ functions through which Dylan code can manipulate the C library’s data
 and call its functions. Interface descriptions can also allow C code to
 call into Dylan; compiling such a description generates entry points
 compatible with C’s calling conventions.</p>
-<div class="contents topic" id="contents">
-<p class="topic-title">Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#the-c-ffi-library" id="id1">The c-ffi Library</a></p>
-<ul>
-<li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p>
-<ul>
-<li><p><a class="reference internal" href="#c-types-in-dylan" id="id3">C types in Dylan</a></p></li>
-<li><p><a class="reference internal" href="#c-functions-in-dylan" id="id4">C functions in Dylan</a></p></li>
-<li><p><a class="reference internal" href="#c-variables-in-dylan" id="id5">C variables in Dylan</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#notes-on-linking" id="id6">Notes on Linking</a></p>
-<ul>
-<li><p><a class="reference internal" href="#linking-against-a-library" id="id7">Linking against a Library</a></p></li>
-<li><p><a class="reference internal" href="#linking-against-a-macos-framework" id="id8">Linking against a macOS Framework</a></p></li>
-<li><p><a class="reference internal" href="#using-pkg-config" id="id9">Using pkg-config</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#tracing-ffi-calls" id="id10">Tracing FFI Calls</a></p></li>
-<li><p><a class="reference internal" href="#terminology" id="id11">Terminology</a></p></li>
-<li><p><a class="reference internal" href="#basic-options-in-c-ffi-macros" id="id12">Basic options in C-FFI macros</a></p></li>
-<li><p><a class="reference internal" href="#designator-classes" id="id13">Designator classes</a></p>
-<ul>
-<li><p><a class="reference internal" href="#designator-type-properties" id="id14">Designator type properties</a></p></li>
-<li><p><a class="reference internal" href="#designator-class-basics" id="id15">Designator class basics</a></p></li>
-<li><p><a class="reference internal" href="#fundamental-numeric-type-designator-classes" id="id16">Fundamental numeric type designator classes</a></p></li>
-<li><p><a class="reference internal" href="#pointer-designator-classes-and-related-functions" id="id17">Pointer designator classes and related functions</a></p></li>
-<li><p><a class="reference internal" href="#structure-types" id="id18">Structure types</a></p></li>
-<li><p><a class="reference internal" href="#union-types" id="id19">Union types</a></p></li>
-<li><p><a class="reference internal" href="#notes-on-c-type-macros" id="id20">Notes on C type macros</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#defining-types" id="id21">Defining types</a></p>
-<ul>
-<li><p><a class="reference internal" href="#defining-specialized-versions-of-designator-classes" id="id22">Defining specialized versions of designator classes</a></p></li>
-<li><p><a class="reference internal" href="#defining-specialized-designator-classes" id="id23">Defining specialized designator classes</a></p></li>
-<li><p><a class="reference internal" href="#describing-structure-types" id="id24">Describing structure types</a></p></li>
-<li><p><a class="reference internal" href="#describing-union-types" id="id25">Describing union types</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#functions" id="id26">Functions</a></p>
-<ul>
-<li><p><a class="reference internal" href="#function-types" id="id27">Function types</a></p></li>
-<li><p><a class="reference internal" href="#describing-c-functions-to-dylan" id="id28">Describing C functions to Dylan</a></p></li>
-<li><p><a class="reference internal" href="#describing-dylan-functions-for-use-by-c" id="id29">Describing Dylan functions for use by C</a></p></li>
-<li><p><a class="reference internal" href="#objective-c" id="id30">Objective C</a></p></li>
-<li><p><a class="reference internal" href="#variables" id="id31">Variables</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#allocating-and-deallocating-c-storage" id="id32">Allocating and deallocating C storage</a></p></li>
-<li><p><a class="reference internal" href="#utility-designator-classes" id="id33">Utility designator classes</a></p></li>
-</ul>
-</li>
-</ul>
-</div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>This section is an overview of the C-FFI library, introducing the most
 commonly used constructs as the basis for examples.</p>
 <p>The C-FFI library provides a set of macros that can be used to describe
@@ -262,7 +201,7 @@ destroying instances of C data structures. For example, using these
 facilities you can allocate C structs and arrays, and access and set
 their elements.</p>
 <div class="section" id="c-types-in-dylan">
-<span id="index-2"></span><h3><a class="toc-backref" href="#id3">C types in Dylan</a><a class="headerlink" href="#c-types-in-dylan" title="Permalink to this headline">¶</a></h3>
+<span id="index-2"></span><h3>C types in Dylan<a class="headerlink" href="#c-types-in-dylan" title="Permalink to this headline">¶</a></h3>
 <p>When you use the interface definition language to describe a C type to
 the Dylan compiler, the compiler generates a new Dylan class. This class
 is said to <em>designate</em> the C type, which means that it carries with it
@@ -405,7 +344,7 @@ the raw C pointer value.</p>
 and the functions available for manipulating them.</p>
 </div>
 <div class="section" id="c-functions-in-dylan">
-<span id="index-9"></span><h3><a class="toc-backref" href="#id4">C functions in Dylan</a><a class="headerlink" href="#c-functions-in-dylan" title="Permalink to this headline">¶</a></h3>
+<span id="index-9"></span><h3>C functions in Dylan<a class="headerlink" href="#c-functions-in-dylan" title="Permalink to this headline">¶</a></h3>
 <p>When you use the interface definition language to describe a C function
 to the Dylan compiler, the compiler generates a new Dylan function. This
 <em>wrapper function</em> accepts Dylan arguments and returns Dylan results. It
@@ -500,7 +439,7 @@ reference allows the C-callable wrapper to be passed to a C function
 expecting a callback argument.</p>
 </div>
 <div class="section" id="c-variables-in-dylan">
-<span id="index-15"></span><h3><a class="toc-backref" href="#id5">C variables in Dylan</a><a class="headerlink" href="#c-variables-in-dylan" title="Permalink to this headline">¶</a></h3>
+<span id="index-15"></span><h3>C variables in Dylan<a class="headerlink" href="#c-variables-in-dylan" title="Permalink to this headline">¶</a></h3>
 <p>When you use the interface definition language to describe a C variable
 to the Dylan compiler, the compiler generates new Dylan getter and
 setter functions for reading and setting the variable’s value from
@@ -564,14 +503,14 @@ storage allocated for the C variable.</p>
 </div>
 </div>
 <div class="section" id="notes-on-linking">
-<h2><a class="toc-backref" href="#id6">Notes on Linking</a><a class="headerlink" href="#notes-on-linking" title="Permalink to this headline">¶</a></h2>
+<h2>Notes on Linking<a class="headerlink" href="#notes-on-linking" title="Permalink to this headline">¶</a></h2>
 <p>When using C-FFI, you will typically need to link in an existing library
 or framework.</p>
 <p><a class="reference internal" href="../lid.html"><span class="doc">LID files</span></a> provide many options for controlling
 the compilation and linking of the project depending on what exactly
 is required.</p>
 <div class="section" id="linking-against-a-library">
-<h3><a class="toc-backref" href="#id7">Linking against a Library</a><a class="headerlink" href="#linking-against-a-library" title="Permalink to this headline">¶</a></h3>
+<h3>Linking against a Library<a class="headerlink" href="#linking-against-a-library" title="Permalink to this headline">¶</a></h3>
 <p>This can be done in a <a class="reference internal" href="../lid.html"><span class="doc">LID file</span></a> using the <a class="reference internal" href="../lid.html#lid-c-libraries"><span class="std std-ref">C-Libraries</span></a>
 keyword.  This supports both static and shared libraries. It also supports
 specifying a search path.  For example:</p>
@@ -580,7 +519,7 @@ specifying a search path.  For example:</p>
 </div>
 </div>
 <div class="section" id="linking-against-a-macos-framework">
-<h3><a class="toc-backref" href="#id8">Linking against a macOS Framework</a><a class="headerlink" href="#linking-against-a-macos-framework" title="Permalink to this headline">¶</a></h3>
+<h3>Linking against a macOS Framework<a class="headerlink" href="#linking-against-a-macos-framework" title="Permalink to this headline">¶</a></h3>
 <p>Just as with a regular shared library, the <a class="reference internal" href="../lid.html#lid-c-libraries"><span class="std std-ref">C-Libraries</span></a>
 keyword in a <a class="reference internal" href="../lid.html"><span class="doc">LID file</span></a>.  For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="o">-</span><span class="n">Libraries</span><span class="p">:</span> <span class="o">-</span><span class="n">framework</span> <span class="n">OpenGL</span>
@@ -588,7 +527,7 @@ keyword in a <a class="reference internal" href="../lid.html"><span class="doc">
 </div>
 </div>
 <div class="section" id="using-pkg-config">
-<h3><a class="toc-backref" href="#id9">Using pkg-config</a><a class="headerlink" href="#using-pkg-config" title="Permalink to this headline">¶</a></h3>
+<h3>Using pkg-config<a class="headerlink" href="#using-pkg-config" title="Permalink to this headline">¶</a></h3>
 <p>Libraries that use “pkg-config” are slightly more complicated to work with in
 that they require using the <a class="reference internal" href="../lid.html#lid-jam-includes"><span class="std std-ref">Jam-Includes</span></a> keyword and
 an additional file within the project.  The GTK+ bindings provide multiple
@@ -608,7 +547,7 @@ examples of this.</p>
 </div>
 </div>
 <div class="section" id="tracing-ffi-calls">
-<h2><a class="toc-backref" href="#id10">Tracing FFI Calls</a><a class="headerlink" href="#tracing-ffi-calls" title="Permalink to this headline">¶</a></h2>
+<h2>Tracing FFI Calls<a class="headerlink" href="#tracing-ffi-calls" title="Permalink to this headline">¶</a></h2>
 <p>When working with the C-FFI, it is very useful to be able to trace what
 is happening, what is getting called, what the arguments are, and what
 the return value is. To aid in this, C-FFI enables the programmer to
@@ -658,7 +597,7 @@ scope as the <code class="docutils literal notranslate"><span class="pre">C-func
 </div>
 </div>
 <div class="section" id="terminology">
-<span id="index-18"></span><h2><a class="toc-backref" href="#id11">Terminology</a><a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<span id="index-18"></span><h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
 <p>For the rest of this chapter, we adopt the following terminology,
 hopefully not too inconsistent with common C terminology:</p>
 <ul class="simple">
@@ -672,7 +611,7 @@ This does not include pointer types, structure types, or union types.</p></li>
 </ul>
 </div>
 <div class="section" id="basic-options-in-c-ffi-macros">
-<span id="index-19"></span><h2><a class="toc-backref" href="#id12">Basic options in C-FFI macros</a><a class="headerlink" href="#basic-options-in-c-ffi-macros" title="Permalink to this headline">¶</a></h2>
+<span id="index-19"></span><h2>Basic options in C-FFI macros<a class="headerlink" href="#basic-options-in-c-ffi-macros" title="Permalink to this headline">¶</a></h2>
 <p>The defining macros of the C-FFI share a consistent core set of options
 which are worth describing here:</p>
 <ul>
@@ -696,7 +635,7 @@ option.</p></li>
 </ul>
 </div>
 <div class="section" id="designator-classes">
-<span id="index-20"></span><h2><a class="toc-backref" href="#id13">Designator classes</a><a class="headerlink" href="#designator-classes" title="Permalink to this headline">¶</a></h2>
+<span id="index-20"></span><h2>Designator classes<a class="headerlink" href="#designator-classes" title="Permalink to this headline">¶</a></h2>
 <p>As <a class="reference internal" href="#overview">Overview</a> explained, the C-FFI defines some Dylan classes to designate
 C types and to describe how they are passed to and from Dylan. These
 <em>designator classes</em> carry with them static information about the C type
@@ -735,7 +674,7 @@ types.</p>
 to a specific kind of pointer. For example, you can define methods that
 specialize on different kinds of pointer on the same generic function.</p>
 <div class="section" id="designator-type-properties">
-<span id="index-22"></span><h3><a class="toc-backref" href="#id14">Designator type properties</a><a class="headerlink" href="#designator-type-properties" title="Permalink to this headline">¶</a></h3>
+<span id="index-22"></span><h3>Designator type properties<a class="headerlink" href="#designator-type-properties" title="Permalink to this headline">¶</a></h3>
 <p>To understand how designator classes work, it is useful to know about
 their properties. A few of these properties are accessible
 programmatically, but others are implicit and only really exist in the
@@ -773,7 +712,7 @@ and back. The <em>import</em> and <em>export</em> functions are inherited when y
 define a subclass for a designator.</p>
 </div>
 <div class="section" id="designator-class-basics">
-<span id="index-24"></span><h3><a class="toc-backref" href="#id15">Designator class basics</a><a class="headerlink" href="#designator-class-basics" title="Permalink to this headline">¶</a></h3>
+<span id="index-24"></span><h3>Designator class basics<a class="headerlink" href="#designator-class-basics" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-25"></span><dl class="class">
 <dt class="dylan-api" id="c-ffi:c-ffi:[c-value]">
 <code class="sig-name descname">&lt;C-value&gt;</code> <em class="property">Abstract Sealed Class</em><a class="headerlink" href="#c-ffi:c-ffi:[c-value]" title="Permalink to this definition">¶</a></dt>
@@ -867,7 +806,7 @@ integer, in the same units as <a class="reference internal" href="#c-ffi:c-ffi:s
 
 </div>
 <div class="section" id="fundamental-numeric-type-designator-classes">
-<span id="index-29"></span><h3><a class="toc-backref" href="#id16">Fundamental numeric type designator classes</a><a class="headerlink" href="#fundamental-numeric-type-designator-classes" title="Permalink to this headline">¶</a></h3>
+<span id="index-29"></span><h3>Fundamental numeric type designator classes<a class="headerlink" href="#fundamental-numeric-type-designator-classes" title="Permalink to this headline">¶</a></h3>
 <p>This section describes the pre-defined designator classes for
 fundamental C numeric types. On page <a class="reference internal" href="#designator-classes">Designator
 classes</a> we saw that none of these designator types
@@ -1119,7 +1058,7 @@ numeric C type.</p>
 
 </div>
 <div class="section" id="pointer-designator-classes-and-related-functions">
-<span id="index-38"></span><h3><a class="toc-backref" href="#id17">Pointer designator classes and related functions</a><a class="headerlink" href="#pointer-designator-classes-and-related-functions" title="Permalink to this headline">¶</a></h3>
+<span id="index-38"></span><h3>Pointer designator classes and related functions<a class="headerlink" href="#pointer-designator-classes-and-related-functions" title="Permalink to this headline">¶</a></h3>
 <p>This section describes the pre-defined classes that designate C pointer
 types. Subclasses of the abstract classes documented here are
 instantiable, and C pointers are represented in Dylan by instances of
@@ -1960,7 +1899,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </div>
 <div class="section" id="structure-types">
-<span id="index-88"></span><h3><a class="toc-backref" href="#id18">Structure types</a><a class="headerlink" href="#structure-types" title="Permalink to this headline">¶</a></h3>
+<span id="index-88"></span><h3>Structure types<a class="headerlink" href="#structure-types" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-89"></span><dl class="class">
 <dt class="dylan-api" id="c-ffi:c-ffi:[c-struct]">
 <code class="sig-name descname">&lt;C-struct&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#c-ffi:c-ffi:[c-struct]" title="Permalink to this definition">¶</a></dt>
@@ -1981,7 +1920,7 @@ returned.</p>
 
 </div>
 <div class="section" id="union-types">
-<span id="index-90"></span><h3><a class="toc-backref" href="#id19">Union types</a><a class="headerlink" href="#union-types" title="Permalink to this headline">¶</a></h3>
+<span id="index-90"></span><h3>Union types<a class="headerlink" href="#union-types" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-91"></span><dl class="class">
 <dt class="dylan-api" id="c-ffi:c-ffi:[c-union]">
 <code class="sig-name descname">&lt;C-union&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#c-ffi:c-ffi:[c-union]" title="Permalink to this definition">¶</a></dt>
@@ -1999,7 +1938,7 @@ that union type are accepted and returned.</p>
 
 </div>
 <div class="section" id="notes-on-c-type-macros">
-<span id="index-92"></span><h3><a class="toc-backref" href="#id20">Notes on C type macros</a><a class="headerlink" href="#notes-on-c-type-macros" title="Permalink to this headline">¶</a></h3>
+<span id="index-92"></span><h3>Notes on C type macros<a class="headerlink" href="#notes-on-c-type-macros" title="Permalink to this headline">¶</a></h3>
 <p>The C-FFI’s C interface description language does not model all of the
 ways of defining new types in C, but all C types should be expressible
 in it. As a simplification, we do not support anonymous base types in
@@ -2035,11 +1974,11 @@ accesses, for example <code class="docutils literal notranslate"><span class="pr
 </div>
 </div>
 <div class="section" id="defining-types">
-<span id="index-93"></span><h2><a class="toc-backref" href="#id21">Defining types</a><a class="headerlink" href="#defining-types" title="Permalink to this headline">¶</a></h2>
+<span id="index-93"></span><h2>Defining types<a class="headerlink" href="#defining-types" title="Permalink to this headline">¶</a></h2>
 <p>This section covers the definition macros that create Dylan designators
 for C types, structs and unions.</p>
 <div class="section" id="defining-specialized-versions-of-designator-classes">
-<span id="index-94"></span><h3><a class="toc-backref" href="#id22">Defining specialized versions of designator classes</a><a class="headerlink" href="#defining-specialized-versions-of-designator-classes" title="Permalink to this headline">¶</a></h3>
+<span id="index-94"></span><h3>Defining specialized versions of designator classes<a class="headerlink" href="#defining-specialized-versions-of-designator-classes" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-95"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-subtype">
 <code class="sig-name descname">define C-subtype</code> <em class="property">Defining Macro</em><a class="headerlink" href="#c-ffi:c-ffi:definec-subtype" title="Permalink to this definition">¶</a></dt>
@@ -2178,7 +2117,7 @@ place a type beneath an abstract class.</p>
 
 </div>
 <div class="section" id="defining-specialized-designator-classes">
-<span id="index-98"></span><h3><a class="toc-backref" href="#id23">Defining specialized designator classes</a><a class="headerlink" href="#defining-specialized-designator-classes" title="Permalink to this headline">¶</a></h3>
+<span id="index-98"></span><h3>Defining specialized designator classes<a class="headerlink" href="#defining-specialized-designator-classes" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-99"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-mapped-subtype">
 <code class="sig-name descname">define C-mapped-subtype</code> <em class="property">Defining Macro</em><a class="headerlink" href="#c-ffi:c-ffi:definec-mapped-subtype" title="Permalink to this definition">¶</a></dt>
@@ -2371,7 +2310,7 @@ subtype of <code class="docutils literal notranslate"><span class="pre">&lt;C-ma
 
 </div>
 <div class="section" id="describing-structure-types">
-<span id="index-102"></span><h3><a class="toc-backref" href="#id24">Describing structure types</a><a class="headerlink" href="#describing-structure-types" title="Permalink to this headline">¶</a></h3>
+<span id="index-102"></span><h3>Describing structure types<a class="headerlink" href="#describing-structure-types" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-103"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-struct">
 <code class="sig-name descname">define C-struct</code> <em class="property">Defining Macro</em><a class="headerlink" href="#c-ffi:c-ffi:definec-struct" title="Permalink to this definition">¶</a></dt>
@@ -2518,7 +2457,7 @@ packing semantics of Microsoft’s <code class="docutils literal notranslate"><s
 
 </div>
 <div class="section" id="describing-union-types">
-<span id="index-107"></span><h3><a class="toc-backref" href="#id25">Describing union types</a><a class="headerlink" href="#describing-union-types" title="Permalink to this headline">¶</a></h3>
+<span id="index-107"></span><h3>Describing union types<a class="headerlink" href="#describing-union-types" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-108"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-union">
 <code class="sig-name descname">define C-union</code> <em class="property">Defining Macro</em><a class="headerlink" href="#c-ffi:c-ffi:definec-union" title="Permalink to this definition">¶</a></dt>
@@ -2606,11 +2545,11 @@ just as in C’s <code class="docutils literal notranslate"><span class="pre">un
 </div>
 </div>
 <div class="section" id="functions">
-<span id="index-110"></span><h2><a class="toc-backref" href="#id26">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<span id="index-110"></span><h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <p>This section describes the C FFI macros that allow C functions to be
 made available to Dylan and Dylan functions available to C.</p>
 <div class="section" id="function-types">
-<span id="index-111"></span><h3><a class="toc-backref" href="#id27">Function types</a><a class="headerlink" href="#function-types" title="Permalink to this headline">¶</a></h3>
+<span id="index-111"></span><h3>Function types<a class="headerlink" href="#function-types" title="Permalink to this headline">¶</a></h3>
 <p>This section describes classes that designate C function types and how
 to construct them.</p>
 <span class="target" id="index-112"></span><dl class="class">
@@ -2627,7 +2566,7 @@ is a subclass of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><
 
 </div>
 <div class="section" id="describing-c-functions-to-dylan">
-<span id="index-113"></span><h3><a class="toc-backref" href="#id28">Describing C functions to Dylan</a><a class="headerlink" href="#describing-c-functions-to-dylan" title="Permalink to this headline">¶</a></h3>
+<span id="index-113"></span><h3>Describing C functions to Dylan<a class="headerlink" href="#describing-c-functions-to-dylan" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-114"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-function">
 <code class="sig-name descname">define C-function</code> <em class="property">Defining Macro</em><a class="headerlink" href="#c-ffi:c-ffi:definec-function" title="Permalink to this definition">¶</a></dt>
@@ -2842,7 +2781,7 @@ of the Dylan function is <a class="reference internal" href="#c-ffi:c-ffi:[c-fun
 
 </div>
 <div class="section" id="describing-dylan-functions-for-use-by-c">
-<span id="index-120"></span><h3><a class="toc-backref" href="#id29">Describing Dylan functions for use by C</a><a class="headerlink" href="#describing-dylan-functions-for-use-by-c" title="Permalink to this headline">¶</a></h3>
+<span id="index-120"></span><h3>Describing Dylan functions for use by C<a class="headerlink" href="#describing-dylan-functions-for-use-by-c" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="index-121"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-callable-wrapper">
 <code class="sig-name descname">define C-callable-wrapper</code> <em class="property">Defining Macro</em><a class="headerlink" href="#c-ffi:c-ffi:definec-callable-wrapper" title="Permalink to this definition">¶</a></dt>
@@ -3047,7 +2986,7 @@ compatible with the declared type.</p>
 
 </div>
 <div class="section" id="objective-c">
-<h3><a class="toc-backref" href="#id30">Objective C</a><a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h3>
+<h3>Objective C<a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h3>
 <p>A full-featured Objective C bridge is provided separately, however, parts
 of that bridge are implemented within this library.</p>
 <dl class="macro">
@@ -3101,7 +3040,7 @@ for the selector. See the Objective C bridge documentation for more details.</p>
 
 </div>
 <div class="section" id="variables">
-<span id="index-124"></span><h3><a class="toc-backref" href="#id31">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<span id="index-124"></span><h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
 <p>This section covers describing and accessing C variables.</p>
 <span class="target" id="index-125"></span><dl class="macro">
 <dt class="dylan-api" id="c-ffi:c-ffi:definec-variable">
@@ -3225,7 +3164,7 @@ then they will be in separate <em>.dll</em> s and <em>import:</em> needs to be
 </div>
 </div>
 <div class="section" id="allocating-and-deallocating-c-storage">
-<span id="index-129"></span><h2><a class="toc-backref" href="#id32">Allocating and deallocating C storage</a><a class="headerlink" href="#allocating-and-deallocating-c-storage" title="Permalink to this headline">¶</a></h2>
+<span id="index-129"></span><h2>Allocating and deallocating C storage<a class="headerlink" href="#allocating-and-deallocating-c-storage" title="Permalink to this headline">¶</a></h2>
 <p>C objects can be allocated by calling <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> on an associated wrapper
 class or by allocating them on the stack using the macro
 <a class="reference internal" href="#c-ffi:c-ffi:with-stack-structure"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-stack-structure</span></code></a>.</p>
@@ -3403,7 +3342,7 @@ The memory that was allocated is freed after <em>body</em> exits.</p>
 
 </div>
 <div class="section" id="utility-designator-classes">
-<span id="index-133"></span><h2><a class="toc-backref" href="#id33">Utility designator classes</a><a class="headerlink" href="#utility-designator-classes" title="Permalink to this headline">¶</a></h2>
+<span id="index-133"></span><h2>Utility designator classes<a class="headerlink" href="#utility-designator-classes" title="Permalink to this headline">¶</a></h2>
 <p>The following designator classes are defined for convenience purposes
 using <a class="reference internal" href="#c-ffi:c-ffi:definec-mapped-subtype"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">c-mapped-subtype</span></code></a>.</p>
 <span class="target" id="index-134"></span><dl class="class">

@@ -41,8 +41,6 @@ a collection of tips for writing Dylan applications with the libraries.
 Finally, there is a list of items not supported in our versions of these
 libraries.
 
-.. contents::
-
 .. index::
    single: libraries provided; list of Win32
    single: list of Win32 libraries provided

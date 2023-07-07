@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="next" title="The hash-algorithms Library" href="../hash-algorithms/index.html" />
+    <link rel="next" title="The io Library" href="../io/index.html" />
     <link rel="prev" title="The dylan-primitives Module" href="primitives.html" /> 
 </head>
 
@@ -53,7 +53,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">The dylan Library</a><ul class="current">
@@ -107,14 +106,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
@@ -146,72 +141,14 @@
            <div itemprop="articleBody">
              
   <div class="section" id="the-threads-module">
-<h1><a class="toc-backref" href="#id6">The threads Module</a><a class="headerlink" href="#the-threads-module" title="Permalink to this headline">¶</a></h1>
+<h1>The threads Module<a class="headerlink" href="#the-threads-module" title="Permalink to this headline">¶</a></h1>
 <p>The Threads module provides a portable threads interface for Dylan. The Threads
 module is designed to map easily and efficiently onto the threads facilities
 provided by all common operating systems.</p>
 <p>All documented bindings are exported from the module <em>threads</em> in the <em>dylan</em>
 and <em>common-dylan</em> libraries.</p>
-<div class="contents topic" id="contents">
-<p class="topic-title">Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#the-threads-module" id="id6">The threads Module</a></p>
-<ul>
-<li><p><a class="reference internal" href="#multi-thread-semantics" id="id7">Multi-thread semantics</a></p>
-<ul>
-<li><p><a class="reference internal" href="#atomicity" id="id8">Atomicity</a></p></li>
-<li><p><a class="reference internal" href="#ordering" id="id9">Ordering</a></p></li>
-<li><p><a class="reference internal" href="#explicit-synchronization" id="id10">Explicit synchronization</a></p></li>
-<li><p><a class="reference internal" href="#conditional-update" id="id11">Conditional update</a></p></li>
-<li><p><a class="reference internal" href="#the-dynamic-environment" id="id12">The dynamic environment</a></p></li>
-<li><p><a class="reference internal" href="#thread-variables" id="id13">Thread variables</a></p></li>
-<li><p><a class="reference internal" href="#dynamic-binding" id="id14">Dynamic binding</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#thread-safety-in-client-libraries" id="id15">Thread safety in client libraries</a></p>
-<ul>
-<li><p><a class="reference internal" href="#general-requirements" id="id16">General requirements</a></p></li>
-<li><p><a class="reference internal" href="#effects-on-the-dylan-library" id="id17">Effects on the Dylan library</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#the-threads-class-hierarchy" id="id18">The Threads class hierarchy</a></p></li>
-<li><p><a class="reference internal" href="#basic-features" id="id19">Basic features</a></p>
-<ul>
-<li><p><a class="reference internal" href="#low-level-synchronization" id="id20">Low-level synchronization</a></p></li>
-<li><p><a class="reference internal" href="#operations-on-threads" id="id21">Operations on threads</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#synchronization-protocol" id="id22">Synchronization protocol</a></p>
-<ul>
-<li><p><a class="reference internal" href="#id1" id="id23">Basic features</a></p></li>
-<li><p><a class="reference internal" href="#locks" id="id24">Locks</a></p></li>
-<li><p><a class="reference internal" href="#semaphores" id="id25">Semaphores</a></p></li>
-<li><p><a class="reference internal" href="#exclusive-locks" id="id26">Exclusive locks</a></p></li>
-<li><p><a class="reference internal" href="#recursive-locks" id="id27">Recursive locks</a></p></li>
-<li><p><a class="reference internal" href="#simple-locks" id="id28">Simple locks</a></p></li>
-<li><p><a class="reference internal" href="#multiple-reader-single-writer-locks" id="id29">Multiple reader / single writer locks</a></p></li>
-<li><p><a class="reference internal" href="#notifications" id="id30">Notifications</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#timers" id="id31">Timers</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id32">Thread variables</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id33">Dynamic binding</a></p>
-<ul>
-<li><p><a class="reference internal" href="#an-extended-form-of-dynamic-bind" id="id34">An extended form of dynamic-bind</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#locked-variables" id="id35">Locked variables</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id36">Conditional update</a></p>
-<ul>
-<li><p><a class="reference internal" href="#an-extended-form-of-conditional-update" id="id37">An extended form of conditional-update!</a></p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
 <div class="section" id="multi-thread-semantics">
-<h2><a class="toc-backref" href="#id7">Multi-thread semantics</a><a class="headerlink" href="#multi-thread-semantics" title="Permalink to this headline">¶</a></h2>
+<h2>Multi-thread semantics<a class="headerlink" href="#multi-thread-semantics" title="Permalink to this headline">¶</a></h2>
 <p>The Threads module provides multiple threads of control within a single
 space of objects and module variables. Each thread runs in its own
 independent stack. The mechanism by which the threads are scheduled is
@@ -221,7 +158,7 @@ provided to call a function on an existing thread other than the current
 thread. Neither is there a mechanism to signal an exception on a thread
 other than the current thread.</p>
 <div class="section" id="atomicity">
-<h3><a class="toc-backref" href="#id8">Atomicity</a><a class="headerlink" href="#atomicity" title="Permalink to this headline">¶</a></h3>
+<h3>Atomicity<a class="headerlink" href="#atomicity" title="Permalink to this headline">¶</a></h3>
 <p>In general, the Threads module guarantees that assignments to slots and
 variables are atomic. That is, after an assignment, but before
 synchronization, another thread will see either the old value or the new
@@ -252,7 +189,7 @@ inter-thread synchronization.</p>
 using explicit inter-thread synchronization.</p>
 </div>
 <div class="section" id="ordering">
-<h3><a class="toc-backref" href="#id9">Ordering</a><a class="headerlink" href="#ordering" title="Permalink to this headline">¶</a></h3>
+<h3>Ordering<a class="headerlink" href="#ordering" title="Permalink to this headline">¶</a></h3>
 <p>The ordering of visibility of side effects performed in other threads is
 undefined, unless explicit synchronization is used. Implementations of
 the module may guarantee that the visibility of side-effects performed
@@ -271,7 +208,7 @@ effects on other threads — for example, common sub-expression
 elimination, or changing the order of evaluation.</p>
 </div>
 <div class="section" id="explicit-synchronization">
-<h3><a class="toc-backref" href="#id10">Explicit synchronization</a><a class="headerlink" href="#explicit-synchronization" title="Permalink to this headline">¶</a></h3>
+<h3>Explicit synchronization<a class="headerlink" href="#explicit-synchronization" title="Permalink to this headline">¶</a></h3>
 <p>The Threads module provides low-level synchronization functions which
 control the ordering of operations with respect to other threads, and
 control when the side effects that have been performed within one thread
@@ -295,7 +232,7 @@ low-level libraries, are discussed in <a class="reference internal" href="#threa
 libraries</a>.</p>
 </div>
 <div class="section" id="conditional-update">
-<h3><a class="toc-backref" href="#id11">Conditional update</a><a class="headerlink" href="#conditional-update" title="Permalink to this headline">¶</a></h3>
+<h3>Conditional update<a class="headerlink" href="#conditional-update" title="Permalink to this headline">¶</a></h3>
 <p>In addition to the synchronization primitives, the module provides a
 conditional update mechanism which is not synchronized, but which tests
 whether the value in a variable or slot has changed and atomically
@@ -320,7 +257,7 @@ blocking function from the Threads module should be used within the
 loop.</p>
 </div>
 <div class="section" id="the-dynamic-environment">
-<h3><a class="toc-backref" href="#id12">The dynamic environment</a><a class="headerlink" href="#the-dynamic-environment" title="Permalink to this headline">¶</a></h3>
+<h3>The dynamic environment<a class="headerlink" href="#the-dynamic-environment" title="Permalink to this headline">¶</a></h3>
 <p>Dylan has an implicit notion of a <em>dynamic environment</em>, corresponding
 to language constructs with <em>dynamic extent</em>. For example, the <em>block</em>
 construct can introduce <em>cleanup-clauses</em>, and the <em>body</em> of the block
@@ -345,7 +282,7 @@ variables are in general potentially global, you may need to explicitly
 synchronize accesses to them.</p>
 </div>
 <div class="section" id="thread-variables">
-<h3><a class="toc-backref" href="#id13">Thread variables</a><a class="headerlink" href="#thread-variables" title="Permalink to this headline">¶</a></h3>
+<h3>Thread variables<a class="headerlink" href="#thread-variables" title="Permalink to this headline">¶</a></h3>
 <p>The Threads module provides a new type of variable: a <em>thread</em>
 variable, also known as a <em>thread-local</em> variable. These variables are
 similar to normal module variables in the sense that they are visible
@@ -361,7 +298,7 @@ definition.</p>
 <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a>.</p>
 </div>
 <div class="section" id="dynamic-binding">
-<h3><a class="toc-backref" href="#id14">Dynamic binding</a><a class="headerlink" href="#dynamic-binding" title="Permalink to this headline">¶</a></h3>
+<h3>Dynamic binding<a class="headerlink" href="#dynamic-binding" title="Permalink to this headline">¶</a></h3>
 <p>The Threads module exports a macro for dynamic binding. A <em>binding</em> is a
 mapping between a variable and a*value-cell* which holds the variable’s
 value. A <em>dynamic</em> binding is a binding which has dynamic extent, and
@@ -382,7 +319,7 @@ future research.</p>
 </div>
 </div>
 <div class="section" id="thread-safety-in-client-libraries">
-<h2><a class="toc-backref" href="#id15">Thread safety in client libraries</a><a class="headerlink" href="#thread-safety-in-client-libraries" title="Permalink to this headline">¶</a></h2>
+<h2>Thread safety in client libraries<a class="headerlink" href="#thread-safety-in-client-libraries" title="Permalink to this headline">¶</a></h2>
 <p>If an application uses multiple threads, then there may be thread safety
 requirements for any library that can be called simultaneously by
 multiple threads, even if the called library does not use the Threads
@@ -390,7 +327,7 @@ library directly.</p>
 <p>This section is about thread safety in any library that is designed to
 be used in a multi-threaded application.</p>
 <div class="section" id="general-requirements">
-<h3><a class="toc-backref" href="#id16">General requirements</a><a class="headerlink" href="#general-requirements" title="Permalink to this headline">¶</a></h3>
+<h3>General requirements<a class="headerlink" href="#general-requirements" title="Permalink to this headline">¶</a></h3>
 <p>A library’s designer is responsible for documenting which features of
 the library offer built-in synchronization and which do not. While there
 is no definitive rule that can assist designers in this documentation,
@@ -411,7 +348,7 @@ it may be more efficient to rely on explicit synchronization by the
 client. Library designers should always document the choice they make.</p>
 </div>
 <div class="section" id="effects-on-the-dylan-library">
-<h3><a class="toc-backref" href="#id17">Effects on the Dylan library</a><a class="headerlink" href="#effects-on-the-dylan-library" title="Permalink to this headline">¶</a></h3>
+<h3>Effects on the Dylan library<a class="headerlink" href="#effects-on-the-dylan-library" title="Permalink to this headline">¶</a></h3>
 <p>The definition of the Dylan library is not changed with the addition of
 the Threads module. The implementation ensures that all hidden global
 state (such as the symbol table and any generic function caches) is
@@ -436,7 +373,7 @@ explicit synchronization, as appropriate.</p>
 </div>
 </div>
 <div class="section" id="the-threads-class-hierarchy">
-<h2><a class="toc-backref" href="#id18">The Threads class hierarchy</a><a class="headerlink" href="#the-threads-class-hierarchy" title="Permalink to this headline">¶</a></h2>
+<h2>The Threads class hierarchy<a class="headerlink" href="#the-threads-class-hierarchy" title="Permalink to this headline">¶</a></h2>
 <div class="figure align-center" id="id5">
 <img alt="../_images/threads.png" src="../_images/threads.png" />
 <p class="caption"><span class="caption-text">Threads class hierarchy.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
@@ -449,11 +386,11 @@ explicit synchronization, as appropriate.</p>
 </ul>
 </div>
 <div class="section" id="basic-features">
-<h2><a class="toc-backref" href="#id19">Basic features</a><a class="headerlink" href="#basic-features" title="Permalink to this headline">¶</a></h2>
+<h2>Basic features<a class="headerlink" href="#basic-features" title="Permalink to this headline">¶</a></h2>
 <p>This section documents basic features of the Threads module: operations
 on threads and low-level synchronization.</p>
 <div class="section" id="low-level-synchronization">
-<h3><a class="toc-backref" href="#id20">Low-level synchronization</a><a class="headerlink" href="#low-level-synchronization" title="Permalink to this headline">¶</a></h3>
+<h3>Low-level synchronization<a class="headerlink" href="#low-level-synchronization" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt class="dylan-api" id="dylan:threads:sequence-point">
 <code class="sig-name descname">sequence-point</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:sequence-point" title="Permalink to this definition">¶</a></dt>
@@ -571,7 +508,7 @@ happen.</p>
 
 </div>
 <div class="section" id="operations-on-threads">
-<h3><a class="toc-backref" href="#id21">Operations on threads</a><a class="headerlink" href="#operations-on-threads" title="Permalink to this headline">¶</a></h3>
+<h3>Operations on threads<a class="headerlink" href="#operations-on-threads" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[thread]">
 <code class="sig-name descname">&lt;thread&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#dylan:threads:[thread]" title="Permalink to this definition">¶</a></dt>
@@ -809,9 +746,9 @@ environment.</p>
 </div>
 </div>
 <div class="section" id="synchronization-protocol">
-<h2><a class="toc-backref" href="#id22">Synchronization protocol</a><a class="headerlink" href="#synchronization-protocol" title="Permalink to this headline">¶</a></h2>
+<h2>Synchronization protocol<a class="headerlink" href="#synchronization-protocol" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
-<h3><a class="toc-backref" href="#id23">Basic features</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Basic features<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[synchronization]">
 <code class="sig-name descname">&lt;synchronization&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#dylan:threads:[synchronization]" title="Permalink to this definition">¶</a></dt>
@@ -939,7 +876,7 @@ created with the <em>name</em> init-keyword. Otherwise <a class="reference exter
 
 </div>
 <div class="section" id="locks">
-<h3><a class="toc-backref" href="#id24">Locks</a><a class="headerlink" href="#locks" title="Permalink to this headline">¶</a></h3>
+<h3>Locks<a class="headerlink" href="#locks" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[lock]">
 <code class="sig-name descname">&lt;lock&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#dylan:threads:[lock]" title="Permalink to this definition">¶</a></dt>
@@ -1040,7 +977,7 @@ equivalent to the following:</p>
 
 </div>
 <div class="section" id="semaphores">
-<h3><a class="toc-backref" href="#id25">Semaphores</a><a class="headerlink" href="#semaphores" title="Permalink to this headline">¶</a></h3>
+<h3>Semaphores<a class="headerlink" href="#semaphores" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[semaphore]">
 <code class="sig-name descname">&lt;semaphore&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[semaphore]" title="Permalink to this definition">¶</a></dt>
@@ -1155,7 +1092,7 @@ maximum count.</p>
 
 </div>
 <div class="section" id="exclusive-locks">
-<h3><a class="toc-backref" href="#id26">Exclusive locks</a><a class="headerlink" href="#exclusive-locks" title="Permalink to this headline">¶</a></h3>
+<h3>Exclusive locks<a class="headerlink" href="#exclusive-locks" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[exclusive-lock]">
 <code class="sig-name descname">&lt;exclusive-lock&gt;</code> <em class="property">Open Abstract Instantiable Class</em><a class="headerlink" href="#dylan:threads:[exclusive-lock]" title="Permalink to this definition">¶</a></dt>
@@ -1254,7 +1191,7 @@ thread.</p>
 
 </div>
 <div class="section" id="recursive-locks">
-<h3><a class="toc-backref" href="#id27">Recursive locks</a><a class="headerlink" href="#recursive-locks" title="Permalink to this headline">¶</a></h3>
+<h3>Recursive locks<a class="headerlink" href="#recursive-locks" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[recursive-lock]">
 <code class="sig-name descname">&lt;recursive-lock&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[recursive-lock]" title="Permalink to this definition">¶</a></dt>
@@ -1354,7 +1291,7 @@ thread.</p>
 
 </div>
 <div class="section" id="simple-locks">
-<h3><a class="toc-backref" href="#id28">Simple locks</a><a class="headerlink" href="#simple-locks" title="Permalink to this headline">¶</a></h3>
+<h3>Simple locks<a class="headerlink" href="#simple-locks" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[simple-lock]">
 <code class="sig-name descname">&lt;simple-lock&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[simple-lock]" title="Permalink to this definition">¶</a></dt>
@@ -1457,7 +1394,7 @@ in seconds.</p></li>
 
 </div>
 <div class="section" id="multiple-reader-single-writer-locks">
-<h3><a class="toc-backref" href="#id29">Multiple reader / single writer locks</a><a class="headerlink" href="#multiple-reader-single-writer-locks" title="Permalink to this headline">¶</a></h3>
+<h3>Multiple reader / single writer locks<a class="headerlink" href="#multiple-reader-single-writer-locks" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[read-write-lock]">
 <code class="sig-name descname">&lt;read-write-lock&gt;</code> <em class="property">Open Primary Instantiable Class</em><a class="headerlink" href="#dylan:threads:[read-write-lock]" title="Permalink to this definition">¶</a></dt>
@@ -1590,7 +1527,7 @@ in write mode — by the current thread.</p>
 
 </div>
 <div class="section" id="notifications">
-<h3><a class="toc-backref" href="#id30">Notifications</a><a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
+<h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dylan:threads:[notification]">
 <code class="sig-name descname">&lt;notification&gt;</code> <em class="property">Instantiable Sealed Class</em><a class="headerlink" href="#dylan:threads:[notification]" title="Permalink to this definition">¶</a></dt>
@@ -1841,7 +1778,7 @@ notification.</p>
 </div>
 </div>
 <div class="section" id="timers">
-<h2><a class="toc-backref" href="#id31">Timers</a><a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h2>
+<h2>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt class="dylan-api" id="dylan:threads:sleep">
 <code class="sig-name descname">sleep</code> <em class="property">Function</em><a class="headerlink" href="#dylan:threads:sleep" title="Permalink to this definition">¶</a></dt>
@@ -1864,7 +1801,7 @@ notification.</p>
 
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id32">Thread variables</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>Thread variables<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <dl class="macro">
 <dt class="dylan-api" id="dylan:threads:thread">
 <code class="sig-name descname">thread</code> <em class="property">Variable definition adjective Macro</em><a class="headerlink" href="#dylan:threads:thread" title="Permalink to this definition">¶</a></dt>
@@ -1894,7 +1831,7 @@ assignment is not visible in other threads.</p>
 
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id33">Dynamic binding</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>Dynamic binding<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <dl class="macro">
 <dt class="dylan-api" id="dylan:threads:dynamic-bind">
 <code class="sig-name descname">dynamic-bind</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:dynamic-bind" title="Permalink to this definition">¶</a></dt>
@@ -1943,7 +1880,7 @@ variable in the module scope.</p>
 </dd></dl>
 
 <div class="section" id="an-extended-form-of-dynamic-bind">
-<h3><a class="toc-backref" href="#id34">An extended form of dynamic-bind</a><a class="headerlink" href="#an-extended-form-of-dynamic-bind" title="Permalink to this headline">¶</a></h3>
+<h3>An extended form of dynamic-bind<a class="headerlink" href="#an-extended-form-of-dynamic-bind" title="Permalink to this headline">¶</a></h3>
 <p>Some implementations of the Threads module may provide an extended form
 of <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a> for binding places other than variables. The
 implementation of this extended form requires the use of non-standard
@@ -2004,7 +1941,7 @@ which make use of the extended form of <a class="reference internal" href="#dyla
 </div>
 </div>
 <div class="section" id="locked-variables">
-<h2><a class="toc-backref" href="#id35">Locked variables</a><a class="headerlink" href="#locked-variables" title="Permalink to this headline">¶</a></h2>
+<h2>Locked variables<a class="headerlink" href="#locked-variables" title="Permalink to this headline">¶</a></h2>
 <dl class="macro">
 <dt class="dylan-api" id="dylan:threads:locked">
 <code class="sig-name descname">locked</code> <em class="property">Variable definition adjective Macro</em><a class="headerlink" href="#dylan:threads:locked" title="Permalink to this definition">¶</a></dt>
@@ -2042,7 +1979,7 @@ assign to the variable.</p></li>
 
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id36">Conditional update</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2>Conditional update<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <dl class="macro">
 <dt class="dylan-api" id="dylan:threads:conditional-update!">
 <code class="sig-name descname">conditional-update!</code> <em class="property">Statement Macro</em><a class="headerlink" href="#dylan:threads:conditional-update!" title="Permalink to this definition">¶</a></dt>
@@ -2206,7 +2143,7 @@ that the <em>place</em> is decremented.</p>
 </dd></dl>
 
 <div class="section" id="an-extended-form-of-conditional-update">
-<h3><a class="toc-backref" href="#id37">An extended form of conditional-update!</a><a class="headerlink" href="#an-extended-form-of-conditional-update" title="Permalink to this headline">¶</a></h3>
+<h3>An extended form of conditional-update!<a class="headerlink" href="#an-extended-form-of-conditional-update" title="Permalink to this headline">¶</a></h3>
 <p>Some implementations of the Threads module may provide an extended form
 of <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> for updating places other than locked
 variables. The implementation of this extended form requires the use of
@@ -2265,7 +2202,7 @@ deemed to have failed.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="primitives.html" class="btn btn-neutral float-left" title="The dylan-primitives Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../hash-algorithms/index.html" class="btn btn-neutral float-right" title="The hash-algorithms Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../io/index.html" class="btn btn-neutral float-right" title="The io Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

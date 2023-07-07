@@ -189,7 +189,7 @@ the image below. Classes shown in bold are all instantiable.
    :align: center
 
 .. note:: :class:`<file-stream>` is included for completeness but is actually
-   exported from the :doc:`file-system </system/file-system>` module.
+   exported from the :doc:`file-system <../system/file-system>` module.
 
 - :class:`<stream>`
 - :class:`<positionable-stream>`

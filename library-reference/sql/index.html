@@ -20,8 +20,8 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="next" title="The strings Library" href="../strings/index.html" />
-    <link rel="prev" title="The regular-expressions Library" href="../regular-expressions/index.html" /> 
+    <link rel="next" title="The system Library" href="../system/index.html" />
+    <link rel="prev" title="The progress-stream Library" href="../progress-stream/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,16 +53,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The sql Library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-sql-odbc-library-in-applications">Using the SQL-ODBC library in applications</a></li>
@@ -105,7 +101,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
@@ -148,57 +143,8 @@ library. The ODBC-FFI library uses the C-FFI library
 and the same C-to-Dylan name mapping scheme as described in the Win32 API FFI
 library documentation. See the C FFI and Win32 library reference for details
 of that scheme. The ODBC-FFI library is otherwise undocumented.</p>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#implementation" id="id7">Implementation</a></p></li>
-<li><p><a class="reference internal" href="#using-the-sql-odbc-library-in-applications" id="id8">Using the SQL-ODBC library in applications</a></p></li>
-<li><p><a class="reference internal" href="#object-oriented-languages-and-relational-databases" id="id9">Object-oriented languages and relational databases</a></p></li>
-<li><p><a class="reference internal" href="#result-retrieval-protocol" id="id10">Result-retrieval protocol</a></p></li>
-<li><p><a class="reference internal" href="#processing-results" id="id11">Processing results</a></p></li>
-<li><p><a class="reference internal" href="#bridging-the-object-relational-gap" id="id12">Bridging the object-relational gap</a></p></li>
-<li><p><a class="reference internal" href="#error-handling" id="id13">Error handling</a></p></li>
-<li><p><a class="reference internal" href="#examples-used-in-this-document" id="id14">Examples used in this document</a></p>
-<ul>
-<li><p><a class="reference internal" href="#connecting-to-a-database" id="id15">Connecting to a database</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#connection-protocol-functions-methods-and-macros" id="id16">Connection protocol functions, methods, and macros</a></p></li>
-<li><p><a class="reference internal" href="#connecting-and-disconnecting" id="id17">Connecting and disconnecting</a></p>
-<ul>
-<li><p><a class="reference internal" href="#executing-sql-statements" id="id18">Executing SQL statements</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#the-null-value" id="id19">The null value</a></p></li>
-<li><p><a class="reference internal" href="#input-indicators-and-output-indicators" id="id20">Input indicators and output indicators</a></p>
-<ul>
-<li><p><a class="reference internal" href="#data-retrieval-using-result-set-collection" id="id21">Data retrieval using result-set collection</a></p></li>
-<li><p><a class="reference internal" href="#result-set-collections" id="id22">Result-set collections</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#record-class" id="id23">Record class</a></p></li>
-<li><p><a class="reference internal" href="#result-set-policy-class" id="id24">Result-set policy class</a></p></li>
-<li><p><a class="reference internal" href="#result-set-classes" id="id25">Result-set classes</a></p></li>
-<li><p><a class="reference internal" href="#liaison-functions" id="id26">Liaison functions</a></p></li>
-<li><p><a class="reference internal" href="#coercion-policies" id="id27">Coercion policies</a></p>
-<ul>
-<li><p><a class="reference internal" href="#data-types-and-conversions" id="id28">Data types and conversions</a></p></li>
-<li><p><a class="reference internal" href="#warning-and-error-conditions" id="id29">Warning and error conditions</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#diagnostics" id="id30">Diagnostics</a></p>
-<ul>
-<li><p><a class="reference internal" href="#database-introspection" id="id31">Database introspection</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#database-objects-and-integrity-constraints" id="id32">Database objects and integrity constraints</a></p>
-<ul>
-<li><p><a class="reference internal" href="#the-sql-module" id="id33">The SQL module</a></p></li>
-</ul>
-</li>
-</ul>
-</div>
 <div class="section" id="implementation">
-<h2><a class="toc-backref" href="#id7">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
 <p>The SQL-ODBC library is built on top of a generic SQL library. This SQL library
 does not include the low-level code necessary to communicate with any particular
 DBMS. In itself, the SQL library simply provides a convenient high-level mechanism
@@ -212,13 +158,13 @@ therefore be simple to port to any future DBMSes for which implementation
 libraries are written.</p>
 </div>
 <div class="section" id="using-the-sql-odbc-library-in-applications">
-<h2><a class="toc-backref" href="#id8">Using the SQL-ODBC library in applications</a><a class="headerlink" href="#using-the-sql-odbc-library-in-applications" title="Permalink to this headline">¶</a></h2>
+<h2>Using the SQL-ODBC library in applications<a class="headerlink" href="#using-the-sql-odbc-library-in-applications" title="Permalink to this headline">¶</a></h2>
 <p>The SQL-ODBC library is available to applications as the SQL-ODBC library,
 which exports the modules SQL-ODBC and SQL. (You should not need to use the
 SQL module, but it will be visible during debugging sessions.)</p>
 </div>
 <div class="section" id="object-oriented-languages-and-relational-databases">
-<h2><a class="toc-backref" href="#id9">Object-oriented languages and relational databases</a><a class="headerlink" href="#object-oriented-languages-and-relational-databases" title="Permalink to this headline">¶</a></h2>
+<h2>Object-oriented languages and relational databases<a class="headerlink" href="#object-oriented-languages-and-relational-databases" title="Permalink to this headline">¶</a></h2>
 <p>The SQL-ODBC library does not provide the means to “objectify” a relational
 database or an SQL statement. That is, it does not treat a databases or
 statements in an object-oriented fashion or provide support for doing so.</p>
@@ -236,7 +182,7 @@ of an object) do not have unique identities: if two rows in a given
 table have identical values, they are indistinguishable.</p>
 </div>
 <div class="section" id="result-retrieval-protocol">
-<h2><a class="toc-backref" href="#id10">Result-retrieval protocol</a><a class="headerlink" href="#result-retrieval-protocol" title="Permalink to this headline">¶</a></h2>
+<h2>Result-retrieval protocol<a class="headerlink" href="#result-retrieval-protocol" title="Permalink to this headline">¶</a></h2>
 <p>The SQL-ODBC library provides an abstract Dylan protocol for handling
 SQL result sets, the means by which SQL SELECT statement results are
 retrieved. The library allows result sets to be processed as Dylan
@@ -244,7 +190,7 @@ collections. The various Dylan collection protocols and functions work
 as you would expect on a result set.</p>
 </div>
 <div class="section" id="processing-results">
-<h2><a class="toc-backref" href="#id11">Processing results</a><a class="headerlink" href="#processing-results" title="Permalink to this headline">¶</a></h2>
+<h2>Processing results<a class="headerlink" href="#processing-results" title="Permalink to this headline">¶</a></h2>
 <p>SQL SELECT statements return database records. You process the results
 of an SQL SELECT statement using a result set. Result sets are the
 focal point of the SQL-ODBC library’s encapsulation of the protocol
@@ -258,7 +204,7 @@ set in place of the record. Result sets retrieve their records one at
 a time.</p>
 </div>
 <div class="section" id="bridging-the-object-relational-gap">
-<h2><a class="toc-backref" href="#id12">Bridging the object-relational gap</a><a class="headerlink" href="#bridging-the-object-relational-gap" title="Permalink to this headline">¶</a></h2>
+<h2>Bridging the object-relational gap<a class="headerlink" href="#bridging-the-object-relational-gap" title="Permalink to this headline">¶</a></h2>
 <p>Relational DBMSes do not in general deal with objects or classes.
 Since Dylan is an object-oriented language, this creates a gap between
 Dylan and the DBMS.</p>
@@ -275,7 +221,7 @@ column of the record. See Section 1.5.4 on page 36 for more on liaison
 functions.</p>
 </div>
 <div class="section" id="error-handling">
-<h2><a class="toc-backref" href="#id13">Error handling</a><a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
 <p>As in any application, errors at run time can occur when applications
 talk to databases. The SQL-ODBC library captures the errors and
 warnings that a DBMS generates and signals a corresponding Dylan error
@@ -283,7 +229,7 @@ or warning condition. Your application can then process the condition
 using the Dylan condition system.</p>
 </div>
 <div class="section" id="examples-used-in-this-document">
-<h2><a class="toc-backref" href="#id14">Examples used in this document</a><a class="headerlink" href="#examples-used-in-this-document" title="Permalink to this headline">¶</a></h2>
+<h2>Examples used in this document<a class="headerlink" href="#examples-used-in-this-document" title="Permalink to this headline">¶</a></h2>
 <p>The following tables depict example database tables to which this
 document’s code examples refer.</p>
 <table class="docutils align-default" id="id1">
@@ -387,7 +333,7 @@ document’s code examples refer.</p>
 </tbody>
 </table>
 <div class="section" id="connecting-to-a-database">
-<h3><a class="toc-backref" href="#id15">Connecting to a database</a><a class="headerlink" href="#connecting-to-a-database" title="Permalink to this headline">¶</a></h3>
+<h3>Connecting to a database<a class="headerlink" href="#connecting-to-a-database" title="Permalink to this headline">¶</a></h3>
 <p>Before it can query a database, your application must connect to it.
 Most DBMSes operate a form of login procedure to verify connections,
 using a user name and password for the purpose. The popular DBMSes
@@ -437,7 +383,7 @@ to a database.</p>
 </div>
 </div>
 <div class="section" id="connection-protocol-functions-methods-and-macros">
-<h2><a class="toc-backref" href="#id16">Connection protocol functions, methods, and macros</a><a class="headerlink" href="#connection-protocol-functions-methods-and-macros" title="Permalink to this headline">¶</a></h2>
+<h2>Connection protocol functions, methods, and macros<a class="headerlink" href="#connection-protocol-functions-methods-and-macros" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="#sql:sql:with-dbms"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-dbms</span></code></a></p></li>
 <li><p><a class="reference internal" href="#sql:sql:dbms"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">dbms</span></code></a></p></li>
@@ -446,7 +392,7 @@ to a database.</p>
 </ul>
 </div>
 <div class="section" id="connecting-and-disconnecting">
-<h2><a class="toc-backref" href="#id17">Connecting and disconnecting</a><a class="headerlink" href="#connecting-and-disconnecting" title="Permalink to this headline">¶</a></h2>
+<h2>Connecting and disconnecting<a class="headerlink" href="#connecting-and-disconnecting" title="Permalink to this headline">¶</a></h2>
 <p>The SQL-ODBC library provides DBMS-independent functions to connect to
 and disconnect from databases. Connecting to a database establishes a
 context (an instance of <a class="reference internal" href="#sql:sql:[connection]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;connection&gt;</span></code></a>) in which SQL statements
@@ -476,7 +422,7 @@ should be dropped.</p>
 <li><p><a class="reference internal" href="#sql:sql:with-connection"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-connection</span></code></a></p></li>
 </ul>
 <div class="section" id="executing-sql-statements">
-<h3><a class="toc-backref" href="#id18">Executing SQL statements</a><a class="headerlink" href="#executing-sql-statements" title="Permalink to this headline">¶</a></h3>
+<h3>Executing SQL statements<a class="headerlink" href="#executing-sql-statements" title="Permalink to this headline">¶</a></h3>
 <p>The SQL-ODBC library provides a way of processing SQL statements: the
 <a class="reference internal" href="#sql:sql:execute"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">execute</span></code></a> function, which you must apply to instances of the
 <a class="reference internal" href="#sql:sql:[sql-statement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sql-statement&gt;</span></code></a> class.</p>
@@ -499,7 +445,7 @@ should be dropped.</p>
 </div>
 </div>
 <div class="section" id="the-null-value">
-<h2><a class="toc-backref" href="#id19">The null value</a><a class="headerlink" href="#the-null-value" title="Permalink to this headline">¶</a></h2>
+<h2>The null value<a class="headerlink" href="#the-null-value" title="Permalink to this headline">¶</a></h2>
 <p>SQL offers the null value to represent missing information, or
 information that is not applicable in a particular context. All
 columns of a table can accept the null value – unless prohibited by
@@ -548,7 +494,7 @@ a client application wishes to set a column to the null value.</p>
 </ul>
 </div>
 <div class="section" id="input-indicators-and-output-indicators">
-<h2><a class="toc-backref" href="#id20">Input indicators and output indicators</a><a class="headerlink" href="#input-indicators-and-output-indicators" title="Permalink to this headline">¶</a></h2>
+<h2>Input indicators and output indicators<a class="headerlink" href="#input-indicators-and-output-indicators" title="Permalink to this headline">¶</a></h2>
 <p>It is difficult for database applications written in traditional
 programming languages to represent the semantics of the null value,
 because it is a universal value which is in the domain of all types,
@@ -594,7 +540,7 @@ element of the sequence whose key corresponds to the column index is
 used as the substitution value. Otherwise, the output indicator value
 itself is used as the substitution value.</p>
 <div class="section" id="data-retrieval-using-result-set-collection">
-<h3><a class="toc-backref" href="#id21">Data retrieval using result-set collection</a><a class="headerlink" href="#data-retrieval-using-result-set-collection" title="Permalink to this headline">¶</a></h3>
+<h3>Data retrieval using result-set collection<a class="headerlink" href="#data-retrieval-using-result-set-collection" title="Permalink to this headline">¶</a></h3>
 <p>Executing an SQL SELECT statement by invoking the execute function on
 the instance of <a class="reference internal" href="#sql:sql:[sql-statement]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sql-statement&gt;</span></code></a> that represents the statement
 yields a result set.</p>
@@ -642,7 +588,7 @@ result sets retrieve records synchronously.</p>
 </div>
 </div>
 <div class="section" id="result-set-collections">
-<h3><a class="toc-backref" href="#id22">Result-set collections</a><a class="headerlink" href="#result-set-collections" title="Permalink to this headline">¶</a></h3>
+<h3>Result-set collections<a class="headerlink" href="#result-set-collections" title="Permalink to this headline">¶</a></h3>
 <p>A result-set collection, in spirit, contains the result of an SQL
 <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statement. To provide these results, result-set collections
 and their methods control the retrieval of elements from the database.
@@ -669,7 +615,7 @@ performing data coercion if a <a class="reference internal" href="#sql:sql:coerc
 </div>
 </div>
 <div class="section" id="record-class">
-<h2><a class="toc-backref" href="#id23">Record class</a><a class="headerlink" href="#record-class" title="Permalink to this headline">¶</a></h2>
+<h2>Record class<a class="headerlink" href="#record-class" title="Permalink to this headline">¶</a></h2>
 <p>An instance of the <a class="reference internal" href="#sql:sql:[record]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;record&gt;</span></code></a> class is a placeholder for
 records retrieved from the database. The record class is a collection
 whose elements are the columns of the records retrieved from the
@@ -696,7 +642,7 @@ valid until the next fetch is performed.</p>
 </ul>
 </div>
 <div class="section" id="result-set-policy-class">
-<h2><a class="toc-backref" href="#id24">Result-set policy class</a><a class="headerlink" href="#result-set-policy-class" title="Permalink to this headline">¶</a></h2>
+<h2>Result-set policy class<a class="headerlink" href="#result-set-policy-class" title="Permalink to this headline">¶</a></h2>
 <p>Applications use result-set policy classes to specify the behavior and
 performance characteristics of a result set, as well as its type. The
 type of the result set is determined by the result-set policy object.
@@ -740,7 +686,7 @@ otherwise, it will be an instance of <a class="reference internal" href="#sql:sq
 </ul>
 </div>
 <div class="section" id="result-set-classes">
-<h2><a class="toc-backref" href="#id25">Result-set classes</a><a class="headerlink" href="#result-set-classes" title="Permalink to this headline">¶</a></h2>
+<h2>Result-set classes<a class="headerlink" href="#result-set-classes" title="Permalink to this headline">¶</a></h2>
 <p>Result-sets are the focal point for the encapsulation of the protocol
 required to retrieve records from a database. The SQL-ODBC library
 provides three result-set classes with different performance and
@@ -748,7 +694,7 @@ behavioral characteristics. These classes are <a class="reference internal" href
 <a class="reference internal" href="#sql:sql:[forward-only-result-set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;forward-only-result-set&gt;</span></code></a>, and <a class="reference internal" href="#sql:sql:[scrollable-result-set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;scrollable-result-set&gt;</span></code></a>.</p>
 </div>
 <div class="section" id="liaison-functions">
-<h2><a class="toc-backref" href="#id26">Liaison functions</a><a class="headerlink" href="#liaison-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Liaison functions<a class="headerlink" href="#liaison-functions" title="Permalink to this headline">¶</a></h2>
 <p>Liaison functions convert records retrieved from a database query to
 Dylan objects. These functions bridge the conceptual gap between
 relational databases and Dylan’s object-orientation.</p>
@@ -813,7 +759,7 @@ for this.</p>
 </div>
 </div>
 <div class="section" id="coercion-policies">
-<h2><a class="toc-backref" href="#id27">Coercion policies</a><a class="headerlink" href="#coercion-policies" title="Permalink to this headline">¶</a></h2>
+<h2>Coercion policies<a class="headerlink" href="#coercion-policies" title="Permalink to this headline">¶</a></h2>
 <p>In the SQL-ODBC library, the element method on the record class
 encapsulates all coercions of data retrieved from a database. This
 method can return columns with or without coercion: as low-level SQL
@@ -842,7 +788,7 @@ class to perform the conversion. When multiple columns define a Dylan
 object or one column defines multiple Dylan objects, use the liaison
 function to perform the conversion.</p>
 <div class="section" id="data-types-and-conversions">
-<h3><a class="toc-backref" href="#id28">Data types and conversions</a><a class="headerlink" href="#data-types-and-conversions" title="Permalink to this headline">¶</a></h3>
+<h3>Data types and conversions<a class="headerlink" href="#data-types-and-conversions" title="Permalink to this headline">¶</a></h3>
 <p>The datatypes that relational DBMSes use are different from those
 Dylan uses. The SQL-ODBC library provides classes that represent
 these low-level relational datatypes, along with a table that
@@ -968,7 +914,7 @@ The Dylan SQL-ODBC library must also be prepared.</p>
 </div>
 </div>
 <div class="section" id="warning-and-error-conditions">
-<h3><a class="toc-backref" href="#id29">Warning and error conditions</a><a class="headerlink" href="#warning-and-error-conditions" title="Permalink to this headline">¶</a></h3>
+<h3>Warning and error conditions<a class="headerlink" href="#warning-and-error-conditions" title="Permalink to this headline">¶</a></h3>
 <p>The SQL-ODBC library defines condition classes for each category of
 error and warning defined in SQL-92. (SQL-92 calls them classes
 rather than categories.)</p>
@@ -989,7 +935,7 @@ the next DBMS condition; to obtain the next DBMS condition, call
 </div>
 </div>
 <div class="section" id="diagnostics">
-<h2><a class="toc-backref" href="#id30">Diagnostics</a><a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h2>
+<h2>Diagnostics<a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h2>
 <p>SQL-92 defines a diagnostics area as a DBMS-managed data structure
 that captures specific information about the execution of a SQL
 statement, with the exception of the <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">DIAGNOSTICS</span></code> statement.
@@ -1019,7 +965,7 @@ and accessors for the information they represent.</p>
 <li><p><a class="reference internal" href="#sql:sql:message-text"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">message-text</span></code></a></p></li>
 </ul>
 <div class="section" id="database-introspection">
-<h3><a class="toc-backref" href="#id31">Database introspection</a><a class="headerlink" href="#database-introspection" title="Permalink to this headline">¶</a></h3>
+<h3>Database introspection<a class="headerlink" href="#database-introspection" title="Permalink to this headline">¶</a></h3>
 <p>The SQL-ODBC library offers introspection features to allow you to
 determine the structure of a database at run time. A database
 structure is a hierarchy comprising catalogs, schemas, tables and
@@ -1035,7 +981,7 @@ introspection.</p>
 </div>
 </div>
 <div class="section" id="database-objects-and-integrity-constraints">
-<h2><a class="toc-backref" href="#id32">Database objects and integrity constraints</a><a class="headerlink" href="#database-objects-and-integrity-constraints" title="Permalink to this headline">¶</a></h2>
+<h2>Database objects and integrity constraints<a class="headerlink" href="#database-objects-and-integrity-constraints" title="Permalink to this headline">¶</a></h2>
 <p>You can interrogate schema and table database objects for a collection
 of constraints defined against them. A constraint is a data integrity
 rule which the DBMS enforces at all times. These constraints are
@@ -1062,7 +1008,7 @@ determined by introspection on the desired column.</p>
 semantically, however, all constraints are enforced at the table
 level.</p>
 <div class="section" id="the-sql-module">
-<h3><a class="toc-backref" href="#id33">The SQL module</a><a class="headerlink" href="#the-sql-module" title="Permalink to this headline">¶</a></h3>
+<h3>The SQL module<a class="headerlink" href="#the-sql-module" title="Permalink to this headline">¶</a></h3>
 <dl class="constant">
 <dt class="dylan-api" id="sql:sql:$default-coercion">
 <code class="sig-name descname">$default-coercion</code> <em class="property">Constant</em><a class="headerlink" href="#sql:sql:$default-coercion" title="Permalink to this definition">¶</a></dt>
@@ -5472,8 +5418,8 @@ to <code class="docutils literal notranslate"><span class="pre">new-text</span><
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../regular-expressions/index.html" class="btn btn-neutral float-left" title="The regular-expressions Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../strings/index.html" class="btn btn-neutral float-right" title="The strings Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../progress-stream/index.html" class="btn btn-neutral float-left" title="The progress-stream Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../system/index.html" class="btn btn-neutral float-right" title="The system Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

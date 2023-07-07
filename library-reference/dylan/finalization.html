@@ -53,7 +53,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command-line-parser/index.html">The command-line-parser Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">The dylan Library</a><ul class="current">
@@ -89,14 +88,10 @@
 <li class="toctree-l2"><a class="reference internal" href="threads.html">The threads Module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../hash-algorithms/index.html">The hash-algorithms Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../logging/index.html">The logging Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../regular-expressions/index.html">The regular-expressions Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../strings/index.html">The strings Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
@@ -129,45 +124,13 @@
              
   <div class="section" id="the-finalization-module">
 <h1>The finalization Module<a class="headerlink" href="#the-finalization-module" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#what-is-finalization" id="id1">What is finalization?</a></p></li>
-<li><p><a class="reference internal" href="#how-the-finalization-interface-works" id="id2">How the finalization interface works</a></p>
-<ul>
-<li><p><a class="reference internal" href="#registering-objects-for-finalization" id="id3">Registering objects for finalization</a></p></li>
-<li><p><a class="reference internal" href="#draining-the-finalization-queue" id="id4">Draining the finalization queue</a></p></li>
-<li><p><a class="reference internal" href="#finalizers" id="id5">Finalizers</a></p></li>
-<li><p><a class="reference internal" href="#after-finalization" id="id6">After finalization</a></p></li>
-<li><p><a class="reference internal" href="#upon-application-exit" id="id7">Upon application exit</a></p></li>
-<li><p><a class="reference internal" href="#the-effects-of-multiple-registrations" id="id8">The effects of multiple registrations</a></p></li>
-<li><p><a class="reference internal" href="#the-effects-of-resurrecting-objects" id="id9">The effects of resurrecting objects</a></p></li>
-<li><p><a class="reference internal" href="#the-effects-of-finalizing-objects-directly" id="id10">The effects of finalizing objects directly</a></p></li>
-<li><p><a class="reference internal" href="#finalization-and-weak-tables" id="id11">Finalization and weak tables</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#writing-finalizers" id="id12">Writing finalizers</a></p>
-<ul>
-<li><p><a class="reference internal" href="#class-based-finalization" id="id13">Class-based finalization</a></p></li>
-<li><p><a class="reference internal" href="#parallels-with-initialize-methods" id="id14">Parallels with INITIALIZE methods</a></p></li>
-<li><p><a class="reference internal" href="#simplicity-and-robustness" id="id15">Simplicity and robustness</a></p></li>
-<li><p><a class="reference internal" href="#singleton-finalizers" id="id16">Singleton finalizers</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#using-finalization-in-applications" id="id17">Using finalization in applications</a></p>
-<ul>
-<li><p><a class="reference internal" href="#how-can-my-application-drain-the-finalization-queue-automatically" id="id18">How can my application drain the finalization queue automatically?</a></p></li>
-<li><p><a class="reference internal" href="#when-should-my-application-drain-the-finalization-queue" id="id19">When should my application drain the finalization queue?</a></p></li>
-</ul>
-</li>
-</ul>
-</div>
 <p>Open Dylan provides a finalization interface in the <em>finalization</em>
 module of <em>common-dylan</em>. This section explains finalization, the
 finalization interface provided, and how to use the interface in
 applications. Note that you <em>must</em> <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">finalization</span></code> to be able
 to use the interface described in this documentation.</p>
 <div class="section" id="what-is-finalization">
-<h2><a class="toc-backref" href="#id1">What is finalization?</a><a class="headerlink" href="#what-is-finalization" title="Permalink to this headline">¶</a></h2>
+<h2>What is finalization?<a class="headerlink" href="#what-is-finalization" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="http://www.memorymanagement.org">Memory Management Reference</a> defines
 finalization as follows:</p>
 <blockquote>
@@ -186,11 +149,11 @@ the memory resources of the foreign object when the Dylan object is
 reclaimed.</p>
 </div>
 <div class="section" id="how-the-finalization-interface-works">
-<h2><a class="toc-backref" href="#id2">How the finalization interface works</a><a class="headerlink" href="#how-the-finalization-interface-works" title="Permalink to this headline">¶</a></h2>
+<h2>How the finalization interface works<a class="headerlink" href="#how-the-finalization-interface-works" title="Permalink to this headline">¶</a></h2>
 <p>The following sections give a broad overview of how finalization works
 and how to use the interface.</p>
 <div class="section" id="registering-objects-for-finalization">
-<h3><a class="toc-backref" href="#id3">Registering objects for finalization</a><a class="headerlink" href="#registering-objects-for-finalization" title="Permalink to this headline">¶</a></h3>
+<h3>Registering objects for finalization<a class="headerlink" href="#registering-objects-for-finalization" title="Permalink to this headline">¶</a></h3>
 <p>Finalization works through cooperation with the garbage collector.
 Objects that are no longer referenced by the application that created
 them will eventually be discovered by Dylan’s garbage collector and are
@@ -229,7 +192,7 @@ in its module definition.</p>
 </div>
 </div>
 <div class="section" id="draining-the-finalization-queue">
-<h3><a class="toc-backref" href="#id4">Draining the finalization queue</a><a class="headerlink" href="#draining-the-finalization-queue" title="Permalink to this headline">¶</a></h3>
+<h3>Draining the finalization queue<a class="headerlink" href="#draining-the-finalization-queue" title="Permalink to this headline">¶</a></h3>
 <p>Objects in the finalization queue wait there until the application
 drains it by calling the function <a class="reference internal" href="#common-dylan:finalization:drain-finalization-queue"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">drain-finalization-queue</span></code></a>. This
 function finalizes every object in the queue.</p>
@@ -244,7 +207,7 @@ about finalization ordering.</p>
 </div>
 </div>
 <div class="section" id="finalizers">
-<h3><a class="toc-backref" href="#id5">Finalizers</a><a class="headerlink" href="#finalizers" title="Permalink to this headline">¶</a></h3>
+<h3>Finalizers<a class="headerlink" href="#finalizers" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="#common-dylan:finalization:drain-finalization-queue"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">drain-finalization-queue</span></code></a> function
 finalizes each object in the finalization queue by calling the generic
 function <a class="reference internal" href="#common-dylan:finalization:finalize"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">finalize</span></code></a> on it. You should define
@@ -277,7 +240,7 @@ for all finalizers to call <a class="reference external" href="https://opendylan
 encourage. See <a class="reference internal" href="#writing-finalizers">Writing finalizers</a>.</p>
 </div>
 <div class="section" id="after-finalization">
-<h3><a class="toc-backref" href="#id6">After finalization</a><a class="headerlink" href="#after-finalization" title="Permalink to this headline">¶</a></h3>
+<h3>After finalization<a class="headerlink" href="#after-finalization" title="Permalink to this headline">¶</a></h3>
 <p>Once an object in the finalization queue has been finalized, it
 typically becomes available for reclamation by the garbage collector.
 Because it has been taken off the garbage collector’s finalization
@@ -290,7 +253,7 @@ resurrecting objects</a>.</p>
 </div>
 </div>
 <div class="section" id="upon-application-exit">
-<h3><a class="toc-backref" href="#id7">Upon application exit</a><a class="headerlink" href="#upon-application-exit" title="Permalink to this headline">¶</a></h3>
+<h3>Upon application exit<a class="headerlink" href="#upon-application-exit" title="Permalink to this headline">¶</a></h3>
 <p>There are no guarantees that objects which are registered for
 finalization will actually be finalized before the application exits.
 This is not a problem on many operating systems, which free any
@@ -299,7 +262,7 @@ resources held by a process when it exits.</p>
 exits, you should use a more explicit mechanism.</p>
 </div>
 <div class="section" id="the-effects-of-multiple-registrations">
-<h3><a class="toc-backref" href="#id8">The effects of multiple registrations</a><a class="headerlink" href="#the-effects-of-multiple-registrations" title="Permalink to this headline">¶</a></h3>
+<h3>The effects of multiple registrations<a class="headerlink" href="#the-effects-of-multiple-registrations" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes objects are registered for finalization more than once. The
 effects of multiple registration are defined as follows:</p>
 <p>Calling <a class="reference internal" href="#common-dylan:finalization:finalize-when-unreachable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">finalize-when-unreachable</span></code></a> on an
@@ -316,7 +279,7 @@ idempotent: that is, the effect of multiple <a class="reference internal" href="
 object should is the same as the effect of a single call.</p>
 </div>
 <div class="section" id="the-effects-of-resurrecting-objects">
-<h3><a class="toc-backref" href="#id9">The effects of resurrecting objects</a><a class="headerlink" href="#the-effects-of-resurrecting-objects" title="Permalink to this headline">¶</a></h3>
+<h3>The effects of resurrecting objects<a class="headerlink" href="#the-effects-of-resurrecting-objects" title="Permalink to this headline">¶</a></h3>
 <p>If a finalizer makes an object reachable again, by storing a reference
 to the object in a variable, slot, or collection, we say it has
 <em>resurrected</em> it. An object may also be resurrected if it becomes
@@ -333,7 +296,7 @@ object left in such a state by another call to <a class="reference internal" hre
 unless you re-register them.</p>
 </div>
 <div class="section" id="the-effects-of-finalizing-objects-directly">
-<h3><a class="toc-backref" href="#id10">The effects of finalizing objects directly</a><a class="headerlink" href="#the-effects-of-finalizing-objects-directly" title="Permalink to this headline">¶</a></h3>
+<h3>The effects of finalizing objects directly<a class="headerlink" href="#the-effects-of-finalizing-objects-directly" title="Permalink to this headline">¶</a></h3>
 <p>Any object that has been finalized directly, through the application
 itself calling <a class="reference internal" href="#common-dylan:finalization:finalize"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">finalize</span></code></a> on it, may not yet be unreachable. Like any
 normal object it only becomes eligible for reclamation when it is
@@ -342,7 +305,7 @@ using <a class="reference internal" href="#common-dylan:finalization:finalize-wh
 via the queue mechanism.</p>
 </div>
 <div class="section" id="finalization-and-weak-tables">
-<h3><a class="toc-backref" href="#id11">Finalization and weak tables</a><a class="headerlink" href="#finalization-and-weak-tables" title="Permalink to this headline">¶</a></h3>
+<h3>Finalization and weak tables<a class="headerlink" href="#finalization-and-weak-tables" title="Permalink to this headline">¶</a></h3>
 <p>If an object is both registered for finalization and is weakly referred
 to from a weak table, finalization occurs <em>first</em>, with weak references
 being removed afterwards. That is, reachability is defined in terms of
@@ -352,20 +315,20 @@ references die only when an object’s storage is finally reclaimed.</p>
 </div>
 </div>
 <div class="section" id="writing-finalizers">
-<h2><a class="toc-backref" href="#id12">Writing finalizers</a><a class="headerlink" href="#writing-finalizers" title="Permalink to this headline">¶</a></h2>
+<h2>Writing finalizers<a class="headerlink" href="#writing-finalizers" title="Permalink to this headline">¶</a></h2>
 <p>Because the default <a class="reference internal" href="#common-dylan:finalization:finalize"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">finalize</span></code></a> method, on
 <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>, does nothing, you must define your own
 <a class="reference internal" href="#common-dylan:finalization:finalize"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">finalize</span></code></a> methods to get results from the
 finalization interface. This section contains useful information about
 writing finalizers.</p>
 <div class="section" id="class-based-finalization">
-<h3><a class="toc-backref" href="#id13">Class-based finalization</a><a class="headerlink" href="#class-based-finalization" title="Permalink to this headline">¶</a></h3>
+<h3>Class-based finalization<a class="headerlink" href="#class-based-finalization" title="Permalink to this headline">¶</a></h3>
 <p>If your application defines a class for which all instances require
 finalization, call <a class="reference internal" href="#common-dylan:finalization:finalize-when-unreachable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">finalize-when-unreachable</span></code></a> in its <code class="docutils literal notranslate"><span class="pre">initialize</span></code>
 method.</p>
 </div>
 <div class="section" id="parallels-with-initialize-methods">
-<h3><a class="toc-backref" href="#id14">Parallels with INITIALIZE methods</a><a class="headerlink" href="#parallels-with-initialize-methods" title="Permalink to this headline">¶</a></h3>
+<h3>Parallels with INITIALIZE methods<a class="headerlink" href="#parallels-with-initialize-methods" title="Permalink to this headline">¶</a></h3>
 <p>The default method on <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a> is provided to make it safe to call
 <a class="reference external" href="https://opendylan.org/books/drm/Method_Dispatch#HEADING-50-32"><code class="xref drm docutils literal notranslate"><span class="pre">next-method</span></code></a> in all finalizers. This situation is parallel to that for
 class <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#initialize"><code class="xref drm docutils literal notranslate"><span class="pre">initialize</span></code></a> methods, which call <code class="docutils literal notranslate"><span class="pre">next-method</span></code> before performing
@@ -375,7 +338,7 @@ that the most specific initializations occur last.</p>
 depend on the superclass finalizer not being run.</p>
 </div>
 <div class="section" id="simplicity-and-robustness">
-<h3><a class="toc-backref" href="#id15">Simplicity and robustness</a><a class="headerlink" href="#simplicity-and-robustness" title="Permalink to this headline">¶</a></h3>
+<h3>Simplicity and robustness<a class="headerlink" href="#simplicity-and-robustness" title="Permalink to this headline">¶</a></h3>
 <p>Write finalizers that are simple and robust. They might be called in any
 context, including within other threads; with careful design, your
 finalizers will work in most or all possible situations.</p>
@@ -398,18 +361,18 @@ graph (in some graph-specific well-ordered fashion) and call the
 <code class="docutils literal notranslate"><span class="pre">finalize</span></code> method for each object in the graph requiring finalization.</p>
 </div>
 <div class="section" id="singleton-finalizers">
-<h3><a class="toc-backref" href="#id16">Singleton finalizers</a><a class="headerlink" href="#singleton-finalizers" title="Permalink to this headline">¶</a></h3>
+<h3>Singleton finalizers<a class="headerlink" href="#singleton-finalizers" title="Permalink to this headline">¶</a></h3>
 <p>Do not write singleton methods on <a class="reference internal" href="#common-dylan:finalization:finalize"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">finalize</span></code></a>. The singleton method
 itself would refer to the object, and hence prevent it from becoming
 unreachable.</p>
 </div>
 </div>
 <div class="section" id="using-finalization-in-applications">
-<h2><a class="toc-backref" href="#id17">Using finalization in applications</a><a class="headerlink" href="#using-finalization-in-applications" title="Permalink to this headline">¶</a></h2>
+<h2>Using finalization in applications<a class="headerlink" href="#using-finalization-in-applications" title="Permalink to this headline">¶</a></h2>
 <p>This section answers questions about using finalization in an
 application.</p>
 <div class="section" id="how-can-my-application-drain-the-finalization-queue-automatically">
-<h3><a class="toc-backref" href="#id18">How can my application drain the finalization queue automatically?</a><a class="headerlink" href="#how-can-my-application-drain-the-finalization-queue-automatically" title="Permalink to this headline">¶</a></h3>
+<h3>How can my application drain the finalization queue automatically?<a class="headerlink" href="#how-can-my-application-drain-the-finalization-queue-automatically" title="Permalink to this headline">¶</a></h3>
 <p>If you would prefer the queue to be drained asynchronously, use the
 automatic finalization interface. For more details, see
 <a class="reference internal" href="#common-dylan:finalization:automatic-finalization-enabled?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">automatic-finalization-enabled?</span></code></a> and
@@ -423,7 +386,7 @@ should always behave correctly if they are used in an application that
 does use it.</p>
 </div>
 <div class="section" id="when-should-my-application-drain-the-finalization-queue">
-<h3><a class="toc-backref" href="#id19">When should my application drain the finalization queue?</a><a class="headerlink" href="#when-should-my-application-drain-the-finalization-queue" title="Permalink to this headline">¶</a></h3>
+<h3>When should my application drain the finalization queue?<a class="headerlink" href="#when-should-my-application-drain-the-finalization-queue" title="Permalink to this headline">¶</a></h3>
 <p>If you do not use automatic finalization, drain the queue synchronously
 at useful points in your application, such as whenever you call
 <a class="reference internal" href="#common-dylan:finalization:finalize-when-unreachable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">finalize-when-unreachable</span></code></a> on an object.</p>
