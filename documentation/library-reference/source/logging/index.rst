@@ -8,71 +8,83 @@ The logging Library
 Overview
 --------
 
-The logging library exports a single module named "logging".
+The logging library provides a traditional file-based logging facility. It
+exports a single module named "logging".
+
+
+.. contents::
+
 
 
 Quick Start
 -----------
 
-Log to stdout:
+The simplest use case is to use completely default logging:
 
 .. code-block:: dylan
 
-  define constant $log
-    = make(<log>,
-           name: "my-app",
-           formatter: "%{millis} %{level} [%{thread}] - %{message}");
-  add-target($log, $stdout-log-target);
-  log-info($log, "My-app starting with args %s", application-arguments());
+   log-info("I did a thing");
+   log-debug("got to here");
+   // also: log-error, log-warning, log-trace
+
+By default all logging goes to standard error.
+
+To do something more sophisticated, such as logging to the network or to a
+rolling log file, store a different :class:`<log>` instance in the :var:`*log*`
+global variable. For example:
+
+.. code-block:: dylan
+
+  let target = make(<rolling-file-log-target>,
+                    pathname: "/tmp/my-app.log");
+  *log* := make(<log>,
+                name: "my-app",
+                formatter: "%{millis} %{level} [%{thread}] - %{message}",
+                targets: list(target));
+  log-info("My-app starting with args %s", application-arguments());
 
 The above results in log lines like this::
 
   12345 INFO [Main Thread] - My-app starting with args blah
 
-Make another log for debugging server requests:
+Make another log specifically for debugging server requests:
 
 .. code-block:: dylan
 
   define constant $request-log
     = make(<log>, name: "my-app.debug.request");
 
-There are several things to notice about the above setup:
-
-* Logs have no log targets by default.  The simplest way to add a
-  target is to add a pre-existing target such as ``$stdout-log-target`` or 
-  ``$stderr-log-target`` using :gf:`add-target`.
-
-* Different logs are associated by name.  In this example the log
-  named ``"my-app"`` is an ancestor of the one named ``"my-app.debug.request"``
-  because the first dotted name component matches.
-
-* No targets were added to the ``my-app.debug.request`` log.  Since
-  all log messages sent to a child are also sent to its ancestors (but
-  see :gf:`log-additive?-setter`), anything logged to the
-  ``my-app.debug.request`` log will be passed along to the ``my-app``
-  log.
-
-  So what's the benefit of having both logs?  You can enable/disable
-  them separately at runtime.  Also, if for example you wanted to log
-  debug messages to a separate file you could add a target to the
-  ``my-app.debug`` log.
-
-Log to a file:
+Log to a specific log object instead of to :var:`*log*`. This isn't expected to
+be the common case so it's more verbose. Create shorthand functions if
+necessary.
 
 .. code-block:: dylan
 
-  add-target($log, make(<rolling-file-log-target>,
-                        pathname: "/var/log/my-app.log"));
+   log-message($debug-level, $request-log, "request = %s", request);
 
-The log file will be rolled immediately if it exists and is not zero length.
-If you don't want it to be rolled on startup, pass ``roll: #f`` to ``make``
-in the above call.
+There are several things to notice about ``$request-log`` above:
+
+* Logs have no log targets by default.  The simplest way to add a target is to
+  add a pre-existing target such as ``$stdout-log-target`` or
+  ``$stderr-log-target`` using :gf:`add-target`.
+
+* Different logs are associated by name.  In this example the log named
+  ``"my-app"`` is an ancestor of the one named ``"my-app.debug.request"``
+  because the first dotted name component matches.
+
+* No targets were added to the ``my-app.debug.request`` log.  Since all log
+  messages sent to a child are also sent to its ancestors (but see
+  :gf:`log-additive?-setter`), anything logged to the ``my-app.debug.request``
+  log will be passed along to the ``my-app`` log.
+
+  So what's the benefit of having both logs?  You can enable/disable them
+  separately at runtime.  Also, if for example you wanted to log debug messages
+  to a separate file you could add a target to the ``my-app.debug`` log.
 
 Logs may be disabled with :gf:`log-enabled?(log) := #f <log-enabled?>`.  When
-disabled, no messages will be logged to the log's local targets,
-but the value of :gf:`log-additive?` will still be respected.  In other
-words, logging to a disabled log will still log to ancestor logs
-if they are themselves enabled.
+disabled, no messages are logged to the log's local targets, but the value of
+:gf:`log-additive?` is still respected.  In other words, logging to a disabled
+log still logs to ancestor logs if they are themselves enabled.
 
 
 Errors
@@ -92,12 +104,11 @@ Log Levels
 ----------
 
 There are five log levels which may be used to affect the way logs are
-formatted and to include/exclude logs of different severity levels.
-When configuring logging, set the log level to the least severe level
-you want to see.  "Trace" logs are the least severe (or most verbose).
-"Error" logs are the most severe.  The distinctions are somewhat
-arbitrary, but it is hoped that five levels is enough for even the
-most compulsive taxonomists.
+formatted and to include/exclude logs of different severity levels.  When
+configuring logging, set the log level to the least severe level you want to
+see.  "Trace" logs are the least severe (or most verbose).  "Error" logs are
+the most severe.  The distinctions are somewhat arbitrary, but it is hoped that
+five levels is enough for even the most compulsive taxonomists.
 
 .. class:: <log-level>
    :open:
@@ -115,19 +126,19 @@ most compulsive taxonomists.
 
 .. constant:: $trace-level
 
-   The most verbose log level.  Generally use this to generate an
-   absurd amount of debug output that you would never want generated
-   by (for example) a production server.
+   The most verbose log level.  Generally use this to generate an absurd amount
+   of debug output that you would never want generated by (for example) a
+   production server.
 
 .. constant:: $debug-level
 
-   For debug messages.  Usually for messages that are expected to be
-   temporary, while debugging a particular problem.
+   For debug messages.  Usually for messages that are expected to be temporary,
+   while debugging a particular problem.
 
 .. constant:: $info-level
 
-   For messages about relatively important events in the normal
-   operation of a program.
+   For messages about relatively important events in the normal operation of a
+   program.
 
 .. constant:: $warn-level
 
@@ -160,9 +171,8 @@ Logging Functions
 
    :signature: log-message (level log object #rest args) => ()
 
-   This is the most basic logging function.  All of the logging
-   functions below simply call this with a specific
-   :class:`<log-level>` object.
+   This is the most basic logging function.  All of the logging functions below
+   simply call this with a specific :class:`<log-level>` object.
 
    :parameter level: An instance of :class:`<log-level>`.
    :parameter log: An instance of :class:`<log>`.
@@ -174,25 +184,25 @@ Logging Functions
 
 .. function:: log-error
 
-   :equivalent: ``log-message($log-error, ...)``
+   :equivalent: ``log-message($log-error, *log*, ...)``
 
    See :func:`log-message`.
 
 .. function:: log-warning
 
-   :equivalent: ``log-message($log-warn, ...)``
+   :equivalent: ``log-message($log-warn, *log*, ...)``
 
    See :func:`log-message`.
 
 .. function:: log-info
 
-   :equivalent: ``log-message($log-info, ...)``
+   :equivalent: ``log-message($log-info, *log*, ...)``
 
    See :func:`log-message`.
 
 .. function:: log-debug
 
-   :equivalent: ``log-message($log-debug, ...)``
+   :equivalent: ``log-message($log-debug, *log*, ...)``
 
    See :func:`log-message`.
 
@@ -205,14 +215,14 @@ Logging Functions
      .. code-block:: dylan
 
         if (test)
-          log-message($log-debug, ...)
+          log-message($log-debug, *log*, ...)
         end
 
    See :func:`log-message`.
 
 .. function:: log-trace
 
-   :equivalent: ``log-message($log-trace, ...)``
+   :equivalent: ``log-message($log-trace, *log*, ...)``
 
    See :func:`log-message`.
 
@@ -226,7 +236,7 @@ Logging Functions
 
 
 Logs
--------
+----
 
 .. class:: <abstract-log>
    :abstract:
@@ -495,14 +505,16 @@ Log Targets
 Log Formatting
 --------------
 
-Each :class:`<log>` has a :class:`<log-formatter>` that determines how to format
-each log message.  Make one like this::
+Each :class:`<log>` has a :class:`<log-formatter>` that determines how to
+format each log message.  Make one like this:
 
-  make(<log-formatter>, pattern: "...");
+.. code-block:: dylan
 
-The log formatter pattern is similar to a format control string except it
-has a short and long form for each format directive.  Here are the defined
-format directives:
+   make(<log-formatter>, pattern: "...");
+
+The log formatter pattern is similar to a format control string except it has a
+short and long form for each format directive.  Here are the defined format
+directives:
 
 =====  ===========  ===================================================
 Short  Long         Description
@@ -520,12 +532,12 @@ Short  Long         Description
 
 .. TODO(cgay): %{micros}
 
-All format directives, in either short or long form, accept a numeric
-argument immediately following the % character.  If provided, the numeric
-argument specifies the minimum width of the field.  If the numeric argument
-is positive then the displayed value will be left justified and padded
-with spaces on the right if necessary.  If negative, the displayed value
-will be right justified and padded with spaces on the left if needed.
+All format directives, in either short or long form, accept a numeric argument
+immediately following the % character.  If provided, the numeric argument
+specifies the minimum width of the field.  If the numeric argument is positive
+then the displayed value will be left justified and padded with spaces on the
+right if necessary.  If negative, the displayed value will be right justified
+and padded with spaces on the left if needed.
 
 .. constant:: $default-log-formatter
 
