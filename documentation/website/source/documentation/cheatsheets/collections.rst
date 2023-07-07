@@ -1,6 +1,6 @@
-********************
-Collections in Dylan
-********************
+***********************
+Collections Cheat Sheet
+***********************
 
 Common Collection Types
 =======================

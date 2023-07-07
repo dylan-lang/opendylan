@@ -13,8 +13,6 @@ Post-History:    `04-Mar-2019 <https://groups.google.com/forum/#!topic/dylan-lan
 Target-Version:  2019.1
 ===============  =============================================
 
-.. contents:: Contents
-   :local:
 
 Revision History
 ================

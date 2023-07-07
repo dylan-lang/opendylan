@@ -12,9 +12,6 @@ Last-Modified:  16-Jan-2012
 Post-History:   16-Jan-2012, 10-Jan-2012
 ==============  =============================================
 
-.. contents:: Contents
-   :local:
-
 
 Preamble
 ========
@@ -210,11 +207,6 @@ Each DEP should have the following parts:
    DEP, including the DEP number, a short descriptive title (limited
    to a maximum of 44 characters), the names, and optionally the
    contact info for each author, etc.
-
-#. Table of contents::
-
-     .. contents: Contents
-        :local:
 
 #. Abstract -- a short (~200 word) description of the technical issue
    being addressed.

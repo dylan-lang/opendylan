@@ -1,62 +1,86 @@
 body {
-  padding-top: 50px;
+    /* Necessary to put content below fixed top navbar. */
+    padding-top: 40px;
+}
+/* Sphinx generates <li><p> for <ul> items. Default margin bottom for P is huge
+   so reduce it to 5px. */
+li > p {
+    margin-bottom: 5px;
+}
+.dylan-top-quote {
+    background-color: #e0e0ff;
+    border-radius: 5px;
+    font-size: large;
+    font-style: italic;
+    max-width: 600px;
+    padding: 20px 40px;
 }
 .navbar .logo {
   float: left;
   padding: 5px 5px;
-  height: 30px;
-  width: 32px;
-}
-.literal {
-  background-color:#f5f5f5;
-  padding:0 3px 2px;
-  font-family:Monaco, Andale Mono, Courier New, monospace;
-  font-size:12px;
-  border:1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius:3px;
-  -moz-border-radius:3px;
-  border-radius:3px;
 }
 footer.navbar {
   margin-top: 20px;
   margin-bottom: 0;
 }
+/* Reduce heading sizes and add a bit of blank space above. */
+.section h1 {
+    font-size: 31.5px;
+    margin-top: 0px;
+    padding-top: 30px;
+}
 .section h2 {
-  padding-top: 50px;
-  margin-top: 0px;
+    font-size: 24.5px;
+    margin-top: 0px;
+    padding-top: 30px;
 }
-/* Make the headerlink less obnoxiously visible.  Better would be to make it
-   only appear when the pointer is over the header but I couldn't figure out
-   how to do that without javascript. --cgay */
+.section h3 {
+    font-size: 17.5px;
+    margin-top: 0px;
+    padding-top: 30px;
+}
+.section h4 {
+    font-size: 14px;
+    margin-top: 0px;
+    padding-top: 30px;
+}
+.section h5 {
+    font-size: 12px;
+    margin-top: 0px;
+    padding-top: 30px;
+}
+/* Make the ugly headerlink invisible unless under the pointer. */
 a.headerlink {
-  color: silver;
-  opacity: 0.3;
+    opacity: 0;
 }
-#code-carousel {
-  margin: 10px 0;
+a.headerlink:hover {
+    color: silver;
+    opacity: 1.0;
 }
-#code-carousel .carousel-inner {
-  margin: 0 70px;
-  width: auto;
-}
-#code-carousel .carousel-indicators {
-  margin-right: 70px;
-}
-#code-carousel .carousel-indicators li {
-  background-color: #EFEFEF;
-}
-#code-carousel .carousel-indicators li.active {
-  background-color: #D0D0D0;
-}
-#code-carousel pre {
-  height: 29em;
-  padding-top: 20px;
-}
-
 blockquote div p {
   font-size: 14px;
   line-height: 20px;
   margin: 0 0 10px;
+}
+
+.button,a.button {
+    background-color: #006600;
+    /* border-radius: 5px; */
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    color: white;
+    margin: 4px 2px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.bi {
+  vertical-align: -.125em;
+  pointer-events: none;
+  fill: currentColor;
 }
 
 /* Responsive Docs
@@ -65,10 +89,6 @@ blockquote div p {
   /* Reduce padding above body */
   body {
     padding-top: 30px;
-  }
-  /* Make code font smaller */
-  #code-carousel pre {
-      font-size: smaller;
   }
 }
 
@@ -88,4 +108,3 @@ blockquote div p {
     padding-top: 0;
   }
 }
-

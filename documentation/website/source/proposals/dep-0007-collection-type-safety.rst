@@ -1,7 +1,7 @@
 *****************************
 Type-Safe Limited Collections
 *****************************
-        
+
 ===============  ========================
 DEP-Number:      0007
 Author:          Dustin Voss
@@ -13,9 +13,6 @@ Last-Modified:   25-Dec-2013
 Post-History:    19-Dec-2013, 28-Jul-2013
 Target-Version:  2014.1
 ===============  ========================
-
-.. contents:: Contents
-   :local:
 
 
 Abstract

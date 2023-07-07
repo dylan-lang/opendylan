@@ -1,147 +1,104 @@
-.. raw:: html
+:hide-toc:
 
-   <div class="row-fluid">
-     <div class="span4">
-       <div class="well">
-	 <p>Dylan is a multi-paradigm functional and object-oriented programming language.
-	 It is dynamic while providing a programming model designed to support efficient
-	 machine code generation, including fine-grained control over dynamic and static
-	 behaviors.</p>
-       </div>
-     </div>
-     <div class="span8">
-.. raw:: html
+**********
+Open Dylan
+**********
 
-     <div id="code-carousel" class="carousel slide">
-       <ol class="carousel-indicators">
-         <li data-target="#code-carousel" data-slide-to="0" class="active"></li>
-         <li data-target="#code-carousel" data-slide-to="1"></li>
-         <li data-target="#code-carousel" data-slide-to="2"></li>
-       </ol>
-       <div class="carousel-inner">
-         <div class="item active">
-.. code-block:: dylan
-
-  define class <vehicle> (<object>)
-    slot owner :: <string>,
-      init-keyword: owner:,
-      init-value: "Northern Motors";
-  end;
-
-  define class <car> (<vehicle>)
-  end;
-
-  define class <truck> (<vehicle>)
-    slot capacity,
-      required-init-keyword: tons:;
-  end;
+..
+   TODO: either reference
+   https://blog.codecentric.de/en/2015/08/essence-of-object-functional-programming-practical-potential-of-scala/
+   or better, write up our own description of object functional.
 
 .. raw:: html
 
-         </div>
-         <div class="item">
-.. code-block:: dylan
+   <div style="font-style: italic; margin-left: 50px; margin-right: 50px">
 
-  define generic tax
-      (v :: <vehicle>) => (tax-in-dollars :: <float>);
-
-  define method tax
-      (v :: <vehicle>) => (tax-in-dollars :: <float>)
-    100.00
-  end;
-
-  define method tax
-      (c :: <car>) => (tax-in-dollars :: <float>)
-    50.0
-  end;
-
-  define method tax
-      (t :: <truck>) => (tax-in-dollars :: <float>)
-    // standard vehicle tax plus $10/ton
-    next-method() + t.capacity * 10.0
-  end;
+Dylan is an :doc:`object-functional <about/examples/generic_functions>`
+language originally :doc:`created by Apple <history/index>` for the
+Newton. Dylan is a direct descendant of Scheme and CLOS (without the Lisp
+syntax) with a programming model designed to support efficient machine code
+generation, including fine-grained control over dynamic and static behaviors.
 
 .. raw:: html
-
-         </div>
-         <div class="item">
-.. code-block:: dylan
-
-  define function make-fibonacci()
-    let n = 0;
-    let m = 1;
-    method ()
-      let result = n + m;
-      n := m;
-      m := result  // return value
-    end
-  end;
-
-  define constant fib = make-fibonacci();
-
-  for (i from 1 to 15)
-    format-out("%d ", fib())
-  end;
-
-.. raw:: html
-
-         </div>
-       </div>
-       <a class="carousel-control left" href="#code-carousel" data-slide="prev">&lsaquo;</a>
-       <a class="carousel-control right" href="#code-carousel" data-slide="next">&rsaquo;</a>
-     </div>
-     </div>
 
    </div>
-   <div class="row-fluid">
-     <div class="span6">
-       <h2>Recent News</h2>
 
-.. include:: news/recent.rst.inc
+New to Dylan?  We recommend starting with the :doc:`Tour of Dylan
+<about/index>`, a quick (30 minute) overview of the language, and/or stop by
+and ask questions on `Matrix`_.
 
-.. raw:: html
+If you want to play around without having to install anything, try out the
+`Playground`_. It has a fixed set of imports so you don't have to worry about
+how to define libraries and modules right away.
 
-       <div class="pull-right"><a href="news/index.html">All news &raquo;</a></div>
-     </div>
-     <div class="span6">
-       <h2>Get Started</h2>
+Then maybe try one of these more in-depth guides:
 
-`Downloading Dylan </download/index.html>`_  is easy.
-Once downloaded, we recommend reading through `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_ and exploring `some examples <https://github.com/dylan-lang/opendylan/tree/master/sources/examples>`_.
+* :doc:`opendylan/documentation/intro-dylan/source/index` provides a high-level
+  overview of language features.
+* `Dylan Programming Guide`_ is a book length Dylan tutorial.
 
-.. raw:: html
+The `Dylan Reference Manual`_, besides being the official language definition,
+has an excellent, very brief `introduction
+<https://opendylan.org/books/drm/Introduction>`_ describing the language
+background and goals.
 
-     <h2>Learn Dylan</h2>
-
-Dylan has a large amount of documentation available:
-
-* `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`__:
-   A tutorial written for those with solid programming
-   experience in C++ or another object-oriented, static language. It
-   provides a gentler introduction to Dylan than does the Dylan
-   Reference Manual (DRM).
-* `Dylan Programming Guide <https://opendylan.org/books/dpg/>`_:
-   A book length Dylan tutorial.
-* `Dylan Reference Manual <https://opendylan.org/books/drm/>`_:
-   The official definition of the Dylan language and standard library.
-* `Open Dylan Documentation <https://opendylan.org/documentation/>`_:
-   All of the Open Dylan documentation.
+Or explore :doc:`all the docs <documentation/index>`, including cheat sheets,
+articles, and all the library docs.
 
 .. raw:: html
 
-     </div>
-     </div>
-   </div>
+   <style>
+   .button,a.button {
+       background-color: #EA8D2F;
+       /* border-radius: 5px; */
+       border: none;
+       cursor: pointer;
+       display: inline-block;
+       font-size: 18px;
+       font-style: bold;
+       color: white;
+       margin: 20px 2px;
+       padding: 10px 32px;
+       text-align: center;
+       text-decoration: none;
+   }
+   </style>
+   <a href="download/" class="button">Install Dylan...</a>
+
+*Happy hacking!*
+
+.. _Dylan Programming Guide: https://opendylan.org/books/dpg/
+.. _Dylan Reference Manual: https://opendylan.org/books/drm/
+.. _Dylan: books/drm/Title
+.. _Matrix: https://app.element.io/#/room/#dylan-language:matrix.org
+.. _Playground: https://play.opendylan.org
 
 .. toctree::
-   :maxdepth: 1
+   :caption: Community
    :hidden:
-   :glob:
 
-   */*
-   articles/*/*
-   documentation/cheatsheets/*
-   news/*/*/*/*
-   community/gsoc/*
+   Get Involved <community/index>
+   Download <download/index>
+   Hacker Guide <opendylan/documentation/hacker-guide/source/index>
+   Enhancement Proposals <proposals/index>
 
-.. -*- tab-width: 4 -*-
+.. toctree::
+   :caption: Learning
+   :hidden:
+
+   Tour of Dylan <about/index>
+   Getting Started Guide <opendylan/documentation/getting-started-cli/source/index>
+   Dylan Programming Guide <https://opendylan.org/books/dpg/>
+
+.. Note that the package/index reference below is not part of this
+   repository; it's generated by the gendoc library, which (obviously)
+   must be run before `make html`.
+
+.. toctree::
+   :caption: Reference Docs
+   :hidden:
+
+   Dylan Reference Manual <https://opendylan.org/books/drm/>
+   Package Docs <package/index>
+   Open Dylan Libraries <opendylan/documentation/library-reference/source/index>
+   All Documentation <documentation/index>

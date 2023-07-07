@@ -5,72 +5,212 @@
     :copyright: Copyright 2020 by the Dylan Hackers.
     :license: MIT.
 #}
-{% extends "basic/layout.html" %}
-{% block doctype %}
 <!DOCTYPE html>
-{% endblock %}
-{% set navigation_bar = [
-    ('download/index', 'Download'),
-    ('documentation/index', 'Documentation'),
-    ('community/index', 'Participate'),
-    ('https://play.opendylan.org', 'Play'),
-    ('history/index', 'History'),
-] -%}
-{% set active_page = pagename|default('index') -%}
-{%- block htmltitle %}
-<title>{% if title == "&lt;no title&gt;" %}Open Dylan{% else %}{{ title|striptags|e }}{% endif %}{{ titlesuffix }}</title>
+{%- set render_sidebar = (not embedded) and (not theme_nosidebar|tobool) and
+                         (sidebars != []) %}
+{# URL root should never be #, then all links are fragments #}
+{%- if not embedded and docstitle %}
+  {%- set titlesuffix = " &#8212; "|safe + docstitle|e %}
+{%- else %}
+  {%- set titlesuffix = "" %}
+{%- endif %}
+
+{%- macro sidebar() %}
+      {%- if render_sidebar %}
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+          {%- block sidebarlogo %}
+          {%- if logo_url %}
+            <p class="logo"><a href="{{ pathto(root_doc)|e }}">
+              <img class="logo" src="{{ logo_url|e }}" alt="Logo"/>
+            </a></p>
+          {%- endif %}
+          {%- endblock %}
+          {%- if sidebars != None %}
+            {#- new style sidebar: explicitly include/exclude templates #}
+            {%- for sidebartemplate in sidebars %}
+            {%- include sidebartemplate %}
+            {%- endfor %}
+          {%- else %}
+            {#- old style sidebars: using blocks -- should be deprecated #}
+            {%- block sidebartoc %}
+            {%- include "localtoc.html" %}
+            {%- endblock %}
+            {%- block sidebarrel %}
+            {%- include "relations.html" %}
+            {%- endblock %}
+            {%- block sidebarsourcelink %}
+            {%- include "sourcelink.html" %}
+            {%- endblock %}
+            {%- if customsidebar %}
+            {%- include customsidebar %}
+            {%- endif %}
+            {%- block sidebarsearch %}
+            {%- include "searchbox.html" %}
+            {%- endblock %}
+          {%- endif %}
+        </div>
+        {%- block sidebarextra %}{%- endblock %}
+      </div>
+      {%- endif %}
+{%- endmacro %}
+
+{%- macro script() %}
+    {%- for js in script_files %}
+    {{ js_tag(js) }}
+    {%- endfor %}
+{%- endmacro %}
+
+{%- macro css() %}
+    {%- for css in css_files %}
+      {%- if css|attr("filename") %}
+    {{ css_tag(css) }}
+      {%- else %}
+    <link rel="stylesheet" href="{{ pathto(css, 1)|e }}" type="text/css" />
+      {%- endif %}
+    {%- endfor %}
+{%- endmacro %}
+
+{%- if html_tag %}
+{{ html_tag }}
+{%- else %}
+<html{% if not html5_doctype %} xmlns="http://www.w3.org/1999/xhtml"{% endif %}{% if language is not none %} lang="{{ language }}"{% endif %}>
+{%- endif %}
+  <head>
+    {%- if not html5_doctype and not skip_ua_compatible %}
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    {%- endif %}
+    {%- if use_meta_charset or html5_doctype %}
+    <meta charset="{{ encoding }}" />
+    {%- else %}
+    <meta http-equiv="Content-Type" content="text/html; charset={{ encoding }}" />
+    {%- endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{- metatags }}
+    {%- block htmltitle %}
+    <title>{% if title == "&lt;no title&gt;" %}Open Dylan{% else %}{{ title|striptags|e }}{% endif %}{{ titlesuffix }}</title>
+    {%- endblock %}
+    {%- block css %}
+    {{- css() }}
+    {%- endblock %}
+    {%- if not embedded %}
+    {%- block scripts %}
+    {{- script() }}
+    {%- endblock %}
+    {%- if pageurl %}
+    <link rel="canonical" href="{{ pageurl|e }}" />
+    {%- endif %}
+    {%- if use_opensearch %}
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}"
+          href="{{ pathto('_static/opensearch.xml', 1) }}"/>
+    {%- endif %}
+    {%- if favicon_url %}
+    <link rel="shortcut icon" href="{{ favicon_url|e }}"/>
+    {%- endif %}
+    {%- endif %}
+{%- block linktags %}
+    {%- if hasdoc('about') %}
+    <link rel="author" title="{{ _('About these documents') }}" href="{{ pathto('about') }}" />
+    {%- endif %}
+    {%- if hasdoc('genindex') %}
+    <link rel="index" title="{{ _('Index') }}" href="{{ pathto('genindex') }}" />
+    {%- endif %}
+    {%- if hasdoc('search') %}
+    <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}" />
+    {%- endif %}
+    {%- if hasdoc('copyright') %}
+    <link rel="copyright" title="{{ _('Copyright') }}" href="{{ pathto('copyright') }}" />
+    {%- endif %}
+    {%- if next %}
+    <link rel="next" title="{{ next.title|striptags|e }}" href="{{ next.link|e }}" />
+    {%- endif %}
+    {%- if prev %}
+    <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />
+    {%- endif %}
 {%- endblock %}
+
 {% block extrahead %}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" type="text/css" />
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <!--[if lt IE 9]>
-      <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
-    <![endif]-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="alternate" type="application/rss+xml" title="Open Dylan" href="/rss.xml" />
     <link rel="icon" href="/_static/favicon.ico" />
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="chevron-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </symbol>
+    </svg>
 {% endblock %}
+
+  </head>
+  {%- block body_tag %}<body>{% endblock %}
 
 {% block header %}
-   <div class="navbar navbar-fixed-top">
-     <div class="navbar-inner">
-       <div class="container">
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-           <span class="icon-bar"></span>
-         </a>
-         <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
-         <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
-         <div class="nav-collapse">
-           <ul class="nav">
-           {% for page, caption in navigation_bar -%}
-             <li {% if page == active_page %} class="active" {% endif %} >
-               <a href="{% if page[:4] == 'http' %} {{page}} {% else %} {{ pathto(page) }} {% endif %}">{{ caption|e }}</a>
-           {% endfor -%}
-           </ul>
-           <form class="navbar-search pull-right" method="get" action="http://www.google.com/cse" id="cse-search-box">
-             <input type="hidden" name="cx" value="014128053697352059339:xr84v5ohkyq" />
-             <input type="hidden" name="ie" value="UTF-8" />
-             <input class="search-query" type="text" name="q" size="16" maxlength="255" value="" />
-           </form>
-         </div>
-       </div>
-     </div>
-    </div>
+
+    {% set navigation_bar = [
+        ('download/index', 'Install'),
+        ('documentation/index', 'Documentation'),
+        ('community/index', 'Participate'),
+        ('https://play.opendylan.org', 'Playground'),
+        ('history/index', 'History'),
+    ] -%}
+    {% set active_page = pagename|default('index') -%}
+
+    {# See examples at https://getbootstrap.com/docs/5.0/components/navbar/ #}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
+        <a class="navbar-brand" href="{{ pathto('index') }}"> Open Dylan</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% for page, caption in navigation_bar -%}
+              <li class="nav-item">
+                <a class="nav-link {% if page == active_page %} active {% endif %}"
+                   href="{% if page[:4] == 'http' %}{{page}}{% else %}{{ pathto(page) }}{% endif %}">{{ caption|e }}</a>
+              </li>
+            {% endfor -%}
+          </ul>
+        </div>
+      </div>
+    </nav>
 {% endblock %}
 
-{% block content %}
-    <div class="container">
-      {%- block document %}
-        {{ super() }}
-      {%- endblock %}
+{%- block content %}
+  {%- block sidebar1 %} {# possible location for sidebar #} {% endblock %}
+
+    <div class="document">
+  {%- block document %}
+      <div class="documentwrapper">
+      {%- if render_sidebar %}
+        <div class="bodywrapper">
+      {%- endif %}
+          <div class="body" role="main">
+            {% block body %} {% endblock %}
+            <div class="clearer"></div>
+          </div>
+      {%- if render_sidebar %}
+        </div>
+      {%- endif %}
+      </div>
+  {%- endblock %}
+
+  {%- block sidebar2 %}{{ sidebar() }}{% endblock %}
       <div class="clearer"></div>
     </div>
-{% endblock %}
+{%- endblock %}
 
 {% block footer %}
+   {# TODO(cgay): why do we need all this extra garbage in the footer compared to the "basic" layout? #}
    <footer class="navbar navbar-static-bottom">
      <div class="navbar-inner">
        <div class="container">
@@ -101,5 +241,5 @@
    </footer>
 {% endblock %}
 
-{% block relbar1 %}{% endblock %}
-{% block relbar2 %}{% endblock %}
+  </body>
+</html>

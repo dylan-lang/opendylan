@@ -14,9 +14,6 @@ Post-History:    16-Feb-2015 hackers@lists.opendylan.org
 Target-Version:  2015.2
 ===============  =============================================
 
-.. contents:: Contents
-   :local:
-
 
 Abstract
 ========

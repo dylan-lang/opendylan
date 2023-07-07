@@ -29,13 +29,13 @@ The next step is fetching the repository and its submodule::
     git submodule update --init --recursive
 
 
-Installing Sphinx
------------------
+Installing Sphinx and the Furo Theme
+------------------------------------
 
 Now you need the Python dependencies. The easiest way to do this is to use
 ``pip3``::
 
-    sudo pip3 install -U Sphinx
+    sudo pip3 install -U Sphinx furo
 
 You may also need ``python-dateutil``.
 
@@ -46,7 +46,7 @@ Building
 
 Building the website is easy on a system with ``make``::
 
-    make
+    make html
 
 If you are on Windows, there is a ``make.bat`` as well. It currently requires
 that you run it with an argument::
@@ -57,8 +57,16 @@ The generated site will be in ``build/html``. For the stylesheets and
 JavaScript to load correctly, we suggest running a local webserver
 pointing to this directory::
 
-    cd build/html
-    python3 -m http.server
+    python3 -m http.server --directory build/html
+
+or you can eat our own Dylan dogfood and run our HTTP server! (You only have to
+build it the first time, of course.) ::
+
+    git clone --recursive https://github.com/dylan-lang/http
+    cd http
+    make install
+    cd ...back to website dir...
+    http-server --directory build/html
 
 Link Validation
 ---------------
@@ -71,11 +79,11 @@ are valid.  You can run the link checker by::
 Site Maintenance
 ================
 
-New Binary Release
-------------------
+New Binary Release of Open Dylan
+--------------------------------
 
 #. Update the appropriate info on the download page.
-#. Add a recent news entry. (See below for notes on that.)
+
 
 Updating Documentation
 ----------------------
@@ -85,18 +93,10 @@ documentation in various repositories by essentially doing a git pull
 and make html. These are the docs linked from the main Documentation
 page.
 
-New News Entry
---------------
+Updating the "opendylan" Sphinx Theme
+-------------------------------------
 
-#. Create an article about it (even if very short) in the appropriate date
-   hierarchy in ``source/news``. The hierarchy should be ``year/month/day``.
-   This article must have 2 metadata fields in it::
+The "opendylan" Sphinx theme relies heavily on the `Bootstrap library
+<https://getbootstrap.com/>`_, for both the navbar and for styles.
 
-       :Author: Hannes Mehnert
-       :Date: 2001-08-11 09:00:00
-
-#. Add it to ``source/news/recent.rst.inc``
-#. If there are too many entries in that file, move some
-   to ``source/news/index.rst``.
-#. Confirm that the site's main page and news page both
-   look good / correct.
+*TODO:* more info here.

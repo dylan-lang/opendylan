@@ -1,10 +1,11 @@
+:orphan:
 :Author: Chris Double
 :Date: 2014-05-28 00:00:00
 
 Nix Packages Available
 ======================
 
-Open Dylan builds have been added to the `Nix package manager`_
+Open Dylan builds have been added to the `Nix package manager`_.
 This makes Open Dylan installable from systems using Nix, or the
 `NixOS Linux distribution`_, using a command like::
 

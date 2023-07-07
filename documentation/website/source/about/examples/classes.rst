@@ -8,7 +8,7 @@ typing. You can initialize slots (a.k.a. "fields", "member variables",
 etc.) by providing a default value or expression in the slot spec and
 the caller may override the value using keyword arguments.  A small
 percentage of classes still need "constructors", which can be defined
-by overriding ``initialize``.
+by overriding :drm:`initialize`.
 
 .. code-block:: dylan
 

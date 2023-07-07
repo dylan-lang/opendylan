@@ -1,3 +1,4 @@
+:orphan:
 :Author: Bruce Mitchener
 :Date: 2012-10-18 00:00:00
 
@@ -27,10 +28,6 @@ be found on GitHub at https://github.com/dylan-lang/dylan.tmbundle.
 Also, we've submitted a request for this plugin to be made
 available via Package Control for Sublime Text and hope
 that this is ready in the near future.
-
-.. raw:: html
-
-   <div class="clearfix"></div>
 
 Vim
 ---

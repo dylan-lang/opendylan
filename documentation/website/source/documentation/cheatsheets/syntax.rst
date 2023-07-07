@@ -1,9 +1,8 @@
-*****************
-Dylan Cheat Sheet
-*****************
+******************
+Syntax Cheat Sheet
+******************
 
-.. contents::
-   :local:
+.. TODO: add a note about `end` words
 
 Literals
 ========

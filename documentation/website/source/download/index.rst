@@ -1,49 +1,16 @@
-********************
-Open Dylan Downloads
-********************
+******************
+Install Open Dylan
+******************
 
-Current Version
-===============
+The current version is **Open Dylan 2022.1**, released 28 November, 2022.
 
-The current version is 2022.1, released 28 November 2022:
+Unix Platforms
+==============
 
-.. table::
-   :class: table-striped
+➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2022.1.0>`_
 
-   +---------------------------+----------------------------------------------+---------------+
-   | Platform                  | File                                         | Size (bytes)  |
-   +===========================+==============================================+===============+
-   | FreeBSD (x86_64)          | `opendylan-2022.1-x86_64-freebsd.tar.bz2`_   | 135071639     |
-   +---------------------------+----------------------------------------------+---------------+
-   | Linux (AArch64)           | `opendylan-2022.1-aarch64-linux.tar.bz2`_    | 132067362     |
-   +---------------------------+----------------------------------------------+---------------+
-   | Linux (x86_64)            | `opendylan-2022.1-x86_64-linux.tar.bz2`_     | 150425752     |
-   +---------------------------+----------------------------------------------+---------------+
-   | RISC-V RV64gc             | opendylan-2022.1-riscv64-linux.tar.bz2       | (coming soon) |
-   +---------------------------+----------------------------------------------+---------------+
-   | macOS (Intel)             | `opendylan-2022.1-x86_64-darwin.tar.bz2`_    | 119395771     |
-   +---------------------------+----------------------------------------------+---------------+
-   | Windows (32 bit)          | `opendylan-2022.1-win32.exe`_                | 106234106     |
-   +---------------------------+----------------------------------------------+---------------+
-
-.. raw:: html
-
-   <br/>
-   <br/>
-
-See the `release notes
-<https://opendylan.org/documentation/release-notes/index.html>`_ for
-information about what changed since the previous version.
-
-The `source code <https://github.com/dylan-lang/opendylan/tree/v2022.1.0>`_ is
-available under an open source license in the `"dylan-lang" organization on
-GitHub`_.
-
-
-Installation on Unix
-====================
-
-Note that Unix versions only have a command-line compiler and no IDE.
+Note that Unix versions only have a command-line compiler and not the full IDE that is
+available on Windows, although there is some integration with VS Code and Emacs.
 
 All required dependencies (llvm, libgc, libunwind) are included; just unpack
 the tarball and add the ``bin`` directory to your ``PATH``::
@@ -53,8 +20,13 @@ the tarball and add the ``bin`` directory to your ``PATH``::
 You may wish to ``sudo apt install lldb-15``, for debugging.
 
 
-Installation on Windows
-=======================
+Windows
+=======
+
+Open Dylan for Windows is currently a 32-bit application that runs under the WOW64 x86
+emulator on Windows 10 64-bit machines.
+
+➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2022.1.0>`_
 
 For installation, double-click on the installer, and follow instructions.  You
 need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
@@ -76,34 +48,16 @@ You may instead start a Pelles C interactive shell and run
 won't help if you want to run Open Dylan via the Start menu.
 
 
-Get Started!
-============
-
-If you're new to Dylan, you'll want to check out these handy resources:
-
-* `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_:
-   A tutorial written for those with solid programming
-   experience in C++ or another object-oriented, static language. It
-   provides a gentler introduction to Dylan than does the Dylan
-   Reference Manual (DRM).
-* `Getting Started with the Open Dylan Command Line Tools <https://opendylan.org/documentation/getting-started-cli/>`_:
-   An introduction to the usage of the command line tools.
-* `Dylan Programming Guide <https://opendylan.org/books/dpg/>`_:
-   A book length Dylan tutorial.
-* `Open Dylan Documentation <https://opendylan.org/documentation/>`_:
-   All of the Open Dylan documentation.
-
-
 Installing Older Versions
 =========================
 
 Older builds can be found `on GitHub
 <https://github.com/dylan-lang/opendylan/releases>`_ or in the `download
-directories`_.
+directories <../downloads/opendylan/>`_.
 
-For the 2020.1 release just untar the downloaded file and add the ``bin``
-directory to your ``PATH``.  Optionally, ``sudo apt install lldb-10`` for
-debugging.
+For the 2020.1 or newer releases just untar the downloaded file and add the
+``bin`` directory to your :envvar:`PATH`.  Optionally, ``sudo apt install
+lldb`` for debugging.
 
 For 2019.1 and earlier releases:
 
@@ -126,13 +80,3 @@ For 2019.1 and earlier releases:
 
     brew tap dylan-lang/dylan
     brew install opendylan       # or brew upgrade opendylan
-
-
-
-.. _opendylan-2022.1-aarch64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-aarch64-linux.tar.bz2
-.. _opendylan-2022.1-win32.exe: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-win32.exe
-.. _opendylan-2022.1-x86_64-darwin.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-darwin.tar.bz2
-.. _opendylan-2022.1-x86_64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-linux.tar.bz2
-.. _opendylan-2022.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2022.1.0/opendylan-2022.1-x86_64-freebsd.tar.bz2
-.. _download directories: https://opendylan.org/downloads/opendylan/
-.. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/

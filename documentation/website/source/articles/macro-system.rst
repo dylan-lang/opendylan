@@ -1,4 +1,5 @@
 :copyright: Copyright © 2011 Dustin Voss, All Rights Reserved.
+:orphan:
 
 .. sectionauthor:: Dustin Voss <d_j_v@me.com>
 .. default-role:: samp
@@ -19,9 +20,6 @@ can use when writing your own macros. I gloss over some of the implementation
 details and present this information more informally than the :title:`Dylan
 Reference Manual` does.
 
-.. contents:: Contents:
-   :local:
-   :depth: 1
 
 ***********************
 Background and Overview
