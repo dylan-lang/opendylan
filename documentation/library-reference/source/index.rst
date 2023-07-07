@@ -34,7 +34,6 @@ published Dylan packages.
    progress-stream/index
    regular-expressions/index
    sql/index
-   strings/index
    system/index
    t-lists/index
    win32/index
