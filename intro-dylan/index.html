@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>An Introduction to Dylan &mdash; An Introduction to Dylan</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -88,66 +89,6 @@ programming experience in C++ or another object-oriented static
 language. It provides a gentler introduction to Dylan than does the
 DRM, although it refers to the latter book frequently.</p>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="why-dylan.html">Why Dylan?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="why-dylan.html#dynamic-vs-static-languages">Dynamic vs. Static Languages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why-dylan.html#functional-languages">Functional Languages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why-dylan.html#algebraic-infix-syntax">Algebraic Infix Syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why-dylan.html#object-orientation">Object Orientation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why-dylan.html#garbage-collection">Garbage Collection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="why-dylan.html#why-not-dylan">Why Not Dylan?</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="expressions-variables.html">Expressions &amp; Variables</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#naming-conventions">Naming Conventions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#true-and-false">True and False</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#the-nature-of-variables">The Nature of Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#assignment-equality-and-identity">Assignment, Equality and Identity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#parallel-values">Parallel Values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#type-declarations">Type Declarations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expressions-variables.html#module-variables-and-constants">Module Variables and Constants</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="methods-generic-functions.html">Methods &amp; Generic Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#parameters-parameter-lists">Parameters &amp; Parameter Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#return-values">Return Values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#bare-methods">Bare Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#local-methods">Local Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#generic-functions">Generic Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#keyword-arguments">Keyword Arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#rest-arguments">Rest Arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="methods-generic-functions.html#parameter-lists-and-generic-functions">Parameter Lists and Generic Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="objects.html#built-in-classes">Built-In Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="objects.html#slots">Slots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="objects.html#getters-and-setters">Getters and Setters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="objects.html#generic-functions-and-objects">Generic Functions and Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="objects.html#initializers">Initializers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="objects.html#abstract-classes-and-overriding-make">Abstract Classes and Overriding Make</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="multiple-dispatch.html">Multiple Dispatch</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="multiple-dispatch.html#dispatching-on-specific-objects">Dispatching on Specific Objects</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="modules-libraries.html">Modules &amp; Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="modules-libraries.html#simple-modules">Simple Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules-libraries.html#import-options">Import Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules-libraries.html#libraries">Libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules-libraries.html#sealing">Sealing</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="conditions.html">Conditions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="conditions.html#signaling">Signaling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conditions.html#handlers">Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conditions.html#recovery">Recovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conditions.html#blocks">Blocks</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
-</ul>
 </div>
 </div>
 
