@@ -27,7 +27,6 @@ published Dylan packages.
    common-dylan/index
    dood/index
    dylan/index
-   hash-algorithms/index
    io/index
    network/index
    progress-stream/index
