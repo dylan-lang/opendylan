@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Open Dylan Hacker’s Guide &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -19,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="copyright" title="Copyright" href="copyright.html" />
-    <link rel="next" title="Copyright" href="copyright.html" /> 
+    <link rel="next" title="Writing Documentation" href="documentation/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,8 +43,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute to Open Dylan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documentation/index.html">Writing Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build-system.html">Jam-based Build System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a></li>
@@ -52,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="duim/index.html">DUIM - Dylan User Interface Manager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="topics/index.html">Topics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
 </ul>
 
         </div>
@@ -80,50 +80,81 @@
              
   <div class="section" id="open-dylan-hacker-s-guide">
 <h1>Open Dylan Hacker’s Guide<a class="headerlink" href="#open-dylan-hacker-s-guide" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+<p>Welcome, Dylan hacker!</p>
+<p>This document is about how to make changes to the <code class="docutils literal notranslate"><span class="pre">opendylan</span></code> repository. For
+libraries (including ones that are pulled into <code class="docutils literal notranslate"><span class="pre">opendylan</span></code> as submodules)
+just make your changes, run the test suite, and submit a pull request to the
+appropriate repository.</p>
+<p>Aside from <a class="reference external" href="https://github.com/dylan-lang">dylan-lang</a> there are two
+other GitHub organizations that may be of interest:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/dylan-foundry">dylan-foundry</a> is Bruce
+Mitchener’s large collection of Dylan libraries.</p></li>
+<li><p><a class="reference external" href="https://github.com/dylan-hackers">dylan-hackers</a> contains
+repositories of historical interest, such as old Harlequin Dylan
+documents and <a class="reference external" href="https://github.com/dylan-hackers/gwydion">gwydion</a>,
+the CMU implementation of Dylan which is no longer maintained.</p></li>
+</ul>
+<div class="section" id="looking-for-ideas">
+<h2>Looking for Ideas?<a class="headerlink" href="#looking-for-ideas" title="Permalink to this headline">¶</a></h2>
+<p>If you’re looking for ideas on how you can contribute to Open Dylan or
+what others might find useful, please see our <a class="reference external" href="https://github.com/dylan-lang/opendylan/wiki">list of projects in the
+Open Dylan wiki</a> or
+check out the list of <a class="reference external" href="https://github.com/dylan-lang/opendylan/labels/Easy">bugs labeled Easy</a>.  If you have
+something in mind that isn’t there, feel free to <a class="reference external" href="http://opendylan.org/community/">talk with us</a> or add it to the list.</p>
+</div>
+<div class="section" id="making-changes">
+<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/dylan-lang/opendylan">Open Dylan sources</a> are hosted
+on GitHub, along with sources for the <a class="reference external" href="https://github.com/dylan-lang/website">opendylan.org web site</a> and many other repositories.  If you
+don’t yet have a GitHub account and ssh keys, now is a good time to get them.</p>
+<p>To checkout the main “opendylan” repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recursive</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dylan</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">opendylan</span>
+</pre></div>
+</div>
+<p>You’ll want to fork this repository so you can push changes to your
+fork and then submit pull requests.</p>
+<p>In general, when making changes to the compiler and core libraries you’ll use
+the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> to build and test your changes. See <code class="docutils literal notranslate"><span class="pre">BUILDING.rst</span></code> in the
+top-level directory of your checkout for details on how to install required
+software and build the compiler.</p>
+<ul class="simple">
+<li><p>Fork the repository. You will need to have a GitHub account to do this.</p></li>
+<li><p>Create a topic branch with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-t</span> <span class="pre">-b</span> <span class="pre">my-branch</span></code>.</p></li>
+<li><p>Build and test with <code class="docutils literal notranslate"><span class="pre">make</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code>.</p></li>
+<li><p>Commit changes to your branch, putting each distinct fix in a separate
+commit.</p></li>
+<li><p>Push your changes to your fork on GitHub.</p></li>
+<li><p>Submit a pull request with your changes.</p></li>
+</ul>
+</div>
+<div class="section" id="guidelines">
+<h2>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>You almost always want to branch from the master branch.</p></li>
+<li><p>Update documentation as necessary. Also, if appropriate, update the
+release notes, samples and other supporting materials.</p></li>
+<li><p>We suggest following <a class="reference external" href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">this note about git commit messages</a>.</p></li>
+<li><p>Follow the <a class="reference external" href="http://opendylan.org/documentation/style-guide/index.html">style guide</a> for
+new code. When working in existing code, follow the existing style.</p></li>
+<li><p>Do not make a lot of style or whitespace fixes in the same commit as
+other changes.</p></li>
+<li><p>Use 2 spaces for indentation, <strong>never</strong> tabs.  If you use emacs,
+<a class="reference external" href="https://github.com/dylan-lang/dylan-mode">dylan-mode</a> does a
+decent job of indenting code.</p></li>
+</ul>
+</div>
+<div class="section" id="licensing">
+<h2>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h2>
+<p>All materials in this repository are licensed under the terms
+expressed in the current <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/License.txt">License.txt</a>
+file.</p>
+<p>We are not interested in incorporating any source code using
+proprietary or copyleft-style licenses.</p>
+<p>Open Dylan is under the collective ownership of the Dylan
+Hackers.</p>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute to Open Dylan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="documentation/index.html">Writing Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="documentation/guidelines.html">Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation/generating.html">Generating Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation/doctower.html">Doctower</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documentation/example.html">Example documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="build-system.html">Jam-based Build System</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiler/old/design.html">Compiler Design (Old)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiler/old/internals.html">Compiler Internals (Old)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="runtime/index.html">The Runtime</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="runtime/object-representation.html">Object Representation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runtime/calling-convention.html">Calling Convention</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runtime/special-features.html">Special Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runtime/mangling.html">Name Mangling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runtime/threads.html">Compiler Support for Threads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runtime/startup.html">Startup</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="runtime-manager/index.html">Runtime Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="duim/index.html">DUIM - Dylan User Interface Manager</a></li>
-<li class="toctree-l1"><a class="reference internal" href="topics/index.html">Topics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="topics/method-dispatch.html">Method Dispatch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="topics/debugging.html">Debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="topics/porting.html">Porting to a New Target Platform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="topics/ppml.html">The PPML library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="topics/making-a-release.html">Release Check-list</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
-</ul>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
@@ -138,7 +169,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="copyright.html" class="btn btn-neutral float-right" title="Copyright" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="documentation/index.html" class="btn btn-neutral float-right" title="Writing Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

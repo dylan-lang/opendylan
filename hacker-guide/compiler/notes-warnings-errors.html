@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Notes, Warnings and Errors &mdash; Open Dylan Hacker&#39;s Guide</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -43,8 +44,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute to Open Dylan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">DFMC, The Dylan Flow Machine Compiler</a><ul class="current">
@@ -58,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../topics/index.html">Topics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
 </ul>
 
         </div>
@@ -87,37 +87,6 @@
              
   <div class="section" id="notes-warnings-and-errors">
 <h1>Notes, Warnings and Errors<a class="headerlink" href="#notes-warnings-and-errors" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#status-of-this-library" id="id1">Status of this Library</a></p></li>
-<li><p><a class="reference internal" href="#philosophy" id="id2">Philosophy</a></p></li>
-<li><p><a class="reference internal" href="#program-condition-hierarchy" id="id3">Program Condition Hierarchy</a></p></li>
-<li><p><a class="reference internal" href="#reporting-a-program-condition" id="id4">Reporting a Program Condition</a></p>
-<ul>
-<li><p><a class="reference internal" href="#source-locations" id="id5">Source Locations</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#defining-a-new-program-condition" id="id6">Defining a new Program Condition</a></p></li>
-<li><p><a class="reference internal" href="#ppml-pretty-print-markup-language" id="id7">PPML, Pretty Print Markup Language</a></p></li>
-<li><p><a class="reference internal" href="#filtering-of-program-conditions" id="id8">Filtering of Program Conditions</a></p></li>
-<li><p><a class="reference internal" href="#how-warnings-are-displayed-and-recorded" id="id9">How Warnings Are Displayed and Recorded</a></p></li>
-<li><p><a class="reference internal" href="#responding-to-a-program-condition" id="id10">Responding to a Program Condition</a></p></li>
-<li><p><a class="reference internal" href="#future-work" id="id11">Future Work</a></p></li>
-<li><p><a class="reference internal" href="#the-dfmc-conditions-api-reference" id="id12">The DFMC-CONDITIONS API Reference</a></p>
-<ul>
-<li><p><a class="reference internal" href="#definers-for-new-program-conditions" id="id13">Definers for new Program Conditions</a></p></li>
-<li><p><a class="reference internal" href="#program-conditions" id="id14">Program Conditions</a></p></li>
-<li><p><a class="reference internal" href="#program-condition-slots" id="id15">Program Condition Slots</a></p></li>
-<li><p><a class="reference internal" href="#signaling-program-conditions" id="id16">Signaling Program Conditions</a></p></li>
-<li><p><a class="reference internal" href="#preserving-program-conditions" id="id17">Preserving Program Conditions</a></p></li>
-<li><p><a class="reference internal" href="#recovery-and-restarting" id="id18">Recovery and Restarting</a></p></li>
-<li><p><a class="reference internal" href="#subnotes" id="id19">Subnotes</a></p></li>
-<li><p><a class="reference internal" href="#printing-program-conditions" id="id20">Printing Program Conditions</a></p></li>
-<li><p><a class="reference internal" href="#unclassified-api" id="id21">Unclassified API</a></p></li>
-</ul>
-</li>
-</ul>
-</div>
 <p>The compiler provides a framework for handling notes, warnings and
 errors as they’re encountered and created during the compilation
 process.</p>
@@ -128,13 +97,13 @@ skeletal API documentation for this library can be found at
 <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>, so we will often refer to them collectively
 as <em>program conditions</em> or instances of <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a>.</p>
 <div class="section" id="status-of-this-library">
-<h2><a class="toc-backref" href="#id1">Status of this Library</a><a class="headerlink" href="#status-of-this-library" title="Permalink to this headline">¶</a></h2>
+<h2>Status of this Library<a class="headerlink" href="#status-of-this-library" title="Permalink to this headline">¶</a></h2>
 <p>This library is interesting (to some) as it is in a half-completed
 state and many things are not yet fully implemented or used. We will
 try to note these things below when we discuss them.</p>
 </div>
 <div class="section" id="philosophy">
-<h2><a class="toc-backref" href="#id2">Philosophy</a><a class="headerlink" href="#philosophy" title="Permalink to this headline">¶</a></h2>
+<h2>Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this headline">¶</a></h2>
 <p>The Open Dylan compiler tries hard not to abort compilation when an
 error is noted. This leads to many things that might be <em>fatal errors</em>
 elsewhere being represented as <em>serious warnings</em> here. For example,
@@ -153,14 +122,14 @@ object so that they’re readily accessible from within the debugger,
 rather than only storing the string representations.</p>
 </div>
 <div class="section" id="program-condition-hierarchy">
-<h2><a class="toc-backref" href="#id3">Program Condition Hierarchy</a><a class="headerlink" href="#program-condition-hierarchy" title="Permalink to this headline">¶</a></h2>
+<h2>Program Condition Hierarchy<a class="headerlink" href="#program-condition-hierarchy" title="Permalink to this headline">¶</a></h2>
 <p>The root of the condition hierarchy is <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a>.
 This is an abstract class and one of the subclasses such as
 <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-error&gt;</span></code></a> or
 <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-restart]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-restart&gt;</span></code></a> should be subclassed instead.</p>
 </div>
 <div class="section" id="reporting-a-program-condition">
-<h2><a class="toc-backref" href="#id4">Reporting a Program Condition</a><a class="headerlink" href="#reporting-a-program-condition" title="Permalink to this headline">¶</a></h2>
+<h2>Reporting a Program Condition<a class="headerlink" href="#reporting-a-program-condition" title="Permalink to this headline">¶</a></h2>
 <p>The typical way to report that a program condition has arisen
 is to use <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:note"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">note</span></code></a>. There are other mechanisms, such as
 <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:raise"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">raise</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:restart"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">restart</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:simple-note"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">simple-note</span></code></a> and <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:simple-raise"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">simple-raise</span></code></a>,
@@ -180,7 +149,7 @@ the program condition, and the type of program condition to emit.</p>
 </pre></div>
 </div>
 <div class="section" id="source-locations">
-<h3><a class="toc-backref" href="#id5">Source Locations</a><a class="headerlink" href="#source-locations" title="Permalink to this headline">¶</a></h3>
+<h3>Source Locations<a class="headerlink" href="#source-locations" title="Permalink to this headline">¶</a></h3>
 <p>There are a couple of useful rules to follow for getting source
 locations for noting a program condition during compilation.</p>
 <ul class="simple">
@@ -202,7 +171,7 @@ model objects, so keep an eye out for when you need to use
 </div>
 </div>
 <div class="section" id="defining-a-new-program-condition">
-<h2><a class="toc-backref" href="#id6">Defining a new Program Condition</a><a class="headerlink" href="#defining-a-new-program-condition" title="Permalink to this headline">¶</a></h2>
+<h2>Defining a new Program Condition<a class="headerlink" href="#defining-a-new-program-condition" title="Permalink to this headline">¶</a></h2>
 <p>Depending on where you are defining your new program condition
 within the <a class="reference internal" href="#program-condition-hierarchy">Program Condition Hierarchy</a>, you will need to use
 the appropriate program condition definer:</p>
@@ -234,7 +203,7 @@ be useful when viewing the condition within the debugger or by other
 programmatic processing such as filtering.</p>
 </div>
 <div class="section" id="ppml-pretty-print-markup-language">
-<h2><a class="toc-backref" href="#id7">PPML, Pretty Print Markup Language</a><a class="headerlink" href="#ppml-pretty-print-markup-language" title="Permalink to this headline">¶</a></h2>
+<h2>PPML, Pretty Print Markup Language<a class="headerlink" href="#ppml-pretty-print-markup-language" title="Permalink to this headline">¶</a></h2>
 <p>When conditions are stored, their slots are converted to PPML
 objects. Many objects within the compiler are already configured
 to be able to generate PPML via the many specializations of
@@ -245,24 +214,24 @@ is autogenerated by the various definer macros which create
 a specialization on <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml</span></code></a>.</p>
 </div>
 <div class="section" id="filtering-of-program-conditions">
-<h2><a class="toc-backref" href="#id8">Filtering of Program Conditions</a><a class="headerlink" href="#filtering-of-program-conditions" title="Permalink to this headline">¶</a></h2>
+<h2>Filtering of Program Conditions<a class="headerlink" href="#filtering-of-program-conditions" title="Permalink to this headline">¶</a></h2>
 <p>This is functionality that has not been completed and is
 currently not entirely in use.</p>
 <p><em>To be written.</em></p>
 </div>
 <div class="section" id="how-warnings-are-displayed-and-recorded">
-<h2><a class="toc-backref" href="#id9">How Warnings Are Displayed and Recorded</a><a class="headerlink" href="#how-warnings-are-displayed-and-recorded" title="Permalink to this headline">¶</a></h2>
+<h2>How Warnings Are Displayed and Recorded<a class="headerlink" href="#how-warnings-are-displayed-and-recorded" title="Permalink to this headline">¶</a></h2>
 <p><em>To be written.</em></p>
 </div>
 <div class="section" id="responding-to-a-program-condition">
-<h2><a class="toc-backref" href="#id10">Responding to a Program Condition</a><a class="headerlink" href="#responding-to-a-program-condition" title="Permalink to this headline">¶</a></h2>
+<h2>Responding to a Program Condition<a class="headerlink" href="#responding-to-a-program-condition" title="Permalink to this headline">¶</a></h2>
 <p>In Dylan, the condition system allows for responses to conditions
 and can restart a computation with new information. While parts
 of <code class="docutils literal notranslate"><span class="pre">dfmc-conditions</span></code> are designed to permit this, this functionality,
 has never been completed and is not yet working.</p>
 </div>
 <div class="section" id="future-work">
-<h2><a class="toc-backref" href="#id11">Future Work</a><a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h2>
+<h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h2>
 <p>Look at cleaning up unused API and things that are no longer
 necessary.</p>
 <ul class="simple">
@@ -291,9 +260,9 @@ filtering to work.</p></li>
 </ul>
 </div>
 <div class="section" id="the-dfmc-conditions-api-reference">
-<h2><a class="toc-backref" href="#id12">The DFMC-CONDITIONS API Reference</a><a class="headerlink" href="#the-dfmc-conditions-api-reference" title="Permalink to this headline">¶</a></h2>
+<h2>The DFMC-CONDITIONS API Reference<a class="headerlink" href="#the-dfmc-conditions-api-reference" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="definers-for-new-program-conditions">
-<h3><a class="toc-backref" href="#id13">Definers for new Program Conditions</a><a class="headerlink" href="#definers-for-new-program-conditions" title="Permalink to this headline">¶</a></h3>
+<h3>Definers for new Program Conditions<a class="headerlink" href="#definers-for-new-program-conditions" title="Permalink to this headline">¶</a></h3>
 <dl class="macro">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:program-condition-definer">
 <code class="sig-name descname">program-condition-definer</code> <em class="property">Macro</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-condition-definer" title="Permalink to this definition">¶</a></dt>
@@ -471,7 +440,7 @@ creating new program-conditioner definer macros.</p>
 
 </div>
 <div class="section" id="program-conditions">
-<h3><a class="toc-backref" href="#id14">Program Conditions</a><a class="headerlink" href="#program-conditions" title="Permalink to this headline">¶</a></h3>
+<h3>Program Conditions<a class="headerlink" href="#program-conditions" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:[program-condition]">
 <code class="sig-name descname">&lt;program-condition&gt;</code> <em class="property">Open Abstract Class</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-condition]" title="Permalink to this definition">¶</a></dt>
@@ -666,7 +635,7 @@ support a standards-conforming version of the compiler.</p>
 
 </div>
 <div class="section" id="program-condition-slots">
-<h3><a class="toc-backref" href="#id15">Program Condition Slots</a><a class="headerlink" href="#program-condition-slots" title="Permalink to this headline">¶</a></h3>
+<h3>Program Condition Slots<a class="headerlink" href="#program-condition-slots" title="Permalink to this headline">¶</a></h3>
 <dl class="generic-function">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:condition-compilation-stage">
 <code class="sig-name descname">condition-compilation-stage</code> <em class="property">Generic function</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-compilation-stage" title="Permalink to this definition">¶</a></dt>
@@ -749,7 +718,7 @@ support a standards-conforming version of the compiler.</p>
 
 </div>
 <div class="section" id="signaling-program-conditions">
-<h3><a class="toc-backref" href="#id16">Signaling Program Conditions</a><a class="headerlink" href="#signaling-program-conditions" title="Permalink to this headline">¶</a></h3>
+<h3>Signaling Program Conditions<a class="headerlink" href="#signaling-program-conditions" title="Permalink to this headline">¶</a></h3>
 <dl class="generic-function">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:note">
 <code class="sig-name descname">note</code> <em class="property">Open Generic function</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note" title="Permalink to this definition">¶</a></dt>
@@ -834,7 +803,7 @@ function and is guaranteed to not return.</p>
 
 </div>
 <div class="section" id="preserving-program-conditions">
-<h3><a class="toc-backref" href="#id17">Preserving Program Conditions</a><a class="headerlink" href="#preserving-program-conditions" title="Permalink to this headline">¶</a></h3>
+<h3>Preserving Program Conditions<a class="headerlink" href="#preserving-program-conditions" title="Permalink to this headline">¶</a></h3>
 <p>Program conditions are tracked in each library. They are stored in
 a table that is associated with each <code class="docutils literal notranslate"><span class="pre">&lt;library-description&gt;</span></code>
 via <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:library-conditions-table"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">library-conditions-table</span></code></a>. There are implementations of
@@ -925,7 +894,7 @@ library being compiled.</p>
 
 </div>
 <div class="section" id="recovery-and-restarting">
-<h3><a class="toc-backref" href="#id18">Recovery and Restarting</a><a class="headerlink" href="#recovery-and-restarting" title="Permalink to this headline">¶</a></h3>
+<h3>Recovery and Restarting<a class="headerlink" href="#recovery-and-restarting" title="Permalink to this headline">¶</a></h3>
 <dl class="macro">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:condition-block">
 <code class="sig-name descname">condition-block</code> <em class="property">Macro</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-block" title="Permalink to this definition">¶</a></dt>
@@ -938,7 +907,7 @@ library being compiled.</p>
 
 </div>
 <div class="section" id="subnotes">
-<h3><a class="toc-backref" href="#id19">Subnotes</a><a class="headerlink" href="#subnotes" title="Permalink to this headline">¶</a></h3>
+<h3>Subnotes<a class="headerlink" href="#subnotes" title="Permalink to this headline">¶</a></h3>
 <p>This is a very rarely used capability within the program condition
 system and isn’t currently well supported by the compiler output
 to standard out and standard error.</p>
@@ -1002,7 +971,7 @@ build process. (<code class="docutils literal notranslate"><span class="pre">_bu
 
 </div>
 <div class="section" id="printing-program-conditions">
-<h3><a class="toc-backref" href="#id20">Printing Program Conditions</a><a class="headerlink" href="#printing-program-conditions" title="Permalink to this headline">¶</a></h3>
+<h3>Printing Program Conditions<a class="headerlink" href="#printing-program-conditions" title="Permalink to this headline">¶</a></h3>
 <dl class="variable">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:*detail-level*">
 <code class="sig-name descname">*detail-level*</code> <em class="property">Thread Variable</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*detail-level*" title="Permalink to this definition">¶</a></dt>
@@ -1096,7 +1065,7 @@ defined in <code class="docutils literal notranslate"><span class="pre">dfmc-deb
 
 </div>
 <div class="section" id="unclassified-api">
-<h3><a class="toc-backref" href="#id21">Unclassified API</a><a class="headerlink" href="#unclassified-api" title="Permalink to this headline">¶</a></h3>
+<h3>Unclassified API<a class="headerlink" href="#unclassified-api" title="Permalink to this headline">¶</a></h3>
 <dl class="constant">
 <dt class="dylan-api" id="dfmc-conditions:dfmc-conditions:$record-program-note">
 <code class="sig-name descname">$record-program-note</code> <em class="property">Constant</em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$record-program-note" title="Permalink to this definition">¶</a></dt>
