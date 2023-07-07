@@ -5,20 +5,28 @@ The strings Library
 .. current-library:: strings
 .. current-module:: strings
 
-The strings library exports definitions for basic string manipulation.
+The *strings* library exports definitions for basic string manipulation.
+
+The *strings* library was originally defined in `DEP-0004
+<http://opendylan.org/proposals/dep-0004.html>`_.  Some additional background
+material can be found there.
+
+.. contents::  Contents
+   :local:
 
 .. note::
 
-  * This library does not address any higher-level operations such as
-    text formatting or anything that requires semantic knowledge of
-    words, such as *pluralize*.
+  * This library does not address any higher-level operations such as text
+    formatting or anything that requires semantic knowledge of words, such as
+    pluralization or internationalization.
 
   * Where it makes sense, functions can be applied to either a single
     character or a string of characters.  For example, ``lowercase('C')
     => 'c'`` and ``lowercase("Foo") => "foo"``.
 
   * Functions are case-sensitive by default.  Versions that ignore
-    alphabetic case are named with a trailing "-ic" or "-ic?".
+    alphabetic case are named with a trailing "-ic" or "-ic?", which
+    stands for "ignore case".
 
   * Open Dylan doesn't yet support Unicode.  When it does, this library
     will be updated to support it also.
@@ -59,7 +67,7 @@ Character Class Predicates
 
        alphabetic?('a') => #t
        alphabetic?('-') => #f
-   
+
 .. method:: alphabetic?
    :specializer: <string>
    :sealed:
@@ -81,8 +89,6 @@ Character Class Predicates
        alphabetic?("abc") => #t
        alphabetic?("abc123") => #f
        alphabetic?("abc123", end: 3) => #t
-   
-------------
 
 .. generic-function:: alphanumeric?
    :sealed:
@@ -128,8 +134,6 @@ Character Class Predicates
        alphanumeric?("abc123") => #t
        alphanumeric?("abc...") => #f
        alphanumeric?("abc...",  end: 3) => #t
-
-------------
 
 .. generic-function:: control?
    :sealed:
@@ -179,8 +183,6 @@ Character Class Predicates
        control?("\0\a\b") => #t
        control?("abc\0") => #f
        control?("abc\0", start: 3) => #t
-
-------------
 
 .. generic-function:: graphic?
    :sealed:
@@ -232,8 +234,6 @@ Character Class Predicates
        graphic?("ABC") => #t
        graphic?("ABC\n") => #f
        graphic?("ABC\n", end: 3) => #t
-
-------------
 
 .. generic-function:: printable?
    :sealed:
@@ -287,8 +287,6 @@ Character Class Predicates
        printable?("abc\0") => #f
        printable?("abc\0", end: 3) => #t
 
-------------
-
 .. generic-function:: whitespace?
    :sealed:
 
@@ -340,8 +338,6 @@ Character Class Predicates
        whitespace?("x\t x") => #f
        whitespace?("x\t x", start: 1, end: 3) => #t
 
-------------
-
 .. generic-function:: decimal-digit?
    :sealed:
 
@@ -389,8 +385,6 @@ Character Class Predicates
        decimal-digit?("123") => #t
        decimal-digit?("x123y") => #f
        decimal-digit?("x123y", start: 1, end: 4) => #t
-
-------------
 
 .. generic-function:: hexadecimal-digit?
    :sealed:
@@ -441,8 +435,6 @@ Character Class Predicates
        hexdecimal-digit?("ff00") => #t
        hexdecimal-digit?(" ff00 ") => #f
        hexdecimal-digit?(" ff00 ", start: 1, end: 5) => #t
-
-------------
 
 .. generic-function:: octal-digit?
    :sealed:
@@ -627,8 +619,6 @@ Case Conversion Functions
        lowercase("Hack Dylan!") => "hack dylan!"
        lowercase("Hack Dylan!", end: 4) => "hack"
 
--------------
-
 .. generic-function:: lowercase!
    :sealed:
 
@@ -681,8 +671,6 @@ Case Conversion Functions
        lowercase!("Hack Dylan!")
        => error, attempt to modify a string constant
 
--------------
-
 .. generic-function:: lowercase?
    :sealed:
 
@@ -733,8 +721,6 @@ Case Conversion Functions
        lowercase?("Why me?", start: 1) => #t
        lowercase?("e.e. cummings") => #t
 
--------------
-
 .. generic-function:: uppercase
    :sealed:
 
@@ -783,8 +769,6 @@ Case Conversion Functions
        uppercase("Hack Dylan!") => "HACK DYLAN!"
        uppercase("Hack Dylan!", end: 4) => "HACK Dylan!"
 
--------------
-
 .. generic-function:: uppercase!
    :sealed:
 
@@ -809,7 +793,7 @@ Case Conversion Functions
      .. code-block:: dylan
 
        uppercase!('t') => 'T'
-     
+
 .. method:: uppercase!
    :specializer: <string>
    :sealed:
@@ -835,8 +819,6 @@ Case Conversion Functions
        => "HACKDYLAN!"
        uppercase!("Hack Dylan!")
        => error, attempt to modify a string constant
-
--------------
 
 .. generic-function:: uppercase?
    :sealed:
@@ -1352,14 +1334,19 @@ Miscellaneous Functions
        strip-right(" \tabc\n") => " \tabc"
        strip-right("*foo*", test: curry(\=, '*')) => "*foo"
 
-	 
-Other Useful Functions
-======================
+String Functions in Other Libraries
+===================================
 
-There are a number of functions outside the strings library itself that can be used with strings.
+There are a number of functions outside the ``strings`` library itself that can
+be used with strings.
 
-Built-In
---------
+dylan Module
+------------
+
+Since strings are a kind of :drm:`<sequence>`, all sequence operations apply to
+strings, including most `Collection Operations
+<https://opendylan.org/books/drm/Collection_Operations>`_. The ones listed
+below are most frequently used for strings.
 
 .. hlist::
 
@@ -1376,7 +1363,7 @@ Built-In
   * :drm:`as-lowercase!`
   * :drm:`as-uppercase`
   * :drm:`as-uppercase!`
-  
+
 common-extensions Module
 ------------------------
 
