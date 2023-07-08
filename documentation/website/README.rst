@@ -1,7 +1,7 @@
 This is the Open Dylan website.
 
-It is built using `Sphinx <http://sphinx.pocoo.org>`_.  All content is written using
-ReStructured Text with Sphinx extensions.
+It is built using `Sphinx <https://www.sphinx-doc.org/>`_.  All content is
+written using ReStructured Text with Sphinx extensions.
 
 Preparation
 ===========
@@ -25,9 +25,10 @@ Getting the source
 
 The next step is fetching the repository and its submodule::
 
-    git clone https://github.com/dylan-lang/website.git  # or your fork
-    git submodule update --init --recursive
+    git clone --recursive https://github.com/dylan-lang/website.git  # or your fork
 
+Note that for now the "opendylan" repository is a submodule and it (along with
+its own submodules) is rather large.
 
 Installing Sphinx and the Furo Theme
 ------------------------------------
@@ -51,7 +52,7 @@ Building the website is easy on a system with ``make``::
 If you are on Windows, there is a ``make.bat`` as well. It currently requires
 that you run it with an argument::
 
-    make.bat html
+    make.bat html  # Best of luck! This hasn't been tested in ages.
 
 The generated site will be in ``build/html``. For the stylesheets and
 JavaScript to load correctly, we suggest running a local webserver
@@ -59,8 +60,7 @@ pointing to this directory::
 
     python3 -m http.server --directory build/html
 
-or you can eat our own Dylan dogfood and run our HTTP server! (You only have to
-build it the first time, of course.) ::
+or you can eat our own Dylan dogfood and run our HTTP server! ::
 
     git clone --recursive https://github.com/dylan-lang/http
     cd http
@@ -90,13 +90,6 @@ Updating Documentation
 
 The `update-opendylan.org.sh` script is run by cron to update the
 documentation in various repositories by essentially doing a git pull
-and make html. These are the docs linked from the main Documentation
-page.
-
-Updating the "opendylan" Sphinx Theme
--------------------------------------
-
-The "opendylan" Sphinx theme relies heavily on the `Bootstrap library
-<https://getbootstrap.com/>`_, for both the navbar and for styles.
+and make html.
 
 *TODO:* more info here.
