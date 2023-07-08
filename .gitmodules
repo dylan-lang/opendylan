@@ -34,3 +34,6 @@
 [submodule "sources/app/dylan-tool"]
 	path = sources/app/dylan-tool
 	url = https://github.com/dylan-lang/dylan-tool
+[submodule "documentation/website"]
+	path = documentation/website
+	url = https://github.com/dylan-lang/website
