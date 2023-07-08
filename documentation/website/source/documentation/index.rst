@@ -8,7 +8,7 @@ Learn Dylan
 :doc:`../about/index`
     A quick overview of the language with examples of major features.
 
-:doc:`../opendylan/documentation/intro-dylan/source/index`
+:doc:`../intro-dylan/source/index`
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
     provides a gentler introduction to Dylan than does the `Dylan Reference
@@ -17,15 +17,15 @@ Learn Dylan
 `Dylan Programming Guide`_ [`pdf <https://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <https://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A book length Dylan tutorial.
 
-:doc:`../opendylan/documentation/getting-started-cli/source/index`
+:doc:`../getting-started-cli/source/index`
     Describes development using the Open Dylan command line tools
     and editor integration (like emacs). This is mainly for
     Linux, FreeBSD, and macOS users.
 
-:doc:`../opendylan/documentation/getting-started-ide/source/index`
+:doc:`../getting-started-ide/source/index`
     Describes Open Dylan's integrated development environment (Windows only).
 
-:doc:`../opendylan/documentation/building-with-duim/source/index`
+:doc:`../building-with-duim/source/index`
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. (Windows only.)
 
@@ -35,15 +35,15 @@ References
 `Dylan Reference Manual`_ (`Errata`_)
     The official definition of the Dylan language and standard library.
 
-:doc:`../opendylan/documentation/library-reference/source/index`
+:doc:`../library-reference/source/index`
     Reference docs for core libraries packaged with Open Dylan.
 
-:doc:`../opendylan/documentation/duim-reference/source/index`
+:doc:`../duim-reference/source/index`
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM. (Currently Windows only.)
 
-:doc:`../opendylan/documentation/corba-guide/source/index`
+:doc:`../corba-guide/source/index`
     A tutorial and reference for CORBA interoperability using the Open
     Dylan ORB.
 
@@ -132,10 +132,10 @@ For Open Dylan Developers
 .. note:: Notes and materials useful to those working on Open Dylan itself or
           those who have an interest in the low level details.
 
-:doc:`../opendylan/documentation/hacker-guide/source/index`
+:doc:`../hacker-guide/source/index`
     A work in progress to help out people who are hacking on Open Dylan itself.
 
-:doc:`../opendylan/documentation/style-guide/source/index`
+:doc:`../style-guide/source/index`
     Notes and thoughts on how to format your Dylan code. This is the style
     guide that we aspire to adhere to in the Open Dylan sources.
 
@@ -143,7 +143,7 @@ For Open Dylan Developers
     A series of proposals for improvements to the Open Dylan
     implementation and related libraries.
 
-:doc:`../opendylan/documentation/release-notes/source/index`
+:doc:`../release-notes/source/index`
     Notes on new features and bug fixes in each release of Open Dylan.
 
 
@@ -159,14 +159,14 @@ For Open Dylan Developers
 
    cheatsheets/index
    Publications <publications>
-   ../opendylan/documentation/intro-dylan/source/index
+   ../intro-dylan/source/index
    ../news/index
-   ../opendylan/documentation/building-with-duim/source/index
-   ../opendylan/documentation/corba-guide/source/index
-   ../opendylan/documentation/duim-reference/source/index
-   ../opendylan/documentation/getting-started-ide/source/index
-   ../opendylan/documentation/library-reference/source/copyright
-   ../opendylan/documentation/man-pages/source/index
-   ../opendylan/documentation/release-notes/source/index
-   ../opendylan/documentation/sphinx-extensions/documentation/source/index
-   ../opendylan/documentation/style-guide/source/index
+   ../building-with-duim/source/index
+   ../corba-guide/source/index
+   ../duim-reference/source/index
+   ../getting-started-ide/source/index
+   ../library-reference/source/copyright
+   ../man-pages/source/index
+   ../release-notes/source/index
+   ../sphinx-extensions/documentation/source/index
+   ../style-guide/source/index

@@ -33,8 +33,8 @@ how to define libraries and modules right away.
 
 Then maybe try one of these more in-depth guides:
 
-* :doc:`opendylan/documentation/intro-dylan/source/index` provides a high-level
-  overview of language features.
+* :doc:`intro-dylan/source/index` provides a high-level overview of language
+  features.
 * `Dylan Programming Guide`_ is a book length Dylan tutorial.
 
 The `Dylan Reference Manual`_, besides being the official language definition,
@@ -79,7 +79,7 @@ articles, and all the library docs.
 
    Get Involved <community/index>
    Download <download/index>
-   Hacker Guide <opendylan/documentation/hacker-guide/source/index>
+   Hacker Guide <hacker-guide/source/index>
    Enhancement Proposals <proposals/index>
 
 .. toctree::
@@ -87,7 +87,7 @@ articles, and all the library docs.
    :hidden:
 
    Tour of Dylan <about/index>
-   Getting Started Guide <opendylan/documentation/getting-started-cli/source/index>
+   Getting Started Guide <getting-started-cli/source/index>
    Dylan Programming Guide <https://opendylan.org/books/dpg/>
 
 .. Note that the package/index reference below is not part of this
@@ -100,5 +100,5 @@ articles, and all the library docs.
 
    Dylan Reference Manual <https://opendylan.org/books/drm/>
    Package Docs <package/index>
-   Open Dylan Libraries <opendylan/documentation/library-reference/source/index>
+   Open Dylan Libraries <library-reference/source/index>
    All Documentation <documentation/index>

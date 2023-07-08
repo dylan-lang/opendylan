@@ -14,7 +14,7 @@ For a variety of reasons, we didn't get to carry out our plan for
 more frequent releases in 2012, but hope to have more frequent releases
 in 2013.
 
-While we have extensive `release notes <https://opendylan.org/documentation/release-notes/2012.1.html>`_,
+While we have extensive `release notes </release-notes/2012.1.html>`_,
 there are some important changes that we feel are worth calling out
 separately:
 
