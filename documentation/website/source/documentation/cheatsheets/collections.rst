@@ -160,8 +160,8 @@ Common Operations
 |                     |                              | has a particular key.                                |
 +---------------------+------------------------------+------------------------------------------------------+
 
-.. _<set>: https://opendylan.org/documentation/library-reference/collections/set.html
-.. _<bit-set>: https://opendylan.org/documentation/library-reference/collections/bit-set.html
-.. _<bit-vector>: https://opendylan.org/documentation/library-reference/collections/bit-vector.html
-.. _<byte-vector>: https://opendylan.org/documentation/library-reference/common-dylan/byte-vector.html
-.. _<string-table>: https://opendylan.org/documentation/library-reference/collections/table-extensions.html#collections:table-extensions:[string-table]
+.. _<set>: library-reference/collections/set.html
+.. _<bit-set>: library-reference/collections/bit-set.html
+.. _<bit-vector>: library-reference/collections/bit-vector.html
+.. _<byte-vector>: library-reference/common-dylan/byte-vector.html
+.. _<string-table>: library-reference/collections/table-extensions.html#collections:table-extensions:[string-table]

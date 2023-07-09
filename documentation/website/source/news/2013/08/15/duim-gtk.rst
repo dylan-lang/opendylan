@@ -32,12 +32,12 @@ work to do on DUIM/Gtk. (We have started building a
 for the `hacker's guide`_, especially for working on Mac OS X.
 
 If you're interested in learning more or helping out, get
-in touch with us on `IRC or the mailing list`_!
+in touch with us on `chat or the mailing list`_!
 
-.. _DUIM: https://opendylan.org/documentation/building-with-duim/
-.. _IDE: https://opendylan.org/documentation/getting-started-ide/
+.. _DUIM: /building-with-duim/index.html
+.. _IDE: /getting-started-ide/index.html
 .. _sources/gtk: https://github.com/dylan-lang/opendylan/tree/master/sources/gtk
 .. _DUIM GTK+: https://github.com/dylan-lang/opendylan/tree/master/sources/duim/gtk
 .. _list of bugs: https://github.com/dylan-lang/opendylan/labels/lib-DUIM%20%2F%20Gtk
-.. _hacker's guide: https://opendylan.org/documentation/hacker-guide/duim/index.html
-.. _IRC or the mailing list: https://opendylan.org/community/
+.. _hacker's guide: /hacker-guide/duim/index.html
+.. _chat or the mailing list: /community/

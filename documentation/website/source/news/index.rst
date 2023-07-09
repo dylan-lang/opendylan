@@ -2,6 +2,37 @@
 News
 ****
 
+Website Revamp - 2023-07-07
+===========================
+
+The opendylan.org website has had a long overdue major overhaul. The goals of
+this revamp were:
+
+1. Enable better navigation between different sections of the website. For
+   example, when reading documentation in the Library Reference it should be
+   easy to navigate to the Hacker Guide or to package docs. Now everything is
+   accessible from the left sidebar (the ``:toctree:`` in reStructured Text
+   terminology).
+
+#. Improved accessibility. The old site had a very low contrast top navbar and
+   other low contrast elements. The new `Furo
+   <https://pradyunsg.me/furo/quickstart/>`_ theme has much better contrast
+   plus light and dark themes.
+
+#. Local table of contents in the right sidebar. Hooray `Furo
+   <https://pradyunsg.me/furo/quickstart/>`_!
+
+#. Integrated :doc:`package docs <../package/index>`.
+
+#. Simplicity! We're a small team so we want to avoid any extra maintenance
+   burden. To that end, we no longer use a Dylan-specific Sphinx theme or
+   templates. If it ain't in `Furo <https://pradyunsg.me/furo/quickstart/>`_,
+   we don't want it! :-)
+
+We'd love to hear feedback on the new site. You can `file a bug
+<https://github.com/dylan-lang/website/issues>`_ or `drop us a note on Matrix
+<https://app.element.io/#/room/#dylan-language:matrix.org>`_.
+
 :doc:`New release: 2022.1 </news/2022/11/28/new-release>` *- 2022-11-28*
   Open Dylan 2022.1 released!
 
