@@ -1,81 +1,53 @@
 #!/bin/bash -xe
 
-# This script assumes that all repos (website, opendylan, and various
-# libraries) are checked out into the same directory. To test, clone all
-# necessary repositories (including this one) into a single directory and then:
+# This script builds the opendylan.org website. A summary of what this script
+# actually does:
 #
-#   mkdir /tmp/www; ./website/update.sh /tmp/www .
+# $ git clone --recursive https://github.com/dylan-lang/opendylan
+# $ git clone --recursive https://github.com/dylan-lang/gendoc
+# $ cd gendoc
+# $ make docs
+# $ cp -rp output/package ../opendylan/documentation/website/source/
+# $ cd ../opendylan/documentation/website
+# $ make html
+# $ cp -rp build/html/* /var/www/opendylan.org
 
 # /var/www/opendylan.org/downloads is handled specially. New versions of Open
-# Dylan must be installed there by hand and then download/index.html must be
-# updated in the website repo.
+# Dylan must be copied there by hand.
 
 # TODO:
 # * Fix latexpdf vs python3 issues. Disabled PDF for now.
 # * Link to GitHub releases for the download pages instead of maintaining
 #   downloads by hand.
-# * Clone repos if not already present. This should use the package manager
-#   since they're spread across different GitHub orgs and we don't want to
-#   maintain that info in multiple places.
 # * Build/install dylan-programming-book into ${dest_dir}/books/dpg.
 # * Build/install dylan-reference-manual into ${dest_dir}/books/drm.
 
-
-if [[ $# -ne 2 ]]; then
-    echo "Usage: `basename $0` dest_dir repo_dir"
-    echo "  dest_dir:  directory in which to build the website. e.g. /var/www/opendylan.org"
-    echo "  repo_dir:  directory containing all necessary git repos"
+if [[ $# -ne 3 ]]; then
+    echo "Usage: `basename $0` dest_dir opendylan_dir gendoc_exe"
+    echo "  dest_dir:      Directory in which to place the built website documents."
+    echo "                 Example: /var/www/opendylan.org"
+    echo "  opendylan_dir: The opendylan repo directory."
+    echo "  gendoc_exe:    Path to the gendoc executable."
     exit 2
 fi
 
 dest_dir=$(realpath "$1")
-repo_dir=$(realpath "$2")       # so we can cd with wild abandon below
+opendylan_dir=$(realpath "$2")
+gendoc_exe=$(realpath "$3")
 
-# Update the main web site pages.
-cd ${repo_dir}/website
+# Generate package docs
+gendoc_work_dir=$(mktemp -d gendoc-XXXX) # git clones go here
+gendoc_output_dir=${opendylan_dir}/documentation/website/source
+cd ${gendoc_work_dir}
+rm -rf ${package_doc_dir}
+${gendoc_exe} -o ${gendoc_output_dir}
+
+# Build website
+cd ${opendylan_dir}/documentation/website
 git pull --rebase origin master
 git submodule update --recursive --init
+make clean
 make html
+
+# Deploy
 rsync -avz build/html/ ${dest_dir}
-
-
-# Update the docs contained in the opendylan repository.
-
-subdirs="building-with-duim duim-reference getting-started-cli getting-started-ide"
-subdirs="${subdirs} hacker-guide intro-dylan library-reference man-pages"
-subdirs="${subdirs} project-notebook release-notes style-guide corba-guide"
-
-cd ${repo_dir}/opendylan
-git pull --rebase origin master
-git submodule update --recursive --init
-export PYTHONPATH=${repo_dir}/opendylan/documentation/sphinx-extensions
-
-for subdir in ${subdirs}; do
-    cd ${repo_dir}/opendylan/documentation/${subdir}
-    make html && rsync -avz build/html/ ${dest_dir}/documentation/${subdir}/
-    make epub && cp build/epub/*.epub ${dest_dir}/documentation/${subdir}/
-    # Disable PDF for now. For some reason it blows out the tex stack in python3.
-    # make latexpdf && cp build/latex/*.pdf ${dest_dir}/documentation/${subdir}/
-done
-
-# Update library docs.
-# For now these are one-offs, until we decide on a standard.
-# If you add a library to this list remember to clone it manually before the first run.
-
-libraries="binary-data concurrency dylan-tool http melange objc-dylan statistics testworks tracing"
-
-for lib in ${libraries}; do
-    echo
-    echo "Building documentation for library ${lib}..."
-    cd ${repo_dir}/${lib}
-    git pull --rebase origin master
-    git submodule update --recursive --init
-    cd ${repo_dir}/${lib}/documentation
-    if [[ "${lib}" == "testworks" ]]; then
-	cd users-guide
-    fi
-    make html && rsync -avz build/html/ ${dest_dir}/documentation/${lib}/
-    make epub && cp build/epub/*.epub ${dest_dir}/documentation/${lib}/
-    # Disable PDF for now.
-    # make latexpdf && cp build/latex/*.pdf ${dest_dir}/documentation/${lib}/
-done

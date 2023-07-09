@@ -1,15 +1,17 @@
 #!/bin/bash -xe
 
-# This script is run from cron.
+# This script is intended to be run from cron.
 
 logfile=/var/log/update-opendylan.org.`date +%Y%m%d%H%M`.log
 exec > $logfile 2>&1
 
 dest_dir=/var/www/opendylan.org
-repo_dir=/root
+opendylan_dir=/root/deploy-opendylan.org/opendylan
+gendoc_exe=/root/deploy-opendylan.org/gendoc/_build/bin/gendoc
 
-./update.sh "${dest_dir}" "${repo_dir}"
+exe_dir="$(realpath $(dirname $0))"
 
+${exe_dir}/update.sh "${dest_dir}" "${opendylan_dir}" "${gendoc_exe}"
 
 echo "Done updating opendylan.org"
 bzip2 $logfile
