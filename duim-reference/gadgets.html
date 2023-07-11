@@ -57,16 +57,26 @@
 <li class="toctree-l2"><a class="reference internal" href="#gadget-protocols">Gadget protocols</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-class-hierarchy-for-duim-gadgets">The class hierarchy for DUIM-Gadgets</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-gadget-class-and-its-subclasses">The &lt;gadget&gt; class and its subclasses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overall-class-hierarchy-for-the-duim-gadgets-library">Overall class hierarchy for the DUIM-Gadgets library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#subclasses-of-value-gadget">Subclasses of &lt;value-gadget&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subclasses-of-the-value-gadget-class">Subclasses of the <em>&lt;value-gadget&gt;</em> class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#subclasses-of-page">Subclasses of &lt;page&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subclasses-of-the-page-class">Subclasses of the <em>&lt;page&gt;</em> class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#subclasses-of-button">Subclasses of &lt;button&gt;</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#subclasses-of-collection-gadget">Subclasses of &lt;collection-gadget&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subclasses-of-the-button-class">Subclasses of the <em>&lt;button&gt;</em> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subclasses-of-collection-gadget">Subclasses of &lt;collection-gadget&gt;</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subclasses-of-the-collection-gadget-class">Subclasses of the <em>&lt;collection-gadget&gt;</em> class</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#button-gadgets">Button gadgets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#text-gadgets">Text gadgets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#collection-gadgets">Collection gadgets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#value-range-gadgets">Value range gadgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#value-range-gadgets">Value range gadgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-variety-of-value-range-gadgets">A variety of value range gadgets</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#page-gadgets">Page gadgets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gadgets-that-can-have-children">Gadgets that can have children</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#menus-and-menu-bars">Menus and menu bars</a></li>
@@ -255,7 +265,7 @@ and describes the class hierarchy present.</p>
 <p>In each table below, classes that support the <em>items</em> protocol are
 displayed in <em>bold text</em>, and classes that support the activate
 protocol are displayed using <em>italic text</em>.</p>
-<p><em>Note:</em> In <a href="#id24"><span class="problematic" id="id25">`Subclasses of the \&lt;collection-gadget\&gt; class`_</span></a>, every
+<p><em>Note:</em> In <a class="reference internal" href="#subclasses-of-the-collection-gadget-class">Subclasses of the &lt;collection-gadget&gt; class</a>, every
 subclass shown supports the <em>items</em> protocol, though for clarity,
 no bold is used.</p>
 <p>All subclasses of <em>&lt;value-gadget&gt;</em> support the <em>value</em> protocol. These
@@ -267,8 +277,8 @@ are described in <a class="reference internal" href="#subclasses-of-value-gadget
 which is itself a subclass of <em>&lt;object&gt;</em>. All other DUIM gadgets are
 subclasses of <em>&lt;gadget&gt;</em>, with the exception of <em>&lt;list-item&gt;</em>,
 <em>&lt;tree-node&gt;</em>, and <em>&lt;table-item&gt;</em>.</p>
-<p>The immediate subclasses of <em>&lt;gadget&gt;</em> are shown in <a href="#id26"><span class="problematic" id="id27">`Overall class
-hierarchy for the DUIM-Gadgets library`_</span></a>. Only <a class="reference internal" href="#duim:duim-gadgets:[value-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code></a>
+<p>The immediate subclasses of <em>&lt;gadget&gt;</em> are shown in <a class="reference internal" href="#overall-class-hierarchy-for-the-duim-gadgets-library">Overall class
+hierarchy for the DUIM-Gadgets library</a>. Only <a class="reference internal" href="#duim:duim-gadgets:[value-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code></a>
 and <a class="reference internal" href="#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a> have any subclasses defined. See
 <a class="reference internal" href="#subclasses-of-value-gadget">Subclasses of &lt;value-gadget&gt;</a> and <a class="reference internal" href="#subclasses-of-page">Subclasses of &lt;page&gt;</a> for details
 of these subclasses.</p>
@@ -323,7 +333,9 @@ gadgets in a frame. Grouped elements are usually displayed with a
 border and label identifying the grouping.</p>
 </dd>
 </dl>
-<p>Overall class hierarchy for the DUIM-Gadgets library</p>
+</div>
+<div class="section" id="overall-class-hierarchy-for-the-duim-gadgets-library">
+<h3>Overall class hierarchy for the DUIM-Gadgets library<a class="headerlink" href="#overall-class-hierarchy-for-the-duim-gadgets-library" title="Permalink to this headline">¶</a></h3>
 <p>&lt;object&gt;</p>
 <p>&lt;gadget&gt;</p>
 <p>&lt;action-gadget&gt;</p>
@@ -387,9 +399,11 @@ displayed within the same window. Clicking on any of the tabs
 displayed in a tab control displays a new page of information.</p>
 </dd>
 </dl>
-<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[value-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code></a> are as shown in <a href="#id28"><span class="problematic" id="id29">`Subclasses of
-the \&lt;value-gadget\&gt; class`_</span></a>.</p>
-<p>Subclasses of the <em>&lt;value-gadget&gt;</em> class</p>
+<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[value-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code></a> are as shown in <a class="reference internal" href="#subclasses-of-the-value-gadget-class">Subclasses of
+the &lt;value-gadget&gt; class</a>.</p>
+</div>
+<div class="section" id="subclasses-of-the-value-gadget-class">
+<h3>Subclasses of the <em>&lt;value-gadget&gt;</em> class<a class="headerlink" href="#subclasses-of-the-value-gadget-class" title="Permalink to this headline">¶</a></h3>
 <p>&lt;value-gadget&gt;</p>
 <p>&lt;text-gadget&gt;</p>
 <p><em>&lt;password-field&gt;</em></p>
@@ -414,9 +428,11 @@ a whole page of information within a “parent” element, with the page
 itself optionally containing other layouts or gadgets. Pages are used in
 situations where different sets of information (the pages themselves)
 need to be displayed in a common parent.</p>
-<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a> are as shown in <a href="#id30"><span class="problematic" id="id31">`Subclasses of the &lt;page&gt;
-class`_</span></a>.</p>
-<p>Subclasses of the <em>&lt;page&gt;</em> class</p>
+<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a> are as shown in <a class="reference internal" href="#subclasses-of-the-page-class">Subclasses of the &lt;page&gt;
+class</a>.</p>
+</div>
+<div class="section" id="subclasses-of-the-page-class">
+<h3>Subclasses of the <em>&lt;page&gt;</em> class<a class="headerlink" href="#subclasses-of-the-page-class" title="Permalink to this headline">¶</a></h3>
 <p>&lt;page&gt;</p>
 <p>&lt;tab-control-page&gt;</p>
 <p>&lt;property-page&gt;</p>
@@ -447,8 +463,8 @@ presented to the user in a strict order.</p>
 </div>
 <div class="section" id="subclasses-of-button">
 <h3>Subclasses of &lt;button&gt;<a class="headerlink" href="#subclasses-of-button" title="Permalink to this headline">¶</a></h3>
-<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code></a> are as shown in <a href="#id32"><span class="problematic" id="id33">`Subclasses of the
-\&lt;button\&gt; class`_</span></a>. These subclasses include not only
+<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code></a> are as shown in <a class="reference internal" href="#subclasses-of-the-button-class">Subclasses of the
+&lt;button&gt; class</a>. These subclasses include not only
 buttons that can appear in any sheet, but also their equivalent classes
 of menu item. Thus, an instance of <a class="reference internal" href="#duim:duim-gadgets:[check-button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;check-button&gt;</span></code></a> represents a button
 whose state can toggle a specific value on and off, and an instance of
@@ -456,7 +472,9 @@ whose state can toggle a specific value on and off, and an instance of
 specific value on and off in the same way.</p>
 <p>Since all the subclasses of <a class="reference internal" href="#duim:duim-gadgets:[button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code></a> are themselves value gadgets,
 each one supports the <em>value</em> protocol, as described in <a class="reference internal" href="#overview">Overview</a>.</p>
-<p>Subclasses of the <em>&lt;button&gt;</em> class</p>
+</div>
+<div class="section" id="subclasses-of-the-button-class">
+<h3>Subclasses of the <em>&lt;button&gt;</em> class<a class="headerlink" href="#subclasses-of-the-button-class" title="Permalink to this headline">¶</a></h3>
 <p>&lt;button&gt;</p>
 <p>&lt;check-button&gt;</p>
 <p>&lt;check-menu-button&gt;</p>
@@ -468,11 +486,12 @@ each one supports the <em>value</em> protocol, as described in <a class="referen
 </div>
 <div class="section" id="subclasses-of-collection-gadget">
 <h3>Subclasses of &lt;collection-gadget&gt;<a class="headerlink" href="#subclasses-of-collection-gadget" title="Permalink to this headline">¶</a></h3>
-<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[collection-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;collection-gadget&gt;</span></code></a> are as shown in <a href="#id34"><span class="problematic" id="id35">`Subclasses
-of the \&lt;collection-gadget&gt;\ class`_</span></a>. All of these
+<p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[collection-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;collection-gadget&gt;</span></code></a> are as shown in <a class="reference internal" href="#subclasses-of-the-collection-gadget-class">Subclasses
+of the &lt;collection-gadget&gt; class</a>. All of these
 subclasses support the <em>items</em> protocol, even though they are not
 displayed in bold.</p>
-<p>Subclasses of the <em>&lt;collection-gadget&gt;</em> class</p>
+<div class="section" id="subclasses-of-the-collection-gadget-class">
+<h4>Subclasses of the <em>&lt;collection-gadget&gt;</em> class<a class="headerlink" href="#subclasses-of-the-collection-gadget-class" title="Permalink to this headline">¶</a></h4>
 <p>&lt;collection-gadget&gt;</p>
 <p>&lt;button-box&gt;</p>
 <p>&lt;check-box&gt;</p>
@@ -547,6 +566,7 @@ value gadgets, each one supports the <em>value</em> protocol, as described in
 <a class="reference internal" href="#overview">Overview</a>.</p>
 </div>
 </div>
+</div>
 <div class="section" id="button-gadgets">
 <h2>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this headline">¶</a></h2>
 <p>Broadly speaking, buttons are gadgets whose value can be changed, or for
@@ -602,18 +622,20 @@ same menu.</p>
 <h2>Value range gadgets<a class="headerlink" href="#value-range-gadgets" title="Permalink to this headline">¶</a></h2>
 <p>A value range gadget is any gadget whose value falls within a defined
 Dylan range.</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center">
 <img alt="_images/gadgets-11.png" src="_images/gadgets-11.png" />
-<p class="caption"><span class="caption-text">A variety of value range gadgets</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
+<div class="section" id="a-variety-of-value-range-gadgets">
+<h3>A variety of value range gadgets<a class="headerlink" href="#a-variety-of-value-range-gadgets" title="Permalink to this headline">¶</a></h3>
 <p>Sliders, scroll bars, and scroll bars are all examples of value range
 gadgets. Value range gadgets provide immediate visual feedback of the
-value of the gadget at any time, as shown in <a href="#id36"><span class="problematic" id="id37">`A variety of value
-range gadgets`_</span></a>. In the case of sliders and scroll
+value of the gadget at any time, as shown in <a class="reference internal" href="#a-variety-of-value-range-gadgets">A variety of value
+range gadgets</a>. In the case of sliders and scroll
 bars, the user can set the <a class="reference internal" href="#duim:duim-gadgets:gadget-value"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">gadget-value</span></code></a> by dragging the appropriate
 part of the gadget to a new point on the scale. Progress bars are
 typically used only to provide the user with feedback about the progress
 of a task.</p>
+</div>
 </div>
 <div class="section" id="page-gadgets">
 <h2>Page gadgets<a class="headerlink" href="#page-gadgets" title="Permalink to this headline">¶</a></h2>
@@ -637,9 +659,9 @@ specified operation. For more information about wizard frames,
 see ` &lt;frames.htm#89815&gt;`_.</p>
 </dd>
 </dl>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id6">
 <img alt="_images/gadgets-12.png" src="_images/gadgets-12.png" />
-<p class="caption"><span class="caption-text">A tab control page, a property page, and a wizard page</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A tab control page, a property page, and a wizard page</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -682,9 +704,9 @@ documentation string for any menu command currently under the mouse
 cursor. In addition, you can define status bars that display any textual
 information your application requires, and to this end, status bars can
 take a number of children.</p>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id7">
 <img alt="_images/gadgets-13.png" src="_images/gadgets-13.png" />
-<p class="caption"><span class="caption-text">A status bar</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A status bar</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 <p>In word processing applications, the status bar may also display the
 current position of the insertion point, and information about the
@@ -698,9 +720,9 @@ bar for an application.</p>
 <p>An instance of the class <a class="reference internal" href="#duim:duim-gadgets:[tab-control]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tab-control&gt;</span></code></a> lets you define a sheet that
 contains several “pages” of information. Each page of information is
 displayed by clicking on the appropriate tab along the top of the sheet.</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id8">
 <img alt="_images/gadgets-14.png" src="_images/gadgets-14.png" />
-<p class="caption"><span class="caption-text">A tab control</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A tab control</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
 <p>This children of a tab control are the pages of information themselves.
 Each child should be an instance of the <a class="reference internal" href="#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a> class. The various
@@ -913,9 +935,9 @@ init-keyword, and is given in pixels.</p>
 Borders may appear raised from the area they surround, or lowered with
 respect to it. Alternatively, a border may be displayed as a thin ridge
 or groove. Input and output borders represent “logical” borders.</p>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id9">
 <img alt="_images/gadgets-16.png" src="_images/gadgets-16.png" />
-<p class="caption"><span class="caption-text">Different types of border</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Different types of border</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </div>
 <p>Borders are usually created using the <a class="reference internal" href="#duim:duim-gadgets:with-border"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-border</span></code></a> macro, rather
 than by making direct instances of this class.</p>
@@ -3931,9 +3953,9 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#&qu
 <dd class="field-odd"><p><p>The class of gadgets that group their children using a labelled border.
 You can use this gadget class to group together a number of related
 items visually.</p>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id10">
 <img alt="_images/gadgets-22.png" src="_images/gadgets-22.png" />
-<p class="caption"><span class="caption-text">A group box</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A group box</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">label:</span></code> init-keyword specifies a string or icon that is to be used
 as a label for the gadget.</p>
@@ -4096,9 +4118,9 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#&qu
 </ul>
 </dd>
 <dt class="field-odd">Discussion</dt>
-<dd class="field-odd"><p><div class="figure align-center" id="id12">
+<dd class="field-odd"><p><div class="figure align-center" id="id11">
 <img alt="_images/gadgets-23.png" src="_images/gadgets-23.png" />
-<p class="caption"><span class="caption-text">The class of list boxes.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">The class of list boxes.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">borders:</span></code> init-keyword lets you specify a border around the list
 box. If specified, a border of the appropriate type is drawn around the
@@ -5085,9 +5107,9 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#f</
 </ul>
 </dd>
 <dt class="field-odd">Discussion</dt>
-<dd class="field-odd"><p><div class="figure align-center" id="id13">
+<dd class="field-odd"><p><div class="figure align-center" id="id12">
 <img alt="_images/gadgets-25.png" src="_images/gadgets-25.png" />
-<p class="caption"><span class="caption-text">The class of option boxes.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">The class of option boxes.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">borders:</span></code> init-keyword lets you specify a border around the option
 box. If specified, a border of the appropriate type is drawn around the
@@ -5189,9 +5211,9 @@ with ES-PASSWORD style.</p>
 </ul>
 </dd>
 <dt class="field-odd">Discussion</dt>
-<dd class="field-odd"><p><div class="figure align-center" id="id14">
+<dd class="field-odd"><p><div class="figure align-center" id="id13">
 <img alt="_images/gadgets-27.png" src="_images/gadgets-27.png" />
-<p class="caption"><span class="caption-text">The class of progress bar windows.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">The class of progress bar windows.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword lets you specify whether the progress
 bar should be horizontal or vertical.</p>
@@ -5238,9 +5260,9 @@ can be monitored as follows:</p>
 <dd class="field-odd"><p><a class="reference internal" href="#duim:duim-gadgets:[button-box]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;button-box&gt;</span></code></a> <a class="reference internal" href="#duim:duim-gadgets:[action-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;action-gadget&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Discussion</dt>
-<dd class="field-even"><p><div class="figure align-center" id="id15">
+<dd class="field-even"><p><div class="figure align-center" id="id14">
 <img alt="_images/gadgets-28.png" src="_images/gadgets-28.png" />
-<p class="caption"><span class="caption-text">The class of grouped push buttons.</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">The class of grouped push buttons.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <a class="reference internal" href="#duim:duim-gadgets:gadget-value"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">gadget-value</span></code></a> of a push box is always the
 gadget value of the last push button in the box to be pressed. You
@@ -5280,10 +5302,10 @@ which button has been pressed in a callback for the push box.</p>
 </ul>
 </dd>
 <dt class="field-odd">Discussion</dt>
-<dd class="field-odd"><p><div class="figure align-center" id="id16">
+<dd class="field-odd"><p><div class="figure align-center" id="id15">
 <img alt="_images/gadgets-29.png" src="_images/gadgets-29.png" />
 <p class="caption"><span class="caption-text">The class of push buttons.The push button gadget provides
-press-to-activate switch behavior.</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+press-to-activate switch behavior.</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
 </div>
 <p>When the button is activated (by releasing the pointer button over it),
 its activate callback is invoked.</p>
@@ -5331,9 +5353,9 @@ message showing the label of the button.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#duim:duim-gadgets:[menu-box]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;menu-box&gt;</span></code></a> <a class="reference internal" href="#duim:duim-gadgets:[action-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;action-gadget&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Discussion</dt>
-<dd class="field-even"><p><div class="figure align-center" id="id17">
+<dd class="field-even"><p><div class="figure align-center" id="id16">
 <img alt="_images/gadgets-30.png" src="_images/gadgets-30.png" />
-<p class="caption"><span class="caption-text">The class of grouped push buttons in menus.</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">The class of grouped push buttons in menus.</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
 </div>
 <p>Internally, this class maps into the menu Windows control.</p>
 </p>
@@ -5369,9 +5391,9 @@ message showing the label of the button.</p>
 </ul>
 </dd>
 <dt class="field-odd">Discussion</dt>
-<dd class="field-odd"><p><div class="figure align-center" id="id18">
+<dd class="field-odd"><p><div class="figure align-center" id="id17">
 <img alt="_images/gadgets-31.png" src="_images/gadgets-31.png" />
-<p class="caption"><span class="caption-text">The class of push buttons that appear on menus.</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">The class of push buttons that appear on menus.</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">default?:</span></code> init-keyword sets the default value for the push menu
 button gadget.</p>
@@ -5477,9 +5499,9 @@ buttons using the :class:&lt;radio-box&gt;` gadget.</p>
 </dd>
 <dt class="field-even">Discussion</dt>
 <dd class="field-even"><p><p>The class of grouped radio buttons that can appear in menus.</p>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id18">
 <img alt="_images/gadgets-34.png" src="_images/gadgets-34.png" />
-<p class="caption"><span class="caption-text">A radio menu box</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A radio menu box</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
 </div>
 <p>Internally, this class maps into the menu Windows control.</p>
 </p>
@@ -5826,9 +5848,9 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#&qu
 </dd>
 <dt class="field-odd">Discussion</dt>
 <dd class="field-odd"><p><p>The class of gadgets used as a visual separator.</p>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id19">
 <img alt="_images/gadgets-37.png" src="_images/gadgets-37.png" />
-<p class="caption"><span class="caption-text">A separator</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A separator</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword specifies whether the separator is
 vertical or horizontal.</p>
@@ -6692,9 +6714,9 @@ current page as follows:</p>
 </dd>
 <dt class="field-even">Discussion</dt>
 <dd class="field-even"><p><p>The class that represents a page in a tab control.</p>
-<div class="figure align-center" id="id21">
+<div class="figure align-center" id="id20">
 <img alt="_images/gadgets-42.png" src="_images/gadgets-42.png" />
-<p class="caption"><span class="caption-text">A tab control page</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A tab control page</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
 </div>
 </p>
 </dd>
@@ -6914,11 +6936,11 @@ so on. Similarly, the first function in the sequence of generators is
 invoked on each item in the control, thereby generating the contents of
 the first column, the second is used to generate the contents of the
 second column by invoking it on each item in the control, and so on.
-This is illustrated in <a href="#id38"><span class="problematic" id="id39">`Defining column headings and contents in
-table controls`_</span></a>.</p>
-<div class="figure align-center" id="id22">
+This is illustrated below.
+.</p>
+<div class="figure align-center" id="id21">
 <img alt="_images/gadgets-44.png" src="_images/gadgets-44.png" />
-<p class="caption"><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </div>
 <p>If you do not specify both of these init-keywords, you must supply
 columns for the table control, using the <a class="reference internal" href="#duim:duim-gadgets:[table-column]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;table-column&gt;</span></code></a> class.</p>
@@ -7303,9 +7325,9 @@ children, a number of buttons that give the user quick access to the
 more common commands in an application. Typically, the label for each
 button is an icon that pictorially represents the operation that
 clicking the button performs.</p>
-<div class="figure align-center" id="id23">
+<div class="figure align-center" id="id22">
 <img alt="_images/gadgets-47.png" src="_images/gadgets-47.png" />
-<p class="caption"><span class="caption-text">A tool bar</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A tool bar</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
 </div>
 <p>A tool bar is often placed underneath the menu bar of an application,
 although its position is very often configurable, and a tool bar may
