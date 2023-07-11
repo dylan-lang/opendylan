@@ -138,20 +138,6 @@ jobs:
           target-folder: man-pages
 
       #
-      # Project notebook
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/project-notebook"
-
-      - name: Deploy Project notebook
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/project-notebook/build/html
-          target-folder: project-notebook
-
-      #
       # Release notes
       #
 
