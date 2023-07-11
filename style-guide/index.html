@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dylan Style Guide &mdash; Style Guide 1.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -42,7 +43,6 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Dylan Style Guide</a><ul>
-<li><a class="reference internal" href="#purpose-of-this-document">Purpose of this document</a></li>
 <li><a class="reference internal" href="#controversial-comments">Controversial comments</a></li>
 <li><a class="reference internal" href="#line-length">Line Length</a></li>
 <li><a class="reference internal" href="#consistency">Consistency</a></li>
@@ -97,39 +97,10 @@
              
   <div class="section" id="dylan-style-guide">
 <h1>Dylan Style Guide<a class="headerlink" href="#dylan-style-guide" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#purpose-of-this-document" id="id1">Purpose of this document</a></p></li>
-<li><p><a class="reference internal" href="#controversial-comments" id="id2">Controversial comments</a></p></li>
-<li><p><a class="reference internal" href="#line-length" id="id3">Line Length</a></p></li>
-<li><p><a class="reference internal" href="#consistency" id="id4">Consistency</a></p></li>
-<li><p><a class="reference internal" href="#naming" id="id5">Naming</a></p></li>
-<li><p><a class="reference internal" href="#dot-notation" id="id6">Dot notation</a></p></li>
-<li><p><a class="reference internal" href="#symbols-versus-keywords" id="id7">Symbols versus keywords</a></p></li>
-<li><p><a class="reference internal" href="#end-words" id="id8">End words</a></p></li>
-<li><p><a class="reference internal" href="#semicolons" id="id9">Semicolons</a></p></li>
-<li><p><a class="reference internal" href="#general-indentation" id="id10">General indentation</a></p></li>
-<li><p><a class="reference internal" href="#operators-on-newline" id="id11">Operators on newline</a></p></li>
-<li><p><a class="reference internal" href="#if-then-else" id="id12">if then else</a></p></li>
-<li><p><a class="reference internal" href="#let" id="id13">let</a></p></li>
-<li><p><a class="reference internal" href="#select-and-case" id="id14">select and case</a></p></li>
-<li><p><a class="reference internal" href="#macros" id="id15">Macros</a></p></li>
-<li><p><a class="reference internal" href="#for-loop" id="id16">for loop</a></p></li>
-<li><p><a class="reference internal" href="#local-methods" id="id17">Local methods</a></p></li>
-<li><p><a class="reference internal" href="#parameter-lists" id="id18">Parameter lists</a></p></li>
-<li><p><a class="reference internal" href="#return-values" id="id19">Return values</a></p></li>
-<li><p><a class="reference internal" href="#method-constants" id="id20">Method constants</a></p></li>
-<li><p><a class="reference internal" href="#generic-function-definitions" id="id21">Generic function definitions</a></p></li>
-<li><p><a class="reference internal" href="#class-definitions" id="id22">Class definitions</a></p></li>
-</ul>
-</div>
-<div class="section" id="purpose-of-this-document">
-<h2>Purpose of this document<a class="headerlink" href="#purpose-of-this-document" title="Permalink to this headline">¶</a></h2>
 <p>This document describes a coding style that the Dylan group recommends.
 There are still some areas of disagreement, and there is still room to
 change this style guide. In some places the Dylan book group decided to
 use a different style, which is noted in this guide.</p>
-</div>
 <div class="section" id="controversial-comments">
 <h2>Controversial comments<a class="headerlink" href="#controversial-comments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
