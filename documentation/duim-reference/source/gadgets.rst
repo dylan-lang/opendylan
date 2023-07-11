@@ -253,6 +253,7 @@ These are as follows:
    border and label identifying the grouping.
 
 Overall class hierarchy for the DUIM-Gadgets library
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <object>
 
@@ -348,6 +349,7 @@ The subclasses of :class:`<value-gadget>` are as shown in `Subclasses of
 the \<value-gadget\> class`_.
 
 Subclasses of the *<value-gadget>* class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <value-gadget>
 
@@ -394,6 +396,7 @@ The subclasses of :class:`<page>` are as shown in `Subclasses of the <page>
 class`_.
 
 Subclasses of the *<page>* class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <page>
 
@@ -447,6 +450,7 @@ Since all the subclasses of :class:`<button>` are themselves value gadgets,
 each one supports the *value* protocol, as described in `Overview`_.
 
 Subclasses of the *<button>* class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 <button>
 
@@ -468,11 +472,13 @@ Subclasses of <collection-gadget>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The subclasses of :class:`<collection-gadget>` are as shown in `Subclasses
-of the \<collection-gadget>\ class`_. All of these
+of the \<collection-gadget\> class`_. All of these
 subclasses support the *items* protocol, even though they are not
 displayed in bold.
 
+
 Subclasses of the *<collection-gadget>* class
+"""""""""""""""""""""""""""""""""""""""""""""
 
 <collection-gadget>
 
@@ -637,7 +643,8 @@ Dylan range.
 .. figure:: images/gadgets-11.png
    :align: center
 
-   A variety of value range gadgets
+A variety of value range gadgets
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sliders, scroll bars, and scroll bars are all examples of value range
 gadgets. Value range gadgets provide immediate visual feedback of the
@@ -5760,12 +5767,12 @@ are exported from the *duim-gadgets* module.
      invoked on each item in the control, thereby generating the contents of
      the first column, the second is used to generate the contents of the
      second column by invoking it on each item in the control, and so on.
-     This is illustrated in `Defining column headings and contents in
-     table controls`_.
+     This is illustrated below. 
+     .
 
      .. figure:: images/gadgets-44.png
         :align: center
-
+        
         Defining column headings and contents in table controls
 
      If you do not specify both of these init-keywords, you must supply

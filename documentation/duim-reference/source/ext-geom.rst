@@ -10,11 +10,11 @@ Overview
 
 The DUIM-Extended-Geometry library builds on the features provided by
 the DUIM-Geometry library, and provides more extensive support for
-coordinate geometry that is only required for more specialist uses. The
-library contains a single module, *duim-extended-geometry*, from which
-all the interfaces described in this chapter are exposed. `See
-DUIM-Extended-Geometry Module`_ contains complete
-reference entries for each exposed interface.
+coordinate geometry that is only required for more specialist
+uses. The library contains a single module, *duim-extended-geometry*,
+from which all the interfaces described in this chapter are
+exposed. See :ref:`duim-extended-geometry-module` that contains
+complete reference entries for each exposed interface.
 
 The class hierarchy for DUIM-Extended-Geometry
 ==============================================
@@ -52,6 +52,8 @@ particular types of line. Their usage is relatively obvious.
 - :class:`<polyline>` This class is used to create lines that pass through an
   arbitrary set of coordinates. It produces a jagged line with vertices
   at each coordinate.
+
+.. _duim-extended-geometry-module:
 
 DUIM-Extended-Geometry Module
 =============================
