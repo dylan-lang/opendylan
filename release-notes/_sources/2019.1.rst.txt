@@ -36,7 +36,7 @@ installed Clang 7.0 or later, you can edit
 ``share/opendylan/build-scripts/config.jam`` and set the CC variable
 to point to your Clang executable:
 
-.. code-block:: jam
+.. code-block:: 
 
    CC                ?= clang-7 ;
    CCFLAGS           ?= -w -g -O2 ;

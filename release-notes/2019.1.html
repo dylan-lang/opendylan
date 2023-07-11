@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Open Dylan 2019.1 &mdash; Open Dylan Release Notes</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -127,7 +128,7 @@ configured to use the platform default C compiler instead. If you have
 installed Clang 7.0 or later, you can edit
 <code class="docutils literal notranslate"><span class="pre">share/opendylan/build-scripts/config.jam</span></code> and set the CC variable
 to point to your Clang executable:</p>
-<div class="highlight-jam notranslate"><div class="highlight"><pre><span></span>CC                ?= clang-7 ;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CC                ?= clang-7 ;
 CCFLAGS           ?= -w -g -O2 ;
 C++               ?= clang++-7 ;
 C++FLAGS          ?= $(CCFLAGS) ;
