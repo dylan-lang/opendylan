@@ -35,4 +35,9 @@ of published Dylan packages.
    t-lists/index
    win32/index
 
+.. toctree::
+   :caption: About
+
+   copyright
+
 :ref:`Full Index <genindex>`
