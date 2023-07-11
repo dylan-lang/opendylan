@@ -21,7 +21,7 @@ Compiler
   ``SUPPORTED_COMPILER_BACK_ENDS`` build system variable, normally set
   at configuration time within the ``config.jam`` build script:
 
-  .. code-block:: jam
+  .. code-block:: 
 
       SUPPORTED_COMPILER_BACK_ENDS ?= llvm c ;
 
