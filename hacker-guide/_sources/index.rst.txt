@@ -104,11 +104,3 @@ Hackers.
    topics/index
    glossary
    copyright
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-
