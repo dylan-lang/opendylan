@@ -36,8 +36,6 @@ The extensions are:
   - :func:`register-application-exit-function`
   - :func:`tokenize-command-line`
 
-  See also: :doc:`../command-line-parser/index`
-
 - Performance analysis: :macro:`timing`, :macro:`profiling`.
 - Type conversion functions: :func:`integer-to-string`,
   :func:`string-to-integer`, and :func:`float-to-string`.

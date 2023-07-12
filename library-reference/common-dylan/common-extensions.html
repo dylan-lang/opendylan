@@ -73,9 +73,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
-</ul>
-<p class="caption"><span class="caption-text">About</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
 </ul>
 
@@ -111,7 +108,7 @@ extensions to the Dylan language and is exported from the
 <em>common-dylan</em> library.  As a convenience, the <em>common-dylan</em> module
 re-exports everything from the <em>common-extensions</em> and <em>dylan</em> modules.</p>
 <p>The extensions are:</p>
-<ul>
+<ul class="simple">
 <li><p>Collection model: <a class="reference internal" href="#common-dylan:common-extensions:[stretchy-sequence]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stretchy-sequence&gt;</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:[string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code></a>,
 <a class="reference internal" href="#common-dylan:common-extensions:difference"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">difference</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:fill-table!"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">fill-table!</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:find-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">find-element</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:position"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">position</span></code></a>,
 <a class="reference internal" href="#common-dylan:common-extensions:remove-all-keys!"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">remove-all-keys!</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:definetable"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">table</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a>, and <a class="reference internal" href="#common-dylan:common-extensions:join"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">join</span></code></a>.</p></li>
@@ -119,7 +116,7 @@ re-exports everything from the <em>common-extensions</em> and <em>dylan</em> mod
 <a class="reference internal" href="#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a>, and <a class="reference internal" href="#common-dylan:common-extensions:condition-to-string"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">condition-to-string</span></code></a>.</p></li>
 <li><p>Control flow: <a class="reference internal" href="#common-dylan:common-extensions:iterate"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">iterate</span></code></a> and <a class="reference internal" href="#common-dylan:common-extensions:when"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">when</span></code></a>.</p></li>
 <li><p>Development conveniences:</p>
-<ul class="simple">
+<ul>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:debug-message"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">debug-message</span></code></a></p></li>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:ignore"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignore</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:ignorable"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">ignorable</span></code></a></p></li>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:$unsupplied"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$unsupplied</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:unsupplied?"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied?</span></code></a>, <a class="reference internal" href="#common-dylan:common-extensions:unsupplied"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">unsupplied</span></code></a>,
@@ -129,7 +126,7 @@ re-exports everything from the <em>common-extensions</em> and <em>dylan</em> mod
 </ul>
 </li>
 <li><p>Handling application startup and shutdown:</p>
-<ul class="simple">
+<ul>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:application-arguments"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-arguments</span></code></a></p></li>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:application-filename"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-filename</span></code></a></p></li>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:application-name"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">application-name</span></code></a></p></li>
@@ -137,7 +134,6 @@ re-exports everything from the <em>common-extensions</em> and <em>dylan</em> mod
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:register-application-exit-function"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">register-application-exit-function</span></code></a></p></li>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:tokenize-command-line"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">tokenize-command-line</span></code></a></p></li>
 </ul>
-<p>See also: <span class="xref std std-doc">../command-line-parser/index</span></p>
 </li>
 <li><p>Performance analysis: <a class="reference internal" href="simple-profiling.html#common-dylan:simple-profiling:timing"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">timing</span></code></a>, <a class="reference internal" href="simple-profiling.html#common-dylan:simple-profiling:profiling"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">profiling</span></code></a>.</p></li>
 <li><p>Type conversion functions: <a class="reference internal" href="#common-dylan:common-extensions:integer-to-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">integer-to-string</span></code></a>,

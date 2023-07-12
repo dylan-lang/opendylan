@@ -8,17 +8,17 @@ documents Dylan language extensions and the LID file format.
 See the :doc:`Dylan Package Docs <../../../../package/index>` for documentation
 of published Dylan packages.
 
+Contents:
+
 .. toctree::
-   :hidden:
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Extensions
 
    language-extensions/index
    lid
 
 .. toctree::
-   :hidden:
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Libraries
 
    c-ffi/index
@@ -34,10 +34,4 @@ of published Dylan packages.
    system/index
    t-lists/index
    win32/index
-
-.. toctree::
-   :caption: About
-
    copyright
-
-:ref:`Full Index <genindex>`
