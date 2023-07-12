@@ -15,8 +15,8 @@ GitHub <https://gist.github.com>`_ and paste a link to it.
 .. _contribute:
 
 How to Contribute
-  The :doc:`Hacker Guide <hacker-guide/index>` has details on how to contribute
-  to the project.
+  The :doc:`Hacker Guide <../hacker-guide/index>` has details on how to
+  contribute to the project.
 
 Report Bugs
   Bugs may be reported against the `opendylan repository`_ on GitHub. If you know the bug
