@@ -16,7 +16,6 @@ pair of tools for interactive development in Emacs.  This document describes
 these tools.
 
 .. toctree::
-   :hidden:
    :maxdepth: 2
 
    hello-world

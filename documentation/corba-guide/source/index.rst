@@ -1,13 +1,11 @@
+****************************************
 Developing Component Software with CORBA
-========================================
+****************************************
 
 This manual describes how to use the CORBA interoperability features
 in Open Dylan.
 
-Contents:
-
 .. toctree::
-   :hidden:
    :maxdepth: 2
 
    preface
@@ -21,9 +19,3 @@ Contents:
    rundebug
    scepter
    idl-app
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`

@@ -17,8 +17,7 @@ points to the appropriate LID file.
 LID File
 --------
 
-For further details of the LID file format, see
-:doc:`../../library-reference/source/lid`.
+For further details of the LID file format, see :doc:`../library-reference/lid`.
 
 1) The ``Library`` keyword
 

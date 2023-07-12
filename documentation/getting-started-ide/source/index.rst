@@ -5,7 +5,6 @@ Getting Started with the Open Dylan IDE
 Contents:
 
 .. toctree::
-   :hidden:
    :maxdepth: 2
 
    preface
@@ -21,11 +20,3 @@ Contents:
    editopt
    com-projects
    copyright
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-

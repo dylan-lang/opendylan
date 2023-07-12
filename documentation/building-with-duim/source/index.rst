@@ -5,7 +5,6 @@ Building Applications With DUIM
 Contents:
 
 .. toctree::
-   :hidden:
    :maxdepth: 2
 
    preface.rst
@@ -18,11 +17,3 @@ Contents:
    tour.rst
    source.rst
    copyright.rst
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-
