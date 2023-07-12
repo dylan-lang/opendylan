@@ -1,3 +1,5 @@
+:orphan:
+
 Welcome to Open Dylan's documentation!
 ======================================
 
@@ -8,12 +10,3 @@ Welcome to Open Dylan's documentation!
    :maxdepth: 2
 
    dylan-compiler
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
