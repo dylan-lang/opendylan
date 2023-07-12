@@ -157,16 +157,14 @@ For Open Dylan Developers
 .. toctree::
    :hidden:
 
-   cheatsheets/index
+   News <../news/index>
+   Cheat Sheets <cheatsheets/index>
    Publications <publications>
-   ../intro-dylan/index
-   ../news/index
-   ../building-with-duim/index
-   ../corba-guide/index
-   ../duim-reference/index
-   ../getting-started-ide/index
-   ../library-reference/copyright
-   ../man-pages/index
-   ../release-notes/index
-   ../sphinx-extensions/documentation/source/index
-   ../style-guide/index
+   Intro to Dylan <../intro-dylan/index>
+   CORBA Guide <../corba-guide/index>
+   DUIM Guide <../building-with-duim/index>
+   DUIM Reference <../duim-reference/index>
+   Getting Started / IDE <../getting-started-ide/index>
+   Release Notes <../release-notes/index>
+   Sphinx Extensions <../../../sphinx-extensions/documentation/source/index>
+   Style Guide <../style-guide/index>
