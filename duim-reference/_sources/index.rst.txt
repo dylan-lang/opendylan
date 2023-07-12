@@ -1,10 +1,10 @@
+**************
 DUIM Reference
-==============
+**************
 
 Contents:
 
 .. toctree::
-   :hidden:
    :maxdepth: 2
 
    conventions
@@ -17,10 +17,3 @@ Contents:
    gadgets
    frames
    copyright
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-
