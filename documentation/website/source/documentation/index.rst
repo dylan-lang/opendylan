@@ -166,5 +166,5 @@ For Open Dylan Developers
    DUIM Reference <../duim-reference/index>
    Getting Started / IDE <../getting-started-ide/index>
    Release Notes <../release-notes/index>
-   Sphinx Extensions <../../../sphinx-extensions/documentation/source/index>
+   Sphinx Extensions <../../sphinx-extensions/documentation/source/index>
    Style Guide <../style-guide/index>
