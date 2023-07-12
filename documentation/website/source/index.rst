@@ -95,10 +95,11 @@ articles, and all the library docs.
    must be run before `make html`.
 
 .. toctree::
-   :caption: Reference Docs
+   :caption: Reference
    :hidden:
 
    Dylan Reference Manual <https://opendylan.org/books/drm/>
    Package Docs <package/index>
    Open Dylan Libraries <library-reference/index>
    All Documentation <documentation/index>
+   Full Index <genindex>
