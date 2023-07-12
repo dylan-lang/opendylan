@@ -134,8 +134,7 @@ platform support and new features.
 Improved editor support
 =======================
 
-**2012-10-18** - :doc:`Improved editor support
- </news/2012/10/18/editor-support>`
+**2012-10-18** - :doc:`Improved editor support </news/2012/10/18/editor-support>`
 
 Bugs in the syntax highlighting support for Textmate and Sublime Text as well
 as for vim have been fixed.
@@ -144,8 +143,7 @@ as for vim have been fixed.
 command-line-parser
 ===================
 
-**2012-10-15** - :doc:`command-line-parser library
-</news/2012/10/15/command-line-parser>`
+**2012-10-15** - :doc:`command-line-parser library </news/2012/10/15/command-line-parser>`
 
 The `command-line-parser <https://github.com/dylan-lang/command-line-parser>`_
 library has been completely rewritten.
