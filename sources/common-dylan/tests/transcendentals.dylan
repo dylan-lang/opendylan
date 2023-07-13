@@ -154,9 +154,7 @@ define test test-^ ()
 end test;
 
 
-define test test-sqrt
-    (expected-to-fail-test: method () $os-name == #"darwin" end,
-     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
+define test test-sqrt ()
   check-condition("sqrt(-1) errors",
                   <error>,
                   sqrt(-1));
@@ -168,8 +166,6 @@ define test test-sqrt
   check-condition("sqrt(-1.d0) errors",
                   <error>,
                   sqrt(-1.d0));
-
-
 end test;
 
 define test test-isqrt ()
