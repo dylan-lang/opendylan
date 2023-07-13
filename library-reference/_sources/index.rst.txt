@@ -5,8 +5,8 @@ This reference describes the libraries provided with Open Dylan, either as part
 of the "opendylan" repository or included therein as submodules. It also
 documents Dylan language extensions and the LID file format.
 
-See the :doc:`Dylan Package Docs <../../../../package/index>` for documentation
-of published Dylan packages.
+See the :doc:`Dylan Package Docs <../package/index>` for documentation
+on published Dylan packages.
 
 Contents:
 
