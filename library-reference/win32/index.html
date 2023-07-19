@@ -1,142 +1,468 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Copyright" href="../copyright.html" /><link rel="prev" title="The t-lists Library" href="../t-lists/index.html" />
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Win32 API Libraries &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="next" title="Copyright" href="../copyright.html" />
-    <link rel="prev" title="The t-lists Library" href="../t-lists/index.html" /> 
-</head>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>The Win32 API Libraries - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Dylan Library Reference
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Extensions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../network/index.html">The network Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">The Win32 API Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#supported-win32-libraries">Supported Win32 libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#content-and-organization-of-the-win32-api-libraries">Content and organization of the Win32 API libraries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#notes-on-the-translations">Notes on the translations</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#naming-and-mapping-conventions">Naming and mapping conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#simple-naming-conventions">Simple naming conventions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-the-null-value">Mapping the null value</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-c-types-onto-dylan-classes">Mapping C types onto Dylan classes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-methods-from-windows-alias-functions">Creating methods from Windows alias functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-c-structure-fields-onto-dylan-slot-names">Mapping C structure fields onto Dylan slot names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#handling-return-of-multiple-values">Handling return of multiple values</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#defining-callback-functions">Defining callback functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#error-messages">Error messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#handling-dylan-conditions-in-a-win32-application">Handling Dylan conditions in a Win32 application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dealing-with-the-c-function-winmain">Dealing with the C function WinMain</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#combining-bit-mask-constants">Combining bit mask constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#other-minor-details">Other minor details</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#index-of-win32-names-excluded-from-the-dylan-libraries">Index of Win32 names excluded from the Dylan libraries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#characters">Characters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#a">A</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#b">B</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#c">C</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#d">D</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#e">E</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#f">F</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#g">G</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#h">H</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#l">L</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#m">M</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#n">N</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#o">O</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#p">P</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#r">R</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#s">S</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#u">U</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#v">V</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#w">W</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#y">Y</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
-</ul>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
       </div>
-    </nav>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Open Dylan Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Full Index</a></li>
+</ul>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Dylan Library Reference</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">The Win32 API Libraries</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/win32/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="the-win32-api-libraries">
-<span id="index-0"></span><h1>The Win32 API Libraries<a class="headerlink" href="#the-win32-api-libraries" title="Permalink to this headline">¶</a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/library-reference/win32/index.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="the-win32-api-libraries">
+<span id="index-0"></span><h1>The Win32 API Libraries<a class="headerlink" href="#the-win32-api-libraries" title="Permalink to this heading">#</a></h1>
 <p id="index-1">This document describes Open Dylan’s set of Win32 API interface
 libraries. These libraries provide a low-level Dylan interface to the
 Win32 API in Microsoft Windows.</p>
@@ -158,8 +484,8 @@ explains the name mapping scheme we used in the conversion, and provides
 a collection of tips for writing Dylan applications with the libraries.
 Finally, there is a list of items not supported in our versions of these
 libraries.</p>
-<div class="section" id="supported-win32-libraries">
-<span id="index-2"></span><h2>Supported Win32 libraries<a class="headerlink" href="#supported-win32-libraries" title="Permalink to this headline">¶</a></h2>
+<section id="supported-win32-libraries">
+<span id="index-2"></span><h2>Supported Win32 libraries<a class="headerlink" href="#supported-win32-libraries" title="Permalink to this heading">#</a></h2>
 <p>Each Dylan library representing a portion of the Win32 API has a single
 module of the same name as the library itself. For example, the library
 Win32-Common has a module also called Win32-Common. An exception to this
@@ -208,9 +534,9 @@ and so on (<em>COMMCTRL.H</em> and <em>COMCTL32.DLL</em>).</p></li>
 Corresponds to <em>SHELLAPI.H</em> and <em>SHELL32.DLL</em>.</p></li>
 <li><p>Winsock2 Corresponds to <em>WINSOCK2.H</em>, <em>QOS.H</em>, and <em>MSWSOCK.H</em>.</p></li>
 </ul>
-</div>
-<div class="section" id="content-and-organization-of-the-win32-api-libraries">
-<span id="index-3"></span><h2>Content and organization of the Win32 API libraries<a class="headerlink" href="#content-and-organization-of-the-win32-api-libraries" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="content-and-organization-of-the-win32-api-libraries">
+<span id="index-3"></span><h2>Content and organization of the Win32 API libraries<a class="headerlink" href="#content-and-organization-of-the-win32-api-libraries" title="Permalink to this heading">#</a></h2>
 <p>The Open Dylan Win32 API libraries are modeled closely upon
 Microsoft’s Win32 C libraries. Most names available in the Dylan
 libraries are the same as those available in the C libraries, though of
@@ -225,8 +551,8 @@ and Windows 95/98.</p>
 <p>If there is an additional area of Win32 you would like to see these
 libraries support, please inform the Open Dylan support team.</p>
 </div>
-<div class="section" id="notes-on-the-translations">
-<span id="index-4"></span><h3>Notes on the translations<a class="headerlink" href="#notes-on-the-translations" title="Permalink to this headline">¶</a></h3>
+<section id="notes-on-the-translations">
+<span id="index-4"></span><h3>Notes on the translations<a class="headerlink" href="#notes-on-the-translations" title="Permalink to this heading">#</a></h3>
 <p>The Win32-Common module re-exports some names from the C-FFI module that
 its user may need to use directly, without needing to use (or know
 about) the C-FFI module itself. These names are: <a class="reference internal" href="../c-ffi/index.html#c-ffi:c-ffi:null-pointer"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">null-pointer</span></code></a>,
@@ -239,15 +565,15 @@ Dylan libraries. The names excluded are listed in <a class="reference internal" 
 names excluded from the Dylan libraries</a>.</p>
 <p>The extended API macros, defined in the optional C header file
 <em>WINDOWSX.H</em>, are not supported.</p>
-</div>
-</div>
-<div class="section" id="naming-and-mapping-conventions">
-<span id="index-5"></span><h2>Naming and mapping conventions<a class="headerlink" href="#naming-and-mapping-conventions" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="naming-and-mapping-conventions">
+<span id="index-5"></span><h2>Naming and mapping conventions<a class="headerlink" href="#naming-and-mapping-conventions" title="Permalink to this heading">#</a></h2>
 <p>A Dylan application using the Win32 API will generally use the same API
 names as a C program would, with the following modifications for
 consistency with Dylan conventions.</p>
-<div class="section" id="simple-naming-conventions">
-<span id="index-6"></span><h3>Simple naming conventions<a class="headerlink" href="#simple-naming-conventions" title="Permalink to this headline">¶</a></h3>
+<section id="simple-naming-conventions">
+<span id="index-6"></span><h3>Simple naming conventions<a class="headerlink" href="#simple-naming-conventions" title="Permalink to this heading">#</a></h3>
 <p>Type names are enclosed in angle brackets. For example, <em>HANDLE</em> becomes
 <code class="docutils literal notranslate"><span class="pre">&lt;HANDLE&gt;</span></code>.</p>
 <p>Names of constants are prefixed by <em>$</em>. For example, <em>OPAQUE</em> becomes
@@ -259,9 +585,9 @@ becomes <em>$NO-ERROR</em> and a class called <em>LIST_ENTRY</em> becomes
 <code class="docutils literal notranslate"><span class="pre">CreateWindow</span></code> does not become <code class="docutils literal notranslate"><span class="pre">Create-Window</span></code>) since that is a less
 obvious mapping that is more likely to cause confusion when switching
 between Dylan code and Windows documentation.</p>
-</div>
-<div class="section" id="mapping-the-null-value">
-<span id="index-7"></span><h3>Mapping the null value<a class="headerlink" href="#mapping-the-null-value" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-the-null-value">
+<span id="index-7"></span><h3>Mapping the null value<a class="headerlink" href="#mapping-the-null-value" title="Permalink to this heading">#</a></h3>
 <p>In place of <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, there are several constants providing null values
 for frequently used types, such as <code class="docutils literal notranslate"><span class="pre">$NULL-HANDLE</span></code>, <code class="docutils literal notranslate"><span class="pre">NULL-RECT</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">$NULL-STRING</span></code>. Null values for other pointer types may be designated
@@ -271,9 +597,9 @@ expression <code class="docutils literal notranslate"><span class="pre">if(ptr).
 not the same as <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. There are also functions <code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">null-handle</span></code> and
 <code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">null-handle?</span></code> for creating and testing handles, since conceptually they
 are not necessarily pointers.</p>
-</div>
-<div class="section" id="mapping-c-types-onto-dylan-classes">
-<span id="index-8"></span><h3>Mapping C types onto Dylan classes<a class="headerlink" href="#mapping-c-types-onto-dylan-classes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-c-types-onto-dylan-classes">
+<span id="index-8"></span><h3>Mapping C types onto Dylan classes<a class="headerlink" href="#mapping-c-types-onto-dylan-classes" title="Permalink to this heading">#</a></h3>
 <p>The multitude of integer data types in C code (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>,
 <code class="docutils literal notranslate"><span class="pre">unsigned</span></code>, <code class="docutils literal notranslate"><span class="pre">ULONG</span></code>, <code class="docutils literal notranslate"><span class="pre">DWORD</span></code>, <code class="docutils literal notranslate"><span class="pre">LRESULT</span></code>, and so on) are all
 designated as <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> (or some appropriate subrange thereof) in
@@ -327,9 +653,9 @@ although the current purpose is different.</p>
 alternative versions of the C declarations. This means, for example,
 that the various handle types such as <code class="docutils literal notranslate"><span class="pre">&lt;hmenu&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;hwnd&gt;</span></code> are
 disjoint subclasses of <code class="docutils literal notranslate"><span class="pre">&lt;handle&gt;</span></code>, instead of all being equivalent.</p>
-</div>
-<div class="section" id="creating-methods-from-windows-alias-functions">
-<span id="index-9"></span><h3>Creating methods from Windows alias functions<a class="headerlink" href="#creating-methods-from-windows-alias-functions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="creating-methods-from-windows-alias-functions">
+<span id="index-9"></span><h3>Creating methods from Windows alias functions<a class="headerlink" href="#creating-methods-from-windows-alias-functions" title="Permalink to this heading">#</a></h3>
 <p>Consider a Windows function called <em>Foo</em> which is an alias for either
 <em>FooA</em> (an 8-bit character version) or <em>FooW</em> (a 16-bit character
 version). In Dylan, only the name <em>Foo</em> will be defined, but it will be
@@ -338,55 +664,55 @@ a generic function with separate methods for arguments of types
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#unicode-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;unicode-string&gt;</span></code></a>. (Only the 8-bit versions will be supported in the
 initial implementation, both because the compiler is not ready to handle
 Unicode and because it will not work on Windows 95.)</p>
-</div>
-<div class="section" id="mapping-c-structure-fields-onto-dylan-slot-names">
-<span id="index-10"></span><h3>Mapping C structure fields onto Dylan slot names<a class="headerlink" href="#mapping-c-structure-fields-onto-dylan-slot-names" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-c-structure-fields-onto-dylan-slot-names">
+<span id="index-10"></span><h3>Mapping C structure fields onto Dylan slot names<a class="headerlink" href="#mapping-c-structure-fields-onto-dylan-slot-names" title="Permalink to this heading">#</a></h3>
 <p>Because slot names are not in a separate name space in Dylan, the names
 of C structure fields will have the suffix <em>-value</em> added to form the
 name of the Dylan accessor function. For example, the C statement:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">pt</span><span class="o">-&gt;</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">pt</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>becomes in Dylan:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pt</span><span class="p">.</span><span class="n">x-value</span> <span class="o">:=</span> <span class="n">x</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pt</span><span class="p">.</span><span class="n">x-value</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>There is not any attempt to append <em>?</em> to the names of predicate
 functions since it is not obvious exactly which functions that should
 apply to. The Dylan convention of <em>*…*</em> for global variables is not
 relevant since there are no global variables involved.</p>
-</div>
-<div class="section" id="handling-return-of-multiple-values">
-<span id="index-11"></span><h3>Handling return of multiple values<a class="headerlink" href="#handling-return-of-multiple-values" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="handling-return-of-multiple-values">
+<span id="index-11"></span><h3>Handling return of multiple values<a class="headerlink" href="#handling-return-of-multiple-values" title="Permalink to this heading">#</a></h3>
 <p>In cases where the C library function takes a pointer argument as a
 place to store a pointer, integer, or boolean value, the corresponding
 Dylan function uses multiple return values to return such output
 parameters following the original function return value. For example,
 where C code does:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOL</span> <span class="n">ok</span><span class="p">;</span>
-<span class="n">DWORD</span> <span class="n">NumberRead</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">BOOL</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span>
+<span class="n">DWORD</span><span class="w"> </span><span class="n">NumberRead</span><span class="p">;</span>
 
-<span class="n">ok</span> <span class="o">=</span> <span class="n">ReadConsoleInput</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="o">&amp;</span> <span class="n">NumberRead</span><span class="p">);</span>
+<span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReadConsoleInput</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">NumberRead</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>in Dylan it would be:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="p">(</span> <span class="n">ok</span> <span class="p">::</span> <span class="nc">&lt;boolean&gt;</span><span class="p">,</span> <span class="n">NumberRead</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span> <span class="p">)</span> <span class="o">=</span>
-  <span class="n">ReadConsoleInput</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">length</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;boolean&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">NumberRead</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">ReadConsoleInput</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Similarly, this function returns multiple values instead of a structure:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span> <span class="o">=</span> <span class="n">GetLargestConsoleWindowSize</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetLargestConsoleWindowSize</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="defining-callback-functions">
-<span id="index-12"></span><h2>Defining callback functions<a class="headerlink" href="#defining-callback-functions" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="defining-callback-functions">
+<span id="index-12"></span><h2>Defining callback functions<a class="headerlink" href="#defining-callback-functions" title="Permalink to this heading">#</a></h2>
 <p>The Win32-common library provides a <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">callback</span></code> macro to make it
 easy to define callback functions without the application programmer
 needing to use the FFI <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">c-callable-wrapper</span></code> macro directly. It is
 used like this:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">callback</span> <span class="n">WndProc</span> <span class="p">::</span> <span class="nc">&lt;WNDPROC&gt;</span> <span class="o">=</span> <span class="n">my-window-function</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">callback</span><span class="w"> </span><span class="n">WndProc</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;WNDPROC&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my-window-function</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>This says that <code class="docutils literal notranslate"><span class="pre">WndProc</span></code> is being defined as a C function pointer of
@@ -395,13 +721,13 @@ type <code class="docutils literal notranslate"><span class="pre">&lt;WNDPROC&gt
 normally using <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">method</span></code> or <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">function</span></code>, and it is the
 responsibility of the programmer to ensure that its argument signature
 is consistent with what <code class="docutils literal notranslate"><span class="pre">&lt;WNDPROC&gt;</span></code> requires. For example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">my-window-function</span><span class="p">(</span>
-  <span class="n">hWnd</span> <span class="p">::</span> <span class="nc">&lt;HWND&gt;</span><span class="p">,</span> <span class="c1">// window handle</span>
-  <span class="n">message</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="c1">// type of message</span>
-  <span class="n">uParam</span><span class="p">,</span> <span class="c1">// additional information</span>
-  <span class="n">lParam</span><span class="p">)</span> <span class="c1">// additional information</span>
-<span class="p">=&gt;</span> <span class="n">return</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">;</span>
-  <span class="p">...</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">my-window-function</span><span class="p">(</span>
+<span class="w">  </span><span class="n">hWnd</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;HWND&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// window handle</span>
+<span class="w">  </span><span class="n">message</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// type of message</span>
+<span class="w">  </span><span class="n">uParam</span><span class="p">,</span><span class="w"> </span><span class="c1">// additional information</span>
+<span class="w">  </span><span class="n">lParam</span><span class="p">)</span><span class="w"> </span><span class="c1">// additional information</span>
+<span class="p">=&gt;</span><span class="w"> </span><span class="n">return</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span>
 </pre></div>
 </div>
 <p>Note that the <em>uParam</em> and <em>lParam</em> arguments might receive values of
@@ -416,18 +742,18 @@ which have the same argument types as a window function, but return a
 <em>COMMDLG.H</em> as returning a <em>UINT</em>, but the value is always supposed to
 be <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, so the Dylan callback interface has been
 implemented using <code class="docutils literal notranslate"><span class="pre">BOOL</span></code> instead.)</p>
-</div>
-<div class="section" id="error-messages">
-<span id="index-13"></span><h2>Error messages<a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="error-messages">
+<span id="index-13"></span><h2>Error messages<a class="headerlink" href="#error-messages" title="Permalink to this heading">#</a></h2>
 <p>The Win32-Kernel library provides the following utility functions.</p>
-<span class="target" id="index-14"></span><dl class="function">
-<dt class="dylan-api" id="win32-kernel:win32-kernel:win32-error-message">
-<code class="sig-name descname">win32-error-message</code> <em class="property">Function</em><a class="headerlink" href="#win32-kernel:win32-kernel:win32-error-message" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="index-14"></span><dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="win32-kernel:win32-kernel:win32-error-message">
+<span class="sig-name descname"><span class="pre">win32-error-message</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#win32-kernel:win32-kernel:win32-error-message" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>win32-error-message <em>error-code</em> =&gt; <em>message</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The <em>error-code</em> is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> or <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> (type
 unioned).</p>
 <span class="target" id="index-15"></span><p>The <em>error-code</em> argument is either a Windows a Windows error code
@@ -440,22 +766,22 @@ string might have more than one line but does not have a newline at
 the end.</p>
 </p>
 </dd>
-<dt class="field-odd">Example</dt>
-<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">win32-error-message</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="s">&quot;Access is denied.&quot;</span>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">win32-error-message</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;Access is denied.&quot;</span>
 </pre></div>
 </div>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt class="dylan-api" id="win32-kernel:win32-kernel:report-win32-error">
-<code class="sig-name descname">report-win32-error</code> <em class="property">Function</em><a class="headerlink" href="#win32-kernel:win32-kernel:report-win32-error" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="win32-kernel:win32-kernel:report-win32-error">
+<span class="sig-name descname"><span class="pre">report-win32-error</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#win32-kernel:win32-kernel:report-win32-error" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>report-win32-error <em>name</em> #key <em>error</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Signals a Dylan error if the Win 32 error code specified is not
 <code class="docutils literal notranslate"><span class="pre">NO_ERROR</span></code>. If no code is specified, the value returned by the
 Win32 API <code class="docutils literal notranslate"><span class="pre">GetLastError</span></code> is used. The error that is signaled
@@ -465,34 +791,34 @@ the function <a class="reference internal" href="#win32-kernel:win32-kernel:win3
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt class="dylan-api" id="win32-kernel:win32-kernel:check-win32-result">
-<code class="sig-name descname">check-win32-result</code> <em class="property">Function</em><a class="headerlink" href="#win32-kernel:win32-kernel:check-win32-result" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="win32-kernel:win32-kernel:check-win32-result">
+<span class="sig-name descname"><span class="pre">check-win32-result</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#win32-kernel:win32-kernel:check-win32-result" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>check-win32-result <em>name</em> <em>result</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Many Windows functions return <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or <code class="docutils literal notranslate"><span class="pre">NULL</span></code> to mean failure.
 The function <code class="docutils literal notranslate"><span class="pre">check-win32-result</span></code> checks the result to see if it
 indicates failure, and if so it calls <a class="reference internal" href="#win32-kernel:win32-kernel:report-win32-error"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">report-win32-error</span></code></a>.</p>
 </dd>
-<dt class="field-odd">Example</dt>
-<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">check-win32-result</span><span class="p">(</span><span class="s">&quot;SetWindowText&quot;</span><span class="p">,</span> <span class="n">SetWindowText</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">check-win32-result</span><span class="p">(</span><span class="s">&quot;SetWindowText&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SetWindowText</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt class="dylan-api" id="win32-kernel:win32-kernel:ensure-no-win32-error">
-<code class="sig-name descname">ensure-no-win32-error</code> <em class="property">Function</em><a class="headerlink" href="#win32-kernel:win32-kernel:ensure-no-win32-error" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="win32-kernel:win32-kernel:ensure-no-win32-error">
+<span class="sig-name descname"><span class="pre">ensure-no-win32-error</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#win32-kernel:win32-kernel:ensure-no-win32-error" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ensure-no-win32-error <em>name</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Ensures that the Win32 API <code class="docutils literal notranslate"><span class="pre">GetLastError</span></code> does not indicate that
 an error occurred. If an occurs, it is signaled using
 <a class="reference internal" href="#win32-kernel:win32-kernel:report-win32-error"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">report-win32-error</span></code></a>.</p>
@@ -500,17 +826,17 @@ an error occurred. If an occurs, it is signaled using
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="handling-dylan-conditions-in-a-win32-application">
-<h2>Handling Dylan conditions in a Win32 application<a class="headerlink" href="#handling-dylan-conditions-in-a-win32-application" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="handling-dylan-conditions-in-a-win32-application">
+<h2>Handling Dylan conditions in a Win32 application<a class="headerlink" href="#handling-dylan-conditions-in-a-win32-application" title="Permalink to this heading">#</a></h2>
 <p>The Win32-User library exports from its Win32-Default-Handler module a
 handler utility function called <a class="reference internal" href="#win32-user:win32-user:win32-last-handler"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">win32-last-handler</span></code></a>, defined on
 objects of class <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#serious-condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;serious-condition&gt;</span></code></a>.</p>
-<dl class="function">
-<dt class="dylan-api" id="win32-user:win32-user:win32-last-handler">
-<code class="sig-name descname">win32-last-handler</code> <em class="property">Function</em><a class="headerlink" href="#win32-user:win32-user:win32-last-handler" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="win32-user:win32-user:win32-last-handler">
+<span class="sig-name descname"><span class="pre">win32-last-handler</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#win32-user:win32-user:win32-last-handler" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>Displays a rudimentary Win32 dialog to allow the user to decide
 what to do with the Dylan condition that has been signalled.</p>
 <p>It is a handler utility function that can be by bound dynamically
@@ -518,22 +844,22 @@ around a computation via <code class="docutils literal notranslate"><span class=
 <code class="docutils literal notranslate"><span class="pre">last-handler-definer</span></code>. It is automatically installed as the last
 handler simply by using the Win32-User library.</p>
 <p>The function has the following call syntax:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">win32-last-handler</span> <span class="p">(</span><span class="n">serious-condition</span><span class="p">,</span> <span class="n">next-handler</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">win32-last-handler</span><span class="w"> </span><span class="p">(</span><span class="n">serious-condition</span><span class="p">,</span><span class="w"> </span><span class="n">next-handler</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The <em>serious-condition</em> argument is an object of class serious
 condition. The <em>next-handler</em> argument is a function. The
 <em>win32-last-handler</em> function returns no values.</p>
 <p>The following form defines a dynamic handler around some body:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="nb">handler</span> <span class="nc">&lt;serious-condition&gt;</span> <span class="o">=</span> <span class="n">win32-last-handler</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nb">handler</span><span class="w"> </span><span class="nc">&lt;serious-condition&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">win32-last-handler</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>while the following form installs a globally visible last-handler:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">last-handler</span> <span class="nc">&lt;serious-condition&gt;</span> <span class="o">=</span> <span class="n">win32-last-handler</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">last-handler</span><span class="w"> </span><span class="nc">&lt;serious-condition&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">win32-last-handler</span><span class="p">;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">seealso</dt>
+<dt class="field-odd">seealso<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>last-handler-definer</em> and <em>default-last-handler</em>, exported
 from the Functional Dylan-Extensions library and module, in the
 <em>Core Features</em> reference manual.</p>
@@ -544,9 +870,9 @@ from the Functional Dylan-Extensions library and module, in the
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="dealing-with-the-c-function-winmain">
-<span id="index-16"></span><h2>Dealing with the C function WinMain<a class="headerlink" href="#dealing-with-the-c-function-winmain" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="dealing-with-the-c-function-winmain">
+<span id="index-16"></span><h2>Dealing with the C function WinMain<a class="headerlink" href="#dealing-with-the-c-function-winmain" title="Permalink to this heading">#</a></h2>
 <p>In C, the programmer has to supply a <em>WinMain</em> function as the main
 program for a GUI application, but in Dylan there is no main program as
 such. The beginning of execution is indicated simply by a top-level
@@ -554,10 +880,10 @@ function call expression; this needs to be at the bottom of the last
 file listed in the project file. The Win32-Kernel and Win32-User
 libraries export functions to obtain the values which would have been
 the arguments to <em>WinMain</em>:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">application-instance-handle</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="nc">&lt;HINSTANCE&gt;</span>
-<span class="n">application-command-line</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="nc">&lt;string&gt;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">application-instance-handle</span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;HINSTANCE&gt;</span>
+<span class="n">application-command-line</span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;string&gt;</span>
 <span class="c1">// arguments without program name</span>
-<span class="n">application-show-window</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="nc">&lt;integer&gt;</span> <span class="c1">// one of $SW-...</span>
+<span class="n">application-show-window</span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="w"> </span><span class="c1">// one of $SW-...</span>
 </pre></div>
 </div>
 <p>There is no accessor provided for the <em>WinMain</em> previous instance
@@ -568,25 +894,25 @@ Win32 <code class="docutils literal notranslate"><span class="pre">ExitProcess</
 Open Dylan’s System library. The latter method is preferred if the
 application might actually be run as part of another process.</p>
 <p>The start of an application program might look something like this:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">my-main</span> <span class="p">()</span>
-  <span class="k">let</span> <span class="n">hInstance</span> <span class="p">::</span> <span class="nc">&lt;HINSTANCE&gt;</span> <span class="o">=</span> <span class="n">application-instance-handle</span><span class="p">();</span>
-  <span class="k">let</span> <span class="n">wc</span> <span class="p">::</span> <span class="nc">&lt;PWNDCLASS&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;PWNDCLASS&gt;</span><span class="p">);</span>
-  <span class="n">wc</span><span class="p">.</span><span class="n">style-value</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">wc</span><span class="p">.</span><span class="n">lpfnWndProc-value</span> <span class="o">:=</span> <span class="n">MainWndProc</span><span class="p">;</span>
-  <span class="p">...</span>
-  <span class="n">RegisterClass</span><span class="p">(</span><span class="n">wc</span><span class="p">);</span>
-  <span class="k">let</span> <span class="n">hWnd</span> <span class="o">=</span> <span class="n">CreateWindow</span><span class="p">(</span> <span class="p">...</span> <span class="p">);</span>
-  <span class="n">ShowWindow</span><span class="p">(</span><span class="n">hWnd</span><span class="p">,</span> <span class="n">application-show-window</span><span class="p">());</span>
-  <span class="n">UpdateWindow</span><span class="p">(</span><span class="n">hWnd</span><span class="p">);</span>
-  <span class="k">let</span> <span class="n">msg</span> <span class="p">::</span> <span class="nc">&lt;PMSG&gt;</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;PMSG&gt;</span><span class="p">);</span>
-  <span class="k">while</span> <span class="p">(</span> <span class="n">GetMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="no">$NULL-HWND</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
-    <span class="n">TranslateMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
-    <span class="n">DispatchMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
-  <span class="k">end</span><span class="p">;</span>
-  <span class="n">ExitProcess</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">wParam-value</span><span class="p">);</span>
-<span class="k">end</span> <span class="nb">method</span> <span class="n">my-main</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">my-main</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">hInstance</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;HINSTANCE&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">application-instance-handle</span><span class="p">();</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">wc</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;PWNDCLASS&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;PWNDCLASS&gt;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">wc</span><span class="p">.</span><span class="n">style-value</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">wc</span><span class="p">.</span><span class="n">lpfnWndProc-value</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">MainWndProc</span><span class="p">;</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="n">RegisterClass</span><span class="p">(</span><span class="n">wc</span><span class="p">);</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">hWnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateWindow</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="n">ShowWindow</span><span class="p">(</span><span class="n">hWnd</span><span class="p">,</span><span class="w"> </span><span class="n">application-show-window</span><span class="p">());</span>
+<span class="w">  </span><span class="n">UpdateWindow</span><span class="p">(</span><span class="n">hWnd</span><span class="p">);</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;PMSG&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;PMSG&gt;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">GetMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span><span class="w"> </span><span class="no">$NULL-HWND</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">TranslateMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+<span class="w">    </span><span class="n">DispatchMessage</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="w">  </span><span class="n">ExitProcess</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">wParam-value</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">my-main</span><span class="p">;</span>
 
-<span class="n">my-main</span><span class="p">();</span> <span class="c1">// this is what initiates execution.</span>
+<span class="n">my-main</span><span class="p">();</span><span class="w"> </span><span class="c1">// this is what initiates execution.</span>
 </pre></div>
 </div>
 <p>For a complete example program, see</p>
@@ -594,9 +920,9 @@ application might actually be run as part of another process.</p>
 <div><p>Examples\Win32\windows-ffi-example\example.dylan</p>
 </div></blockquote>
 <p>in the Open Dylan installation directory.</p>
-</div>
-<div class="section" id="combining-bit-mask-constants">
-<span id="index-17"></span><h2>Combining bit mask constants<a class="headerlink" href="#combining-bit-mask-constants" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="combining-bit-mask-constants">
+<span id="index-17"></span><h2>Combining bit mask constants<a class="headerlink" href="#combining-bit-mask-constants" title="Permalink to this heading">#</a></h2>
 <p>Where C code would use the <em>|</em> operator to combine bit mask constants,
 Dylan code usually uses the <em>logior</em> function. However, a few such
 constants have values of type <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> when they will not fit in
@@ -620,17 +946,17 @@ controls <em>($CFM-…</em> and <em>$CFE-…)</em></p></li>
 <li><p>Mask value in <em>PARAFORMAT</em> structure for “rich edit” controls
 <em>($PFM-…)</em></p></li>
 </ul>
-</div>
-<div class="section" id="other-minor-details">
-<span id="index-18"></span><h2>Other minor details<a class="headerlink" href="#other-minor-details" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="other-minor-details">
+<span id="index-18"></span><h2>Other minor details<a class="headerlink" href="#other-minor-details" title="Permalink to this heading">#</a></h2>
 <p>The types <code class="docutils literal notranslate"><span class="pre">&lt;FARPROC&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;PROC&gt;</span></code> are defined as equivalent to
 <code class="docutils literal notranslate"><span class="pre">&lt;C-function-pointer&gt;</span></code>, so any C function wrapper object can be passed
 to a routine taking a <code class="docutils literal notranslate"><span class="pre">&lt;FARPROC&gt;</span></code> without needing to do any type
 conversion like that needed in C.</p>
 <p>Type casts between handles and integers (<a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> or
 <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>) can be done by using <code class="docutils literal notranslate"><span class="pre">as</span></code>. For example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">window-class</span><span class="p">.</span><span class="n">hbrBackground-value</span> <span class="o">:=</span>
-  <span class="nb">as</span><span class="p">(</span><span class="nc">&lt;HBRUSH&gt;</span><span class="p">,</span> <span class="no">$COLOR-WINDOW</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">window-class</span><span class="p">.</span><span class="n">hbrBackground-value</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="nb">as</span><span class="p">(</span><span class="nc">&lt;HBRUSH&gt;</span><span class="p">,</span><span class="w"> </span><span class="no">$COLOR-WINDOW</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that pointers and handles must be compared using <em>=</em>, not <em>==</em>,
@@ -641,19 +967,19 @@ the data structure pointed to, while <code class="docutils literal notranslate">
 the pointer itself.</p>
 <p>The Dylan function <a class="reference internal" href="../c-ffi/index.html#c-ffi:c-ffi:pointer-value"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pointer-value</span></code></a> can be used to convert between a
 Dylan integer and a <em>LARGE-INTEGER</em> or <em>ULARGE-INTEGER</em>. For example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">li</span> <span class="p">::</span> <span class="nb">make</span><span class="p">(</span> <span class="nc">&lt;PLARGE-INTEGER&gt;</span> <span class="p">);</span> <span class="n">pointer-value</span><span class="p">(</span><span class="n">li</span><span class="p">)</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">li</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;PLARGE-INTEGER&gt;</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="n">pointer-value</span><span class="p">(</span><span class="n">li</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>allocates a <em>LARGE-INTEGER</em> and sets its value to 0, without needing to
 be concerned with the individual fields of the internal representation.
 Alternatively, you can use an initialization keyword:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">li</span> <span class="p">::</span> <span class="nb">make</span><span class="p">(</span> <span class="nc">&lt;PLARGE-INTEGER&gt;</span><span class="p">,</span> <span class="k">value:</span> <span class="mi">0</span> <span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">li</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;PLARGE-INTEGER&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">value:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The C macros <em>MAKEPOINT</em>, <em>MAKEPOINTS</em>, and <em>LONG2POINT</em> do not easily
 translate to Dylan. Instead, use the Dylan function <em>lparam-to-xy</em> to
 split a parameter into two signed numbers. For example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span> <span class="o">=</span> <span class="n">LPARAM-TO-XY</span><span class="p">(</span><span class="n">lParam</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LPARAM-TO-XY</span><span class="p">(</span><span class="n">lParam</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In Dylan, <code class="docutils literal notranslate"><span class="pre">&lt;RECTL&gt;</span></code> is an alias of <code class="docutils literal notranslate"><span class="pre">&lt;RECT&gt;</span></code> instead of being a distinct
@@ -662,9 +988,9 @@ types for the sake of source code compatibility with Win16; there is no
 need to maintain that artificial distinction in Dylan.)</p>
 <p>Windows resource files (<em>.rc</em> files) can be included by using the LID
 file field <em>RC-Files:</em>.</p>
-</div>
-<div class="section" id="index-of-win32-names-excluded-from-the-dylan-libraries">
-<span id="index-19"></span><h2>Index of Win32 names excluded from the Dylan libraries<a class="headerlink" href="#index-of-win32-names-excluded-from-the-dylan-libraries" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="index-of-win32-names-excluded-from-the-dylan-libraries">
+<span id="index-19"></span><h2>Index of Win32 names excluded from the Dylan libraries<a class="headerlink" href="#index-of-win32-names-excluded-from-the-dylan-libraries" title="Permalink to this heading">#</a></h2>
 <p>The names listed in the index below are excluded from the Open Dylan
 Win32 API libraries because they are obsolete.</p>
 <p>Functions for old-style metafiles (<em>CreateMetaFile</em>, <em>CloseMetaFile</em>,
@@ -683,57 +1009,57 @@ planned to be supported since there is no clear need for them and the
 functionality can be obtained by using Dylan extended integers. However,
 an interface to function <em>MulDiv</em> is provided, since it is an ordinary C
 function that is commonly used.</p>
-<div class="section" id="characters">
-<span id="index-20"></span><h3>Characters<a class="headerlink" href="#characters" title="Permalink to this headline">¶</a></h3>
+<section id="characters">
+<span id="index-20"></span><h3>Characters<a class="headerlink" href="#characters" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>_hread, _hwrite, _lclose, _lcreat, _llseek, _lopen, _lread,
 _lwrite</p>
 </div></blockquote>
-</div>
-<div class="section" id="a">
-<h3>A<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="a">
+<h3>A<a class="headerlink" href="#a" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>AccessResource, AllocDSToCSAlias, AllocResource, AllocSelector,
 AnsiLowerBuff, AnsiNext, AnsiPrev, AnsiToOem, AnsiToOemBuff,
 AnsiUpper, AnsiUpperBuff</p>
 </div></blockquote>
-</div>
-<div class="section" id="b">
-<h3>B<a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="b">
+<h3>B<a class="headerlink" href="#b" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>BN_DBLCLK, BN_DISABLE, BN_DOUBLECLICKED, BN_HILITE, BN_PAINT,
 BN_PUSHED, BN_UNPUSHED, BS_USERBUTTON</p>
 </div></blockquote>
-</div>
-<div class="section" id="c">
-<h3>C<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="c">
+<h3>C<a class="headerlink" href="#c" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>CPL_INQUIRE, ChangeSelector, CloseComm, CloseSound, CopyLZFile,
 CountVoiceNotes</p>
 </div></blockquote>
-</div>
-<div class="section" id="d">
-<h3>D<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="d">
+<h3>D<a class="headerlink" href="#d" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>DOS3Call, DefHookProc, DefineHandleTable, DeviceMode,
 DlgDirSelect, DlgDirSelectComboBox</p>
 </div></blockquote>
-</div>
-<div class="section" id="e">
-<h3>E<a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="e">
+<h3>E<a class="headerlink" href="#e" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>EnumFonts, ERR_…, ExtDeviceMode</p>
 </div></blockquote>
-</div>
-<div class="section" id="f">
-<h3>F<a class="headerlink" href="#f" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="f">
+<h3>F<a class="headerlink" href="#f" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>FixBrushOrgEx, FlushComm, FreeModule, FreeProcInstance,
 FreeSelector</p>
 </div></blockquote>
-</div>
-<div class="section" id="g">
-<h3>G<a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="g">
+<h3>G<a class="headerlink" href="#g" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>GCW_HBRBACKGROUND, GCW_HCURSOR, GCW_HICON, GWW_HINSTANCE,
 GWW_HWNDPARENT, GWW_ID, GWW_USERDATA, GetAspectRatioFilter,
@@ -753,55 +1079,55 @@ GlobalLRUNewest, GlobalLRUOldest, GlobalNotify, GlobalPageLock,
 GlobalPageUnlock, GlobalUnWire, GlobalUnfix, GlobalUnwire,
 GlobalWire</p>
 </div></blockquote>
-</div>
-<div class="section" id="h">
-<h3>H<a class="headerlink" href="#h" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="h">
+<h3>H<a class="headerlink" href="#h" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>HFILE, HFILE_ERROR</p>
 </div></blockquote>
-</div>
-<div class="section" id="l">
-<h3>L<a class="headerlink" href="#l" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="l">
+<h3>L<a class="headerlink" href="#l" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>LZDone, LZStart, LimitEmsPages, LocalCompact, LocalInit,
 LocalNotify, LocalShrink, LockSegment</p>
 </div></blockquote>
-</div>
-<div class="section" id="m">
-<h3>M<a class="headerlink" href="#m" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="m">
+<h3>M<a class="headerlink" href="#m" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>MAKEPOINT, MakeProcInstance, MoveTo</p>
 </div></blockquote>
-</div>
-<div class="section" id="n">
-<h3>N<a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="n">
+<h3>N<a class="headerlink" href="#n" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>NetBIOSCall</p>
 </div></blockquote>
-</div>
-<div class="section" id="o">
-<h3>O<a class="headerlink" href="#o" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="o">
+<h3>O<a class="headerlink" href="#o" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>OemToAnsi, OemToAnsiBuff, OffsetViewportOrg, OffsetWindowOrg,
 OpenComm, OpenFile, OpenSound</p>
 </div></blockquote>
-</div>
-<div class="section" id="p">
-<h3>P<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="p">
+<h3>P<a class="headerlink" href="#p" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>PM_NOYIELD, ProfClear, ProfFinish, ProfFlush, ProfInsChk,
 ProfSampRate, ProfSetup, ProfStart, ProfStop</p>
 </div></blockquote>
-</div>
-<div class="section" id="r">
-<h3>R<a class="headerlink" href="#r" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="r">
+<h3>R<a class="headerlink" href="#r" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>READ, READ_WRITE, ReadComm, RegCreateKey, RegEnumKey, RegOpenKey,
 RegQueryValue, RegSetValue</p>
 </div></blockquote>
-</div>
-<div class="section" id="s">
-<h3>S<a class="headerlink" href="#s" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="s">
+<h3>S<a class="headerlink" href="#s" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>SYSTEM_FIXED_FONT, ScaleViewportExt, ScaleWindowExt,
 SetBitmapDimension, SetCommEventMask, SetEnvironment,
@@ -813,66 +1139,150 @@ SetVoiceThreshold, SetWindowExt, SetWindowOrg, SetWindowsHook,
 StartSound, StopSound, SwitchStackBack, SwitchStackTo,
 SyncAllVoices</p>
 </div></blockquote>
-</div>
-<div class="section" id="u">
-<h3>U<a class="headerlink" href="#u" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="u">
+<h3>U<a class="headerlink" href="#u" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>UngetCommChar, UnhookWindowsHook, UnlockSegment</p>
 </div></blockquote>
-</div>
-<div class="section" id="v">
-<h3>V<a class="headerlink" href="#v" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="v">
+<h3>V<a class="headerlink" href="#v" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>ValidateCodeSegments, ValidateFreeSpaces</p>
 </div></blockquote>
-</div>
-<div class="section" id="w">
-<h3>W<a class="headerlink" href="#w" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="w">
+<h3>W<a class="headerlink" href="#w" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>WM_CTLCOLOR, WNetAddConnection, WNetCancelConnection, WRITE,
 WaitSoundState, WriteComm, WritePrivateProfileSection,
 WritePrivateProfileString, WritePrivateProfileStruct,
 WriteProfileSection, WriteProfileString</p>
 </div></blockquote>
-</div>
-<div class="section" id="y">
-<h3>Y<a class="headerlink" href="#y" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="y">
+<h3>Y<a class="headerlink" href="#y" title="Permalink to this heading">#</a></h3>
 <blockquote>
 <div><p>Yield</p>
 </div></blockquote>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../copyright.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Copyright</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../t-lists/index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">The t-lists Library</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../t-lists/index.html" class="btn btn-neutral float-left" title="The t-lists Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../copyright.html" class="btn btn-neutral float-right" title="Copyright" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">The Win32 API Libraries</a><ul>
+<li><a class="reference internal" href="#supported-win32-libraries">Supported Win32 libraries</a></li>
+<li><a class="reference internal" href="#content-and-organization-of-the-win32-api-libraries">Content and organization of the Win32 API libraries</a><ul>
+<li><a class="reference internal" href="#notes-on-the-translations">Notes on the translations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#naming-and-mapping-conventions">Naming and mapping conventions</a><ul>
+<li><a class="reference internal" href="#simple-naming-conventions">Simple naming conventions</a></li>
+<li><a class="reference internal" href="#mapping-the-null-value">Mapping the null value</a></li>
+<li><a class="reference internal" href="#mapping-c-types-onto-dylan-classes">Mapping C types onto Dylan classes</a></li>
+<li><a class="reference internal" href="#creating-methods-from-windows-alias-functions">Creating methods from Windows alias functions</a></li>
+<li><a class="reference internal" href="#mapping-c-structure-fields-onto-dylan-slot-names">Mapping C structure fields onto Dylan slot names</a></li>
+<li><a class="reference internal" href="#handling-return-of-multiple-values">Handling return of multiple values</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-callback-functions">Defining callback functions</a></li>
+<li><a class="reference internal" href="#error-messages">Error messages</a></li>
+<li><a class="reference internal" href="#handling-dylan-conditions-in-a-win32-application">Handling Dylan conditions in a Win32 application</a></li>
+<li><a class="reference internal" href="#dealing-with-the-c-function-winmain">Dealing with the C function WinMain</a></li>
+<li><a class="reference internal" href="#combining-bit-mask-constants">Combining bit mask constants</a></li>
+<li><a class="reference internal" href="#other-minor-details">Other minor details</a></li>
+<li><a class="reference internal" href="#index-of-win32-names-excluded-from-the-dylan-libraries">Index of Win32 names excluded from the Dylan libraries</a><ul>
+<li><a class="reference internal" href="#characters">Characters</a></li>
+<li><a class="reference internal" href="#a">A</a></li>
+<li><a class="reference internal" href="#b">B</a></li>
+<li><a class="reference internal" href="#c">C</a></li>
+<li><a class="reference internal" href="#d">D</a></li>
+<li><a class="reference internal" href="#e">E</a></li>
+<li><a class="reference internal" href="#f">F</a></li>
+<li><a class="reference internal" href="#g">G</a></li>
+<li><a class="reference internal" href="#h">H</a></li>
+<li><a class="reference internal" href="#l">L</a></li>
+<li><a class="reference internal" href="#m">M</a></li>
+<li><a class="reference internal" href="#n">N</a></li>
+<li><a class="reference internal" href="#o">O</a></li>
+<li><a class="reference internal" href="#p">P</a></li>
+<li><a class="reference internal" href="#r">R</a></li>
+<li><a class="reference internal" href="#s">S</a></li>
+<li><a class="reference internal" href="#u">U</a></li>
+<li><a class="reference internal" href="#v">V</a></li>
+<li><a class="reference internal" href="#w">W</a></li>
+<li><a class="reference internal" href="#y">Y</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
 </html>

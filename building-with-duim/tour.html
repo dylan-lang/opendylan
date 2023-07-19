@@ -1,141 +1,470 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Source Code For The Task List Manager" href="source.html" /><link rel="prev" title="Using Command Tables" href="commands.html" />
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Tour of the DUIM Libraries &mdash; Building Applications With DUIM</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="copyright" title="Copyright" href="copyright.html" />
-    <link rel="next" title="Source Code For The Task List Manager" href="source.html" />
-    <link rel="prev" title="Using Command Tables" href="commands.html" /> 
-</head>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>A Tour of the DUIM Libraries - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            Building Applications With DUIM
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
-<li class="toctree-l1"><a class="reference internal" href="improve.html">Improving The Design</a></li>
-<li class="toctree-l1"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
-<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">A Tour of the DUIM Libraries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#a-tour-of-gadgets">A tour of gadgets</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#general-properties-of-gadgets">General properties of gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#button-gadgets">Button gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#standard-buttons">Standard buttons</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#menu-buttons">Menu buttons</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#collection-gadgets">Collection gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#useful-properties-of-collection-gadgets">Useful properties of collection gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#button-boxes">Button boxes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#menu-boxes">Menu boxes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lists">Lists</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#display-controls">Display controls</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tree-controls">Tree controls</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#list-controls">List controls</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#table-controls">Table controls</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#spin-boxes">Spin boxes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#text-gadgets">Text gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#useful-properties-of-text-gadgets">Useful properties of text gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#text-fields">Text fields</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#text-editors">Text editors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#password-fields">Password fields</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#range-gadgets">Range gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#useful-properties-of-range-gadgets">Useful properties of range gadgets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scroll-bars">Scroll bars</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sliders">Sliders</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#progress-bars">Progress bars</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assigning-callbacks-to-gadgets">Assigning callbacks to gadgets</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#a-tour-of-layouts">A tour of layouts</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#row-layouts-and-column-layouts">Row layouts and column layouts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#stack-layouts">Stack layouts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pinboard-layouts-and-fixed-layouts">Pinboard layouts and fixed layouts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-horizontally-and-vertically-macros">Using horizontally and vertically macros</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#a-tour-of-sheets">A tour of sheets</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#basic-properties-of-sheets">Basic properties of sheets</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#a-tour-of-frames">A tour of frames</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#creating-frames-and-displaying-them-on-screen">Creating frames and displaying them on-screen</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#useful-properties-of-frames">Useful properties of frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#defining-new-classes-of-frame">Defining new classes of frame</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#specifying-slots-for-a-new-class-of-frame">Specifying slots for a new class of frame</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#specifying-panes-for-a-new-class-of-frame">Specifying panes for a new class of frame</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#overview-of-dialogs">Overview of dialogs</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#where-to-go-from-here">Where to go from here</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
-<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
-</ul>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
       </div>
-    </nav>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">DUIM Guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
+</ul>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Building Applications With DUIM</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">A Tour of the DUIM Libraries</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/tour.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="a-tour-of-the-duim-libraries">
-<span id="index-0"></span><h1>A Tour of the DUIM Libraries<a class="headerlink" href="#a-tour-of-the-duim-libraries" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<span id="index-1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/building-with-duim/tour.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="a-tour-of-the-duim-libraries">
+<span id="index-0"></span><h1>A Tour of the DUIM Libraries<a class="headerlink" href="#a-tour-of-the-duim-libraries" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<span id="index-1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
 <p>This chapter provides an overview of the gadgets and functionality that
 are provided by DUIM. Of necessity, it covers a lot of ground in as
 short a space as possible, and does not attempt to place any information
@@ -183,15 +512,15 @@ your own classes of frame.</p></li>
 presented in this chapter, you must pass them to <code class="docutils literal notranslate"><span class="pre">contain</span></code> (see
 <a class="reference external" href="design.html#using-contain-to-run-examples-interactively">Using contain to run examples interactively</a> for
 details).</p>
-</div>
-<div class="section" id="a-tour-of-gadgets">
-<span id="index-2"></span><h2>A tour of gadgets<a class="headerlink" href="#a-tour-of-gadgets" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="a-tour-of-gadgets">
+<span id="index-2"></span><h2>A tour of gadgets<a class="headerlink" href="#a-tour-of-gadgets" title="Permalink to this heading">#</a></h2>
 <p>The DUIM-Gadgets library provides you with all the controls you can use
 to create an interface. Objects like buttons, menus, boxes, and other
 common interface elements are defined as subclasses of the base class
 <code class="docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code>.</p>
-<div class="section" id="general-properties-of-gadgets">
-<span id="index-3"></span><h3>General properties of gadgets<a class="headerlink" href="#general-properties-of-gadgets" title="Permalink to this headline">¶</a></h3>
+<section id="general-properties-of-gadgets">
+<span id="index-3"></span><h3>General properties of gadgets<a class="headerlink" href="#general-properties-of-gadgets" title="Permalink to this heading">#</a></h3>
 <p>Each class of gadget has a set of associated slots that help define the
 properties for that class. Different classes of gadget have different
 sets of slots. This section describes some of the more important slots
@@ -232,7 +561,7 @@ or not.</p>
 <p>All of the slots described above can also be specified as init-keyword
 values when creating an instance of a gadget. In all cases, the
 init-keyword name is the same as the slot name, but without the
-preceding “gadget-“. Thus, a gadget can be enabled or disabled when it
+preceding “gadget-”. Thus, a gadget can be enabled or disabled when it
 is first created by specifying the <code class="docutils literal notranslate"><span class="pre">enabled?:</span></code> init-keyword
 appropriately.</p>
 <p>Gadgets can also have a variety of associated callbacks. A callback is a
@@ -242,16 +571,16 @@ primary technique you use to make your applications “do something”. Like
 gadget properties, different classes of gadget can have different
 callback types available. For an introduction to callbacks, see
 <a class="reference internal" href="#assigning-callbacks-to-gadgets">Assigning callbacks to gadgets</a>.</p>
-</div>
-<div class="section" id="button-gadgets">
-<span id="index-4"></span><h3>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="button-gadgets">
+<span id="index-4"></span><h3>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this heading">#</a></h3>
 <p>Broadly speaking, these are gadgets whose value can be changed, or for
 which some user-defined functionality can be invoked, by clicking on the
 gadget. Button gadgets encompass obvious controls such as push buttons,
 radio buttons, and check boxes, and, less obviously, menu items.</p>
-</div>
-<div class="section" id="standard-buttons">
-<span id="index-5"></span><h3>Standard buttons<a class="headerlink" href="#standard-buttons" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="standard-buttons">
+<span id="index-5"></span><h3>Standard buttons<a class="headerlink" href="#standard-buttons" title="Permalink to this heading">#</a></h3>
 <p id="index-6">DUIM provides three standard button gadget classes:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;push-button&gt;</span></code> Sometimes referred to as <em>command button</em> in
@@ -261,16 +590,18 @@ Microsoft documentation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;check-button&gt;</span></code> Sometimes referred to as <em>check box</em> in Microsoft
 documentation.</p></li>
 </ul>
-<div class="figure align-center" id="id1">
-<span id="three-buttons"></span><img alt="_images/tour-3.png" src="_images/tour-3.png" />
-<p class="caption"><span class="caption-text">A push button, a radio button, and a check button</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id1">
+<span id="three-buttons"></span><img alt="../_images/tour-3.png" src="../_images/tour-3.png" />
+<figcaption>
+<p><span class="caption-text">A push button, a radio button, and a check button</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The chapters covering the task list manager application (chapters
 <a class="reference internal" href="design.html"><span class="doc">Designing A Simple DUIM Application</span></a> to <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a>) introduced you to the
 <code class="docutils literal notranslate"><span class="pre">&lt;push-button&gt;</span></code> class. This is the default type of button (that is,
 creating an instance of <code class="docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code> actually creates an instance of
 <code class="docutils literal notranslate"><span class="pre">&lt;push-button&gt;</span></code> ).</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Radio buttons let you choose one option out of a group of several. They
@@ -278,7 +609,7 @@ are usually implemented in groups of several buttons (using the
 <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&gt;</span></code> class), although they can also be created singly, as shown
 in <a class="reference internal" href="#three-buttons"><span class="std std-ref">A push button, a radio button, and a check button</span></a>.  For more information about creating groups of
 radio buttons, see <a class="reference internal" href="#button-boxes">Button boxes</a>.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Check buttons are buttons whose setting can be toggled on and off. Like
@@ -286,9 +617,9 @@ radio buttons, they are often implemented in groups, although unlike
 radio buttons, they are frequently used individually. For more
 information about creating groups of check buttons, see <a class="reference internal" href="#button-boxes">Button
 boxes</a>.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">variable</span> <span class="vg">*my-check-button*</span>
-  <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;check-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span>
-          <span class="k">value:</span> <span class="l">#f</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="vg">*my-check-button*</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;check-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span>
+<span class="w">          </span><span class="k">value:</span><span class="w"> </span><span class="l">#f</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Remember that you can use <code class="docutils literal notranslate"><span class="pre">gadget-label</span></code> to set or return the label for
@@ -302,7 +633,7 @@ depending on whether or not the button is selected. For example:</p>
 </div>
 <p>returns <code class="docutils literal notranslate"><span class="pre">#f</span></code> if the check button is not selected.</p>
 <p>You can set the <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> with the <code class="docutils literal notranslate"><span class="pre">:=</span></code> operator.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">gadget-value</span><span class="p">(</span><span class="vg">*my-check-button*</span><span class="p">)</span> <span class="o">:=</span> <span class="l">#t</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">gadget-value</span><span class="p">(</span><span class="vg">*my-check-button*</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="l">#t</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Supplying a value for a push button is a useful way of sending
@@ -314,10 +645,10 @@ default, this is <code class="docutils literal notranslate"><span class="pre">#f
 displayed on the screen with a heavier border, and any callback defined
 for the button is invoked by pressing the RETURN key on the keyboard, as
 well as by clicking the button itself.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">variable</span> <span class="vg">*my-default-button*</span>
-  <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
-          <span class="k">label:</span> <span class="s">&quot;Click me or press Return&quot;</span><span class="p">,</span>
-          <span class="k">default?:</span> <span class="l">#t</span><span class="p">));</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="vg">*my-default-button*</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+<span class="w">          </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Click me or press Return&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="k">default?:</span><span class="w"> </span><span class="l">#t</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>It is good practice to define a default button in most dialog boxes, so
@@ -332,30 +663,30 @@ is a part of. You should use the <code class="docutils literal notranslate"><spa
 button fill all the available space, by setting it to the constant
 <code class="docutils literal notranslate"><span class="pre">$fill</span></code>.</p>
 <p>Thus, the button created by</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Red&quot;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Red&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>will only be as wide as the label it is given—“Red”, in this case—but
 the button created by</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Red&quot;</span><span class="p">,</span> <span class="k">max-width:</span> <span class="no">$fill</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Red&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">max-width:</span><span class="w"> </span><span class="no">$fill</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>will have a width that is determined by the sheet that it is a child of
 and will still have the same minimum width, so it cannot be resized too
 small.</p>
-</div>
-<div class="section" id="menu-buttons">
-<span id="index-7"></span><h3>Menu buttons<a class="headerlink" href="#menu-buttons" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="menu-buttons">
+<span id="index-7"></span><h3>Menu buttons<a class="headerlink" href="#menu-buttons" title="Permalink to this heading">#</a></h3>
 <p id="index-8"><a class="reference internal" href="#standard-buttons">Standard buttons</a> described buttons that are all
 displayed in windows on the screen. For each of those buttons, there is
 an analogous type of button that is displayed as an item in a menu.</p>
-<p><img alt="image0" src="_images/pushmb.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;push-menu-button&gt;</span></code> class is used to create a standard
+<p><img alt="image0" src="../_images/pushmb.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;push-menu-button&gt;</span></code> class is used to create a standard
 menu item. This class is the menu-specific equivalent to <code class="docutils literal notranslate"><span class="pre">&lt;push-button&gt;</span></code>.</p>
 <p>Like push buttons, you can make a given push menu button the default
 command in a menu by specifying the <code class="docutils literal notranslate"><span class="pre">default?:</span></code> init-keyword. The label
 for a default menu button is highlighted in the menu that it is
 displayed in, usually by displaying the label using a bold font.</p>
-<p><img alt="image1" src="_images/radiomb.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;radio-menu-button&gt;</span></code> class is used to create a menu item
+<p><img alt="image1" src="../_images/radiomb.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;radio-menu-button&gt;</span></code> class is used to create a menu item
 that has the properties of a radio button. The value of a radio menu
 button may be toggled on and off, just like a radio button, and from any
 group of radio menu buttons, only one may be on at any one time.</p>
@@ -364,7 +695,7 @@ small dot to the left of the command name on the menu.</p>
 <p>As with radio buttons, radio menu buttons are most useful when used in
 group form. The class <code class="docutils literal notranslate"><span class="pre">&lt;radio-menu-box&gt;</span></code> is provided for this purpose.
 See <a class="reference internal" href="#menu-boxes">Menu boxes</a> for more details.</p>
-<p><img alt="image2" src="_images/checkmb.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;check-menu-button&gt;</span></code> class is used to create a menu item
+<p><img alt="image2" src="../_images/checkmb.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;check-menu-button&gt;</span></code> class is used to create a menu item
 that has the properties of a check button. The value of a check menu
 button may be toggled on and off, just like a check button, by
 repeatedly choosing the menu item. In a group of check menu buttons, any
@@ -372,9 +703,9 @@ number may be on at any one time.</p>
 <p>In appearance, a selected check menu button is usually shown with a
 check mark to the left of the command name on the menu.</p>
 <p>For more information about creating menus, see <a class="reference internal" href="menus.html"><span class="doc">Adding Menus To The Application</span></a>.</p>
-</div>
-<div class="section" id="collection-gadgets">
-<span id="index-9"></span><h3>Collection gadgets<a class="headerlink" href="#collection-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="collection-gadgets">
+<span id="index-9"></span><h3>Collection gadgets<a class="headerlink" href="#collection-gadgets" title="Permalink to this heading">#</a></h3>
 <p>Collection gadgets are gadgets whose items can consist of any Dylan
 collection. They are typically used to group together a number of
 related objects, such as items in a list or a group of buttons. All
@@ -386,9 +717,9 @@ such as strings, numbers, or symbols, that describe the contents of the
 collection gadget. It is worth emphasizing this distinction since,
 visually, collection gadgets often look like groups of individual
 gadgets.</p>
-</div>
-<div class="section" id="useful-properties-of-collection-gadgets">
-<span id="index-10"></span><h3>Useful properties of collection gadgets<a class="headerlink" href="#useful-properties-of-collection-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="useful-properties-of-collection-gadgets">
+<span id="index-10"></span><h3>Useful properties of collection gadgets<a class="headerlink" href="#useful-properties-of-collection-gadgets" title="Permalink to this heading">#</a></h3>
 <p>All collection gadgets share certain essential properties. These can
 either be specified when an instance of a gadget is created, using an
 init-keyword, or set interactively via a slot value.</p>
@@ -424,18 +755,20 @@ and a check box is multiple selection.</p>
 <p>To specify any of these slot values as an init-keyword, remove the
 “gadget-” prefix. Thus, the <code class="docutils literal notranslate"><span class="pre">gadget-value-key</span></code> slot becomes the
 <code class="docutils literal notranslate"><span class="pre">value-key:</span></code> init-keyword.</p>
-</div>
-<div class="section" id="button-boxes">
-<span id="index-11"></span><h3>Button boxes<a class="headerlink" href="#button-boxes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="button-boxes">
+<span id="index-11"></span><h3>Button boxes<a class="headerlink" href="#button-boxes" title="Permalink to this heading">#</a></h3>
 <p>Groups of functionally related buttons are placed in button boxes. The
 superclass for button boxes is the <code class="docutils literal notranslate"><span class="pre">&lt;button-box&gt;</span></code> class. The two most
 common types of button box are <code class="docutils literal notranslate"><span class="pre">&lt;check-box&gt;</span></code> (groups of check buttons)
 and <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&gt;</span></code> (groups of radio buttons). In addition, <code class="docutils literal notranslate"><span class="pre">&lt;push-box&gt;</span></code>
 (groups of push buttons) can be used.</p>
-<div class="figure align-center" id="id2">
-<img alt="_images/pushbox.png" src="_images/pushbox.png" />
-<p class="caption"><span class="caption-text">A push box</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/pushbox.png" src="../_images/pushbox.png" />
+<figcaption>
+<p><span class="caption-text">A push box</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You should be aware of the distinction between the use of the
@@ -448,72 +781,72 @@ button</em> may sometimes be called a <em>check box</em>.</p>
 </div>
 <p>A <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&gt;</span></code> is a button box that contains one or more radio buttons,
 only one of which may be selected at any time.</p>
-<div class="figure align-right">
-<img alt="_images/rbox.png" src="_images/rbox.png" />
-</div>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">variable</span> <span class="vg">*my-radio-box*</span>
-  <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-          <span class="k">value:</span> <span class="mi">2</span><span class="p">);</span>
+<figure class="align-right">
+<img alt="../_images/rbox.png" src="../_images/rbox.png" />
+</figure>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="vg">*my-radio-box*</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span>
+<span class="w">          </span><span class="k">value:</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note the use of <code class="docutils literal notranslate"><span class="pre">value:</span></code> to choose the item initially selected when the
 box is created.</p>
 <p>For all boxes, the <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> is the selected button. In the
 illustration above the <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> is 2.</p>
-<div class="highlight-dylan-repl notranslate"><div class="highlight"><pre><span></span><span class="gp">?</span> <span class="n">gadget-value</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">);</span>
+<div class="highlight-dylan-repl notranslate"><div class="highlight"><pre><span></span><span class="gp">?</span><span class="w"> </span><span class="n">gadget-value</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">);</span>
 <span class="go">=&gt; 2</span>
 </pre></div>
 </div>
 <p>You can set the <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> to 3 and the selected button changes to
 3:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">gadget-value</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">)</span> <span class="o">:=</span> <span class="mi">3</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">gadget-value</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>As with all collection gadgets, use <code class="docutils literal notranslate"><span class="pre">gadget-items</span></code> to set or return the
 collection that defines the contents of a radio box.</p>
-<div class="highlight-dylan-repl notranslate"><div class="highlight"><pre><span></span><span class="gp">?</span> <span class="n">gadget-items</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">);</span>
+<div class="highlight-dylan-repl notranslate"><div class="highlight"><pre><span></span><span class="gp">?</span><span class="w"> </span><span class="n">gadget-items</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">);</span>
 <span class="go">=&gt; #[1, 2, 3]</span>
 </pre></div>
 </div>
-<div class="figure align-right">
-<img alt="_images/rangebox.png" src="_images/rangebox.png" />
-</div>
+<figure class="align-right">
+<img alt="../_images/rangebox.png" src="../_images/rangebox.png" />
+</figure>
 <p>If you reset the <code class="docutils literal notranslate"><span class="pre">gadget-items</span></code> in a collection gadget, the gadget
 resizes accordingly:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">gadget-items</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">)</span> <span class="o">:=</span> <span class="nb">range</span><span class="p">(</span><span class="k">from:</span> <span class="mi">5</span><span class="p">,</span> <span class="k">to:</span> <span class="mi">20</span><span class="p">,</span> <span class="k">by:</span> <span class="mi">5</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">gadget-items</span><span class="p">(</span><span class="vg">*my-radio-box*</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="k">to:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="k">by:</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A check box, on the other hand, can have any number of buttons selected.
 The following code creates a check box. After creating it, select the
 buttons labelled 4 and 6, as shown below.</p>
-<div class="figure align-right">
-<img alt="_images/cbox.png" src="_images/cbox.png" />
-</div>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">variable</span> <span class="vg">*my-check-box*</span>
-  <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;check-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span>
+<figure class="align-right">
+<img alt="../_images/cbox.png" src="../_images/cbox.png" />
+</figure>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="vg">*my-check-box*</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;check-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>You can return the current selection, or set the selection, using
 <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gadget</span><span class="o">-</span><span class="n">value</span><span class="p">(</span><span class="o">*</span><span class="n">my</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">box</span><span class="o">*</span><span class="p">);</span>
 <span class="o">=&gt;</span> <span class="c1">#[4, 6]</span>
-<span class="n">gadget</span><span class="o">-</span><span class="n">value</span><span class="p">(</span><span class="o">*</span><span class="n">my</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">box</span><span class="o">*</span><span class="p">)</span> <span class="p">:</span><span class="o">=</span> <span class="c1">#[5, 6];</span>
+<span class="n">gadget</span><span class="o">-</span><span class="n">value</span><span class="p">(</span><span class="o">*</span><span class="n">my</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">box</span><span class="o">*</span><span class="p">)</span> <span class="o">:=</span> <span class="c1">#[5, 6];</span>
 </pre></div>
 </div>
 <p>Remember that for a multiple-selection collection gadget, the gadget
 value is a sequence consisting of the values of all the selected items.
 The value of any given item is calculated using the value key.</p>
-</div>
-<div class="section" id="menu-boxes">
-<span id="index-12"></span><h3>Menu boxes<a class="headerlink" href="#menu-boxes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="menu-boxes">
+<span id="index-12"></span><h3>Menu boxes<a class="headerlink" href="#menu-boxes" title="Permalink to this heading">#</a></h3>
 <p>In addition to groups of buttons, groups of menu items can be created.
 All of these are subclasses of the class <code class="docutils literal notranslate"><span class="pre">&lt;menu-box&gt;</span></code>.</p>
-<p><img alt="image5" src="_images/pushmbox.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;push-menu-box&gt;</span></code> is a group of several standard menu items.
+<p><img alt="image5" src="../_images/pushmbox.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;push-menu-box&gt;</span></code> is a group of several standard menu items.
 A <code class="docutils literal notranslate"><span class="pre">&lt;push-menu-box&gt;</span></code> is the menu-specific version of <code class="docutils literal notranslate"><span class="pre">&lt;push-box&gt;</span></code>. This
 is the default type of <code class="docutils literal notranslate"><span class="pre">&lt;menu-box&gt;</span></code>.</p>
-<p><img alt="image6" src="_images/radiombx.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;radio-menu-box&gt;</span></code> is a group of several radio menu items. A
+<p><img alt="image6" src="../_images/radiombx.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;radio-menu-box&gt;</span></code> is a group of several radio menu items. A
 <code class="docutils literal notranslate"><span class="pre">&lt;radio-menu-box&gt;</span></code> is the menu-specific version of <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&gt;</span></code>.</p>
-<p><img alt="image7" src="_images/checkmbx.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;check-menu-box&gt;</span></code> is a group of several check menu items. A
+<p><img alt="image7" src="../_images/checkmbx.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;check-menu-box&gt;</span></code> is a group of several check menu items. A
 <code class="docutils literal notranslate"><span class="pre">&lt;check-menu-box&gt;</span></code> is the menu-specific version of <code class="docutils literal notranslate"><span class="pre">&lt;check-box&gt;</span></code>.</p>
 <p>All the items in a menu box are grouped together on the menu in which
 they are placed. A divider separates these items visually from any other
@@ -523,18 +856,20 @@ such as <em>Cut</em>, <em>Copy</em>, and <em>Paste</em>, where the operations pe
 the commands are related, even though the commands themselves do not act
 as a group. Note that you can also use command tables to create and
 group related menu commands. See <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a> for more details.</p>
-</div>
-<div class="section" id="lists">
-<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="lists">
+<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">#</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">&lt;list-box&gt;</span></code>, although it has a different appearance than a
 <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&gt;</span></code>, shares many of the same characteristics:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">));</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id3">
-<span id="index-13"></span><img alt="_images/lbox.png" src="_images/lbox.png" />
-<p class="caption"><span class="caption-text">A list box</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id3">
+<span id="index-13"></span><img alt="../_images/lbox.png" src="../_images/lbox.png" />
+<figcaption>
+<p><span class="caption-text">A list box</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>As with other boxes, <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> is used to return and set the
 selection in the box, and <code class="docutils literal notranslate"><span class="pre">gadget-items</span></code> is used to return and set the
 items in the box.</p>
@@ -571,14 +906,14 @@ bars.</p></li>
 bars only when they are necessary because of the amount of
 information visible in the list.</p></li>
 </ul>
-<p id="index-14"><img alt="image8" src="_images/obox.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;option-box&gt;</span></code> class is another list control that you will
+<p id="index-14"><img alt="image8" src="../_images/obox.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;option-box&gt;</span></code> class is another list control that you will
 frequently use in your applications. This gadget is usually referred to
 in Microsoft documentation as a <em>drop-down list box</em>. It differs from a
 standard list box in that it looks rather like a text field, with only
 the current selection visible at any one time. In order to see the
 entire list, the user must click on an arrow displayed to the right of
 the field.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;option-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;&amp;Red&quot;</span><span class="p">,</span> <span class="s">&quot;&amp;Green&quot;</span><span class="p">,</span> <span class="s">&quot;&amp;Blue&quot;</span><span class="p">));</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;option-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="s">&quot;&amp;Red&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&amp;Green&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&amp;Blue&quot;</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>Notice the use of the &amp; character to denote a keyboard shortcut.
@@ -594,28 +929,30 @@ new options typed by the user into the drop-down list part of the gadget
 for future use.</p>
 <p>Like list boxes and option boxes, combo boxes support the <code class="docutils literal notranslate"><span class="pre">borders:</span></code> and
 <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keywords.</p>
-</div>
-<div class="section" id="display-controls">
-<span id="index-15"></span><h3>Display controls<a class="headerlink" href="#display-controls" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="display-controls">
+<span id="index-15"></span><h3>Display controls<a class="headerlink" href="#display-controls" title="Permalink to this heading">#</a></h3>
 <p>Display controls describe a set of collection gadgets that provide a
 richer set of features for displaying more complex objects, such as
 files on disk, that may have properties such as icons associated with
 them.</p>
 <p>A number of display controls are available that, like lists, are used to
 display information in a variety of ways.</p>
-</div>
-<div class="section" id="tree-controls">
-<span id="index-16"></span><h3>Tree controls<a class="headerlink" href="#tree-controls" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tree-controls">
+<span id="index-16"></span><h3>Tree controls<a class="headerlink" href="#tree-controls" title="Permalink to this heading">#</a></h3>
 <p id="index-17">The <code class="docutils literal notranslate"><span class="pre">&lt;tree-control&gt;</span></code> class (also known as a tree view control in
 Microsoft documentation) is a special list control that displays a set
 of objects in an indented outline based on the logical hierarchical
 relationship between the objects. A number of slots are available to
 control the information that is displayed in the control, and the
 appearance of that information.</p>
-<div class="figure align-center" id="id4">
-<img alt="_images/tree.png" src="_images/tree.png" />
-<p class="caption"><span class="caption-text">A tree control</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id4">
+<img alt="../_images/tree.png" src="../_images/tree.png" />
+<figcaption>
+<p><span class="caption-text">A tree control</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">tree-control-children-generator</span></code> slot contains a function that is
 used to generate any children below the root of the tree control. It is
 called with one argument, which can be any instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p>
@@ -635,22 +972,22 @@ cannot be manipulated after the control has been created. In the example
 below, <code class="docutils literal notranslate"><span class="pre">$odd-icon</span></code> and <code class="docutils literal notranslate"><span class="pre">$even-icon</span></code> are assumed to be icons that have
 been defined.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tree-control&gt;</span><span class="p">,</span>
-     <span class="k">roots:</span> <span class="p">#[</span><span class="mi">1</span><span class="p">],</span>
-     <span class="k">children-generator:</span>
-       <span class="nb">method</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nb">vector</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span> <span class="k">end</span><span class="p">,</span>
-     <span class="k">icon-function:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">item</span> <span class="p">::</span> <span class="nc">&lt;integer&gt;</span><span class="p">)</span>
-       <span class="k">case</span>
-         <span class="nb">odd?</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="no">$odd-icon</span><span class="p">;</span>
-         <span class="nb">even?</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="no">$even-icon</span><span class="p">;</span>
-       <span class="k">end</span><span class="p">);</span>
+<span class="w">     </span><span class="k">roots:</span><span class="w"> </span><span class="p">#[</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">     </span><span class="k">children-generator:</span>
+<span class="w">       </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">end</span><span class="p">,</span>
+<span class="w">     </span><span class="k">icon-function:</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">item</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">)</span>
+<span class="w">       </span><span class="k">case</span>
+<span class="w">         </span><span class="nb">odd?</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="no">$odd-icon</span><span class="p">;</span>
+<span class="w">         </span><span class="nb">even?</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="no">$even-icon</span><span class="p">;</span>
+<span class="w">       </span><span class="k">end</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Like list boxes and list controls, tree controls support the
 <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keyword.</p>
-</div>
-<div class="section" id="list-controls">
-<h3>List controls<a class="headerlink" href="#list-controls" title="Permalink to this headline">¶</a></h3>
-<p id="index-18"><img alt="image9" src="_images/listcont.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;list-control&gt;</span></code> class is used to display a collection of
+</section>
+<section id="list-controls">
+<h3>List controls<a class="headerlink" href="#list-controls" title="Permalink to this heading">#</a></h3>
+<p id="index-18"><img alt="image9" src="../_images/listcont.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;list-control&gt;</span></code> class is used to display a collection of
 items, each item consisting of an icon and a label. In Microsoft
 documentation, this control corresponds to the List View control in its
 “icon”, “small icon”, and “list” views. Like other collection gadgets,
@@ -678,19 +1015,19 @@ is invoked when that item is double-clicked.</p></li>
 <p>The example assumes that you have already defined these callback
 functions elsewhere.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-control&gt;</span><span class="p">,</span>
-     <span class="k">items:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Yes or No?&quot;</span><span class="p">,</span> <span class="n">reply-yes-or-no</span><span class="p">),</span>
-                   <span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Black or White?&quot;</span><span class="p">,</span>
-                          <span class="n">reply-black-or-white</span><span class="p">),</span>
-                   <span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Left or Right?&quot;</span><span class="p">,</span> <span class="n">reply-left-or-right</span><span class="p">),</span>
-                   <span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Top or Bottom?&quot;</span><span class="p">,</span> <span class="n">reply-top-or-bottom</span><span class="p">),</span>
-                   <span class="nb">vector</span><span class="p">(</span><span class="s">&quot;North or South?&quot;</span><span class="p">,</span>
-                          <span class="n">reply-north-or-south</span><span class="p">)),</span>
-     <span class="k">label-key:</span> <span class="nb">first</span><span class="p">,</span>
-     <span class="k">value-key:</span> <span class="nb">second</span><span class="p">,</span>
-     <span class="k">scroll-bars:</span> <span class="ss">#&quot;none&quot;</span><span class="p">,</span>
-     <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">sheet</span> <span class="p">::</span> <span class="nc">&lt;sheet&gt;</span><span class="p">)</span>
-         <span class="n">gadget-value</span><span class="p">(</span><span class="n">sheet</span><span class="p">)(</span><span class="n">sheet-frame</span><span class="p">(</span><span class="n">sheet</span><span class="p">))</span>
-       <span class="k">end</span><span class="p">);</span>
+<span class="w">     </span><span class="k">items:</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Yes or No?&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">reply-yes-or-no</span><span class="p">),</span>
+<span class="w">                   </span><span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Black or White?&quot;</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">reply-black-or-white</span><span class="p">),</span>
+<span class="w">                   </span><span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Left or Right?&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">reply-left-or-right</span><span class="p">),</span>
+<span class="w">                   </span><span class="nb">vector</span><span class="p">(</span><span class="s">&quot;Top or Bottom?&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">reply-top-or-bottom</span><span class="p">),</span>
+<span class="w">                   </span><span class="nb">vector</span><span class="p">(</span><span class="s">&quot;North or South?&quot;</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">reply-north-or-south</span><span class="p">)),</span>
+<span class="w">     </span><span class="k">label-key:</span><span class="w"> </span><span class="nb">first</span><span class="p">,</span>
+<span class="w">     </span><span class="k">value-key:</span><span class="w"> </span><span class="nb">second</span><span class="p">,</span>
+<span class="w">     </span><span class="k">scroll-bars:</span><span class="w"> </span><span class="ss">#&quot;none&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="k">activate-callback:</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">sheet</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;sheet&gt;</span><span class="p">)</span>
+<span class="w">         </span><span class="n">gadget-value</span><span class="p">(</span><span class="n">sheet</span><span class="p">)(</span><span class="n">sheet-frame</span><span class="p">(</span><span class="n">sheet</span><span class="p">))</span>
+<span class="w">       </span><span class="k">end</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In the example above, <code class="docutils literal notranslate"><span class="pre">first</span></code> is used to calculate the label that is
@@ -701,10 +1038,10 @@ Note that the <code class="docutils literal notranslate"><span class="pre">scrol
 if any, scroll bars are added to the control.</p>
 <p>Like list boxes, and tree controls, list controls support the <code class="docutils literal notranslate"><span class="pre">borders:</span></code>
 and <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keywords.</p>
-</div>
-<div class="section" id="table-controls">
-<span id="index-19"></span><h3>Table controls<a class="headerlink" href="#table-controls" title="Permalink to this headline">¶</a></h3>
-<p id="index-20"><img alt="image10" src="_images/tablecnt.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;table-control&gt;</span></code> class (which corresponds to the List
+</section>
+<section id="table-controls">
+<span id="index-19"></span><h3>Table controls<a class="headerlink" href="#table-controls" title="Permalink to this heading">#</a></h3>
+<p id="index-20"><img alt="image10" src="../_images/tablecnt.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;table-control&gt;</span></code> class (which corresponds to the List
 View control in its “report” view in Microsoft documentation) allows you
 to display items in a table, with information divided into a number of
 column headings. This type of control is used when you need to display
@@ -726,10 +1063,12 @@ displayed in the respective column.</p></li>
 for the first column in the control, and the first function in the
 <code class="docutils literal notranslate"><span class="pre">generators:</span></code> sequence is used to generate the contents of that column,
 and so on for each element in each sequence, as shown here:</p>
-<div class="figure align-center" id="id5">
-<img alt="_images/table-headings-and-contents.png" src="_images/table-headings-and-contents.png" />
-<p class="caption"><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id5">
+<img alt="../_images/table-headings-and-contents.png" src="../_images/table-headings-and-contents.png" />
+<figcaption>
+<p><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Note that the sequences passed to both of these init-keywords should
 contain the same number of elements, since there must be as many column
 headings as there are functions to generate their contents.</p>
@@ -742,9 +1081,9 @@ init-keyword can be used to determine the width of each column in a
 table control when it is created. This column takes a sequence of
 integers, each of which represents the width in pixels of its respective
 column in the control.</p>
-</div>
-<div class="section" id="spin-boxes">
-<span id="index-21"></span><h3>Spin boxes<a class="headerlink" href="#spin-boxes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="spin-boxes">
+<span id="index-21"></span><h3>Spin boxes<a class="headerlink" href="#spin-boxes" title="Permalink to this heading">#</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">&lt;spin-box&gt;</span></code> is a collection gadget that only accepts a limited set of
 ordered values as input. To the right of the text field are a pair of
 buttons depicting an upward pointing|image11| arrow and a downward
@@ -757,23 +1096,23 @@ in the text field.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">gadget-items</span></code> slot is used to specify the possible values that the
 spin box can accept.</p>
 <p>Consider the following example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;spin-box&gt;</span><span class="p">,</span> <span class="k">items:</span> <span class="nb">range</span><span class="p">(</span><span class="k">from:</span> <span class="mi">6</span><span class="p">,</span> <span class="k">to:</span> <span class="mi">24</span><span class="p">,</span> <span class="k">by:</span> <span class="mi">2</span><span class="p">));</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;spin-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="k">to:</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span><span class="w"> </span><span class="k">by:</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>This creates a spin box that accepts any even integer value between 6
 and 24.</p>
-</div>
-<div class="section" id="text-gadgets">
-<span id="index-22"></span><h3>Text gadgets<a class="headerlink" href="#text-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="text-gadgets">
+<span id="index-22"></span><h3>Text gadgets<a class="headerlink" href="#text-gadgets" title="Permalink to this heading">#</a></h3>
 <p>Several text gadgets are provided by the DUIM-Gadgets library. These
 represent gadgets into which the user of your application can type
 information. The superclass of all text gadgets is the <code class="docutils literal notranslate"><span class="pre">&lt;text-gadget&gt;</span></code>
 class.</p>
 <p>There are three kinds of text gadget available: text fields, text
 editors, and password fields.</p>
-</div>
-<div class="section" id="useful-properties-of-text-gadgets">
-<span id="index-23"></span><h3>Useful properties of text gadgets<a class="headerlink" href="#useful-properties-of-text-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="useful-properties-of-text-gadgets">
+<span id="index-23"></span><h3>Useful properties of text gadgets<a class="headerlink" href="#useful-properties-of-text-gadgets" title="Permalink to this heading">#</a></h3>
 <p>You an initialize the text string in a text gadget using the <code class="docutils literal notranslate"><span class="pre">text:</span></code>
 init-keyword. The <code class="docutils literal notranslate"><span class="pre">gadget-text</span></code> slot can then be used to manipulate this
 text after the gadget has been created.</p>
@@ -797,42 +1136,42 @@ non-integer characters, then interpretation fails, and <code class="docutils lit
 returns <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p>
 <p>Note that the combo boxes and spin boxes also contains a textual
 element, though they are not themselves text gadgets.</p>
-</div>
-<div class="section" id="text-fields">
-<span id="index-24"></span><h3>Text fields<a class="headerlink" href="#text-fields" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="text-fields">
+<span id="index-24"></span><h3>Text fields<a class="headerlink" href="#text-fields" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;text-field&gt;</span></code> class is a single line edit control, and is the most
 basic type of text gadget, consisting of a single line into which you
 can type text.</p>
-<div class="figure align-center">
-<img alt="_images/textfld.png" src="_images/textfld.png" />
-</div>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span> <span class="k">value-type:</span> <span class="nc">&lt;integer&gt;</span><span class="p">,</span> <span class="k">text:</span> <span class="s">&quot;1234&quot;</span><span class="p">);</span>
+<figure class="align-center">
+<img alt="../_images/textfld.png" src="../_images/textfld.png" />
+</figure>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">value-type:</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">text:</span><span class="w"> </span><span class="s">&quot;1234&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Use the``x-alignment:`` init-keyword to specify how text typed into the
 field should be aligned. This can be either <code class="docutils literal notranslate"><span class="pre">#&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;center&quot;</span></code>, or
 <code class="docutils literal notranslate"><span class="pre">#&quot;right&quot;</span></code>, the default being <code class="docutils literal notranslate"><span class="pre">#&quot;left&quot;</span></code>.</p>
-</div>
-<div class="section" id="text-editors">
-<span id="index-25"></span><h3>Text editors<a class="headerlink" href="#text-editors" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="text-editors">
+<span id="index-25"></span><h3>Text editors<a class="headerlink" href="#text-editors" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;text-editor&gt;</span></code> class is a multiple line edit control, used when
 more complex editing controls and several lines of text are needed by
 the user.</p>
-<div class="figure align-center">
-<img alt="_images/texted.png" src="_images/texted.png" />
-</div>
+<figure class="align-center">
+<img alt="../_images/texted.png" src="../_images/texted.png" />
+</figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">columns:</span></code> and <code class="docutils literal notranslate"><span class="pre">lines:</span></code> init-keywords control the size of a text
 editor when it is created. Each init-keyword takes an integer argument,
 and the resulting text editor has the specified number of character
 columns (width) and the specified number of lines (height).</p>
 <p>In addition, text editors support the <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keyword
 described in <a class="reference internal" href="#lists">Lists</a>.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-editor&gt;</span><span class="p">,</span> <span class="k">lines:</span> <span class="mi">10</span><span class="p">,</span> <span class="k">fixed-height?:</span> <span class="l">#t</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-editor&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">lines:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="k">fixed-height?:</span><span class="w"> </span><span class="l">#t</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="password-fields">
-<span id="index-26"></span><h3>Password fields<a class="headerlink" href="#password-fields" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="password-fields">
+<span id="index-26"></span><h3>Password fields<a class="headerlink" href="#password-fields" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;password-field&gt;</span></code> class provides a specialized type of single line
 edit control for use in situations where the user is required to type
 some text that should not be seen by anyone else, such as when typing in
@@ -840,19 +1179,19 @@ a password or identification code. Visually, a password field looks
 identical to a text field. However, when text is typed into a password
 field, it is not displayed on the screen; a series of asterisks may be
 used instead.</p>
-<div class="figure align-center">
-<img alt="_images/passwd.png" src="_images/passwd.png" />
-</div>
-</div>
-<div class="section" id="range-gadgets">
-<span id="index-27"></span><h3>Range gadgets<a class="headerlink" href="#range-gadgets" title="Permalink to this headline">¶</a></h3>
+<figure class="align-center">
+<img alt="../_images/passwd.png" src="../_images/passwd.png" />
+</figure>
+</section>
+<section id="range-gadgets">
+<span id="index-27"></span><h3>Range gadgets<a class="headerlink" href="#range-gadgets" title="Permalink to this heading">#</a></h3>
 <p>Range gadgets are gadgets whose <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> can be any value on a
 sliding scale. The most obvious examples of range gadgets are scroll
 bars and sliders. The protocol class of all range gadgets is the class
 <code class="docutils literal notranslate"><span class="pre">&lt;value-range-gadget&gt;</span></code>.</p>
-</div>
-<div class="section" id="useful-properties-of-range-gadgets">
-<span id="index-28"></span><h3>Useful properties of range gadgets<a class="headerlink" href="#useful-properties-of-range-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="useful-properties-of-range-gadgets">
+<span id="index-28"></span><h3>Useful properties of range gadgets<a class="headerlink" href="#useful-properties-of-range-gadgets" title="Permalink to this heading">#</a></h3>
 <p>When creating a range gadget, you must specify the range of values over
 which the <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> of the gadget can vary, using the
 <code class="docutils literal notranslate"><span class="pre">gadget-value-range</span></code> slot. An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#range"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;range&gt;</span></code></a> must be passed
@@ -864,38 +1203,40 @@ the <code class="docutils literal notranslate"><span class="pre">gadget-value-ra
 with all other gadgets, use <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> to return or set this value,
 as shown in <a class="reference internal" href="#gadget-value-scroll-bar"><span class="std std-ref">Returning or setting the gadget-value of a scroll-bar</span></a>, which
 illustrates this behavior for a scroll bar.</p>
-<div class="figure align-center" id="id6">
-<span id="gadget-value-scroll-bar"></span><img alt="_images/tour-24.png" src="_images/tour-24.png" />
-<p class="caption"><span class="caption-text">Returning or setting the gadget-value of a scroll-bar</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="scroll-bars">
-<span id="index-29"></span><h3>Scroll bars<a class="headerlink" href="#scroll-bars" title="Permalink to this headline">¶</a></h3>
+<figure class="align-center" id="id6">
+<span id="gadget-value-scroll-bar"></span><img alt="../_images/tour-24.png" src="../_images/tour-24.png" />
+<figcaption>
+<p><span class="caption-text">Returning or setting the gadget-value of a scroll-bar</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="scroll-bars">
+<span id="index-29"></span><h3>Scroll bars<a class="headerlink" href="#scroll-bars" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;scroll-bar&gt;</span></code> class is the most common type of value range gadget.
 Interestingly, it is probably also the class that is explicitly used the
 least. Because most gadgets that make use of scroll bars support the
 <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keyword; you rarely need to explicitly create an
 instance of <code class="docutils literal notranslate"><span class="pre">&lt;scroll-bar&gt;</span></code> and attach it to another gadget.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">variable</span> <span class="vg">*my-scroll-bar*</span> <span class="o">:=</span>
-  <span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;scroll-bar&gt;</span><span class="p">,</span>
-               <span class="k">value-range:</span> <span class="nb">range</span><span class="p">(</span><span class="k">from:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">to:</span> <span class="mi">50</span><span class="p">)));</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="vg">*my-scroll-bar*</span><span class="w"> </span><span class="o">:=</span>
+<span class="w">  </span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;scroll-bar&gt;</span><span class="p">,</span>
+<span class="w">               </span><span class="k">value-range:</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">to:</span><span class="w"> </span><span class="mi">50</span><span class="p">)));</span>
 </pre></div>
 </div>
 <p>On the occasions when you do need to place scroll bars around a gadget
 explicitly, use the <code class="docutils literal notranslate"><span class="pre">scrolling</span></code> macro.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">scrolling</span> <span class="p">(</span><span class="k">scroll-bars:</span> <span class="ss">#&quot;vertical&quot;</span><span class="p">)</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
-       <span class="k">orientation:</span> <span class="ss">#&quot;vertical&quot;</span><span class="p">,</span>
-       <span class="k">items:</span> <span class="nb">range</span><span class="p">(</span><span class="k">from:</span> <span class="mi">1</span><span class="p">,</span> <span class="k">to:</span> <span class="mi">50</span><span class="p">))</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">scrolling</span><span class="w"> </span><span class="p">(</span><span class="k">scroll-bars:</span><span class="w"> </span><span class="ss">#&quot;vertical&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span>
+<span class="w">       </span><span class="k">orientation:</span><span class="w"> </span><span class="ss">#&quot;vertical&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="k">items:</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">to:</span><span class="w"> </span><span class="mi">50</span><span class="p">))</span>
 <span class="k">end</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="sliders">
-<span id="index-30"></span><h3>Sliders<a class="headerlink" href="#sliders" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sliders">
+<span id="index-30"></span><h3>Sliders<a class="headerlink" href="#sliders" title="Permalink to this heading">#</a></h3>
 <p>Sliders can be created in much the same way as scroll bars. By default,
 the gadget value is displayed alongside the slider itself.</p>
-<p><img alt="image12" src="_images/slider.png" /> You can display tick marks along the slider using the
+<p><img alt="image12" src="../_images/slider.png" /> You can display tick marks along the slider using the
 <code class="docutils literal notranslate"><span class="pre">tick-marks:</span></code> init-keyword, which is either <code class="docutils literal notranslate"><span class="pre">#f</span></code> (no tick marks are
 displayed) or an integer, which specifies the number of tick marks to
 display. The default is not to show tick marks.</p>
@@ -905,25 +1246,25 @@ you are advised to use a number that is natural to the user, such as 3,
 5, or 10. While it is possible to use oddball numbers such as 29, this
 could confuse the user of your application, unless there is a compelling
 reason to do so.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">variable</span> <span class="vg">*my-slider*</span>
-  <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;slider&gt;</span><span class="p">,</span>
-          <span class="k">value-range:</span> <span class="nb">range</span><span class="p">(</span><span class="k">from:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">to:</span> <span class="mi">50</span><span class="p">)</span>
-          <span class="k">tick-marks:</span> <span class="mi">10</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="vg">*my-slider*</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;slider&gt;</span><span class="p">,</span>
+<span class="w">          </span><span class="k">value-range:</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">to:</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span>
+<span class="w">          </span><span class="k">tick-marks:</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="progress-bars">
-<span id="index-31"></span><h3>Progress bars<a class="headerlink" href="#progress-bars" title="Permalink to this headline">¶</a></h3>
-<p><img alt="image13" src="_images/progress.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;progress-bar&gt;</span></code> class is used to display a dialog that
+</section>
+<section id="progress-bars">
+<span id="index-31"></span><h3>Progress bars<a class="headerlink" href="#progress-bars" title="Permalink to this heading">#</a></h3>
+<p><img alt="image13" src="../_images/progress.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;progress-bar&gt;</span></code> class is used to display a dialog that
 provides a gauge illustrating the progress of a particular task.
 Possible uses for progress bars include the progress of an installation
 procedure, downloading e-mail messages from a mail server, performing a
 file backup, and compiling one or more files of source code. Any
 situation in which the user may have to wait for a task to complete is a
 good candidate for a progress bar.</p>
-</div>
-<div class="section" id="assigning-callbacks-to-gadgets">
-<span id="index-32"></span><h3>Assigning callbacks to gadgets<a class="headerlink" href="#assigning-callbacks-to-gadgets" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="assigning-callbacks-to-gadgets">
+<span id="index-32"></span><h3>Assigning callbacks to gadgets<a class="headerlink" href="#assigning-callbacks-to-gadgets" title="Permalink to this heading">#</a></h3>
 <p>To make gadgets actually do something, you have to assign them callback
 functions. A callback is a function that is invoked when a particular
 event occurs on a gadget, such as pressing a button. When the user
@@ -940,21 +1281,23 @@ classes you have seen so far are general instances of <code class="docutils lite
 <p>The following code creates a push button that has an activate callback
 defined:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
-     <span class="k">label:</span> <span class="s">&quot;Hello&quot;</span><span class="p">,</span>
-     <span class="k">activate-callback:</span> <span class="nb">method</span> <span class="p">(</span><span class="n">button</span><span class="p">)</span>
-         <span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Pressed button!&quot;</span><span class="p">,</span>
-         <span class="k">owner:</span> <span class="n">button</span><span class="p">)</span>
-       <span class="k">end</span><span class="p">)));</span>
+<span class="w">     </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="k">activate-callback:</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+<span class="w">         </span><span class="n">notify-user</span><span class="p">(</span><span class="s">&quot;Pressed button!&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="k">owner:</span><span class="w"> </span><span class="n">button</span><span class="p">)</span>
+<span class="w">       </span><span class="k">end</span><span class="p">)));</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">notify-user</span></code> function is a useful function that lets you display a
 message in a dialog.</p>
 <p>Now when you click on the button, a notification pops up saying “Pressed
 button!”</p>
-<div class="figure align-center" id="id7">
-<img alt="_images/notify.png" src="_images/notify.png" />
-<p class="caption"><span class="caption-text">Simple behavior of notify-user</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id7">
+<img alt="../_images/notify.png" src="../_images/notify.png" />
+<figcaption>
+<p><span class="caption-text">Simple behavior of notify-user</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Two callbacks are unique to general instances of <code class="docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code> : the
 value-changing and the value-changed callbacks. The value-changing
 callback is invoked as the gadget value of the gadget changes, and the
@@ -971,17 +1314,17 @@ callback would be invoked once the user had finished typing and had
 returned the value to the gadget. For a text field, the value-changed
 callback is usually more useful than the value-changing callback.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span>
- <span class="k">value-changed-callback:</span>
-   <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
-     <span class="n">notify-user</span>
-       <span class="p">(</span><span class="s">&quot;Changed to %=&quot;</span><span class="p">,</span> <span class="n">gadget-value</span><span class="p">(</span><span class="n">gadget</span><span class="p">))</span>
-   <span class="k">end</span><span class="p">));</span>
+<span class="w"> </span><span class="k">value-changed-callback:</span>
+<span class="w">   </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
+<span class="w">     </span><span class="n">notify-user</span>
+<span class="w">       </span><span class="p">(</span><span class="s">&quot;Changed to %=&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">gadget-value</span><span class="p">(</span><span class="n">gadget</span><span class="p">))</span>
+<span class="w">   </span><span class="k">end</span><span class="p">));</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="a-tour-of-layouts">
-<span id="index-33"></span><h2>A tour of layouts<a class="headerlink" href="#a-tour-of-layouts" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="a-tour-of-layouts">
+<span id="index-33"></span><h2>A tour of layouts<a class="headerlink" href="#a-tour-of-layouts" title="Permalink to this heading">#</a></h2>
 <p>Layouts determine how the elements that make a GUI are presented on the
 screen. Together with gadgets, layouts are an important type of sheet
 that you need to be familiar with in order to develop basic DUIM
@@ -1020,19 +1363,21 @@ time.</p>
 a specified number of rows and columns.</p>
 </dd>
 </dl>
-<div class="section" id="row-layouts-and-column-layouts">
-<span id="index-34"></span><h3>Row layouts and column layouts<a class="headerlink" href="#row-layouts-and-column-layouts" title="Permalink to this headline">¶</a></h3>
+<section id="row-layouts-and-column-layouts">
+<span id="index-34"></span><h3>Row layouts and column layouts<a class="headerlink" href="#row-layouts-and-column-layouts" title="Permalink to this heading">#</a></h3>
 <p id="index-35">Create a column layout containing three buttons as follows:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;column-layout&gt;</span><span class="p">,</span>
-             <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;One&quot;</span><span class="p">),</span>
-                              <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Two&quot;</span><span class="p">),</span>
-                              <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Three&quot;</span><span class="p">))));</span>
+<span class="w">             </span><span class="k">children:</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;One&quot;</span><span class="p">),</span>
+<span class="w">                              </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Two&quot;</span><span class="p">),</span>
+<span class="w">                              </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Three&quot;</span><span class="p">))));</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id8">
-<img alt="_images/column.png" src="_images/column.png" />
-<p class="caption"><span class="caption-text">Three button arranged in a column layout</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id8">
+<img alt="../_images/column.png" src="../_images/column.png" />
+<figcaption>
+<p><span class="caption-text">Three button arranged in a column layout</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Similarly, <code class="docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code> can be used to lay out any number of children
 in a single row.</p>
 <p>A number of different init-keywords can be used to specify the initial
@@ -1072,27 +1417,27 @@ side.</p>
 axis. This can be either <code class="docutils literal notranslate"><span class="pre">#&quot;top&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;bottom&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> <code class="docutils literal notranslate"><span class="pre">#&quot;center&quot;</span></code>, and
 the children of the column layout are aligned appropriately. By default,
 the children of a row layout are aligned along the top.</p>
-</div>
-<div class="section" id="stack-layouts">
-<span id="index-36"></span><h3>Stack layouts<a class="headerlink" href="#stack-layouts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="stack-layouts">
+<span id="index-36"></span><h3>Stack layouts<a class="headerlink" href="#stack-layouts" title="Permalink to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code> class is provided to let you create layout classes
 in which only one child is visible at a time. They are used to implement
 tab controls and wizards. In a stack layout, all children are placed on
 top of one another, with each child aligned at the top left corner by
 default.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;stack-layout&gt;</span><span class="p">,</span>
-     <span class="k">children:</span> <span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;List 1&quot;</span>
-                           <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;One&quot;</span><span class="p">,</span> <span class="s">&quot;Two&quot;</span><span class="p">,</span>
-                                    <span class="s">&quot;Three&quot;</span><span class="p">,</span> <span class="s">&quot;Four&quot;</span><span class="p">),</span>
-                      <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;List 2&quot;</span>
-                           <span class="k">items:</span> <span class="p">#(</span><span class="s">&quot;Five&quot;</span><span class="p">,</span> <span class="s">&quot;Six&quot;</span><span class="p">,</span>
-                                    <span class="s">&quot;Seven&quot;</span><span class="p">,</span> <span class="s">&quot;Eight&quot;</span><span class="p">),</span>
-                      <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Finish&quot;</span><span class="p">)));</span>
+<span class="w">     </span><span class="k">children:</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;List 1&quot;</span>
+<span class="w">                           </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="s">&quot;One&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Two&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s">&quot;Three&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Four&quot;</span><span class="p">),</span>
+<span class="w">                      </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;List 2&quot;</span>
+<span class="w">                           </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="s">&quot;Five&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Six&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s">&quot;Seven&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Eight&quot;</span><span class="p">),</span>
+<span class="w">                      </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Finish&quot;</span><span class="p">)));</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="pinboard-layouts-and-fixed-layouts">
-<span id="index-37"></span><h3>Pinboard layouts and fixed layouts<a class="headerlink" href="#pinboard-layouts-and-fixed-layouts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pinboard-layouts-and-fixed-layouts">
+<span id="index-37"></span><h3>Pinboard layouts and fixed layouts<a class="headerlink" href="#pinboard-layouts-and-fixed-layouts" title="Permalink to this heading">#</a></h3>
 <p>A pinboard layout is a framework that serves as a place to locate any
 number of child gadgets. It has no built in layout information, so,
 unless you specify coordinates explicitly, any object placed in a
@@ -1103,19 +1448,21 @@ to determine its position in the layout. You have complete flexibility
 in positioning objects in a pinboard layout by giving each object
 coordinates, as shown in the following example:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span>
-  <span class="p">(</span><span class="nb">make</span>
-    <span class="p">(</span><span class="nc">&lt;pinboard-layout&gt;</span><span class="p">,</span>
-     <span class="k">children:</span>
-       <span class="nb">vector</span> <span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;One&quot;</span><span class="p">,</span> <span class="k">x:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">y:</span> <span class="mi">0</span><span class="p">),</span>
-               <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Two&quot;</span><span class="p">,</span> <span class="k">x:</span> <span class="mi">50</span><span class="p">,</span><span class="k">y:</span> <span class="mi">50</span><span class="p">),</span>
-               <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Three&quot;</span><span class="p">,</span>
-                    <span class="k">x:</span> <span class="mi">50</span><span class="p">,</span> <span class="k">y:</span> <span class="mi">100</span><span class="p">))));</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">make</span>
+<span class="w">    </span><span class="p">(</span><span class="nc">&lt;pinboard-layout&gt;</span><span class="p">,</span>
+<span class="w">     </span><span class="k">children:</span>
+<span class="w">       </span><span class="nb">vector</span><span class="w"> </span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;One&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">x:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">y:</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">               </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Two&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">x:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="k">y:</span><span class="w"> </span><span class="mi">50</span><span class="p">),</span>
+<span class="w">               </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Three&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="k">x:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="k">y:</span><span class="w"> </span><span class="mi">100</span><span class="p">))));</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id9">
-<span id="three-buttons-pinboard-layout"></span><img alt="_images/pinboard.png" src="_images/pinboard.png" />
-<p class="caption"><span class="caption-text">Three buttons arranged in a pinboard layout</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id9">
+<span id="three-buttons-pinboard-layout"></span><img alt="../_images/pinboard.png" src="../_images/pinboard.png" />
+<figcaption>
+<p><span class="caption-text">Three buttons arranged in a pinboard layout</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Any child in a pinboard layout obeys any size constraints that may apply
 to it, whether those constraints have been specified by you, or
 calculated by DUIM. For instance, any button you place on a pinboard
@@ -1130,28 +1477,30 @@ setting up a resource database in which the sizes and positions of a number
 of sheets were specified, and were to be read directly into your application
 code from this database. For most situations, however, you will not need to
 use the <code class="docutils literal notranslate"><span class="pre">&lt;fixed-layout&gt;</span></code> class.</p>
-</div>
-<div class="section" id="using-horizontally-and-vertically-macros">
-<span id="index-38"></span><h3>Using horizontally and vertically macros<a class="headerlink" href="#using-horizontally-and-vertically-macros" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="using-horizontally-and-vertically-macros">
+<span id="index-38"></span><h3>Using horizontally and vertically macros<a class="headerlink" href="#using-horizontally-and-vertically-macros" title="Permalink to this heading">#</a></h3>
 <p>The macros <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> and <code class="docutils literal notranslate"><span class="pre">vertically</span></code> are provided to position
 objects sequentially in a column layout or row layout. Using these
 macros, rather than creating layout objects explicitly, can lead to
 shorter and more readable code.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">horizontally</span> <span class="p">()</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;One&quot;</span><span class="p">);</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Two&quot;</span><span class="p">);</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Three&quot;</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;One&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Two&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Three&quot;</span><span class="p">)</span>
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id10">
-<img alt="_images/row.png" src="_images/row.png" />
-<p class="caption"><span class="caption-text">Three buttons arranged in a horizontal layout</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</div>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span> <span class="p">()</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;One&quot;</span><span class="p">);</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Two&quot;</span><span class="p">);</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Three&quot;</span><span class="p">)</span>
+<figure class="align-center" id="id10">
+<img alt="../_images/row.png" src="../_images/row.png" />
+<figcaption>
+<p><span class="caption-text">Three buttons arranged in a horizontal layout</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;One&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Two&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Three&quot;</span><span class="p">)</span>
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1163,20 +1512,20 @@ the macro. The following code ensures that the row layout created by
 label. In addition, the use of <code class="docutils literal notranslate"><span class="pre">max-width:</span></code> in the definitions of the
 two other buttons ensures that those buttons are sized so as to occupy
 the entire width of the row layout.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span> <span class="p">(</span><span class="k">equalize-widths?:</span> <span class="l">#t</span><span class="p">)</span>
-  <span class="n">horizontally</span> <span class="p">()</span>
-    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Red&quot;</span><span class="p">,</span> <span class="k">max-width:</span> <span class="no">$fill</span><span class="p">);</span>
-    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span> <span class="k">label:</span> <span class="s">&quot;Ultraviolet&quot;</span><span class="p">,</span> <span class="k">max-width:</span> <span class="no">$fill</span><span class="p">);</span>
-  <span class="k">end</span><span class="p">;</span>
-  <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span>
-       <span class="k">label:</span> <span class="s">&quot;A button with a really really long label&quot;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span><span class="w"> </span><span class="p">(</span><span class="k">equalize-widths?:</span><span class="w"> </span><span class="l">#t</span><span class="p">)</span>
+<span class="w">  </span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Red&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">max-width:</span><span class="w"> </span><span class="no">$fill</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Ultraviolet&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">max-width:</span><span class="w"> </span><span class="no">$fill</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span>
+<span class="w">       </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;A button with a really really long label&quot;</span><span class="p">);</span>
 <span class="k">end</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="a-tour-of-sheets">
-<span id="index-39"></span><h2>A tour of sheets<a class="headerlink" href="#a-tour-of-sheets" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="a-tour-of-sheets">
+<span id="index-39"></span><h2>A tour of sheets<a class="headerlink" href="#a-tour-of-sheets" title="Permalink to this heading">#</a></h2>
 <p>Each unique piece of a window is a sheet. Thus, a sheet creates a
 visible element of some sort on the screen. In any frame, sheets are
 nested in a parent-child hierarchy. The DUIM-Sheets library provides
@@ -1187,8 +1536,8 @@ protocols, and you do not need to define your own sheet classes, since
 most of the sheet classes you need to use have been implemented for you
 in the form of gadgets (<a class="reference internal" href="#a-tour-of-gadgets">A tour of gadgets</a>) and layouts
 (<a class="reference internal" href="#a-tour-of-layouts">A tour of layouts</a>).</p>
-<div class="section" id="basic-properties-of-sheets">
-<span id="index-40"></span><h3>Basic properties of sheets<a class="headerlink" href="#basic-properties-of-sheets" title="Permalink to this headline">¶</a></h3>
+<section id="basic-properties-of-sheets">
+<span id="index-40"></span><h3>Basic properties of sheets<a class="headerlink" href="#basic-properties-of-sheets" title="Permalink to this heading">#</a></h3>
 <p>All sheets, including gadgets and layouts, have a number of properties
 that deal with the fairly low level implementation behavior of sheet
 classes. When developing basic DUIM applications, you do not need to be
@@ -1254,10 +1603,10 @@ so that callbacks may be described for the sheet class.</p></li>
 that can display output have a <code class="docutils literal notranslate"><span class="pre">sheet-medium</span></code> slot. As a guide, all
 gadgets can be repainted and can display output, and no layouts can be
 repainted or display output.</p>
-</div>
-</div>
-<div class="section" id="a-tour-of-frames">
-<span id="index-41"></span><h2>A tour of frames<a class="headerlink" href="#a-tour-of-frames" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="a-tour-of-frames">
+<span id="index-41"></span><h2>A tour of frames<a class="headerlink" href="#a-tour-of-frames" title="Permalink to this heading">#</a></h2>
 <p>As you will have seen if you worked through the task list manager
 example application, frames are the basic components used to display
 DUIM objects on-screen. Every window in your application is a general
@@ -1277,8 +1626,8 @@ events.</p>
 windows, as well as dialog boxes (both modal and modeless), property
 pages and wizards.</p>
 <p>Support for frames is provided by the DUIM-Frames library.</p>
-<div class="section" id="creating-frames-and-displaying-them-on-screen">
-<span id="index-42"></span><h3>Creating frames and displaying them on-screen<a class="headerlink" href="#creating-frames-and-displaying-them-on-screen" title="Permalink to this headline">¶</a></h3>
+<section id="creating-frames-and-displaying-them-on-screen">
+<span id="index-42"></span><h3>Creating frames and displaying them on-screen<a class="headerlink" href="#creating-frames-and-displaying-them-on-screen" title="Permalink to this heading">#</a></h3>
 <p>To create an instance of a frame class, use <code class="docutils literal notranslate"><span class="pre">make</span></code>, as you would any
 other class. To display an instance of a frame on the screen, use the
 function <code class="docutils literal notranslate"><span class="pre">start-frame</span></code>. This takes as an argument a name bound to an
@@ -1287,22 +1636,24 @@ that evaluates to a frame instance.</p>
 <p>For example, to create a simple frame that contains a single button, use
 the following code:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">start-frame</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">,</span>
-                 <span class="k">title:</span> <span class="s">&quot;Simple frame&quot;</span><span class="p">,</span>
-                 <span class="k">layout:</span>
-                   <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
-                        <span class="k">label:</span> <span class="s">&quot;A button on a simple frame&quot;</span><span class="p">)));</span>
+<span class="w">                 </span><span class="k">title:</span><span class="w"> </span><span class="s">&quot;Simple frame&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="k">layout:</span>
+<span class="w">                   </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+<span class="w">                        </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;A button on a simple frame&quot;</span><span class="p">)));</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id11">
-<img alt="_images/frame.png" src="_images/frame.png" />
-<p class="caption"><span class="caption-text">A simple frame</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id11">
+<img alt="../_images/frame.png" src="../_images/frame.png" />
+<figcaption>
+<p><span class="caption-text">A simple frame</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Note that normally you should define your own subclasses or
 <code class="docutils literal notranslate"><span class="pre">&lt;simple-frame&gt;</span></code> and call <code class="docutils literal notranslate"><span class="pre">start-frame</span></code> on instances of these, rather
 than creating direct instances of <code class="docutils literal notranslate"><span class="pre">&lt;simple-frame&gt;</span></code>.</p>
-</div>
-<div class="section" id="useful-properties-of-frames">
-<span id="index-43"></span><h3>Useful properties of frames<a class="headerlink" href="#useful-properties-of-frames" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="useful-properties-of-frames">
+<span id="index-43"></span><h3>Useful properties of frames<a class="headerlink" href="#useful-properties-of-frames" title="Permalink to this heading">#</a></h3>
 <p>You can specify a wide variety of properties for any instance or class
 of frame. This section describes some of the most common properties you
 might want to use. Naturally, when you create your own classes of frame
@@ -1341,9 +1692,9 @@ frame with respect to the top left hand corner of the screen.</p>
 can be done using <code class="docutils literal notranslate"><span class="pre">frame-fixed-width?</span></code> and <code class="docutils literal notranslate"><span class="pre">frame-fixed-height?</span></code>, both
 of which take a boolean value. Setting <code class="docutils literal notranslate"><span class="pre">frame-resizable?</span></code> to <code class="docutils literal notranslate"><span class="pre">#f</span></code> fixes
 both the width and height of a frame.</p>
-</div>
-<div class="section" id="defining-new-classes-of-frame">
-<span id="index-44"></span><h3>Defining new classes of frame<a class="headerlink" href="#defining-new-classes-of-frame" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="defining-new-classes-of-frame">
+<span id="index-44"></span><h3>Defining new classes of frame<a class="headerlink" href="#defining-new-classes-of-frame" title="Permalink to this heading">#</a></h3>
 <p>As described in <a class="reference external" href="improve.html#defining-a-new-frame-class">Defining a new frame class</a>, the <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">frame</span></code>
 macro is used to create new classes of frame. The bulk of the
 definition of any new frame is split into several parts:</p>
@@ -1360,9 +1711,9 @@ applications) set the properties of any instances of the new frame class
 that are created.</p>
 <p>Panes control the overall appearance of the new class of frame. You need
 to define panes for any GUI elements you wish to place in the frame.</p>
-</div>
-<div class="section" id="specifying-slots-for-a-new-class-of-frame">
-<span id="index-45"></span><h3>Specifying slots for a new class of frame<a class="headerlink" href="#specifying-slots-for-a-new-class-of-frame" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="specifying-slots-for-a-new-class-of-frame">
+<span id="index-45"></span><h3>Specifying slots for a new class of frame<a class="headerlink" href="#specifying-slots-for-a-new-class-of-frame" title="Permalink to this heading">#</a></h3>
 <p>As with any other Dylan class, you can use standard slot options to
 define slots for any new class of frame. This includes techniques such
 as setting default values, specifying init-keyword names, and specifying
@@ -1372,16 +1723,16 @@ defines an additional slot that can be set to a date and time. The
 default value of the slot is set to the current date and time using an
 init expression. So that you can provide an initial value for the slot,
 it is defined with an init-keyword of the same name.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;date-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
-  <span class="nb">slot</span> <span class="n">date</span> <span class="p">::</span> <span class="nc">&lt;date&gt;</span> <span class="o">=</span> <span class="n">current-date</span><span class="p">(),</span>
-    <span class="k">init-keyword:</span> <span class="k">date:</span><span class="p">;</span>
-  <span class="c1">// Other stuff here</span>
-<span class="k">end</span> <span class="nb">class</span> <span class="nc">&lt;date-frame&gt;</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="nc">&lt;date-frame&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">slot</span><span class="w"> </span><span class="n">date</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;date&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current-date</span><span class="p">(),</span>
+<span class="w">    </span><span class="k">init-keyword:</span><span class="w"> </span><span class="k">date:</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// Other stuff here</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;date-frame&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="specifying-panes-for-a-new-class-of-frame">
-<span id="index-46"></span><h3>Specifying panes for a new class of frame<a class="headerlink" href="#specifying-panes-for-a-new-class-of-frame" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="specifying-panes-for-a-new-class-of-frame">
+<span id="index-46"></span><h3>Specifying panes for a new class of frame<a class="headerlink" href="#specifying-panes-for-a-new-class-of-frame" title="Permalink to this heading">#</a></h3>
 <p>In the same way that you can define slots, you can define panes for a
 frame class using pane options. Panes may be used to define all the
 visual aspects of a frame class, including such things as:</p>
@@ -1409,7 +1760,7 @@ included in the frame using an appropriate clause. For example, to
 include a tool bar, having created a pane called <code class="docutils literal notranslate"><span class="pre">app-tool-bar</span></code> that
 contains the definition of the tool bar itself, you need to include the
 following code at the end of the definition of the frame:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">tool-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">app-tool-bar</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">tool-bar</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">app-tool-bar</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The major components that need to be activated in any frame definition
@@ -1423,59 +1774,59 @@ frame.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">main-layout</span></code> A column layout that consists of the <code class="docutils literal notranslate"><span class="pre">button</span></code> pane,
 together with a drawing pane.</p></li>
 </ul>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">frame</span> <span class="nc">&lt;example-frame&gt;</span> <span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
-  <span class="p">...</span> <span class="n">other</span> <span class="n">code</span> <span class="n">here</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="nc">&lt;example-frame&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">...</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">here</span>
 
-  <span class="c1">// pane definitions</span>
-  <span class="n">pane</span> <span class="n">button</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
-    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
-         <span class="k">label:</span> <span class="s">&quot;Press&quot;</span><span class="p">,</span>
-         <span class="k">activate-callback:</span>
-           <span class="nb">method</span> <span class="p">(</span><span class="n">button</span><span class="p">)</span>
-             <span class="n">notify-user</span> <span class="p">(</span><span class="n">format-to-string</span> <span class="p">(</span><span class="s">&quot;Pressed button&quot;</span><span class="p">),</span>
-                          <span class="k">owner:</span> <span class="n">frame</span><span class="p">)</span>
-           <span class="k">end</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// pane definitions</span>
+<span class="w">  </span><span class="n">pane</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
+<span class="w">         </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Press&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="k">activate-callback:</span>
+<span class="w">           </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+<span class="w">             </span><span class="n">notify-user</span><span class="w"> </span><span class="p">(</span><span class="n">format-to-string</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Pressed button&quot;</span><span class="p">),</span>
+<span class="w">                          </span><span class="k">owner:</span><span class="w"> </span><span class="n">frame</span><span class="p">)</span>
+<span class="w">           </span><span class="k">end</span><span class="p">);</span>
 
-  <span class="n">pane</span> <span class="n">status</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
-    <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">pane</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;status-bar&gt;</span><span class="p">);</span>
 
-  <span class="n">pane</span> <span class="n">main-layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span>
-    <span class="n">vertically</span> <span class="p">(</span><span class="k">spacing:</span> <span class="mi">10</span><span class="p">)</span>
-      <span class="n">horizontally</span> <span class="p">(</span><span class="k">borders:</span> <span class="mi">2</span><span class="p">,</span> <span class="k">x-alignment:</span> <span class="ss">#&quot;center&quot;</span><span class="p">)</span>
-        <span class="n">frame</span><span class="p">.</span><span class="n">button</span><span class="p">;</span>
-      <span class="k">end</span><span class="p">;</span>
-      <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;drawing-pane&gt;</span><span class="p">,</span>
-           <span class="k">foreground:</span> <span class="no">$red</span><span class="p">);</span>
-    <span class="k">end</span><span class="p">;</span>
+<span class="w">  </span><span class="n">pane</span><span class="w"> </span><span class="n">main-layout</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<span class="w">    </span><span class="n">vertically</span><span class="w"> </span><span class="p">(</span><span class="k">spacing:</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">      </span><span class="n">horizontally</span><span class="w"> </span><span class="p">(</span><span class="k">borders:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">x-alignment:</span><span class="w"> </span><span class="ss">#&quot;center&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="n">frame</span><span class="p">.</span><span class="n">button</span><span class="p">;</span>
+<span class="w">      </span><span class="k">end</span><span class="p">;</span>
+<span class="w">      </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;drawing-pane&gt;</span><span class="p">,</span>
+<span class="w">           </span><span class="k">foreground:</span><span class="w"> </span><span class="no">$red</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="p">;</span>
 
-  <span class="p">...</span> <span class="n">other</span> <span class="n">code</span> <span class="n">here</span>
+<span class="w">  </span><span class="p">...</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">here</span>
 
-  <span class="c1">// activate components of frame</span>
-  <span class="n">layout</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">main-layout</span><span class="p">;</span>
-  <span class="n">status-bar</span> <span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="n">frame</span><span class="p">.</span><span class="n">status</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// activate components of frame</span>
+<span class="w">  </span><span class="n">layout</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">main-layout</span><span class="p">;</span>
+<span class="w">  </span><span class="n">status-bar</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">status</span><span class="p">;</span>
 
-  <span class="c1">// frame title</span>
-  <span class="nb">keyword</span> <span class="k">title:</span> <span class="o">=</span> <span class="s">&quot;Example Frame&quot;</span><span class="p">;</span>
-<span class="k">end</span> <span class="n">frame</span> <span class="nc">&lt;example-frame&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// frame title</span>
+<span class="w">  </span><span class="nb">keyword</span><span class="w"> </span><span class="k">title:</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Example Frame&quot;</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="nc">&lt;example-frame&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The following method creates an instance of an <code class="docutils literal notranslate"><span class="pre">&lt;example-frame&gt;</span></code>.</p>
 <p>The simplest way to create an example frame is by calling this method
 thus: <code class="docutils literal notranslate"><span class="pre">make-example-frame();</span></code>.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">make-example-frame</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="n">frame</span> <span class="p">::</span> <span class="nc">&lt;example-frame&gt;</span><span class="p">)</span>
-  <span class="k">let</span> <span class="n">frame</span>
-    <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;example-frame&gt;</span><span class="p">);</span>
-  <span class="n">start-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
-<span class="k">end</span> <span class="nb">method</span> <span class="n">make-example-frame</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">make-example-frame</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;example-frame&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">frame</span>
+<span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;example-frame&gt;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">start-frame</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">make-example-frame</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>For a more complete example of how to define your own class of frame for
 use in an application, see the chapters that cover the development of
 the Task List Manager in this manual (Chapters <a class="reference internal" href="design.html"><span class="doc">Designing A Simple DUIM Application</span></a> to
 <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a>).</p>
-</div>
-<div class="section" id="overview-of-dialogs">
-<span id="index-47"></span><h3>Overview of dialogs<a class="headerlink" href="#overview-of-dialogs" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="overview-of-dialogs">
+<span id="index-47"></span><h3>Overview of dialogs<a class="headerlink" href="#overview-of-dialogs" title="Permalink to this heading">#</a></h3>
 <p>Dialog boxes are a standard way of requesting more information from the
 user in order to proceed with an operation. Typically, dialog boxes are
 modal — that is, the operation cannot be continued until the dialog is
@@ -1502,12 +1853,12 @@ have already seen. This function provides you with a straightforward way
 of displaying an alert message on screen in whatever format is standard
 for the target operating system.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
-             <span class="k">label:</span> <span class="s">&quot;Press me!&quot;</span><span class="p">,</span>
-             <span class="k">activate-callback:</span>
-               <span class="nb">method</span> <span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
-                 <span class="n">notify-user</span>
-                   <span class="p">(</span><span class="n">format-to-string</span> <span class="p">(</span><span class="s">&quot;You pressed me!&quot;</span><span class="p">))</span>
-               <span class="k">end</span><span class="p">));</span>
+<span class="w">             </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Press me!&quot;</span><span class="p">,</span>
+<span class="w">             </span><span class="k">activate-callback:</span>
+<span class="w">               </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">gadget</span><span class="p">)</span>
+<span class="w">                 </span><span class="n">notify-user</span>
+<span class="w">                   </span><span class="p">(</span><span class="n">format-to-string</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;You pressed me!&quot;</span><span class="p">))</span>
+<span class="w">               </span><span class="k">end</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>The example above creates a push button which, when pressed, calls
@@ -1517,8 +1868,8 @@ using <code class="docutils literal notranslate"><span class="pre">choose-file</
 direction that distinguishes between the two types of dialog: thus, if
 the direction is <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>, a file is opened, and if the direction is
 <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code> a file is saved.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">choose-file</span><span class="p">(</span><span class="k">title:</span> <span class="s">&quot;Open File&quot;</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
-<span class="n">choose-file</span><span class="p">(</span><span class="k">title:</span> <span class="s">&quot;Save File As&quot;</span><span class="p">,</span> <span class="k">direction:</span> <span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">choose-file</span><span class="p">(</span><span class="k">title:</span><span class="w"> </span><span class="s">&quot;Open File&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">direction:</span><span class="w"> </span><span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+<span class="n">choose-file</span><span class="p">(</span><span class="k">title:</span><span class="w"> </span><span class="s">&quot;Save File As&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">direction:</span><span class="w"> </span><span class="ss">#&quot;input&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that DUIM provides default titles based on the specified direction,
@@ -1547,10 +1898,10 @@ Manual</em>.</p>
 listed above. If you wish to use any of them, you must either use the
 Win32 control directly, or you must emulate the dialog yourself by
 building it using DUIM classes.</p>
-</div>
-</div>
-<div class="section" id="where-to-go-from-here">
-<h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="where-to-go-from-here">
+<h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this heading">#</a></h2>
 <p>This concludes a fairly basic tour of the major functionality provided
 by DUIM. Other topics that have not been covered in this tour include
 colors, fonts, images, generic drawing properties, and the functionality
@@ -1573,38 +1924,129 @@ relevant. The reference manual also provides further information
 about how you should use DUIM, and the organization of the DUIM class
 hierarchy.</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="source.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Source Code For The Task List Manager</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="commands.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Using Command Tables</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="commands.html" class="btn btn-neutral float-left" title="Using Command Tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="source.html" class="btn btn-neutral float-right" title="Source Code For The Task List Manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">A Tour of the DUIM Libraries</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#a-tour-of-gadgets">A tour of gadgets</a><ul>
+<li><a class="reference internal" href="#general-properties-of-gadgets">General properties of gadgets</a></li>
+<li><a class="reference internal" href="#button-gadgets">Button gadgets</a></li>
+<li><a class="reference internal" href="#standard-buttons">Standard buttons</a></li>
+<li><a class="reference internal" href="#menu-buttons">Menu buttons</a></li>
+<li><a class="reference internal" href="#collection-gadgets">Collection gadgets</a></li>
+<li><a class="reference internal" href="#useful-properties-of-collection-gadgets">Useful properties of collection gadgets</a></li>
+<li><a class="reference internal" href="#button-boxes">Button boxes</a></li>
+<li><a class="reference internal" href="#menu-boxes">Menu boxes</a></li>
+<li><a class="reference internal" href="#lists">Lists</a></li>
+<li><a class="reference internal" href="#display-controls">Display controls</a></li>
+<li><a class="reference internal" href="#tree-controls">Tree controls</a></li>
+<li><a class="reference internal" href="#list-controls">List controls</a></li>
+<li><a class="reference internal" href="#table-controls">Table controls</a></li>
+<li><a class="reference internal" href="#spin-boxes">Spin boxes</a></li>
+<li><a class="reference internal" href="#text-gadgets">Text gadgets</a></li>
+<li><a class="reference internal" href="#useful-properties-of-text-gadgets">Useful properties of text gadgets</a></li>
+<li><a class="reference internal" href="#text-fields">Text fields</a></li>
+<li><a class="reference internal" href="#text-editors">Text editors</a></li>
+<li><a class="reference internal" href="#password-fields">Password fields</a></li>
+<li><a class="reference internal" href="#range-gadgets">Range gadgets</a></li>
+<li><a class="reference internal" href="#useful-properties-of-range-gadgets">Useful properties of range gadgets</a></li>
+<li><a class="reference internal" href="#scroll-bars">Scroll bars</a></li>
+<li><a class="reference internal" href="#sliders">Sliders</a></li>
+<li><a class="reference internal" href="#progress-bars">Progress bars</a></li>
+<li><a class="reference internal" href="#assigning-callbacks-to-gadgets">Assigning callbacks to gadgets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-tour-of-layouts">A tour of layouts</a><ul>
+<li><a class="reference internal" href="#row-layouts-and-column-layouts">Row layouts and column layouts</a></li>
+<li><a class="reference internal" href="#stack-layouts">Stack layouts</a></li>
+<li><a class="reference internal" href="#pinboard-layouts-and-fixed-layouts">Pinboard layouts and fixed layouts</a></li>
+<li><a class="reference internal" href="#using-horizontally-and-vertically-macros">Using horizontally and vertically macros</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-tour-of-sheets">A tour of sheets</a><ul>
+<li><a class="reference internal" href="#basic-properties-of-sheets">Basic properties of sheets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-tour-of-frames">A tour of frames</a><ul>
+<li><a class="reference internal" href="#creating-frames-and-displaying-them-on-screen">Creating frames and displaying them on-screen</a></li>
+<li><a class="reference internal" href="#useful-properties-of-frames">Useful properties of frames</a></li>
+<li><a class="reference internal" href="#defining-new-classes-of-frame">Defining new classes of frame</a></li>
+<li><a class="reference internal" href="#specifying-slots-for-a-new-class-of-frame">Specifying slots for a new class of frame</a></li>
+<li><a class="reference internal" href="#specifying-panes-for-a-new-class-of-frame">Specifying panes for a new class of frame</a></li>
+<li><a class="reference internal" href="#overview-of-dialogs">Overview of dialogs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#where-to-go-from-here">Where to go from here</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
 </html>

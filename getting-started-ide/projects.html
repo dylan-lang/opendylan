@@ -1,145 +1,487 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Learning More About an Application" href="browsing.html" /><link rel="prev" title="Programming in Open Dylan" href="model.html" />
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creating and Using Projects &mdash; Getting Started with the Open Dylan IDE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="copyright" title="Copyright" href="copyright.html" />
-    <link rel="next" title="Learning More About an Application" href="browsing.html" />
-    <link rel="prev" title="Programming in Open Dylan" href="model.html" /> 
-</head>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Creating and Using Projects - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            Getting Started with the Open Dylan IDE
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Creating and Using Projects</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#creating-a-new-project">Creating a new project</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#specifying-the-type-of-the-project">Specifying the type of the project</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#specifying-the-project-name-and-location">Specifying the project name and location</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#choosing-the-libraries-that-the-project-uses">Choosing the libraries that the project uses</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-final-page-in-the-new-project-wizard">The final page in the New Project wizard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#examining-the-files-in-the-hello-project">Examining the files in the Hello project</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#projects-for-gui-applications">Projects for GUI applications</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-a-gui-project">Creating a GUI project</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#examining-and-building-the-new-gui-project">Examining and building the new GUI project</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-a-project-using-the-custom-library-option">Creating a project using the Custom library option</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#saving-settings-in-the-new-project-wizard">Saving settings in the New Project wizard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#advanced-project-settings">Advanced project settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adding-moving-and-deleting-project-sources">Adding, moving, and deleting project sources</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#inserting-files-into-a-project">Inserting files into a project</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#moving-the-position-of-a-file-within-a-project">Moving the position of a file within a project</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deleting-files-from-a-project">Deleting files from a project</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#the-project-start-function">The project start function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#project-settings">Project settings</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#compile-page">Compile page</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#link-page">Link page</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#target-file-section-of-the-link-page">Target File section of the Link page</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#base-address-section-of-the-link-page">Base Address section of the Link page</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#version-information-section-of-the-link-page">Version Information section of the Link page</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#windows-subsystem-section-of-the-link-page">Windows Subsystem section of the Link page</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#debug-page">Debug page</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#project-files-and-lid-files">Project files and LID files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#opening-a-lid-file-as-a-project">Opening a LID file as a project</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exporting-a-project-into-a-lid-file">Exporting a project into a LID file</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
-<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
-<li class="toctree-l1"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a></li>
-</ul>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
       </div>
-    </nav>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Getting Started / IDE</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
+</ul>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Getting Started with the Open Dylan IDE</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Creating and Using Projects</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/projects.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="creating-and-using-projects">
-<h1>Creating and Using Projects<a class="headerlink" href="#creating-and-using-projects" title="Permalink to this headline">¶</a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/getting-started-ide/projects.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="creating-and-using-projects">
+<h1>Creating and Using Projects<a class="headerlink" href="#creating-and-using-projects" title="Permalink to this heading">#</a></h1>
 <p>In this chapter we look more closely at projects. We take a break from
 Reversi and develop some new projects of our own. To do this, we use
 Open Dylan’s New Project wizard. We also look at some of the
 options and settings associated with projects, and some of the features
 of the project window.</p>
-<div class="section" id="creating-a-new-project">
-<span id="creating-new-project"></span><span id="index-0"></span><h2>Creating a new project<a class="headerlink" href="#creating-a-new-project" title="Permalink to this headline">¶</a></h2>
+<section id="creating-a-new-project">
+<span id="creating-new-project"></span><span id="index-0"></span><h2>Creating a new project<a class="headerlink" href="#creating-a-new-project" title="Permalink to this heading">#</a></h2>
 <p>We now create a new project for a simple “Hello World” application that
 will run in an MS-DOS console window.</p>
-<p>We create the project by clicking the New Project (<img alt="image0" src="_images/newproj.png" />) button in
+<p>We create the project by clicking the New Project (<img alt="image0" src="../_images/newproj.png" />) button in
 the main window, or by choosing <strong>File &gt; New</strong> in any window.</p>
 <p>Click the New Project button in the main window.</p>
 <p>The New Project wizard appears.</p>
-<div class="figure align-center" id="id4">
-<img alt="_images/pwiz.png" src="_images/pwiz.png" />
-<p class="caption"><span class="caption-text">The New Project wizard.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id4">
+<img alt="../_images/pwiz.png" src="../_images/pwiz.png" />
+<figcaption>
+<p><span class="caption-text">The New Project wizard.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The New Project wizard guides us through the process of creating a new
 project. Across a series of pages, it gathers the following information:</p>
 <ul class="simple">
@@ -181,8 +523,8 @@ included in your project. We discuss this in <a class="reference internal" href=
 applications</a>.</p>
 <p>For more information on DUIM, see <em>Building Applications Using DUIM</em> and
 the <em>DUIM Reference</em>.</p>
-<div class="section" id="specifying-the-type-of-the-project">
-<h3>Specifying the type of the project<a class="headerlink" href="#specifying-the-type-of-the-project" title="Permalink to this headline">¶</a></h3>
+<section id="specifying-the-type-of-the-project">
+<h3>Specifying the type of the project<a class="headerlink" href="#specifying-the-type-of-the-project" title="Permalink to this heading">#</a></h3>
 <p>The first page in the New Project wizard asks us to specify the kind of
 target we want to build from the project.</p>
 <p>In the Project type box, the default option is “GUI Application (EXE)”.
@@ -191,16 +533,18 @@ application, so we need to change this option setting from the default.</p>
 <p>Select “Console Application (EXE)” in the Project type box.</p>
 <p>Click <strong>Next</strong>.</p>
 <p>We now move to the second page.</p>
-</div>
-<div class="section" id="specifying-the-project-name-and-location">
-<h3>Specifying the project name and location<a class="headerlink" href="#specifying-the-project-name-and-location" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="specifying-the-project-name-and-location">
+<h3>Specifying the project name and location<a class="headerlink" href="#specifying-the-project-name-and-location" title="Permalink to this heading">#</a></h3>
 <p>The second page in the New Project wizard asks us to supply a name for
 our project, and to specify a location for the automatically generated
 project and source files.</p>
-<div class="figure align-center" id="id5">
-<img alt="_images/pwiz2.png" src="_images/pwiz2.png" />
-<p class="caption"><span class="caption-text">The New Project wizard’s second page.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id5">
+<img alt="../_images/pwiz2.png" src="../_images/pwiz2.png" />
+<figcaption>
+<p><span class="caption-text">The New Project wizard’s second page.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>When naming projects, remember that Open Dylan uses the name given
 to a project as a basis for naming some of the files that make up the
 project, so the name should only contain characters that are valid in
@@ -226,9 +570,9 @@ automatically generated project and source files.</p>
 automatically if it does not already exist.</p>
 <p>Click <strong>Next</strong>.</p>
 <p>We now move to the third page.</p>
-</div>
-<div class="section" id="choosing-the-libraries-that-the-project-uses">
-<h3>Choosing the libraries that the project uses<a class="headerlink" href="#choosing-the-libraries-that-the-project-uses" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="choosing-the-libraries-that-the-project-uses">
+<h3>Choosing the libraries that the project uses<a class="headerlink" href="#choosing-the-libraries-that-the-project-uses" title="Permalink to this heading">#</a></h3>
 <p>The next stage in creating our project is to decide which libraries and
 modules it is going to use. The third page of the wizard offers three
 different ways to do this. Each of the three options is described below.</p>
@@ -256,9 +600,9 @@ the wizard.</p>
 <p>Select <strong>Minimal</strong> in the Use Libraries box.</p>
 <p>Click <strong>Next</strong>.</p>
 <p>We now move to the final page.</p>
-</div>
-<div class="section" id="the-final-page-in-the-new-project-wizard">
-<span id="index-1"></span><h3>The final page in the New Project wizard<a class="headerlink" href="#the-final-page-in-the-new-project-wizard" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-final-page-in-the-new-project-wizard">
+<span id="index-1"></span><h3>The final page in the New Project wizard<a class="headerlink" href="#the-final-page-in-the-new-project-wizard" title="Permalink to this heading">#</a></h3>
 <p>The final page of the New Project wizard gives us the option of
 supplying text for the documentation keywords <em>Synopsis:</em>, <em>Author:</em>,
 <em>Copyright:</em>, and <em>Version:</em>.</p>
@@ -268,25 +612,29 @@ project file itself. With the exception of <em>Synopsis:</em>, these keywords
 are defined as part of the Dylan interchange format, on page 23 of the
 DRM. <em>Synopsis:</em> is a not a standard Dylan interchange keyword, but an
 additional one that Open Dylan accepts.</p>
-<div class="figure align-center" id="id6">
-<img alt="_images/pwiz3.png" src="_images/pwiz3.png" />
-<p class="caption"><span class="caption-text">The New Project wizard’s third page.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id6">
+<img alt="../_images/pwiz3.png" src="../_images/pwiz3.png" />
+<figcaption>
+<p><span class="caption-text">The New Project wizard’s third page.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Change the default keyword text as you wish, or turn the keywords off
 altogether.</p>
 <p>Click <strong>Finish</strong>.</p>
 <p>Now we have supplied all the information the wizard asks for, it creates
 the new Hello project and opens it.</p>
-</div>
-<div class="section" id="examining-the-files-in-the-hello-project">
-<h3>Examining the files in the Hello project<a class="headerlink" href="#examining-the-files-in-the-hello-project" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="examining-the-files-in-the-hello-project">
+<h3>Examining the files in the Hello project<a class="headerlink" href="#examining-the-files-in-the-hello-project" title="Permalink to this heading">#</a></h3>
 <p><a class="reference internal" href="#hello-project"><span class="std std-ref">The Hello project.</span></a> shows our new Hello project.</p>
 <p>The default view shows the Sources page, where we can see the files
 <em>library.dylan</em>, <em>module.dylan</em>, and <em>Hello.dylan</em>.</p>
-<div class="figure align-center" id="id7">
-<span id="hello-project"></span><img alt="_images/hellopr.png" src="_images/hellopr.png" />
-<p class="caption"><span class="caption-text">The Hello project.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id7">
+<span id="hello-project"></span><img alt="../_images/hellopr.png" src="../_images/hellopr.png" />
+<figcaption>
+<p><span class="caption-text">The Hello project.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The <em>library.dylan</em> file defines a Dylan library called <em>Hello</em>, which
 uses the library <em>harlequin-dylan</em>. The <em>module.dylan</em> file defines a
 module of the <em>Hello</em> library which is also called <em>Hello</em>, and which
@@ -317,18 +665,18 @@ has terminated.</p>
 project folder we specified on the second page of the New Project
 wizard. See <a class="reference internal" href="model.html#projects-on-disk"><span class="std std-ref">Projects on disk</span></a> for more details of where build
 products reside.</p>
-</div>
-<div class="section" id="projects-for-gui-applications">
-<h3>Projects for GUI applications<a class="headerlink" href="#projects-for-gui-applications" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="projects-for-gui-applications">
+<h3>Projects for GUI applications<a class="headerlink" href="#projects-for-gui-applications" title="Permalink to this heading">#</a></h3>
 <p>In this section, we define a more typical project. This project will be
 a for GUI application. To do this, we take a different path through the
 New Project wizard. We look at the project files that the wizard
 creates, then build and run our GUI application.</p>
-</div>
-<div class="section" id="creating-a-gui-project">
-<h3>Creating a GUI project<a class="headerlink" href="#creating-a-gui-project" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="creating-a-gui-project">
+<h3>Creating a GUI project<a class="headerlink" href="#creating-a-gui-project" title="Permalink to this heading">#</a></h3>
 <p>First, we create the new project for our GUI application.</p>
-<p>Click the New Project (<img alt="image1" src="_images/newproj.png" />) button in the main window.</p>
+<p>Click the New Project (<img alt="image1" src="../_images/newproj.png" />) button in the main window.</p>
 <p>On the first page, we want to specify the project type.</p>
 <p>Select “GUI Application (EXE)” in the Project type box.</p>
 <p>Click <strong>Next</strong>.</p>
@@ -382,9 +730,9 @@ Project wizard</a> for a list of the details that the
 wizard saves.</p>
 <p>Make any changes you want to here, and then click <strong>Finish</strong>.</p>
 <p>The wizard creates the new GUI-App project and opens it.</p>
-</div>
-<div class="section" id="examining-and-building-the-new-gui-project">
-<h3>Examining and building the new GUI project<a class="headerlink" href="#examining-and-building-the-new-gui-project" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="examining-and-building-the-new-gui-project">
+<h3>Examining and building the new GUI project<a class="headerlink" href="#examining-and-building-the-new-gui-project" title="Permalink to this heading">#</a></h3>
 <p>Now, we examine the template code that the wizard has set up for us in
 the GUI-App project sources.</p>
 <p>The GUI-App project contains the same basic set of files as Hello. There
@@ -404,10 +752,12 @@ code can be built without requiring any further work.</p>
 <p>Choose <strong>Project &gt; Build</strong> in the GUI-App project window.</p>
 <p>Choose <strong>Application &gt; Start</strong>.</p>
 <p>An application window appears.</p>
-<div class="figure align-center" id="id8">
-<img alt="_images/gui-app.png" src="_images/gui-app.png" />
-<p class="caption"><span class="caption-text">The GUI-App skeleton application.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id8">
+<img alt="../_images/gui-app.png" src="../_images/gui-app.png" />
+<figcaption>
+<p><span class="caption-text">The GUI-App skeleton application.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>We can see from the window that the template code creates a skeleton
 application with File, Edit, and Help menus. There is even some
 functionality attached to the basic application. If we choose <strong>File &gt;
@@ -415,10 +765,10 @@ New</strong>, an editor pane is initialized, into which we can type. The other
 <strong>File</strong> and <strong>Edit</strong> menu commands have their standard effects. The <strong>Help &gt;
 About</strong> command uses some of the constants from <em>GUI-App-info.dylan</em> to
 identify the application as “GUI-App Version 1.0”.</p>
-</div>
-</div>
-<div class="section" id="creating-a-project-using-the-custom-library-option">
-<h2>Creating a project using the Custom library option<a class="headerlink" href="#creating-a-project-using-the-custom-library-option" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="creating-a-project-using-the-custom-library-option">
+<h2>Creating a project using the Custom library option<a class="headerlink" href="#creating-a-project-using-the-custom-library-option" title="Permalink to this heading">#</a></h2>
 <p>The New Project wizard’s Use Libraries page has a Custom option which
 allows complete control over the libraries and modules a project will
 use. This section explains how to choose libraries and modules using
@@ -443,10 +793,12 @@ libraries you wish to use.</p>
 <p>If we select “Core”, we can see which libraries from that group would be
 used in a default project.</p>
 <p>Select “Core” in the Library Group list.</p>
-<div class="figure align-center" id="id9">
-<img alt="_images/p2frag2-0.png" src="_images/p2frag2-0.png" />
-<p class="caption"><span class="caption-text">Functional-Dylan is the default library for use in new projects.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id9">
+<img alt="../_images/p2frag2-0.png" src="../_images/p2frag2-0.png" />
+<figcaption>
+<p><span class="caption-text">Functional-Dylan is the default library for use in new projects.</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>So, by default, a project would use the library Functional-Dylan. (Note
 that Functional-Dylan is the default library for use in new projects.
 Your copy of Open Dylan may have more library groups.)</p>
@@ -454,10 +806,12 @@ Your copy of Open Dylan may have more library groups.)</p>
 modules from the Functional-Dylan library a default project would
 include.</p>
 <p>Select “Functional-Dylan” in the Library list.</p>
-<div class="figure align-center" id="id10">
-<img alt="_images/p2frag2_2-0.png" src="_images/p2frag2_2-0.png" />
-<p class="caption"><span class="caption-text">Default modules from Functional-Dylan for use in new projects.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</div>
+<figure class="align-center" id="id10">
+<img alt="../_images/p2frag2_2-0.png" src="../_images/p2frag2_2-0.png" />
+<figcaption>
+<p><span class="caption-text">Default modules from Functional-Dylan for use in new projects.</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Although the list shows that the Dylan and Functional-Extensions modules
 are not used, they are actually used indirectly, since the
 Functional-Dylan module is simply a repackaging of those two modules.</p>
@@ -466,9 +820,9 @@ modules are simply interfaces to functionality within a library. By
 deciding not to use a particular exported module, you will import fewer
 interfaces into your application, but the delivered application will not
 be any smaller on disk, or in memory when it is running.</p>
-</div>
-<div class="section" id="saving-settings-in-the-new-project-wizard">
-<span id="index-2"></span><h2>Saving settings in the New Project wizard<a class="headerlink" href="#saving-settings-in-the-new-project-wizard" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="saving-settings-in-the-new-project-wizard">
+<span id="index-2"></span><h2>Saving settings in the New Project wizard<a class="headerlink" href="#saving-settings-in-the-new-project-wizard" title="Permalink to this heading">#</a></h2>
 <p>Whenever you click <strong>Finish</strong> on the last page of the New Project wizard,
 the wizard stores some of the choices and text-field settings you made
 so that they are available next time you create a project. The details
@@ -491,9 +845,9 @@ Compilation Mode.</p></li>
 <p><em>Synopsis:</em> is not saved because it is likely to change with each new
 project.</p>
 <p>Nothing from the first page is saved.</p>
-</div>
-<div class="section" id="advanced-project-settings">
-<span id="index-3"></span><h2>Advanced project settings<a class="headerlink" href="#advanced-project-settings" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="advanced-project-settings">
+<span id="index-3"></span><h2>Advanced project settings<a class="headerlink" href="#advanced-project-settings" title="Permalink to this heading">#</a></h2>
 <p>The <em>Advanced…</em> button on the first page of the New Project wizard
 leads to the Advanced Project Settings dialog. The dialog has five
 sections.</p>
@@ -504,13 +858,13 @@ is the name of the project.</p>
 Mode, and Windows Subsystem—all control settings that you can both set
 here and change after creating a project by choosing <strong>Project &gt;
 Settings…</strong>. See <a class="reference internal" href="#id1">Project settings</a> for details.</p>
-</div>
-<div class="section" id="adding-moving-and-deleting-project-sources">
-<h2>Adding, moving, and deleting project sources<a class="headerlink" href="#adding-moving-and-deleting-project-sources" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="adding-moving-and-deleting-project-sources">
+<h2>Adding, moving, and deleting project sources<a class="headerlink" href="#adding-moving-and-deleting-project-sources" title="Permalink to this heading">#</a></h2>
 <p>In this section we discuss how to insert files into a project, how
 re-order them, and how to delete them from the project.</p>
-<div class="section" id="inserting-files-into-a-project">
-<span id="index-4"></span><h3>Inserting files into a project<a class="headerlink" href="#inserting-files-into-a-project" title="Permalink to this headline">¶</a></h3>
+<section id="inserting-files-into-a-project">
+<span id="index-4"></span><h3>Inserting files into a project<a class="headerlink" href="#inserting-files-into-a-project" title="Permalink to this heading">#</a></h3>
 <p>To insert a new file or subproject into a project, choose <strong>Project &gt;
 Insert File…</strong> in the project window. The project window prompts you
 with the <em>Insert File into Project</em> dialog, through which you can find a
@@ -526,15 +880,15 @@ the file currently selected in the list.</p>
 <p>If you have added a subproject (a .HDP file), remember that you still
 need to edit the library and module definitions in your project to
 import from the new subproject.</p>
-</div>
-<div class="section" id="moving-the-position-of-a-file-within-a-project">
-<span id="index-5"></span><h3>Moving the position of a file within a project<a class="headerlink" href="#moving-the-position-of-a-file-within-a-project" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="moving-the-position-of-a-file-within-a-project">
+<span id="index-5"></span><h3>Moving the position of a file within a project<a class="headerlink" href="#moving-the-position-of-a-file-within-a-project" title="Permalink to this heading">#</a></h3>
 <p>To move a file to a new position in a project, select the file in the
 Sources page and use <strong>Project &gt; Move File Up</strong> and <strong>Project &gt; Move File
 Down</strong>.</p>
-</div>
-<div class="section" id="deleting-files-from-a-project">
-<span id="index-6"></span><h3>Deleting files from a project<a class="headerlink" href="#deleting-files-from-a-project" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="deleting-files-from-a-project">
+<span id="index-6"></span><h3>Deleting files from a project<a class="headerlink" href="#deleting-files-from-a-project" title="Permalink to this heading">#</a></h3>
 <p>To delete a file from a project, select the file in the Sources page and
 choose <strong>Project &gt; Remove File</strong>. You could also select <strong>Edit &gt; Cut</strong>,
 <strong>Edit &gt; Delete</strong>, or the scissors toolbar icon.</p>
@@ -551,10 +905,10 @@ source file from the project, the definitions from that file stay on the
 Definitions page until you rebuild the project, which causes the
 compiler database to be updated.</p>
 </div>
-</div>
-</div>
-<div class="section" id="the-project-start-function">
-<span id="start-function"></span><span id="index-7"></span><h2>The project start function<a class="headerlink" href="#the-project-start-function" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="the-project-start-function">
+<span id="start-function"></span><span id="index-7"></span><h2>The project start function<a class="headerlink" href="#the-project-start-function" title="Permalink to this heading">#</a></h2>
 <p>The New Project wizard always adds a <em>start function</em> to the end of the
 last file in the project.</p>
 <p>The Dylan language does not require that a program define an explicit
@@ -569,21 +923,21 @@ name if you like—there is nothing special about it.</p>
 <p>The <em>project-name</em> <em>.dylan</em> file for all new projects will contain a
 definition of <em>main</em> and a call to it. Projects that include template
 code will contain this definition of <em>main</em> :</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
-  <span class="n">start-template</span><span class="p">()</span>
-<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="n">start-template</span><span class="p">()</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Projects that do not include template code will contain this definition:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
-  <span class="c1">// Your program starts here...</span>
-<span class="k">end</span> <span class="nb">method</span> <span class="n">main</span><span class="p">;</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="c1">// Your program starts here...</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>For both kinds of project, the <em>project-name</em> <em>.dylan</em> file will end
 with this expression:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span>
-  <span class="n">main</span><span class="p">();</span>
+<span class="w">  </span><span class="n">main</span><span class="p">();</span>
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -600,7 +954,7 @@ produce the dialog. In this case, the generated project code will call
 the correct new name without requiring you to make a change by hand.</p>
 <p>The debugger uses the start function name to know where to pause a
 program that you start up in interaction mode with <strong>Application &gt;
-Interact</strong> or the Interact (<img alt="image2" src="_images/interact.png" />) toolbar button, or in debugging
+Interact</strong> or the Interact (<img alt="image2" src="../_images/interact.png" />) toolbar button, or in debugging
 mode with <strong>Application &gt; Debug</strong>. When you start a program either way,
 the debugger allows the program to execute normally, but sets a
 breakpoint on the start function so that interaction or debugging begins
@@ -620,21 +974,21 @@ definitions could behave in unexpected ways.
 See <a class="reference internal" href="model.html#application-and-library-initialization"><span class="std std-ref">Application and library initialization</span></a>
 for more information on this topic.</p>
 </div>
-</div>
-<div class="section" id="project-settings">
-<span id="id1"></span><h2>Project settings<a class="headerlink" href="#project-settings" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="project-settings">
+<span id="id1"></span><h2>Project settings<a class="headerlink" href="#project-settings" title="Permalink to this heading">#</a></h2>
 <p>The <strong>Project &gt; Settings…</strong> dialog allows you to set options for
 compiling, linking, and debugging projects. There are separate pages for
 each category, each described below.</p>
-<div class="section" id="compile-page">
-<h3>Compile page<a class="headerlink" href="#compile-page" title="Permalink to this headline">¶</a></h3>
+<section id="compile-page">
+<h3>Compile page<a class="headerlink" href="#compile-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 <a class="reference internal" href="model.html#compilation-modes"><span class="std std-ref">Compilation modes</span></a> for details of the modes.</p>
-</div>
-<div class="section" id="link-page">
-<span id="index-8"></span><span id="id2"></span><h3>Link page<a class="headerlink" href="#link-page" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="link-page">
+<span id="index-8"></span><span id="id2"></span><h3>Link page<a class="headerlink" href="#link-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target, a base
@@ -647,17 +1001,17 @@ instead. To change the default linker, go to the main window and choose
 <strong>Options &gt; Environment Options…</strong>, then choose that dialog’s Build
 page.</p>
 </div>
-</div>
-<div class="section" id="target-file-section-of-the-link-page">
-<h3>Target File section of the Link page<a class="headerlink" href="#target-file-section-of-the-link-page" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="target-file-section-of-the-link-page">
+<h3>Target File section of the Link page<a class="headerlink" href="#target-file-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
 that the name will always end in .EXE or .DLL according to the target
 type, regardless of any extension you give to the target’s name.</p>
-</div>
-<div class="section" id="base-address-section-of-the-link-page">
-<h3>Base Address section of the Link page<a class="headerlink" href="#base-address-section-of-the-link-page" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="base-address-section-of-the-link-page">
+<h3>Base Address section of the Link page<a class="headerlink" href="#base-address-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Base Address section
 that allows you to specify a base address for your target file. This is
 the address at which the target will be loaded into memory.</p>
@@ -667,18 +1021,18 @@ target automatically if there is no room for it at that address. You can
 provide a value in the Base Address if you would like the target to be
 loaded at a particular location. The value should be specified in
 hexadecimal, using Dylan’s <em>#x</em> prefix: for example, <em>#x1000000</em>.</p>
-</div>
-<div class="section" id="version-information-section-of-the-link-page">
-<h3>Version Information section of the Link page<a class="headerlink" href="#version-information-section-of-the-link-page" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="version-information-section-of-the-link-page">
+<h3>Version Information section of the Link page<a class="headerlink" href="#version-information-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
 time to determine if compatible versions of Dylan libraries are in use.
 See <a class="reference internal" href="model.html#versioning"><span class="std std-ref">Versioning</span></a> for details.</p>
-</div>
-<div class="section" id="windows-subsystem-section-of-the-link-page">
-<h3>Windows Subsystem section of the Link page<a class="headerlink" href="#windows-subsystem-section-of-the-link-page" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="windows-subsystem-section-of-the-link-page">
+<h3>Windows Subsystem section of the Link page<a class="headerlink" href="#windows-subsystem-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 “Windows GUI” (WINDOWS) subsystem or the “Windows Console” (CONSOLE)
@@ -688,9 +1042,9 @@ console-mode project to make it create its own windows, or vice versa.</p>
 “Console Application (EXE)” is to run in the Windows Console subsystem,
 while the default for a project created as a “GUI Application (EXE)” is
 to run in the “Windows GUI” (WINDOWS) subsystem.</p>
-</div>
-<div class="section" id="debug-page">
-<span id="index-9"></span><h3>Debug page<a class="headerlink" href="#debug-page" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="debug-page">
+<span id="index-9"></span><h3>Debug page<a class="headerlink" href="#debug-page" title="Permalink to this heading">#</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Debug page allows you to specify a
 command line with which to execute the project target, and the start
 function for the project.</p>
@@ -706,10 +1060,10 @@ valid MS-DOS command line when concatenated.</p>
 <p>Another use of the Command Line section is to arrange to test and debug
 DLLs and OLE components. See <a class="reference internal" href="debug.html#debugging-techniques"><span class="std std-ref">Debugging techniques</span></a> for a description
 of these debugging techniques.</p>
-</div>
-</div>
-<div class="section" id="project-files-and-lid-files">
-<span id="index-10"></span><span id="id3"></span><h2>Project files and LID files<a class="headerlink" href="#project-files-and-lid-files" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="project-files-and-lid-files">
+<span id="index-10"></span><span id="id3"></span><h2>Project files and LID files<a class="headerlink" href="#project-files-and-lid-files" title="Permalink to this heading">#</a></h2>
 <p>Open Dylan’s project files can be exported in a portable library
 interface format called LID (library interchange description). Harlequin
 and other Dylan vendors have chosen LID as the standard interchange
@@ -717,17 +1071,17 @@ format for Dylan libraries. LID files describe libraries in a flat ASCII
 text format for ease of interchange between different Dylan systems. The
 <em>Core Features and Mathematics</em> reference volume describes the LID
 format. LID files must have the extension .LID.</p>
-<div class="section" id="opening-a-lid-file-as-a-project">
-<h3>Opening a LID file as a project<a class="headerlink" href="#opening-a-lid-file-as-a-project" title="Permalink to this headline">¶</a></h3>
+<section id="opening-a-lid-file-as-a-project">
+<h3>Opening a LID file as a project<a class="headerlink" href="#opening-a-lid-file-as-a-project" title="Permalink to this heading">#</a></h3>
 <p>When you open a LID file in the development environment, it is converted
 into a project file and opened in a project window. (This process does
 not modify the original LID file on disk.)</p>
 <p>In order to open a LID file as a text file in an editor, open the LID
 file using <strong>File &gt; Open</strong> and select the file type filter “Dylan Library
 Interchange Descriptions (as text)” before clicking <strong>Open</strong>.</p>
-</div>
-<div class="section" id="exporting-a-project-into-a-lid-file">
-<h3>Exporting a project into a LID file<a class="headerlink" href="#exporting-a-project-into-a-lid-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exporting-a-project-into-a-lid-file">
+<h3>Exporting a project into a LID file<a class="headerlink" href="#exporting-a-project-into-a-lid-file" title="Permalink to this heading">#</a></h3>
 <p>To export a project as a LID file for use in other Dylan
 implementations, use <strong>File &gt; Save As</strong> and choose the file type “Dylan
 Library Interchange Descriptions”.</p>
@@ -736,39 +1090,116 @@ only, and without paths. In addition it will not contain any of the
 project settings, any files that are not Dylan source files (.DYLAN
 files), and any information about whether the project was created as a
 console application.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="browsing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Learning More About an Application</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="model.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Programming in Open Dylan</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="model.html" class="btn btn-neutral float-left" title="Programming in Open Dylan" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="browsing.html" class="btn btn-neutral float-right" title="Learning More About an Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Creating and Using Projects</a><ul>
+<li><a class="reference internal" href="#creating-a-new-project">Creating a new project</a><ul>
+<li><a class="reference internal" href="#specifying-the-type-of-the-project">Specifying the type of the project</a></li>
+<li><a class="reference internal" href="#specifying-the-project-name-and-location">Specifying the project name and location</a></li>
+<li><a class="reference internal" href="#choosing-the-libraries-that-the-project-uses">Choosing the libraries that the project uses</a></li>
+<li><a class="reference internal" href="#the-final-page-in-the-new-project-wizard">The final page in the New Project wizard</a></li>
+<li><a class="reference internal" href="#examining-the-files-in-the-hello-project">Examining the files in the Hello project</a></li>
+<li><a class="reference internal" href="#projects-for-gui-applications">Projects for GUI applications</a></li>
+<li><a class="reference internal" href="#creating-a-gui-project">Creating a GUI project</a></li>
+<li><a class="reference internal" href="#examining-and-building-the-new-gui-project">Examining and building the new GUI project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-a-project-using-the-custom-library-option">Creating a project using the Custom library option</a></li>
+<li><a class="reference internal" href="#saving-settings-in-the-new-project-wizard">Saving settings in the New Project wizard</a></li>
+<li><a class="reference internal" href="#advanced-project-settings">Advanced project settings</a></li>
+<li><a class="reference internal" href="#adding-moving-and-deleting-project-sources">Adding, moving, and deleting project sources</a><ul>
+<li><a class="reference internal" href="#inserting-files-into-a-project">Inserting files into a project</a></li>
+<li><a class="reference internal" href="#moving-the-position-of-a-file-within-a-project">Moving the position of a file within a project</a></li>
+<li><a class="reference internal" href="#deleting-files-from-a-project">Deleting files from a project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-project-start-function">The project start function</a></li>
+<li><a class="reference internal" href="#project-settings">Project settings</a><ul>
+<li><a class="reference internal" href="#compile-page">Compile page</a></li>
+<li><a class="reference internal" href="#link-page">Link page</a></li>
+<li><a class="reference internal" href="#target-file-section-of-the-link-page">Target File section of the Link page</a></li>
+<li><a class="reference internal" href="#base-address-section-of-the-link-page">Base Address section of the Link page</a></li>
+<li><a class="reference internal" href="#version-information-section-of-the-link-page">Version Information section of the Link page</a></li>
+<li><a class="reference internal" href="#windows-subsystem-section-of-the-link-page">Windows Subsystem section of the Link page</a></li>
+<li><a class="reference internal" href="#debug-page">Debug page</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#project-files-and-lid-files">Project files and LID files</a><ul>
+<li><a class="reference internal" href="#opening-a-lid-file-as-a-project">Opening a LID file as a project</a></li>
+<li><a class="reference internal" href="#exporting-a-project-into-a-lid-file">Exporting a project into a LID file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; <a href="copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
 </html>

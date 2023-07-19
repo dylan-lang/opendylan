@@ -1,0 +1,140 @@
+***************************
+C3 superclass linearization
+***************************
+
+===============  =============================================
+DEP-Number:      3
+Type:            Standards Track
+Affects-DRM:     Yes
+Author:          Hannes Mehnert
+Status:          Accepted
+Created:         09-Jan-2012
+Last-Modified:   09-Jan-2012
+Post-History:    09-Jan-2012
+Target-Version:  2012.1
+===============  =============================================
+
+
+Abstract
+========
+
+The Dylan superclass linearization is sometimes counter-intuitive. The
+C3 superclass linearization algorithm is more intuitive and allows for
+greater optimization.
+
+Copyright
+=========
+
+This DEP is public domain.
+
+Specification
+=============
+
+The C3 superclass linearization has been proposed in 1996 by Kim
+Barrett, Bob Cassels, Paul Haahr, David A. Moon, Keith Playford, and
+P. Tucker Withington in a `paper
+<https://dl.acm.org/doi/10.1145/236337.236343>`_ (`html version
+<https://web.archive.org/web/20120415074347/http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`_).
+
+A superclass linearization (also known as a class precedence list) is
+used for resolving conflicts among multiply-inherited superclasses
+which provide differing definitions of the same method.
+
+Unfortunately the algorithm presented in the Dylan Reference Manual
+(`computing the class precedence list
+<https://opendylan.org/books/drm/Classes#HEADING-41-25>`_) is not
+consistent with the extended precedence graph, and may lead to
+counter-intuitive linearizations. To fix that, the C3 linearization
+was developed.
+
+Motivation
+==========
+
+In order to allow for more optimizations, especially compression of
+dispatch tables, which requires monotonicity of method orderings, a
+consistent superclass linearization algorithm is needed.
+
+After the C3 linearization was proposed in 1996, it was subsequently
+adapted in Python 2.3 (`article <https://www.python.org/download/releases/2.3/mro/>`__)
+and Perl 6 (`article
+<https://web.archive.org/web/20150216030253/http://use.perl.org/use.perl.org/_autrijus/journal/25768.html>`__).
+
+Rationale
+=========
+
+The C3 linearization has been around for a long time, does not break
+any existing code, and is commonly agreed upon as being the right thing
+to do (in mailing list discussions).
+
+Examples
+========
+
+The example from the paper is given here, consider the following Dylan classes:
+
+.. code-block:: dylan
+
+    define class <pane> (<object>) end;
+    define class <scrolling-mixin> (<object>) end;
+    define class <editing-mixin> (<object>) end;
+    define class <scrollable-pane> (<pane>, <scrolling-mixin>) end;
+    define class <editable-pane> (<pane>, <editing-mixin>) end;
+    define class <editable-scrollable-pane> (<scrollable-pane>, <editable-pane>) end;
+
+
+The Dylan linearization is:
+
+.. code-block:: dylan
+
+    <editable-scrollable-pane>, <scrollable-pane>, <editable-pane>, <pane>, <editing-mixin>, <scrolling-mixin>, <object>
+
+The C3 linearization is:
+
+.. code-block:: dylan
+
+    <editable-scrollable-pane>, <scrollable-pane>, <editable-pane>, <pane>, <scrolling-mixin>, <editing-mixin>, <object>
+
+The difference in the ordering of ``<scrolling-mixin>`` and
+``<editing-mixin>`` and having that match the ordering of
+``<scrollable-pane>`` and ``<editable-pane>`` is clearly
+more intuitive and consistent.
+
+Backwards Compatibility
+=======================
+
+In the first release a serious warning will be issued for superclass
+linearization which changed, in subsequent releases a warning should
+be issued (depending on a strict compatibility to DRM switch).
+
+Experiments show that there are some differences in existing code; we
+found so far three, two of them in duim-gadgets, one in
+win32-duim. According to Scott McKay, the author of DUIM, the first
+two look better when C3 is used (`mailing list post
+<https://web.archive.org/web/20160324145817/https://lists.opendylan.org/pipermail/hackers/2012-January/006309.html>`_). The
+latter does not alter behaviour (`post
+<https://web.archive.org/web/20160324142050/https://lists.opendylan.org/pipermail/hackers/2012-January/006310.html>`_).
+
+The class precedence list of <row-splitter-pane> differ, Dylan:
+    #(<row-splitter-pane>, <row-splitter>, <splitter>, <single-child-wrapping-pane>, <cached-space-requirement-mixin>, <client-overridability-mixin>, <wrapping-layout-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <single-child-mixin>, <basic-sheet>, <sheet>, <basic-gadget>, <gadget>, <abstract-gadget>, <abstract-sheet>, <event-handler>, <object>); 
+C3:
+    #(<row-splitter-pane>, <row-splitter>, <splitter>, <single-child-wrapping-pane>, <cached-space-requirement-mixin>, <client-overridability-mixin>, <wrapping-layout-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <basic-gadget>, <gadget>, <abstract-gadget>, <single-child-mixin>, <basic-sheet>, <sheet>, <abstract-sheet>, <event-handler>, <object>)
+
+
+The class precedence list of <column-splitter-pane> differ, Dylan:
+    #(<column-splitter-pane>, <column-splitter>, <splitter>, <single-child-wrapping-pane>, <cached-space-requirement-mixin>, <client-overridability-mixin>, <wrapping-layout-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <single-child-mixin>, <basic-sheet>, <sheet>, <basic-gadget>, <gadget>, <abstract-gadget>, <abstract-sheet>, <event-handler>, <object>);
+C3:
+    #(<column-splitter-pane>, <column-splitter>, <splitter>, <single-child-wrapping-pane>, <cached-space-requirement-mixin>, <client-overridability-mixin>, <wrapping-layout-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <basic-gadget>, <gadget>, <abstract-gadget>, <single-child-mixin>, <basic-sheet>, <sheet>, <abstract-sheet>, <event-handler>, <object>)
+
+
+The class precedence list of <win32-viewport> differ, Dylan:
+    #(<win32-viewport>, <viewport>, <basic-gadget>, <gadget>, <abstract-gadget>, <win32-pane-mixin>, <standard-input-mixin>, <sheet-with-event-queue-mixin>, <client-overridability-mixin>, <scrolling-sheet-mixin>, <permanent-medium-mixin>, <sheet-with-medium-mixin>, <mirrored-sheet-mixin>, <sheet-with-resource-mixin>, <single-child-composite-pane>, <single-child-mixin>, <basic-composite-pane>, <cached-space-requirement-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <basic-sheet>, <sheet>, <abstract-sheet>, <event-handler>, <object>);
+C3:
+    #(<win32-viewport>, <viewport>, <basic-gadget>, <gadget>, <abstract-gadget>, <win32-pane-mixin>, <standard-input-mixin>, <sheet-with-event-queue-mixin>, <client-overridability-mixin>, <scrolling-sheet-mixin>, <permanent-medium-mixin>, <mirrored-sheet-mixin>, <sheet-with-resource-mixin>, <sheet-with-medium-mixin>, <single-child-composite-pane>, <single-child-mixin>, <basic-composite-pane>, <cached-space-requirement-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <basic-sheet>, <sheet>, <abstract-sheet>, <event-handler>, <object>)
+
+
+Reference Implementation
+========================
+
+The `pull request #168
+<https://github.com/dylan-lang/opendylan/pull/168#issuecomment-3645980>`_
+was finally merged into master.
+

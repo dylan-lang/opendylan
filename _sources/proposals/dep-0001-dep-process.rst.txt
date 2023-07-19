@@ -1,0 +1,508 @@
+**************************
+DEP Purpose and Guidelines
+**************************
+
+==============  =============================================
+DEP Number:     1
+Type:           Process
+Author:         Carl Gay
+Status:         Active
+Created:        07-Jan-2012
+Last-Modified:  16-Jan-2012
+Post-History:   16-Jan-2012, 10-Jan-2012
+==============  =============================================
+
+
+Preamble
+========
+
+This document is based heavily on Python `PEP 1
+<https://www.python.org/dev/peps/pep-0001/>`_, "PEP Purpose and
+Guidelines", by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
+author would like to thank them for providing an excellent base for
+the Dylan team to work from.
+
+
+Terminology
+===========
+
+Dylan Reference Manual (DRM)
+    The manual written by Andrew Shalit, plus its errata.
+
+Dylan language specification
+    The DRM *plus* all **Accepted** DEPs that modify the Dylan
+    language specification.
+
+Open Dylan (OD)
+    The reference implementation of the Dylan language specification.
+
+Standard libraries
+    The set of libraries that are officially maintained alongside Open
+    Dylan.  They are officially maintained in the following sense:
+
+      * Commits are reviewed for bugs and style.
+      * They are tested prior to each OD release.
+      * They are packaged with each OD release.
+
+
+What is a DEP?
+==============
+
+DEP stands for Dylan Enhancement Proposal.  A DEP is a design document
+which
+
+  * provides information to the Dylan community, or
+  * describes a new feature for the Dylan language or its standard
+    libraries, or
+  * describes changes to the processes or environment surrounding
+    the Dylan language or Open Dylan.
+
+The DEP should provide a concise technical specification of, and
+rationale for, the feature or process.
+
+We intend DEPs to be the primary mechanism for proposing new
+features, for collecting community input on an issue, and for
+documenting the design decisions that have gone into Dylan.  The DEP
+author is responsible for building consensus within the community and
+documenting dissenting opinions.
+
+Because the DEPs are maintained as text files in a versioned
+repository, their revision history is the historical record of the
+feature proposal [1]_.
+
+
+DEP Types
+=========
+
+There are three kinds of DEP:
+
+1. A **Standards Track** DEP describes a new feature or implementation
+   for Dylan or its standard libraries.
+
+2. An **Informational** DEP describes a Dylan design issue, or
+   provides general guidelines or information to the Dylan community,
+   but does not propose a new feature.  Informational DEPs do not
+   necessarily represent a Dylan community consensus or
+   recommendation, so users and implementors are free to ignore
+   Informational DEPs or follow their advice.
+
+3. A **Process** DEP describes a process surrounding Dylan, or
+   proposes a change to (or an event in) a process.  Process DEPs are
+   like Standards Track DEPs but apply to areas other than the Dylan
+   language itself.  They may propose an implementation, but not to
+   Dylan's codebase; they often require community consensus; unlike
+   Informational DEPs, they are more than recommendations, and users
+   are typically not free to ignore them.  Examples include
+   procedures, guidelines, changes to the decision-making process, and
+   changes to the tools or environment used in Dylan development.
+   Any meta-DEP is also considered a Process DEP.
+
+
+DEP Work Flow
+=============
+
+**Have an idea** -- The DEP process begins with a new idea for Dylan.
+It is highly recommended that a single DEP contain a **single key
+proposal** or new idea. Small enhancements or patches often don't need
+a DEP and can be injected into the Dylan development work flow with a
+pull request to the issue tracker for the appropriate repository on
+GitHub. The more focused the DEP, the more successful it tends to be.
+If in doubt, split your DEP into several well-focused ones.
+
+**Have an author** -- Each DEP must have an author -- someone who
+writes the DEP using the style and format described below, shepherds
+the discussions in the appropriate forums, and attempts to build
+community consensus around the idea.  The DEP author should first
+attempt to ascertain whether the idea is DEP-able.  Posting to
+dylan-lang@googlegroups.com is the best way to go about this.
+
+**Vet the idea publicly** -- Vetting an idea publicly before going as
+far as writing a DEP is meant to save the potential author time.  Many
+ideas have been brought forward for changing Dylan that have been
+rejected for various reasons. Asking the Dylan community first if an
+idea is original helps prevent too much time being spent on something
+that is guaranteed to be rejected based on prior discussions
+(searching the internet does not always do the trick). It also helps
+to make sure the idea is applicable to the entire community and not
+just the author.  Just because an idea sounds good to the author does
+not mean it will work for most people in most areas where Dylan is
+used.
+
+**Present a draft** -- Once the author has asked the Dylan community
+whether an idea has any chance of acceptance, a properly formatted
+draft DEP should be presented to dylan-lang@googlegroups.com.  The
+initial DEP status should be **Draft**.  The DEP author should assign
+the next available DEP number to the DEP by looking at the :doc:`DEP
+directory <index>` to find the highest used number.  The DEP
+number is not assured until the DEP has been committed to the `origin
+Git repository
+<https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
+As updates are necessary, the DEP author may commit new versions.
+
+Wait for at least ten days to receive feedback on each draft.
+
+**Reach consensus** -- We rely on reaching consensus on the
+dylan-lang@googlegroups.com mailing list.  Consensus *must* be
+reached for the DEP to be approved.  Exactly what "consensus" means
+here is left undefined, as we expect most cases to be obvious and we
+wish to keep the process informal for now.  At such time as this
+becomes a problem we may implement a more formal scheme (e.g.,
+voting).
+
+Standards Track DEPs consist of two parts, a design document and a
+reference implementation.  The DEP should be reviewed and accepted
+before a reference implementation is begun, unless a reference
+implementation will aid people in studying the DEP.  Standards Track
+DEPs must include an implementation -- in the form of a Git branch URL
+-- before it can be considered Final.
+
+DEP authors are responsible for collecting community feedback on a DEP
+before submitting it for review. However, wherever possible, long
+open-ended discussions on public mailing lists should be avoided.
+Strategies to keep the discussions efficient include: setting up a
+separate mailing list for the topic, having the DEP author accept
+private comments in the early design phases, setting up a wiki page,
+etc.  DEP authors should use their discretion here.
+
+For a DEP to be **Accepted** it must meet certain minimum criteria.  It
+must be a clear and complete description of the proposed enhancement.
+The enhancement must represent a net improvement.  The proposed
+implementation, if applicable, must be solid and must not unduly add
+complication.
+
+Once a DEP has been accepted, the reference implementation must be
+completed.  When the reference implementation is complete and accepted
+by the community, the status may be changed to **Final**.
+
+A DEP can also be assigned status **Deferred**.  The DEP author or
+editor can assign the DEP this status when no progress is being made
+on the DEP.  Once a DEP is deferred, the DEP editor can re-assign it
+to draft status.
+
+A DEP can also be **Rejected**.  Perhaps after all is said and done it
+was not a good idea.  It is still important to have a record of this
+fact.
+
+DEPs can also be **Superseded-By** a different DEP, rendering the original
+obsolete.  This is intended for Informational DEPs, where version 2 of
+an API can replace version 1.
+
+The possible paths of the status of DEPs are as follows:
+
+.. image:: ../_static/dep-0001-states.png
+
+Some Informational and Process DEPs may also have a status of
+**Active** if they are never meant to be completed.  E.g. DEP 1 (this
+DEP).
+
+
+What belongs in a successful DEP?
+=================================
+
+Each DEP should have the following parts:
+
+1. Title
+
+#. Preamble -- RFC 822 style headers containing meta-data about the
+   DEP, including the DEP number, a short descriptive title (limited
+   to a maximum of 44 characters), the names, and optionally the
+   contact info for each author, etc.
+
+#. Abstract -- a short (~200 word) description of the technical issue
+   being addressed.
+
+#. Copyright/public domain -- Each DEP must either be explicitly
+   labelled as placed in the public domain (see this DEP as an
+   example) or licensed under the `Open Publication License`_.
+
+#. Specification -- The technical specification should describe the
+   syntax and semantics of any new language or library feature.  The
+   specification should be detailed enough to allow competing,
+   interoperable Dylan implementations.  If the DEP proposes changes
+   to the language itself it *must* clearly indicate all such changes.
+
+#. Motivation -- The motivation is critical for DEPs that want to
+   change the Dylan language.  It should clearly explain why the
+   existing language specification is inadequate to address the
+   problem that the DEP solves.
+
+#. Rationale -- The rationale fleshes out the specification by
+   describing what motivated the design and why particular design
+   decisions were made.  It should describe alternate designs that
+   were considered and related work, e.g. how the feature is supported
+   in other languages.
+
+   The rationale should provide evidence of consensus within the
+   community and discuss important objections or concerns raised
+   during discussion.
+
+#. Backwards Compatibility -- All DEPs that introduce backwards
+   incompatibilities must include a section describing these
+   incompatibilities and their severity.  The DEP must explain how the
+   author proposes to deal with these incompatibilities.
+
+#. Reference Implementation -- The reference implementation must be
+   completed before any DEP is given status "Final", but it need not
+   be completed before the DEP is accepted.  It is better to finish
+   the specification and rationale first and reach consensus on it
+   before writing code.
+
+   The final implementation must include good test code and
+   documentation.
+
+
+DEP Format and Templates
+========================
+
+DEPs must be written in ReStructuredText_ format.  This allows for
+rich markup that is still quite easy to read, but results in much
+better-looking and more functional HTML.
+
+.. DEP 12 contains instructions and a template [4]_ for
+   reStructuredText DEPs.
+
+The DEP author must verify that the ReStructuredText_ parses correctly.
+For example::
+
+    git clone git@github.com:dylan-lang/website.git
+    cd website
+    cp your-dep.rst source/proposals/dep-1234.rst
+    make html
+
+Fix any errors that are displayed.
+
+
+DEP Header Preamble
+===================
+
+Each DEP must begin with a title, followed by an RFC 822 style header
+preamble in simple RST table format.  The headers must appear in the
+following order.  Headers marked with "*" are optional and are
+described below.  All other headers are required.  All dates must be
+in dd-mmm-yyyy format (e.g., 14-Jan-2012).  A list of values must use
+a comma as separator.  ::
+
+    DEP-Number: <DEP number>
+    Author: <list of authors' real names and optionally, email addresses>
+    Status: <Draft | Active | Accepted | Deferred | Rejected |
+             Withdrawn | Final | Superseded>
+    Type: <Standards Track | Informational | Process>
+    Affects-DRM: <Yes | No>
+    Created: <date created>
+    Last-Modified: <date last modified>
+    Post-History: <date(s) of postings to hackers list>
+  * Resolution: <url>
+  * Target-Version: <OD version number>
+  * Requires: <DEP number(s)>
+  * Replaces: <DEP number(s)>
+  * Superseded-By: <DEP number>
+
+DEP Number
+~~~~~~~~~~
+
+Authors may assign DEP numbers themselves by looking at the last
+number in the `numerical list of DEPs
+<https://opendylan.org/proposals/index.html>`_ and incrementing it by
+one.  To prevent collisions, the author should set the ``DEP-Number``
+header to "Unassigned" until just before the DEP is committed to git.
+
+Author
+~~~~~~
+
+The Author header lists the names, and optionally the email addresses
+of all the authors/owners of the DEP.  The format of the Author header
+value must be
+
+    Random J. User <address@dom.ain>
+
+if the email address is included, and just
+
+    Random J. User
+
+if the address is not given.
+
+If there are multiple authors, each should be on a separate line
+following RFC 2822 continuation line conventions.
+
+.. Not yet: Note that personal email addresses in DEPs will be
+   obscured as a defense against spam harvesters.
+
+Status
+~~~~~~
+
+See `DEP Work Flow`_ for a description of this field.
+
+Type
+~~~~
+
+The Type header specifies the type of DEP: Standards Track,
+Informational, or Process.
+
+Affects-DRM
+~~~~~~~~~~~
+
+This field is only required for Standards Track DEPs.  The value
+should be **Yes** if the DEP proposes a change to the Dylan language
+definition, and otherwise **No**.  The language definition is composed
+of the Dylan Reference Manual plus any **Accepted** DEPs for which
+this field is **Yes**.  If this field is set to **Yes** then the DEP
+*must* clearly list exactly how it affects the language definition.
+
+Created
+~~~~~~~
+
+The Created header records the date that the DEP was assigned a
+number.
+
+Last-Modified
+~~~~~~~~~~~~~
+
+The Last-Modified header is included because it may be useful to those
+reading DEPs without access to git.  It should be updated when
+substantive changes are made to the DEP.  It need not be updated when
+fixing typos, changed URLs, etc.
+
+Post-History
+~~~~~~~~~~~~
+
+This field should list the dates when DEP drafts were posted to the
+hackers mailing list.  List the dates from newest to oldest.
+
+Resolution
+~~~~~~~~~~
+
+The Resolution header is required for Standards Track DEPs only.  It
+contains a URL that should point to an email message or other web
+resource where the pronouncement about the DEP is made.
+
+Target-Version
+~~~~~~~~~~~~~~
+
+Standards Track DEPs must have a Target-Version header which indicates
+the version of Open Dylan in which the feature will be released.
+Informational and Process DEPs do not need a Target-Version header.
+
+Requires
+~~~~~~~~
+
+DEPs may have a Requires header, indicating the DEP numbers that this
+DEP depends on.
+
+Superseded-By and Replaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+DEPs may also have a Superseded-By header indicating that they have
+been rendered obsolete by a later document; the value is the number of
+the DEP that replaces the current document.  The newer DEP must have a
+Replaces header containing the number of the DEP that it rendered
+obsolete.
+
+
+Auxiliary Files
+===============
+
+DEPs may include auxiliary files such as diagrams.  Such files must be
+named ``dep-XXXX-aaaa.ext``, where "XXXX" is the DEP number (padded
+with leading zeros), "aaaa" is arbitrary text to indicate the file
+content (e.g., "state-diagram"), and "ext" is replaced by the actual
+file extension (e.g. "png").
+
+
+Reporting DEP Bugs, or Submitting DEP Updates
+=============================================
+
+How you report a bug, or submit a DEP update depends on several
+factors, such as the maturity of the DEP, the preferences of the DEP
+author, and the nature of your comments.  For the early draft stages
+of the DEP, it's probably best to send your comments and changes
+directly to the DEP author.  For more mature, or finished DEPs you may
+want to submit corrections to the Dylan issue tracker [2]_ so that your
+changes don't get lost.  Assign the bug/patch to the DEP author.
+
+When in doubt about where to send your changes, please check first
+with the DEP author.
+
+DEP authors who are also Dylan committers can update the DEPs
+themselves committing them to Git and pushing to the main repository.
+
+
+DEP Author Responsibilities & Workflow
+======================================
+
+A DEP author must subscribe to the <dylan-lang@googlegroups.com>
+list.  Before submitting a (new revision of a DEP) the author must do
+the following:
+
+* Read the DEP to check if it is ready, sound, and complete.  The ideas
+  must make technical sense, even if they don't seem likely to be
+  accepted.
+
+* The title should accurately describe the content.
+
+* Edit the DEP for language (spelling, grammar, sentence structure,
+  etc.), markup, and code style.
+
+Once the DEP is ready for the repository, the DEP author will:
+
+* Assign the next available DEP number.
+
+* List the DEP in the DEP index (in two places: the categorized list,
+  and the numeric list).
+
+* Add the DEP to Git.  All DEPs live in `the website repository
+  <https://github.com/dylan-lang/website>`_.  The command to check
+  it out is::
+
+    git clone https://github.com/dylan-lang/website
+
+  Commit your changes, push them to your fork of the repository and
+  submit a pull request.
+
+* Monitor `opendylan.org <https://opendylan.org>`_ to make sure the DEP
+  gets added to the site properly.
+
+Resources:
+
+* See the section `For Open Dylan Developers
+  <https://opendylan.org/documentation/index.html>`_ on the opendylan.org
+  documentation page.
+
+.. It would be nice to have equivalents for some of these:
+
+    * `How Dylan is Developed <http://www.python.org/dev/intro/>`_
+
+    * `Dylan's Development Process <http://www.python.org/dev/process/>`_
+
+    * `Why Develop Dylan? <http://www.python.org/dev/why/>`_
+
+    * `Development Tools <http://www.python.org/dev/tools/>`_
+
+    * `Frequently Asked Questions for Developers
+      <http://www.python.org/dev/faq/>`_
+
+
+References and Footnotes
+========================
+
+.. [1] This historical record is available by the normal Git commands
+   for retrieving older revisions.  For those without direct access to
+   Git, you can browse the current and past DEP revisions here:
+   https://github.com/dylan-lang/website/tree/master/source/proposals
+
+.. [2] Which issue tracker to use will depend on the content of the
+   DEP.  For language changes, changes to Open Dylan, or changes to
+   "core" libraries it will usually be `opendylan
+   <https://github.com/dylan-lang/opendylan/issues>`_.  For other
+   libraries there may be a separate repository and issue tracker.
+   This is still in flux.  When in doubt, ask in IRC on the #dylan
+   channel or on the hackers list.
+
+.. _Open Publication License: http://www.opencontent.org/openpub/
+
+.. _reStructuredText: https://web.archive.org/web/20120114014252/https://docutils.sourceforge.net/rst.html
+
+
+Copyright
+=========
+
+This document has been placed in the public domain.

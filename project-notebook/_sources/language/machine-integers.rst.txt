@@ -1,2 +1,0 @@
-Machine Integer Sizes
-*********************

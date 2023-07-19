@@ -1,140 +1,488 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The progress-stream Library" href="../progress-stream/index.html" /><link rel="prev" title="The standard-io Module" href="../io/standard-io.html" />
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The network Library &mdash; Dylan Library Reference</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="copyright" title="Copyright" href="../copyright.html" />
-    <link rel="next" title="The progress-stream Library" href="../progress-stream/index.html" />
-    <link rel="prev" title="The standard-io Module" href="../io/standard-io.html" /> 
-</head>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>The network Library - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Dylan Library Reference
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Extensions</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lid.html">LID File Format</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../collections/index.html">The collections Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dylan/index.html">The dylan Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../io/index.html">The io Library</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">The network Library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#internet-addresses">Internet addresses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#basic-internet-address-protocol">Basic Internet address protocol</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-ipv6-address-class">The &lt;ipv6-address&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-numeric-address-class">The &lt;numeric-address&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ipv4-addresses">IPV4 addresses</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#sockets">Sockets</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#the-abstract-socket-class">The &lt;abstract-socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-server-socket-class">The &lt;server-socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-tcp-server-socket-class">The &lt;tcp-server-socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-socket-class">The &lt;socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-buffered-socket-class">The &lt;buffered-socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-tcp-socket-class">The &lt;tcp-socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-udp-socket-class">The &lt;udp-socket&gt; class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-udp-server-socket-class">The &lt;udp-server-socket&gt; class</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#socket-conditions">Socket conditions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../system/index.html">The system Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
-</ul>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
       </div>
-    </nav>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Open Dylan Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Full Index</a></li>
+</ul>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Dylan Library Reference</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">The network Library</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/network/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="the-network-library">
-<h1>The network Library<a class="headerlink" href="#the-network-library" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/library-reference/network/index.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="the-network-library">
+<h1>The network Library<a class="headerlink" href="#the-network-library" title="Permalink to this heading">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>The Network library provides internet address protocols and TCP/IP server and
 client sockets. It exports a single module, called Sockets.</p>
-</div>
-<div class="section" id="utilities">
-<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading">#</a></h2>
 <p>This section covers the <a class="reference internal" href="#network:sockets:start-sockets"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">start-sockets</span></code></a> function, which all
 libraries using the Network library must call before <em>any</em> other call to
 the Network library API. It also covers the <a class="reference internal" href="#network:sockets:with-socket-thread"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-socket-thread</span></code></a>
 macro which registers the current thread as a thread that will call a
 socket function that blocks.</p>
-<dl class="function">
-<dt class="dylan-api" id="network:sockets:start-sockets">
-<code class="sig-name descname">start-sockets</code> <em class="property">Function</em><a class="headerlink" href="#network:sockets:start-sockets" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:start-sockets">
+<span class="sig-name descname"><span class="pre">start-sockets</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#network:sockets:start-sockets" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>start-sockets () =&gt; ()</p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Applications must call this function before using <em>any</em> other
 function or variable from the Network library.</p>
 <p>This function is necessary because the Win32 API library Winsock2,
@@ -156,14 +504,14 @@ called from a top-level form in an appropriate EXE project.</p>
 <em>any</em> other sockets API functions. A good place to do this is at
 the beginning of your startup function (usually called <code class="docutils literal notranslate"><span class="pre">main</span></code>, or similar).
 For example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">method</span> <span class="n">main</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">()</span>
-  <span class="n">start-sockets</span><span class="p">();</span>
-  <span class="k">let</span> <span class="n">the-server</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tcp-server-socket&gt;</span><span class="p">,</span> <span class="k">port:</span> <span class="mi">7</span><span class="p">);</span>
-  <span class="p">...</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="n">start-sockets</span><span class="p">();</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">the-server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;tcp-server-socket&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">port:</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
+<span class="w">  </span><span class="p">...</span>
 <span class="k">end</span><span class="p">;</span>
 
 <span class="k">begin</span>
-  <span class="n">main</span><span class="p">();</span>
+<span class="w">  </span><span class="n">main</span><span class="p">();</span>
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -180,15 +528,15 @@ initialization.</p>
 </dl>
 </dd></dl>
 
-<dl class="macro">
-<dt class="dylan-api" id="network:sockets:with-socket-thread">
-<code class="sig-name descname">with-socket-thread</code> <em class="property">Statement Macro</em><a class="headerlink" href="#network:sockets:with-socket-thread" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:with-socket-thread">
+<span class="sig-name descname"><span class="pre">with-socket-thread</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#network:sockets:with-socket-thread" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Macro Call</dt>
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><pre class="literal-block">with-socket-thread (#key <cite>server?</cite>) <cite>body</cite> end</pre>
 </p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Registers the current thread as a blocking socket thread, that is,
 a thread which will call a socket function that blocks, such as
 <a class="reference internal" href="../io/streams.html#io:streams:read-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-element</span></code></a> or <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a>.</p>
@@ -207,22 +555,22 @@ condition.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="internet-addresses">
-<h2>Internet addresses<a class="headerlink" href="#internet-addresses" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="internet-addresses">
+<h2>Internet addresses<a class="headerlink" href="#internet-addresses" title="Permalink to this heading">#</a></h2>
 <p>This section covers Internet address protocols.</p>
-<div class="section" id="basic-internet-address-protocol">
-<h3>Basic Internet address protocol<a class="headerlink" href="#basic-internet-address-protocol" title="Permalink to this headline">¶</a></h3>
+<section id="basic-internet-address-protocol">
+<h3>Basic Internet address protocol<a class="headerlink" href="#basic-internet-address-protocol" title="Permalink to this heading">#</a></h3>
 <p>This section covers the class <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a> and related
 generic functions and constants.</p>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[internet-address]">
-<code class="sig-name descname">&lt;internet-address&gt;</code> <em class="property">Open Primary Abstract Instantiable Class</em><a class="headerlink" href="#network:sockets:[internet-address]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[internet-address]">
+<span class="sig-name descname"><span class="pre">&lt;internet-address&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[internet-address]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>name</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> representing a symbolic
 internet address.</p></li>
@@ -231,16 +579,16 @@ presentation (dotted) form Internet address or an instance of
 <a class="reference internal" href="#network:sockets:[numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;numeric-address&gt;</span></code></a> (see below).</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>The class of objects representing Internet addresses used as
 endpoints for peer-to-peer socket connections.</p>
 <p>To construct an <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a> object you must supply
 either the <code class="docutils literal notranslate"><span class="pre">name:</span></code> or <code class="docutils literal notranslate"><span class="pre">address:</span></code> keyword. For example:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;internet-address&gt;</span><span class="p">,</span> <span class="k">name:</span> <span class="s">&quot;www.whatever.com&quot;</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;internet-address&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">name:</span><span class="w"> </span><span class="s">&quot;www.whatever.com&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>or</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span> <span class="p">(</span><span class="nc">&lt;internet-address&gt;</span><span class="p">,</span> <span class="k">address:</span> <span class="s">&quot;9.74.122.0&quot;</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;internet-address&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">address:</span><span class="w"> </span><span class="s">&quot;9.74.122.0&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> on <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a> returns an instance of
@@ -250,14 +598,14 @@ either the <code class="docutils literal notranslate"><span class="pre">name:</s
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:host-name">
-<code class="sig-name descname">host-name</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:host-name" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:host-name">
+<span class="sig-name descname"><span class="pre">host-name</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:host-name" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>host-name <em>internet-address</em> =&gt; <em>name</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Returns an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> containing a symbolic host
 name. The <em>internet-address</em> argument must be an instance of
 <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a>.</p>
@@ -275,14 +623,14 @@ or not.</p>
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:host-address">
-<code class="sig-name descname">host-address</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:host-address" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:host-address">
+<span class="sig-name descname"><span class="pre">host-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:host-address" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>host-address <em>internet-address</em> =&gt; <em>address</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Returns an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> containing the presentation form of
 the host address. In the case of multi-homed hosts this will usually be
 the same as:</p>
@@ -297,25 +645,25 @@ it will be either the keyword value or
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:numeric-host-address">
-<code class="sig-name descname">numeric-host-address</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:numeric-host-address" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:numeric-host-address">
+<span class="sig-name descname"><span class="pre">numeric-host-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:numeric-host-address" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the host address as a <a class="reference internal" href="#network:sockets:[numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;numeric-address&gt;</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>numeric-host-address <em>internet-address</em> =&gt; <em>numeric-address</em></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:all-addresses">
-<code class="sig-name descname">all-addresses</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:all-addresses" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:all-addresses">
+<span class="sig-name descname"><span class="pre">all-addresses</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:all-addresses" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>all-addresses <em>internet-address</em> =&gt; <em>sequence</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Returns an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> whose elements are
 <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a> objects containing all known addresses
 for the host.</p>
@@ -323,51 +671,51 @@ for the host.</p>
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:aliases">
-<code class="sig-name descname">aliases</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:aliases" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:aliases">
+<span class="sig-name descname"><span class="pre">aliases</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:aliases" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>aliases <em>internet-address</em> =&gt; <em>sequence</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Returns an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> whose elements are instances
 of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> representing alternative names for the host.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt class="dylan-api" id="network:sockets:local-host-name">
-<code class="sig-name descname">local-host-name</code> <em class="property">Function</em><a class="headerlink" href="#network:sockets:local-host-name" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:local-host-name">
+<span class="sig-name descname"><span class="pre">local-host-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#network:sockets:local-host-name" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>local-host-name () =&gt; <em>name</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Returns an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> containing a symbolic host
 name.</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-ipv6-address-class">
-<h3>The &lt;ipv6-address&gt; class<a class="headerlink" href="#the-ipv6-address-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-ipv6-address-class">
+<h3>The &lt;ipv6-address&gt; class<a class="headerlink" href="#the-ipv6-address-class" title="Permalink to this heading">#</a></h3>
 <p>This name is reserved for future development.</p>
-</div>
-<div class="section" id="the-numeric-address-class">
-<h3>The &lt;numeric-address&gt; class<a class="headerlink" href="#the-numeric-address-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-numeric-address-class">
+<h3>The &lt;numeric-address&gt; class<a class="headerlink" href="#the-numeric-address-class" title="Permalink to this heading">#</a></h3>
 <p>This section describes numeric Internet representation and associated
 protocols.</p>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[numeric-address]">
-<code class="sig-name descname">&lt;numeric-address&gt;</code> <em class="property">Primary Abstract Sealed Class</em><a class="headerlink" href="#network:sockets:[numeric-address]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[numeric-address]">
+<span class="sig-name descname"><span class="pre">&lt;numeric-address&gt;</span></span> <em class="property"><span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[numeric-address]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The class of objects representing the numeric form of an Internet
 addresses.</p>
 <p>Currently only ipv4 (32-bit) addresses are supported. Ipv6
@@ -380,14 +728,14 @@ context in which they are employed.</p>
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:network-order">
-<code class="sig-name descname">network-order</code> <em class="property">Sealed Generic function</em><a class="headerlink" href="#network:sockets:network-order" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:network-order">
+<span class="sig-name descname"><span class="pre">network-order</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:network-order" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>network-order <em>address</em> =&gt; <em>network-order-address</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Returns the value of the numeric address in network order. The argument
 is a general instance of <a class="reference internal" href="#network:sockets:[numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;numeric-address&gt;</span></code></a>. The class of the object
 returned depends upon the particular subclass of the argument; the
@@ -399,14 +747,14 @@ of <a class="reference internal" href="../common-dylan/machine-words.html#common
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:host-order">
-<code class="sig-name descname">host-order</code> <em class="property">Sealed Generic function</em><a class="headerlink" href="#network:sockets:host-order" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:host-order">
+<span class="sig-name descname"><span class="pre">host-order</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:host-order" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>host-order <em>address</em> =&gt; <em>host-order-address</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Like <a class="reference internal" href="#network:sockets:network-order"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">network-order</span></code></a> but returns the value in host order.</p>
 <p><em>Host order</em> is big-endian byte order on a big-endian host
 machine and little-endian on a little-endian host machine.</p>
@@ -415,23 +763,23 @@ machine and little-endian on a little-endian host machine.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="ipv4-addresses">
-<h3>IPV4 addresses<a class="headerlink" href="#ipv4-addresses" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[ipv4-numeric-address]">
-<code class="sig-name descname">&lt;ipv4-numeric-address&gt;</code> <em class="property">Open Primary Abstract Instantiable Class</em><a class="headerlink" href="#network:sockets:[ipv4-numeric-address]" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="ipv4-addresses">
+<h3>IPV4 addresses<a class="headerlink" href="#ipv4-addresses" title="Permalink to this heading">#</a></h3>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[ipv4-numeric-address]">
+<span class="sig-name descname"><span class="pre">&lt;ipv4-numeric-address&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[ipv4-numeric-address]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;numeric-address&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>value</strong> – An instance of <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>. Required.</p></li>
 <li><p><strong>order</strong> – One of <code class="docutils literal notranslate"><span class="pre">#&quot;network-order&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">#&quot;host-order&quot;</span></code>. Required.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The single slot of this class contains a 32-bit value representing
 a ipv4 address. This slot is accessed by the generic functions
 <a class="reference internal" href="#network:sockets:network-order"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">network-order</span></code></a> and <a class="reference internal" href="#network:sockets:host-order"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">host-order</span></code></a> described above.
@@ -444,14 +792,14 @@ returns one or the other of these depending upon the value of the
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt class="dylan-api" id="network:sockets:host-order([ipv4-numeric-address])">
-<code class="sig-name descname">host-order(&lt;ipv4-numeric-address&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#network:sockets:host-order([ipv4-numeric-address])" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:host-order([ipv4-numeric-address])">
+<span class="sig-name descname"><span class="pre">host-order(&lt;ipv4-numeric-address&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#network:sockets:host-order([ipv4-numeric-address])" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>host-order <em>ipv4-numeric-address</em> =&gt; <em>machine-word</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Returns the numeric address in host order as an instance of
 <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>. The argument is an instance of
 <a class="reference internal" href="#network:sockets:[ipv4-numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ipv4-numeric-address&gt;</span></code></a>.</p>
@@ -459,14 +807,14 @@ returns one or the other of these depending upon the value of the
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt class="dylan-api" id="network:sockets:network-order([ipv4-numeric-address])">
-<code class="sig-name descname">network-order(&lt;ipv4-numeric-address&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#network:sockets:network-order([ipv4-numeric-address])" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:network-order([ipv4-numeric-address])">
+<span class="sig-name descname"><span class="pre">network-order(&lt;ipv4-numeric-address&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#network:sockets:network-order([ipv4-numeric-address])" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>network-order <em>ipv4-numeric-address</em> =&gt; <em>machine-word</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Returns the numeric address in network order as an instance of
 <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>. The argument is an instance of
 <a class="reference internal" href="#network:sockets:[ipv4-numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ipv4-numeric-address&gt;</span></code></a>.</p>
@@ -474,32 +822,32 @@ returns one or the other of these depending upon the value of the
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt class="dylan-api" id="network:sockets:as([string],[ipv4-numeric-address])">
-<code class="sig-name descname">as(&lt;string&gt;, &lt;ipv4-numeric-address&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#network:sockets:as([string],[ipv4-numeric-address])" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:as([string],[ipv4-numeric-address])">
+<span class="sig-name descname"><span class="pre">as(&lt;string&gt;,</span> <span class="pre">&lt;ipv4-numeric-address&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#network:sockets:as([string],[ipv4-numeric-address])" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the presentation (dotted string) form of an instance of
 <a class="reference internal" href="#network:sockets:[ipv4-numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ipv4-numeric-address&gt;</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>as <em>string</em> <em>ipv4-numeric-address</em> =&gt; <em>string</em></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[ipv4-network-order-address]">
-<code class="sig-name descname">&lt;ipv4-network-order-address&gt;</code> <em class="property">Concrete Sealed Class</em><a class="headerlink" href="#network:sockets:[ipv4-network-order-address]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[ipv4-network-order-address]">
+<span class="sig-name descname"><span class="pre">&lt;ipv4-network-order-address&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[ipv4-network-order-address]" title="Permalink to this definition">#</a></dt>
 <dd><p>Concrete subclass for network-order numeric addresses.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[ipv4-numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ipv4-numeric-address&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;ipv4-network-order-address&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>is equivalent to</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;ipv4-numeric-address&gt;</span><span class="p">,</span> <span class="k">order:</span> <span class="n">network-order</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;ipv4-numeric-address&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">order:</span><span class="w"> </span><span class="n">network-order</span><span class="p">)</span>
 </pre></div>
 </div>
 </p>
@@ -507,32 +855,32 @@ returns one or the other of these depending upon the value of the
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[ipv4-host-order-address]">
-<code class="sig-name descname">&lt;ipv4-host-order-address&gt;</code> <em class="property">Concrete Sealed Class</em><a class="headerlink" href="#network:sockets:[ipv4-host-order-address]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[ipv4-host-order-address]">
+<span class="sig-name descname"><span class="pre">&lt;ipv4-host-order-address&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[ipv4-host-order-address]" title="Permalink to this definition">#</a></dt>
 <dd><p>Concrete subclass for host order numeric addresses.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[ipv4-numeric-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ipv4-numeric-address&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="sockets">
-<h2>Sockets<a class="headerlink" href="#sockets" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sockets">
+<h2>Sockets<a class="headerlink" href="#sockets" title="Permalink to this heading">#</a></h2>
 <p>This section describes socket classes and protocols.</p>
-<div class="section" id="the-abstract-socket-class">
-<h3>The &lt;abstract-socket&gt; class<a class="headerlink" href="#the-abstract-socket-class" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[abstract-socket]">
-<code class="sig-name descname">&lt;abstract-socket&gt;</code> <em class="property">Open Free Abstract Uninstantiable Class</em><a class="headerlink" href="#network:sockets:[abstract-socket]" title="Permalink to this definition">¶</a></dt>
+<section id="the-abstract-socket-class">
+<h3>The &lt;abstract-socket&gt; class<a class="headerlink" href="#the-abstract-socket-class" title="Permalink to this heading">#</a></h3>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[abstract-socket]">
+<span class="sig-name descname"><span class="pre">&lt;abstract-socket&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Free</span> <span class="pre">Abstract</span> <span class="pre">Uninstantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[abstract-socket]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>socket-descriptor</strong> – A Windows handle or UNIX file
 descriptor for the socket. In general users of the sockets API
@@ -540,7 +888,7 @@ should not need to use this keyword. Only implementors of new socket
 classes should be interested.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The common superclass of all socket objects including
 <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a> (IP client socket), <a class="reference internal" href="#network:sockets:[server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-socket&gt;</span></code></a> and
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-accessor&gt;</span></code>.</p>
@@ -550,21 +898,21 @@ classes should be interested.</p></li>
 
 <p>Each subclass of <a class="reference internal" href="#network:sockets:[abstract-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-socket&gt;</span></code></a> must provide methods for <a class="reference internal" href="../io/streams.html#io:streams:close"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">close</span></code></a>
 and for the following generic functions:</p>
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:local-port">
-<code class="sig-name descname">local-port</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:local-port" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:local-port">
+<span class="sig-name descname"><span class="pre">local-port</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:local-port" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the local port number.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>local-port <em>socket</em> =&gt; <em>port-number</em></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>socket</strong> – An instance of <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>,
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;datagram-socket&gt;</span></code> or <a class="reference internal" href="#network:sockets:[server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-socket&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Values</dt>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>port-number</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
 </ul>
@@ -572,20 +920,20 @@ and for the following generic functions:</p>
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:socket-descriptor">
-<code class="sig-name descname">socket-descriptor</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:socket-descriptor" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:socket-descriptor">
+<span class="sig-name descname"><span class="pre">socket-descriptor</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:socket-descriptor" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the descriptor (handle or fd) for the socket.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>socket-descriptor <em>socket</em> =&gt; descriptor</p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>socket</strong> – An instance of <a class="reference internal" href="#network:sockets:[abstract-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-socket&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Values</dt>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>descriptor</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;accessor-socket-descriptor&gt;</span></code>.</p></li>
 </ul>
@@ -593,20 +941,20 @@ and for the following generic functions:</p>
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:local-host">
-<code class="sig-name descname">local-host</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:local-host" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:local-host">
+<span class="sig-name descname"><span class="pre">local-host</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:local-host" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the address of the local host.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>local-host <em>socket</em> =&gt; <em>host-address</em></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>socket</strong> – An instance of <a class="reference internal" href="#network:sockets:[abstract-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-socket&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Values</dt>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>host-address</strong> – An instance of <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a>.</p></li>
 </ul>
@@ -614,17 +962,17 @@ and for the following generic functions:</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-server-socket-class">
-<h3>The &lt;server-socket&gt; class<a class="headerlink" href="#the-server-socket-class" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[server-socket]">
-<code class="sig-name descname">&lt;server-socket&gt;</code> <em class="property">Open Primary Abstract Instantiable Class</em><a class="headerlink" href="#network:sockets:[server-socket]" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="the-server-socket-class">
+<h3>The &lt;server-socket&gt; class<a class="headerlink" href="#the-server-socket-class" title="Permalink to this heading">#</a></h3>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[server-socket]">
+<span class="sig-name descname"><span class="pre">&lt;server-socket&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[server-socket]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[abstract-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-socket&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>service</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> containing an abstract
 name for a service with a “well-known” port, such as <code class="docutils literal notranslate"><span class="pre">&quot;ftp&quot;</span></code> or
@@ -641,7 +989,7 @@ the <code class="docutils literal notranslate"><span class="pre">protocol:</span
 <span class="pre">...)</span></code>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>Server-sockets listen on a specified port for connection requests
 which come in over the network. Either the <code class="docutils literal notranslate"><span class="pre">port:</span></code> or
 <code class="docutils literal notranslate"><span class="pre">service:</span></code> keyword must be supplied.</p>
@@ -652,14 +1000,14 @@ which come in over the network. Either the <code class="docutils literal notrans
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:accept">
-<code class="sig-name descname">accept</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:accept" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:accept">
+<span class="sig-name descname"><span class="pre">accept</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:accept" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>accept <em>server-socket</em> #rest <em>args</em> #key =&gt; <em>result</em></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Blocks until a connect request is received, then it returns a
 connected instance of <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>. The particular subclass of
 <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a> returned depends on the actual class of the <em>server-socket</em>
@@ -679,17 +1027,17 @@ the sender using <a class="reference internal" href="#network:sockets:remote-hos
 </dl>
 </dd></dl>
 
-<dl class="macro">
-<dt class="dylan-api" id="network:sockets:with-server-socket">
-<code class="sig-name descname">with-server-socket</code> <em class="property">Macro</em><a class="headerlink" href="#network:sockets:with-server-socket" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:with-server-socket">
+<span class="sig-name descname"><span class="pre">with-server-socket</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#network:sockets:with-server-socket" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Macro Call</dt>
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><pre class="literal-block">with-server-socket (<cite>server-var</cite> [:: <cite>server-class</cite> ], <cite>keywords</cite>)
   <cite>body</cite>
 end</pre>
 </p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Creates an instance of <a class="reference internal" href="#network:sockets:[server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-socket&gt;</span></code></a>, using the
 (optional) <em>server-class</em> argument and keyword arguments to make
 the <a class="reference internal" href="#network:sockets:[server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-socket&gt;</span></code></a>, and binds it to the local variable
@@ -700,17 +1048,17 @@ executed.</p>
 </dl>
 </dd></dl>
 
-<dl class="macro">
-<dt class="dylan-api" id="network:sockets:start-server">
-<code class="sig-name descname">start-server</code> <em class="property">Macro</em><a class="headerlink" href="#network:sockets:start-server" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:start-server">
+<span class="sig-name descname"><span class="pre">start-server</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#network:sockets:start-server" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Macro Call</dt>
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><pre class="literal-block">start-server ([<cite>server-var</cite> = ] <cite>socket-server-instance</cite>, <cite>socket-var</cite> [, <cite>keywords</cite> ])
   <cite>body</cite>
 end</pre>
 </p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>Enters an infinite <code class="docutils literal notranslate"><span class="pre">while(#t)</span> <span class="pre">accept</span></code> loop on the server socket.
 Each time <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> succeeds the <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a> returned from
 <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> is bound to <em>socket-var</em> and <em>body</em> is evaluated in the
@@ -721,17 +1069,17 @@ keywords are passed to the call to <a class="reference internal" href="#network:
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-tcp-server-socket-class">
-<h3>The &lt;tcp-server-socket&gt; class<a class="headerlink" href="#the-tcp-server-socket-class" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[tcp-server-socket]">
-<code class="sig-name descname">&lt;tcp-server-socket&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[tcp-server-socket]" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="the-tcp-server-socket-class">
+<h3>The &lt;tcp-server-socket&gt; class<a class="headerlink" href="#the-tcp-server-socket-class" title="Permalink to this heading">#</a></h3>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[tcp-server-socket]">
+<span class="sig-name descname"><span class="pre">&lt;tcp-server-socket&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[tcp-server-socket]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-socket&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>element-type</strong> – Establishes a new default for the <em>element-type</em> of
 <a class="reference internal" href="#network:sockets:[tcp-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tcp-socket&gt;</span></code></a> instances returned by calling <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> on this
@@ -742,7 +1090,7 @@ by using the <code class="docutils literal notranslate"><span class="pre">elemen
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code> is used as the default <em>element-type</em>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The class of TCP server sockets. A server socket is an object which
 listens for requests for connections from the network. When <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> is
 called on the server socket and a request for connection is detected,
@@ -751,14 +1099,14 @@ accept returns a connected <a class="reference internal" href="#network:sockets:
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt class="dylan-api" id="network:sockets:accept([tcp-server-socket])">
-<code class="sig-name descname">accept(&lt;tcp-server-socket&gt;)</code> <em class="property">Method</em><a class="headerlink" href="#network:sockets:accept([tcp-server-socket])" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:accept([tcp-server-socket])">
+<span class="sig-name descname"><span class="pre">accept(&lt;tcp-server-socket&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#network:sockets:accept([tcp-server-socket])" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>accept <em>server-socket</em> #rest <em>args</em> #key <em>element-type</em> =&gt; <em>connected-socket</em></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>server-socket</strong> – An instance of <a class="reference internal" href="#network:sockets:[tcp-server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tcp-server-socket&gt;</span></code></a>.</p></li>
 <li><p><strong>element-type</strong> (<em>#key</em>) – Controls the element type of the
@@ -766,30 +1114,30 @@ accept returns a connected <a class="reference internal" href="#network:sockets:
 to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Values</dt>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>connected-socket</strong> – A connected instance of <a class="reference internal" href="#network:sockets:[tcp-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tcp-socket&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>The other keyword arguments are passed directly to the creation of
 the <a class="reference internal" href="#network:sockets:[tcp-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tcp-socket&gt;</span></code></a> instance.</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-socket-class">
-<h3>The &lt;socket&gt; class<a class="headerlink" href="#the-socket-class" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[socket]">
-<code class="sig-name descname">&lt;socket&gt;</code> <em class="property">Open Free Abstract Instantiable Class</em><a class="headerlink" href="#network:sockets:[socket]" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="the-socket-class">
+<h3>The &lt;socket&gt; class<a class="headerlink" href="#the-socket-class" title="Permalink to this heading">#</a></h3>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[socket]">
+<span class="sig-name descname"><span class="pre">&lt;socket&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Free</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[socket]" title="Permalink to this definition">#</a></dt>
 <dd><p>The class of general client sockets. All client sockets are streams.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[abstract-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-socket&gt;</span></code></a>, <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;external-stream&gt;</span></code></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>direction</strong> – Specifies the direction of the stream. It must be
 one of <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">#&quot;input-output&quot;</span></code>. This
@@ -804,17 +1152,17 @@ for a full description.</p></li>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-buffered-socket-class">
-<h3>The &lt;buffered-socket&gt; class<a class="headerlink" href="#the-buffered-socket-class" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[buffered-socket]">
-<code class="sig-name descname">&lt;buffered-socket&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[buffered-socket]" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="the-buffered-socket-class">
+<h3>The &lt;buffered-socket&gt; class<a class="headerlink" href="#the-buffered-socket-class" title="Permalink to this heading">#</a></h3>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[buffered-socket]">
+<span class="sig-name descname"><span class="pre">&lt;buffered-socket&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[buffered-socket]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>, <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;double-buffered-stream&gt;</span></code></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>force-output-before-read?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.
 Defaults to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>. The methods which implement the stream
@@ -832,7 +1180,7 @@ socket is created with <code class="docutils literal notranslate"><span class="p
 block.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Socket streams whose elements are bytes or characters. These
 inherit buffering protocols and the implications of <a class="reference internal" href="../io/streams.html#io:streams:read"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read</span></code></a>,
 <a class="reference internal" href="../io/streams.html#io:streams:write"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write</span></code></a>, <a class="reference internal" href="../io/streams.html#io:streams:read-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-element</span></code></a>, <a class="reference internal" href="../io/streams.html#io:streams:write-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write-element</span></code></a>,
@@ -842,19 +1190,19 @@ inherit buffering protocols and the implications of <a class="reference internal
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-tcp-socket-class">
-<h3>The &lt;tcp-socket&gt; class<a class="headerlink" href="#the-tcp-socket-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-tcp-socket-class">
+<h3>The &lt;tcp-socket&gt; class<a class="headerlink" href="#the-tcp-socket-class" title="Permalink to this heading">#</a></h3>
 <p>The class of TCP client sockets.</p>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[tcp-socket]">
-<code class="sig-name descname">&lt;tcp-socket&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[tcp-socket]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[tcp-socket]">
+<span class="sig-name descname"><span class="pre">&lt;tcp-socket&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[tcp-socket]" title="Permalink to this definition">#</a></dt>
 <dd><p>The class of TCP client sockets.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[buffered-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffered-socket&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>host</strong> – An instance of <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a> or
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>. The remote host to connect to. The <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> may be
@@ -881,20 +1229,20 @@ This keyword is an inherited streams class keyword. See
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:remote-port">
-<code class="sig-name descname">remote-port</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:remote-port" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:remote-port">
+<span class="sig-name descname"><span class="pre">remote-port</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:remote-port" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the remote port number for a <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>remote-port <em>socket</em> =&gt; <em>port-number</em></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>socket</strong> – An instance of <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Values</dt>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>port-number</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
 </ul>
@@ -902,20 +1250,20 @@ This keyword is an inherited streams class keyword. See
 </dl>
 </dd></dl>
 
-<dl class="generic-function">
-<dt class="dylan-api" id="network:sockets:remote-host">
-<code class="sig-name descname">remote-host</code> <em class="property">Open Generic function</em><a class="headerlink" href="#network:sockets:remote-host" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:remote-host">
+<span class="sig-name descname"><span class="pre">remote-host</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#network:sockets:remote-host" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the remote host for a <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Signature</dt>
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>remote-host <em>socket</em> =&gt; <em>remote-host-address</em></p>
 </dd>
-<dt class="field-even">Parameters</dt>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>socket</strong> – An instance of <a class="reference internal" href="#network:sockets:[socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Values</dt>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>remote-host-address</strong> – An instance of <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a>.</p></li>
 </ul>
@@ -923,19 +1271,19 @@ This keyword is an inherited streams class keyword. See
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-udp-socket-class">
-<h3>The &lt;udp-socket&gt; class<a class="headerlink" href="#the-udp-socket-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-udp-socket-class">
+<h3>The &lt;udp-socket&gt; class<a class="headerlink" href="#the-udp-socket-class" title="Permalink to this heading">#</a></h3>
 <p>The class of UDP client sockets.</p>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[udp-socket]">
-<code class="sig-name descname">&lt;udp-socket&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[udp-socket]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[udp-socket]">
+<span class="sig-name descname"><span class="pre">&lt;udp-socket&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[udp-socket]" title="Permalink to this definition">#</a></dt>
 <dd><p>The class of UDP client sockets.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[buffered-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffered-socket&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>host</strong> – An instance of <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a> or
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>. The remote host to connect to. The <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> may be
@@ -960,25 +1308,25 @@ keyword is an inherited streams class keyword. See <a class="reference internal"
 a full description.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Of the keywords, <code class="docutils literal notranslate"><span class="pre">host:</span></code> and one of either <code class="docutils literal notranslate"><span class="pre">service:</span></code> or
 <code class="docutils literal notranslate"><span class="pre">port:</span></code> are required.</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="the-udp-server-socket-class">
-<h3>The &lt;udp-server-socket&gt; class<a class="headerlink" href="#the-udp-server-socket-class" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-udp-server-socket-class">
+<h3>The &lt;udp-server-socket&gt; class<a class="headerlink" href="#the-udp-server-socket-class" title="Permalink to this heading">#</a></h3>
 <p>The class of UDP server sockets.</p>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[udp-server-socket]">
-<code class="sig-name descname">&lt;udp-server-socket&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[udp-server-socket]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[udp-server-socket]">
+<span class="sig-name descname"><span class="pre">&lt;udp-server-socket&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[udp-server-socket]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[server-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;server-socket&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Init-Keywords</dt>
+<dt class="field-even">Init-Keywords<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>element-type</strong> – Establishes a new default for the element-type of
 <a class="reference internal" href="#network:sockets:[udp-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;UDP-socket&gt;</span></code></a> instances returned by calling <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> with this
@@ -989,7 +1337,7 @@ specified when the server socket is created, <code class="xref dylan dylan-class
 used as the default element-type.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion</dt>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The class of UDP server sockets. A server socket is an object that
 listens for requests from the network. When <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> is called
 on the UDP server socket, <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a> returns a
@@ -998,21 +1346,21 @@ on the UDP server socket, <a class="reference internal" href="#network:sockets:a
 </dl>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="socket-conditions">
-<h2>Socket conditions<a class="headerlink" href="#socket-conditions" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="socket-conditions">
+<h2>Socket conditions<a class="headerlink" href="#socket-conditions" title="Permalink to this heading">#</a></h2>
 <p>This section lists the socket condition classes in the Network library.</p>
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[socket-condition]">
-<code class="sig-name descname">&lt;socket-condition&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[socket-condition]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[socket-condition]">
+<span class="sig-name descname"><span class="pre">&lt;socket-condition&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[socket-condition]" title="Permalink to this definition">#</a></dt>
 <dd><p>All socket conditions are general instances of <a class="reference internal" href="#network:sockets:[socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-condition&gt;</span></code></a>.
 Some are recoverable and others are not.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The class of socket conditions. It inherits the <code class="docutils literal notranslate"><span class="pre">format-string:</span></code>
 and <code class="docutils literal notranslate"><span class="pre">format-arguments:</span></code> keywords from
 <a class="reference internal" href="../common-dylan/common-extensions.html#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a>.</p>
@@ -1033,27 +1381,27 @@ the <em>details:</em> keyword to set the value for this slot.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[socket-error]">
-<code class="sig-name descname">&lt;socket-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[socket-error]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[socket-error]">
+<span class="sig-name descname"><span class="pre">&lt;socket-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[socket-error]" title="Permalink to this definition">#</a></dt>
 <dd><p>The superclass of all unrecoverable socket conditions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 <p>The class of socket conditions from which no recovery is possible.</p>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[internal-socket-error]">
-<code class="sig-name descname">&lt;internal-socket-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[internal-socket-error]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[internal-socket-error]">
+<span class="sig-name descname"><span class="pre">&lt;internal-socket-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[internal-socket-error]" title="Permalink to this definition">#</a></dt>
 <dd><p>The class of unexpected socket errors.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[socket-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-error&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The class of unexpected errors encountered while interacting with
 the underlying host system’s network library.</p>
 <p>Inspect the contents of the <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">socket-condition-details</span></code> slot for
@@ -1063,16 +1411,16 @@ more information.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[recoverable-socket-condition]">
-<code class="sig-name descname">&lt;recoverable-socket-condition&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[recoverable-socket-condition]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[recoverable-socket-condition]">
+<span class="sig-name descname"><span class="pre">&lt;recoverable-socket-condition&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[recoverable-socket-condition]" title="Permalink to this definition">#</a></dt>
 <dd><p>The class of socket conditions for which an application may be able to take
 some remedial action.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The general class of socket conditions for which an application may be
 able to take some remedial action.</p>
 <p>For instance, a web browser receiving such conditions as
@@ -1087,73 +1435,73 @@ continue to handle other requests for connections.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[network-not-responding]">
-<code class="sig-name descname">&lt;network-not-responding&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[network-not-responding]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[network-not-responding]">
+<span class="sig-name descname"><span class="pre">&lt;network-not-responding&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[network-not-responding]" title="Permalink to this definition">#</a></dt>
 <dd><p>The network — probably a local network — is down. Try again later.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[invalid-address]">
-<code class="sig-name descname">&lt;invalid-address&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[invalid-address]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[invalid-address]">
+<span class="sig-name descname"><span class="pre">&lt;invalid-address&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[invalid-address]" title="Permalink to this definition">#</a></dt>
 <dd><p>A badly formed address string has been passed to a function trying to
 make an <a class="reference internal" href="#network:sockets:[internet-address]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;internet-address&gt;</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[host-not-found]">
-<code class="sig-name descname">&lt;host-not-found&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[host-not-found]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[host-not-found]">
+<span class="sig-name descname"><span class="pre">&lt;host-not-found&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[host-not-found]" title="Permalink to this definition">#</a></dt>
 <dd><p>The Domain Name Server (DNS) cannot resolve the named host or
 internet address. Try again with a different (correct) name or
 address.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[server-not-responding]">
-<code class="sig-name descname">&lt;server-not-responding&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[server-not-responding]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[server-not-responding]">
+<span class="sig-name descname"><span class="pre">&lt;server-not-responding&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[server-not-responding]" title="Permalink to this definition">#</a></dt>
 <dd><p>The Domain Name Server (DNS) did not respond or returned an ambiguous
 result. Try again.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[host-unreachable]">
-<code class="sig-name descname">&lt;host-unreachable&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[host-unreachable]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[host-unreachable]">
+<span class="sig-name descname"><span class="pre">&lt;host-unreachable&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[host-unreachable]" title="Permalink to this definition">#</a></dt>
 <dd><p>The remote host cannot be reached from this host at this time.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[socket-closed]">
-<code class="sig-name descname">&lt;socket-closed&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[socket-closed]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[socket-closed]">
+<span class="sig-name descname"><span class="pre">&lt;socket-closed&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[socket-closed]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The socket or server socket has been closed.</p>
 <p>Most operations on closed instances of <a class="reference internal" href="#network:sockets:[tcp-socket]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tcp-socket&gt;</span></code></a>
 return instances of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream-closed-error&gt;</span></code> (from the
@@ -1163,14 +1511,14 @@ Streams library) rather than instances of <a class="reference internal" href="#n
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[connection-failed]">
-<code class="sig-name descname">&lt;connection-failed&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[connection-failed]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[connection-failed]">
+<span class="sig-name descname"><span class="pre">&lt;connection-failed&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[connection-failed]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>The attempt to connect to the remote host was not successful.
 Connection failed for one of the following reasons: because the
 connect request timed out or because it was refused, or because the
@@ -1179,28 +1527,28 @@ remote host could not be reached.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[connection-closed]">
-<code class="sig-name descname">&lt;connection-closed&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[connection-closed]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[connection-closed]">
+<span class="sig-name descname"><span class="pre">&lt;connection-closed&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[connection-closed]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>The connection to the remote host has been broken. The socket
 should be closed. To try again, open a new socket.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[address-in-use]">
-<code class="sig-name descname">&lt;address-in-use&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[address-in-use]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[address-in-use]">
+<span class="sig-name descname"><span class="pre">&lt;address-in-use&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[address-in-use]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>A process on the machine is already bound to the same fully
 qualified address. This condition probably occurred because you
 were trying to use a port with an active server already installed,
@@ -1209,26 +1557,26 @@ or a process crashed without closing a socket.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[blocking-call-interrupted]">
-<code class="sig-name descname">&lt;blocking-call-interrupted&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[blocking-call-interrupted]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[blocking-call-interrupted]">
+<span class="sig-name descname"><span class="pre">&lt;blocking-call-interrupted&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[blocking-call-interrupted]" title="Permalink to this definition">#</a></dt>
 <dd><p>A blocking socket call, like <a class="reference internal" href="../io/streams.html#io:streams:read"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read</span></code></a>, <a class="reference internal" href="../io/streams.html#io:streams:write"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write</span></code></a> or <a class="reference internal" href="#network:sockets:accept"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">accept</span></code></a>,
 was interrupted.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[out-of-resources]">
-<code class="sig-name descname">&lt;out-of-resources&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[out-of-resources]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[out-of-resources]">
+<span class="sig-name descname"><span class="pre">&lt;out-of-resources&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[out-of-resources]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[recoverable-socket-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recoverable-socket-condition&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>The implementation-dependent limit on the number of open sockets
 has been reached. You must close some sockets before you can open
 any more.</p>
@@ -1236,14 +1584,14 @@ any more.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[socket-accessor-error]">
-<code class="sig-name descname">&lt;socket-accessor-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[socket-accessor-error]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[socket-accessor-error]">
+<span class="sig-name descname"><span class="pre">&lt;socket-accessor-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[socket-accessor-error]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[socket-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-error&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>An implementation-specific error from the C-FFI interface to the
 native socket library. Usually instances of this class appear
 in the <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">socket-condition-details</span></code> slot of another
@@ -1252,14 +1600,14 @@ in the <code class="xref dylan dylan-gf docutils literal notranslate"><span clas
 </dl>
 </dd></dl>
 
-<dl class="class">
-<dt class="dylan-api" id="network:sockets:[win32-socket-error]">
-<code class="sig-name descname">&lt;win32-socket-error&gt;</code> <em class="property">Class</em><a class="headerlink" href="#network:sockets:[win32-socket-error]" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan class">
+<dt class="sig sig-object dylan-api dylan" id="network:sockets:[win32-socket-error]">
+<span class="sig-name descname"><span class="pre">&lt;win32-socket-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#network:sockets:[win32-socket-error]" title="Permalink to this definition">#</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Superclasses</dt>
+<dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#network:sockets:[socket-accessor-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;socket-accessor-error&gt;</span></code></a></p>
 </dd>
-<dt class="field-even">Discussion</dt>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>A Win32-specific error from the Winsock2 library, a C-FFI interface to
 the native socket library Winsock2. A function in the FFI library has
 returned an error return code.</p>
@@ -1283,38 +1631,100 @@ error code. An instance of <a class="reference external" href="https://opendylan
 </dl>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../progress-stream/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">The progress-stream Library</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../io/standard-io.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">The standard-io Module</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../io/standard-io.html" class="btn btn-neutral float-left" title="The standard-io Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../progress-stream/index.html" class="btn btn-neutral float-right" title="The progress-stream Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">The network Library</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
+<li><a class="reference internal" href="#internet-addresses">Internet addresses</a><ul>
+<li><a class="reference internal" href="#basic-internet-address-protocol">Basic Internet address protocol</a></li>
+<li><a class="reference internal" href="#the-ipv6-address-class">The &lt;ipv6-address&gt; class</a></li>
+<li><a class="reference internal" href="#the-numeric-address-class">The &lt;numeric-address&gt; class</a></li>
+<li><a class="reference internal" href="#ipv4-addresses">IPV4 addresses</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sockets">Sockets</a><ul>
+<li><a class="reference internal" href="#the-abstract-socket-class">The &lt;abstract-socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-server-socket-class">The &lt;server-socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-tcp-server-socket-class">The &lt;tcp-server-socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-socket-class">The &lt;socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-buffered-socket-class">The &lt;buffered-socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-tcp-socket-class">The &lt;tcp-socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-udp-socket-class">The &lt;udp-socket&gt; class</a></li>
+<li><a class="reference internal" href="#the-udp-server-socket-class">The &lt;udp-server-socket&gt; class</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#socket-conditions">Socket conditions</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; <a href="../copyright.html">Copyright</a> 2011-2023, Dylan Hackers.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
 </html>

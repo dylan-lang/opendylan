@@ -1,111 +1,470 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="The Bank Client" href="bank-client.html" /><link rel="prev" title="Setting up the Bank Example" href="bank-setup.html" />
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Writing and Compiling IDL &mdash; Developing Component Software with CORBA</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/opendylan.org/css/opendylan-docs.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="The Bank Client" href="bank-client.html" />
-    <link rel="prev" title="Setting up the Bank Example" href="bank-setup.html" /> 
-</head>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Writing and Compiling IDL - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            Developing Component Software with CORBA
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Writing and Compiling IDL</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#writing-idl-for-a-corba-application">Writing IDL for a CORBA application</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#idl-for-the-account-interface">IDL for the account interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#idl-for-the-checkingaccount-interface">IDL for the checkingAccount interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#idl-for-the-bank-interface">IDL for the bank interface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling-idl-for-a-corba-application">Compiling IDL for a CORBA application</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#libraries-created-by-compiling-idl">Libraries created by compiling IDL</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#idl-files-in-dylan-projects">IDL files in Dylan projects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#compilation-steps">Compilation steps</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#mapping-idl-to-dylan">Mapping IDL to Dylan</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-for-interfaces">Mapping for interfaces</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-for-basic-types">Mapping for basic types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-for-attributes">Mapping for attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-for-operations">Mapping for operations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mapping-for-exceptions">Mapping for exceptions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
-<li class="toctree-l1"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
-</ul>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
       </div>
-    </nav>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">CORBA Guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
+</ul>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Developing Component Software with CORBA</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Writing and Compiling IDL</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/bank-idl.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <div class="section" id="writing-and-compiling-idl">
-<h1>Writing and Compiling IDL<a class="headerlink" href="#writing-and-compiling-idl" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="writing-idl-for-a-corba-application">
-<h2>Writing IDL for a CORBA application<a class="headerlink" href="#writing-idl-for-a-corba-application" title="Permalink to this headline">¶</a></h2>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/corba-guide/bank-idl.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="writing-and-compiling-idl">
+<h1>Writing and Compiling IDL<a class="headerlink" href="#writing-and-compiling-idl" title="Permalink to this heading">#</a></h1>
+<section id="writing-idl-for-a-corba-application">
+<h2>Writing IDL for a CORBA application<a class="headerlink" href="#writing-idl-for-a-corba-application" title="Permalink to this heading">#</a></h2>
 <p>The first step in developing a CORBA application is to define the
 interfaces to its distributed application objects. You define these
 interfaces using OMG’s Interface Definition Language (IDL).</p>
@@ -119,18 +478,18 @@ types of operations that:</p>
 representing accounts, checking accounts, and banks. We declare the
 interfaces to all three objects within the same CORBA module,
 <code class="docutils literal notranslate"><span class="pre">BankingDemo</span></code>:</p>
-<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>module BankingDemo {
-  interface account {
-    <span class="o">//</span> details follow
-  };
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>module<span class="w"> </span>BankingDemo<span class="w"> </span>{
+<span class="w">  </span>interface<span class="w"> </span>account<span class="w"> </span>{
+<span class="w">    </span><span class="o">//</span><span class="w"> </span>details<span class="w"> </span>follow
+<span class="w">  </span>};
 
-  interface checkingAccount <span class="o">:</span> account {
-    <span class="o">//</span> details follow
-  };
+<span class="w">  </span>interface<span class="w"> </span>checkingAccount<span class="w"> </span><span class="o">:</span><span class="w"> </span>account<span class="w"> </span>{
+<span class="w">    </span><span class="o">//</span><span class="w"> </span>details<span class="w"> </span>follow
+<span class="w">  </span>};
 
-  interface bank {
-    <span class="o">//</span> details follow
-  };
+<span class="w">  </span>interface<span class="w"> </span>bank<span class="w"> </span>{
+<span class="w">    </span><span class="o">//</span><span class="w"> </span>details<span class="w"> </span>follow
+<span class="w">  </span>};
 };
 </pre></div>
 </div>
@@ -138,21 +497,21 @@ interfaces to all three objects within the same CORBA module,
 the three interfaces. You can find the complete IDL description for
 the bank demo in the Open Dylan Examples folder, under
 <code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank\bank.idl</span></code>.</p>
-<div class="section" id="idl-for-the-account-interface">
-<h3>IDL for the account interface<a class="headerlink" href="#idl-for-the-account-interface" title="Permalink to this headline">¶</a></h3>
+<section id="idl-for-the-account-interface">
+<h3>IDL for the account interface<a class="headerlink" href="#idl-for-the-account-interface" title="Permalink to this heading">#</a></h3>
 <p>This is the IDL definition of the interface to an <code class="docutils literal notranslate"><span class="pre">account</span></code> object.</p>
-<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> in module BankingDemo
-interface account {
-  readonly attribute <span class="nb">string</span> name;
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>BankingDemo
+interface<span class="w"> </span>account<span class="w"> </span>{
+<span class="w">  </span>readonly<span class="w"> </span>attribute<span class="w"> </span><span class="nb">string</span><span class="w"> </span>name;
 
-  readonly attribute <span class="nb">long</span> balance;
+<span class="w">  </span>readonly<span class="w"> </span>attribute<span class="w"> </span><span class="nb">long</span><span class="w"> </span>balance;
 
-  void credit (in unsigned <span class="nb">long</span> amount);
+<span class="w">  </span>void<span class="w"> </span>credit<span class="w"> </span>(in<span class="w"> </span>unsigned<span class="w"> </span><span class="nb">long</span><span class="w"> </span>amount);
 
-  exception refusal {<span class="nb">string</span> reason;};
+<span class="w">  </span>exception<span class="w"> </span>refusal<span class="w"> </span>{<span class="nb">string</span><span class="w"> </span>reason;};
 
-  void debit (in <span class="nb">long</span> amount)
-    raises (refusal);
+<span class="w">  </span>void<span class="w"> </span>debit<span class="w"> </span>(in<span class="w"> </span><span class="nb">long</span><span class="w"> </span>amount)
+<span class="w">    </span>raises<span class="w"> </span>(refusal);
 };
 </pre></div>
 </div>
@@ -168,7 +527,7 @@ allow updates to an account’s <code class="docutils literal notranslate"><span
 <p>The operation <code class="docutils literal notranslate"><span class="pre">credit</span></code> adds a non-negative amount to the current
 account balance.</p>
 <p>Next is an exception declaration:</p>
-<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>exception refusal {<span class="nb">string</span> reason;};
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span>exception<span class="w"> </span>refusal<span class="w"> </span>{<span class="nb">string</span><span class="w"> </span>reason;};
 </pre></div>
 </div>
 <p>This declares a named exception, <code class="docutils literal notranslate"><span class="pre">refusal</span></code>, that the <code class="docutils literal notranslate"><span class="pre">debit</span></code>
@@ -184,18 +543,18 @@ operation may raise any CORBA system exception, its declaration must
 specify any additional user-defined CORBA exceptions that it might
 raise.</p>
 <p>This completes the IDL declaration of the <code class="docutils literal notranslate"><span class="pre">account</span></code> interface.</p>
-</div>
-<div class="section" id="idl-for-the-checkingaccount-interface">
-<h3>IDL for the checkingAccount interface<a class="headerlink" href="#idl-for-the-checkingaccount-interface" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="idl-for-the-checkingaccount-interface">
+<h3>IDL for the checkingAccount interface<a class="headerlink" href="#idl-for-the-checkingaccount-interface" title="Permalink to this heading">#</a></h3>
 <p>Our application manages a second sort of bank account, called a
 checking account . While an ordinary <code class="docutils literal notranslate"><span class="pre">account</span></code> must maintain a
 positive balance, a <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> may be overdrawn up to an
 agreed limit. We use IDL’s notion of interface inheritance to capture
 the intuition that a checking account is just a special form of
 <code class="docutils literal notranslate"><span class="pre">account</span></code>:</p>
-<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> in module BankingDemo
-interface checkingAccount <span class="o">:</span> account {
-  readonly attribute <span class="nb">long</span> limit;
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>BankingDemo
+interface<span class="w"> </span>checkingAccount<span class="w"> </span><span class="o">:</span><span class="w"> </span>account<span class="w"> </span>{
+<span class="w">  </span>readonly<span class="w"> </span>attribute<span class="w"> </span><span class="nb">long</span><span class="w"> </span>limit;
 };
 </pre></div>
 </div>
@@ -208,9 +567,9 @@ additional <code class="docutils literal notranslate"><span class="pre">limit</s
 <code class="docutils literal notranslate"><span class="pre">account</span></code> does not imply that the methods implementing those
 operations need to be inherited too. We will exploit this flexibility
 to provide a specialized <code class="docutils literal notranslate"><span class="pre">debit</span></code> method for <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code>s.</p>
-</div>
-<div class="section" id="idl-for-the-bank-interface">
-<h3>IDL for the bank interface<a class="headerlink" href="#idl-for-the-bank-interface" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="idl-for-the-bank-interface">
+<h3>IDL for the bank interface<a class="headerlink" href="#idl-for-the-bank-interface" title="Permalink to this heading">#</a></h3>
 <p>We can now design the interface of a bank object. The intention is
 that a bank associates customer names with accounts, with each name
 identifying at most one account. A client is able to open accounts for
@@ -222,25 +581,25 @@ to retrieve an account for an unknown customer, the bank should reject
 the request by raising an exception.</p>
 <p>The IDL definition of the <code class="docutils literal notranslate"><span class="pre">bank</span></code> interface captures some of these
 requirements:</p>
-<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> in module BankingDemo
-interface bank {
-  readonly attribute <span class="nb">string</span> name;
+<div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>BankingDemo
+interface<span class="w"> </span>bank<span class="w"> </span>{
+<span class="w">  </span>readonly<span class="w"> </span>attribute<span class="w"> </span><span class="nb">string</span><span class="w"> </span>name;
 
-  exception duplicateAccount{};
+<span class="w">  </span>exception<span class="w"> </span>duplicateAccount{};
 
-  account openAccount (in <span class="nb">string</span> name)
-    raises (duplicateAccount);
+<span class="w">  </span>account<span class="w"> </span>openAccount<span class="w"> </span>(in<span class="w"> </span><span class="nb">string</span><span class="w"> </span>name)
+<span class="w">    </span>raises<span class="w"> </span>(duplicateAccount);
 
-  checkingAccount openCheckingAccount(in <span class="nb">string</span> name,
-                                      in <span class="nb">long</span> limit)
-    raises (duplicateAccount);
+<span class="w">  </span>checkingAccount<span class="w"> </span>openCheckingAccount(in<span class="w"> </span><span class="nb">string</span><span class="w"> </span>name,
+<span class="w">                                      </span>in<span class="w"> </span><span class="nb">long</span><span class="w"> </span>limit)
+<span class="w">    </span>raises<span class="w"> </span>(duplicateAccount);
 
-  exception nonExistentAccount{};
+<span class="w">  </span>exception<span class="w"> </span>nonExistentAccount{};
 
-  account retrieveAccount(in <span class="nb">string</span> name)
-    raises (nonExistentAccount);
+<span class="w">  </span>account<span class="w"> </span>retrieveAccount(in<span class="w"> </span><span class="nb">string</span><span class="w"> </span>name)
+<span class="w">    </span>raises<span class="w"> </span>(nonExistentAccount);
 
-  void closeAccount (in account account);
+<span class="w">  </span>void<span class="w"> </span>closeAccount<span class="w"> </span>(in<span class="w"> </span>account<span class="w"> </span>account);
 };
 </pre></div>
 </div>
@@ -273,10 +632,10 @@ operation. For instance, we can use <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> objects as well as <code class="docutils literal notranslate"><span class="pre">account</span></code> objects, and we can
 use <code class="docutils literal notranslate"><span class="pre">retrieveAccount</span></code> to fetch <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> objects as well
 as <code class="docutils literal notranslate"><span class="pre">account</span></code> objects.</p>
-</div>
-</div>
-<div class="section" id="compiling-idl-for-a-corba-application">
-<h2>Compiling IDL for a CORBA application<a class="headerlink" href="#compiling-idl-for-a-corba-application" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="compiling-idl-for-a-corba-application">
+<h2>Compiling IDL for a CORBA application<a class="headerlink" href="#compiling-idl-for-a-corba-application" title="Permalink to this heading">#</a></h2>
 <p>Open Dylan includes an IDL compiler, Scepter, that it uses to check
 and compile IDL files into Dylan libraries. These libraries provide
 essential infrastructure for CORBA-based applications in Dylan.</p>
@@ -293,8 +652,8 @@ specification states that:</p>
 </ul>
 <p>IDL declarations are mapped to Dylan according to these rules. The
 resulting libraries provide a Dylan protocol equivalent to the IDL.</p>
-<div class="section" id="libraries-created-by-compiling-idl">
-<h3>Libraries created by compiling IDL<a class="headerlink" href="#libraries-created-by-compiling-idl" title="Permalink to this headline">¶</a></h3>
+<section id="libraries-created-by-compiling-idl">
+<h3>Libraries created by compiling IDL<a class="headerlink" href="#libraries-created-by-compiling-idl" title="Permalink to this heading">#</a></h3>
 <p>The IDL compiler can produce <em>skeleton</em>, <em>stub</em>, and <em>protocol</em>
 libraries from an IDL file. This, again, is as specified in
 <a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a>. The purpose of these libraries is to make writing
@@ -320,9 +679,9 @@ both use the protocol library and re-export the names from it.</p>
 addition to the skeletons and protocol library. This allows the
 server to make callbacks to the client.</p>
 </div>
-</div>
-<div class="section" id="idl-files-in-dylan-projects">
-<h3>IDL files in Dylan projects<a class="headerlink" href="#idl-files-in-dylan-projects" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="idl-files-in-dylan-projects">
+<h3>IDL files in Dylan projects<a class="headerlink" href="#idl-files-in-dylan-projects" title="Permalink to this heading">#</a></h3>
 <p>IDL files can be treated as part of Dylan projects, allowing the IDL
 interface to be compiled at the same time as the project’s Dylan
 sources. This is in fact the simplest way to manage a Dylan project
@@ -360,9 +719,9 @@ Bank-Skeletons and Bank-Stubs libraries, and added automatically to
 the projects of both.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="compilation-steps">
-<h3>Compilation steps<a class="headerlink" href="#compilation-steps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="compilation-steps">
+<h3>Compilation steps<a class="headerlink" href="#compilation-steps" title="Permalink to this heading">#</a></h3>
 <p>If you have not built the Bank-Client and Bank-Server projects yet,
 you should do so now.</p>
 <ol class="arabic">
@@ -377,61 +736,61 @@ generated and added automatically to the top-level client and
 server projects.</p>
 </li>
 </ol>
-</div>
-</div>
-<div class="section" id="mapping-idl-to-dylan">
-<h2>Mapping IDL to Dylan<a class="headerlink" href="#mapping-idl-to-dylan" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="mapping-idl-to-dylan">
+<h2>Mapping IDL to Dylan<a class="headerlink" href="#mapping-idl-to-dylan" title="Permalink to this heading">#</a></h2>
 <p>To get an impression of the mapping from IDL to Dylan, we can take a
 look at the result of applying the mapping to the file
 <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. The following Dylan definitions are taken from
 <code class="file docutils literal notranslate"><span class="pre">bank-protocol.dylan</span></code>, part of the Bank-Protocol project
 produced by compiling <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code> IDL:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="n">BankingDemo/&lt;account&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
 
-<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/name</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">);</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/name</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;string&gt;</span><span class="p">);</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/balance</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/balance</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/credit</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
-     <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">();</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/credit</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">amount</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">();</span>
 
-<span class="k">define</span> <span class="nb">sealed</span> <span class="nb">class</span> <span class="n">BankingDemo/account/&lt;refusal&gt;</span>
-    <span class="p">(</span><span class="n">CORBA/&lt;user-exception&gt;</span><span class="p">)</span>
-  <span class="nb">slot</span> <span class="n">BankingDemo/account/refusal/reason</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">,</span>
-    <span class="k">required-init-keyword:</span> <span class="k">reason:</span><span class="p">;</span>
-<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">sealed</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="n">BankingDemo/account/&lt;refusal&gt;</span>
+<span class="w">    </span><span class="p">(</span><span class="n">CORBA/&lt;user-exception&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">slot</span><span class="w"> </span><span class="n">BankingDemo/account/refusal/reason</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;string&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="k">required-init-keyword:</span><span class="w"> </span><span class="k">reason:</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
 
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/debit</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span> <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">();</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/debit</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;long&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">();</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="n">BankingDemo/&lt;checkingAccount&gt;</span>
-    <span class="p">(</span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
-<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="n">BankingDemo/&lt;checkingAccount&gt;</span>
+<span class="w">    </span><span class="p">(</span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/checkingAccount/limit</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/checkingAccount/limit</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">abstract</span> <span class="nb">class</span> <span class="n">BankingDemo/&lt;bank&gt;</span> <span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
-<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="n">BankingDemo/&lt;bank&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
 
-<span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/bank/name</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;bank&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;string&gt;</span><span class="p">);</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/bank/name</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;bank&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;string&gt;</span><span class="p">);</span>
 
-<span class="k">define</span> <span class="nb">sealed</span> <span class="nb">class</span> <span class="n">BankingDemo/bank/&lt;duplicateAccount&gt;</span>
-    <span class="p">(</span><span class="n">CORBA/&lt;user-exception&gt;</span><span class="p">)</span>
-<span class="k">end</span> <span class="nb">class</span><span class="p">;</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">sealed</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="n">BankingDemo/bank/&lt;duplicateAccount&gt;</span>
+<span class="w">    </span><span class="p">(</span><span class="n">CORBA/&lt;user-exception&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
 
 <span class="p">...</span>
 </pre></div>
@@ -440,8 +799,8 @@ produced by compiling <code class="file docutils literal notranslate"><span clas
 subsections examine the Dylan counterparts of some of the more
 representative IDL declarations from the file <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. See
 <a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a> for the full mapping description.</p>
-<div class="section" id="mapping-for-interfaces">
-<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this headline">¶</a></h3>
+<section id="mapping-for-interfaces">
+<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this heading">#</a></h3>
 <p>The IDL interfaces <code class="docutils literal notranslate"><span class="pre">account</span></code>, <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> and <code class="docutils literal notranslate"><span class="pre">bank</span></code> map
 to the Dylan abstract classes <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code> .</p>
@@ -454,30 +813,30 @@ identifiers <code class="docutils literal notranslate"><span class="pre">Banking
 maps naturally onto Dylan class inheritance: the class
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code> is defined as a subclass of
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>).</p>
-</div>
-<div class="section" id="mapping-for-basic-types">
-<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-for-basic-types">
+<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this heading">#</a></h3>
 <p>The IDL types <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, and <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span></code> are mapped
 to the Dylan classes <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;string&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;long&gt;</span></code> and
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;unsigned-long&gt;</span></code>, which are simply aliases for the Dylan
 classes <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and a positive subset of
 <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
-</div>
-<div class="section" id="mapping-for-attributes">
-<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-for-attributes">
+<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this heading">#</a></h3>
 <p>The read-only <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute of an IDL <code class="docutils literal notranslate"><span class="pre">account</span></code> gives rise
 to the Dylan generic function:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/balance</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/balance</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If we had omitted the <code class="docutils literal notranslate"><span class="pre">readonly</span></code> keyword from the definition of the
 <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute, the mapping would have introduced an
 additional generic <code class="docutils literal notranslate"><span class="pre">-setter</span></code> function:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/balance-setter</span>
-    <span class="p">(</span><span class="n">value</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">,</span> <span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">(</span><span class="n">value</span> <span class="p">::</span> <span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/balance-setter</span>
+<span class="w">    </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;long&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;long&gt;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Recall that, in the IDL source, the <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute is declared
@@ -495,14 +854,14 @@ together all the enclosing scope identifiers and the scoped
 identifier itself, separating the identifiers by forward slashes
 (<code class="docutils literal notranslate"><span class="pre">/</span></code>).</p>
 </div>
-</div>
-<div class="section" id="mapping-for-operations">
-<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-for-operations">
+<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this heading">#</a></h3>
 <p>The IDL operation <code class="docutils literal notranslate"><span class="pre">credit</span></code> is mapped to the Dylan generic function:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="nb">open</span> <span class="nb">generic</span> <span class="n">BankingDemo/account/credit</span>
-    <span class="p">(</span><span class="n">object</span> <span class="p">::</span> <span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
-     <span class="n">amount</span> <span class="p">::</span> <span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
- <span class="p">=&gt;</span> <span class="p">();</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/credit</span>
+<span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">amount</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">CORBA/&lt;unsigned-long&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">();</span>
 </pre></div>
 </div>
 <p>In IDL, the <code class="docutils literal notranslate"><span class="pre">credit</span></code> operation is defined within the <code class="docutils literal notranslate"><span class="pre">account</span></code>
@@ -523,9 +882,9 @@ parameter, <code class="docutils literal notranslate"><span class="pre">amount</
 generic function. In this case, because the result type of <code class="docutils literal notranslate"><span class="pre">credit</span></code>
 is <code class="docutils literal notranslate"><span class="pre">void</span></code>, and the operation has no <code class="docutils literal notranslate"><span class="pre">out</span></code> or <code class="docutils literal notranslate"><span class="pre">inout</span></code>
 parameters, <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/credit</span></code> has an empty result list.</p>
-</div>
-<div class="section" id="mapping-for-exceptions">
-<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapping-for-exceptions">
+<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this heading">#</a></h3>
 <p>The IDL exception <code class="docutils literal notranslate"><span class="pre">refusal</span></code> maps onto the Dylan class
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/&lt;refusal&gt;</span></code> . Its member, <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">reason;</span></code>,
 maps onto a slot <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/refusal/reason</span> <span class="pre">::</span>
@@ -535,39 +894,100 @@ maps onto a slot <code class="docutils literal notranslate"><span class="pre">Ba
 <code class="docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code>. This means that CORBA user exceptions can be raised
 on the server, and handled in the client, using the standard Dylan
 condition mechanism.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="bank-client.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">The Bank Client</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="bank-setup.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Setting up the Bank Example</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="bank-setup.html" class="btn btn-neutral float-left" title="Setting up the Bank Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="bank-client.html" class="btn btn-neutral float-right" title="The Bank Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Writing and Compiling IDL</a><ul>
+<li><a class="reference internal" href="#writing-idl-for-a-corba-application">Writing IDL for a CORBA application</a><ul>
+<li><a class="reference internal" href="#idl-for-the-account-interface">IDL for the account interface</a></li>
+<li><a class="reference internal" href="#idl-for-the-checkingaccount-interface">IDL for the checkingAccount interface</a></li>
+<li><a class="reference internal" href="#idl-for-the-bank-interface">IDL for the bank interface</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compiling-idl-for-a-corba-application">Compiling IDL for a CORBA application</a><ul>
+<li><a class="reference internal" href="#libraries-created-by-compiling-idl">Libraries created by compiling IDL</a></li>
+<li><a class="reference internal" href="#idl-files-in-dylan-projects">IDL files in Dylan projects</a></li>
+<li><a class="reference internal" href="#compilation-steps">Compilation steps</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mapping-idl-to-dylan">Mapping IDL to Dylan</a><ul>
+<li><a class="reference internal" href="#mapping-for-interfaces">Mapping for interfaces</a></li>
+<li><a class="reference internal" href="#mapping-for-basic-types">Mapping for basic types</a></li>
+<li><a class="reference internal" href="#mapping-for-attributes">Mapping for attributes</a></li>
+<li><a class="reference internal" href="#mapping-for-operations">Mapping for operations</a></li>
+<li><a class="reference internal" href="#mapping-for-exceptions">Mapping for exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2011-2023, Dylan Hackers.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
 </html>

@@ -1,0 +1,1404 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Beyond Java? - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/articles/beyond-java.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="beyond-java">
+<h1>Beyond Java?<a class="headerlink" href="#beyond-java" title="Permalink to this heading">#</a></h1>
+<p><em>Some experiences from building two CORBA IDL compilers.</em></p>
+<p>by Dr Jason Trenouth</p>
+<p>(<a class="reference external" href="http://web.archive.org/web/20030409041302/http://fun-o.com/resources/beyond-java.phtml">Originally published</a> in 2001.)</p>
+<hr class="docutils" />
+<section id="the-java-age">
+<h2>The Java Age<a class="headerlink" href="#the-java-age" title="Permalink to this heading">#</a></h2>
+<p>We have been living through the Java age. It is somewhat of an understatement
+to say that there has been a great deal of interest in the <a class="reference external" href="http://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html">Java programming
+language</a>
+– although as far as hype goes <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.xml.org/">XML</a> is now
+overshadowing it. Initially Java, outside <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.sun.com/">Sun Microsystems</a> at least, was
+seen as a programming language purely for the Internet. In particular, it came
+with a virtual machine that could be embedded in web browsers and a security
+model to control the activity of Java programs running in such browsers.</p>
+<p>These days, however, Java has moved on and developers are using the language
+for all sorts of applications. Java is perceived as a reasonable general
+purpose programming language – one that is good enough. The tools are
+evolving. JIT compilers like <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.javasoft.com/products/hotspot/">Sun’s Hotspot</a>
+are making Java code run faster. UML-based design tools like <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.rational.com/products/rose/index.jtmpl">Rational Rose</a>
+are finding Java’s rigid syntax amenable to round-trip engineering. EJB-based
+Application Servers like <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.bea.com/">BEA’s WebLogic</a> are providing
+the background of services needed for many kinds of business applications.</p>
+<p>So what’s the problem?</p>
+</section>
+<hr class="docutils" />
+<section id="the-problems">
+<h2>The Problems<a class="headerlink" href="#the-problems" title="Permalink to this heading">#</a></h2>
+<p>Java may not be up to the job. Linguistically it has a number of faults which
+all seem minor on their own but that add up to awkward and hard to maintain
+code. Some of these faults are born out of engineering compromises and some of
+them are deliberately chosen to reduce the perceived complexity of the
+language. But, for whatever the reason they exist, they are a burden to
+developers and they will be a burden to maintainers. Here are some of the
+problems:</p>
+<ul class="simple">
+<li><p>single implementation inheritance</p></li>
+<li><p>single argument method dispatch</p></li>
+<li><p>primitive types distinct from objects</p></li>
+<li><p>casting required</p></li>
+<li><p>no extensible syntax</p></li>
+<li><p>poor iteration/collection integration</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="the-solutions">
+<h2>The Solutions<a class="headerlink" href="#the-solutions" title="Permalink to this heading">#</a></h2>
+<p>The solution is to adopt a more advanced programming language instead of
+Java. This need not mean going back to C++. After all, Java’s popularization of
+garbage collection and pointer-free programming has probably significantly
+advanced the cause of reliable software. This also does not mean stepping
+sideways to <a class="reference external" href="http://web.archive.org/web/20030409041302/http://msdn.microsoft.com/vstudio/nextgen/technology/csharpintro.asp">C#</a>
+– a similar language with many of the same problems.</p>
+<p>The alternative programming language that I’m proposing in this article is
+Dylan. Dylan already has solutions to the problems listed above for Java:</p>
+<ul class="simple">
+<li><p>multiple implementation inheritance</p></li>
+<li><p>multiple argument method dispatch</p></li>
+<li><p>pure object types</p></li>
+<li><p>no casting required</p></li>
+<li><p>extensible syntax</p></li>
+<li><p>good iteration/collection integration</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="an-example">
+<h2>An Example<a class="headerlink" href="#an-example" title="Permalink to this heading">#</a></h2>
+<p>Since, according to <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.samueljohnson.com/">Samuel Johnson</a>,
+“example is always more efficacious than precept”, I will examine a real
+programming task that is made more awkward by Java and more elegant by Dylan.</p>
+<p>In the last few years I’ve personally been working on some <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.corba.org/">CORBA</a>
+projects. In particular, I’ve written compilers in both Dylan and Java for
+CORBA’s Interface Definition Language (IDL), so I feel able to show how a
+language like Dylan can simplify application development compared to Java. In
+the sections that follow I will use IDL compiler examples while looking at the
+points I listed above where I contend that Dylan is an improvement over Java.</p>
+<hr class="docutils" />
+<section id="single-implementation-inheritance">
+<h3>Single Implementation Inheritance<a class="headerlink" href="#single-implementation-inheritance" title="Permalink to this heading">#</a></h3>
+<p>While Java supports multiple inheritance of interfaces, it only offers single
+inheritance of implementations. Partly, this is because single inheritance is
+easier to implement efficiently and partly this is because multiple inheritance
+is seen, philosophically, as unnecessary. The view is that, in nearly all
+cases, the goal of multiple inheritance is better achieved through composition
+of objects and merging of interfaces rather than the merging of objects.</p>
+<p>Let’s look at this in reality. In any compiler it is usual to convert the
+textual form of the input language into an internal representation consisting
+of a graph of objects. This graph is sometimes called an abstract syntax tree
+or AST.</p>
+<p>The input language, CORBA’s IDL, consists of the usual types of construct. Some
+elements of the language textually contain some other parts of the
+language. E.g. an IDL <em>module</em> can contain all the other kinds of
+construct including other modules. Suppose we want to model these IDL
+constructs in our internal representation. Let’s assume a parser is supplying
+us with calls to allocate these objects. How should we implement them? Well,
+Java advocates would start by concentrating on the interfaces, because the
+implementation details don’t matter. So let’s look at two pairs of IDL
+constructs:</p>
+<ul class="simple">
+<li><p><em>interface</em> and <em>string</em> both define a type in IDL, members of which can be
+passed to and returned from operations; and</p></li>
+<li><p><em>module</em> and <em>interface</em> both introduce new scope* for identifier names.</p></li>
+</ul>
+<p>We can define Java interfaces to model the IDL concepts of <em>type</em> and
+<em>scope</em>. We can subclass these interfaces individually to model <em>string</em> and
+<em>module</em>, and subclass them together to produce a model for an IDL
+<em>interface</em>. However, after you have defined the interfaces, you need to get
+down to the implementation. Whatever the interfaces, you still have to
+implement these objects and their associated operations.</p>
+<p>In this case, since the concepts are orthogonal, we would like to be able to
+reuse and so share the implementations, otherwise we are going to have
+maintenance headache. That is, we’d like the implementation of IDL’s
+<em>interface</em> to share the implementation of both <em>type</em> and <em>scope</em>.</p>
+<p>Unfortunately, in Java, we cannot use inheritance to implement both these kinds
+of sharing. We will have to implement one kind of sharing through inheritance
+and one through composition (aka aggregation). As a colleague of mine put it,
+“if you want multiple inheritance then you have to get off at the next stop as
+the Java bus doesn’t go there.”</p>
+<p>This asymmetry is messy. Here is some putative Java code:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">AbstractIDLType</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">TypeInfo</span><span class="w"> </span><span class="nf">getTypeInfo</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">AbstractIDLScope</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">ScopeInfo</span><span class="w"> </span><span class="nf">getScopeInfo</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">IDLType</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AbstractIDLType</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">TypeInfo</span><span class="w"> </span><span class="n">_typeInfo</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">TypeInfo</span><span class="w"> </span><span class="nf">getTypeInfo</span><span class="p">()</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">_typeInfo</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IDLModule</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AbstractIDLScope</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">ScopeInfo</span><span class="w"> </span><span class="n">_scopeInfo</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">ScopeInfo</span><span class="w"> </span><span class="nf">getScopeInfo</span><span class="p">()</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">_scopeInfo</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IDLInterface</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">IDLType</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AbstractIDLScope</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">ScopeInfo</span><span class="w"> </span><span class="n">_scopeInfo</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">ScopeInfo</span><span class="w"> </span><span class="nf">getScopeInfo</span><span class="p">()</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">_scopeInfo</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IDLString</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">IDLType</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Contrast this with the equivalent Dylan code which can use multiple
+implementation inheritance:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;IDL-type&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;object&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="nb">slot</span><span class="w"> </span><span class="n">get-type-info</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;type-info&gt;</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;IDL-scope&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;object&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="nb">slot</span><span class="w"> </span><span class="n">get-scope-info</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;scope-info&gt;</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;IDL-module&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;IDL-scope&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;IDL-interface&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;IDL-type&gt;</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;IDL-scope&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;IDL-string&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;IDL-type&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The Dylan code is symmetrical whereas the same sharing in Java has to be
+asymmetrical with redundant code if you want to take advantage of inheritance
+where you can. This symmetry simplifies the code and so speeds initial
+development time and eases later maintenance.</p>
+</section>
+<hr class="docutils" />
+<section id="single-argument-method-dispatch">
+<h3>Single Argument Method Dispatch<a class="headerlink" href="#single-argument-method-dispatch" title="Permalink to this heading">#</a></h3>
+<p>Now lets look at another of Java’s drawbacks: single argument dispatch. Now,
+many programmers many not even be aware of this limitation if they have only
+programmed in single-dispatch or message-passing OO languages. It can be a case
+of what you’ve never had you don’t miss. However, you tend to miss multiple
+argument dispatch if you’ve ever had it taken away. Here is an example from our
+IDL compiler. When building the AST from the textual input there comes a point
+when the program has created the new node instance and needs to add it into the
+tree as a new child of the current parent. This is an ideal opportunity to
+check some constraints on what is and is not legal IDL. For example, the
+grammar can tell you that arguments are attached to operations, but not that
+<em>out</em> or <em>inout</em> arguments make no sense for <em>oneway</em> operations. The latter
+constraint is best dealt with during tree construction. So suppose we had a
+method for adding new nodes into the tree called <code class="docutils literal notranslate"><span class="pre">addNode</span></code>. In Java the above
+constraint might be coded as follows:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">IDLOperation</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">IDLObject</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">addNode</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLObject</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IDLException</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">IDLArgument</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">IDLArgument</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLArgument</span><span class="w"> </span><span class="p">)</span><span class="n">node</span><span class="p">;</span>
+<span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argument</span><span class="p">.</span><span class="na">direction</span><span class="p">();</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">flag</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ONEWAY</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">OUT</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">INOUT</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="n">illegalOneWayOperation</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">super</span><span class="p">.</span><span class="na">addNode</span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Constrast this with the Dylan code which can dynamically dispatch
+on both arguments in the signature:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">add-node</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">operation</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-operation&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-argument&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">direction</span><span class="p">(</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">flag</span><span class="p">(</span><span class="w"> </span><span class="n">operation</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ONEWAY</span><span class="w"> </span><span class="n">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">OUT</span><span class="w"> </span><span class="n">||</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">INOUT</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">illegal-one-way-operation</span><span class="p">(</span><span class="w"> </span><span class="n">operation</span><span class="p">,</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">next-method</span><span class="p">();</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>We don’t have to complicate this Dylan method by making it deal with the case
+when the second argument is not of type <code class="docutils literal notranslate"><span class="pre">&lt;IDL-argument&gt;</span></code> because the
+language’s dispatching mechanism takes care of that for us. And in the case
+when it is an instance of <code class="docutils literal notranslate"><span class="pre">&lt;IDL-argument&gt;</span></code> we don’t have to do a cast in
+order to call methods on it.</p>
+<p>The situation gets more complicated when there are other classes you have to
+care about. IDL operations can raise exceptions, but that doesn’t make sense
+for <em>oneway</em> operations.  Suppose that we want to protect against that. With
+Java we have to modify the existing definition:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">IDLOperation</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">IDLObject</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">addNode</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLObject</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IDLException</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">IDLArgument</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">IDLArgument</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLArgument</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">;</span>
+<span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argument</span><span class="p">.</span><span class="na">direction</span><span class="p">();</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">flag</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ONEWAY</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">OUT</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">INOUT</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="n">illegalOneWayOperation</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">IDLException</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">IDLException</span><span class="w"> </span><span class="n">_exception</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLException</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">flag</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">oneway</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="n">illegalOneWayException</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">_exception</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">super</span><span class="p">.</span><span class="na">addNode</span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>While Dylan lets us define a new modular method.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">add-node</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">operation</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-operation&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-exception&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">flag</span><span class="p">(</span><span class="w"> </span><span class="n">operation</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ONEWAY</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">illegal-one-way-operation</span><span class="p">(</span><span class="w"> </span><span class="n">operation</span><span class="p">,</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">next-method</span><span class="p">();</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="single-argument-method-dispatch-part-ii-the-visitor-horror">
+<h3>Single Argument Method Dispatch (Part II : The Visitor Horror)<a class="headerlink" href="#single-argument-method-dispatch-part-ii-the-visitor-horror" title="Permalink to this heading">#</a></h3>
+<p>The situation gets even more complicated when you want to walk the nodes as
+part of backends that are responsible for emitting stubs and skeletons for all
+the supported languages in your CORBA framework. In Java, one way of doing this
+would be to add new code for each backend to each of the node classes. This is
+clearly the wrong thing since you have to repeatedly edit the same core files
+over and over. Not very modular.</p>
+<p>An alternative is the <code class="docutils literal notranslate"><span class="pre">visitor</span></code> design pattern. Suppose, as one of the
+backends, you want to just dump out a regurgitated form of the original IDL for
+debugging purposes. We can avoid having to modify the core files for each
+backend if we add a single mechanism that lets us visit each node with an
+object of the backend’s choosing.</p>
+<p>E.g. in each node class file we would have the class implement the following
+method:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">accept</span><span class="w"> </span><span class="p">(</span><span class="n">Visitor</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">v</span><span class="p">.</span><span class="na">visit</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">accept</span></code> method switches the recipient of the message from the current
+object to the argument and passes the current object along as an argument. Its
+a kind of callback. The <code class="docutils literal notranslate"><span class="pre">Visitor</span></code> interface has to specify visitor methods
+for each node class:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">interface</span> <span class="nc">Visitor</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLOperation</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLModule</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// etc</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then the backend must define a visitor object that can be passed to the accept
+methods and must define visitor methods that can be called depending on the
+acceptor’s class:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">DumpVisitor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Visitor</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLOperation</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="c1">// etc</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>So the backend calls into the tree representation as follows:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
+<span class="n">node</span><span class="p">.</span><span class="na">accept</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="p">);</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>This sends the visitor (the backend) to the node and lets Java dynamically
+dispatch to an <code class="docutils literal notranslate"><span class="pre">accept</span></code> method. The <code class="docutils literal notranslate"><span class="pre">accept</span></code> method, as we’ve seen above is
+just a trampoline that immediately calls back into the visitor:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
+<span class="n">visitor</span><span class="p">.</span><span class="na">visit</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="p">);</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>This might seem pointless, but because there is a different <code class="docutils literal notranslate"><span class="pre">accept</span></code> method
+for each node class a different visit method is statically selected on the
+backend. In a sense, we have converted a dynamic dispatch into a static one.</p>
+<p>Unfortunately, we have lost the inheritance we might have used had we put the
+code directly into the core node class files. The visit methods are separate
+methods. We can’t use <code class="docutils literal notranslate"><span class="pre">super.visit(node)</span></code> in say the <code class="docutils literal notranslate"><span class="pre">IDLInterface</span></code> visit
+method to invoke the inherited visit method on say <code class="docutils literal notranslate"><span class="pre">IDLScope</span></code>. Instead we
+have to explicitly recode the inheritance by hand:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">visit</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLScope</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In a kind of Catch-22 situation Java programmers are forced to break modularity
+in order to avoid breaking modularity.</p>
+<p>In Dylan, which not only has multiple-argument dispatch, but also lets you
+define methods which dispatch on classes from other libraries (without having
+access to private state), the situation is more straightforward. The dump back
+end can simply define a method (let’s also call it <code class="docutils literal notranslate"><span class="pre">visit</span></code>) that dispatches
+on the IDL node classes:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;dump-backend&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-interface&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="nb">next-method</span><span class="p">();</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And that’s it. There is nothing more that is required. The Dylan <code class="docutils literal notranslate"><span class="pre">visit</span></code>
+method can call <code class="docutils literal notranslate"><span class="pre">next-method</span></code> and invoke the inherited <code class="docutils literal notranslate"><span class="pre">visit</span></code> method on
+<code class="docutils literal notranslate"><span class="pre">&lt;IDL-scope&gt;</span></code> without having to encode that directly into the method.</p>
+<p>Moreover the Dylan <code class="docutils literal notranslate"><span class="pre">visit</span></code> method can call <code class="docutils literal notranslate"><span class="pre">visit</span></code> directly on sub-objects
+without having to bounce there via the <code class="docutils literal notranslate"><span class="pre">accept</span></code> bottleneck. There are no
+<code class="docutils literal notranslate"><span class="pre">accept</span></code> methods at all in the Dylan solution.</p>
+<p>In summary:</p>
+<ul class="simple">
+<li><p>There is no need to define lots of identical <code class="docutils literal notranslate"><span class="pre">accept</span></code> methods. (In Java, we
+might even have had to introduce another <code class="docutils literal notranslate"><span class="pre">accept</span></code> method per class to deal
+with, say, value-returning visitors.)</p></li>
+<li><p>There is no need to define a <code class="docutils literal notranslate"><span class="pre">Visitor</span></code> interface that redundantly knows all
+the classes.</p></li>
+<li><p>There is no need to give up inheritence and then try and hack it back in!</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="primitive-types-distinct-from-objects">
+<h3>Primitive Types Distinct From Objects<a class="headerlink" href="#primitive-types-distinct-from-objects" title="Permalink to this heading">#</a></h3>
+<p>Java has primitive types that lie outside its object system. This can make
+intuitively simple operations into complex nightmares.</p>
+<p>In an IDL compiler you have to process arithmetic expressions. Suppose that
+your front end has parsed them into nodes that contain the operations and
+operands. Let’s consider just a node for a binary operation: one with two
+sub-nodes with values of their own that need to be combined. For simplicity,
+let’s suppose that IDL allows only all-integer or all-float arithmetic so we
+only have to code those two cases. We can record all integers we parse as long
+values and all floating point values we parse as doubles. To distinguish
+between these types we either have two different primitive fields and a flag in
+each node or we can store different kinds of numeric objects: Longs or Doubles.</p>
+<p>Given these constraints, the Java code for evaluating addition and subtraction
+nodes might come out looking like the following.  Notice all the casting,
+primitive value accessing, object allocation, and repetition needed to do the
+actual arithmetic.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">IDLExpression</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="n">Object</span><span class="w"> </span><span class="nf">evaluate</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">EvaluationError</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Object</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">leftSubExpression</span><span class="p">().</span><span class="na">evaluate</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Object</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rightSubExpression</span><span class="p">().</span><span class="na">evaluate</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">operation</span><span class="p">();</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Long</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">).</span><span class="na">longValue</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                           </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">).</span><span class="na">longValue</span><span class="w"> </span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Double</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Double</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">).</span><span class="na">doubleValue</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                             </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">).</span><span class="na">doubleValue</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EvaluationError</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Long</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">).</span><span class="na">longValue</span><span class="w"> </span><span class="o">-</span>
+<span class="w">                           </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">).</span><span class="na">longValue</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Double</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">).</span><span class="na">doubleValue</span><span class="w"> </span><span class="o">-</span>
+<span class="w">                             </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Double</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">).</span><span class="na">doubleValue</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EvaluationError</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now imagine all this ugly code replicated for more arithmetic operations. And
+more realistic constraints on the arithmetic types will make the bloating
+worse.</p>
+<p>Dylan does not have primitive types that are distinct from its object types so
+it can express the code above more succinctly while retaining arithmetic
+efficiency:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">evaluate</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-expression&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">left-subexpression</span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">right-subexpression</span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">operation</span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="sc">&#39;+&#39;</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">      </span><span class="n">check-constraints</span><span class="p">(</span><span class="w"> </span><span class="n">lhs</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="n">lhs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rhs</span><span class="p">;</span>
+<span class="w">    </span><span class="sc">&#39;-&#39;</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">      </span><span class="n">check-constraints</span><span class="p">(</span><span class="w"> </span><span class="n">lhs</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="n">lhs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">rhs</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">select</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">check-constraints</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-expression&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">check-constraints</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-expression&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;float&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;float&gt;</span><span class="p">)</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">check-constraints</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-expression&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;object&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">error</span><span class="p">(</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="w"> </span><span class="nc">&lt;evaluation-error&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">expression:</span><span class="w"> </span><span class="n">expr</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the Dylan version we only have to test that the arithmetic constraints of
+IDL are met, using multiple argument dispatch again, and then we can perform
+the operation quite naturally in a single intuitive line. By contrast the Java
+version must split up the cases into very long-winded, clumsy, and inefficient
+code.</p>
+</section>
+<hr class="docutils" />
+<section id="casting-required">
+<h3>Casting Required<a class="headerlink" href="#casting-required" title="Permalink to this heading">#</a></h3>
+<p>In static languages casting seems to be a necessary evil. You have to tell the
+compiler things that it needs to know. In unsafe languages, if you break that
+promise, the computation can become corrupt and go awry. In a safe language
+like Java runtime checks prevent such unfriendly behaviour. But whatever safety
+net is provided for mistakes, cast-ridden code is harder to read and maintain.</p>
+<p>The arithmetic example from the section on “Primitive Types Distinct From
+Objects” has already introduced some of the ugliness of casting. The
+<code class="docutils literal notranslate"><span class="pre">evaluate</span></code> method returns the result of an arithmetic (sub)expression. In
+both Dylan and in Java we don’t know exactly what the resulting type is, but in
+Java we have to care because we need to extract a primitive value from that
+result and the primitive accessor we use depends on the type. So in Java we
+have to test and then cast the result to that type.</p>
+<p>When you have several layers of abstract protocol that have to work on many
+data types casting can become incredibly ugly. Here is some code that takes a
+name of a constant value that we know in a certain context is used to declare
+the size of an IDL array. Suppose that we want to access that size in Java:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLConstant</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">node</span><span class="p">.</span><span class="na">resolveIdentifier</span><span class="p">(</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">).</span><span class="na">expression</span><span class="p">().</span><span class="na">evaluate</span><span class="p">()</span>
+<span class="p">).</span><span class="na">intValue</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now compare that with Dylan:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">expression</span><span class="p">(</span><span class="w"> </span><span class="n">resolve-identifier</span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In Dylan we can assume that if there is a runtime type mismatch it will be
+detected and signaled for us. We don’t have to put in explicit casts at the
+call site just to promise the compiler that we’re allowed to call a method. The
+mere fact we are calling a method which expects that type is sufficient.</p>
+<p>Dylan does not force you to pay for what you don’t use. Elsewhere in your code
+– away from dynamic cases – type declarations and domain sealing
+(constraining the extensibility of functions by argument type) can allow Dylan
+compilers to statically dispatch calls or warn of the lack of applicable
+methods.</p>
+</section>
+<hr class="docutils" />
+<section id="no-extensible-syntax">
+<h3>No Extensible Syntax<a class="headerlink" href="#no-extensible-syntax" title="Permalink to this heading">#</a></h3>
+<p>Java has no macros. After the C preprocessor this was seen as a step
+forward. The two main uses of C preprocessor in C and C++ programs has been for
+naming constants and conditionalizing code. In Java constants can be declared
+via <em>static final</em> fields and benefit from the automatic association with a
+class namespace. Conditionalizing code was typically done to enable source code
+to be ported across platforms and also in order to turn on and off debugging
+code. Java deals with cross-platform portability in other ways. For example
+integer types have known fixed sizes no matter what the platform. Finally, for
+debugging, Java compilers will optimize away unreachable code, so debugging
+code can be left in and turned off by manipulating an ordinary constant in one
+place in the code.</p>
+<p>However, constants and conditionalized debugging are not the only uses of
+macros. Macros can also be used for syntactic extension. Unfortunately, macros
+defined in the C preprocessor use textual substitution and so extending the
+syntax is hard to get right.</p>
+<p>In Dylan, macros are defined using a pattern and template filling notation that
+is smart about the syntax of the language. This lets programmers build
+abstractions, encapsulate details, and map external formats to internal ones
+which can be verified at compile time.</p>
+<p>As an example, let us consider the <code class="docutils literal notranslate"><span class="pre">dump</span></code> output of an IDL compiler
+again. When reproducing IDL code from the internal tree representation it is
+useful for the human reader if we indent the output. One way to do this would
+be to implement a so called “pretty printer” for the internal
+representation. This could take account of the page width and have heuristics
+for breaking lines and so on.</p>
+<p>A full-blown pretty printer is too much work for this IDL re-emitter which is
+really only for debugging purposes, although one could argue that a generalized
+component of this sort would come in handy in other situations.</p>
+<p>Instead we will take care of line breaks manually and we only need something to
+keep track of the indentation level. An natural abstraction is an extended I/O
+stream which inserts extra whitespace before each line that is printed, and
+that can be told to add more or less whitespace as the context demands. We will
+call this an “indenting stream” although it will also add braces around the
+nested IDL as well as indenting it.</p>
+<p>In Java we might use the indenting stream, wrapped up in some utility calls,
+for dumping out the IDL for an interface as follows:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpInherits</span><span class="p">();</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="na">stream</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w"> </span><span class="c1">// write out a &#39;{&#39; and increase the indention</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">node</span><span class="p">.</span><span class="na">dumpBody</span><span class="p">()</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="na">stream</span><span class="p">.</span><span class="na">finish</span><span class="p">();</span><span class="w"> </span><span class="c1">// decrease the indentation and write out a &#39;}&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the example we add extra indentation for the elements of inteface by calling
+a function <code class="docutils literal notranslate"><span class="pre">start</span></code> and we remove the extra indentation by calling
+<code class="docutils literal notranslate"><span class="pre">finish</span></code>. Also, we use a trick and introduce extra indentation into the
+source code by using a Java block. This lets us see the structure of the
+emitted code in the source code. Unfortunately, we have to remember to put the
+call to <code class="docutils literal notranslate"><span class="pre">finish</span></code> in ourselves and the Java compiler won’t notice if we miss
+it out. There is also no real connection between the indenting in the output
+and the indenting in the source – we just have to remember to put in the block
+braces.</p>
+<p>An alternative might be to use an extra instance (a <code class="docutils literal notranslate"><span class="pre">Start</span></code> !) of an
+anonymous inner class that takes care of the indentation by using a <code class="docutils literal notranslate"><span class="pre">body</span></code>
+callback something like the following.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpInherits</span><span class="p">();</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">Start</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">stream</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">body</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">node</span><span class="p">.</span><span class="na">dumpBody</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="p">.</span><span class="na">finish</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">finish</span></code> method calls the <code class="docutils literal notranslate"><span class="pre">body</span></code> method wrapped with the other calls
+for indenting and exdenting the stream.</p>
+<p>However, the Java compiler will still not notice if we miss out the
+<code class="docutils literal notranslate"><span class="pre">.finish()</span></code>. Also this is beginning to look rather strange and potentially
+inefficient if we are creating lots of these “Starts” all over the place. More
+fatally, there is at least one popular Java compiler that cannot cope with more
+than two nested levels of the above construct.</p>
+<p>A more typical way of doing this Java would be to use a static method and an
+instance of an anonymous inner class:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpInherits</span><span class="p">();</span>
+<span class="w">  </span><span class="n">Body</span><span class="p">.</span><span class="na">with</span><span class="p">(</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Body</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">stream</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">invoke</span><span class="w"> </span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">node</span><span class="p">.</span><span class="na">dumpBody</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This at least lets us wrap up the call in a way that enables the Java compiler
+to spot missing delimiters, but we have to pay the cost of an object allocation
+each time.</p>
+<p>So what would you do in Dylan using macros? Well, the following
+demonstrates. First we define the macro:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="n">indenting</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">indenting</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nt">?stream</span><span class="o">:</span><span class="nb">expression</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nt">?body</span><span class="o">:</span><span class="nb">body</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">=&gt;</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="k">let</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">?stream</span><span class="p">;</span>
+<span class="w">      </span><span class="n">start</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="nt">?body</span><span class="p">;</span>
+<span class="w">      </span><span class="n">finish</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This defines a macro called <code class="docutils literal notranslate"><span class="pre">indenting</span></code> which wraps up some code denoted by
+<code class="docutils literal notranslate"><span class="pre">?body</span></code> with a couple of administrative calls to change the current stream’s
+indentation and insert braces. The <code class="docutils literal notranslate"><span class="pre">:body</span></code> syntax is a constraint that says
+<code class="docutils literal notranslate"><span class="pre">?body</span></code> must match a well-formed sequence of Dylan source code
+statements. Similarly, the <code class="docutils literal notranslate"><span class="pre">:expression</span></code> syntax is a constraint that says
+<code class="docutils literal notranslate"><span class="pre">?stream</span></code> must match a well-formed Dylan expression.</p>
+<p>Now that we have the macro we can use it as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;dump-backend&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-interface&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">dump-name</span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="n">dump-inherits</span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="n">indenting</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">dump-body</span><span class="p">(</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The macro expands into the administrative calls, but lets us see the indented
+source and lets the Dylan compiler check the balanced statements:
+<code class="docutils literal notranslate"><span class="pre">indenting...end</span></code>.</p>
+<p>Now suppose that there is a possibility that parts of the output may go awry or
+be terminated and yet we want the bulk of the printing to continue. In
+particular, we want to be able to reset the indentation back to the original
+level in the advent of a non-local exit.</p>
+<p>The original Java technique would mean having to insert a try-finally block in
+every use of the pattern:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLInterface</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">  </span><span class="n">node</span><span class="p">.</span><span class="na">dumpInherits</span><span class="p">();</span>
+<span class="w">  </span><span class="k">try</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">stream</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w"> </span><span class="c1">// write out a &#39;{&#39; and increase the indention</span>
+<span class="w">    </span><span class="n">node</span><span class="p">.</span><span class="na">dumpBody</span><span class="p">()</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">finally</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">stream</span><span class="p">.</span><span class="na">finish</span><span class="p">();</span><span class="w"> </span><span class="c1">// decrease the indentation and write out a &#39;}&#39;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now this is beginning to get out of hand. The usual Java technique of defining
+a static method that calls a protocol invoker on an instance of an anonymous
+inner class helps, but at the cost of clumsy boilerplate in the source and
+instance allocation for each call.</p>
+<p>In Dylan the solution is simply to extend the macro in one place:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="n">indenting</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">indenting</span><span class="w"> </span><span class="p">(</span><span class="nt">?stream</span><span class="o">:</span><span class="nb">expression</span><span class="p">)</span><span class="w"> </span><span class="nt">?body</span><span class="o">:</span><span class="nb">body</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">=&gt;</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nb">block</span>
+<span class="w">      </span><span class="k">let</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">?stream</span><span class="p">;</span>
+<span class="w">      </span><span class="n">start</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">);</span>
+<span class="w">      </span><span class="nt">?body</span><span class="p">;</span>
+<span class="w">    </span><span class="k">cleanup</span>
+<span class="w">      </span><span class="n">finish</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And all the uses of <code class="docutils literal notranslate"><span class="pre">indenting</span> <span class="pre">...</span> <span class="pre">end</span></code> remain the same.</p>
+</section>
+<hr class="docutils" />
+<section id="poor-iteration-collection-integration">
+<h3>Poor Iteration/Collection Integration<a class="headerlink" href="#poor-iteration-collection-integration" title="Permalink to this heading">#</a></h3>
+<p>Let’s suppose we are implementing <code class="docutils literal notranslate"><span class="pre">dumpInherits</span></code> from the above emitter
+code. We need to iterate over the inherited interfaces and dump out their
+names. Suppose also that we want to maintain a degree of abstraction over how
+we implement the sequence of inherited interfaces.</p>
+<p>In Java, we might expose the interface to the sequence of inherited interfaces
+as a <code class="docutils literal notranslate"><span class="pre">List</span></code> so that we could implement it as a LinkedList or an ArrayList or
+something else depending on other constraints.</p>
+<p>Here is some possible code:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">dumpInherits</span><span class="w"> </span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">dumpColon</span><span class="p">();</span>
+<span class="w">  </span><span class="n">Iterator</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getInherited</span><span class="p">().</span><span class="na">iterator</span><span class="p">();</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLInterface</span><span class="w"> </span><span class="p">)</span><span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">()</span><span class="w"> </span><span class="p">).</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="n">dumpComma</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>However, if we knew we had an <code class="docutils literal notranslate"><span class="pre">ArrayList</span></code> (which can be indexed in constant
+time) we could use an index rather than using an iterator (which is slightly
+more efficient):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">dumpInherits</span><span class="w"> </span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">dumpColon</span><span class="p">();</span>
+<span class="w">  </span><span class="n">ArrayList</span><span class="w"> </span><span class="n">inherited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getInherited</span><span class="p">();</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">nInherited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inherited</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
+<span class="w">  </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nInherited</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">isFirst</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">isFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">dumpComma</span><span class="p">();</span>
+
+<span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">IDLInterface</span><span class="w"> </span><span class="p">)</span><span class="n">inherited</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And if we didn’t need the power of the collection classes then we
+use a good old fashioned array.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">dumpInherits</span><span class="w"> </span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">dumpColon</span><span class="p">();</span>
+<span class="w">  </span><span class="n">IDLInterface</span><span class="o">[]</span><span class="w"> </span><span class="n">inherited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getInherited</span><span class="p">();</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">nInherited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inherited</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nInherited</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">isFirst</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">isFirst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">dumpComma</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">inherited</span><span class="o">[</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">]</span><span class="p">.</span><span class="na">dumpName</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The situation in Dylan is different. The following code covers any collection
+class from the built-in ones like <code class="docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code> to custom ones
+that you’ve written for your application. Moreover you don’t actually need to
+create an explicit iterator or index in order to loop over the elements of any
+collection as that is done for you behind the scenes.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">dump-inherits</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">interface</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-interface&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">dump-colon</span><span class="p">();</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">inherits</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">get-inherited</span><span class="p">(</span><span class="w"> </span><span class="nb">interface</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">first?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="l">#t</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="l">#f</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">~first?</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="n">dump-comma</span><span class="p">();</span>
+<span class="w">    </span><span class="k">end</span><span class="p">;</span>
+<span class="w">    </span><span class="n">dump-name</span><span class="p">(</span><span class="w"> </span><span class="n">inherits</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>We could program explicitly using iterators in Dylan, just as in Java, but
+that’s a bit of a drag when you have a <code class="docutils literal notranslate"><span class="pre">for</span></code> construct that can do the work
+for us automatically.</p>
+<p>In fact, using Dylan’s macros we can even build an abstraction that lets us
+express the <code class="docutils literal notranslate"><span class="pre">dump-inherits</span></code> method even more clearly. First we put a line
+similar to the following one in the module definition.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">import</span><span class="w"> </span><span class="n">dylan</span><span class="p">,</span><span class="w"> </span><span class="k">rename:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">\for</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">\dylan/for</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This rebinds the original Dylan <code class="docutils literal notranslate"><span class="pre">for</span></code> macro on import so that we can define a
+new one and have it expand into the original one.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="k">for</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nt">?clauses</span><span class="o">:</span><span class="nb">*</span><span class="w"> </span><span class="p">)</span>
+<span class="w">      </span><span class="nt">?body</span><span class="o">:</span><span class="nb">body</span>
+<span class="w">    </span><span class="n">between</span>
+<span class="w">      </span><span class="nt">?between</span><span class="o">:</span><span class="nb">body</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
+<span class="w">   </span><span class="p">=&gt;</span>
+<span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="n">dylan/for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nt">?clauses</span><span class="p">,</span><span class="w"> </span><span class="n">first?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="l">#t</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="l">#f</span><span class="w"> </span><span class="p">)</span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">~first?</span><span class="w"> </span><span class="p">)</span>
+<span class="w">         </span><span class="nt">?between</span>
+<span class="w">       </span><span class="k">end</span><span class="p">;</span>
+<span class="w">       </span><span class="nt">?body</span>
+<span class="w">     </span><span class="k">end</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">macro</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This macro lets us express <code class="docutils literal notranslate"><span class="pre">dump-inherits</span></code> as follows:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">dump-inherits</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">interface</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;IDL-interface&gt;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">dump-colon</span><span class="p">();</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">inherits</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">get-inherited</span><span class="p">(</span><span class="w"> </span><span class="nb">interface</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="n">dump-name</span><span class="p">(</span><span class="w"> </span><span class="n">inherits</span><span class="w"> </span><span class="p">)</span>
+<span class="w">  </span><span class="n">between</span>
+<span class="w">    </span><span class="n">dump-comma</span><span class="p">();</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Actually, our <code class="docutils literal notranslate"><span class="pre">for</span></code> macro interferes with the facilities of the built-in
+Dylan <code class="docutils literal notranslate"><span class="pre">for</span></code> macro more than we might wish. The new macro has deliberately
+been kept simple for the purposes of the example, and the real situation would
+require more propagation of rare syntax from our macro to the the Dylan one.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>We’ve covered some of the awkwardnesses of Java with respect to Dylan, but what
+is the point? Java is clearly here to stay isn’t it?  There’s been too much
+investment in Java to stop now hasn’t there? We don’t need another new
+programming language do we?</p>
+<p>Well, in 1995 people thought that mainstream programming language development
+had peaked with the widespread use of C++. Of course there were detractors, but
+in the main C++ was seen as the de facto standard application development
+language. On the fringes Smalltalk was gaining currency (pun intended) in
+business application areas, and other languages had their established niches
+(e.g. Common Lisp for R&amp;D).</p>
+<p>Since 1995 Java has swept aside C++ as the de facto standard programming
+language for mainstream applications. Even C shops that had not even moved to
+C++ have jumped on the Java bandwagon.</p>
+<p>But if you’re building the future at the latest e-commerce “.com” you need a
+competitive advantage over the other energetic internet businesses. Games
+developers budget on throwing away their code base every two to three
+years. Internet time is bringing that time-frame to more mainstream
+development. You don’t want to be held back by your tool, and if you are using
+the same mediocre tool as everyone else in the herd then you <em>are</em> being held
+back.</p>
+<p>Equivalently, if you are shoring up the present in a larger organisation then
+it is your duty to ensure that the systems you build are maintainable in the
+future. And you want <em>maintainable</em> to mean <em>really maintainable</em>. That means
+using a tool that lets you encode abstractions and model the domain in the
+program source, and not just hope that takes place in some surrounding cloud of
+documentation and diagrams.</p>
+<p>Ultimately, you have to ask yourself: is Java is really good enough
+for the 21st Century?</p>
+</section>
+<hr class="docutils" />
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">#</a></h2>
+<p>Thanks to Carl L. Gay, Hugh Greene, Scott McKay, and others associated
+with Functional Objects for feedback on drafts of this article.</p>
+<p>Copyright; 1999-2001 Functional Objects, Inc.
+All rights reserved.
+All product and brand names are the registered trademarks or trademarks of their respective owners.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Beyond Java?</a><ul>
+<li><a class="reference internal" href="#the-java-age">The Java Age</a></li>
+<li><a class="reference internal" href="#the-problems">The Problems</a></li>
+<li><a class="reference internal" href="#the-solutions">The Solutions</a></li>
+<li><a class="reference internal" href="#an-example">An Example</a><ul>
+<li><a class="reference internal" href="#single-implementation-inheritance">Single Implementation Inheritance</a></li>
+<li><a class="reference internal" href="#single-argument-method-dispatch">Single Argument Method Dispatch</a></li>
+<li><a class="reference internal" href="#single-argument-method-dispatch-part-ii-the-visitor-horror">Single Argument Method Dispatch (Part II : The Visitor Horror)</a></li>
+<li><a class="reference internal" href="#primitive-types-distinct-from-objects">Primitive Types Distinct From Objects</a></li>
+<li><a class="reference internal" href="#casting-required">Casting Required</a></li>
+<li><a class="reference internal" href="#no-extensible-syntax">No Extensible Syntax</a></li>
+<li><a class="reference internal" href="#poor-iteration-collection-integration">Poor Iteration/Collection Integration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>

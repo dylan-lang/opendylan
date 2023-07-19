@@ -1,0 +1,1002 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Define Function" href="dep-0002-define-function.html" /><link rel="prev" title="Dylan Enhancement Proposals" href="index.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>DEP Purpose and Guidelines - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Enhancement Proposals</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started-cli/index.html">Getting Started Guide</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/proposals/dep-0001-dep-process.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="dep-purpose-and-guidelines">
+<h1>DEP Purpose and Guidelines<a class="headerlink" href="#dep-purpose-and-guidelines" title="Permalink to this heading">#</a></h1>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>DEP Number:</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Type:</p></td>
+<td><p>Process</p></td>
+</tr>
+<tr class="row-odd"><td><p>Author:</p></td>
+<td><p>Carl Gay</p></td>
+</tr>
+<tr class="row-even"><td><p>Status:</p></td>
+<td><p>Active</p></td>
+</tr>
+<tr class="row-odd"><td><p>Created:</p></td>
+<td><p>07-Jan-2012</p></td>
+</tr>
+<tr class="row-even"><td><p>Last-Modified:</p></td>
+<td><p>16-Jan-2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>Post-History:</p></td>
+<td><p>16-Jan-2012, 10-Jan-2012</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="preamble">
+<h2>Preamble<a class="headerlink" href="#preamble" title="Permalink to this heading">#</a></h2>
+<p>This document is based heavily on Python <a class="reference external" href="https://www.python.org/dev/peps/pep-0001/">PEP 1</a>, “PEP Purpose and
+Guidelines”, by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
+author would like to thank them for providing an excellent base for
+the Dylan team to work from.</p>
+</section>
+<section id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">#</a></h2>
+<dl>
+<dt>Dylan Reference Manual (DRM)</dt><dd><p>The manual written by Andrew Shalit, plus its errata.</p>
+</dd>
+<dt>Dylan language specification</dt><dd><p>The DRM <em>plus</em> all <strong>Accepted</strong> DEPs that modify the Dylan
+language specification.</p>
+</dd>
+<dt>Open Dylan (OD)</dt><dd><p>The reference implementation of the Dylan language specification.</p>
+</dd>
+<dt>Standard libraries</dt><dd><p>The set of libraries that are officially maintained alongside Open
+Dylan.  They are officially maintained in the following sense:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Commits are reviewed for bugs and style.</p></li>
+<li><p>They are tested prior to each OD release.</p></li>
+<li><p>They are packaged with each OD release.</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</section>
+<section id="what-is-a-dep">
+<h2>What is a DEP?<a class="headerlink" href="#what-is-a-dep" title="Permalink to this heading">#</a></h2>
+<p>DEP stands for Dylan Enhancement Proposal.  A DEP is a design document
+which</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>provides information to the Dylan community, or</p></li>
+<li><p>describes a new feature for the Dylan language or its standard
+libraries, or</p></li>
+<li><p>describes changes to the processes or environment surrounding
+the Dylan language or Open Dylan.</p></li>
+</ul>
+</div></blockquote>
+<p>The DEP should provide a concise technical specification of, and
+rationale for, the feature or process.</p>
+<p>We intend DEPs to be the primary mechanism for proposing new
+features, for collecting community input on an issue, and for
+documenting the design decisions that have gone into Dylan.  The DEP
+author is responsible for building consensus within the community and
+documenting dissenting opinions.</p>
+<p>Because the DEPs are maintained as text files in a versioned
+repository, their revision history is the historical record of the
+feature proposal <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="dep-types">
+<h2>DEP Types<a class="headerlink" href="#dep-types" title="Permalink to this heading">#</a></h2>
+<p>There are three kinds of DEP:</p>
+<ol class="arabic simple">
+<li><p>A <strong>Standards Track</strong> DEP describes a new feature or implementation
+for Dylan or its standard libraries.</p></li>
+<li><p>An <strong>Informational</strong> DEP describes a Dylan design issue, or
+provides general guidelines or information to the Dylan community,
+but does not propose a new feature.  Informational DEPs do not
+necessarily represent a Dylan community consensus or
+recommendation, so users and implementors are free to ignore
+Informational DEPs or follow their advice.</p></li>
+<li><p>A <strong>Process</strong> DEP describes a process surrounding Dylan, or
+proposes a change to (or an event in) a process.  Process DEPs are
+like Standards Track DEPs but apply to areas other than the Dylan
+language itself.  They may propose an implementation, but not to
+Dylan’s codebase; they often require community consensus; unlike
+Informational DEPs, they are more than recommendations, and users
+are typically not free to ignore them.  Examples include
+procedures, guidelines, changes to the decision-making process, and
+changes to the tools or environment used in Dylan development.
+Any meta-DEP is also considered a Process DEP.</p></li>
+</ol>
+</section>
+<section id="dep-work-flow">
+<h2>DEP Work Flow<a class="headerlink" href="#dep-work-flow" title="Permalink to this heading">#</a></h2>
+<p><strong>Have an idea</strong> – The DEP process begins with a new idea for Dylan.
+It is highly recommended that a single DEP contain a <strong>single key
+proposal</strong> or new idea. Small enhancements or patches often don’t need
+a DEP and can be injected into the Dylan development work flow with a
+pull request to the issue tracker for the appropriate repository on
+GitHub. The more focused the DEP, the more successful it tends to be.
+If in doubt, split your DEP into several well-focused ones.</p>
+<p><strong>Have an author</strong> – Each DEP must have an author – someone who
+writes the DEP using the style and format described below, shepherds
+the discussions in the appropriate forums, and attempts to build
+community consensus around the idea.  The DEP author should first
+attempt to ascertain whether the idea is DEP-able.  Posting to
+<a class="reference external" href="mailto:dylan-lang&#37;&#52;&#48;googlegroups&#46;com">dylan-lang<span>&#64;</span>googlegroups<span>&#46;</span>com</a> is the best way to go about this.</p>
+<p><strong>Vet the idea publicly</strong> – Vetting an idea publicly before going as
+far as writing a DEP is meant to save the potential author time.  Many
+ideas have been brought forward for changing Dylan that have been
+rejected for various reasons. Asking the Dylan community first if an
+idea is original helps prevent too much time being spent on something
+that is guaranteed to be rejected based on prior discussions
+(searching the internet does not always do the trick). It also helps
+to make sure the idea is applicable to the entire community and not
+just the author.  Just because an idea sounds good to the author does
+not mean it will work for most people in most areas where Dylan is
+used.</p>
+<p><strong>Present a draft</strong> – Once the author has asked the Dylan community
+whether an idea has any chance of acceptance, a properly formatted
+draft DEP should be presented to <a class="reference external" href="mailto:dylan-lang&#37;&#52;&#48;googlegroups&#46;com">dylan-lang<span>&#64;</span>googlegroups<span>&#46;</span>com</a>.  The
+initial DEP status should be <strong>Draft</strong>.  The DEP author should assign
+the next available DEP number to the DEP by looking at the <a class="reference internal" href="index.html"><span class="doc">DEP
+directory</span></a> to find the highest used number.  The DEP
+number is not assured until the DEP has been committed to the <a class="reference external" href="https://github.com/dylan-lang/website/tree/master/source/proposals">origin
+Git repository</a>.
+As updates are necessary, the DEP author may commit new versions.</p>
+<p>Wait for at least ten days to receive feedback on each draft.</p>
+<p><strong>Reach consensus</strong> – We rely on reaching consensus on the
+<a class="reference external" href="mailto:dylan-lang&#37;&#52;&#48;googlegroups&#46;com">dylan-lang<span>&#64;</span>googlegroups<span>&#46;</span>com</a> mailing list.  Consensus <em>must</em> be
+reached for the DEP to be approved.  Exactly what “consensus” means
+here is left undefined, as we expect most cases to be obvious and we
+wish to keep the process informal for now.  At such time as this
+becomes a problem we may implement a more formal scheme (e.g.,
+voting).</p>
+<p>Standards Track DEPs consist of two parts, a design document and a
+reference implementation.  The DEP should be reviewed and accepted
+before a reference implementation is begun, unless a reference
+implementation will aid people in studying the DEP.  Standards Track
+DEPs must include an implementation – in the form of a Git branch URL
+– before it can be considered Final.</p>
+<p>DEP authors are responsible for collecting community feedback on a DEP
+before submitting it for review. However, wherever possible, long
+open-ended discussions on public mailing lists should be avoided.
+Strategies to keep the discussions efficient include: setting up a
+separate mailing list for the topic, having the DEP author accept
+private comments in the early design phases, setting up a wiki page,
+etc.  DEP authors should use their discretion here.</p>
+<p>For a DEP to be <strong>Accepted</strong> it must meet certain minimum criteria.  It
+must be a clear and complete description of the proposed enhancement.
+The enhancement must represent a net improvement.  The proposed
+implementation, if applicable, must be solid and must not unduly add
+complication.</p>
+<p>Once a DEP has been accepted, the reference implementation must be
+completed.  When the reference implementation is complete and accepted
+by the community, the status may be changed to <strong>Final</strong>.</p>
+<p>A DEP can also be assigned status <strong>Deferred</strong>.  The DEP author or
+editor can assign the DEP this status when no progress is being made
+on the DEP.  Once a DEP is deferred, the DEP editor can re-assign it
+to draft status.</p>
+<p>A DEP can also be <strong>Rejected</strong>.  Perhaps after all is said and done it
+was not a good idea.  It is still important to have a record of this
+fact.</p>
+<p>DEPs can also be <strong>Superseded-By</strong> a different DEP, rendering the original
+obsolete.  This is intended for Informational DEPs, where version 2 of
+an API can replace version 1.</p>
+<p>The possible paths of the status of DEPs are as follows:</p>
+<img alt="../_images/dep-0001-states.png" src="../_images/dep-0001-states.png" />
+<p>Some Informational and Process DEPs may also have a status of
+<strong>Active</strong> if they are never meant to be completed.  E.g. DEP 1 (this
+DEP).</p>
+</section>
+<section id="what-belongs-in-a-successful-dep">
+<h2>What belongs in a successful DEP?<a class="headerlink" href="#what-belongs-in-a-successful-dep" title="Permalink to this heading">#</a></h2>
+<p>Each DEP should have the following parts:</p>
+<ol class="arabic">
+<li><p>Title</p></li>
+<li><p>Preamble – RFC 822 style headers containing meta-data about the
+DEP, including the DEP number, a short descriptive title (limited
+to a maximum of 44 characters), the names, and optionally the
+contact info for each author, etc.</p></li>
+<li><p>Abstract – a short (~200 word) description of the technical issue
+being addressed.</p></li>
+<li><p>Copyright/public domain – Each DEP must either be explicitly
+labelled as placed in the public domain (see this DEP as an
+example) or licensed under the <a class="reference external" href="http://www.opencontent.org/openpub/">Open Publication License</a>.</p></li>
+<li><p>Specification – The technical specification should describe the
+syntax and semantics of any new language or library feature.  The
+specification should be detailed enough to allow competing,
+interoperable Dylan implementations.  If the DEP proposes changes
+to the language itself it <em>must</em> clearly indicate all such changes.</p></li>
+<li><p>Motivation – The motivation is critical for DEPs that want to
+change the Dylan language.  It should clearly explain why the
+existing language specification is inadequate to address the
+problem that the DEP solves.</p></li>
+<li><p>Rationale – The rationale fleshes out the specification by
+describing what motivated the design and why particular design
+decisions were made.  It should describe alternate designs that
+were considered and related work, e.g. how the feature is supported
+in other languages.</p>
+<p>The rationale should provide evidence of consensus within the
+community and discuss important objections or concerns raised
+during discussion.</p>
+</li>
+<li><p>Backwards Compatibility – All DEPs that introduce backwards
+incompatibilities must include a section describing these
+incompatibilities and their severity.  The DEP must explain how the
+author proposes to deal with these incompatibilities.</p></li>
+<li><p>Reference Implementation – The reference implementation must be
+completed before any DEP is given status “Final”, but it need not
+be completed before the DEP is accepted.  It is better to finish
+the specification and rationale first and reach consensus on it
+before writing code.</p>
+<p>The final implementation must include good test code and
+documentation.</p>
+</li>
+</ol>
+</section>
+<section id="dep-format-and-templates">
+<h2>DEP Format and Templates<a class="headerlink" href="#dep-format-and-templates" title="Permalink to this heading">#</a></h2>
+<p>DEPs must be written in <a class="reference external" href="https://web.archive.org/web/20120114014252/https://docutils.sourceforge.net/rst.html">ReStructuredText</a> format.  This allows for
+rich markup that is still quite easy to read, but results in much
+better-looking and more functional HTML.</p>
+<p>The DEP author must verify that the <a class="reference external" href="https://web.archive.org/web/20120114014252/https://docutils.sourceforge.net/rst.html">ReStructuredText</a> parses correctly.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">dylan</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">website</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">website</span>
+<span class="n">cp</span> <span class="n">your</span><span class="o">-</span><span class="n">dep</span><span class="o">.</span><span class="n">rst</span> <span class="n">source</span><span class="o">/</span><span class="n">proposals</span><span class="o">/</span><span class="n">dep</span><span class="o">-</span><span class="mf">1234.</span><span class="n">rst</span>
+<span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>Fix any errors that are displayed.</p>
+</section>
+<section id="dep-header-preamble">
+<h2>DEP Header Preamble<a class="headerlink" href="#dep-header-preamble" title="Permalink to this heading">#</a></h2>
+<p>Each DEP must begin with a title, followed by an RFC 822 style header
+preamble in simple RST table format.  The headers must appear in the
+following order.  Headers marked with “*” are optional and are
+described below.  All other headers are required.  All dates must be
+in dd-mmm-yyyy format (e.g., 14-Jan-2012).  A list of values must use
+a comma as separator.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">DEP</span><span class="o">-</span><span class="n">Number</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">DEP</span> <span class="n">number</span><span class="o">&gt;</span>
+  <span class="n">Author</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">list</span> <span class="n">of</span> <span class="n">authors</span><span class="s1">&#39; real names and optionally, email addresses&gt;</span>
+  <span class="n">Status</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Draft</span> <span class="o">|</span> <span class="n">Active</span> <span class="o">|</span> <span class="n">Accepted</span> <span class="o">|</span> <span class="n">Deferred</span> <span class="o">|</span> <span class="n">Rejected</span> <span class="o">|</span>
+           <span class="n">Withdrawn</span> <span class="o">|</span> <span class="n">Final</span> <span class="o">|</span> <span class="n">Superseded</span><span class="o">&gt;</span>
+  <span class="n">Type</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Standards</span> <span class="n">Track</span> <span class="o">|</span> <span class="n">Informational</span> <span class="o">|</span> <span class="n">Process</span><span class="o">&gt;</span>
+  <span class="n">Affects</span><span class="o">-</span><span class="n">DRM</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">No</span><span class="o">&gt;</span>
+  <span class="n">Created</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">date</span> <span class="n">created</span><span class="o">&gt;</span>
+  <span class="n">Last</span><span class="o">-</span><span class="n">Modified</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">date</span> <span class="n">last</span> <span class="n">modified</span><span class="o">&gt;</span>
+  <span class="n">Post</span><span class="o">-</span><span class="n">History</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">date</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">of</span> <span class="n">postings</span> <span class="n">to</span> <span class="n">hackers</span> <span class="nb">list</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="n">Resolution</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="n">Target</span><span class="o">-</span><span class="n">Version</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">OD</span> <span class="n">version</span> <span class="n">number</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="n">Requires</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">DEP</span> <span class="n">number</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="n">Replaces</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">DEP</span> <span class="n">number</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="n">Superseded</span><span class="o">-</span><span class="n">By</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">DEP</span> <span class="n">number</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<section id="dep-number">
+<h3>DEP Number<a class="headerlink" href="#dep-number" title="Permalink to this heading">#</a></h3>
+<p>Authors may assign DEP numbers themselves by looking at the last
+number in the <a class="reference external" href="https://opendylan.org/proposals/index.html">numerical list of DEPs</a> and incrementing it by
+one.  To prevent collisions, the author should set the <code class="docutils literal notranslate"><span class="pre">DEP-Number</span></code>
+header to “Unassigned” until just before the DEP is committed to git.</p>
+</section>
+<section id="author">
+<h3>Author<a class="headerlink" href="#author" title="Permalink to this heading">#</a></h3>
+<p>The Author header lists the names, and optionally the email addresses
+of all the authors/owners of the DEP.  The format of the Author header
+value must be</p>
+<blockquote>
+<div><p>Random J. User &lt;<a class="reference external" href="mailto:address&#37;&#52;&#48;dom&#46;ain">address<span>&#64;</span>dom<span>&#46;</span>ain</a>&gt;</p>
+</div></blockquote>
+<p>if the email address is included, and just</p>
+<blockquote>
+<div><p>Random J. User</p>
+</div></blockquote>
+<p>if the address is not given.</p>
+<p>If there are multiple authors, each should be on a separate line
+following RFC 2822 continuation line conventions.</p>
+</section>
+<section id="status">
+<h3>Status<a class="headerlink" href="#status" title="Permalink to this heading">#</a></h3>
+<p>See <a class="reference internal" href="#dep-work-flow">DEP Work Flow</a> for a description of this field.</p>
+</section>
+<section id="type">
+<h3>Type<a class="headerlink" href="#type" title="Permalink to this heading">#</a></h3>
+<p>The Type header specifies the type of DEP: Standards Track,
+Informational, or Process.</p>
+</section>
+<section id="affects-drm">
+<h3>Affects-DRM<a class="headerlink" href="#affects-drm" title="Permalink to this heading">#</a></h3>
+<p>This field is only required for Standards Track DEPs.  The value
+should be <strong>Yes</strong> if the DEP proposes a change to the Dylan language
+definition, and otherwise <strong>No</strong>.  The language definition is composed
+of the Dylan Reference Manual plus any <strong>Accepted</strong> DEPs for which
+this field is <strong>Yes</strong>.  If this field is set to <strong>Yes</strong> then the DEP
+<em>must</em> clearly list exactly how it affects the language definition.</p>
+</section>
+<section id="created">
+<h3>Created<a class="headerlink" href="#created" title="Permalink to this heading">#</a></h3>
+<p>The Created header records the date that the DEP was assigned a
+number.</p>
+</section>
+<section id="last-modified">
+<h3>Last-Modified<a class="headerlink" href="#last-modified" title="Permalink to this heading">#</a></h3>
+<p>The Last-Modified header is included because it may be useful to those
+reading DEPs without access to git.  It should be updated when
+substantive changes are made to the DEP.  It need not be updated when
+fixing typos, changed URLs, etc.</p>
+</section>
+<section id="post-history">
+<h3>Post-History<a class="headerlink" href="#post-history" title="Permalink to this heading">#</a></h3>
+<p>This field should list the dates when DEP drafts were posted to the
+hackers mailing list.  List the dates from newest to oldest.</p>
+</section>
+<section id="resolution">
+<h3>Resolution<a class="headerlink" href="#resolution" title="Permalink to this heading">#</a></h3>
+<p>The Resolution header is required for Standards Track DEPs only.  It
+contains a URL that should point to an email message or other web
+resource where the pronouncement about the DEP is made.</p>
+</section>
+<section id="target-version">
+<h3>Target-Version<a class="headerlink" href="#target-version" title="Permalink to this heading">#</a></h3>
+<p>Standards Track DEPs must have a Target-Version header which indicates
+the version of Open Dylan in which the feature will be released.
+Informational and Process DEPs do not need a Target-Version header.</p>
+</section>
+<section id="requires">
+<h3>Requires<a class="headerlink" href="#requires" title="Permalink to this heading">#</a></h3>
+<p>DEPs may have a Requires header, indicating the DEP numbers that this
+DEP depends on.</p>
+</section>
+<section id="superseded-by-and-replaces">
+<h3>Superseded-By and Replaces<a class="headerlink" href="#superseded-by-and-replaces" title="Permalink to this heading">#</a></h3>
+<p>DEPs may also have a Superseded-By header indicating that they have
+been rendered obsolete by a later document; the value is the number of
+the DEP that replaces the current document.  The newer DEP must have a
+Replaces header containing the number of the DEP that it rendered
+obsolete.</p>
+</section>
+</section>
+<section id="auxiliary-files">
+<h2>Auxiliary Files<a class="headerlink" href="#auxiliary-files" title="Permalink to this heading">#</a></h2>
+<p>DEPs may include auxiliary files such as diagrams.  Such files must be
+named <code class="docutils literal notranslate"><span class="pre">dep-XXXX-aaaa.ext</span></code>, where “XXXX” is the DEP number (padded
+with leading zeros), “aaaa” is arbitrary text to indicate the file
+content (e.g., “state-diagram”), and “ext” is replaced by the actual
+file extension (e.g. “png”).</p>
+</section>
+<section id="reporting-dep-bugs-or-submitting-dep-updates">
+<h2>Reporting DEP Bugs, or Submitting DEP Updates<a class="headerlink" href="#reporting-dep-bugs-or-submitting-dep-updates" title="Permalink to this heading">#</a></h2>
+<p>How you report a bug, or submit a DEP update depends on several
+factors, such as the maturity of the DEP, the preferences of the DEP
+author, and the nature of your comments.  For the early draft stages
+of the DEP, it’s probably best to send your comments and changes
+directly to the DEP author.  For more mature, or finished DEPs you may
+want to submit corrections to the Dylan issue tracker <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> so that your
+changes don’t get lost.  Assign the bug/patch to the DEP author.</p>
+<p>When in doubt about where to send your changes, please check first
+with the DEP author.</p>
+<p>DEP authors who are also Dylan committers can update the DEPs
+themselves committing them to Git and pushing to the main repository.</p>
+</section>
+<section id="dep-author-responsibilities-workflow">
+<h2>DEP Author Responsibilities &amp; Workflow<a class="headerlink" href="#dep-author-responsibilities-workflow" title="Permalink to this heading">#</a></h2>
+<p>A DEP author must subscribe to the &lt;<a class="reference external" href="mailto:dylan-lang&#37;&#52;&#48;googlegroups&#46;com">dylan-lang<span>&#64;</span>googlegroups<span>&#46;</span>com</a>&gt;
+list.  Before submitting a (new revision of a DEP) the author must do
+the following:</p>
+<ul class="simple">
+<li><p>Read the DEP to check if it is ready, sound, and complete.  The ideas
+must make technical sense, even if they don’t seem likely to be
+accepted.</p></li>
+<li><p>The title should accurately describe the content.</p></li>
+<li><p>Edit the DEP for language (spelling, grammar, sentence structure,
+etc.), markup, and code style.</p></li>
+</ul>
+<p>Once the DEP is ready for the repository, the DEP author will:</p>
+<ul>
+<li><p>Assign the next available DEP number.</p></li>
+<li><p>List the DEP in the DEP index (in two places: the categorized list,
+and the numeric list).</p></li>
+<li><p>Add the DEP to Git.  All DEPs live in <a class="reference external" href="https://github.com/dylan-lang/website">the website repository</a>.  The command to check
+it out is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dylan</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">website</span>
+</pre></div>
+</div>
+<p>Commit your changes, push them to your fork of the repository and
+submit a pull request.</p>
+</li>
+<li><p>Monitor <a class="reference external" href="https://opendylan.org">opendylan.org</a> to make sure the DEP
+gets added to the site properly.</p></li>
+</ul>
+<p>Resources:</p>
+<ul class="simple">
+<li><p>See the section <a class="reference external" href="https://opendylan.org/documentation/index.html">For Open Dylan Developers</a> on the opendylan.org
+documentation page.</p></li>
+</ul>
+</section>
+<section id="references-and-footnotes">
+<h2>References and Footnotes<a class="headerlink" href="#references-and-footnotes" title="Permalink to this heading">#</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This historical record is available by the normal Git commands
+for retrieving older revisions.  For those without direct access to
+Git, you can browse the current and past DEP revisions here:
+<a class="reference external" href="https://github.com/dylan-lang/website/tree/master/source/proposals">https://github.com/dylan-lang/website/tree/master/source/proposals</a></p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Which issue tracker to use will depend on the content of the
+DEP.  For language changes, changes to Open Dylan, or changes to
+“core” libraries it will usually be <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">opendylan</a>.  For other
+libraries there may be a separate repository and issue tracker.
+This is still in flux.  When in doubt, ask in IRC on the #dylan
+channel or on the hackers list.</p>
+</aside>
+</aside>
+</section>
+<section id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">#</a></h2>
+<p>This document has been placed in the public domain.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="dep-0002-define-function.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Define Function</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Dylan Enhancement Proposals</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">DEP Purpose and Guidelines</a><ul>
+<li><a class="reference internal" href="#preamble">Preamble</a></li>
+<li><a class="reference internal" href="#terminology">Terminology</a></li>
+<li><a class="reference internal" href="#what-is-a-dep">What is a DEP?</a></li>
+<li><a class="reference internal" href="#dep-types">DEP Types</a></li>
+<li><a class="reference internal" href="#dep-work-flow">DEP Work Flow</a></li>
+<li><a class="reference internal" href="#what-belongs-in-a-successful-dep">What belongs in a successful DEP?</a></li>
+<li><a class="reference internal" href="#dep-format-and-templates">DEP Format and Templates</a></li>
+<li><a class="reference internal" href="#dep-header-preamble">DEP Header Preamble</a><ul>
+<li><a class="reference internal" href="#dep-number">DEP Number</a></li>
+<li><a class="reference internal" href="#author">Author</a></li>
+<li><a class="reference internal" href="#status">Status</a></li>
+<li><a class="reference internal" href="#type">Type</a></li>
+<li><a class="reference internal" href="#affects-drm">Affects-DRM</a></li>
+<li><a class="reference internal" href="#created">Created</a></li>
+<li><a class="reference internal" href="#last-modified">Last-Modified</a></li>
+<li><a class="reference internal" href="#post-history">Post-History</a></li>
+<li><a class="reference internal" href="#resolution">Resolution</a></li>
+<li><a class="reference internal" href="#target-version">Target-Version</a></li>
+<li><a class="reference internal" href="#requires">Requires</a></li>
+<li><a class="reference internal" href="#superseded-by-and-replaces">Superseded-By and Replaces</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#auxiliary-files">Auxiliary Files</a></li>
+<li><a class="reference internal" href="#reporting-dep-bugs-or-submitting-dep-updates">Reporting DEP Bugs, or Submitting DEP Updates</a></li>
+<li><a class="reference internal" href="#dep-author-responsibilities-workflow">DEP Author Responsibilities &amp; Workflow</a></li>
+<li><a class="reference internal" href="#references-and-footnotes">References and Footnotes</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>

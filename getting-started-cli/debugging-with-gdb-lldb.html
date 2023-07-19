@@ -1,0 +1,968 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Notes for Windows Users" href="windows.html" /><link rel="prev" title="Dylan Interactor Mode for Emacs (DIME)" href="dylan-mode-for-emacs.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
+        <title>Debugging with GDB or LLDB - Open Dylan</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Open Dylan</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/opendylan-light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/opendylan-dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/documentation/example.html">Example documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime/startup.html">Startup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Learning</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html">Tour of Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of Tour of Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/hello_world.html">Hello, World!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/everything_value.html">Everything is a value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/classes.html">Classes &amp; Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/generic_functions.html">Generic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/getters_setters_functions.html">Getters &amp; Setters are functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/keyword_arguments.html">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/limited_types.html">Limited Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/macros.html">Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/examples/multiple_return_values.html">Multiple Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Getting Started Guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of Getting Started Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html">Hello World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source-registries.html">Using Source Registries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managing-dependencies.html">Managing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-tips.html">A Few More Quick Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dylan-compiler.html">Using dylan-compiler interactively</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dylan-environment.html">An example of dylan-environment interactive functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="editor-support.html">Editor Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dylan-mode-for-emacs.html">Dylan Interactor Mode for Emacs (DIME)</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Debugging with GDB or LLDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">Notes for Windows Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment-variables.html">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross-compilation.html">Cross Compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform-specific.html">Platform Specific Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/dylan/threads.html">The threads Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/io/standard-io.html">The standard-io Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library-reference/system/operating-system.html">The operating-system Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/objects.html">Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/multiple-dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/modules-libraries.html">Modules &amp; Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/conditions.html">Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-setup.html">Setting up the Bank Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-idl.html">Writing and Compiling IDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-client.html">The Bank Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/bank-server.html">The Bank Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/projects.html">Creating CORBA Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/rundebug.html">Running and Debugging CORBA Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/scepter.html">Using the Dylan IDL Compiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/dcs.html">DUIM-DCs Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/sheets.html">DUIM-Sheets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/graphics.html">DUIM-Graphics Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/layouts.html">DUIM-Layouts Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/gadgets.html">DUIM-Gadgets Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/frames.html">DUIM-Frames Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/model.html">Programming in Open Dylan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/projects.html">Creating and Using Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/browsing.html">Learning More About an Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/debug.html">Debugging and Interactive Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/remotedbg.html">Remote Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/coloring.html">Dispatch Optimization Coloring in the Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/delivery.html">Delivering Dylan Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/editopt.html">The Interactive Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/com-projects.html">Creating COM Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2019.1.html">Open Dylan 2019.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2014.1.html">Open Dylan 2014.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.2.html">Open Dylan 2013.2 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2013.1.html">Open Dylan 2013.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2012.1.html">Open Dylan 2012.1 Release Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2011.1.html">Open Dylan 2011.1 Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/getting-started-cli/debugging-with-gdb-lldb.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="debugging-with-gdb-or-lldb">
+<h1>Debugging with GDB or LLDB<a class="headerlink" href="#debugging-with-gdb-or-lldb" title="Permalink to this heading">#</a></h1>
+<section id="which-compiler-back-end-are-you-using">
+<h2>Which compiler back-end are you using?<a class="headerlink" href="#which-compiler-back-end-are-you-using" title="Permalink to this heading">#</a></h2>
+<p>LLVM is the default compiler back-end on all platforms except for NetBSD and
+ARM Linux. On those platforms the C back-end is the default. On Windows the
+HARP back-end is used.</p>
+<p>We recommend that you read this entire document, since the GDB- and
+LLDB-specific parts are short and may be skipped over as needed. (In other
+words, this document needs some reorganization which has not yet happened.)</p>
+<p>If you’re using the HARP back-end (32 bit Linux, 32 bit FreeBSD, or Windows),
+then you’ll be limited to getting stack traces.</p>
+</section>
+<section id="debugging-with-the-c-back-end">
+<h2>Debugging with the C Back-end<a class="headerlink" href="#debugging-with-the-c-back-end" title="Permalink to this heading">#</a></h2>
+<p>Debugging with the C back-end is not a perfect experience but it is
+improving.</p>
+<section id="finding-the-generated-c-files">
+<h3>Finding the generated C files<a class="headerlink" href="#finding-the-generated-c-files" title="Permalink to this heading">#</a></h3>
+<p>The C files generated by the compiler may be found under the
+<code class="docutils literal notranslate"><span class="pre">_build/build</span></code> directory with a directory in there for each
+library that was built as part of the project.</p>
+</section>
+<section id="finding-the-corresponding-dylan-code">
+<h3>Finding the corresponding Dylan code<a class="headerlink" href="#finding-the-corresponding-dylan-code" title="Permalink to this heading">#</a></h3>
+<p>The generated C files contain the file name and line number of the
+corresponding Dylan source. However, this may be confusing in the
+presence of inlined functions and macro expansions.</p>
+</section>
+<section id="understanding-name-mangling">
+<h3>Understanding name mangling<a class="headerlink" href="#understanding-name-mangling" title="Permalink to this heading">#</a></h3>
+<p>Dylan identifiers (method and variable names) do not follow the same
+rules as C; they are case insensitive, can contain extra characters
+such as ‘&lt;’ or ‘-’, and are part of the two-level namespace (module
+and library). There is a process, known as ‘mangling’, to turn Dylan
+identifiers into valid C identifiers. The reverse process is called
+demangling. C++ also mangles its variable and function names, for the
+same reason. When debugging, backtraces and frame summaries will show
+the mangled names rather than the Dylan names. An outline of the
+mangling rules is as follows:</p>
+<ul class="simple">
+<li><p>Convert identifier to lower case</p></li>
+<li><p>Replace incompatible symbols.
+For example, <code class="docutils literal notranslate"><span class="pre">-</span></code> becomes <code class="docutils literal notranslate"><span class="pre">_</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> becomes <code class="docutils literal notranslate"><span class="pre">L</span></code>.</p></li>
+<li><p>Repeat for module and library identifiers</p></li>
+<li><p>Join them like this: <code class="docutils literal notranslate"><span class="pre">K</span></code> identifier <code class="docutils literal notranslate"><span class="pre">Y</span></code> module <code class="docutils literal notranslate"><span class="pre">V</span></code> library.</p></li>
+<li><p>If it is a method, append a suffix starting with <code class="docutils literal notranslate"><span class="pre">M</span></code> to distinguish the
+specific methods within a generic function.</p></li>
+</ul>
+<p>There are a number of extra cases to shorten the mangled name. The
+<code class="docutils literal notranslate"><span class="pre">Y</span></code> and module name are omitted if the module name is the same as
+the library. For modules in the Dylan library, the sequence
+<code class="docutils literal notranslate"><span class="pre">YmoduleVdylan</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">VKmodule</span></code> and some modules have
+short names, for example <code class="docutils literal notranslate"><span class="pre">i</span></code> is the ‘internal’ module.</p>
+<p>Following these rules, method <code class="docutils literal notranslate"><span class="pre">format-err</span></code> in the <code class="docutils literal notranslate"><span class="pre">format-out</span></code>
+module of the <code class="docutils literal notranslate"><span class="pre">io</span></code> library becomes
+<code class="docutils literal notranslate"><span class="pre">Kformat_errYformat_outVioMM0I</span></code>.</p>
+<p>For full details, see <a class="reference external" href="https://opendylan.org/documentation/hacker-guide/runtime/mangling.html?highlight=mangling">the Hacker’s guide</a>.</p>
+</section>
+<section id="understanding-stack-traces">
+<h3>Understanding stack traces<a class="headerlink" href="#understanding-stack-traces" title="Permalink to this heading">#</a></h3>
+<p>Let’s look at part of a representative stack trace:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#0  0x92b41b06 in read$NOCANCEL$UNIX2003 ()
+#1  0x0042c509 in Kunix_readYio_internalsVioI ()
+#2  0x000bc8e7 in xep_4 ()
+#3  0x0042ba99 in Kaccessor_read_intoXYstreams_internalsVioMM0I ()
+#4  0x000c0805 in key_mep_6 ()
+#5  0x000c43a4 in implicit_keyed_single_method_engine_4 ()
+#6  0x000c1dd5 in gf_optional_xep_4 ()
+#7  0x004139fb in Kload_bufferYstreams_internalsVioI ()
+#8  0x0041334a in Kdo_next_input_bufferYstreamsVioMM1I ()
+#9  0x000c04ab in key_mep_4 ()
+#10 0x000c3eaf in implicit_keyed_single_method_engine_1 ()
+#11 0x0040520f in Kread_lineYstreamsVioMM0I ()
+#12 0x000c0321 in key_mep_3 ()
+#13 0x000c3eaf in implicit_keyed_single_method_engine_1 ()
+#14 0x0079dcf6 in Kcommand_line_loopYcommand_linesVenvironment_commandsMM0I ()
+#15 0x000bf6b3 in rest_key_xep_5 ()
+#16 0x00007abe in Kdo_execute_commandVcommandsMdylan_compilerM0I ()
+#17 0x000bb9bb in primitive_engine_node_apply_with_optionals ()
+#18 0x0002b9ba in Khandle_missed_dispatchVKgI ()
+#19 0x0002aaef in KPgf_dispatch_absentVKgI ()
+#20 0x000c25e8 in general_engine_node_n_engine ()
+#21 0x004b19a8 in Kexecute_commandVcommandsMM0I ()
+#22 0x000bb9bb in primitive_engine_node_apply_with_optionals ()
+#23 0x0002b9ba in Khandle_missed_dispatchVKgI ()
+#24 0x0002aaef in KPgf_dispatch_absentVKgI ()
+#25 0x000c25e8 in general_engine_node_n_engine ()
+#26 0x000c11ab in gf_xep_1 ()
+#27 0x0000aa9e in KmainYconsole_environmentVdylan_compilerI ()
+#28 0x0000abb3 in _Init_dylan_compiler__X_start_for_user ()
+</pre></div>
+</div>
+<p>Some things to notice:</p>
+<ul class="simple">
+<li><p>Method dispatch takes up the bulk of the stack frames with function calls
+like <code class="docutils literal notranslate"><span class="pre">gf_xep_1</span></code>, <code class="docutils literal notranslate"><span class="pre">general_engine_node_n_engine</span></code>, <code class="docutils literal notranslate"><span class="pre">rest_key_xep_5</span></code>,
+<code class="docutils literal notranslate"><span class="pre">key_mep_4</span></code>, <code class="docutils literal notranslate"><span class="pre">xep_4</span></code>, <code class="docutils literal notranslate"><span class="pre">implicit_keyed_single_method_engine_1</span></code> and
+so on.</p></li>
+<li><p>Methods representing Dylan code are mangled as discussed in a section
+above.</p></li>
+<li><p>It may seem alarming to see methods like <code class="docutils literal notranslate"><span class="pre">KPgf_dispatch_absentVKgI</span></code>
+or <code class="docutils literal notranslate"><span class="pre">Khandle_missed_dispatchVKgI</span></code> (where did dispatch go?!?). These
+function calls indicate that the dispatch data for a method hadn’t
+been set up yet as this is the first invocation of that method.
+The method dispatch data is set up lazily, so this is normal and
+expected.</p></li>
+<li><p>There isn’t any information on arguments or what file and line
+number contains the corresponding code. This means that you don’t
+have the debug data for the compiler around. An easy way to
+address this is to build your own copy of the compiler.</p></li>
+</ul>
+</section>
+<section id="breaking-on-main">
+<h3>Breaking on main<a class="headerlink" href="#breaking-on-main" title="Permalink to this heading">#</a></h3>
+<p>Unfortunately, you can’t simply set a breakpoint on <code class="docutils literal notranslate"><span class="pre">main</span></code>. This is because
+the generated code runs from shared library constructor functions so the
+entire Dylan application runs and exits prior to <code class="docutils literal notranslate"><span class="pre">main</span></code> being invoked.</p>
+<p>A reasonable alternative is to determine the C name of your entry point
+function and set a breakpoint on that instead.</p>
+</section>
+<section id="debugging-with-lldb">
+<h3>Debugging with LLDB<a class="headerlink" href="#debugging-with-lldb" title="Permalink to this heading">#</a></h3>
+<p>If you are using LLDB, there is a helper script provided. Start LLDB with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dylan</span><span class="o">-</span><span class="n">lldb</span> <span class="p">[</span><span class="n">args</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This will import the Dylan support library from <code class="docutils literal notranslate"><span class="pre">/path/to/opendylan/share/opendylan/lldb/dylan</span></code>.
+Any LLDB arguments can be specified, as normal.</p>
+<p>The support library provides some extra commands and specialized
+summarizers for commonly-encountered Dylan objects.</p>
+<p>Note that if you’re using the Boehm GC, which is the default on Unix systems,
+it is necessary to tell <code class="docutils literal notranslate"><span class="pre">lldb</span></code> not to stop on the signals used by the GC.
+Which signals are used varies depending on the platform. For Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">process</span> <span class="n">handle</span> <span class="o">-</span><span class="n">p</span> <span class="n">yes</span> <span class="o">-</span><span class="n">s</span> <span class="n">no</span> <span class="o">-</span><span class="n">n</span> <span class="n">no</span> <span class="n">SIGPWR</span>
+<span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">process</span> <span class="n">handle</span> <span class="o">-</span><span class="n">p</span> <span class="n">yes</span> <span class="o">-</span><span class="n">s</span> <span class="n">no</span> <span class="o">-</span><span class="n">n</span> <span class="n">no</span> <span class="n">SIGXCPU</span>
+</pre></div>
+</div>
+<p>For FreeBSD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">process</span> <span class="n">handle</span> <span class="o">-</span><span class="n">p</span> <span class="n">yes</span> <span class="o">-</span><span class="n">s</span> <span class="n">no</span> <span class="o">-</span><span class="n">n</span> <span class="n">no</span> <span class="n">SIGUSR1</span>
+<span class="p">(</span><span class="n">lldb</span><span class="p">)</span> <span class="n">process</span> <span class="n">handle</span> <span class="o">-</span><span class="n">p</span> <span class="n">yes</span> <span class="o">-</span><span class="n">s</span> <span class="n">no</span> <span class="o">-</span><span class="n">n</span> <span class="n">no</span> <span class="n">SIGUSR2</span>
+</pre></div>
+</div>
+<p>On macOS (Darwin) Boehm GC doesn’t use any signals.</p>
+<p>The command <code class="docutils literal notranslate"><span class="pre">dylan-bt</span></code> prints a Dylan-friendly backtrace by
+stripping out all frames which refer to internal runtime functions,
+leaving only Dylan code. For example, a backtrace like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(lldb) bt
+* thread #1, name = &#39;Main thread&#39;, stop reason = signal SIGTRAP
+  * frame #0: 0x00007ffff7dacb21 libdylan.so`primitive_invoke_debugger at x86_64-linux-runtime.ll:0
+    frame #1: 0x00007ffff7d43da9 libdylan.so`invoke-debugger(condition=&lt;unavailable&gt;, .next=&lt;unavailable&gt;, .function=&lt;unavailable&gt;) at boot.dylan:1041:3
+    frame #2: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+    frame #3: 0x00007ffff7d52bc2 libdylan.so`default-handler(condition=&lt;unavailable&gt;, .next=&lt;unavailable&gt;, .function=&lt;unavailable&gt;) at condition.dylan:140:3
+    frame #4: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+    frame #5: 0x00007ffff7f7ee5d libcommon-dylan.so`default-last-handler(condition=&lt;unavailable&gt;, next-handler=0x00000000004e19b0, .next=&lt;unavailable&gt;, .function=&lt;unavailable&gt;) at common-extensions.dylan:448:3
+    frame #6: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+    frame #7: 0x00007ffff7d52743 libdylan.so`error(condition=&lt;unavailable&gt;, noise=&lt;unavailable&gt;, .next=&lt;unavailable&gt;, .function=&lt;unavailable&gt;) at condition.dylan:125:3
+    frame #8: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+    frame #9: 0x00007ffff7d52716 libdylan.so`error(string=&lt;unavailable&gt;, arguments=&lt;unavailable&gt;, .next=&lt;unavailable&gt;, .function=&lt;unavailable&gt;) at condition.dylan:154:3
+    frame #10: 0x00007ffff7fb0214 libdebugging.so`bar(name=&lt;unavailable&gt;, .next=&lt;unavailable&gt;, .function=&lt;unavailable&gt;) at debugging.dylan:22:3
+    frame #11: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+    frame #12: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+    frame #13: 0x00007ffff7fb0252 libdebugging.so`_Init_debugging__X_debugging_for_user + 34
+    frame #14: 0x0000000000401149 debugging`main + 25
+    frame #15: 0x00007ffff763b09b libc.so.6`__libc_start_main(main=(debugging`main), argc=1, argv=0x00007fffffffe858, init=&lt;unavailable&gt;, fini=&lt;unavailable&gt;, rtld_fini=&lt;unavailable&gt;, stack_end=0x00007fffffffe848) at libc-start.c:308:16
+    frame #16: 0x000000000040106a debugging`_start + 42
+</pre></div>
+</div>
+<p>becomes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(lldb) dylan-bt
+  frame #1    invoke-debugger        0x007ffff7d43da9 libdylan.so at boot.dylan:1041
+  frame #3    default-handler        0x007ffff7d52bc2 libdylan.so at condition.dylan:140
+  frame #5    default-last-handler   0x007ffff7f7ee5d libcommon-dylan.so at common-extensions.dylan:448
+  frame #7    error                  0x007ffff7d52743 libdylan.so at condition.dylan:125
+  frame #9    error                  0x007ffff7d52716 libdylan.so at condition.dylan:154
+  frame #10   bar                    0x007ffff7fb0214 libdebugging.so at debugging.dylan:22
+</pre></div>
+</div>
+<p>The command <code class="docutils literal notranslate"><span class="pre">dylan-break-gf</span></code> will set a breakpoint on all specific
+methods of a given generic function.  The generic function needs to be
+specified as <code class="docutils literal notranslate"><span class="pre">name:module:library</span></code>, for example
+<code class="docutils literal notranslate"><span class="pre">format-err:format-out:io</span></code>.  Note that the functions may not be
+known until they are loaded, so it is necessary to run the program
+first, otherwise the message ‘No generic function XXX was found.’ will
+be shown.</p>
+<p>The second purpose of the helper script is to show Dylan objects in a
+more intuitive fashion. LLDB on its own will show most Dylan objects
+as plain hex values, for example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(dylan_value) T33 = 0x0000000100d38060
+(dylan_value) T35_0 = 0x00007ffeefbfe360
+(dylan_value) Ustream_ = 0x0000000000000001
+</pre></div>
+</div>
+<p>With the helper, extra information is added to the right:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(dylan_value) T33 = 0x0000000100c38060 {&lt;symbol&gt;: #&quot;libraries-test-suite-app&quot;}
+(dylan_value) T35_0 = 0x00007ffeefbfe370 {&lt;simple-object-vector&gt;: size: 1}
+(dylan_value) Ustream_ = 0x0000000000000001 {&lt;integer&gt;: 0}
+</pre></div>
+</div>
+<p>The summarizer support has to be added on a class-by-class basis, so
+some objects will show only the class name without further detail.
+Because LLDB was principally a C debugger, some concepts such as
+pointers need to be considered. Given a Dylan class like:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;element&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
+<span class="w"> </span><span class="nb">slot</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
+<span class="w"> </span><span class="nb">slot</span><span class="w"> </span><span class="n">content</span><span class="p">;</span>
+<span class="w"> </span><span class="nb">slot</span><span class="w"> </span><span class="n">attrs</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>LLDB will print an instance without any detail, because a
+<code class="docutils literal notranslate"><span class="pre">dylan_value</span></code> is seen as a pointer which is not dereferenced by
+default:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(lldb) frame variable div_
+(dylan_value) div_ = 0x00005555556232d0 {&lt;element&gt;}
+</pre></div>
+</div>
+<p>However, using the <code class="docutils literal notranslate"><span class="pre">-P</span></code> option to <code class="docutils literal notranslate"><span class="pre">frame</span> <span class="pre">variable</span></code> shows the slot names and contents:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(lldb) frame variable -P 1 div_
+(dylan_value) div_ = 0x00005555556232d0 {&lt;element&gt;} {
+[tag] = 0x00007ffff7fcd8f0 {&lt;byte-string&gt;: size: 3, data: &quot;div&quot;}
+[content] = 0x00005555556232a0 {&lt;simple-object-vector&gt;: size: 3}
+[attrs] = 0x0000555555629a40 {&lt;object-table&gt;}
+</pre></div>
+</div>
+<p>Increasing the value of the <code class="docutils literal notranslate"><span class="pre">-P</span></code> option shows additional levels of detail:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(lldb) frame variable -P 2 div_
+(dylan_value) div_ = 0x00005555556232d0 {&lt;element&gt;} {
+  [tag] = 0x00007ffff7fcd8f0 {&lt;byte-string&gt;: size: 3, data: &quot;div&quot;}
+  [content] = 0x00005555556232a0 {&lt;simple-object-vector&gt;: size: 3} {
+    [0] = 0x00007ffff7fcd8d0 {&lt;byte-string&gt;: size: 1, data: &quot;a&quot;}
+    [1] = 0x0000555555623300 {&lt;element&gt;}
+    [2] = 0x00007ffff7fcd8b0 {&lt;byte-string&gt;: size: 5, data: &quot;world&quot;}
+  }
+  [attrs] = 0x0000555555629a40 {&lt;object-table&gt;} {
+    [element-type] = 0x00007ffff7e976e0 {&lt;class&gt;: &lt;object&gt;}
+    [table-vector] = 0x000055555562c700 {&lt;table-vector&gt;}
+    [initial-entries] = 0x0000000000000029 {&lt;integer&gt;: 10}
+    [grow-size-function] = 0x00007ffff7f39d20 {&lt;simple-method&gt;}
+    [weak?] = 0x00007ffff7e97590 {&lt;boolean&gt;: #f}
+  }
+}
+</pre></div>
+</div>
+</section>
+<section id="inspecting-dylan-objects-in-gdb">
+<h3>Inspecting Dylan objects in GDB<a class="headerlink" href="#inspecting-dylan-objects-in-gdb" title="Permalink to this heading">#</a></h3>
+<p>We do not yet have support for Dylan in GDB as we do for LLDB.</p>
+<p>The C runtime contains a number of helper functions specifically for
+improving the debugging process. These can be invoked from gdb or lldb
+and will assist you in analyzing values.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_object_class">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_object_class</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_object_class" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the class instance for the given instance object.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_boolean_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_boolean_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_boolean_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_true_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_true_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_true_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is <code class="docutils literal notranslate"><span class="pre">#t</span></code>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_float_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_float_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_float_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <code class="docutils literal notranslate"><span class="pre">&lt;float&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_single_float_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_single_float_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_single_float_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_single_float_data">
+<span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_single_float_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_single_float_data" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">float</span></code> data stored in the instance.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_double_float_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_double_float_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_double_float_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_double_float_data">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_double_float_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_double_float_data" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">double</span></code> data stored in the instance.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_symbol_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_symbol_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_symbol_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_symbol_name">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_symbol_name</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_symbol_name" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the string form of the given symbol.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_pair_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_pair_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_pair_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#pair"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_empty_list_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_empty_list_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_empty_list_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is an empty list.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_head">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_head</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_head" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the head of the given <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#pair"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code></a> instance.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_tail">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_tail</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_tail" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the tail of the given <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#pair"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code></a> instance.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_vector_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_vector_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_vector_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_string_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_string_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_string_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_string_data">
+<span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">dylan_string_data</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_string_data" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the C string data stored in the given instance.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_simple_condition_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_simple_condition_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_simple_condition_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <code class="docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_simple_condition_format_string">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_simple_condition_format_string</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_simple_condition_format_string" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the format string stored in the given <code class="docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_simple_condition_format_args">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_simple_condition_format_args</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_simple_condition_format_args" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the format string arguments stored in the given
+<code class="docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_class_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_class_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_class_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Type_Classes#class"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;class&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_class_debug_name">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_class_debug_name</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_class_debug_name" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> object containing the class’s name.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_function_p">
+<span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_function_p</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_function_p" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Tests whether instance is a <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_function_debug_name">
+<span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_function_debug_name</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">instance</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_function_debug_name" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Returns the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> object containing the function’s name.
+Note that we do not store the name for all function objects.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.dylan_print_object">
+<span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dylan_print_object</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">D</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.dylan_print_object" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Print some information about the given object to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="debugging-with-the-harp-back-end">
+<h2>Debugging with the HARP back-end<a class="headerlink" href="#debugging-with-the-harp-back-end" title="Permalink to this heading">#</a></h2>
+<p>As mentioned previously, this is largely limited to getting stack
+traces.  If you try to run a Dylan application built with the
+HARP back-end under the debugger, you may need to adjust your
+debugger’s signal handling as the Memory Pool System GC that is
+used employs the <code class="docutils literal notranslate"><span class="pre">SIGSEGV</span></code> signal.</p>
+<p>To do this on Linux and FreeBSD in gdb, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">handle</span> <span class="n">SIGSEGV</span> <span class="k">pass</span> <span class="n">nostop</span> <span class="n">noprint</span>
+</pre></div>
+</div>
+<p><em>Add more notes about this later.</em></p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="windows.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Notes for Windows Users</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="dylan-mode-for-emacs.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Dylan Interactor Mode for Emacs (DIME)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2011-2023, Dylan Hackers
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Debugging with GDB or LLDB</a><ul>
+<li><a class="reference internal" href="#which-compiler-back-end-are-you-using">Which compiler back-end are you using?</a></li>
+<li><a class="reference internal" href="#debugging-with-the-c-back-end">Debugging with the C Back-end</a><ul>
+<li><a class="reference internal" href="#finding-the-generated-c-files">Finding the generated C files</a></li>
+<li><a class="reference internal" href="#finding-the-corresponding-dylan-code">Finding the corresponding Dylan code</a></li>
+<li><a class="reference internal" href="#understanding-name-mangling">Understanding name mangling</a></li>
+<li><a class="reference internal" href="#understanding-stack-traces">Understanding stack traces</a></li>
+<li><a class="reference internal" href="#breaking-on-main">Breaking on main</a></li>
+<li><a class="reference internal" href="#debugging-with-lldb">Debugging with LLDB</a></li>
+<li><a class="reference internal" href="#inspecting-dylan-objects-in-gdb">Inspecting Dylan objects in GDB</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugging-with-the-harp-back-end">Debugging with the HARP back-end</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>
