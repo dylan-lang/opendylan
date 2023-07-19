@@ -4,6 +4,22 @@ News
 
 Significant events in the Open Dylan space...
 
+
+Release 2023.1
+==============
+
+**2023-07-19** Release 2023.1 is now available! A few highlights...
+
+* Updated versions of LLVM and the BDW garbage collector.
+* New ``"""multi-line"""`` and ``#r"raw"`` string literals (`DEP 12
+  <../proposals/dep-0012-string-literals.rst>`_).
+* The :doc:`dylan <../package/dylan-tool/index>` tool continues to evolve with
+  a new, simplified workspace model.
+* Bug fixes for json, command-line-parser, system, and others.
+
+See the `release notes <../release-notes/2023.1.rst>`_ for more details.
+
+
 New website
 ===========
 

@@ -2,12 +2,12 @@
 Install Open Dylan
 ******************
 
-The current version is **Open Dylan 2022.1**, released 28 November, 2022.
+The current version is **Open Dylan 2023.1**.
 
 Unix Platforms
 ==============
 
-➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2022.1.0>`_
+➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2023.1.0>`_
 
 Note that Unix versions only have a command-line compiler and not the full IDE that is
 available on Windows, although there is some integration with VS Code and Emacs.
@@ -26,7 +26,7 @@ Windows
 Open Dylan for Windows is currently a 32-bit application that runs under the WOW64 x86
 emulator on Windows 10 64-bit machines.
 
-➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2022.1.0>`_
+➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2023.1.0>`_
 
 For installation, double-click on the installer, and follow instructions.  You
 need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
