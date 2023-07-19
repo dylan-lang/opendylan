@@ -25,43 +25,12 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/building-with-duim"
+      #
+      # Build documentation installing first 'furo' theme dependencies
+      #
 
       - uses: ammaraskar/sphinx-action@master
         with:
-          docs-folder: "documentation/corba-guide"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/duim-reference"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/getting-started-ide"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/hacker-guide"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/intro-dylan"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/library-reference"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/man-pages"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/release-notes"
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/style-guide"
+          pre-build-command: "echo furo >> documentation/website/requirements.txt"
+          docs-folder: "documentation/website"
 
