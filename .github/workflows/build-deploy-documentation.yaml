@@ -26,141 +26,17 @@ jobs:
           submodules: recursive
 
       #
-      # Building with Duim
+      # Build documentation installing first 'furo' theme dependencies
       #
 
       - uses: ammaraskar/sphinx-action@master
         with:
-          docs-folder: "documentation/building-with-duim"
+          pre-build-command: "echo furo >> documentation/website/requirements.txt"
+          docs-folder: "documentation/website"
 
-      - name: Deploy Building with Duim
+      - name: Deploy documents to GH pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: documentation/building-with-duim/build/html
-          target-folder: building-with-duim
+          folder: documentation/website/build/html
 
-      #
-      # Corba guide
-      #
 
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/corba-guide"
-
-      - name: Deploy Corba Guide
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/corba-guide/build/html
-          target-folder: corba-guide
-
-      #
-      # Duim reference
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/duim-reference"
-
-      - name: Deploy Duim Reference
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/duim-reference/build/html
-          target-folder: duim-reference
-
-      #
-      # Getting started IDE
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/getting-started-ide"
-
-      - name: Deploy Getting started IDE
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/getting-started-ide/build/html
-          target-folder: getting-started-ide
-
-      #
-      # Hacker guide
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/hacker-guide"
-
-      - name: Deploy Hacker Guide
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/hacker-guide/build/html
-          target-folder: hacker-guide
-
-      #
-      # Intro Dylan
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/intro-dylan"
-
-      - name: Deploy Intro Dylan
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/intro-dylan/build/html
-          target-folder: intro-dylan
-
-      #
-      # Library reference
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/library-reference"
-
-      - name: Deploy Library Reference
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/library-reference/build/html
-          target-folder: library-reference
-
-      #
-      # Man pages
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/man-pages"
-
-      - name: Deploy Man pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/man-pages/build/html
-          target-folder: man-pages
-
-      #
-      # Release notes
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/release-notes"
-
-      - name: Deploy Release notes
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/release-notes/build/html
-          target-folder: release-notes
-
-      #
-      # Style guide
-      #
-
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "documentation/style-guide"
-
-      - name: Style Guide
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: documentation/style-guide/build/html
-          target-folder: style-guide
