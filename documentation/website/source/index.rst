@@ -31,7 +31,7 @@ If you want to play around without having to install anything, try out the
 `Playground`_. It has a fixed set of imports so you don't have to worry about
 how to define libraries and modules right away.
 
-Then maybe try one of these more in-depth guides:
+Then move on to one of these in-depth guides:
 
 * :doc:`intro-dylan/index` provides a high-level overview of language
   features.
