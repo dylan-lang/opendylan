@@ -224,9 +224,8 @@ define integer-sign-adjust abs;
 define method \^
     (base :: <integer>, power :: <integer>) => (res :: <rational>)
   if (negative?(power))
-    //---*** THIS IS WRONG AS / ISN'T DEFINED FOR <integer>!
-    //1 / (base ^ -power)
-    error("Negative powers are unimplemented")
+    error("for '%d ^ %d': negative powers are undefined for integers because division"
+            " is undefined for integers. Use floats instead?", base, power);
   elseif (base = 2)
     ash(1, power)
   elseif (negative?(base))
