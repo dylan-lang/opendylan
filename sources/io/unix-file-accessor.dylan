@@ -161,9 +161,10 @@ define method accessor-write-from
      return-fresh-buffer? = #f)
  => (nwritten :: <integer>, new-buffer :: <buffer>)
   let buffer :: <buffer> = buffer | stream-output-buffer(stream);
+  let fd :: <integer> = accessor.file-descriptor;
   iterate loop (offset :: <integer> = offset, count :: <integer> = count)
     let nwritten :: <integer>
-      = unix-write(accessor.file-descriptor, buffer, offset, count);
+      = unix-write(fd, buffer, offset, count);
     if (nwritten < 0)
       unix-error("write");
     else

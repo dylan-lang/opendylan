@@ -57,7 +57,7 @@ define function unix-read
 end function unix-read;
 
 define function unix-write
-    (fd :: <integer>, data, offset :: <integer>, count :: <integer>) => (result :: <integer>)
+    (fd :: <integer>, data :: <buffer>, offset :: <integer>, count :: <integer>) => (result :: <integer>)
   with-interrupt-repeat
     raw-as-integer
       (%call-c-function ("write")
