@@ -139,14 +139,14 @@ The Rectangle Rule
   rectangle, containing all of that subtree’s text and none of any other
   subtree’s.
 
-To conform to that rule, multi-line string literals need special treatment of
-leading whitespace. In the following two examples the programmer wants to
-ensure that there's no leading whitespace on any line in the resulting string
-literal token:
+To permit (but not require) Dylan source code to conform to that rule,
+multi-line string literals need special treatment of leading whitespace. In the
+following two examples the programmer wants to ensure that there is no leading
+whitespace on any line in the resulting string literal token:
 
 .. code-block:: dylan
    :linenos:
-   :caption: Without the Rectangle Rule
+   :caption: Without support for the Rectangle Rule
    :emphasize-lines: 3,4,5
 
    define method foo ()
@@ -164,20 +164,21 @@ the highlighted lines, harming readability due to violating the Rectangle Rule.
 .. code-block:: dylan
    :linenos:
    :emphasize-lines: 3,4,5,6
-   :caption: With the Rectangle Rule
+   :caption: With support for the Rectangle Rule
 
    define method foo ()
      let text = """
-           bits on the wire
-           protocols well understood
-           where did my mail go?
-           """;
+                bits on the wire
+                protocols well understood
+                where did my mail go?
+                """;
      ...
    end method;
 
-Here, the ``\n`` after the opening delimiter is removed and leading whitespace
-is removed from the highlighted lines in the resulting string literal token, so
-they may be moved (as a unit) left or right without affecting the result.
+Here, the ``\n`` (and any other whitespace) after the opening delimiter is
+removed and leading whitespace is removed from the highlighted lines in the
+resulting string literal token, so they may be moved (as a unit) left or right
+without affecting the result.
 
 To achieve this we adopt the techniques used for `raw strings in C#
 <https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#raw-string-literals>`_.
