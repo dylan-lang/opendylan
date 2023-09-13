@@ -431,10 +431,6 @@ define method read
   end
 end method read;
 
-//---*** andrewa: this is a bad name, since this isn't meant to know about
-//---*** multi-buffered-streams!
-define variable *multi-buffer-bytes* :: <integer> = 0;
-
 define method read-into!
     (stream :: <buffered-stream>, n :: <integer>, seq :: <mutable-sequence>,
      #key start :: <integer> = 0, on-end-of-stream = unsupplied())
@@ -444,7 +440,6 @@ define method read-into!
     with-input-buffer (sb = stream)
       let e :: <integer> = start + n;
       // Fill in the result sequence
-      *multi-buffer-bytes* := *multi-buffer-bytes* + n;
       iterate loop (i :: <integer> = start, sb :: false-or(<buffer>) = sb)
         if (sb & (i < e))
           let sb :: <buffer> = sb;

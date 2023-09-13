@@ -55,11 +55,6 @@ define inline function buffer-map-entry-deposit-empty
   logbit-deposit(~v, 0, bme)
 end function;
 
-define inline function buffer-map-entry-dirty?
-    (bme :: <buffer-map-entry>) => (res :: <boolean>)
-  logbit?(1, bme)
-end function;
-
 define inline function buffer-map-entry-deposit-dirty
     (v :: <boolean>, bme :: <buffer-map-entry>)
   logbit-deposit(v, 1, bme)
@@ -316,9 +311,6 @@ define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
     = if (buffer-map-entry-empty?(map-entry))
         let buffer-index =
           preempt-buffer(the-stream, the-position, wait?: wait?, bytes: bytes);
-        unless (buffer-map-entry-dirty?(map-entry))
-          *multi-buffer-working-set* := *multi-buffer-working-set* + 1;
-        end unless;
         buffer-map[buffer-map-index]
           := buffer-map-entry-deposit-index(buffer-index, map-entry);
         buffer-index
@@ -357,42 +349,6 @@ define function grow-buffer-map
     end unless;
   end iterate;
 end function;
-
-define function multi-buffer-total-bytes () => (res :: <integer>)
-  *multi-buffer-bytes*
-end function;
-
-define variable *multi-buffer-reads* :: <integer> = 0;
-
-define function multi-buffer-total-reads () => (res :: <integer>)
-  *multi-buffer-reads*
-end function;
-
-define variable *multi-buffer-working-set* :: <integer> = 0;
-
-define function multi-buffer-total-working-set () => (res :: <integer>)
-  *multi-buffer-working-set*
-end function;
-
-define method multi-buffer-reads (stream :: <multi-buffered-stream>) => (res :: <integer>)
-  // TODO
-  multi-buffer-total-reads()
-end method;
-
-define method multi-buffer-bytes (stream :: <multi-buffered-stream>) => (res :: <integer>)
-  // TODO
-  multi-buffer-total-bytes()
-end method;
-
-define method multi-buffer-working-set (stream :: <multi-buffered-stream>) => (res :: <integer>)
-  let count :: <integer> = 0;
-  for (map-entry in stream.buffer-map)
-    when (buffer-map-entry-dirty?(map-entry))
-      count := count + 1;
-    end when;
-  end for;
-  count
-end method;
 
 // Find an empty buffer slot or else preempt an existing buffer, load the
 // buffer from the underlying file and return the index of buffer in the
@@ -485,7 +441,6 @@ define function preempt-buffer
     load-buffer-and-fill(the-stream, the-buffer, new-buffer-position, start,
                          the-size);
   end if;
-  *multi-buffer-reads* := *multi-buffer-reads* + 1;
   the-buffer.buffer-position := new-buffer-position;
   the-buffer.buffer-start := 0;
   the-buffer.buffer-dirty? := #f;
@@ -831,7 +786,6 @@ define function read-4-aligned-bytes
      byte-4 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
-      *multi-buffer-bytes* := *multi-buffer-bytes* + 4;
       let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 4;
@@ -852,7 +806,6 @@ define function read-8-aligned-bytes
      byte-7 :: <integer>, byte-8 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
-      *multi-buffer-bytes* := *multi-buffer-bytes* + 8;
       let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 8;
