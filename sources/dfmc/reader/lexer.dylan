@@ -861,8 +861,9 @@ end method hex-escape-character;
 define method decode-string
     (source-location :: <lexer-source-location>, bpos :: <integer>,
      epos :: <integer>, escapes? :: <boolean>)
- => (string :: <byte-string>)
+ => (string :: <byte-string>, multi-line? :: <boolean>)
   let contents = source-location.source-location-record.contents;
+  let multi-line? = #f;
   local
     method skip-hex-escape (pos)
       // TODO(cgay): signal better error if '>' not found.
@@ -903,9 +904,11 @@ define method decode-string
               loop(new-position, len + 1, #f, string);
             end if;
           as(<integer>, '\r') =>
+            multi-line? := #t;
             string & (string[len] := '\n');
             loop(pos + 1, len + 1, #t, string);
           as(<integer>, '\n') =>
+            multi-line? := #t;
             let increment = if (prev-was-cr?)
                               0 // already stored a LF
                             else
@@ -922,8 +925,55 @@ define method decode-string
   let length = loop(bpos, 0, #f, #f);
   let string = make(<string>, size: length);
   loop(bpos, 0, #f, string);
-  string
+  values(string, multi-line?)
 end method decode-string;
+
+// https://opendylan.org/proposals/dep-0012-string-literals.html#the-rectangle-rule
+//
+// When this is called `string` is known to contain at least one literal newline
+// character, the EOL sequence has already been canonicalized to just '\n', escape
+// sequences have been processed, and the start/end delimiters have been removed.
+define function trim-multi-line-prefix
+    (string :: <string>) => (maybe-trimmed :: <string>)
+  let lines = split(string, '\n');
+  let junk = first(lines);
+  let prefix = last(lines);
+  if (~empty?(junk) & ~whitespace?(junk))
+    error("invalid multi-line string literal - only whitespace may"
+            " follow the start delimiter \"\"\" on the same line");
+  end;
+  if (~empty?(prefix) & ~whitespace?(prefix))
+    error("invalid multi-line string literal - only whitespace may"
+            " precede the end delimiter \"\"\" on the same line");
+  end;
+  local method remove-prefix (line)
+          if (line = "")
+            line
+          elseif (~starts-with?(line, prefix))
+            error("invalid multi-line string literal - each line must begin"
+                    " with the same whitespace that precedes the end"
+                    " delimiter (got %=, want %=)",
+                  copy-sequence(line, end: prefix.size), prefix);
+          else
+            copy-sequence(line, start: prefix.size)
+          end
+        end method;
+  select (lines.size)
+    1 => error("compiler bug while trimming multi-line string prefix");
+    2 => "";
+    otherwise =>
+      let keep = copy-sequence(lines, start: 1, end: lines.size - 1);
+      let trimmed = map(remove-prefix, keep);
+      if (every?(empty?, trimmed))
+        // If all lines are empty the last line needs to be handled specially because of
+        // the exceptional case of ``abc\n"""`` (where we don't want the final newline)
+        // vs ``\n\n"""`` (where we do want the final newline).
+        join(concatenate(trimmed, #("")), "\n")
+      else
+        join(trimmed, "\n")
+      end
+  end select
+end function;
 
 // Make a <literal-token> when confronted with the #"foo" syntax.
 // These are referred to as "unique strings" in the DRM Lexical Syntax.
@@ -1119,7 +1169,11 @@ define method %make-string-literal
  => (res :: <string-fragment>)
   let bpos = source-location.start-posn + start-offset;
   let epos = source-location.end-posn - end-offset;
-  let string = decode-string(source-location, bpos, epos, allow-escapes?);
+  let (string, multi-line?)
+    = decode-string(source-location, bpos, epos, allow-escapes?);
+  if (multi-line?)
+    string := trim-multi-line-prefix(string);
+  end;
   make(<string-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,

@@ -12,6 +12,7 @@ define library dfmc-reader
   use dfmc-common;
   use dfmc-conditions;
   use source-records;
+  use strings;
   export dfmc-reader;
 end library dfmc-reader;
 
@@ -29,6 +30,7 @@ define module dfmc-reader
   use dfmc-imports;
   use dfmc-conditions;
   use source-records;
+  use strings;
 
   //// Token classes used externally.
 
