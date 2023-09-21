@@ -113,9 +113,10 @@ define method display-help
     end;
   end;
   format(stream,
-         "For documentation on a group, use:    HELP %sGROUP group.\n"
-         "For documentation on a command, use:  HELP command\n"
-         "For a complete list of commands, use: SHOW COMMANDS\n"
+         "For documentation on a group, use:      HELP %sGROUP group.\n"
+         "For documentation on a command, use:    HELP command\n"
+         "For a complete list of commands, use:   SHOW COMMANDS\n"
+         "For a complete list of properties, use: SHOW PROPERTIES\n"
          "\n"
          "For full documentation, see %sdocumentation/\n"
          "For a guide to the command line tools, see %sdocumentation/getting-started-cli/\n",
