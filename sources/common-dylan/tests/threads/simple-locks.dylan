@@ -11,7 +11,7 @@ define constant *print-lock* = make(<lock>);
 
 define method format-l (#rest args)
   with-lock (*print-lock*)
-    apply(format-out, args);
+    apply(test-output, args);
   end with-lock;
 end method;
 
