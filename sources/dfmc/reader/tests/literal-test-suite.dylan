@@ -224,39 +224,224 @@ define test string-literal-test ()
   assert-signals(<invalid-token>, read-fragment(#:string:{"\1<b>"}));
 end test;
 
-define test string-literal-multi-line-test ()
-  let f = read-fragment(#:string:{""""""});
-  verify-literal(f, "", <string-fragment>);
+// verify multi-line string
+define function verify-mls
+    (name, source, want)
+  assert-no-errors(read-fragment(source), "%s - parses without error", name);
+  let frag = read-fragment(source);
+  assert-instance?(<string-fragment>, frag, "%s - is string fragment", name);
+  assert-equal(frag.fragment-value, want, "%s - has expected value", name);
+end function;
+
+define test string-literal-one-line-test ()
+  verify-mls("empty string", #:string:{""""""}, "");
+
   // Make sure the reader didn't stop at the first pair of double quotes...
-  let source = source-location-string(fragment-source-location(f));
-  assert-equal(#:string:{""""""}, source);
+  let empty-string-fragment = read-fragment(#:string:{""""""});
+  assert-equal(#:string:{""""""},
+               source-location-string(fragment-source-location(empty-string-fragment)),
+               "entire empty string consumed");
 
-  verify-literal(read-fragment(#:string:{"""abc"""}),  "abc", <string-fragment>);
-  verify-literal(read-fragment(#:string:{"""a\nc"""}), "a\nc", <string-fragment>);
+  verify-mls("simple abc",
+             #:string:{"""abc"""},  "abc");
+  verify-mls("abc with spaces",
+             #:string:{""" abc """},  " abc ");
+end test;
 
-  // EOL canonicalization
-  verify-literal(read-fragment("\"\"\"a\nc\"\"\""),   "a\nc", <string-fragment>);
-  verify-literal(read-fragment("\"\"\"a\r\nc\"\"\""), "a\nc", <string-fragment>);
-  verify-literal(read-fragment("\"\"\"a\rc\"\"\""),   "a\nc", <string-fragment>);
-  verify-literal(read-fragment("\"\"\"a\n\rc\"\"\""), "a\n\nc", <string-fragment>);
+define test string-literal-multi-line-test ()
+  verify-mls("multi-line empty string, no prefix",
+             #:string:{"""
+"""},
+             "");
+  verify-mls("multi-line empty string, with prefix",
+             #:string:{"""
+"""},
+             "");
+  verify-mls("multi-line one blank line, no prefix",
+             #:string:{"""
+
+"""},
+             "\n");
+  verify-mls("leading whitespace relative to end delim retained",
+             #:string:{"""
+  abc
+def
+"""},
+             "  abc\ndef");
+  verify-mls("end delim to right of start delim",
+             #:string:{"""
+                           abc
+                         def
+                         """},
+             "  abc\ndef");
+  verify-mls("whitespace on first line ignored?", // 0x20 = space
+             #:string:{"""\<20>\<20>
+  abc
+def
+"""},
+             "  abc\ndef");
+  // The first blank line below is truly empty and the second one has only the prefix
+  // (written as \<20> to avoid editors removing trailing whitespace).
+  verify-mls("blank lines retained",
+             #:string:{"""
+
+   def
+\<20>\<20>\<20>
+   """},
+             "\ndef\n");
+  assert-signals(<error>,
+                 read-fragment(#:string:{"""a  (only whitespace allowed after start delim)
+abc
+"""}),
+                 "junk on first line");
+  assert-signals(<error>,
+                 read-fragment(#:string:{"""
+abc
+xxx"""}),
+                  "junk on last line");
+  assert-signals(<error>,
+                 read-fragment(#:string:{"""
+   abc
+  xxx  (this line not indented enough)
+   """}),
+                 "prefix mismatch non-white");
+  // Prefix should be "   " but one line has a literal tab in prefix.
+  /* TODO: the literal tab causes a failure due (I presume) to
+           https://github.com/dylan-lang/opendylan/issues/425
+  check-condition("prefix mismatch whitespace",
+                  <error>,
+                  read-fragment("\"\"\"\n   aaa\n \t bbb\n   \"\"\""));
+  */
+
+  // Check that CRLF and CR are converted to LF.
+  verify-mls("eol canonicalized 1",
+             "\"\"\"\na\r\nc\n\"\"\"",
+             "a\nc");
+  verify-mls("eol canonicalized 2",
+             "\"\"\"\na\rc\n\"\"\"",
+             "a\nc");
+  verify-mls("eol canonicalized 3",
+             "\"\"\"\r\na\n\rc\r\n\"\"\"",
+             "a\n\nc");
 
   let char = curry(as, <character>);
-  // One of every escape sequence. "\a\b\e\f\n\r\t\0\'\"\\"
-  verify-literal(read-fragment(#:string:{"""\a\b\e\f\n\r\t\0\'\"\\"""}),
-                 map-as(<string>, char, #('\a', '\b', '\e', '\f', '\n', '\r',
-                                          '\t', '\0', '\'', '\"', '\\')),
-                 <string-fragment>);
-  // Basic hex escaping.
-  verify-literal(read-fragment(#:string:{"""z\<9f>z"""}),
-                 map-as(<string>, char, #('z', #x9f, 'z')),
-                 <string-fragment>);
+  verify-mls("all escape sequences",
+             #:string:{"""\a\b\e\f\n\r\t\0\'\"\\"""},
+             map-as(<string>, char,
+                    #('\a', '\b', '\e', '\f', '\n', '\r', '\t', '\0', '\'', '\"', '\\')));
+  verify-mls("basic hex escaping",
+             #:string:{"""z\<9f>z"""},
+             map-as(<string>, char, #('z', #x9f, 'z')));
   // We can't handle character codes > 255 yet, but the leading zeros shouldn't
   // confuse the reader.
-  verify-literal(read-fragment(#:string:{"""z\<009f>z"""}),
-                 map-as(<string>, char, #('z', #x9f, 'z')),
-                 <string-fragment>);
+  verify-mls("hex escape with leading zeros",
+             #:string:{"""z\<009f>z"""},
+             map-as(<string>, char, #('z', #x9f, 'z')));
 
-  assert-signals(<invalid-token>, read-fragment(#:string:{"""\1<b>"""}));
+  assert-signals(<invalid-token>,
+                 read-fragment(#:string:{"""\1<b>"""}),
+                 "invalid escape sequence");
+
+  verify-mls("one line",
+             #:string:{
+"""
+abc
+"""},
+                  "abc");
+  verify-mls("one line with prefix",
+             #:string:{
+  """
+  abc
+  """},
+             "abc");
+  verify-mls("two lines",
+             #:string:{
+"""
+abc
+def
+"""},
+             "abc\ndef");
+  verify-mls("two lines with prefix",
+             #:string:{
+  """
+  abc
+  def
+  """},
+             "abc\ndef");
+  verify-mls("empty line at start",
+             #:string:{
+"""
+
+abc
+"""},
+             "\nabc");
+  verify-mls("two empty lines at start",
+             #:string:{
+"""
+
+
+abc
+"""},
+             "\n\nabc");
+  verify-mls("one empty line",
+             #:string:{
+"""
+
+"""},
+             "\n");
+  verify-mls("one empty line with prefix",
+             #:string:{
+  """
+\<20>\<20>
+  """},
+             "\n");
+  verify-mls("empty line at end",
+             #:string:{
+"""
+abc
+
+"""},
+             "abc\n");
+  verify-mls("two empty lines at end",
+             #:string:{
+"""
+abc
+
+
+"""},
+                  "abc\n\n");
+  verify-mls("empty lines at start and end",
+             #:string:{
+"""
+
+abc
+
+"""},
+             "\nabc\n");
+  verify-mls("two empty lines",
+             #:string:{
+"""
+
+
+"""},
+             "\n\n");
+  verify-mls("three empty lines",
+             #:string:{
+"""
+
+
+
+"""},
+             "\n\n\n");
+  verify-mls("three empty lines at end",
+             #:string:{
+"""
+abc
+
+
+
+"""},
+             "abc\n\n\n");
 end test;
 
 define test string-literal-raw-one-line-test ()
@@ -362,6 +547,7 @@ define suite literal-test-suite ()
   test pair-literal-test;
   test ratio-literal-test;
   test string-literal-multi-line-test;
+  test string-literal-one-line-test;
   test string-literal-raw-multi-line-test;
   test string-literal-raw-one-line-test;
   test string-literal-test;
