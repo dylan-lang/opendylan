@@ -52,11 +52,8 @@ define method test-collection-class
   if (instantiable?)
     test-collection("pair(1, #())", pair(1, #()));
     test-collection("pair(1, pair(2, #()))", pair(1, pair(2, #())));
-    //--- These are likely to crash so make them a unit
-    with-test-unit ("Non-list <pair> tests")
-      test-collection("pair(1, 2)", pair(1, 2));
-      test-collection("pair(1, pair(2, 3))", pair(1, pair(2, 3)));
-    end
+    test-collection("pair(1, 2)", pair(1, 2));
+    test-collection("pair(1, pair(2, 3))", pair(1, pair(2, 3)));
   end
 */
 end method test-collection-class;

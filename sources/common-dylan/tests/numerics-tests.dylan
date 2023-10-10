@@ -140,8 +140,7 @@ define not-inline function store-float (x :: <float>) => (the-x :: <float>)
   *temp*;
 end function;
 
-// TODO(cgay): separate into multiple tests instead with-test-unit, which is a no-op.
-define test test-float-radix ()
+define test test-float-radix-single-float ()
   // Based on the algorithm in:
   //   Malcolm, M. A. Algorithms to reveal properties of floating-point
   //   arithmetic. Comm. ACM 15, 11 (Nov. 1972), 949-951.
@@ -152,51 +151,49 @@ define test test-float-radix ()
   //   Comm. ACM 17, 5 (May 1974), 276-277.
   //   http://doi.acm.org/10.1145/360980.361003
 
-  with-test-unit ("float-radix on <single-float>")
-    // Test successive powers of two until we find the first one in
-    // the region where integers are no longer exactly representable
-    let a :: <single-float>
-      = for (a :: <single-float> = 1.0s0 then a + a,
-             while: store-float(store-float(a + 1.0s0) - a) = 1.0s0)
-        finally
-          a
-        end for;
-    // Add successive powers of two to a until we find the successor
-    // floating point number beyond a; a and its successor differ by
-    // beta
-    let ibeta :: <integer>
-      = for (b :: <single-float> = 1.0s0 then b + b,
-             while: zero?(store-float(store-float(a + b) - a)))
-        finally
-          floor(store-float(store-float(a + b) - a))
-        end;
+  // Test successive powers of two until we find the first one in
+  // the region where integers are no longer exactly representable
+  let a :: <single-float>
+    = for (a :: <single-float> = 1.0s0 then a + a,
+           while: store-float(store-float(a + 1.0s0) - a) = 1.0s0)
+      finally
+        a
+      end for;
+  // Add successive powers of two to a until we find the successor
+  // floating point number beyond a; a and its successor differ by
+  // beta
+  let ibeta :: <integer>
+    = for (b :: <single-float> = 1.0s0 then b + b,
+           while: zero?(store-float(store-float(a + b) - a)))
+      finally
+        floor(store-float(store-float(a + b) - a))
+      end;
 
-    check-equal("float-radix for <single-float> matches ibeta",
-                ibeta, float-radix(1.0s0));
-  end with-test-unit;
+  check-equal("float-radix for <single-float> matches ibeta",
+              ibeta, float-radix(1.0s0));
+end test;
 
-  with-test-unit ("float-radix on <double-float>")
-    // Test successive powers of two until we find the first one in
-    // the region where integers are no longer exactly representable
-    let a :: <double-float>
-      = for (a :: <double-float> = 1.0d0 then a + a,
-             while: store-float(store-float(a + 1.0d0) - a) = 1.0d0)
-        finally
-          a
-        end for;
-    // Add successive powers of two to a until we find the successor
-    // floating point number beyond a; a and its successor differ by
-    // beta
-    let ibeta :: <integer>
-      = for (b :: <double-float> = 1.0d0 then b + b,
-             while: zero?(store-float(store-float(a + b) - a)))
-        finally
-          floor(store-float(store-float(a + b) - a))
-        end;
+define test test-float-radix-double-float ()
+  // Test successive powers of two until we find the first one in
+  // the region where integers are no longer exactly representable
+  let a :: <double-float>
+    = for (a :: <double-float> = 1.0d0 then a + a,
+           while: store-float(store-float(a + 1.0d0) - a) = 1.0d0)
+      finally
+        a
+      end for;
+  // Add successive powers of two to a until we find the successor
+  // floating point number beyond a; a and its successor differ by
+  // beta
+  let ibeta :: <integer>
+    = for (b :: <double-float> = 1.0d0 then b + b,
+           while: zero?(store-float(store-float(a + b) - a)))
+      finally
+        floor(store-float(store-float(a + b) - a))
+      end;
 
-    check-equal("float-radix for <double-float> matches ibeta",
-                ibeta, float-radix(1.0d0));
-  end with-test-unit;
+  check-equal("float-radix for <double-float> matches ibeta",
+              ibeta, float-radix(1.0d0));
 end test;
 
 define test test-float-digits ()
@@ -215,78 +212,76 @@ define test test-float-precision ()
               float-precision(1.0d0), float-digits(1.0d0));
 end test;
 
-// TODO(cgay): separate into multiple tests instead with-test-unit, which is a no-op.
-define test test-decode-float ()
+define test test-decode-single-float-radix ()
   let single-beta :: <single-float> = as(<single-float>, float-radix(1.0s0));
+  let (significand :: <single-float>,
+       exponent :: <integer>,
+       sign :: <single-float>) = decode-float(single-beta);
+  check-equal("significand for <single-float> radix = 1 / radix",
+              1.0s0 / single-beta, significand);
+  check-equal("exponent for <single-float> radix = 2",
+              2, exponent);
+  check-equal("sign for <single-float> radix = 1.0s0",
+              1.0s0, sign);
+end test;
 
-  with-test-unit ("decode-float of <single-float> radix")
-    let (significand :: <single-float>,
-         exponent :: <integer>,
-         sign :: <single-float>) = decode-float(single-beta);
-    check-equal("significand for <single-float> radix = 1 / radix",
-                1.0s0 / single-beta, significand);
-    check-equal("exponent for <single-float> radix = 2",
-                2, exponent);
-    check-equal("sign for <single-float> radix = 1.0s0",
-                1.0s0, sign);
-  end with-test-unit;
+define test test-decode-single-float-subnormal ()
+  let single-beta :: <single-float> = as(<single-float>, float-radix(1.0s0));
+  let single-subnormal :: <single-float> = encode-single-float(as(<machine-word>, #x1));
+  let (significand :: <single-float>,
+       exponent :: <integer>,
+       sign :: <single-float>) = decode-float(single-subnormal);
+  check-equal("significand for <single-float> subnormal = 1 / radix",
+              1.0s0 / single-beta, significand);
+  check-equal("exponent for <single-float> subnormal = -148",
+              -148, exponent);
+  check-equal("sign for <single-float> subnormal = 1.0s0",
+              1.0s0, sign);
+end test;
 
-  with-test-unit ("decode-float of <single-float> subnormal")
-    let single-subnormal :: <single-float> = encode-single-float(as(<machine-word>, #x1));
-    let (significand :: <single-float>,
-         exponent :: <integer>,
-         sign :: <single-float>) = decode-float(single-subnormal);
-    check-equal("significand for <single-float> subnormal = 1 / radix",
-                1.0s0 / single-beta, significand);
-    check-equal("exponent for <single-float> subnormal = -148",
-                -148, exponent);
-    check-equal("sign for <single-float> subnormal = 1.0s0",
-                1.0s0, sign);
-  end with-test-unit;
-
+define test test-decode-double-float-radix ()
   let double-beta :: <double-float> = as(<double-float>, float-radix(1.0d0));
+  let (significand :: <double-float>,
+       exponent :: <integer>,
+       sign :: <double-float>) = decode-float(double-beta);
+  check-equal("significand for <double-float> radix = 1 / radix",
+              1.0d0 / double-beta, significand);
+  check-equal("exponent for <double-float> radix = 2",
+              2, exponent);
+  check-equal("sign for <double-float> radix = 1.0d0",
+              1.0d0, sign);
+end test;
 
-  with-test-unit ("decode-float of <double-float> radix")
-    let (significand :: <double-float>,
-         exponent :: <integer>,
-         sign :: <double-float>) = decode-float(double-beta);
-    check-equal("significand for <double-float> radix = 1 / radix",
-                1.0d0 / double-beta, significand);
-    check-equal("exponent for <double-float> radix = 2",
-                2, exponent);
-    check-equal("sign for <double-float> radix = 1.0d0",
-                1.0d0, sign);
-  end with-test-unit;
-
-  with-test-unit ("decode-float of <double-float> subnormal")
-    let double-subnormal :: <double-float> =
-      encode-double-float(as(<machine-word>, #x1),
+define test test-decode-double-float-subnormal ()
+  let double-beta :: <double-float> = as(<double-float>, float-radix(1.0d0));
+  let double-subnormal :: <double-float>
+    = encode-double-float(as(<machine-word>, #x1),
                           as(<machine-word>, #x0));
-    let (significand :: <double-float>,
-         exponent :: <integer>,
-         sign :: <double-float>) = decode-float(double-subnormal);
-    check-equal("significand for <double-float> subnormal = 1 / radix",
-                1.0d0 / double-beta, significand);
-    check-equal("exponent for <double-float> subnormal = -1073",
-                -1073, exponent);
-    check-equal("sign for <double-float> subnormal = 1.0d0",
-                1.0d0, sign);
-  end with-test-unit;
-  with-test-unit ("decode-float of <double-float> negative subnormal")
-    let double-subnormal :: <double-float> =
-      encode-double-float(as(<machine-word>, #x0),
-                          as(<machine-word>, #x80000001));
-    let (significand :: <double-float>,
-         exponent :: <integer>,
-         sign :: <double-float>) = decode-float(double-subnormal);
-    check-equal("significand for <double-float> negative subnormal = 1 / radix",
-                1.0d0 / double-beta, significand);
-    check-equal("exponent for <double-float> negative subnormal = -1041",
-                -1041, exponent);
-    check-equal("sign for <double-float> negative subnormal = -1.0d0",
-                -1.0d0, sign);
-  end with-test-unit;
+  let (significand :: <double-float>,
+       exponent :: <integer>,
+       sign :: <double-float>) = decode-float(double-subnormal);
+  check-equal("significand for <double-float> subnormal = 1 / radix",
+              1.0d0 / double-beta, significand);
+  check-equal("exponent for <double-float> subnormal = -1073",
+              -1073, exponent);
+  check-equal("sign for <double-float> subnormal = 1.0d0",
+              1.0d0, sign);
+end test;
 
+define test test-decode-double-float-negative-subnormal ()
+  let double-beta :: <double-float> = as(<double-float>, float-radix(1.0d0));
+  let double-subnormal :: <double-float>
+    = encode-double-float(as(<machine-word>, #x0),
+                          as(<machine-word>, #x80000001));
+  let (significand :: <double-float>,
+       exponent :: <integer>,
+       sign :: <double-float>) = decode-float(double-subnormal);
+  check-equal("significand for <double-float> negative subnormal = 1 / radix",
+              1.0d0 / double-beta, significand);
+  check-equal("exponent for <double-float> negative subnormal = -1041",
+              -1041, exponent);
+  check-equal("sign for <double-float> negative subnormal = -1.0d0",
+              -1.0d0, sign);
 end test;
 
 define test test-scale-float ()
@@ -351,10 +346,15 @@ define suite common-dylan-numerics-test-suite ()
   test test-<arithmetic-underflow-error>;
   test test-<division-by-zero-error>;
   test test-classify-float;
-  test test-decode-float;
+  test test-decode-single-float-radix;
+  test test-decode-single-float-subnormal;
+  test test-decode-double-float-radix;
+  test test-decode-double-float-subnormal;
+  test test-decode-double-float-negative-subnormal;
   test test-float-digits;
   test test-float-precision;
-  test test-float-radix;
+  test test-float-radix-single-float;
+  test test-float-radix-double-float;
   test test-integer-length;
   test test-scale-float;
 end suite;
