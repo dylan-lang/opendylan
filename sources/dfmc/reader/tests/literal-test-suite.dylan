@@ -289,17 +289,17 @@ def
 \<20>\<20>\<20>
    """},
              "\ndef\n");
-  assert-signals(<error>,
+  assert-signals(<invalid-multi-line-string-literal>,
                  read-fragment(#:string:{"""a  (only whitespace allowed after start delim)
 abc
 """}),
                  "junk on first line");
-  assert-signals(<error>,
+  assert-signals(<invalid-multi-line-string-literal>,
                  read-fragment(#:string:{"""
 abc
 xxx"""}),
                   "junk on last line");
-  assert-signals(<error>,
+  assert-signals(<invalid-multi-line-string-literal>,
                  read-fragment(#:string:{"""
    abc
   xxx  (this line not indented enough)
