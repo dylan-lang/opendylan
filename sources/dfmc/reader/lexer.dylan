@@ -934,26 +934,36 @@ end method decode-string;
 // character, the EOL sequence has already been canonicalized to just '\n', escape
 // sequences have been processed, and the start/end delimiters have been removed.
 define function trim-multi-line-prefix
-    (string :: <string>) => (maybe-trimmed :: <string>)
+    (string :: <string>, source-location) => (maybe-trimmed :: <string>)
   let lines = split(string, '\n');
   let junk = first(lines);
   let prefix = last(lines);
   if (~empty?(junk) & ~whitespace?(junk))
-    error("invalid multi-line string literal - only whitespace may"
-            " follow the start delimiter \"\"\" on the same line");
+    note(<invalid-multi-line-string-literal>,
+         source-location: source-location,
+         token-string: extract-string(source-location),
+         detail:
+           "only whitespace may follow the start delimiter \"\"\" on the same line");
   end;
   if (~empty?(prefix) & ~whitespace?(prefix))
-    error("invalid multi-line string literal - only whitespace may"
-            " precede the end delimiter \"\"\" on the same line");
+    note(<invalid-multi-line-string-literal>,
+         source-location: source-location,
+         token-string: extract-string(source-location),
+         detail:
+           "only whitespace may precede the end delimiter \"\"\" on the same line");
   end;
   local method remove-prefix (line)
           if (line = "")
             line
           elseif (~starts-with?(line, prefix))
-            error("invalid multi-line string literal - each line must begin"
-                    " with the same whitespace that precedes the end"
-                    " delimiter (got %=, want %=)",
-                  copy-sequence(line, end: prefix.size), prefix);
+            note(<invalid-multi-line-string-literal>,
+                 source-location: source-location,
+                 token-string: extract-string(source-location),
+                 detail:
+                   format-to-string
+                   ("each line must begin with the same whitespace that precedes the end"
+                      " delimiter (got %=, want %=)",
+                    copy-sequence(line, end: prefix.size), prefix));
           else
             copy-sequence(line, start: prefix.size)
           end
@@ -1172,7 +1182,7 @@ define method %make-string-literal
   let (string, multi-line?)
     = decode-string(source-location, bpos, epos, allow-escapes?);
   if (multi-line?)
-    string := trim-multi-line-prefix(string);
+    string := trim-multi-line-prefix(string, source-location);
   end;
   make(<string-fragment>,
        record: source-location.source-location-record,

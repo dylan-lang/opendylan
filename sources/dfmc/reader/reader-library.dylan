@@ -71,6 +71,7 @@ define module dfmc-reader
         <integer-too-large>,
         <character-code-too-large>,
         <ratios-not-supported>,
+        <invalid-multi-line-string-literal>,
       <invalid-end-of-input>,
       <parser-error>,
       <manual-parser-error>,
