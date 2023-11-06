@@ -82,7 +82,7 @@ define function tool-name-from-specification
   //---*** andrewa: bootstrapping nastiness, only the first should be necessary
   if (extsym == #"spec" | extsym == #".spec")
     // Read the header of the file:
-    let h = read-keyword-pair-file(spec-file);
+    let h = read-file-header(spec-file);
     let tool = element(h, origin:, default: #());
     if (tool.size ~= 1)
       tool-error("specification file must contain a single \"origin:\" "

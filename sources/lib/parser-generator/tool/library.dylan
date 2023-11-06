@@ -8,6 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library tool-parser-generator
   use dylan;
   use common-dylan;
+  use file-source-records;
   use io;
   use system;
   use tools-interface;

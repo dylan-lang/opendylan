@@ -9,6 +9,7 @@ define module tool-parser-generator
   use common-dylan;
   use simple-debugging, import: { debug-out };
   use date;
+  use file-source-records;
   use file-system;
   use format;
   use streams;

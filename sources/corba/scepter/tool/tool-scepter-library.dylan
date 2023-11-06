@@ -9,6 +9,7 @@ define library tool-scepter
   use dylan;
   use common-dylan;
   use collections;
+  use file-source-records;
   use system;
   use io;
   use tools-interface;

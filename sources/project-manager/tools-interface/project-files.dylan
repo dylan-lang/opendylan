@@ -134,8 +134,8 @@ end function read-project-file;
 // Read a project file from a stream.
 
 define function read-project-from-stream
-    (s :: <stream>) => (p :: <project-information>, version :: <integer>)
-  let t :: <table> = read-keyword-pair-stream(s, 1);
+    (stream :: <stream>) => (p :: <project-information>, version :: <integer>)
+  let t :: <table> = read-header-from-stream(stream);
   let error? :: <boolean> = #f;
   let keyval = keyword-file-element-value;
   let keyline = keyword-file-element-line;
@@ -303,115 +303,3 @@ define function write-keyword-pair-stream (s :: <stream>, keys :: <table>) => ()
     end if;
   end for;
 end function write-keyword-pair-stream;
-
-
-define function read-keyword-pair-file
-    (file :: type-union(<string>, <locator>))
- => (keys :: <table>)
-  let handler <tool-warning-condition> = tool-warning-add-file-handler(file);
-  with-open-file (stream = file, direction: #"input")
-    read-keyword-pair-stream(stream, 1)
-  end
-end function read-keyword-pair-file;
-
-
-define function read-keyword-pair-stream
-    (s :: <stream>, first-line-no :: <integer>)
- => (keys :: <table>, last-line-no :: <integer>)
-  let keys = make(<table>);
-  local
-    method loop (line-no :: <integer>) => (keys, last-line-no :: <integer>)
-      let (key, strings, eoh?, line-no)
-        = read-file-header-component(s, line-no);
-      if (key)
-        let old-strings = element(keys, key, default: #());
-        keys[key] := concatenate!(old-strings, strings);
-      end if;
-      if (eoh?)
-        values(keys, line-no)
-      else
-        loop(line-no)
-      end if
-    end method;
-  loop(first-line-no)
-end function read-keyword-pair-stream;
-
-
-define function read-file-header-component
-    (s :: <stream>, line-no :: <integer>)
- => (key, strings, eoh?, new-line-no)
-  let (key-line, nl?) = read-line(s, on-end-of-stream: "");
-  if (header-end-marker-line?(key-line))
-    values(#f, #f, #t, line-no)
-  else
-    local
-      method loop (text-strings :: <list>)
-        line-no := line-no + 1;
-        let char = read-element(s, on-end-of-stream: #f);
-        if (char == ' ' | char == '\t')
-          let (continuation-line, nl?) = read-line(s, on-end-of-stream: "");
-          if (header-end-marker-line?(continuation-line))
-            values(text-strings, #t, line-no)
-          else
-            let text = parse-header-continuation-line(continuation-line, line-no);
-            loop(pair(text, text-strings))
-          end;
-        else
-          if (char) unread-element(s, char) end;
-          values(text-strings, #f, line-no)
-        end;
-      end method;
-    let (key, text) = parse-header-keyword-line(key-line, line-no);
-    let (text-strings, past-eoh?) = loop(list(text));
-    values(key, reverse!(text-strings), past-eoh?, line-no)
-  end;
-end function read-file-header-component;
-
-
-define function parse-header-keyword-line
-    (line :: <string>, line-no :: <integer>)
-  let colon = position(line, ':');
-  if (~colon)
-    tool-error("syntax error", line: line-no);
-  end;
-  values(as(<symbol>, copy-sequence(line, end: colon)),
-         make(<keyword-file-element>,
-              value: trim-whitespace(line, colon + 1),
-              line: line-no))
-end function parse-header-keyword-line;
-
-define function parse-header-continuation-line
-    (line :: <string>, line-no :: <integer>)
-  make(<keyword-file-element>,
-       value: trim-whitespace(line, 0),
-       line: line-no)
-end function parse-header-continuation-line;
-
-define function header-end-marker-line? (line :: <string>)
-  every?(method (c) c == ' ' | c == '\t' end, line)
-end function;
-
-define function trim-whitespace (line :: <string>, start)
-  local method bwd (line, start, len)
-          let last = len - 1;
-          let c = line[last];
-          if (c == ' ' | c == '\t')
-            bwd(line, start, last)
-          else
-            copy-sequence(line, start: start, end: len)
-          end;
-        end method;
-  local method fwd (line, start, len)
-          if (start == len)
-            ""
-          else
-            let c = line[start];
-            if (c == ' ' | c == '\t')
-              fwd(line, start + 1, len)
-            else
-              bwd(line, start, len)
-            end;
-          end;
-        end method;
-  fwd(line, start, size(line))
-end function;

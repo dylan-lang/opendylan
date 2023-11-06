@@ -13,7 +13,7 @@ define class <bad-header> (<simple-error>)
 end;
 
 define method read-file-header (file :: <locator>)
- => (keys :: <table>, lines :: <integer>, chars :: <integer>)
+ => (keys :: <table>, nlines :: <integer>, nchars :: <integer>)
   block ()
     with-open-file (stream = file)
       read-header-from-stream(stream)
@@ -27,6 +27,12 @@ end method;
 
 define constant $unique-header-keywords =  #(#"module", #"language");
 
+// Read 'key: val' pairs up through the empty line that separates the header
+// from the main source code. Returns
+//   * a table mapping key (interned as a symbol) to values which are either a
+//     single string or, if there were continuation lines, a sequence of strings.
+//   * the number of lines read
+//   * the number of characters read
 define method read-header-from-stream (stream :: <stream>)
  => (keys :: <table>, lines :: <integer>, chars :: <integer>)
   let keys = make(<table>);
@@ -49,6 +55,7 @@ define method read-header-from-stream (stream :: <stream>)
   end
 end method;
 
+// Read one 'key: val' pair, with val possibly having continuation lines.
 define method read-file-header-component (stream :: <stream>)
  => (key, strings, nlines, end-of-header?)
   let (key-line, nl?) = read-line(stream, on-end-of-stream: "");
@@ -65,8 +72,9 @@ define method read-file-header-component (stream :: <stream>)
         if (header-end-marker-line?(continuation-line))
           values(key, reverse!(text-strings), nlines, #t)
         else
-          let text = parse-header-continuation-line(continuation-line);
-          loop(pair(text, text-strings), nlines)
+          loop(pair(strip(continuation-line, test: header-whitespace?),
+                    text-strings),
+               nlines)
         end
       else
         char & unread-element(stream, char);
@@ -77,11 +85,9 @@ define method read-file-header-component (stream :: <stream>)
 end method;
 
 define method parse-header-keyword-line (line :: <string>)
-  let colon = position(line, ':');
-  if (~colon)
-    signal(make(<bad-header>,
-                message: format-to-string("Syntax error on line: %=", line)))
-  end;
+  let colon = position(line, ':')
+    | signal(make(<bad-header>,
+                  message: format-to-string("Syntax error on line: %=", line)));
   values(as(<symbol>, copy-sequence(line, end: colon)),
          strip(line, start: colon + 1, test: header-whitespace?))
 end method;
@@ -90,10 +96,6 @@ end method;
 define inline function header-whitespace? (c :: <character>) => (white? :: <boolean>)
   c == ' ' | c == '\t'
 end;
-
-define method parse-header-continuation-line (line :: <string>)
-  strip(line, test: header-whitespace?)
-end method;
 
 define function header-end-marker-line? (line :: <string>)
   every?(header-whitespace?, line)

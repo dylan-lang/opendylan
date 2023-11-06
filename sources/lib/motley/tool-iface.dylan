@@ -16,7 +16,7 @@ define function motley-invoke
   debug-message("Motley invoked.  Spec: %=, project: %=, last: %=, clean: %=\n",
   		spec-file, project-file, last-run & date-as-string(last-run),
 		clean-build?);
-  let spec-keys = read-keyword-pair-file(spec-file);
+  let spec-keys = read-file-header(spec-file);
   motley-process-spec(spec-keys, spec-file, project-file, last-run, 
 		      clean-build?: clean-build?);
 end function motley-invoke;

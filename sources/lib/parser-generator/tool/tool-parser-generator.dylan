@@ -19,7 +19,7 @@ define method parser-generator-invoke
 
   let keyval = keyword-file-element-value;
   let keyline = keyword-file-element-line;
-  let spec = read-keyword-pair-file(spec-file);
+  let spec = read-file-header(spec-file);
   local method key (sym :: <symbol>) element(spec, sym, default: #()) end;
   local method single (sym :: <symbol>, #key default = $unsupplied)
     if (sym.key.size = 1)

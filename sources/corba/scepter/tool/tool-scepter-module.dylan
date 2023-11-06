@@ -7,6 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module tool-scepter
   use common-dylan;
+  use file-source-records;
   use format;
   use streams;
   use table-extensions;

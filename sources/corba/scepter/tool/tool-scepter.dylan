@@ -138,7 +138,7 @@ end method;
 
 define inline-only function read-spec-file (file :: <file-locator>)
  => (specification)
-  read-keyword-pair-file(file);
+  read-file-header(file);
 end function;
 
 define function date-as-string (date :: false-or(<date>)) => (r :: <string>)

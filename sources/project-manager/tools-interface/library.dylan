@@ -10,8 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library tools-interface
   use dylan;
   use common-dylan;
-  use system;
+  use file-source-records;
   use io;
+  use system;
 
   export tools-interface;
 end library tools-interface;
@@ -21,6 +22,7 @@ define module tools-interface
   use dylan;
   use common-extensions;
   use machine-words;
+  use file-source-records;
   use format;
   use format-out;
   use locators;
@@ -59,7 +61,6 @@ define module tools-interface
          project-information-base-address-setter,
          project-information-remaining-keys-setter;
 
-  export read-keyword-pair-file, read-keyword-pair-stream;
   export write-keyword-pair-file, write-keyword-pair-stream;
   export <keyword-file-element>,
            keyword-file-element-value, keyword-file-element-value-setter,
