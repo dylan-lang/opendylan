@@ -1,26 +1,27 @@
-Module:         tools-interface
-Author:                1997-07-17: Seth LaForge
-Synopsis:        Interface between spec file tools and the project manager.
+Module:       tools-interface
+Author:       1997-07-17: Seth LaForge
+Synopsis:     Interface between spec file tools and the project manager.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// Overview of how tools work:
-//   Tools are Dylan libraries which contain a top-level expression to
-//   register themselves via tool-register.  Tools are linked into the
-//   environment and batch compiler by being "use"d in
-//   D-environment-win32!*-library.dylan and D-app-dw!*-library.dylan.
+// Tools are Dylan libraries which register themselves by calling
+// tool-register().  They are linked into the environment and batch compiler by
+// being "use"d in the compiler executable libraries in
+// sources/environment/*/*-library.dylan.
 //
 // When a build is initiated, the project manager first iterates over all
 // files in the project, calling tool-name-from-specification() and
-// tool-find() for each to determine is a tool processes that file type.
+// tool-find() for each to determine if a tool processes that file type.
 // For files for which tool-find() finds a tool:
+//
 //   The project manager calls the function returned, passing the
 //   location of the file and the project file, and the date of the last
 //   time the file was processed.  This function reprocesses the file if
 //   necessary, and returns a list of modified projects.
+//
 // The project manager then rereads any project files which tools have
 // modified, and continues with the rest of the build.
 //
@@ -33,11 +34,12 @@ define variable tool-registry :: false-or(<table>) = #f;
 
 
 // Register a tool.  Invokee should have signature:
-//      (spec-file :: <locator>, project-file :: false-or(<locator>),
-//         last-run :: false-or(<date>)
-//         #key clean-build? :: <boolean> = #f)
+//      (spec-file :: <locator>,
+//       project-file :: false-or(<locator>),
+//       last-run :: false-or(<date>)
+//       #key clean-build? :: <boolean> = #f)
 //   => (success? :: <boolean>,
-//         modified-projects :: <sequence> /* of: <locator> */)
+//       modified-projects :: <sequence>)
 // modified-projects is a <sequence> of <locator>s of projects which have been
 // (or may have been) modified.
 // project-file should be #f only when the tool is invoked from the tool-tester
@@ -65,7 +67,6 @@ end function tool-register;
 // extension.
 // If there is an error, a nonrecoverable <tool-warning-condition> will
 // be signalled.
-
 define function tool-name-from-specification
     (spec-file :: <locator>)
  => (tool-name :: <symbol>)
@@ -92,7 +93,7 @@ define function tool-name-from-specification
   else
     extsym
   end if
-end;
+end function tool-name-from-specification;
 
 
 // Find a tool invokee by name - used by project manager.
@@ -157,23 +158,36 @@ end function tool-error;
 define method condition-to-string
     (this :: <tool-warning-condition>)
  => (r :: <string>)
-  format-to-string("%s: %s%s%s%s",
-        if (this.tool-warning-recoverable?)
-          if (this.tool-warning-serious?) "Serious warning" else "Warning"
-          end if
-        else "Error" end if,
-        if (this.tool-warning-file)
-          format-to-string("file %s%s: ", as(<string>, this.tool-warning-file),
-                           if (this.tool-warning-line)
-                             concatenate(":", integer-to-string(
-                                                             this.tool-warning-line))
-                           else "" end if)
-        else "" end if,
-        next-method(),
-        if (this.tool-warning-definition)
-          concatenate(" in ", this.tool-warning-definition)
-        else "" end if,
-        if (this.tool-warning-library)
-          concatenate(" in library ", this.tool-warning-library)
-        else "" end if)
+  format-to-string
+    ("%s: %s%s%s%s",
+     if (this.tool-warning-recoverable?)
+       if (this.tool-warning-serious?)
+         "Serious warning"
+       else
+         "Warning"
+       end if
+     else
+       "Error"
+     end if,
+     if (this.tool-warning-file)
+       format-to-string("file %s%s: ", as(<string>, this.tool-warning-file),
+                        if (this.tool-warning-line)
+                          concatenate(":", integer-to-string(this.tool-warning-line))
+                        else
+                          ""
+                        end if)
+     else
+       ""
+     end if,
+     next-method(),
+     if (this.tool-warning-definition)
+       concatenate(" in ", this.tool-warning-definition)
+     else
+       ""
+     end if,
+     if (this.tool-warning-library)
+       concatenate(" in library ", this.tool-warning-library)
+     else
+       ""
+     end if)
 end method condition-to-string;
