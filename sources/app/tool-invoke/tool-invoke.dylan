@@ -1,5 +1,5 @@
 Module:    tool-invoke
-Synopsis:  A standalone program to invoke Functional Developer tools on 
+Synopsis:  A standalone program to invoke Functional Developer tools on
 	   specification files.
 Author:    7/98 Seth LaForge
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -15,7 +15,7 @@ define method main () => ()
         exit-application(2);
       end if;
     end method;
-  local method yn-handler (c :: <tool-yes-no-question>, next :: <function>) 
+  local method yn-handler (c :: <tool-yes-no-question>, next :: <function>)
 		       => (answer :: <boolean>)
     format-out("%s (y/n) ", c);
     force-output(*standard-output*);
@@ -30,7 +30,7 @@ define method main () => ()
 
   let args = application-arguments();
   if (size(args) < 1 | size(args) > 2)
-    format-out("Usage: %s <specification-file-name> [<project-file-name>]\n", 
+    format-out("Usage: %s <specification-file-name> [<project-file-name>]\n",
       	       application-name());
     exit-application(1);
   end if;
@@ -39,7 +39,7 @@ define method main () => ()
   if (project-file)
     project-file := as(<file-locator>, project-file);
   end if;
-  
+
   let tool-name = tool-name-from-specification(spec-file);
   let tool = tool-find(tool-name);
   if (tool)
