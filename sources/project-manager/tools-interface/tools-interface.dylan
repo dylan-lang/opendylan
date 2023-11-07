@@ -104,7 +104,7 @@ define function tool-find
  => (invokee :: false-or(<function>))
   if (tool-registry)
     element(tool-registry, tool-name, default: #f)
-  end if;
+  end if
 end function tool-find;
 
 

@@ -1,0 +1,7 @@
+syntax = "proto2";
+
+package pbtool.test.two.pb;
+
+message Message1 {
+  optional string field1 = 1;
+}

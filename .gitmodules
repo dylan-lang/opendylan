@@ -37,3 +37,6 @@
 [submodule "documentation/website"]
 	path = documentation/website
 	url = https://github.com/dylan-lang/website
+[submodule "sources/lib/protocol-buffers"]
+	path = sources/lib/protocol-buffers
+	url = https://github.com/cgay/protocol-buffers
