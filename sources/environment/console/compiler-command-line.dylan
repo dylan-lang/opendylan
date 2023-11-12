@@ -43,7 +43,7 @@ define command-line main => <main-command>
   keyword personal-root :: <directory-locator> = "personal area root";
   keyword system-root   :: <directory-locator> = "system area root";
   keyword internal-debug :: $keyword-list-type
-                        = "show debug messages (e.g. for linker, project-manager)";
+    = "show debug messages (comma separated, e.g. linker,project-manager)";
   flag unify            = "combine libraries into a single executable";
   flag profile-commands = "profile the execution of each command";
   flag harp             = "generate HARP output";
