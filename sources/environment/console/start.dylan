@@ -15,10 +15,9 @@ define function main
     = make-environment-command-line-server
         (input-stream:   input-stream,
          output-stream:  output-stream);
-  let class = <main-command>;
   let command
     = block ()
-        parse-command-line(server, arguments, class: class)
+        parse-command-line(server, arguments, class: <main-command>)
       exception (error :: <parse-error>)
         format(output-stream, "%s\n", error);
         exit-application($usage-error-exit-code)

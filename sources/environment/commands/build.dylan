@@ -234,34 +234,37 @@ define method do-execute-command
               serious-warnings? := #t;
             end;
           end;
-    if (build-project
-          (project,
-           process-subprojects?: command.%subprojects?,
-           clean?:               command.%clean?,
-           link?:                #f,
-           save-databases?:      command.%save?,
-           messages:             messages,
-           output:               command.%output,
-           dispatch-coloring:    command.%dispatch-coloring,
-           progress-callback:    progress-callback,
-           warning-callback:     warning-callback,
-           error-handler:        curry(compiler-condition-handler, context)))
+    let success?
+      = build-project(project,
+                      process-subprojects?: command.%subprojects?,
+                      clean?:               command.%clean?,
+                      link?:                #f,
+                      save-databases?:      command.%save?,
+                      messages:             messages,
+                      output:               command.%output,
+                      dispatch-coloring:    command.%dispatch-coloring,
+                      progress-callback:    progress-callback,
+                      warning-callback:     warning-callback,
+                      error-handler:        curry(compiler-condition-handler, context));
+    if (~success?)
+      message(context, "Build of '%s' aborted",   project.project-name);
+      $unexpected-error-exit-code
+    else
       if (command.%link?)
         let project-context = context.context-project-context;
         let build-script
           = command.%build-script | project-context.context-build-script;
-        link-project
-          (project,
-           build-script:         build-script,
-           target:               command.%target,
-           release?:             command.%release?,
-           force?:               command.%force?,
-           jobs:                 command.%jobs,
-           process-subprojects?: command.%subprojects?,
-           unify?:               command.%unify?,
-           messages:             messages,
-           progress-callback:    progress-callback,
-           error-handler:        curry(compiler-condition-handler, context))
+        link-project(project,
+                     build-script:         build-script,
+                     target:               command.%target,
+                     release?:             command.%release?,
+                     force?:               command.%force?,
+                     jobs:                 command.%jobs,
+                     process-subprojects?: command.%subprojects?,
+                     unify?:               command.%unify?,
+                     messages:             messages,
+                     progress-callback:    progress-callback,
+                     error-handler:        curry(compiler-condition-handler, context));
       end;
       message(context, "Build of '%s' completed", project.project-name);
       if (serious-warnings? & ~command.%allow-serious-warnings?)
@@ -269,9 +272,6 @@ define method do-execute-command
       else
         $success-exit-code
       end
-    else
-      message(context, "Build of '%s' aborted",   project.project-name);
-      $unexpected-error-exit-code
     end
   exception (error :: <file-system-error>)
     command-error("%s", error)
