@@ -12,8 +12,7 @@ define constant $release-full-copyright =
   "are subject to the following license terms.\n"
   "\n";
 
-define constant $release-web-address
-  = "http://opendylan.org/";
+define constant $release-web-address = "https://opendylan.org";
 
 define constant $license-agreement-filename   = "License.txt";
 define constant $help-filename                = "opendylan.chm";

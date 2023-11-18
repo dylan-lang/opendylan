@@ -29,17 +29,17 @@ end function main;
 
 define function dylan-banner
     () => (banner :: <string>)
-  format-to-string(
-    "Welcome to %s, %s.\n"
-    "\n"
-    "For documentation on %s, see %sdocumentation/.\n"
-    "See %sdocumentation/getting-started-cli/ for an introduction to the command line tools.\n"
-    "\n"
-    "Type \"help\" for more information.",
-    release-product-name(),
-    release-version(),
-    release-product-name(), release-web-address(),
-    release-web-address());
+  format-to-string
+    ("Welcome to %s, %s.\n"
+       "\n"
+       "For documentation on %s, see %s.\n"
+       "See %s/getting-started-cli/ for an introduction to the command line tools.\n"
+       "\n"
+       "Type \"help\" for more information.",
+     release-product-name(),
+     release-version(),
+     release-product-name(), release-web-address(),
+     release-web-address());
 end function dylan-banner;
 
 define function application-arguments-as-string
