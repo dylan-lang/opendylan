@@ -333,9 +333,9 @@ REM // Setup the default build options for the environment/console compiler buil
 REM //
 :SETUP_ENVIRONMENT_DEFAULT_BUILD_OPTIONS
 if "%COMPILER_TARGET%"=="" set COMPILER_TARGET=dylan-compiler
-if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=dylan-compiler-with-tools console-scepter
+if "%FINAL_COMPILER_TARGET%"=="" set FINAL_COMPILER_TARGET=dylan-compiler console-scepter
 if "%COMPILER_FILENAME%"=="" set COMPILER_FILENAME=dylan-compiler.exe
-if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=dylan-compiler-with-tools.exe
+if "%FINAL_COMPILER_FILENAME%"=="" set FINAL_COMPILER_FILENAME=dylan-compiler.exe
 if "%RELEASE_TARGET%"=="" set RELEASE_TARGET=release
 goto setup_default_release_options
 

@@ -51,8 +51,6 @@ goto PARAM_LOOP
 
 REM // Try what we just built
 REM //
-set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compiler-with-tools.exe
-if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 set DYLAN_RELEASE_COMPILER=%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compiler.exe
 if exist "%DYLAN_RELEASE_COMPILER%" goto compiler_found
 REM //... finally hope that we can find it on the path.

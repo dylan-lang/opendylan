@@ -24,7 +24,9 @@ define library dylan-compiler
   use dfmc-back-end-implementations;
 
   // Project manager plug-ins
+  use motley;
+  use tool-scepter;
   use tool-parser-generator;
 
   export console-environment;
-end library dylan-compiler;
+end library;

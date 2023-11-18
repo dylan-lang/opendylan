@@ -373,7 +373,6 @@ HTMLHELP = $(INSTALL_LIB_DIRECTORY)\htmlhelp.lib
 DYLAN_COMPILER = $(INSTALL_BIN_DIRECTORY)\dylan-compiler.exe
 DYLAN_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\dylan-environment.exe
 BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\batch-debug.exe
-DYLAN_COMPILER_WITH_TOOLS = $(INSTALL_BIN_DIRECTORY)\dylan-compiler-with-tools.exe
 CREATE_ID = $(INSTALL_BIN_DIRECTORY)\create-id.exe
 DEVEL_DBG_UI = $(INSTALL_BIN_DIRECTORY)\devel-dbg-ui.exe
 DLL_WRAP = $(INSTALL_BIN_DIRECTORY)\dll-wrap.exe
@@ -1064,8 +1063,6 @@ network-examples: daytime-client daytime-server echo-client echo-client echo-ser
 
 release-info: $(RELEASE_INFO)
 compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
-dylan-compiler-with-tools-exe: $(DYLAN_COMPILER_WITH_TOOLS)
-dylan-compiler-with-tools: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries dylan-compiler-with-tools-exe
 dylan-environment: $(DYLAN_ENVIRONMENT)
 win32-environment: $(WIN32_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
@@ -1074,7 +1071,7 @@ libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-l
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
 tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger parser-compiler dylan-tool-app
-release: release-info dylan-compiler-with-tools compiler environment rel-environment libraries tools install-runtime-dlls install-examples
+release: release-info dylan-compiler compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
   $(REMOVE_DIRECTORY) $(EXAMPLES_INSTALL_DIRECTORY)
@@ -1082,7 +1079,7 @@ reinstall-examples:
 
 minimal-compiler: pentium-dw-libraries release-info
 dylan-compiler-exe: $(DYLAN_COMPILER)
-dylan-compiler: console-compiler-libraries release-info environment-internal-commands dylan-compiler-exe
+dylan-compiler: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries dylan-compiler-exe
 dylan-environment: $(DYLAN_ENVIRONMENT)
 minimal-libraries: user-libraries win32-libraries duim
 minimal-environment: dylan-environment with-splash-screen
@@ -1954,6 +1951,8 @@ $(PARSER_COMPILER):
 $(DYLAN_COMPILER):
   $(ENSURE_LIBRARY) environment-commands
   $(ENSURE_LIBRARY) environment-internal-commands
+  $(ENSURE_LIBRARY) motley
+  $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) release-info
   $(BUILD_APPLICATION) dylan-compiler
 
@@ -1965,14 +1964,6 @@ $(DYLAN_ENVIRONMENT):
   $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) release-info
   $(BUILD_APPLICATION) dylan-environment
-
-$(DYLAN_COMPILER_WITH_TOOLS):
-  $(ENSURE_LIBRARY) environment-commands
-  $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) dylan-compiler-with-tools
 
 $(WIN32_ENVIRONMENT):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell

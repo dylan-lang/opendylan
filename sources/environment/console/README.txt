@@ -1,5 +1,5 @@
-The three libraries in this directory are the various command-line entry points
-into the Open Dylan application.
+The libraries in this directory are the command-line entry points into the Open
+Dylan application.
 
 The modules used by each library determine the commands and features built in to
 the application, but the libraries themselves simply process the command-line
@@ -10,9 +10,8 @@ The libraries and their features are:
 
 ____Library_______________________Compile__Execute__Remote__Plugins___________
 
-DC  dylan-compiler                compile
+DC  dylan-compiler                compile                   plugins
 DE  dylan-environment             compile  execute  remote  plugins
-DCT dylan-compiler-with-tools     compile                   plugins
 
 Compile         Can open and build projects.
 Execute         Can execute and debug applications.
@@ -22,23 +21,22 @@ ______________________________________________________________________________
 
 The Dylan files in this directory used by each library are:
 
-File_______________________________DC DE___DCT _______________________________
+File_______________________________DC DE______________________________________
 
 compiler-library                   x
-dylan-compiler-with-tools-library           x
-compiler-command-line              x        x
-compiler-module                    x        x
+compiler-command-line              x
+compiler-module                    x
 
 environment-library                   x
 environment-command-line              x
 environment-module                    x
 
-command-line                       x  x     x
-start                              x  x     x
+command-line                       x  x
+start                              x  x
 ______________________________________________________________________________
 
-All three libraries export a single module called console-environment. This
-module is defined in compiler-module.dylan for the DC and DCT libraries and in
+Both libraries export a single module called console-environment. This module
+is defined in compiler-module.dylan for the DC library and in
 environment-module.dylan for the DE library. It does not export any bindings.
 
 The command-line options are DEFINED in compiler-command-line.dylan or
@@ -46,7 +44,7 @@ environment-command-line.dylan:
 
 Libraries_________Options_______________________In file_______________________
 
-DC, DCT           <main-command>                compiler-command-line.dylan
+DC                <main-command>                compiler-command-line.dylan
 DE                <main-command>                environment-command-line.dylan
 ______________________________________________________________________________
 
@@ -55,7 +53,7 @@ The command-line options are STORED in <basic-main-command> or its subclass
 
 Libraries_________Storage_______________________In file_______________________
 
-DC, DCT           <basic-main-command>          command-line.dylan
+DC                <basic-main-command>          command-line.dylan
 DE                <environment-main-command>    environment-command-line.dylan
 ______________________________________________________________________________
 
