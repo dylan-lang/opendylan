@@ -22,19 +22,19 @@ ______________________________________________________________________________
 
 The Dylan files in this directory used by each library are:
 
-File___________________________DC DE___DCT ___________________________________
+File_______________________________DC DE___DCT _______________________________
 
-compiler-library               x
-tools-compiler-library                  x
-compiler-command-line          x        x
-compiler-module                x        x
+compiler-library                   x
+dylan-compiler-with-tools-library           x
+compiler-command-line              x        x
+compiler-module                    x        x
 
-environment-library               x
-environment-command-line          x
-environment-module                x
+environment-library                   x
+environment-command-line              x
+environment-module                    x
 
-command-line                   x  x     x
-start                          x  x     x
+command-line                       x  x     x
+start                              x  x     x
 ______________________________________________________________________________
 
 All three libraries export a single module called console-environment. This

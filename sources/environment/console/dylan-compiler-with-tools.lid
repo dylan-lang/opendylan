@@ -2,7 +2,7 @@ Library:   dylan-compiler-with-tools
 Synopsis:  The command line version of the environment
 Author:    Andy Armstrong
 Target-Type: executable
-Files: tools-compiler-library
+Files: dylan-compiler-with-tools-library
        compiler-module
        command-line
        compiler-command-line
