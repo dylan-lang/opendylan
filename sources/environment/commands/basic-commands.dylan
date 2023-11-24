@@ -118,8 +118,8 @@ define method display-help
          "For a complete list of commands, use:   SHOW COMMANDS\n"
          "For a complete list of properties, use: SHOW PROPERTIES\n"
          "\n"
-         "For full documentation, see %sdocumentation/\n"
-         "For a guide to the command line tools, see %sdocumentation/getting-started-cli/\n",
+         "For full documentation, see %s.\n"
+         "For a guide to the command line tools, see %s/getting-started-cli/\n",
          $option-prefix,
          release-web-address(),
          release-web-address())

@@ -183,8 +183,7 @@ end method help-credits;
 
 /// Web site command tables
 
-define constant $download-doc-page
-  = format-to-string("%sdocumentation/", release-web-address());
+define constant $download-doc-page = release-web-address();
 
 define function frame-open-dylan-web-page
     (frame :: <frame>, #key page = release-web-address()) => ()

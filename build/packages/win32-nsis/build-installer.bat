@@ -50,12 +50,12 @@ echo "cannot find release root"
 goto end
 
 :VERSION
-if exist "%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compiler-with-tools.exe" goto set_version
-echo "cannot find dylan-compiler-with-tools"
+if exist "%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compiler.exe" goto set_version
+echo "cannot find dylan-compiler"
 goto end
 
 :SET_VERSION
-for /f %%X in ('%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compiler-with-tools.exe /shortversion') DO SET OPEN_DYLAN_VERSION=%%X
+for /f %%X in ('%OPEN_DYLAN_RELEASE_ROOT%\bin\dylan-compiler.exe /shortversion') DO SET OPEN_DYLAN_VERSION=%%X
 if "%OPEN_DYLAN_VERSION%"=="" goto end
 
 :MAKENSIS
