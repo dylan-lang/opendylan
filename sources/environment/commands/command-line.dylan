@@ -816,14 +816,6 @@ define method command-line-loop
 end method command-line-loop;
 
 define macro command-line-definer
-  { define command-line ?name:name (?options:*)
-      ?parameters:*
-    end }
-    => { define command-line-class ?name (?options) ?parameters end;
-         define command-line-constant ?name => "<" ## ?name ## "-command>" (?options)
-           ?parameters
-         end }
-
   { define command-line ?name:name => ?command:name (?options:*)
       ?parameters:*
     end }
