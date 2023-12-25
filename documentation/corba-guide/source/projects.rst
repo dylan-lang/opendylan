@@ -67,20 +67,19 @@ To create a CORBA project with the New Project wizard:
 
    The :guilabel:`Advanced...` button next to the client and server
    options produces a dialog containing several ORB-related
-   options. See “Setting ORB options” on page 76 for details.
+   options. See `Setting ORB options`_ for details.
 
 #. Click :guilabel:`Next`.
 
    The next page is the standard wizard page for naming a project and
-   specifying its location. (See Chapter 4 of Getting Started with
-   Open Dylan for details.)
+   specifying its location. (See `Getting Started with Open Dylan > Projects
+   <https://opendylan.org/getting-started-ide/projects.html>`_ for details.)
 
-   The project name you specify here is not used literally when the
-   wizard creates the project or projects. Instead, if you chose to
-   create a client project, the wizard creates a project called name
-   ``-client``, where name is the project name you specified. If you
-   chose to create a server project, the project will be called name
-   ``-server``.
+   The project name you specify here is not used literally when the wizard
+   creates the project or projects. Instead, if you chose to create a client
+   project, the wizard creates a project called ``{name}-client``, where
+   ``{name}`` is the project name you specified. If you chose to create a
+   server project, the project will be called ``{name}-server``.
 
    Similarly, the project folder you specify is used as the overall
    project folder name, with the project files and sources for clients
@@ -106,7 +105,8 @@ To create a CORBA project with the New Project wizard:
 
 #. Enter a project name and location, and click :guilabel:`Next`.
 
-   The wizard moves on to the Use libraries page. This and the remaining wizard pages are as for ordinary projects.
+   The wizard moves on to the "Use libraries" page. This and the remaining
+   wizard pages are as for ordinary projects.
 
 #. Complete the remaining pages in the wizard to finish specifying the
    non-CORBA parts of your project or projects.
@@ -119,7 +119,7 @@ To create a CORBA project with the New Project wizard:
    both separately. The only exception to this is your choice of
    Advanced ORB Settings, which can be set differently for client and
    server projects in the “Projects to generate” section of the
-   wizard’s CORBA options page. See “Setting ORB options” on page 76.
+   wizard’s CORBA options page. See `Setting ORB options`_.
 
 .. note::
    The interface projects (that is, the client stubs, server
@@ -127,8 +127,8 @@ To create a CORBA project with the New Project wizard:
    the main project’s IDL) are not generated until you first build
    your client or server project. When you do so, the IDL compiler is
    invoked and the necessary interface projects are created
-   automatically. See “How the spec file affects IDL compilation” on
-   page 80 for details of what projects are generated and where.
+   automatically. See `How the spec file affects IDL compilation`_ for
+   details of what projects are generated and where.
 
 Setting ORB options
 ===================
