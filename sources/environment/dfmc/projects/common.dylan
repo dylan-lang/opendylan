@@ -17,16 +17,10 @@ define sealed method initialize
     (project-object :: <native-project-object>, #key) => ()
   next-method();
   add-new!(*open-projects*, project-object);
-end method initialize;
+end method;
 
 //--- Is there a way around making this sideways?
 define sealed sideways method open-projects
     () => (projects :: <sequence>)
-  let projects :: <stretchy-object-vector> = make(<stretchy-object-vector>);
-  for (project :: <native-project-object> in *open-projects*)
-    if (project-opened-by-user?(project))
-      add!(projects, project)
-    end
-  end;
-  projects
-end method open-projects;
+  choose(project-opened-by-user?, *open-projects*)
+end method;
