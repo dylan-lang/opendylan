@@ -1116,21 +1116,29 @@ end method;
 define program-warning <statement-tail-mismatch>
   slot condition-statement-name,
     init-keyword: statement-name:;
-  format-string "Mismatched end clause in %s statement.";
-  format-arguments statement-name;
+  slot condition-expected, // Whatever 1 or 2 words were expected, concatenated.
+    init-keyword: expected:;
+  slot condition-actual,   // Whatever 1 or 2 words were used, concatenated.
+    init-keyword: actual:;
+  format-string "Mismatched end clause in %= statement, expected %= but got %=";
+  format-arguments statement-name, expected, actual;
 end program-warning;
 
+// macro-word is "if", "unless", etc.
+// tail is either the matching "if", "unless", etc. or "end"
 define function verify-statement-tail
     (macro-word :: <name-fragment>, tail :: false-or(<name-fragment>))
  => ()
-  if (tail & fragment-name(tail) ~== #"end")
-    if (fragment-name(tail) ~== fragment-name(macro-word))
+  if (tail)
+    let name = fragment-name(tail);
+    if (name ~== #"end" & name ~== fragment-name(macro-word))
       note(<statement-tail-mismatch>,
            source-location:
-             record-position-as-location
-               (fragment-record(macro-word),
-                position-between(macro-word, tail)),
-           statement-name: macro-word);
+             record-position-as-location(fragment-record(macro-word),
+                                         position-between(macro-word, tail)),
+           statement-name: macro-word,
+           expected: concatenate("end ", as(<string>, macro-word)),
+           actual: concatenate("end ", as(<string>, name)));
     end;
   end;
 end function;
@@ -1198,15 +1206,28 @@ ignore(fragment-end);
 define program-warning <definition-tail-mismatch>
   slot condition-definition-name,
     init-keyword: definition-name:;
-  format-string "Mismatched end clause in %s definition.";
-  format-arguments definition-name;
+  slot condition-expected, // Whatever 1 or 2 words were expected, concatenated.
+    init-keyword: expected:;
+  slot condition-actual,   // Whatever 1 or 2 words were used, concatenated.
+    init-keyword: actual:;
+  format-string "Mismatched end clause in %= definition, expected %= but got %=";
+  format-arguments definition-name, expected, actual;
 end program-warning;
 
+// lead-word is "define"
+// macro-word is e.g. "function"
+// maybe-name is e.g., "foo" in "define function foo"
 define function verify-definition-tail
     (lead-word :: <name-fragment>, macro-word :: <name-fragment>,
-       maybe-name :: false-or(<name-fragment>),
-       tail :: <definition-tail-fragment>)
+     maybe-name :: false-or(<name-fragment>),
+     tail :: <definition-tail-fragment>)
  => ()
+  local method expected ()
+          concatenate("end ",
+                      as(<string>, macro-word),
+                      if (maybe-name) " " else "" end,
+                      if (maybe-name) as(<string>, maybe-name) else "" end)
+        end;
   let name-1 = fragment-tail-name-1(tail);
   let name-2 = fragment-tail-name-2(tail);
   if (name-2)
@@ -1216,10 +1237,11 @@ define function verify-definition-tail
                & fragment-name(name-2) ~== fragment-name(maybe-name)))
       note(<definition-tail-mismatch>,
            source-location:
-             record-position-as-location
-               (fragment-record(lead-word),
-                position-between(lead-word, tail)),
-           definition-name: macro-word);
+             record-position-as-location(fragment-record(lead-word),
+                                         position-between(lead-word, tail)),
+           definition-name: macro-word,
+           expected: expected(),
+           actual: concatenate("end ", as(<string>, name-1), " ", as(<string>, name-2)));
     end;
   elseif (name-1)
     // We have one name that could validly be either the macro word or
@@ -1230,10 +1252,11 @@ define function verify-definition-tail
                      & fragment-name(name-1) ~== fragment-name(maybe-name)))))
       note(<definition-tail-mismatch>,
            source-location:
-             record-position-as-location
-               (fragment-record(lead-word),
-                position-between(lead-word, tail)),
-           definition-name: macro-word);
+             record-position-as-location(fragment-record(lead-word),
+                                         position-between(lead-word, tail)),
+           definition-name: macro-word,
+           expected: expected(),
+           actual: concatenate("end ", as(<string>, name-1)))
     end;
   end;
 end function;
