@@ -517,7 +517,7 @@ IO library's *pprint* module.
 
      Controls *miser mode*. Pretty printing is in miser mode whenever a
      logical block (see :gf:`pprint-logical-block`) begins in a column
-     of output that is greater than::
+     of output that is greater than:
 
        .. code-block:: dylan
 
