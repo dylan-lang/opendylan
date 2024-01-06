@@ -1055,11 +1055,11 @@ the line.</p></li>
 <dd class="field-odd"><p><p>Controls <em>miser mode</em>. Pretty printing is in miser mode whenever a
 logical block (see <a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a>) begins in a column
 of output that is greater than:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">dylan</span>
-
-   <span class="o">*</span><span class="n">default</span><span class="o">-</span><span class="n">line</span><span class="o">-</span><span class="n">length</span><span class="o">*</span> <span class="o">-</span> <span class="o">*</span><span class="nb">print</span><span class="o">-</span><span class="n">miser</span><span class="o">-</span><span class="n">width</span><span class="o">*</span>
+<blockquote>
+<div><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*default-line-length*</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="vg">*print-miser-width*</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p>The value must be an integer or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> (the default); <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>
 indicates that the pretty printer should never enter miser mode.</p>
 </p>
