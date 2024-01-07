@@ -520,18 +520,16 @@ the project, with the extension <code class="docutils literal notranslate"><span
 generate a client or server project, or both.</p>
 <p>The <span class="guilabel">Advanced…</span> button next to the client and server
 options produces a dialog containing several ORB-related
-options. See “Setting ORB options” on page 76 for details.</p>
+options. See <a class="reference internal" href="#setting-orb-options">Setting ORB options</a> for details.</p>
 </li>
 <li><p>Click <span class="guilabel">Next</span>.</p>
 <p>The next page is the standard wizard page for naming a project and
-specifying its location. (See Chapter 4 of Getting Started with
-Open Dylan for details.)</p>
-<p>The project name you specify here is not used literally when the
-wizard creates the project or projects. Instead, if you chose to
-create a client project, the wizard creates a project called name
-<code class="docutils literal notranslate"><span class="pre">-client</span></code>, where name is the project name you specified. If you
-chose to create a server project, the project will be called name
-<code class="docutils literal notranslate"><span class="pre">-server</span></code>.</p>
+specifying its location. (See <a class="reference external" href="https://opendylan.org/getting-started-ide/projects.html">Getting Started with Open Dylan &gt; Projects</a> for details.)</p>
+<p>The project name you specify here is not used literally when the wizard
+creates the project or projects. Instead, if you chose to create a client
+project, the wizard creates a project called <code class="docutils literal notranslate"><span class="pre">{name}-client</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">{name}</span></code> is the project name you specified. If you chose to create a
+server project, the project will be called <code class="docutils literal notranslate"><span class="pre">{name}-server</span></code>.</p>
 <p>Similarly, the project folder you specify is used as the overall
 project folder name, with the project files and sources for clients
 and servers in subfolders of the appropriate name. For a project
@@ -555,7 +553,8 @@ top-level project folder:</p>
 of the top-level project folder called <code class="file docutils literal notranslate"><span class="pre">client</span></code> and <code class="file docutils literal notranslate"><span class="pre">server</span></code>.</p>
 </li>
 <li><p>Enter a project name and location, and click <span class="guilabel">Next</span>.</p>
-<p>The wizard moves on to the Use libraries page. This and the remaining wizard pages are as for ordinary projects.</p>
+<p>The wizard moves on to the “Use libraries” page. This and the remaining
+wizard pages are as for ordinary projects.</p>
 </li>
 <li><p>Complete the remaining pages in the wizard to finish specifying the
 non-CORBA parts of your project or projects.</p></li>
@@ -569,7 +568,7 @@ have different settings or use different libraries, you must create
 both separately. The only exception to this is your choice of
 Advanced ORB Settings, which can be set differently for client and
 server projects in the “Projects to generate” section of the
-wizard’s CORBA options page. See “Setting ORB options” on page 76.</p>
+wizard’s CORBA options page. See <a class="reference internal" href="#setting-orb-options">Setting ORB options</a>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -578,8 +577,8 @@ skeletons, and protocol projects that provide a static interface to
 the main project’s IDL) are not generated until you first build
 your client or server project. When you do so, the IDL compiler is
 invoked and the necessary interface projects are created
-automatically. See “How the spec file affects IDL compilation” on
-page 80 for details of what projects are generated and where.</p>
+automatically. See <a class="reference internal" href="#how-the-spec-file-affects-idl-compilation">How the spec file affects IDL compilation</a> for
+details of what projects are generated and where.</p>
 </div>
 </section>
 <section id="setting-orb-options">
