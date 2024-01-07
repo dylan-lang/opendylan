@@ -24,8 +24,9 @@ define library dylan-environment
   // Back-ends
   use dfmc-back-end-implementations;
 
-  // Project manager plug-ins
+  // Project manager plug-ins call tool-register on load.
   use motley;
+  use protobuf-tool;
   use tool-scepter;
   use tool-parser-generator;
 

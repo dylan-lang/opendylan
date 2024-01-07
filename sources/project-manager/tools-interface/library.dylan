@@ -24,6 +24,7 @@ define module tools-interface
   use format;
   use format-out;
   use locators;
+  use simple-debugging;
   use streams;
   use file-system;
 

@@ -154,7 +154,7 @@ define method note-project-loaded (project :: <user-project>)
     let symbol-name :: <symbol> = as(<symbol>, name);
     unless (symbol-name == old-name)
       project.project-lid-library-name := symbol-name;
-      debug-out(#"project-manager", "Changing library name keyword to %s", name);
+      debug-out(#"project-manager", "Changing library name keyword to %s\n", name);
     end;
   end;
 end method;
@@ -165,7 +165,8 @@ define constant $replace-project-string =
 define function %project-replace-project-ask
     (project :: <project>, close? :: <boolean>)
  => (yes-or-no :: <boolean>, project :: false-or(<project>))
-  debug-out(#"project-manager", "Asking if to replace %= %s", project, project.project-name);
+  debug-out(#"project-manager", "Asking whether to replace %= %s\n",
+            project, project.project-name);
   let key = project.project-library-name;
   let text = format-to-string($replace-project-string,
                               key, project.project-location);
@@ -214,8 +215,7 @@ define method project-replace-project-with?
      #key project-file :: <file-locator>, close? = #t)
  => (yes-or-no :: <boolean>, project :: false-or(<project>))
   if (project.user-disk-project-file = project-file)
-    debug-out(#"project-manager",
-              "project file %s is the same as %s",
+    debug-out(#"project-manager", "project file %s is the same as %s\n",
               project-file, project.user-disk-project-file);
     values(#f, project)
   else
@@ -302,8 +302,7 @@ define method replace-project-with?
   // TO DO: when replacing project the new one will not have an owner
   // until next compilation - is this a problem ?
   if (project)
-    debug-out(#"project-manager",
-              "Deciding if %= %s should be replaced",
+    debug-out(#"project-manager", "Deciding if %= %s should be replaced\n",
               project, project.project-name);
     if (force?)
       // 'force?' implies 'close?'
@@ -534,6 +533,8 @@ define method import-lid-project (lid-location :: <file-locator>, #key to-file)
   when (project & project.project-namespace-loaded)
     close-unused-projects();
   end;
+  debug-out(#"project-manager", "import-lid-project(%=) returning %=\n",
+            lid-location, project);
   project
 end;
 
@@ -563,9 +564,8 @@ define method %import-lid-project (lid-location :: <file-locator>,
     end;
 
   if (ok?)
-    debug-out(#"project-manager",
-              "Importing %s to %s", as(<string>, lid-location),
-              as(<string>, project-location));
+    debug-out(#"project-manager", "Importing %s to %s\n",
+              lid-location, project-location);
 
     apply(make-method, <user-project>, project-file: project-location, keys);
   else
@@ -661,11 +661,11 @@ define function open-hdp-project (project-file-location :: <file-locator>)
           project
         else
           debug-out(#"project-manager",
-                    "Open-project: returning already opened project %= %s",
+                    "open-hdp-project: returning already opened project %= %s\n",
                     opened-project, opened-project & opened-project.project-name);
           if (opened-project)
             debug-out(#"project-manager",
-                      "The project is already open as %s ",
+                      "open-hdp-project: the project is already open as %s\n",
                       project-location)
           else
             user-warning("Couldn't open project in %s ", project-location)
@@ -823,10 +823,14 @@ define method note-loading-namespace (project :: <user-project>) => ()
     local method process-file(f)
             let full-path = merge-locators(as(<file-locator>, f),
                                            project.project-source-location);
-            let tool-name :: false-or(<symbol>) =
-              tool-name-from-specification(full-path);
+            let tool-name :: false-or(<symbol>)
+              = tool-name-from-specification(full-path);
             let tool = tool-name & tool-find(tool-name);
-            if (tool)
+            debug-out(#"project-manager", "process-file(%=) tool-name: %=, tool: %=\n",
+                      f, tool-name, tool);
+            if (~tool)
+              user-warning("No tool found to process file %s", f);
+            else
               let tool-cache = element(project.%tools-cache, tool-name, default: #f);
               local method last-run-date(f, cache)
                       block (found)
