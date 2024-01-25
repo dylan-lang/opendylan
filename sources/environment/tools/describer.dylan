@@ -17,7 +17,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // ---*** Do I need the <frame-help-mixin>?
 
 
-
+
 /// "Describer" tool
 
 define constant $describer-name :: <string> = "Describe";
@@ -68,7 +68,7 @@ define method initialize
   next-method();
 end method initialize;
 
-
+
 // "Service" function, mainly for use by environment-manager library.
 define sideways method show-definition-summary
     (name :: <string>,
@@ -79,7 +79,7 @@ define sideways method show-definition-summary
   describe-object(name, project, module, object)
 end method show-definition-summary;
 
-
+
 // Main entry point
 
 define sideways method describe-object
@@ -124,7 +124,7 @@ define sideways method describe-object
   project & module & object & #t
 end method describe-object;
 
-
+
 // General frame-related methods
 
 define method generate-frame-title
@@ -144,7 +144,7 @@ end method generate-frame-title;
 // ---*** What other general frame methods are there?
 
 
-
+
 // Module mixin
 
 // ---*** Do we want to allow people to enter object/module/library
@@ -155,7 +155,7 @@ end method generate-frame-title;
 // See above: explicit slot for frame-current-project.
 
 
-
+
 // Selection mixin
 
 // ---*** Can I use the default methods for frame-selection and
@@ -165,7 +165,7 @@ end method generate-frame-title;
 // GFs)?
 
 
-
+
 // Reuse mixin
 
 define sealed method frame-reusable?
@@ -211,7 +211,7 @@ define sealed method reinitialize-frame
 end method reinitialize-frame;
 
 
-
+
 // Help mixin
 
 // ---*** Anything to do here?  Maybe I just want a "Help" button?  Or

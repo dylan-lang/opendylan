@@ -4,7 +4,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method setup-ole-tests ()  
+define method setup-ole-tests ()
   OLE-initialize();
 end method setup-ole-tests;
 
@@ -12,7 +12,7 @@ define method cleanup-ole-tests ()
   OLE-uninitialize();
 end method cleanup-ole-tests;
 
-define suite custom-interface-suite 
+define suite custom-interface-suite
   (setup-function: setup-ole-tests,
    cleanup-function: cleanup-ole-tests)
   test custom-interface-test;

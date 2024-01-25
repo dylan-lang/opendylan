@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                           *
 * winuser.h -- USER procedure declarations, constant definitions and macros *
 *                                                                           *
-* 
+*
 *                                                                           *
 ****************************************************************************/
 define inline constant <HDWP> = <HANDLE>;

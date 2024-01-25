@@ -299,7 +299,7 @@ define interface-specification-suite llvm-builder-specification-suite ()
    => (<llvm-instruction>);
   function ins--extractvalue
       (<llvm-builder>, <llvm-value>, #"rest") => (<llvm-instruction>);
-  
+
   function ins--ret (<llvm-builder>, #"rest") => (<llvm-instruction>);
   function ins--br (<llvm-builder>, #"rest") => (<llvm-instruction>);
   function ins--switch

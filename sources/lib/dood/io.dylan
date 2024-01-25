@@ -14,7 +14,7 @@ define inline function dood-position (dood :: <dood>) => (res :: <address>)
   truncate/(position, $bytes-per-word);
 end function;
 
-define inline function dood-position-setter 
+define inline function dood-position-setter
     (value :: <address>, dood :: <dood>)
   audit(dood, "%dP%d\n", value);
   let new-position = value * $bytes-per-word;
@@ -44,7 +44,7 @@ define inline function dood-read-string-into!
   read-into!(dood-stream(dood), n, object)
 end function;
 
-define inline function dood-read-word-at 
+define inline function dood-read-word-at
     (dood :: <dood>, address :: <address>) => (res :: <dood-word>)
   dood-position(dood) := address;
   dood-read-machine-word(dood);
@@ -54,12 +54,12 @@ define function dood-read (dood :: <dood>) => (res :: <address>)
   as(<address>, dood-read-machine-word(dood))
 end function;
 
-define inline function dood-read-at 
+define inline function dood-read-at
     (dood :: <dood>, address :: <address>) => (res :: <address>)
   as(<address>, dood-read-word-at(dood, address))
 end function;
 
-define inline function dood-read-machine-word-at 
+define inline function dood-read-machine-word-at
     (dood :: <dood>, address :: <address>) => (res :: <dood-word>)
   dood-position(dood) := address;
   dood-read-machine-word(dood);
@@ -86,7 +86,7 @@ define inline function dood-write-string-at
 end function;
 */
 
-define inline function dood-write-word-at 
+define inline function dood-write-word-at
     (dood :: <dood>, value :: <dood-word>, address :: <address>)
   dood-position(dood) := address;
   dood-write-machine-word(dood, value);
@@ -96,13 +96,13 @@ define function dood-write (dood :: <dood>, value :: <integer>)
   dood-write-machine-word(dood, as(<dood-word>, value))
 end function;
 
-define inline function dood-write-at 
+define inline function dood-write-at
     (dood :: <dood>, value :: <integer>, address :: <address>)
   dood-write-word-at(dood, as(<dood-word>, value), address)
 end function;
 
 /* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
-define inline function dood-write-machine-word-at 
+define inline function dood-write-machine-word-at
     (dood :: <dood>, value :: <machine-word>, address :: <address>)
   dood-position(dood) := address;
   dood-write-machine-word(dood, value);

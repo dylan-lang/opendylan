@@ -19,7 +19,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Use explicit copy-down for efficiency
 
-define method prefer (any :: <virtual-register>, 
+define method prefer (any :: <virtual-register>,
                       real-list :: <list>)
   let pref-vect = any.virtual-register-colour-pref;
   for (real :: <real-register> in real-list)
@@ -35,7 +35,7 @@ define method prefer (any :: <virtual-register>,
   end;
 end;
 
-define method prefer (any :: <virtual-register>, 
+define method prefer (any :: <virtual-register>,
                       real-list :: <sequence>)
   let pref-vect = any.virtual-register-colour-pref;
   for (real :: <real-register> in real-list)
@@ -49,7 +49,7 @@ end;
 
 ////// A couple of small but useful thingies for rsets of real registers
 
-// NB. In the following functions, the name "list" is used for LW 
+// NB. In the following functions, the name "list" is used for LW
 // compatibility, and does not imply the technical Dylan meaning of <list>.
 
 // Use explicit copy-down for efficiency
@@ -82,7 +82,7 @@ end;
 
 define method rset-from-args (#rest args) => (set :: <integer>)
   rset-from-list(args);
-end; 
+end;
 
 define method list-from-register-vector
    (register-vector :: <vector>, rset :: <integer>) => (l :: <list>)
@@ -109,11 +109,11 @@ define method prset-from-list
   let call-in = backend.variables.compiling-call-in;
   if (call-in)
     for (item :: <real-register> in lst)
-      rset := logior(rset, item.real-register-c-preserved-mask) 
+      rset := logior(rset, item.real-register-c-preserved-mask)
     end for;
   else
     for (item :: <real-register> in lst)
-      rset := logior(rset, item.real-register-preserved-mask) 
+      rset := logior(rset, item.real-register-preserved-mask)
     end for;
   end if;
   rset;
@@ -126,11 +126,11 @@ define method prset-from-list
   let call-in = backend.variables.compiling-call-in;
   if (call-in)
     for (item :: <real-register> in lst)
-      rset := logior(rset, item.real-register-c-preserved-mask) 
+      rset := logior(rset, item.real-register-c-preserved-mask)
     end for;
   else
     for (item :: <real-register> in lst)
-      rset := logior(rset, item.real-register-preserved-mask) 
+      rset := logior(rset, item.real-register-preserved-mask)
     end for;
   end if;
   rset;
@@ -146,9 +146,9 @@ define method list-from-prset
                 else backend.registers.preserved-register-vector;
                 end if;
   for (reg :: <real-register> in reg-vec)
-    let mask = if (call-in) 
+    let mask = if (call-in)
                  reg.real-register-c-preserved-mask
-               else reg.real-register-preserved-mask 
+               else reg.real-register-preserved-mask
                end if;
     unless (logand(rset, mask) = 0)
       push!(reg, lst);
@@ -225,13 +225,13 @@ end;
 /***
 
 define method single-bit? (x :: <integer>)
-  member?(x, #[#x1, #x2, #x4, #x8, 
-	       #x10, #x20, #x40, #x80, 
+  member?(x, #[#x1, #x2, #x4, #x8,
+	       #x10, #x20, #x40, #x80,
                #x100, #x200, #x400, #x800,
-               #x1000, #x2000, #x4000, #x8000, 
-               #x10000, #x20000, #x40000, #x80000, 
-               #x100000, #x200000, #x400000, #x800000, 
-               #x1000000, #x2000000, #x4000000, #x8000000, 
+               #x1000, #x2000, #x4000, #x8000,
+               #x10000, #x20000, #x40000, #x80000,
+               #x100000, #x200000, #x400000, #x800000,
+               #x1000000, #x2000000, #x4000000, #x8000000,
                #x10000000, #x20000000, #x40000000, #x80000000]);
 end;
 

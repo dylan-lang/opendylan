@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $class-id = 
+define constant $class-id =
 	as(<REFIID>, "{08448350-265D-11D2-9A67-006097C90313}");
 
 define COM-interface <my-coclass-object> ( <simple-component-object> )
@@ -37,7 +37,7 @@ define variable *internal-server* :: <interface> = $null-interface;
 define variable *typelib* :: <interface> = $null-interface;
 define variable *xtypeinfo* :: <interface> = $null-interface;
 
-define test internal-coclass-test 
+define test internal-coclass-test
 		    (name: "internal-coclass-test",
 		     description: "test coclass with custom interfaces")
   AddRef($test-coclass-type-info);
@@ -46,10 +46,10 @@ define test internal-coclass-test
 	  *internal-server* := make(<my-coclass-object>,
 				    typeinfo: $test-coclass-type-info));
 
-  test-server(*internal-server*);  
+  test-server(*internal-server*);
 end test internal-coclass-test;
 
-define test typelib-test 
+define test typelib-test
 		    (name: "external-coclass-test",
 		     description: "test coclass in separate process")
 
@@ -73,7 +73,7 @@ define test typelib-test
 
     check-equal("get typeinfo from typelib",
 		begin
-		  let (status :: <HRESULT>, typeinfo :: <LPTYPEINFO>) = 
+		  let (status :: <HRESULT>, typeinfo :: <LPTYPEINFO>) =
 		    ITypeLib/GetTypeInfoOfGuid (*typelib*,
 						as(<REFIID>, $IID-IMonkey));
 		  *xtypeinfo* := typeinfo;
@@ -112,7 +112,7 @@ define test typelib-test
 end test typelib-test;
 
 
-define test external-coclass-test 
+define test external-coclass-test
 		    (name: "external-coclass-test",
 		     description: "test coclass in separate process")
 
@@ -130,7 +130,7 @@ define test external-coclass-test
     test-server(*remote-server*);
   end; // not null server
 end test external-coclass-test;
-
+
 
 define variable *the-server* :: <interface> = $null-interface;
 
@@ -204,7 +204,7 @@ define function test-server( server :: <LPUNKNOWN> ) => ()
       check-equal("set IDonkey/Size",
 		  IDonkey/Size(*remote-donkey*) := $arbitrary-number,
 		  $arbitrary-number);
-      
+
       check-equal("get IDonkey/Size",
 		  get-property(*remote-donkey*, "Size"),
 		  $arbitrary-number);

@@ -45,7 +45,7 @@ end protocol <<space-requirement>>;
 // 'floor(10 ^ floor(logn($maximum-integer, 10)) / 100)'
 define constant $fill :: <integer> = 100000;
 
-
+
 /// Simple space requirement classes
 
 define sealed class <null-space-requirement> (<space-requirement>)
@@ -254,7 +254,7 @@ define sealed method space-requirement-max-height
   sr.%max-height
 end method space-requirement-max-height;
 
-
+
 /// Complex space requirement classes
 
 // A space requirement that allocates enough room to hold the given label
@@ -418,7 +418,7 @@ define sealed method space-requirement-max-height
   h+
 end method space-requirement-max-height;
 
-
+
 /// Space requirement constructors
 
 define sealed method make
@@ -463,7 +463,7 @@ end method make;
 define sealed domain make (subclass(<space-requirement>));
 define sealed domain initialize (<space-requirement>);
 
-
+
 /// Space requirements arithmetic
 
 define method space-requirement-combine

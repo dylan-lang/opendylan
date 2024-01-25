@@ -147,7 +147,7 @@ define method OLE-part-insert-menus (obj :: <simple-server>,
  => (nedit :: <integer>, nobject :: <integer>, nhelp :: <integer>);
 
   InsertMenu(shared-menu, edit-position,
-	     logior($MF-BYPOSITION,$MF-POPUP), 
+	     logior($MF-BYPOSITION,$MF-POPUP),
 	     pointer-address(obj.server-app.app-color-menu),
 	     TEXT("&Color"));
   values(1, 0, 0)

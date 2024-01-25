@@ -42,7 +42,7 @@ define constant make-type-estimate = make;
 // Input to the typist.
 define constant <dfm-ref> = type-union(<computation>, <model-value>,
                                        <binding>, <value-reference>);
-
+
 ///
 /// [1] A theory of types.
 ///
@@ -101,7 +101,7 @@ define method print-message(te :: <type-estimate>, stream :: <stream>) => ()
   end
 end;
 
-
+
 ///
 /// [2] The algebra of types.
 ///
@@ -173,7 +173,7 @@ define function type-estimate-pseudosubtype?(te1 :: <type-estimate>,
     values(#f, #f)
   end
 end;
-
+
 ///
 /// [3] How to infer the types.
 ///

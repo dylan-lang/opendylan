@@ -42,7 +42,7 @@ define test test-block ()
 end test;
 
 define test test-case ()
-  check-equal("case stop when test is five = five", 
+  check-equal("case stop when test is five = five",
 	      case
 		(2 < 2)   => "2 less than 2";
 		(3 > 3)   => "3 greater than 3";
@@ -50,7 +50,7 @@ define test test-case ()
 		otherwise => "none of above";
 	      end case,
 	     "5 equals 5");
-  check-equal("case else clause is catch all", 
+  check-equal("case else clause is catch all",
 	      case
 		(2 < 2)   => "2 less than 2";
 		(3 > 3)   => "3 greater than 3";
@@ -58,25 +58,25 @@ define test test-case ()
 		otherwise => "none of above";
 	      end case,
 	      "none of above");
-  check-equal("case remaining tests not evaluated", 
+  check-equal("case remaining tests not evaluated",
 	      begin
 		let x = 0;
-		case 
+		case
 		  (100 = 100)        => #t;
 		  ((x := 100) = #()) => #f;
 		end case;
 		x
 	      end,
 	      0);
-  check-false("case returns false if no test evals to true", 
-	      case 
+  check-false("case returns false if no test evals to true",
+	      case
 		(2 = 3)   => 55;
 		(#t = #f) => 56;
 	      end case);
-  check-equal("case no consequents, returns 1st value of test case", 
+  check-equal("case no consequents, returns 1st value of test case",
 	      begin
 		let (a, b, c)
-		  = case 
+		  = case
 		      (3 = 2)         => #"foo";
 		      values(3, 4, 5) => ;
 		      otherwise       => #t;
@@ -84,7 +84,7 @@ define test test-case ()
 		list(a, b, c)
 	      end,
 	      #(3, #f, #f));
-  check-equal("case returns all values from last consequent", 
+  check-equal("case returns all values from last consequent",
 	      begin
 		let (a, b, c)
 		  = case
@@ -266,16 +266,16 @@ define test test-if ()
   check-equal("if empty-list",
               if (#()) #"true" else #"false" end if,
               #"true");
-  check-equal("if symbol", 
+  check-equal("if symbol",
               if (#"anything") #"true" else #"false" end if,
               #"true");
-  check-equal("if vector", 
+  check-equal("if vector",
               if (#[1, 2, 3]) #"true" else #"false" end if,
               #"true");
-  check-equal("if even 100", 
+  check-equal("if even 100",
               if (even?(100)) #"even" else #"odd" end if,
               #"even");
-  check-equal("if odd 100", 
+  check-equal("if odd 100",
               if (odd?(100)) #"true" else #"false" end if,
               #"false");
 end test test-if;
@@ -297,7 +297,7 @@ define test test-select ()
 	      "I wish you luck."
 	  end
         end;
-  check-equal("select simple", 
+  check-equal("select simple",
 	      select (3 + 2)
 	        1 => ;
 	        2 => ;
@@ -305,7 +305,7 @@ define test test-select ()
 	        otherwise => "none of above"
 	      end select,
 	      "5ish");
-  check-equal("select otherwise", 
+  check-equal("select otherwise",
 	      select (30 + 2)
 		1 => ;
 		2 => ;
@@ -313,27 +313,27 @@ define test test-select ()
 		otherwise => "none of above"
 	      end select,
 	      "none of above");
-  check-equal("select student art", 
+  check-equal("select student art",
 	      student(#"art"), "Don't quit your day job.");
-  check-equal("select student engineering", 
+  check-equal("select student engineering",
 	      student(#"engineering"), "Say, can you fix my VCR?");
-  check-equal("select student nursing", 
+  check-equal("select student nursing",
 	      student(#"nursing"), "I wish you luck.");
-  check-false("select if no consequents false", 
+  check-false("select if no consequents false",
 	      select (1 + 1)
 		1 => ;
 		2 => ;
 		5 => ;
 		otherwise => "none of above"
 	      end select);
-  check-false("select if no otherwise consequents false", 
+  check-false("select if no otherwise consequents false",
 	      select (1 + 99)
 	        1 => ;
 		2 => ;
                 5 => ;
 		otherwise =>
 	      end select);
-  check-equal("select returns multiple values", 
+  check-equal("select returns multiple values",
 	      begin
 		let (a, b, c)
 		  = select (3 + 2)
@@ -347,7 +347,7 @@ define test test-select ()
 		list(a, b, c)
 	      end,
 	      #(4, 5, 6));
-  check-equal("select returns last consequent", 
+  check-equal("select returns last consequent",
 	      select (999)
 		1, 2, 999 =>
 		  #"oops";
@@ -356,7 +356,7 @@ define test test-select ()
 		  #"ok"
 	      end select,
 	      #"ok");
-  check-equal("select otherwise returns last consequent", 
+  check-equal("select otherwise returns last consequent",
 	      select (999)
 		otherwise =>
 		  #"oops";
@@ -365,7 +365,7 @@ define test test-select ()
 		  #"ok"
 	      end select,
 	      #"ok");
-  check-equal("select by <", 
+  check-equal("select by <",
 	      select (10 + 5 by \<)
 		12, 12 + 1 =>
 		  "12 or 13";
@@ -377,7 +377,7 @@ define test test-select ()
  		  "99 or 100"
 	      end select,
 	      "15 or 16");
-  check-equal("select by < otherwise", 
+  check-equal("select by < otherwise",
 	      select (100 + 5 by \<)
 		12, 12 + 1 =>
 		  "12 or 13";
@@ -391,7 +391,7 @@ define test test-select ()
 		  "else";
 	      end select,
 	      "else");
-  check-equal("select by instance?", 
+  check-equal("select by instance?",
 	      select (5 by instance?)
 		<list> =>
 		  "list";
@@ -404,30 +404,30 @@ define test test-select ()
 end test test-select;
 
 define test test-unless ()
-  check-false("unless true", 
+  check-false("unless true",
 	      unless (#t) 1; 2; 3 end unless);
-  check-false("unless even 100", 
+  check-false("unless even 100",
 	      unless (even?(100)) 1; 2; 3 end unless);
-  check-equal("unless true doesnt exec body", 
+  check-equal("unless true doesnt exec body",
 	      begin
 		let x = 0;
 		unless (#t) x := 100; #"oops"; #"oops" end unless;
 		x
 	      end,
 	      0);
-  check-equal("unless false does exec body", 
+  check-equal("unless false does exec body",
 	      begin
 		let x = 0;
 		unless (#f) x := 100; #"oops"; #"oops" end unless;
 		x
 	      end,
 	      100);
-  check-equal("unless returns ok", 
+  check-equal("unless returns ok",
 	      unless (#f) #"ok" end, #"ok");
-  check-equal("unless returns last", 
+  check-equal("unless returns last",
 	      unless (#f) #"oops"; #"oops"; #"oops"; #"oops"; #"ok" end,
 	      #"ok");
-  check-false("unless no forms returns false", 
+  check-false("unless no forms returns false",
 	      unless (#t) end);
 end test test-unless;
 
@@ -439,7 +439,7 @@ define test test-while ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Function macro suite
 
 define test test-colon-equal ()
@@ -471,56 +471,56 @@ define test test-colon-equal ()
 end test test-colon-equal;
 
 define test test-or ()
-  check-equal("or simple numbers", 
+  check-equal("or simple numbers",
               1 | 2 | 3,
-              1); 
-  check-equal("or with simple predicates", 
-              even?(3) | zero?(2) | 0, 
+              1);
+  check-equal("or with simple predicates",
+              even?(3) | zero?(2) | 0,
               0);
-  check-false("or none true then false", 
+  check-false("or none true then false",
 	      even?(3) | odd?(2) | zero?(-1));
-  check-equal("or nothing evaled after one returns true", 
+  check-equal("or nothing evaled after one returns true",
 	      begin
 		let x = 0;
 		#f | 1 | (x := 999);
 		x
 	      end,
 	      0);
-  check-equal("or multiple values before last first val returned", 
+  check-equal("or multiple values before last first val returned",
 	      begin
 		let (a, b, c) = values(1, 2, 3) | #f;
 		list(a, b, c);
 	      end,
 	      #(1, #f, #f));
-  check-equal("or multiple values in last, all vals returned", 
+  check-equal("or multiple values in last, all vals returned",
 	      begin
 		let (a, b, c) = #f | values(1, 2, 3);
 		list(a, b, c)
 	      end,
 	      #(1, 2, 3));
-  check-equal("or 1st value only thing that matters to judge truth", 
+  check-equal("or 1st value only thing that matters to judge truth",
 	      (even?(1) | values(#f, #t) | 3), 3);
 end test test-or;
 
 define test test-and ()
   check-equal("and simple number",
               1 & 2 & 3,
-              3); 
-  check-false("and with simple predicate", 
+              3);
+  check-false("and with simple predicate",
 	      1 & 2 & even?(3));
-  check-equal("and multiple values as last form returns all vals", 
+  check-equal("and multiple values as last form returns all vals",
 	      begin
 		let (a, b, c) = 1 & 2 & values(1, #f, 3);
 		list(a, b, c)
 	      end,
 	      #(1, #f, 3));
-  check-equal("and 1st value only thing that matters to judge truth", 
+  check-equal("and 1st value only thing that matters to judge truth",
 	      begin
 		let (a, b, c) = values(1, #f, 3) & 1 & 2;
 		list(a, b, c);
 	      end,
 	      #(2, #f, #f));
-  check-equal("and things past 1st false don't get evaled", 
+  check-equal("and things past 1st false don't get evaled",
 	      begin
 		let x = 0;
 		values(1, #f) & values(#f, 1) & (x := 999);
@@ -529,7 +529,7 @@ define test test-and ()
 	      0);
 end test test-and;
 
-
+
 /// Definer tests
 
 define test test-define-class ()
@@ -586,4 +586,4 @@ define suite dylan-macros-test-suite ()
   test test-define-method;
   test test-define-module;
   test test-define-variable;
-end suite dylan-macros-test-suite;    
+end suite dylan-macros-test-suite;

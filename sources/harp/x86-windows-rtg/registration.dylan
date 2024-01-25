@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define macro win32-runtime-primitive-definer
-  { define ?adjectives:* win32-runtime-primitive ?:name 
+  { define ?adjectives:* win32-runtime-primitive ?:name
       ?body:*
     end }
     => {
@@ -22,7 +22,7 @@ define macro win32-runtime-primitive-definer
 end macro;
 
 define macro win32-API-runtime-primitive-definer
-  { define ?adjectives:* win32-API-runtime-primitive ?:name 
+  { define ?adjectives:* win32-API-runtime-primitive ?:name
         (?win-name:expression, ?index:expression)
       ?body:*
     end }

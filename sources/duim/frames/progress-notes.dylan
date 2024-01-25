@@ -157,7 +157,7 @@ define method note-progress-in-phases
   end
 end method note-progress-in-phases;
 
-
+
 /// Default implementation of progress notes, using the status bar
 
 define method raise-progress-note

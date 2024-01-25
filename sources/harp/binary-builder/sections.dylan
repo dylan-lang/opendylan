@@ -11,7 +11,7 @@ define constant $code-section           = ".text";     // Code
 define constant $init-code-section      = ".text$i";   // Initialization code
 define constant $elf-init-code-section  = ".init";     // SO initialization code
 define constant $elf-fini-code-section  = ".fini";     // SO finalization code
-define constant $untraced-objs-section  = ".dyutr$m";  // Untraced Dylan objects 
+define constant $untraced-objs-section  = ".dyutr$m";  // Untraced Dylan objects
 define constant $untraced-data-section  = ".dyutr$r";  // Untraced random data
 define constant $data-section           = ".dydat$m";  // Ambiguously traced data
 define constant $data-start-section     = ".dydat$a";
@@ -48,13 +48,13 @@ define constant $obj-file-start-untraced-objs-symbol = "_dylan_untraced_objs_sta
 define constant $obj-file-start-untraced-data-symbol = "_dylan_untraced_data_start";
 
 
-define function ensure-optional-section  
-    (builder :: <binary-builder>, 
+define function ensure-optional-section
+    (builder :: <binary-builder>,
      optional-section :: false-or(<section-with-fixups>),
-     section-name :: <byte-string>, 
+     section-name :: <byte-string>,
      start-symbol :: <byte-string>)
     => (section-with-fixups :: <section-with-fixups>)
-  let section-with-fixups :: <section-with-fixups> = 
+  let section-with-fixups :: <section-with-fixups> =
     if (optional-section)
       builder.current-section := optional-section.actual-section;
       optional-section;
@@ -69,8 +69,8 @@ define function ensure-optional-section
 end function;
 
 
-define function ensure-code-section  
-    (builder :: <binary-builder>, 
+define function ensure-code-section
+    (builder :: <binary-builder>,
      optional-section :: false-or(<binary-section>),
      section-name :: <byte-string>,
      code-item-increment)
@@ -87,7 +87,7 @@ define function ensure-code-section
 end function;
 
 
-define function select-dylan-section 
+define function select-dylan-section
     (builder :: <binary-builder>, section :: <symbol>,
      code-item-increment) => ()
   if (*dll-support*)
@@ -108,34 +108,34 @@ define function select-dylan-section
         builder.elf-fini-code-section
           := ensure-code-section(builder, builder.elf-fini-code-section,
                                  $elf-fini-code-section, code-item-increment);
-      #"data", #"ambiguous-data" => 
+      #"data", #"ambiguous-data" =>
         builder.optional-data-section
-          := ensure-optional-section(builder, builder.optional-data-section, 
+          := ensure-optional-section(builder, builder.optional-data-section,
                                      $data-section,
                                      $obj-file-start-data-symbol);
       #"objects" =>
         builder.optional-objs-section
-          := ensure-optional-section(builder, builder.optional-objs-section, 
+          := ensure-optional-section(builder, builder.optional-objs-section,
                                      $objs-section,
                                      $obj-file-start-objs-symbol);
       #"variables" =>
         builder.optional-vars-section
-          := ensure-optional-section(builder, builder.optional-vars-section, 
+          := ensure-optional-section(builder, builder.optional-vars-section,
                                      $vars-section,
                                      $obj-file-start-vars-symbol);
       #"untraced-objects" =>
         builder.optional-untraced-objs-section
           := ensure-optional-section(builder,
-                                     builder.optional-untraced-objs-section, 
+                                     builder.optional-untraced-objs-section,
                                      $untraced-objs-section,
                                      $obj-file-start-untraced-objs-symbol);
       #"untraced-data" =>
         builder.optional-untraced-data-section
           := ensure-optional-section(builder,
-                                     builder.optional-untraced-data-section, 
+                                     builder.optional-untraced-data-section,
                                      $untraced-data-section,
                                      $obj-file-start-untraced-data-symbol);
-      otherwise => 
+      otherwise =>
         select-data-section(builder, as(<string>, section));
         builder.current-fixups := #f;
         builder.id-current-fixups := #f;
@@ -156,7 +156,7 @@ define method select-data-section (builder :: <binary-builder>, name :: <byte-st
 end method;
 
 
-define method select-code-section 
+define method select-code-section
     (builder :: <binary-builder>, name :: <byte-string>, code-item-increment) => ()
   select-binary-section(builder, name, alignment: code-item-increment,
 			flags: if (name = $init-code-section)
@@ -170,12 +170,12 @@ end method;
 //
 // The slot "raw-section-size" in a <binary-section> is used as a fill pointer into
 // <byte-vector> in the "section-data" slot.  When we want to add more data, we
-// have to first check to see if we need a bigger <byte-vector>. In effect, the 
+// have to first check to see if we need a bigger <byte-vector>. In effect, the
 // <binary-section> objects is itself being used as a stretchy vector. The management
 // for all this happens here.
 
 
-define method ensure-size-of-section-data 
+define method ensure-size-of-section-data
     (section :: <binary-section>, len :: <integer>)
   let data = section.section-data;
   let curr-len = data.size;
@@ -192,26 +192,26 @@ define method ensure-size-of-section-data
 end method;
 
 
-define open generic  current-position 
+define open generic  current-position
     (section :: <binary-section>) => (pos :: <integer>);
 
-define open generic current-position-setter 
+define open generic current-position-setter
     (new-pos :: <integer>, section :: <binary-section>) => (pos :: <integer>);
 
-define method current-position 
+define method current-position
     (section :: <binary-section>) => (pos :: <integer>)
   section.raw-data-size;
 end method;
 
 
-define method current-position-setter 
+define method current-position-setter
     (new-pos :: <integer>, section :: <binary-section>) => (pos :: <integer>)
   ensure-size-of-section-data(section, new-pos);
   section.raw-data-size := new-pos;
 end method;
 
 
-define method bytes-for-realignment 
+define method bytes-for-realignment
       (pos :: <integer>, alignment :: <integer>) => (padding :: <integer>)
   let excess = modulo(pos, alignment);
   if (excess == 0) 0 else alignment - excess end if;
@@ -223,8 +223,8 @@ define open generic fill-section-data
      => ();
 
 define method align-section-data
-     (section :: <binary-section>, 
-      #key alignment = section.section-alignment, fill = 0) 
+     (section :: <binary-section>,
+      #key alignment = section.section-alignment, fill = 0)
      => ()
   let pos = section.current-position;
   let padding = bytes-for-realignment(pos, alignment);
@@ -236,19 +236,19 @@ define method align-section-data
 end method;
 
 
-define method select-binary-section 
+define method select-binary-section
     (builder :: <binary-builder>, section-name :: <byte-string>,
      #key alignment = 4, flags = init-flags(builder)) => ()
   builder.current-section :=
     share-or-create(builder.binary-file.sections, section-name, unsupplied(),
                     method ()
-                      make-binary-section(builder, section-name, 
+                      make-binary-section(builder, section-name,
                                         alignment, flags);
                     end method);
 end method;
 
-define open generic  make-binary-section 
-    (builder :: <binary-builder>, name :: <byte-string>, 
+define open generic  make-binary-section
+    (builder :: <binary-builder>, name :: <byte-string>,
      alignment :: <integer>, flags)
     => (new :: <binary-section>);
 
@@ -277,14 +277,14 @@ define open generic add-word-to-section
 define open generic add-short-to-section
     (section :: <binary-section>, data) => ();
 
-define open generic add-byte-to-section 
+define open generic add-byte-to-section
     (section :: <binary-section>, data :: <integer>) => ();
 
-define open generic add-string-to-section 
+define open generic add-string-to-section
     (section :: <binary-section>, string :: <byte-string>) => ();
 
 
-define method add-integer-data 
+define method add-integer-data
     (builder :: <binary-builder>,
      data :: <abstract-integer>,
      #key section = builder.current-section)
@@ -301,25 +301,25 @@ define method add-integer-data-short
 end method;
 
 define method add-data-byte
-    (builder :: <binary-builder>, data :: <integer>, 
+    (builder :: <binary-builder>, data :: <integer>,
      #key section = builder.current-section)
     => ()
   add-byte-to-section(section, data);
 end method;
 
 define method add-data-byte
-    (builder :: <binary-builder>, char :: <character>, 
+    (builder :: <binary-builder>, char :: <character>,
      #key section = builder.current-section)
     => ()
   add-byte-to-section(section, as(<integer>, char));
 end method;
 
-define open generic add-data 
+define open generic add-data
     (builder :: <binary-builder>, data, model-object,
      #key section = builder.current-section)
     => ();
 
-define method add-data 
+define method add-data
     (builder :: <binary-builder>,
      data :: <abstract-integer>, model-object,
      #key section = builder.current-section)
@@ -328,7 +328,7 @@ define method add-data
 end method;
 
 define method add-data-string
-    (builder :: <binary-builder>, string :: <byte-string>, 
+    (builder :: <binary-builder>, string :: <byte-string>,
      #key section = builder.current-section)
     => ()
   add-string-to-section(section, string);

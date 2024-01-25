@@ -209,7 +209,7 @@ define sealed method method-generic-function
                               compiler-object-proxy: definition)
 end method method-generic-function;
 
-
+
 /// Definition level functions
 //
 // Note: we use <definition> as the discriminator as there is no other
@@ -258,7 +258,7 @@ define sealed method method-definition-generic-definition
   end
 end method method-definition-generic-definition;
 
-
+
 /// ID handling
 
 define sealed method find-compiler-database-proxy

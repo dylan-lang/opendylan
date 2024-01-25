@@ -447,7 +447,7 @@ define side-effect-free stateless dynamic-extent auxiliary &runtime-primitive-de
   op--global-mv-struct(be, primary, count-trunc)
 end;
 
-
+
 /// values primitive
 
 define side-effect-free stateless dynamic-extent mapped-parameter &primitive-descriptor primitive-values

@@ -667,7 +667,7 @@ define method uninstall-form-models (form :: <variable-defining-form>)
   end for;
 end method;
 
-
+
 ////////////////////////////////////////////////////////////////////////////
 //
 // Triggering.
@@ -1074,7 +1074,7 @@ define function trigger-name-dependents (binding :: <module-binding>,
 end function;
 
 
-
+
 define function retract-compilation-record-dependencies
     (cr :: <compilation-record>, stages :: <stage-mask>)
   let table = cr.compilation-record-dependency-table;
@@ -1199,7 +1199,7 @@ define function dep-conditions-stages
          else stage$1-mask end)
 end function;
 
-
+
 // DEBUG only
 define function dependency-conditions-name (conditions :: <dep-conditions>)
   let str = #f;

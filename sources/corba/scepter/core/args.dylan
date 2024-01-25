@@ -144,7 +144,7 @@ define method scepter-initialize-options (scepter :: <scepter>) => ()
     if (init-callback) init-callback(option, scepter) end;
   end for;
 end method;
-        
+
 define method scepter-find-option (scepter :: <scepter>, arg-name :: <string>)
  => (option :: false-or(<scepter-option>), rest :: false-or(<string>))
   let option = element(*scepter-options*, as(<symbol>, arg-name), default: #f)

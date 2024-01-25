@@ -27,7 +27,7 @@ define protocol <<path-graphics-protocol>> ()
   function curve-to (drawable :: <drawable>, x1, y1, x2, y2, x3, y3) => (record);
 end protocol <<path-graphics-protocol>>;
 
-
+
 /// START-PATH
 
 define method start-path
@@ -42,7 +42,7 @@ define method start-path
   start-path(sheet-medium(sheet))
 end method start-path;
 
-
+
 /// END-PATH
 
 define method end-path
@@ -57,7 +57,7 @@ define method end-path
   end-path(sheet-medium(sheet))
 end method end-path;
 
-
+
 /// ABORT-PATH
 
 define method abort-path
@@ -72,7 +72,7 @@ define method abort-path
   abort-path(sheet-medium(sheet))
 end method abort-path;
 
-
+
 /// CLOSE-PATH
 
 define method close-path
@@ -87,7 +87,7 @@ define method close-path
   close-path(sheet-medium(sheet))
 end method close-path;
 
-
+
 /// STROKE-PATH
 
 define method stroke-path
@@ -102,7 +102,7 @@ define method stroke-path
   stroke-path(sheet-medium(sheet), filled?: filled?)
 end method stroke-path;
 
-
+
 /// FILL-PATH
 
 define method fill-path
@@ -117,7 +117,7 @@ define method fill-path
   fill-path(sheet-medium(sheet))
 end method fill-path;
 
-
+
 /// CLIP-FROM-PATH
 
 define method clip-from-path
@@ -132,7 +132,7 @@ define method clip-from-path
   clip-from-path(sheet-medium(sheet), function: function)
 end method clip-from-path;
 
-
+
 /// SAVE-CLIPPING-REGION
 
 define method save-clipping-region
@@ -147,7 +147,7 @@ define method save-clipping-region
   save-clipping-region(sheet-medium(sheet))
 end method save-clipping-region;
 
-
+
 /// RESTORE-CLIPPING-REGION
 
 define method restore-clipping-region
@@ -162,7 +162,7 @@ define method restore-clipping-region
   restore-clipping-region(sheet-medium(sheet))
 end method restore-clipping-region;
 
-
+
 /// MOVE-TO
 
 define method move-to
@@ -182,7 +182,7 @@ define function move-to*
   move-to(medium, point-x(point), point-y(point))
 end function move-to*;
 
-
+
 /// LINE-TO
 
 define method line-to
@@ -202,7 +202,7 @@ define function line-to*
   line-to(medium, point-x(point), point-y(point))
 end function line-to*;
 
-
+
 /// ARC-TO
 
 define method arc-to
@@ -237,7 +237,7 @@ define function arc-to*
         radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
 end function arc-to*;
 
-
+
 /// CURVE-TO
 
 define method curve-to

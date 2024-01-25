@@ -11,7 +11,7 @@ define c-fun runtime-external ExitProcess-ref    = "exit";
 
 define used-by-client unix-runtime-primitive exit-application
   // On entry: raw-int-status
-  //    
+  //
   // On exit: entire process is terminated
   arg0 status;
 

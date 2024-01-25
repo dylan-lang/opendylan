@@ -19,7 +19,7 @@ define method register-vector-on-connection
           let enum-code :: <integer> =
             nub-get-register-enumeration-code(conn.connection-process, r);
           let register-name = make (<byte-string>, size: name-length);
-          nub-get-register-name 
+          nub-get-register-name
             (conn.connection-process, r, name-length, register-name);
           let reg = make (<unassigned-remote-register>,
                           descriptor: r,
@@ -40,11 +40,11 @@ define method register-vector-on-connection
   let register-vector =
     make (<vector>, size: (last-register - first-register + 1));
   for (i from first-general to last-general)
-    register-vector[i - 1] := 
+    register-vector[i - 1] :=
       nub-register-descriptor (#"general", i);
   end for;
   for (i from first-special to last-special)
-    register-vector[i - 1] := 
+    register-vector[i - 1] :=
       nub-register-descriptor (#"special", i);
   end for;
   register-vector;
@@ -53,11 +53,11 @@ end method;
 
 ///// READ-VALUE
 
-define method read-value-from-register 
+define method read-value-from-register
     (conn :: <local-access-connection>, register :: <active-remote-register>,
      #key frame-index = #f)
       => (val :: <remote-value>)
-  let (value, error) = 
+  let (value, error) =
     if (frame-index)
       nub-read-value-from-process-register-in-stack-frame
          (conn.connection-process, register.register-thread.nub-descriptor,
@@ -75,7 +75,7 @@ define method read-value-from-register
   value;
 end method;
 
-define method read-value-from-memory 
+define method read-value-from-memory
     (conn :: <local-access-connection>, location :: <remote-value>)
       => (val :: <remote-value>)
   let (value, error) =
@@ -90,11 +90,11 @@ end method;
 
 ///// WRITE-VALUE
 
-define method write-value-to-register 
+define method write-value-to-register
     (conn :: <local-access-connection>,
      register :: <active-remote-register>,
      value :: <remote-value>) => ()
-  let err = 
+  let err =
     nub-write-value-to-process-register
     (conn.connection-process,
      register.register-thread.nub-descriptor,
@@ -105,7 +105,7 @@ define method write-value-to-register
   end if;
 end method;
 
-define method write-value-to-memory 
+define method write-value-to-memory
     (conn :: <local-access-connection>, address :: <remote-value>,
      value :: <remote-value>) => ()
   let err =
@@ -118,11 +118,11 @@ end method;
 
 ///// READ-SINGLE-FLOAT
 
-define method read-single-float-from-register 
+define method read-single-float-from-register
     (conn :: <local-access-connection>,
      register :: <active-remote-register>)
        => (val :: <single-float>)
-  let (value, error) = 
+  let (value, error) =
     nub-read-single-float-from-process-register
       (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor);
   if (error ~= $access-ok)
@@ -131,7 +131,7 @@ define method read-single-float-from-register
   value;
 end method;
 
-define method read-single-float-from-memory 
+define method read-single-float-from-memory
     (conn :: <local-access-connection>, location :: <remote-value>)
        => (val :: <single-float>)
   let (value, error) =
@@ -145,13 +145,13 @@ end method;
 
 ///// WRITE-SINGLE-FLOAT
 
-define method write-single-float-to-register 
-    (conn :: <local-access-connection>, 
+define method write-single-float-to-register
+    (conn :: <local-access-connection>,
      register :: <active-remote-register>,
-     value :: <single-float>) 
+     value :: <single-float>)
        => ()
-  let error = 
-    nub-write-single-float-to-process-register 
+  let error =
+    nub-write-single-float-to-process-register
       (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor,
        value);
   if (error ~= $access-ok)
@@ -159,9 +159,9 @@ define method write-single-float-to-register
   end if
 end method;
 
-define method write-single-float-to-memory 
+define method write-single-float-to-memory
     (conn :: <local-access-connection>, address :: <remote-value>,
-     value :: <single-float>) 
+     value :: <single-float>)
        => ()
   let error =
     nub-write-single-float-to-process-memory (conn.connection-process, address, value);
@@ -173,12 +173,12 @@ end method;
 
 ///// READ-DOUBLE-FLOAT
 
-define method read-double-float-from-register 
+define method read-double-float-from-register
     (conn :: <local-access-connection>,
      register :: <active-remote-register>)
        => (val :: <double-float>)
-  let (value, error) = 
-    nub-read-double-float-from-process-register 
+  let (value, error) =
+    nub-read-double-float-from-process-register
       (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor);
   if (error ~= $access-ok)
     signal (make (<remote-access-violation-error>));
@@ -186,7 +186,7 @@ define method read-double-float-from-register
   value;
 end method;
 
-define method read-double-float-from-memory 
+define method read-double-float-from-memory
     (conn :: <local-access-connection>, location :: <remote-value>)
        => (val :: <double-float>)
   let (value, error) =
@@ -200,13 +200,13 @@ end method;
 
 ///// WRITE-DOUBLE-FLOAT
 
-define method write-double-float-to-register 
-    (conn :: <local-access-connection>, 
+define method write-double-float-to-register
+    (conn :: <local-access-connection>,
      register :: <active-remote-register>,
-     value :: <double-float>) 
+     value :: <double-float>)
        => ()
-  let error = 
-    nub-write-double-float-to-process-register 
+  let error =
+    nub-write-double-float-to-process-register
       (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor,
        value);
   if (error ~= $access-ok)
@@ -214,9 +214,9 @@ define method write-double-float-to-register
   end if
 end method;
 
-define method write-double-float-to-memory 
+define method write-double-float-to-memory
     (conn :: <local-access-connection>, address :: <remote-value>,
-     value :: <double-float>) 
+     value :: <double-float>)
        => ()
   let error =
     nub-write-double-float-to-process-memory (conn.connection-process, address, value);
@@ -228,7 +228,7 @@ end method;
 
 ///// READ-BYTE-STRING
 
-define method read-byte-string-from-memory 
+define method read-byte-string-from-memory
    (conn :: <local-access-connection>, address :: <remote-value>,
     length :: <integer>)
       => (val :: <byte-string>)
@@ -266,7 +266,7 @@ end method;
 //    1 remote-value below the top of the stack, etc...
 
 define method calculate-stack-address-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>, 
+    (conn :: <local-access-connection>, thread :: <remote-thread>,
      offset :: <integer>)
        => (addr :: <remote-value>)
   nub-calculate-stack-address
@@ -341,7 +341,7 @@ end method;
 //    semantics. This is used by the interactive downloader.
 
 define method perform-coff-relocation-on-connection
-    (conn :: <local-access-connection>, 
+    (conn :: <local-access-connection>,
      ra :: <remote-value>, da :: <remote-value>,
      #key relative? = #f)
        => (worked? :: <boolean>)

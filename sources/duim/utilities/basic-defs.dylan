@@ -18,7 +18,7 @@ define function duim-debug-message
   end
 end function duim-debug-message;
 
-
+
 /// Numeric constants
 
 // Various forms of pi, as single floats
@@ -26,7 +26,7 @@ define constant $pi   :: <single-float> = $single-pi;
 define constant $2pi  :: <single-float> = $single-pi * 2;
 define constant $pi/2 :: <single-float> = $single-pi / 2;
 
-
+
 /// Simpler table accessors
 
 define function gethash
@@ -48,7 +48,7 @@ define inline function remhash (table :: <table>, key) => ()
   remove-key!(table, key)
 end function remhash;
 
-
+
 /// New table subclass
 
 // This hashes objects as normal, except for <string>s, which compare and
@@ -77,7 +77,7 @@ define sealed method table-protocol
          end)
 end method table-protocol;
 
-
+
 /// Sequence hacking
 
 define inline function substitute! (sequence, old, new) => (sequence)
@@ -223,7 +223,7 @@ define sealed method position
   primitive-position(string, item, test: test, start: _start, end: _end)
 end method position;
 
-
+
 /// Array hacking
 
 // Makes and fills a 2d-array from contents, which is a sequence of sequences
@@ -259,7 +259,7 @@ define method fill-array!
   array
 end method fill-array!;
 
-
+
 /// Conditions
 
 define function warn (format-string :: <string>, #rest format-args) => ()

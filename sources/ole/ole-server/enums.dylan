@@ -78,7 +78,7 @@ define method enum-set-next( dest-ptr :: <C-int*>,
   pointer-value(dest-ptr) := source;
 end method;
 
-
+
 
 define COM-interface <CEnumFORMATETC> ( <IEnumFORMATETC>, <CEnumXXXX> )
 end <CEnumFORMATETC>;

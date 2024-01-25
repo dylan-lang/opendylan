@@ -46,7 +46,7 @@ define open abstract class <multiple-child-composite-pane>
      <basic-composite-pane>)
 end class <multiple-child-composite-pane>;
 
-
+
 /// Base class for concrete panes
 
 define open abstract class <single-child-wrapping-pane>
@@ -167,7 +167,7 @@ define macro pane-layout-definer
     => { define pane-layout ?class (?superclasses) ?more-slots end; }
 end macro pane-layout-definer;
 
-
+
 /// Top level sheets
 
 //--- Maybe we should define <top-level-sheet> in Duim-Sheets, and
@@ -244,7 +244,7 @@ define sideways method relayout-parent
   end
 end method relayout-parent;
 
-
+
 /// Simple user panes
 
 define open generic pane-display-function

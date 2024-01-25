@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for common dialog boxes
 	   corresponding to "COMMDLG.H" and "COMDLG32.DLL"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

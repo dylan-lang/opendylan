@@ -47,7 +47,7 @@ define test menu-parents-test ()
   frame
 end test menu-parents-test;
 
-
+
 /// Menu box pane testing
 
 define method test-menu-box-panes-buttons ()
@@ -71,7 +71,7 @@ define test menu-box-panes-test ()
 end test menu-box-panes-test;
 
 
-
+
 /// Define the menus test suite
 
 define suite duim-menus-suite ()

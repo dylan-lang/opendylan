@@ -47,7 +47,7 @@ define class <function-expression> (<debugger-expression>)
   constant slot function-expression :: <simple-expression>,
     required-init-keyword: function:;
 
-  constant 
+  constant
     slot function-arguments-list :: <sequence>, // of <simple-expression>
     required-init-keyword: arguments:;
 
@@ -196,7 +196,7 @@ define method evaluate-simple-expression
       hex-string[i] := hex-string-with-zero-x[i + 2];
     end for;
     expression.expression-evaluated? := #t;
-    expression.expression-value := 
+    expression.expression-value :=
       string-as-remote-value(application.debug-target-access-path,
                              hex-string,
                              16);
@@ -232,10 +232,10 @@ define method evaluate-simple-expression
 end method;
 
 define method evaluate-simple-expression
-  (application :: <application>, 
+  (application :: <application>,
    expression :: <dylan-keyword-literal-expression>) => ()
   unless (expression.expression-evaluated?)
-    let keyword-address = 
+    let keyword-address =
       resolve-dylan-keyword(application,
         generate-actual-keyword(expression.literal-token));
     if (keyword-address)
@@ -280,7 +280,7 @@ define method evaluate-simple-expression
 end method;
 
 define method evaluate-simple-expression
-  (application :: <application>, 
+  (application :: <application>,
    expression :: <empty-list-literal-expression>)
      => ()
   unless (expression.expression-evaluated?)
@@ -314,7 +314,7 @@ define method evaluate-simple-expression
               live-frame-lexical-variables(*open-application*, fr);
             limit := size(live-variables);
             while ((~found) & (i < limit))
-              let lexname = 
+              let lexname =
                 mangle-local-dylan-name
                   (as-lowercase(expression.literal-token.representation));
               if ((lexname = live-variables[i].lexical-variable-name) |
@@ -324,7 +324,7 @@ define method evaluate-simple-expression
                 expression.expression-evaluated? := #t;
                 expression.expression-value := live-values[i];
                 expression.expression-has-lvalue? := #t;
-                expression.expression-lvalue := 
+                expression.expression-lvalue :=
                   live-variables[i].lexical-variable-address;
               else
                 i := i + 1;
@@ -341,7 +341,7 @@ define method evaluate-simple-expression
   (application :: <application>, expression :: <register-literal-expression>)
     => ()
   let found-register = #f;
-  let regname = 
+  let regname =
     generate-actual-register-name(expression.literal-token);
 
   local method set-if-correct (r :: <unassigned-remote-register>)
@@ -354,7 +354,7 @@ define method evaluate-simple-expression
     do-registers(set-if-correct, application.debug-target-access-path);
     if (found-register)
       if (application.stopped-thread)
-        let reg-active = 
+        let reg-active =
           active-register(application.debug-target-access-path,
                           select-most-appropriate-thread(application),
                           found-register);
@@ -395,8 +395,8 @@ define method evaluate-simple-expression
           end if;
         end method;
 
-  local method found-on-stack? () => (well? :: <boolean>)    
-          let found-it? = #f;              
+  local method found-on-stack? () => (well? :: <boolean>)
+          let found-it? = #f;
           if (size(*open-application*.current-stack) > 0)
             let i = *open-application*.current-frame-index;
             if (i > 0)
@@ -412,7 +412,7 @@ define method evaluate-simple-expression
   unless (expression.expression-evaluated?)
     (expression.lookup-in-stack? & found-on-stack?()) |
     block ()
-      let sym = 
+      let sym =
         if (expression.dll-context)
           symbol-table-find-symbol(application.debug-target-symbol-table,
                                    expression.symbol,
@@ -432,7 +432,7 @@ define method evaluate-simple-expression
 end method;
 
 define method evaluate-simple-expression
-  (application :: <application>, 
+  (application :: <application>,
    expression :: <dylan-symbolic-name-expression>)
      => ()
 
@@ -478,7 +478,7 @@ define method evaluate-simple-expression
                                  context, indirect?: #f)
             end if;
           if (direct-val & direct-address)
-            let (sv, sa) = 
+            let (sv, sa) =
               thread-localise-if-necessary(expression.symbol, context,
                                            direct-val, direct-address);
             expression.expression-evaluated? := #t;
@@ -503,7 +503,7 @@ define method evaluate-simple-expression
                                  context, indirect?: #t)
             end if;
           if (indirect-val & indirect-address)
-            let (sv, sa) = 
+            let (sv, sa) =
               thread-localise-if-necessary(expression.symbol, context,
                                            indirect-val, indirect-address);
             expression.expression-evaluated? := #t;
@@ -552,8 +552,8 @@ define method evaluate-simple-expression
           end if;
         end method;
 
-  local method found-on-stack? () => (well? :: <boolean>)    
-          let found-it? = #f;              
+  local method found-on-stack? () => (well? :: <boolean>)
+          let found-it? = #f;
           if (size(*open-application*.current-stack) > 0)
             let i = *open-application*.current-frame-index;
             if (i > 0)
@@ -582,7 +582,7 @@ define method evaluate-simple-expression
         if (found-static-in-this-context?(context) |
             found-dynamic-in-this-context?(context))
           debugger-message("NB: Using the value of %s in %s:%s",
-                           expression.symbol, 
+                           expression.symbol,
                            context.context-module,
                            context.context-library);
           return(#t);
@@ -657,8 +657,8 @@ define method compute-general-breakpoint-targets
       let method-list = dylan-generic-function-methods(application, value);
       targets := make(<vector>, size: method-list.size);
       objects := make(<vector>, size: method-list.size);
-      bp-types := make(<vector>, 
-                       size: method-list.size, 
+      bp-types := make(<vector>,
+                       size: method-list.size,
                        fill: #"dylan-method-iep");
       for (i from 0 below method-list.size)
         let (signature, breakpoint-address, dummy) =

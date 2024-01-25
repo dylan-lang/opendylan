@@ -110,7 +110,7 @@ end method Create;
 
 define method initialize (this :: <CSimpSvrDoc>, #key lpApp :: <CSimpSvrApp>,
 			  hWnd :: <HWND>, #all-keys ) => ();
-	
+
   OutputDebugString("In CSimpSvrDoc's Constructor\r\n");
   next-method();
 
@@ -227,11 +227,11 @@ end method lResizeDoc;
 
 
 define method PaintDoc(this :: <CSimpSvrDoc>, hDC :: <HDC>) => ();
-	
+
   // if the object hasn't been created yet, then don't draw
   unless ( null?(this.m-lpObj) )
-    Draw(this.m-lpObj, hDC, #f ); 
-    
+    Draw(this.m-lpObj, hDC, #f );
+
     // Sending a data change every time we paint, but only if we
     // were started by OLE
     if ( IsStartedByOle(this.m-lpApp) )
@@ -324,7 +324,7 @@ end method CreateObject;
 define method CloseObject (this :: <CSimpSvrDoc>) => ();
 
  block(return)
-	
+
    OutputDebugString("In CSimpSvrDoc::CloseObject() \r\n");
 
    let svrObj :: <CSimpSvrObj> = this.m-lpObj;
@@ -344,8 +344,8 @@ define method CloseObject (this :: <CSimpSvrDoc>) => ();
 
    // unregister from the ROT...
    if ( GetRotRegister(svrObj) ~= 0 )
-	        
-     let ( status :: <HRESULT>, lpRot :: <LPRUNNINGOBJECTTABLE> ) = 
+
+     let ( status :: <HRESULT>, lpRot :: <LPRUNNINGOBJECTTABLE> ) =
        GetRunningObjectTable(0);
      if ( status = $NOERROR )
        IRunningObjectTable/Revoke(lpRot, GetRotRegister(svrObj));
@@ -355,7 +355,7 @@ define method CloseObject (this :: <CSimpSvrDoc>) => ();
 
    // if we have a clientsite, instruct it to save the object
    unless ( null?(GetOleClientSite(svrObj)) )
-	        
+
      IOleClientSite/SaveObject(GetOleClientSite(svrObj));
      IOleClientSite/OnShowWindow(GetOleClientSite(svrObj), #f);
    end unless;
@@ -363,7 +363,7 @@ define method CloseObject (this :: <CSimpSvrDoc>) => ();
    // Do a final SendOnDataChange for those containers that have specified the
    // ADF_DATAONSTOP flag.
    unless ( null?(GetDataAdviseHolder(svrObj)) )
-	        
+
      IDataAdviseHolder/SendOnDataChange(GetDataAdviseHolder(svrObj),
 					GetDataObject(svrObj), 0,
 					$ADVF-DATAONSTOP);
@@ -374,14 +374,14 @@ define method CloseObject (this :: <CSimpSvrDoc>) => ();
 
    // Tell the container that we are shutting down.
    unless ( null?(GetOleAdviseHolder(svrObj)) )
-	        
+
      IOleAdviseHolder/SendOnClose(GetOleAdviseHolder(svrObj));
      Release(GetOleAdviseHolder(svrObj));
      ClearOleAdviseHolder(svrObj);
    end unless;
 
    unless ( null?(GetOleClientSite(svrObj)) )
-	        
+
      Release(GetOleClientSite(svrObj));
      ClearOleClientSite(svrObj);
    end unless;

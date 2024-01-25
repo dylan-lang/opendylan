@@ -48,7 +48,7 @@ define sealed inline-only method dwMaximum-value ( u :: <bounds-union*> )
 end;
 
 
-
+
 
 // Hand translations of some complicated macros.
 
@@ -63,7 +63,7 @@ define inline constant MCI-MAKE-HMS = MCI-MAKE-MSF;
 define inline function MCI-MAKE-TMSF (t :: <integer>, m :: <integer>,
 				      s :: <integer>, f :: <integer>)
  => ( x :: <integer> )
-  logior(LOBYTE(t), ash(LOWORD(m), 8), 
+  logior(LOBYTE(t), ash(LOWORD(m), 8),
 	 ash(logior(LOBYTE(s), ash(LOWORD(f),8)), 16))
 end;
 

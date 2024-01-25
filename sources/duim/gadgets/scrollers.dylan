@@ -46,7 +46,7 @@ define macro scrolling
          end }
 end macro scrolling;
 
-
+
 /// Concrete scroller panes
 
 define sealed class <scroller-pane>

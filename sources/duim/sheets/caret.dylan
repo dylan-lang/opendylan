@@ -119,7 +119,7 @@ define sealed method caret-visible?-setter
   visible?
 end method caret-visible?-setter;
 
-
+
 /// Carets and sheets
 
 define macro with-caret-position-saved

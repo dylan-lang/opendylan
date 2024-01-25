@@ -9,10 +9,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 // Force LOAD-NLX-ADDRESS to be with-stack.
-// This instruction is used by bind-exit and unwind-protect. 
+// This instruction is used by bind-exit and unwind-protect.
 // For these constructs, leaf-case is inappropriate as stack-
 // relative addressing will fail after building a frame on the stack.
-// LOAD-NLX-ADDRESS also destroys all registers, because the 
+// LOAD-NLX-ADDRESS also destroys all registers, because the
 // block introduced by the tag may be called from an arbitrary
 // register context.
 
@@ -20,7 +20,7 @@ define macro with-load-nlx-address-ops
   { with-load-nlx-address-ops ?back-end:name end }
     => { with-ops-in ?back-end ## "-instructions" (load-nlx-address)
 	   c-preserved-destroys-fn := ?=all-c-preserved-fn;  // not worth being smarter
-	   destroys-fn := constant-fn(?back-end ## "-allocatable-registers"); 
+	   destroys-fn := constant-fn(?back-end ## "-allocatable-registers");
 	   flag := #t;
 	 end with-ops-in }
 end macro;
@@ -63,12 +63,12 @@ end macro;
 
 
 
-define method emit-scl 
+define method emit-scl
     (be :: <harp-native-back-end>, locator, named-registers :: <simple-object-vector>)
      => ()
   let with-stack = be.variables.with-stack;
-  let label = make(<code-locator-constant>, 
-                   data: locator, stack: with-stack, 
+  let label = make(<code-locator-constant>,
+                   data: locator, stack: with-stack,
                    variables: named-registers, size: 0);
   emit-labelled-constant(be, label, 0);
 end method;

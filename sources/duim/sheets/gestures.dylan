@@ -85,7 +85,7 @@ define function make-modifier-state
   state
 end function make-modifier-state;
 
-
+
 /// Higher level gesture support
 
 // The idea here is to provide a "gesture" abstraction that can be matched

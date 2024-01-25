@@ -17,7 +17,7 @@ define C-function IMalloc/Free
   c-name: "C_IMalloc_Free";
 end;
 
-
+
 /// Definitions for access to some Win32 Shell API functionality
 ///--- Maybe put in some win32-XXX library if we ever use more related stuff.
 
@@ -105,7 +105,7 @@ define C-function SHGetMalloc
   c-name: "SHGetMalloc", c-modifiers: "__stdcall";
 end;
 
-
+
 /// Timer proc
 
 define macro <TIMERPROC>-callback-wrapper

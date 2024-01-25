@@ -164,7 +164,7 @@ define sealed method make
   apply(next-method, class, order: order, initargs)
 end method;
 
-
+
 /// ----------------------------------------------------------------------
 /// THE REPOSITORY AS <CHOICE>S
 /// The functions hereunder control what is made visible from the

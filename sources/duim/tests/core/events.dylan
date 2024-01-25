@@ -23,7 +23,7 @@ define sideways method make-test-instance
   make(class, frame: $dummy-frame)
 end method make-test-instance;
 
-
+
 /// event tests
 
 define method handle-all-events
@@ -398,7 +398,7 @@ define test mouse-button-events-test ()
   test-button-box-clicking(<check-box>);
 end test mouse-button-events-test;
 
-
+
 /// Define the events test suite
 
 define suite duim-events-suite ()

@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// define-instruction-set does everything necessary to define an instruction
 /// set class, create a default instance of it, initialize all the slots from
-/// the parent default, and obey the inheritance protocol so that children 
+/// the parent default, and obey the inheritance protocol so that children
 /// may inherit instructions correctly.
 
 
@@ -19,8 +19,8 @@ define macro instruction-set-definer
       create ?default:name, inheriting: ?pdefault:name;
       ?ops:*
     end }
-    => { define-instruction-set-aux ?class 
-           (?parent, ?backend, ?default, ?pdefault) 
+    => { define-instruction-set-aux ?class
+           (?parent, ?backend, ?default, ?pdefault)
            (?ops)
            ?ops
          end }
@@ -28,14 +28,14 @@ define macro instruction-set-definer
 end macro;
 
 define macro define-instruction-set-aux
-  { define-instruction-set-aux ?class:name 
+  { define-instruction-set-aux ?class:name
       (?parent:name, ?backend:name, ?default:name, ?pdefault:name)
       (?ops:*)
       ?names:*
     end }
     => { define instruction-class ?class (?parent) ?names end;
          define-instruction-defaulter(?class, ?names);
-         define method parent-instruction-set 
+         define method parent-instruction-set
              (set :: ?class) => (r :: ?parent)
            ?pdefault
          end;
@@ -84,7 +84,7 @@ define macro define-instruction-defaulter
          end method }
 set-names:
   { } => { }
-  { ?harp-name:name, ... } 
+  { ?harp-name:name, ... }
     => { child . ?harp-name := copy-op(default . ?harp-name);
          ... }
 harp-name:
@@ -112,11 +112,11 @@ make-ops:
 end macro;
 
 
-define macro initialize-instruction-options 
+define macro initialize-instruction-options
   { initialize-instruction-options ?new:name end }
      => {  }
 
-  { initialize-instruction-options ?new:name 
+  { initialize-instruction-options ?new:name
       ?init-options:* ;
       ?next-options:*
     end }
@@ -125,9 +125,9 @@ define macro initialize-instruction-options
 
 init-options:
   { } => { }
-  { op ?group-data:* } 
+  { op ?group-data:* }
     => { ?group-data }
-  { ?type:name op ?group-data:*  } 
+  { ?type:name op ?group-data:*  }
     => { ?group-data, spread: "spread-" ## ?type }
 
 group-data:
@@ -140,7 +140,7 @@ end macro;
 
 define macro initialize-instructions-of-one-type
   { initialize-instructions-of-one-type ?new:name,
-      ?ops:* ; op-options, ?options:* 
+      ?ops:* ; op-options, ?options:*
     end }
     => { begin
            let new = ?new;
@@ -159,7 +159,7 @@ define macro define-instruction-outputters
   { define-instruction-outputters ?backend:name end }
     => { }
 
-  { define-instruction-outputters ?backend:name 
+  { define-instruction-outputters ?backend:name
       ?ops:*; ?next-options:*
     end }
     => { define-instruction-outputters-for-type ?backend ?ops end;
@@ -172,7 +172,7 @@ define macro define-instruction-outputters-for-type
     => { }
 
   { define-instruction-outputters-for-type ?backend:name
-      ?type:name op ?op-names:* 
+      ?type:name op ?op-names:*
     end }
     => { "define-" ## ?type ?backend (?op-names) end }
 

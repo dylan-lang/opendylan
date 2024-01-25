@@ -38,7 +38,7 @@ define method transform-components
          transform.%tx, transform.%ty)
 end method transform-components;
 
-
+
 /// Conditions
 
 define sealed class <transform-underspecified> (<transform-error>)
@@ -71,7 +71,7 @@ define method condition-to-string
                    condition.%underspecified-points[3])
 end method condition-to-string;
 
-
+
 /// Constructors
 
 // External interface ensures everything is a single float
@@ -253,7 +253,7 @@ define sideways method make-3-point-transform*
      point-x(point-3-image), point-y(point-3-image))
 end method make-3-point-transform*;
 
-
+
 /// Predicates
 
 define method transform-equal
@@ -304,7 +304,7 @@ define method rectilinear-transform? (transform :: <general-transform>) => (true
   | (transform.%mxx = 0.0 & transform.%myy = 0.0)
 end method rectilinear-transform?;
 
-
+
 /// Inversion
 
 define method invert-transform
@@ -330,7 +330,7 @@ define method invert-transform
     end
 end method invert-transform;
 
-
+
 /// Composition operators
 
 define method compose-transforms
@@ -526,7 +526,7 @@ define sideways method compose-transform-with-rotation
   compose-transforms(make-rotation-transform*(angle, origin: origin), transform)
 end method compose-transform-with-rotation;
 
-
+
 /// Transforming and untransforming of "spread" points
 
 define method transform-position

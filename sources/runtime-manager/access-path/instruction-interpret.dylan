@@ -29,7 +29,7 @@ define constant $flowIllegal = 8;
 
 define method interpret-instruction-at-current-location
     (ap :: <access-path>, thread :: <remote-thread>)
-      => (flow, 
+      => (flow,
           destination :: false-or(<remote-value>),
           length :: false-or(<integer>))
   interpret-instruction-on-connection(ap.connection, thread);

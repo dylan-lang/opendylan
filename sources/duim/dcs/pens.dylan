@@ -107,7 +107,7 @@ define sealed method make
   end
 end method make;
 
-
+
 /// Contrasting dash patterns
 
 define constant $dash-pattern-grain-size :: <integer> = 3;

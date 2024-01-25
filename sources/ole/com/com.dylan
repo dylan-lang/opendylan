@@ -59,7 +59,7 @@ define constant <LPCOLESTR> = <LPOLESTR>;
 
 define constant $NULL-OLESTR :: <LPOLESTR> = null-pointer(<LPOLESTR>);
 
-// String Name Block 
+// String Name Block
 define constant <SNB> = <LPLPOLESTR>;
 
 define variable *ole-string-table* :: <table> = make(<table>);
@@ -98,7 +98,7 @@ define inline constant <LPPROPID> = <LPULONG>;
 //define constant <ULONGLONG> = <C-double>;
 define constant <ULONGLONG> = <ULARGE-INTEGER>;
 
-
+
 //====================================================
 //	result and status codes
 //====================================================
@@ -127,7 +127,7 @@ end;
 define constant $severity-bit :: <SCODE> = as(<machine-word>,#x80000000);
 
 /* See companion file "com-err.dylan" for error codes collected by:
-	  gema -f com-err.pat winerror.h 
+	  gema -f com-err.pat winerror.h
 */
 
 define constant $NOERROR :: <HRESULT> = as(<machine-word>,0);
@@ -176,7 +176,7 @@ define function HRESULT-FROM-NT( nt-code ) => scode :: <SCODE>;
   %logior(nt-code, #x10000000)
 end;
 
-
+
 //====================================================
 //	object handles for C (temporary until supported by C-FFI)
 //====================================================
@@ -220,14 +220,14 @@ define function object-from-handle ( handle :: <U16> ) => object :: <object>;
   *handled-objects*[handle - $handle-offset];
 end object-from-handle;
 
-
+
 //====================================================
 //	interfaces
 //====================================================
 
 define C-subtype <C-COM-vtbl> ( <C-void*> ) end;
 
-define C-struct <C-COM-struct> 
+define C-struct <C-COM-struct>
   slot vtbl :: <C-COM-vtbl>; // pointer to method table used by C code.
   slot handle :: <C-int>; // way to find the corresponding Dylan object.
   pointer-type-name: <Interface>;
@@ -266,8 +266,8 @@ end <Dylan-interface>;
 
 /* Note: $NULL-interface is implemented as a <Dylan-interface> instead of
     an <Interface> so that an attempt to de-reference it will be caught as
-    a Dylan dispatch error instead of crashing the C code. 
-    A separate sub-type is used simply for clarity in the debugger. */ 
+    a Dylan dispatch error instead of crashing the C code.
+    A separate sub-type is used simply for clarity in the debugger. */
 define sealed C-subtype <null-interface> ( <Dylan-interface> )
 end <null-interface>;
 
@@ -281,9 +281,9 @@ end <mapped-interface>;
 define function import-interface (ptr :: <C-interface>)
  => value :: <Dylan-interface>;
 
-  // When calling from C to Dylan, we get the address of the C structure 
+  // When calling from C to Dylan, we get the address of the C structure
   // and need to find the Dylan interface object which is a wrapper for
-  // that address. 
+  // that address.
   let object-handle = ptr.handle;
   if ( object-handle == $null-object-handle )
     error("Importing C pointer to terminated Dylan OLE object");
@@ -312,7 +312,7 @@ end macro;
 //====================================================
 
 // This uses the QueryInterface mechanism so that a C-implemented interface
-// can be harmlessly queried, but this is not a real interface. 
+// can be harmlessly queried, but this is not a real interface.
 // In particular, it does not follow the usual conventions for use count
 // and for controlling unknown delegation.  But that doesn't matter because
 // it is only used internally here.
@@ -340,7 +340,7 @@ define method dylan-interface( obj :: <Dylan-Interface> )
   // already have the Dylan object so just return it.
   obj
 end method;
-
+
 //====================================================
 //	"IUnknown" interface
 //====================================================
@@ -519,7 +519,7 @@ define method terminate ( self :: <IUnknown> ) => ();
     end if;
   end for;
   // Note: if this were to be called from finalization instead of `Release'
-  //  (and if we could tell the difference), we would also want to do 
+  //  (and if we could tell the difference), we would also want to do
   //  `destroy(self)' here to release the C storage space.
   values()
 end;
@@ -631,9 +631,9 @@ define method as (class :: subclass(<IUnknown>), value :: <C-pointer>)
 end;
 
 //====================================================
-
 
-/* 
+
+/*
  Users can create their own interface by defining a subclass of one of the
  pre-defined interfaces:
 
@@ -662,14 +662,14 @@ end;
 
  And then defining the methods.  However, these methods will not be
  callable from C code unless additional hacks are done.  (The object can
- however be passed to C functions that accept a pointer to an instance of 
+ however be passed to C functions that accept a pointer to an instance of
  the base class interface.)
 
  Similarly, additional hacks would be needed for a Dylan program to be able
  to use a custom interface implemented in C.
 
 */
-
+
 //====================================================
 //	helper functions for more convenient use from Dylan
 //====================================================

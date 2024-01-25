@@ -14,7 +14,7 @@ define sealed method symbol-name
   next-method()
 end method symbol-name;
 
-
+
 /// Strings
 
 define sealed method string-contents
@@ -23,7 +23,7 @@ define sealed method string-contents
   next-method()
 end method string-contents;
 
-
+
 /// Booleans
 
 define sealed method boolean-true?
@@ -32,7 +32,7 @@ define sealed method boolean-true?
   next-method()
 end method boolean-true;
 
-
+
 /// Numbers
 
 define method number-value
@@ -41,7 +41,7 @@ define method number-value
   next-method()
 end method number-value;
 
-
+
 /// Collections
 
 define method collection-keys

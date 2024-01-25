@@ -68,7 +68,7 @@ define macro pop!
          end }
 end macro pop!;
 
-
+
 /// Conditions and restarts
 
 define macro with-restart
@@ -130,7 +130,7 @@ define macro with-abort-restart-loop
     end }
 end macro with-abort-restart-loop;
 
-
+
 ///--- Declarations :-(
 
 define inline function dynamic-extent (#rest args) => ()
@@ -138,7 +138,7 @@ define inline function dynamic-extent (#rest args) => ()
   #f
 end function dynamic-extent;
 
-
+
 ///--- Stack allocation
 
 define macro with-stack-list
@@ -185,7 +185,7 @@ define inline function evacuate-object (_object) => (_object)
   _object
 end function evacuate-object;
 
-
+
 /// Additional thread support
 
 // Per-thread (i.e., dynamically bindable) slots

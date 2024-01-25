@@ -133,7 +133,7 @@ define method handle-event
   end
 end method handle-event;
 
-
+
 /// Shared list/table/tree control label button functionality
 
 define constant $item-label-border :: <integer> = 5;

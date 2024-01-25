@@ -102,7 +102,7 @@ define leaf runtime-primitive stack-vector-remaining-values
 
   op--buffer-up-remaining-values(be, buffer, size, offset);
 
-  local method manipulate-vector 
+  local method manipulate-vector
             (be :: <harp-back-end>, vec :: <register>, size :: <register>)
           op--fill-vector-from-buffer(be, vec, buffer, size);
         end method;
@@ -118,34 +118,34 @@ end runtime-primitive;
 /// register.
 ///
 define method op--buffer-up-remaining-values
-    (be :: <harp-back-end>, buffer :: <register>, 
+    (be :: <harp-back-end>, buffer :: <register>,
      size :: <register>, offset :: <register>)
   with-harp (be)
     tag have-mvs, mvs-done, skip-it, continue;
     arg0 single-value;
     nreg count;
-    
+
     op--ld-mv-area-address(be, buffer);
     ins--bmvset(be, have-mvs);
-    
+
     // Case where there is a single value
     ins--bne(be, skip-it, offset, 0);
-    
+
     // Case where we want the single value
     ins--st(be, single-value, buffer, 0); // put only value in MV area
     ins--move(be, size, 1);
     ins--bra(be, mvs-done);
-    
+
     // Case where we don't want the single value
     ins--tag(be, skip-it);
     ins--move(be, size, 0);
     ins--bra(be, mvs-done);
-    
+
     // Case where there are multiple values
     ins--tag(be, have-mvs);
     op--ld-mv-count(be, count);
     ins--bge(be, skip-it, offset, count);   // Check for values all used up
-  
+
     // Case where we need to copy values from the MV area
     // First, ensure first value in MV area
     ins--bne(be, continue, offset, 0);
@@ -156,14 +156,14 @@ define method op--buffer-up-remaining-values
     ins--add(be, buffer, buffer, offset);   // address of first interesting value
     ins--move(be, size, count);
     ins--bra(be, mvs-done);
-    
+
     ins--tag(be, mvs-done);
   end with-harp;
 end method;
 
 
 define method op--fill-vector-from-buffer
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      vec :: <register>, buffer :: <register>, size :: <register>)
   with-harp (be)
     nreg vec-data;
@@ -176,8 +176,8 @@ end method;
 
 
 define method op--stack-allocate-vector-internal
-     (be :: <harp-back-end>, 
-      args-to-drop :: <integer>, 
+     (be :: <harp-back-end>,
+      args-to-drop :: <integer>,
       manipulate-vector :: <function>)
   // On entry:
   //   size  - the size in words of the vector
@@ -218,7 +218,7 @@ define leaf runtime-primitive mep-apply
   // On exit:
   //    tail call the mep with the appropriate arguments
   // Strategy:
-  //    We are called with 3 arguments. Look to see if we 
+  //    We are called with 3 arguments. Look to see if we
   //    want to end up with more or less on the stack or
   //    in registers depending on the active calling convention.
   //    Set up space on the stack for the arguments as required.
@@ -226,11 +226,11 @@ define leaf runtime-primitive mep-apply
   //    and into required argument registers.
   //    Set up the mlist and argument registers.
   //    Tail call the MEP
-  //    We have a different version for optionals because 
-  //    optionals require a count 
+  //    We have a different version for optionals because
+  //    optionals require a count
   //
-  op--mep-apply-select(be, 
-                       op--simple-mep-apply-internal, 
+  op--mep-apply-select(be,
+                       op--simple-mep-apply-internal,
                        op--optionals-mep-apply-unvectored-internal);
 end runtime-primitive;
 
@@ -242,7 +242,7 @@ define leaf runtime-primitive mep-apply-with-optionals
   // On exit:
   //    tail call the mep with the appropriate arguments
   // Strategy:
-  //    We are called with 3 arguments. Look to see if we 
+  //    We are called with 3 arguments. Look to see if we
   //    want to end up with more or less on the stack or
   //    in registers depending on the active calling convention.
   //    Set up space on the stack for the arguments as required.
@@ -250,11 +250,11 @@ define leaf runtime-primitive mep-apply-with-optionals
   //    and into required argument registers.
   //    Set up the mlist and argument registers.
   //    Tail call the MEP
-  //    We have a different version for optionals because 
-  //    optionals require a count 
+  //    We have a different version for optionals because
+  //    optionals require a count
   //
-  op--mep-apply-select(be, 
-                       op--simple-mep-apply-internal, 
+  op--mep-apply-select(be,
+                       op--simple-mep-apply-internal,
                        op--optionals-mep-apply-vectored-internal);
 end runtime-primitive;
 
@@ -266,11 +266,11 @@ define method op--mep-apply-select
 
   with-harp (be)
     function function;
-  
+
     nreg mlist-reg, vector-reg, vec;
     arg-count argnum;
     arg0 arg0;
-  
+
     tag tag-have-optionals;
 
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
@@ -282,7 +282,7 @@ define method op--mep-apply-select
       if (max-num-arg-regs = 1) arg0
       else make-n-register(be) end;
     ins--add(be, vec-data, vec, 8);
-  
+
     // do the hard work
     op--branch-if-function-with-optionals(be, tag-have-optionals);
     no-opts(be, mlist-reg, vec-data, argnum);
@@ -293,7 +293,7 @@ end method;
 
 
 define method op--simple-mep-apply-internal
-     (be :: <harp-back-end>, 
+     (be :: <harp-back-end>,
       mlist :: <register>, vec-data :: <register>, argnum :: <register>)
   with-harp (be)
     tmp 1, tmp;
@@ -322,7 +322,7 @@ define method op--simple-mep-apply-internal
       ins--tag(be, tag);
       mep-apply-case-generator(be, i, mlist, vec-data, tmp);
     end for;
-  
+
     // case where we need to extend the stack
     ins--tag(be, tag-many-stack-args);
     let retaddr = tmp;
@@ -349,7 +349,7 @@ end method;
 
 
 define method op--optionals-mep-apply-vectored-internal
-     (be :: <harp-back-end>, 
+     (be :: <harp-back-end>,
       mlist :: <register>, vec-data :: <register>, argnum :: <register>)
   // For methods with optionals, we must allow for the extra count word
   // on the stack, and we must set it correctly.
@@ -371,9 +371,9 @@ define method op--optionals-mep-apply-vectored-internal
       max-num-arg-regs
       // Also, a special case for all filled registers plus
       // a replaceable stack location
-      + (if (old-args-on-stack > 0) 1 else 0 end); 
+      + (if (old-args-on-stack > 0) 1 else 0 end);
     let tags :: <simple-object-vector> = make-tags(be, num-cases);
-  
+
     // test for the special cases
     // (NB argnum must be at least 1 because of #rest)
     for (tag :: <tag> in tags,
@@ -397,7 +397,7 @@ define method op--optionals-mep-apply-vectored-internal
     let arg-dest = make-n-register(be);
     let retaddr = tmp;
 
-    // First get the count right. 
+    // First get the count right.
     let adjust = 4 * (1 - max-num-arg-regs);
     let argnum-in-bytes = op--multiply-by-4(be, argnum);
     unless (adjust == 0)
@@ -482,7 +482,7 @@ end method;
 
 
 define method op--optionals-mep-apply-unvectored-internal
-     (be :: <harp-back-end>, 
+     (be :: <harp-back-end>,
       mlist :: <register>, vec-data :: <register>, argnum :: <register>)
   // Check whether there are any required arguments. If not, then we can
   // use the argument vector as the #rest vector. Otherwise we must
@@ -506,7 +506,7 @@ end method;
 
 
 define method op--optionals-mep-apply-unvectored-no-required
-     (be :: <harp-back-end>, 
+     (be :: <harp-back-end>,
       mlist :: <register>, vec-data :: <register>, argnum :: <register>)
   // If there are no required arguments, then the vector of supplied
   // arguments is appropriate for use as the #rest vector.
@@ -543,7 +543,7 @@ end method;
 
 
 define method op--optionals-mep-apply-unvectored-with-required
-     (be :: <harp-back-end>, 
+     (be :: <harp-back-end>,
       mlist :: <register>, vec-data :: <register>, argnum :: <register>)
   // For methods with optionals, we first copy all of the arguments onto the
   // stack. We then vector up the rest args, as for an XEP call with optionals.
@@ -560,7 +560,7 @@ define method op--optionals-mep-apply-unvectored-with-required
 
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
-    // Here we copy the argument vector onto the stack. 
+    // Here we copy the argument vector onto the stack.
     // First make room on the stack for all the arguments
 
     // pop the return address
@@ -597,7 +597,7 @@ define method op--optionals-mep-apply-unvectored-with-required
     // Set up our argument registers
     op--copy-registers-with-update
       (be, to, #f, to, argc, 0, to?: #t);
-  
+
     if-return-address()
       ins--pop(be, ret-addr2);
       ins--move(be, stack, to);
@@ -632,13 +632,13 @@ define method vector-up-rest-args-case-generator
     if (cases?)
       op--number-required(be, required);
     end;
-  
+
     // test for the special cases (#rest in an argument register)
     for (tag :: <tag> in tags,
 	 i :: <integer> from case-1)
       ins--beq(be, tag, required, i);
     end for;
-    
+
     // fall through
     cases? & ins--bra(be, dynamic-case);
 
@@ -654,7 +654,7 @@ define method vector-up-rest-args-case-generator
     cases? & ins--tag(be, dynamic-case);
     op--vector-up-rest-args(be, #"dynamic", 0);
     cases? & ins--tag(be, done);
-    
+
   end with-harp;
 end method;
 
@@ -727,37 +727,37 @@ define leaf runtime-primitive xep-apply
   tmp1 retaddr;
   nreg dummy;
   tag tag1, tag2;
-  
+
   let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
   // prolog
   op--load-arguments(be, function, argnum, buffer-arg);
   ins--move(be, buffer, buffer-arg);
-  
+
   // calculate the number of arguments which live on the stack
   ins--beq(be, tag1, argnum, 0);    // test if the buffer is empty
   ins--sub(be, args-minus-one, argnum, 1);  // one arg goes in a register
-  
+
   // get rid of the 2 stack arguments and make space for the new args
   ins--pop(be, retaddr);            // pop the return address
   ins--add(be, stack, stack, 8);    // remove argnum and buffer
   ins--sub(be, stack, stack, op--multiply-by-4(be, args-minus-one));
   ins--move(be, arg-dest, stack);
   ins--push(be, retaddr);           // restore ret addr after making space
-  
+
   // copy the arguments from the buffer onto the stack
   let buffer-next = tmp;
   ins--add(be, buffer-next, buffer, 4);  // location of second arg
   op--copy-words-with-update(be, dummy, arg-dest, buffer-next, args-minus-one);
-  
+
   // fill the argument register with the first arg
   ins--ld(be, arg0, buffer, 0);
-  
+
   // tail call the XEP
   ins--tag(be, tag2);
   ins--move(be, argc, argnum);
   ins--jmp-indirect(be, function, be.function-xep-offset, max-num-arg-regs);
-  
+
   // case where there are no args
   ins--tag(be, tag1);
   ins--move-return-address(be, #f, 8, #f); // pop the args on the stack
@@ -792,7 +792,7 @@ define leaf runtime-primitive apply
   op--vector-size(be, count, vec);
 
   // Copy the vector of arguments into the appropriate position on the stack.
-  // But, as an optimization, check for "required" argument registers first, 
+  // But, as an optimization, check for "required" argument registers first,
   // to avoid a block copy.
 
   let old-args = 2;
@@ -833,7 +833,7 @@ define leaf runtime-primitive apply
   if-return-address() ins--pop(be, ret-addr) end;
   ins--asl(be, arg-bytes, count, 2);   // size of all args in bytes
   ins--sub(be, stack, stack, arg-bytes);
-  // args to copy onto the stack 
+  // args to copy onto the stack
   ins--sub(be, copy-count, count, max-num-arg-regs);
   // remove unwanted required arg regs & possible vector arg
   let adjust = 4 * (old-args-on-stack + max-num-arg-regs);
@@ -946,11 +946,11 @@ end runtime-primitive;
 define leaf runtime-primitive remove-optionals
   // On entry: reg--tmp1  is the caller's index onto the stack which
   //           contains the count (in bytes) of the optionals to drop.
-  //    
+  //
   // On exit:  The stack has had the optionals removed.
   // Preserved registers:
   //           reg--function, reg--arg-count, reg--arg0, reg--mlist
-  //    
+  //
 
   arg0 arg0;
   tmp 1, tmp;
@@ -960,17 +960,17 @@ define leaf runtime-primitive remove-optionals
   stack stack;
   nreg offset, drop-size, bytes-of-required;
   tmp1 callers-offset;
-  
-  // preserve the registers we care about 
+
+  // preserve the registers we care about
   let bytes-pushed = op--push-registers-for-remove-optionals(be);
-  
+
   // calculate the new offset of the optionals count allowing
   // for our return address and the registers pushed on the stack:
   ins--add(be, offset, callers-offset,
 	   bytes-pushed + be.return-address-size-in-bytes);
-  
+
   // calculate the drop size from the count. It's not the same as the
-  // count because there may be required arguments. We first calculate 
+  // count because there may be required arguments. We first calculate
   // bytes-of-required which is the bytes of required args for the caller.
   ins--ld(be, drop-size, stack, offset);  // the count from the stack
   if-return-address()
@@ -980,14 +980,14 @@ define leaf runtime-primitive remove-optionals
     ins--move(be, bytes-of-required, callers-offset);
   end;
   ins--sub(be, drop-size, drop-size, bytes-of-required);
-  
+
   // now copy everything below the offset upwards to remove the optionals
   // Use copy-words-up to get the right direction of move to prevent clobbering.
   // The last required argument is copied first. The parameters to copy-words-up
   // are the lowest addresses of the move. (It actually starts copying from the
   // highest addresses)
-  // We include in the copy the caller's required args and return address (i.e. 
-  // callers-offset bytes). 
+  // We include in the copy the caller's required args and return address (i.e.
+  // callers-offset bytes).
   let from-reg = tmp;
   let to-reg = make-n-register(be);
   let how-many = make-n-register(be);
@@ -999,10 +999,10 @@ define leaf runtime-primitive remove-optionals
 	   bytes-pushed + be.return-address-size-in-bytes);
   ins--add(be, to-reg, from-reg, drop-size);   // move up by drop-size
   ins--copy-words-up(be, to-reg, from-reg, how-many);
-  
+
   // restore the registers we care about
   op--pop-registers-for-remove-optionals(be);
-  
+
   // and return, getting rid of the drop space in the process
   ins--rts-and-drop(be, drop-size);
 end runtime-primitive;
@@ -1018,7 +1018,7 @@ define method op--push-registers-for-remove-optionals
     arg-count argc;
     mlist mlist;
     function function;
-  
+
     ins--push(be, arg0);
     ins--push(be, argc);
     ins--push(be, mlist);

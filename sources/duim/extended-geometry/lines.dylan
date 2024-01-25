@@ -157,7 +157,7 @@ define method region-intersection
   end
 end method region-intersection;
 
-
+
 /// Line geometry
 
 define method line-intersects-line?

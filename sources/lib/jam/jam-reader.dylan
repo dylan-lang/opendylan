@@ -48,7 +48,7 @@ define function jam-read
     method lexer() => (token-class, token-value);
       let data = *jam-input-state*.jam-input-data;
       let _end :: <integer> = data.size;
-      
+
       if (*jam-input-state*.jam-input-mode == #"string")
         iterate loop (pos :: <integer>
                         = *jam-input-state*.jam-input-position,
@@ -60,7 +60,7 @@ define function jam-read
             select (data[pos])
               '{' =>
                 loop(pos + 1, level + 1);
-                
+
               '}' =>
                 if (level = 1)
                   let string
@@ -72,19 +72,19 @@ define function jam-read
                 else
                   loop(pos + 1, level - 1)
                 end;
-                
+
               '\n' =>
                 *jam-input-state*.jam-input-line-number
                   := *jam-input-state*.jam-input-line-number + 1;
                 loop(pos + 1, level);
-                
+
               '\r' =>
                 unless (pos + 1 < _end & data[pos + 1] = '\n')
                   *jam-input-state*.jam-input-line-number
                     := *jam-input-state*.jam-input-line-number + 1;
                 end unless;
                 loop(pos + 1, level);
-                
+
               otherwise =>
                 loop(pos + 1, level);
             end select;
@@ -123,7 +123,7 @@ define function jam-read
                 else
                   loop(pos + 1, pos + 1, #t, #f, accumulated-string);
                 end if;
-                
+
               '\\' =>
                 if (pos > start)
                   let str
@@ -134,13 +134,13 @@ define function jam-read
                 else
                   loop(pos + 1, pos + 2, #t, #t, accumulated-string);
                 end if;
-                
+
               '\n' =>
                 *jam-input-state*.jam-input-line-number
                   := *jam-input-state*.jam-input-line-number + 1;
                 loop(start, pos + 1, metachars?, quoting?,
                      accumulated-string);
-                
+
               '\r' =>
                 unless (pos + 1 < _end & data[pos + 1] = '\n')
                   *jam-input-state*.jam-input-line-number
@@ -148,11 +148,11 @@ define function jam-read
                 end unless;
                 loop(start, pos + 1, metachars?, quoting?,
                      accumulated-string);
-                
+
               otherwise =>
                 loop(start, pos + 1, metachars?, quoting?,
                      accumulated-string);
-                
+
             end select;
           else
             let char = data[pos];
@@ -169,7 +169,7 @@ define function jam-read
                   loop(pos + 1, pos + 1, metachars?, quoting?,
                        accumulated-string)
                 end;
-                
+
               '\n' =>
                 *jam-input-state*.jam-input-line-number
                   := *jam-input-state*.jam-input-line-number + 1;
@@ -184,7 +184,7 @@ define function jam-read
                   loop(pos + 1, pos + 1, metachars?, quoting?,
                        accumulated-string)
                 end;
-                
+
               '\r' =>
                 unless (pos + 1 < _end & data[pos + 1] = '\n')
                   *jam-input-state*.jam-input-line-number
@@ -201,7 +201,7 @@ define function jam-read
                   loop(pos + 1, pos + 1, metachars?, quoting?,
                        accumulated-string)
                 end;
-                
+
               '#' =>
                 if (pos > start | metachars?)
                   loop(start, pos + 1, #t, quoting?, accumulated-string)
@@ -213,7 +213,7 @@ define function jam-read
                          accumulated-string)
                   end for
                 end;
-                
+
               '"' =>
                 if (pos > start)
                   let str
@@ -224,7 +224,7 @@ define function jam-read
                 else
                   loop(pos + 1, pos + 1, #t, #t, accumulated-string);
                 end if;
-                
+
               '\\' =>
                 if (pos > start)
                   let str
@@ -235,7 +235,7 @@ define function jam-read
                 else
                   loop(pos + 1, pos + 2, #t, quoting?, accumulated-string);
                 end if;
-                
+
               otherwise =>
                 loop(start, pos + 1, metachars?, quoting?,
                      accumulated-string);

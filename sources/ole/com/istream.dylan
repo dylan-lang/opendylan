@@ -45,7 +45,7 @@ define sealed method adjust-stream-position (istream :: <storage-istream>,
     end with-stack-structure;
   end with-stack-structure;
 end adjust-stream-position;
-  
+
 define sealed inline method stream-position (istream :: <storage-istream>)
  => (pos :: <abstract-integer>)
   adjust-stream-position(istream, 0, from: #"current")

@@ -13,7 +13,7 @@ define thread variable *string* :: <string> = "";
 define thread variable *string-size* :: <integer> = 0;
 define thread variable *index* :: <integer> = 0;
 
-
+
 // Parse a string containing one or more commands, of the form
 //
 //        [_command-name_(_argument_,...)]
@@ -144,7 +144,7 @@ define method parse-1-command
 end method;
 
 
-
+
 /// -=- Mini-parsers for bits of the command string format -=-
 
 // Parses the sequence "<some-string> ',' ... ')'".
@@ -184,7 +184,7 @@ define method parse-arguments
 end method;
 
 
-
+
 /// -=- Auxiliary functions for the parser -=-
 
 // A function like find-key which lets you search a particular
@@ -302,7 +302,7 @@ define method parse-delimited-string
 end method;
 
 
-
+
 /// -=- Simplified error handling -=-
 
 // Quick way to signal a <parse-warning> for some unfound symbol.

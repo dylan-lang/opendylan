@@ -28,28 +28,28 @@ define macro output-instruction
 end macro;
 
 
-define macro output-instruction-args 
+define macro output-instruction-args
   { output-instruction-args(?vec:expression, ?index:expression) }
     => { output-instruction-args(?vec, ?index, #f, #f, #f, #f) }
 
   { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression) }
     => { output-instruction-args(?vec, ?index, ?arg1, #f, #f, #f) }
-  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression, 
+  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression,
                             ?arg2:expression) }
     => { output-instruction-args(?vec, ?index, ?arg1, ?arg2, #f, #f) }
 
-  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression, 
+  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression,
                             ?arg2:expression, ?arg3:expression) }
     => { output-instruction-args(?vec, ?index, ?arg1, ?arg2, ?arg3, #f) }
 
-  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression, 
+  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression,
                             ?arg2:expression, ?arg3:expression, ?arg4:expression) }
     => { ?vec[?index + 1] := ?arg1;
          ?vec[?index + 2] := ?arg2;
          ?vec[?index + 3] := ?arg3;
          ?vec[?index + 4] := ?arg4 }
 
-  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression, 
+  { output-instruction-args(?vec:expression, ?index:expression, ?arg1:expression,
                             ?arg2:expression, ?arg3:expression, ?more-args:*) }
     => { output-instruction-args(?vec, ?index, ?arg1, ?arg2, ?arg3, vector(?more-args)) }
 

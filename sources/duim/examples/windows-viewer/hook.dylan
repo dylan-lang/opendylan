@@ -84,7 +84,7 @@ end macro <HOOKPROC>-callback-wrapper;
 
 define callback Hook-Proc :: <HOOKPROC> = CallWndProc-hook;
 
-
+
 /// Give a brief textual description of a message
 
 define method message-description

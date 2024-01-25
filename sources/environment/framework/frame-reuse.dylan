@@ -166,7 +166,7 @@ define class <frame-found-message> (<frame-reuse-message>)
     init-keyword: frame:;
 end class <frame-found-message>;
 
-
+
 /// FIND-ENVIRONMENT-FRAME (environment-framework)
 ///
 /// obsolete (use ensure-environment-frame)
@@ -177,7 +177,7 @@ define method find-environment-frame
   apply(ensure-environment-frame, portd, class, initargs)
 end method find-environment-frame;
 
-
+
 /// ENSURE-ENVIRONMENT-FRAME (environment-framework)
 
 define method ensure-environment-frame
@@ -188,7 +188,7 @@ define method ensure-environment-frame
 end method ensure-environment-frame;
 
 
-
+
 /// REUSE-ENVIRONMENT-FRAME (environment-framework)
 
 define method reuse-environment-frame
@@ -378,7 +378,7 @@ define method reinitialize-frame
 end method reinitialize-frame;
 
 
-
+
 /// FORK-ENVIRONMENT-FRAME (environment-framework)
 
 define method fork-environment-frame

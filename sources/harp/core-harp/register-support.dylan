@@ -9,12 +9,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Support for virtual registers
 //
-// Ordering problems mean that this cannot be in the same file 
+// Ordering problems mean that this cannot be in the same file
 // as the class definitions.
 
-define method really-new-greg 
+define method really-new-greg
     (state :: <vreg-state>, name, indirections) => (new :: <greg>)
-  let reg = make(<greg>, id: inc!(state.next-vreg-id), 
+  let reg = make(<greg>, id: inc!(state.next-vreg-id),
 		 name: name, indirections: indirections);
   reg.virtual-register-vreg-state := state;
   add!(state.vr-vect, reg);
@@ -24,7 +24,7 @@ end;
 
 define method really-new-nreg
     (state :: <vreg-state>, name, indirections) => (new :: <nreg>)
-  let reg = make(<nreg>, id: inc!(state.next-vreg-id), 
+  let reg = make(<nreg>, id: inc!(state.next-vreg-id),
 		 name: name, indirections: indirections);
   reg.virtual-register-vreg-state := state;
   add!(state.vr-vect, reg);
@@ -44,31 +44,31 @@ define method ensure-name (name, indirections) => (name)
 end method;
 
 define method make-sf-register
-     (backend :: <harp-back-end>, #key name, indirections = #[]) 
+     (backend :: <harp-back-end>, #key name, indirections = #[])
      => (new :: <sfreg>)
   let state = backend.variables.vreg-state;
   let name = ensure-name(name, indirections);
-  let reg = make(<sfreg>, id: inc!(state.next-vreg-id), 
+  let reg = make(<sfreg>, id: inc!(state.next-vreg-id),
 		 name: name, indirections: indirections);
   reg.virtual-register-vreg-state := state;
   add!(state.vr-vect, reg);
   reg;
 end;
 
-define method make-df-register 
+define method make-df-register
     (backend :: <harp-back-end>, #key name, indirections = #[])
     => (new :: <dfreg>)
   let state = backend.variables.vreg-state;
   let name = ensure-name(name, indirections);
-  let reg = make(<dfreg>, id: inc!(state.next-vreg-id), 
+  let reg = make(<dfreg>, id: inc!(state.next-vreg-id),
 		 name: name, indirections: indirections);
   reg.virtual-register-vreg-state := state;
   add!(state.vr-vect, reg);
   reg;
 end;
 
-define method make-g-register 
-    (backend :: <harp-back-end>, #key name, indirections = #[]) 
+define method make-g-register
+    (backend :: <harp-back-end>, #key name, indirections = #[])
     => (new :: <greg>)
   let state = backend.variables.vreg-state;
   let name = ensure-name(name, indirections);
@@ -79,9 +79,9 @@ define method make-g-register
     stretchy-vector-pop!(state.gregs-to-reuse);
   end
 end;
-     
-define method make-n-register 
-    (backend :: <harp-back-end>, #key name, indirections = #[]) 
+
+define method make-n-register
+    (backend :: <harp-back-end>, #key name, indirections = #[])
     => (new :: <nreg>)
   let state = backend.variables.vreg-state;
   let name = ensure-name(name, indirections);
@@ -93,7 +93,7 @@ define method make-n-register
   end
 end;
 
-// Back-end specific decision whether to use explicit machine-register temporaries or 
+// Back-end specific decision whether to use explicit machine-register temporaries or
 // leave that to the register colourer. Generic runtime code uses this so that register
 // pressured back-ends can use machine registers directly but RISC back-ends can leave
 // colouring decisions up to the register colourer as usual.
@@ -110,7 +110,7 @@ end method;
 // MOVE-REG
 // Methods will be created for this when instructions sets are defined
 //
-define open generic move-reg 
+define open generic move-reg
     (backend :: <harp-back-end>, toreg :: <register>, fromreg :: <register>)
     => ();
 
@@ -122,7 +122,7 @@ define generic make-register
    => (new :: <virtual-register>);
 
 define method make-register
-   (backend :: <harp-back-end>, 
+   (backend :: <harp-back-end>,
     #key reg-class :: <class> = <greg>, name = #f, indirections = #[])
    => (new :: <virtual-register>)
   select (reg-class)
@@ -186,7 +186,7 @@ end;
 // arg-spill-location returns the integer offset of an arg-spill, or #F
 // otherwise. It may be a useful utility for the generation of tail-calls.
 
-define open generic arg-spill-location 
+define open generic arg-spill-location
     (register :: <object>) => (colour :: <object>);
 
 define method arg-spill-location (x :: <virtual-register>) => (loc)
@@ -210,18 +210,18 @@ end;
 // i = virtual-register-id. For every pair of virtual-registers,
 // there is only one bit entry. This enables tighter bit-packing
 // and reduces space by a factor of 3 for 128 virtual-registers,
-// 
+//
 //   nwords = 128!/32 + 2 = 128.129/64 = 260 words
-// 
+//
 // compared to:
-// 
+//
 //   nwords = 128.(4 + 2) = 768 words
-// 
-// 
+//
+//
 // Saves space by a factor approaching 2 at infinity.
-// 
+//
 //    Nosa  Jan 25, 1999
-// 
+//
 
 /*
 define method virtual-registers-clash?

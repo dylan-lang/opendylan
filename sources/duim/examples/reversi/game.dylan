@@ -459,7 +459,7 @@ define method play-moves-for-player
   end
 end method play-moves-for-player;
 
-
+
 /// Play the piece the player requests
 
 define method reversi-game-play-square
@@ -538,7 +538,7 @@ define method display-message
   end
 end method display-message;
 
-
+
 /// Score handling
 
 define method score-for-player

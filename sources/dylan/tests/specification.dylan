@@ -60,51 +60,51 @@ end dylan-arithmetic-specification-suite;
 
 define interface-specification-suite dylan-collections-specification-suite ()
   /// Collections
-  open abstract class 
+  open abstract class
       <collection> (<object>);
-  open abstract class 
+  open abstract class
       <explicit-key-collection> (<collection>);
-  open abstract class 
+  open abstract class
       <sequence> (<collection>);
-  open abstract class 
+  open abstract class
       <mutable-collection> (<collection>);
-  open abstract class 
+  open abstract class
       <mutable-explicit-key-collection>
     (<explicit-key-collection>, <mutable-collection>);
-  open abstract class 
+  open abstract class
       <mutable-sequence>  (<sequence>, <mutable-collection>);
-  open abstract class 
+  open abstract class
       <stretchy-collection> (<collection>);
   open abstract instantiable class
       <array> (<mutable-sequence>);
-  open abstract instantiable class 
+  open abstract instantiable class
       <vector> (<array>);
-  sealed abstract instantiable class 
+  sealed abstract instantiable class
       <simple-vector> (<vector>);
-  sealed instantiable class 
+  sealed instantiable class
       <simple-object-vector> (<vector>);
-  open abstract instantiable primary class 
+  open abstract instantiable primary class
       <stretchy-vector> (<vector>, <stretchy-collection>);
-  open abstract instantiable primary class 
+  open abstract instantiable primary class
       <deque> (<mutable-sequence>, <stretchy-collection>);
-  sealed abstract instantiable class 
+  sealed abstract instantiable class
       <list> (<mutable-sequence>);
-  sealed instantiable class 
+  sealed instantiable class
       <pair> (<list>);
-  sealed instantiable class 
+  sealed instantiable class
       <empty-list> (<list>);
-  open abstract instantiable primary class 
+  open abstract instantiable primary class
       <range> (<sequence>);
-  open abstract instantiable class 
+  open abstract instantiable class
       <string> (<mutable-sequence>);
-  sealed instantiable class 
+  sealed instantiable class
       <byte-string> (<string>, <vector>);
   //--- <unicode-string> isn't part of our implementation
   // sealed instantiable class
   //    <unicode-string> (<string>, <vector>);
-  open abstract instantiable primary class 
+  open abstract instantiable primary class
       <table> (<mutable-explicit-key-collection>, <stretchy-collection>);
-  open abstract instantiable class 
+  open abstract instantiable class
       <object-table> (<table>);
 
   /// Collection functions
@@ -117,7 +117,7 @@ define interface-specification-suite dylan-collections-specification-suite ()
   open generic function dimension (<array>, <integer>) => (<integer>);
   open generic function key-test (<collection>) => (<function>);
   open generic function key-sequence (<collection>) => (<sequence>);
-  open generic function element 
+  open generic function element
       (<collection>, <object>, #"key", #"default") => (<object>),
     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function element-setter
@@ -148,7 +148,7 @@ define interface-specification-suite dylan-collections-specification-suite ()
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
   open generic function add-new!
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
-  open generic function remove 
+  open generic function remove
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
   open generic function remove!
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>),
@@ -159,7 +159,7 @@ define interface-specification-suite dylan-collections-specification-suite ()
   open generic function pop-last (<deque>) => (<object>);
   open generic function reverse (<sequence>) => (<sequence>);
   open generic function reverse! (<sequence>) => (<sequence>);
-  open generic function sort 
+  open generic function sort
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
   open generic function sort!
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
@@ -167,13 +167,13 @@ define interface-specification-suite dylan-collections-specification-suite ()
   /// Mapping and reducing
   function do (<function>, <collection>, #"rest") => (singleton(#f));
   function map (<function>, <collection>, #"rest") => (<collection>);
-  function map-as 
+  function map-as
       (<type>, <function>, <collection>, #"rest") => (<collection>);
   function map-into
       (<mutable-collection>, <function>, <collection>, #"rest") => (<mutable-collection>);
   function any? (<function>, <collection>, #"rest") => (<object>);
   function every? (<function>, <collection>, #"rest") => (<boolean>);
-  open generic function reduce 
+  open generic function reduce
       (<function>, <object>, <collection>) => (<object>);
   open generic function reduce1
       (<function>, <collection>) => (<object>);
@@ -247,7 +247,7 @@ define interface-specification-suite dylan-conditions-specification-suite ()
   sealed instantiable class <simple-restart> (<restart>);
 
   /// Condition functions
-  function signal 
+  function signal
       (type-union(<condition>, <string>), #"rest") => (#"rest"),
     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function error
@@ -321,14 +321,14 @@ define interface-specification-suite dylan-core-specification-suite ()
   sealed class <method> (<function>);
 
   /// Constructing and initializing instances
-  open generic function make 
+  open generic function make
       (<type>, #"rest", #"key", #"all-keys") => (<object>);
-  open generic function initialize 
+  open generic function initialize
       (<object>, #"key", #"all-keys") => (#"rest");
   open generic function slot-initialized?
       (<object>, <generic-function>) => (<boolean>),
     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
-  function list 
+  function list
       (#"rest") => (<list>);
   function pair
       (<object>, <object>) => (<pair>);
@@ -397,7 +397,7 @@ define interface-specification-suite dylan-core-specification-suite ()
       (<generic-function>) => (false-or(<collection>));
   function function-specializers (<function>) => (<sequence>),
     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
-  function function-arguments 
+  function function-arguments
       (<function>)
    => (<integer>, <boolean>, type-union(one-of(#f, #"all"), <collection>)),
     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";

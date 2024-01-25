@@ -43,7 +43,7 @@ define sealed method gadget-items
     end
 end method gadget-items;
 
-
+
 /// Gadget update protocol
 
 define sealed method update-gadget
@@ -112,7 +112,7 @@ define sealed method item-selected?
 end method item-selected?;
 */
 
-
+
 /// Shared tree/graph control label button functionality
 
 define open abstract class <tree-node-pane-mixin>
@@ -158,7 +158,7 @@ define sealed method initialize
   end
 end method initialize;
 
-
+
 /// Tree node labels
 
 define sealed class <tree-node-label-button>
@@ -168,7 +168,7 @@ end class <tree-node-label-button>;
 define sealed domain make (singleton(<tree-node-label-button>));
 define sealed domain initialize (<tree-node-label-button>);
 
-
+
 /// Tree node expand and contract buttons
 
 define sealed class <tree-node-control-button>

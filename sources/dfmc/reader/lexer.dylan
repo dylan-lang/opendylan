@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $max-lexer-code :: <integer> = 255;
 
-
+
 // state machine
 
 // A particular state in the state machine.
@@ -154,7 +154,7 @@ define method compile-state-machine
   element(state-table, #"start");
 end method compile-state-machine;
 
-
+
 // Features.
 
 /*
@@ -173,7 +173,7 @@ define method feature-present? (feature :: <symbol>) => present? :: <boolean>;
 end method feature-present?;
 */
 
-
+
 // lexer
 
 // Holds the current lexer state.
@@ -633,7 +633,7 @@ define method unget-token
 end method unget-token;
 */
 
-
+
 // Constructors.
 
 define method make-binary-operator
@@ -1515,7 +1515,7 @@ define function delimiter-code?
   end;
 end function delimiter-code?;
 
-
+
 // Conditional compilation stuff.
 
 /*

@@ -192,7 +192,7 @@ define function project-load-namespace (project :: <project>, #rest keys)
                   project.project-name, keys);
         project-stage-text(project, "Loading namespace for library %s",
                            as(<string>, project.project-library-name));
-  
+
         if (project-dynamic-environment(#"compiler-transaction"))
           remove-all-personal-owners(project);
         end;

@@ -197,7 +197,7 @@ define sealed method remove-column
   remove-at!(table-control-columns(pane), index)
 end method remove-column;
 
-
+
 /// Column-click callbacks
 
 define sealed class <column-click-gadget-event> (<gadget-event>)

@@ -33,7 +33,7 @@ define constant $test-internal-class-id
          name: "<internal-test-object>",
          module: $test-library-module-id);
 
-
+
 /// Test suite initialization
 
 define variable *test-application* :: false-or(<project-object>) = #f;
@@ -110,7 +110,7 @@ define function project-condition-handler
   format-out("\nProject warning: type %s: %s\n", type, message)
 end function project-condition-handler;
 
-
+
 /// Project tests
 
 define test open-projects-test ()
@@ -140,7 +140,7 @@ define test open-projects-test ()
               $test-library);
 end test open-projects-test;
 
-
+
 /// projects suite
 
 define suite projects-suite ()

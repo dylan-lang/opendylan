@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $progress-bar-best-width    :: <integer> = 120;
 define constant $status-bar-label-min-width :: <integer> = 150;
 
-
+
 /// Collection gadgets
 
 define constant <selection-specifier> = type-union(one-of(#"all"), <sequence>);
@@ -135,7 +135,7 @@ define method gadget-value-type
   end
 end method gadget-value-type;
 
-
+
 // Mix-in to allow a selection of zero or more items
 // Note: This must come before <collection-gadget-mixin> in any CPL,
 // as it overrides some of the behavior.
@@ -324,7 +324,7 @@ define method gadget-state-setter
   next-method()
 end method gadget-state-setter;
 
-
+
 // The base class for hairy controls like list and tree controls, etc
 define open abstract class <basic-choice-gadget>
     (<gadget-selection-mixin>,
@@ -334,7 +334,7 @@ define open abstract class <basic-choice-gadget>
     init-keyword: selection-mode:;
 end class <basic-choice-gadget>;
 
-
+
 /// List boxes
 
 // This is both an action gadget and a value gadget. Changing the
@@ -416,7 +416,7 @@ define method do-gadget-value-setter
   end
 end method do-gadget-value-setter;
 
-
+
 /// Spin boxes
 
 // You can get "integer spin boxes" by specifying 'items: range(...)',
@@ -445,7 +445,7 @@ define method gadget-label
   end
 end method gadget-label;
 
-
+
 /// Gadget Boxes
 
 // A gadget box is a value gadget whose value is given by a selection
@@ -458,7 +458,7 @@ define open abstract class <gadget-box>
      <updatable-gadget-mixin>)
 end class <gadget-box>;
 
-
+
 /// Tool bars
 
 define abstract class <gadget-bar-mixin>
@@ -484,7 +484,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<tool-bar-pane>));
 define sealed domain initialize (<tool-bar-pane>);
 
-
+
 /// Status bars
 
 define open abstract class <status-bar>
@@ -625,7 +625,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<status-bar-pane>));
 define sealed domain initialize (<status-bar-pane>);
 
-
+
 /// Button box [exclusive-choice] .. [inclusive-choice]
 
 define open abstract class <button-box>
@@ -691,7 +691,7 @@ define sealed method gadget-selection-mode
   #"multiple"
 end method gadget-selection-mode;
 
-
+
 /// Some useful default methods
 
 define method collection-gadget-default-label-key
@@ -715,7 +715,7 @@ define method collection-gadget-default-value-key
   object
 end method collection-gadget-default-value-key;
 
-
+
 /// Event handling
 
 define sealed class <selection-changed-gadget-event> (<gadget-event>)

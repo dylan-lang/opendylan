@@ -22,7 +22,7 @@ define module harp-x86
   use dfmc-back-end-protocol;
   use harp-native, export: all;
   use harp-native-for-extenders;
-  use harp-coff, 
+  use harp-coff,
     exclude: { big-endian? };
   use gnu-as-outputter;
 
@@ -35,30 +35,30 @@ define module harp-x86
 
     // Pentium instructions
     ins--st-index, ins--stb-index, ins--sth-index,
-    ins--st-index-scaled, ins--sth-index-scaled, 
+    ins--st-index-scaled, ins--sth-index-scaled,
     ins--fst-index, ins--dst-index,
     ins--fst-index-scaled, ins--dst-index-scaled, ins--dst-index-scale-2,
-    ins--bits-mem, ins--bitc-mem, 
+    ins--bits-mem, ins--bitc-mem,
     ins--and2-byte-mem, ins--or2-byte-mem,
-    ins--beq-byte-mem, ins--bne-byte-mem, 
+    ins--beq-byte-mem, ins--bne-byte-mem,
     ins--bz-bytes, ins--bnz-bytes,
     ins--ld-index, ins--ldb-index, ins--ldh-index,
     ins--ldb-index-signed, ins--ldh-index-signed,
-    ins--ld-index-scaled, ins--ldh-index-scaled, 
-    ins--ldh-index-scaled-signed, 
+    ins--ld-index-scaled, ins--ldh-index-scaled,
+    ins--ldh-index-scaled-signed,
     ins--fld-index, ins--dld-index,
     ins--fld-index-scaled, ins--dld-index-scaled, ins--dld-index-scale-2,
     ins--move-lower-byte, ins--asr-unsafe,
     ins--move-arg-count-byte, ins--load-stack-index,
-    ins--offset-to-tag, 
+    ins--offset-to-tag,
     ins--clear-direction-flag, ins--push-last-arg,
     ins--get-stack-bottom,
 
 
     // registers
     eax, ecx, edx, ebx, esp, ebp, esi, edi,
-    reg--tmp1, reg--tmp2, reg--tmp3, 
-    reg--stack, reg--frame, reg--arg0, 
+    reg--tmp1, reg--tmp2, reg--tmp3,
+    reg--stack, reg--frame, reg--arg0,
     reg--mlist, reg--function
 
     ;
@@ -72,10 +72,10 @@ define module harp-x86-test
   use format;
   use print;
   use harp-native-for-extenders;
-  use harp-coff, 
+  use harp-coff,
     exclude: { big-endian? };
   use harp-x86;
-  use source-records, 
+  use source-records,
     exclude: { source-record-start-line, source-record-end-line };
 
   export
@@ -96,4 +96,4 @@ define module harp-x86-test
     file-test-5,
     defasm-test0;
 end module;
-    
+

@@ -49,7 +49,7 @@ define method WinMain(hInstance :: <HANDLE>, hPrevInstance :: <HANDLE>,
  => value :: <integer>;
 
  block(return)
-	
+
    // Not needed for Win32:
    //  // recommended size for OLE apps
    //  SetMessageQueue(96);
@@ -78,8 +78,8 @@ define method WinMain(hInstance :: <HANDLE>, hPrevInstance :: <HANDLE>,
    // message loop
    while( GetMessage(msg, $NULL-HWND, 0, 0) )
      unless ( HandleAccelerators(*lpCSimpleApp*, msg) )
-       TranslateMessage(msg);    /* Translates virtual key codes */ 
-       DispatchMessage(msg);     /* Dispatches message to window */ 
+       TranslateMessage(msg);    /* Translates virtual key codes */
+       DispatchMessage(msg);     /* Dispatches message to window */
      end unless;
    end while;
 
@@ -87,7 +87,7 @@ define method WinMain(hInstance :: <HANDLE>, hPrevInstance :: <HANDLE>,
    // the App's ref count go to 0, and the App object will be deleted.
    Release(*lpCSimpleApp*);
 
-   return(msg.wParam-value);   /* Returns the value from PostQuitMessage */ 
+   return(msg.wParam-value);   /* Returns the value from PostQuitMessage */
  end block
 end method WinMain;
 
@@ -136,18 +136,18 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
   block(return)
 
     select ( message )
-	        
+
       $WM-COMMAND =>            // message: command from application menu
 	return(lCommandHandler(*lpCSimpleApp*, hWnd, message, wParam, lParam));
 
-      $WM-CREATE => 
+      $WM-CREATE =>
 	return(lCreateDoc(*lpCSimpleApp*, hWnd, message, wParam, lParam));
 
       $WM-DESTROY =>                   // message: window being destroyed
 	DestroyDocs(*lpCSimpleApp*);  // need to destroy the doc...
 	PostQuitMessage(0);
 
-      $WM-INITMENUPOPUP => 
+      $WM-INITMENUPOPUP =>
 	// is this the edit menu?
 	// Message packing is the same for WIN16 and 32
 	if ( LOWORD(lParam) = 1 )
@@ -155,16 +155,16 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
 	end if;
 
       // this code is needed for 256 color objects to work properly.
-      $WM-QUERYNEWPALETTE => 
+      $WM-QUERYNEWPALETTE =>
 	unless ( *lpCSimpleApp*.m-fAppActive )
 	  return(0);
 	end unless;
 	return(QueryNewPalette(*lpCSimpleApp*));
 
-      $WM-PALETTECHANGED => 
-	begin 
+      $WM-PALETTECHANGED =>
+	begin
 	  let hWndPalChg :: <HWND> =  as(<HWND>, wParam);
-	  
+
 	  if ( hWnd ~= hWndPalChg )
 	    wSelectPalette(hWnd, *lpCSimpleApp*.m-hStdPal,
 			   #t // fBackground
@@ -179,7 +179,7 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
 	  //    whether they use color palettes themselves--their objects
 	  //    may use color palettes.
 	  //    (see ContainerDoc_ForwardPaletteChangedMsg for more info)
-	  // 
+	  //
 	  let doc = *lpCSimpleApp*.m-lpDoc;
 	  if( doc &
 	       doc.m-lpSite &
@@ -189,14 +189,14 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
 	    return(0);
 	  end if;
 	end;
-	  
+
       $WM-ACTIVATEAPP =>
 	let active? :: <boolean> = ~ zero?(wParam);
 	*lpCSimpleApp*.m-fAppActive := active?;
 	if ( active? )
 	  QueryNewPalette(*lpCSimpleApp*);
 	end if;
-	
+
 	let doc = *lpCSimpleApp*.m-lpDoc;
 	if ( doc )
 	  let activeobj = doc.m-lpActiveObject;
@@ -205,12 +205,12 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
 	  end unless;
 	end if;
 
-      $WM-SIZE => 
+      $WM-SIZE =>
 	return(lSizeHandler(*lpCSimpleApp*, hWnd, message, wParam, lParam));
 
       otherwise =>                           // Passes it on if unproccessed
 	return(DefWindowProc(hWnd, message, wParam, lParam));
-	        
+
     end select;
     return(0);
   end block;
@@ -251,19 +251,19 @@ define method about-proc(hDlg :: <HWND>, message :: <integer>,
 			 wParam, lParam)
  => value :: <boolean>;
 
-  select ( message ) 
-    $WM-INITDIALOG =>			/* message: initialize dialog box */ 
+  select ( message )
+    $WM-INITDIALOG =>			/* message: initialize dialog box */
       #t;
 
-    $WM-COMMAND =>			   /* message: received a command */ 
+    $WM-COMMAND =>			   /* message: received a command */
       let button :: <integer> = LOWORD(wParam);
       if ( button = $IDOK	   /* "OK" box selected?	  */
-	    |	 button = $IDCANCEL) /* System menu close command? */ 
-	EndDialog(hDlg, 1);	      /* Exits the dialog box	     */ 
+	    |	 button = $IDCANCEL) /* System menu close command? */
+	EndDialog(hDlg, 1);	      /* Exits the dialog box	     */
 	#t
       end if;
     otherwise =>
-      #f		     /* Didn't process a message    */ 
+      #f		     /* Didn't process a message    */
   end select
 end method about-proc;
 
@@ -311,10 +311,10 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>,
  => value :: <integer>;
 
   block(return)
-	
-    select ( message ) 
-      $WM-PAINT => 
-	
+
+    select ( message )
+      $WM-PAINT =>
+
 	begin
 	  let ps :: <LPPAINTSTRUCT> = make(<LPPAINTSTRUCT>);
 	  let hDC :: <HDC> = BeginPaint(hWnd, ps);
@@ -327,8 +327,8 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>,
 	  destroy(ps);
 	end;
 
-      $WM-LBUTTONDBLCLK => 
-	begin 
+      $WM-LBUTTONDBLCLK =>
+	begin
 	  let pt :: <LPPOINT> = make(<LPPOINT>);
 	  let ( x, y ) = LPARAM-TO-XY(lParam);
 	  pt.x-value := x;
@@ -340,7 +340,7 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>,
 	    GetObjRect(site, rect);
 
 	    if ( PtInRect(rect, pt) )
-	                                
+
 	      // Execute object's default verb
 	      let pmsg :: <LPMSG> = make(<LPMSG>);
 	      pmsg.hwnd-value := hWnd;
@@ -359,7 +359,7 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>,
 
       // no code is added to WM_LBUTTONDOWN for context sensitive help,
       // because this app does not do context sensitive help.
-      $WM-LBUTTONDOWN => 
+      $WM-LBUTTONDOWN =>
 
 	let doc = *lpCSimpleApp*.m-lpDoc;
 	if ( doc.m-fInPlaceActive )

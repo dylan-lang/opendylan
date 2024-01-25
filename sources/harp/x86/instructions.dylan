@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define instruction-set <pentium-instruction-set>
      (<instruction-set>, <harp-x86-back-end>)
-  
+
   create pentium-instructions, inheriting: default-instructions;
 
   uuuu  op st-index, fst-index, dst-index, stb-index, sth-index, bits-mem, bitc-mem,
@@ -23,10 +23,10 @@ define instruction-set <pentium-instruction-set>
 
   tuu   op bz-bytes, bnz-bytes;
 
-  duuu  op ld-index, fld-index, dld-index, ldb-index, ldh-index, 
+  duuu  op ld-index, fld-index, dld-index, ldb-index, ldh-index,
            ldb-index-signed, ldh-index-signed, eliminatable: #t;
 
-  duuu  op ld-index-scaled, ldh-index-scaled, ldh-index-scaled-signed, 
+  duuu  op ld-index-scaled, ldh-index-scaled, ldh-index-scaled-signed,
            fld-index-scaled, dld-index-scaled, dld-index-scale-2, eliminatable: #t;
 
   duu   op move-lower-byte, asr-unsafe, eliminatable: #t;

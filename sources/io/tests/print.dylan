@@ -104,7 +104,7 @@ define test test-object-id-locking ()
   assert-true(every?(identity, v));
 end test;
 
-
+
 /// A simple printing harness
 
 define class <test-class> (<object>)
@@ -127,7 +127,7 @@ define method check-print
               apply(print-to-string, object, args))
 end method check-print;
 
-
+
 /// The print tests
 
 define function test-print-character ()

@@ -26,7 +26,7 @@ define sealed method deuce/command-enabled?-setter
   end
 end method deuce/command-enabled?-setter;
 
-
+
 /// Status bar
 
 // Indices into the status bar
@@ -114,7 +114,7 @@ define method deuce-frame-status-bar-change-label
   string
 end method deuce-frame-status-bar-change-label;
 
-
+
 /// Notifications
 
 define method window-note-mode-entered

@@ -260,7 +260,7 @@ define method do-lower-sheet
   insert-at!(parent.%children, record, #"end")
 end method do-lower-sheet;
 
-
+
 /// Sequence output history
 
 define sealed class <sequence-output-history>

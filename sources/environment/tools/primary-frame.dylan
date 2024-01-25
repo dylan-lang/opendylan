@@ -84,7 +84,7 @@ define method handle-event
   broadcast($environment-channel, make(<environment-stopping-message>));
 end method handle-event;
 
-
+
 /// Toolbar buttons
 
 // New file buttons
@@ -378,13 +378,13 @@ define method frame-open-project-for-library
   end
 end method frame-open-project-for-library;
 
-
+
 /// Command-line windows
 
 define open generic find-command-line-window
     (frame :: <environment-frame>) => ();
 
-
+
 /// Primary frame command table
 
 define command-table *primary-frame-file-open-command-table* (*global-command-table*)

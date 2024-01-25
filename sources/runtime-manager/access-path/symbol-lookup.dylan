@@ -79,7 +79,7 @@ define class <remote-symbol> (<object>)
   constant slot remote-symbol-language :: <integer>,
     required-init-keyword: language:;
 
-  constant slot remote-symbol-storage-status :: 
+  constant slot remote-symbol-storage-status ::
                              one-of(#"public", #"static", #"exported"),
     init-value: #"public",
     init-keyword: storage-status:;
@@ -129,17 +129,17 @@ end class;
 ///// EXPORTED GENERIC FUNCTIONS
 
 
-define generic do-symbols 
+define generic do-symbols
     (function :: <function>, ap :: <access-path>,
      #key library = #f, matching = #f, type = #f) => ();
 
-define generic nearest-symbols 
+define generic nearest-symbols
     (ap :: <access-path>, ra :: <remote-value>)
       => (symbol :: false-or(<remote-symbol>),
           previous :: false-or(<remote-symbol>),
           next :: false-or(<remote-symbol>));
 
-define generic find-symbol 
+define generic find-symbol
     (ap :: <access-path>, name :: <string>,
      #key library = #f, type = #f)
        => (maybe-sym :: false-or(<remote-symbol>));
@@ -153,7 +153,7 @@ define generic find-symbol
 //    so this isn't a problem, but we should probably re-think this and
 //    get it back on line.
 
-define method do-symbols 
+define method do-symbols
     (function :: <function>, ap :: <access-path>,
      #key library = #f, matching = #f, type = #f) => ()
 
@@ -176,8 +176,8 @@ end method;
 
 ///// NEAREST-SYMBOLS-FROM-NUB
 
-define open generic nearest-symbols-from-nub 
-    (conn :: <access-connection>, address :: <remote-value>) 
+define open generic nearest-symbols-from-nub
+    (conn :: <access-connection>, address :: <remote-value>)
  => (any-luck? :: <boolean>,
      where-is-it? :: <NUBLIBRARY>,
      gimme-handle :: <NUBHANDLE>);
@@ -185,7 +185,7 @@ define open generic nearest-symbols-from-nub
 
 ///// COLLECT-NEAREST-SYMBOLS
 
-define open generic collect-nearest-symbols 
+define open generic collect-nearest-symbols
     (conn :: <access-connection>, lib :: <remote-library>,
      lookups :: <NUBHANDLE>)
  => (closest :: <remote-symbol>,
@@ -195,34 +195,34 @@ define open generic collect-nearest-symbols
 
 ///// NEAREST-SYMBOLS
 
-define method nearest-symbols 
+define method nearest-symbols
      (ap :: <access-path>, address :: <remote-value>)
        => (symbol :: false-or (<remote-symbol>),
            previous :: false-or (<remote-symbol>),
            next :: false-or (<remote-symbol>))
-  let (success, lib, table) 
+  let (success, lib, table)
     = nearest-symbols-from-nub (ap.connection, address);
   if (success)
     let remote-lib = find-or-make-library (ap, lib);
     collect-nearest-symbols (ap.connection, remote-lib, table);
   else
     values (#f, #f, #f);
-  end if;        
+  end if;
 end method;
 
 
 ///// FIND-SYMBOL-IN-LIBRARY
 
-define open generic find-symbol-in-library 
+define open generic find-symbol-in-library
     (conn :: <access-connection>,
      lib :: <remote-library>,
-     name :: <string>) 
+     name :: <string>)
  => (maybe-sym :: false-or(<remote-symbol>));
 
 
 ///// FIND-SYMBOL
 
-define method find-symbol 
+define method find-symbol
     (ap :: <access-path>, name :: <string>,
      #key library = #f, type = #f)
         => (maybe-sym :: false-or (<remote-symbol>))
@@ -232,12 +232,12 @@ define method find-symbol
     let i = 0;
     let found = #f;
     while ((~found) & (i < size (ap.libraries)))
-      found := find-symbol-in-library 
+      found := find-symbol-in-library
                  (ap.connection, ap.libraries[i], name);
       i := i + 1;
     end while;
     found;
-  end if;       
+  end if;
 end method;
 
 
@@ -262,7 +262,7 @@ end method;
 
 
 define open generic symbol-relative-address-on-connection
-  (conn :: <access-connection>, 
+  (conn :: <access-connection>,
    path :: <access-path>, address :: <remote-value>)
  => (sym-if-found :: false-or(<remote-symbol>),
      offset);

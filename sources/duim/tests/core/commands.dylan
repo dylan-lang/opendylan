@@ -35,7 +35,7 @@ define test test-<command-table> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Command tests
 
 define test simple-commands-test ()
@@ -46,7 +46,7 @@ define test simple-commands-test ()
   check-true("Execute command", test-callback-invoked?());
 end test simple-commands-test;
 
-
+
 /// Command table tests
 
 define test command-tables-test ()
@@ -74,7 +74,7 @@ define test command-tables-test ()
               command-present?(command-table, command));
 end test command-tables-test;
 
-
+
 /// Command table menu handling
 
 define variable *test-command-menus*
@@ -107,7 +107,7 @@ define test command-table-menus-test ()
   menus
 end test command-table-menus-test;
 
-
+
 /// Define the commands test suite
 
 define suite duim-commands-suite ()

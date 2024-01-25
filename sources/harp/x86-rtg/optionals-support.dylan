@@ -1,5 +1,5 @@
 module:    harp-x86-rtg
-Synopsis:  Support for entry points with optionals 
+Synopsis:  Support for entry points with optionals
 Author:    Tony Mann
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -12,8 +12,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // A hack for the Pentium. Register pressure is so great
 // that the Pentium must recalculate the size of the key space.
 
-define sideways method ensure-safe-key-space 
-    (be :: <harp-x86-back-end>, key-space :: <register>) 
+define sideways method ensure-safe-key-space
+    (be :: <harp-x86-back-end>, key-space :: <register>)
     => (r :: <register>);
   let keys-size = make-n-register(be);
   op--keywords-size(be, keys-size);

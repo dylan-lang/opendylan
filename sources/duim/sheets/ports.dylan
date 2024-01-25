@@ -206,7 +206,7 @@ define method register-port-class
   end
 end method register-port-class;
 
-
+
 /// Making ports
 
 define macro with-port-locked
@@ -347,7 +347,7 @@ define method destroy-port (_port :: <basic-port>) => ()
   next-method()
 end method destroy-port;
 
-
+
 /// Ports vs. pointers
 
 define sealed method port-pointer
@@ -362,7 +362,7 @@ define sealed method port-pointer-setter
   _port.%pointer := pointer
 end method port-pointer-setter;
 
-
+
 /// Input focus handling
 
 define method port-input-focus-setter
@@ -395,7 +395,7 @@ define method note-focus-in
   distribute-event(_port, make(<input-focus-in-event>,  sheet: sheet))
 end method note-focus-in;
 
-
+
 /// Port event loop
 
 define method restart-port (_port :: <port>) => ()
@@ -444,7 +444,7 @@ define method note-port-terminated (_port :: <port>, condition) => ()
   remove!(*ports*, _port)
 end method note-port-terminated;
 
-
+
 /// "Resources"
 
 define sealed method get-default-foreground

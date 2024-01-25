@@ -82,7 +82,7 @@ define method value-partition-key
          value.llvm-asm-constant-align-stack?)
 end method;
 
-
+
 /// Constant expressions
 
 define abstract class <llvm-expression-constant> (<llvm-constant-value>)
@@ -155,7 +155,7 @@ end class;
 // record CE_SHUFVEC_EX = 19;  // SHUFVEC_EX:    [opty, opval, opval, opval]
 // record BLOCKADDRESS  = 21;  // BLOCKADDRESS:  [fnty, fnval, bb#]
 
-
+
 /// Constant placeholders
 
 define class <llvm-symbolic-constant> (<llvm-constant-value>,
@@ -174,7 +174,7 @@ define method value-forward
   end if
 end method;
 
-
+
 /// Well-known constants
 
 define constant $llvm-false

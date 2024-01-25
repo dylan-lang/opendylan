@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library corba-pente
   use common-dylan;
   use system;
-  use duim;  
+  use duim;
   use dylan-orb;
   use pente-skeletons;
   use network;

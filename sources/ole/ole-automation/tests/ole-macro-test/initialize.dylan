@@ -13,7 +13,7 @@ define method double-internal-integer-value
 end method double-internal-integer-value;
 
 define method does-string-equal-hello?
-    (test :: <dispatch-object-2>, string :: <string>) 
+    (test :: <dispatch-object-2>, string :: <string>)
  => (status :: <HRESULT>, boolean :: <boolean>)
   values($S-OK, string = "hello")
 end method does-string-equal-hello?;
@@ -50,7 +50,7 @@ define dispatch-interface <dispatch-object-3> (<simple-dispatch>)
   documentation "disp-type-info-3 for testing purposes";
   uuid as(<REFIID>, "{94CCDC4C-92AD-11D1-9A5E-006097C90313}");
   property another-integer :: <integer>;
-  member-function multiply 
+  member-function multiply
     (arg1 :: <integer>, arg2 :: <integer>) => (result :: <integer>);
 end <dispatch-object-3>;
 
@@ -61,7 +61,7 @@ define dispatch-interface <dispatch-object-4> (<dispatch-object-3>)
   constant property id = 707;
 end <dispatch-object-4>;
 
-define constant $class-id = 
+define constant $class-id =
 	as(<REFIID>, "{94CCDC4A-92AD-11D1-9A5E-006097C90313}");
 
 define coclass *test-coclass-type-info*

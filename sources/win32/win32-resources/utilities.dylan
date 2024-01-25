@@ -31,7 +31,7 @@ define inline function pointer-address-32
   %logand(\%+(p, 3), as(<machine-word>, #xFFFFFFFC))
 end function pointer-address-32;
 
-
+
 /// Error handling
 
 // define constant $false    :: <integer> = 0;

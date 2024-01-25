@@ -23,7 +23,7 @@ define open generic compiler-database-proxy-id
     (database :: <compiler-database>, proxy)
  => (id :: false-or(<id>));
 
-
+
 /// Implementation
 
 define method choose-server
@@ -65,7 +65,7 @@ define method environment-object-home-server?
   proxy & lookup-environment-object-by-proxy(database, proxy) & #t
 end method environment-object-home-server?;
 
-
+
 /// Proxy handling
 
 //--- This default method means that the objects will never get linked, so

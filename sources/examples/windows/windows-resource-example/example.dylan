@@ -38,7 +38,7 @@ define method Main-program() => exit-status :: <signed-int>;
   debug-out("Button win pos %d,%d\n", x1,y1);
 
   if ( Init-Application(*app-instance*)  // Initialize shared things
-	// Perform initializations that apply to a specific instance 
+	// Perform initializations that apply to a specific instance
 	& Init-Instance(*app-instance*, *cmd-show*) )
     // initialized OK
 
@@ -79,7 +79,7 @@ define method Init-Instance(
 
   // Create a main window for this application instance.
   let win = create-window($IDD-MAIN-WINDOW);
-  
+
   if(null-handle?(win))
     print-last-error();
     #f
@@ -97,20 +97,20 @@ define variable *display-pointer* = 0;
 // this handler is for the drawing area
 define function handle-create(hWnd :: <HWND>,
 			      commandId :: <unsigned-int>,
-			      uParam :: <unsigned-int>,  
+			      uParam :: <unsigned-int>,
 			      lParam :: <integer>) => ();
-  // $WM-CREATE => 
+  // $WM-CREATE =>
 
   *drawing-area-window* := hWnd;
-  /* Create the brush objects */ 
+  /* Create the brush objects */
 
   *hGreenBrush* := CreateSolidBrush(RGB(0, 255, 0));
 
-  /* Create the "---" pen */ 
+  /* Create the "---" pen */
 
-  *hDashPen* := CreatePen($PS-DASH,           /* style */ 
-			  1,		      /* width */ 
-			  RGB(0, 0, 255));      /* color */ 
+  *hDashPen* := CreatePen($PS-DASH,           /* style */
+			  1,		      /* width */
+			  RGB(0, 0, 255));      /* color */
 end;
 
 define function draw-line(hDC :: <HDC>) => ();
@@ -124,7 +124,7 @@ define function draw-line(hDC :: <HDC>) => ();
   // Draw a line
   LineTo(hDC, 250, 100);
 
-  // Restore the old pen  
+  // Restore the old pen
 
   SelectObject(hDC, hOldPen);
 
@@ -133,7 +133,7 @@ end;
 // those commands are run on the main window
 define function draw-line-command(window :: <HWND>,
 				  commandId :: <unsigned-int>,
-				  uParam :: <unsigned-int>,  
+				  uParam :: <unsigned-int>,
 				  lParam :: <integer>) => ();
   if(*display-pointer* < 10)
     InvalidateRgn(*drawing-area-window*, null-handle(<HRGN>), #f);
@@ -150,7 +150,7 @@ define function draw-square(hDC :: <HDC>) => ();
   debug-out("drawing square: drawing\n");
   Rectangle(hDC, 20, 20, 70, 70);
 
-  // Restore the old brush  
+  // Restore the old brush
   debug-out("drawing square: restoring old brush\n");
   SelectObject(hDC, hOldBrush);
   debug-out("drawing square: done\n");
@@ -158,7 +158,7 @@ end;
 
 define function draw-square-command(window :: <HWND>,
 				    commandId :: <unsigned-int>,
-				    uParam :: <unsigned-int>,  
+				    uParam :: <unsigned-int>,
 				    lParam :: <integer>) => ();
   if(*display-pointer* < 10)
     InvalidateRgn(*drawing-area-window*, null-handle(<HRGN>), #f);
@@ -169,7 +169,7 @@ end;
 
 define function clear-command(window :: <HWND>,
 			      commandId :: <unsigned-int>,
-			      uParam :: <unsigned-int>,  
+			      uParam :: <unsigned-int>,
 			      lParam :: <integer>) => ();
   let hWnd = *drawing-area-window*;
   *display-pointer* := 0;
@@ -178,20 +178,20 @@ end;
 
 define function handle-paint(hWnd :: <HWND>,
 			     commandId :: <unsigned-int>,
-			     uParam :: <unsigned-int>,  
+			     uParam :: <unsigned-int>,
 			     lParam :: <integer>) => ();
-  // $WM-PAINT => 
-  begin 
+  // $WM-PAINT =>
+  begin
     let ps :: <PPAINTSTRUCT> = make(<PPAINTSTRUCT>);
-    
-    // Set up a display context to begin painting 
+
+    // Set up a display context to begin painting
     let hDC :: <HDC> = BeginPaint(hWnd, ps);
 
     for(i from 0 below *display-pointer*)
       *display-list*[i](hDC);
     end;
 
-    // Tell Windows you are done painting  
+    // Tell Windows you are done painting
 
     EndPaint(hWnd, ps);
     %free(ps);
@@ -200,7 +200,7 @@ end;
 
 define function handle-destroy(hWnd :: <HWND>,
 			       commandId :: <unsigned-int>,
-			       uParam :: <unsigned-int>,  
+			       uParam :: <unsigned-int>,
 			       lParam :: <integer>) => ();
   // $WM-DESTROY =>   // message: window being destroyed
   DeleteObject(*hGreenBrush*);
@@ -213,24 +213,24 @@ end;
 
 define function about-command(hWnd :: <HWND>,
 			      commandId :: <unsigned-int>,
-			      uParam :: <unsigned-int>,  
+			      uParam :: <unsigned-int>,
 			      lParam :: <integer>) => ();
-  //	  $IDM-ABOUT => 
+  //	  $IDM-ABOUT =>
   let dlg = create-modal-window($IDD-ABOUTBOX, parent: hWnd);
 end;
 define function exit-command(hWnd :: <HWND>,
 			     commandId :: <unsigned-int>,
-			     uParam :: <unsigned-int>,  
+			     uParam :: <unsigned-int>,
 			     lParam :: <integer>) => ();
-  //	  $IDM-EXIT => 
+  //	  $IDM-EXIT =>
   DestroyWindow(hWnd);
 end;
 
 define function help-command(hWnd :: <HWND>,
 			     commandId :: <unsigned-int>,
-			     uParam :: <unsigned-int>,  
+			     uParam :: <unsigned-int>,
 			     lParam :: <integer>) => ();
-  //	  $IDM-HELPCONTENTS => 
+  //	  $IDM-HELPCONTENTS =>
   if ( ~ WinHelp(hWnd, TEXT("EXAMPLE.HLP"), $HELP-KEY,
 		 pointer-address(TEXT("CONTENTS"))) )
     MessageBox(GetFocus(),
@@ -242,9 +242,9 @@ end;
 
 define function search-help-command(hWnd :: <HWND>,
 				    commandId :: <unsigned-int>,
-				    uParam :: <unsigned-int>,  
+				    uParam :: <unsigned-int>,
 				    lParam :: <integer>) => ();
-  //	  $IDM-HELPSEARCH => 
+  //	  $IDM-HELPSEARCH =>
   if ( ~ WinHelp(hWnd, TEXT("EXAMPLE.HLP"), $HELP-PARTIALKEY,
 		 pointer-address(TEXT(""))) )
     MessageBox(GetFocus(),
@@ -256,9 +256,9 @@ end;
 
 define function help-help-command(hWnd :: <HWND>,
 				  commandId :: <unsigned-int>,
-				  uParam :: <unsigned-int>,  
-				  lParam :: <integer>) => ();	    
-  //	  $IDM-HELPHELP => 
+				  uParam :: <unsigned-int>,
+				  lParam :: <integer>) => ();
+  //	  $IDM-HELPHELP =>
   if ( ~ WinHelp(hWnd, $NULL-string, $HELP-HELPONHELP, 0) )
     MessageBox(GetFocus(),
 	       TEXT("Unable to activate help"),
@@ -271,7 +271,7 @@ end;
 // all of these are currently disabled:
 /*
 $IDM-NEW, $IDM-OPEN, $IDM-SAVE, $IDM-SAVEAS, $IDM-UNDO, $IDM-CUT,
-$IDM-COPY, $IDM-PASTE, $IDM-LINK, $IDM-LINKS => 
+$IDM-COPY, $IDM-PASTE, $IDM-LINK, $IDM-LINKS =>
 */
 
 Main-program(); // run the main program

@@ -39,13 +39,13 @@ end method;
 
 define macro with-connection-manager
   { with-connection-manager (?manager:expression) ?body:body end }
-    => 
+    =>
     { with-lock (connection-manager-lock(?manager)) ?body end }
 end macro;
 
 define macro with-each-connection
   { with-each-connection (?connection:name = ?manager:expression) ?body:body end }
-    => 
+    =>
     { do-connections(?manager, method (?connection) ?body end method) }
 end macro;
 
@@ -122,7 +122,7 @@ define method open-connection (manager :: <connection-manager>, host :: <string>
 			manager: manager,
 			stream: make(connection-manager-stream-class(manager),
 				     host: host,
-				     port: port, 
+				     port: port,
 				     force-output-before-read?: #f,
 				     element-type: <byte>),
 			host: host,
@@ -175,7 +175,7 @@ end method;
 define method close-connection (manager :: <connection-manager>, connection :: <connection>)
   let stream = connection-stream(connection);
   with-lock (stream-lock(stream))
-    close(stream, abort?: #t);	
+    close(stream, abort?: #t);
   end with-lock;
   debug-out(#"connection", "Closed connection to %= (%=)", connection-host(connection), connection-port(connection));
 end method;

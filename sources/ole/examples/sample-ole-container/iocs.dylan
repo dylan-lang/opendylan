@@ -48,18 +48,18 @@ define method IOleClientSite/SaveObject(this :: <COleClientSite>)
   // get a pointer to IPersistStorage
   let ( hErr :: <HRESULT>, interface :: <Interface> ) =
     QueryInterface(this.m-pSite.m-lpOleObject, $IID-IPersistStorage);
-  
+
   // save the object
   if ( hErr = $NOERROR )
 
     let lpPS :: <LPPERSISTSTORAGE> =
       pointer-cast(<LPPERSISTSTORAGE>, interface);
-    
+
     sc := OleSave(lpPS, this.m-pSite.m-lpObjStorage, #t);
     IPersistStorage/SaveCompleted(lpPS, null-pointer(<LPSTORAGE>));
     Release(lpPS);
   end if;
-  sc 
+  sc
 end method IOleClientSite/SaveObject;
 
 //**********************************************************************
@@ -129,7 +129,7 @@ end method IOleClientSite/GetMoniker;
 
 define method IOleClientSite/GetContainer(this :: <COleClientSite> )
 	=> ( status :: <HRESULT>, pContainer :: <LPOLECONTAINER> );
-	
+
   OutputDebugString( "In IOCS::GetContainer\r\n");
 
   values( $E-NOTIMPL, $NULL-interface )
@@ -202,7 +202,7 @@ end method IOleClientSite/ShowObject;
 
 
 define method IOleClientSite/OnShowWindow(this :: <COleClientSite>,
-					  fShow :: <boolean>) 
+					  fShow :: <boolean>)
  => status :: <HRESULT>;
 
   // let stabilize :: <CStabilize> = make(<CStabilize>, this.m-pSite);
@@ -212,11 +212,11 @@ define method IOleClientSite/OnShowWindow(this :: <COleClientSite>,
   InvalidateRect(window, $NULL-RECT, #t);
 
   // if object window is closing, then bring container window to top
-  if ( ~ fShow ) 
+  if ( ~ fShow )
     BringWindowToTop(window);
     SetFocus(window);
   end if;
-  $S-OK 
+  $S-OK
 end method IOleClientSite/OnShowWindow;
 
 //**********************************************************************
@@ -247,9 +247,9 @@ end method IOleClientSite/OnShowWindow;
 //********************************************************************
 
 
-define method IOleClientSite/RequestNewObjectLayout(this :: <COleClientSite>) 
+define method IOleClientSite/RequestNewObjectLayout(this :: <COleClientSite>)
 	=> status :: <HRESULT>;
 
   OutputDebugString( "In IOCS::RequestNewObjectLayout\r\n");
-  $E-NOTIMPL 
+  $E-NOTIMPL
 end method IOleClientSite/RequestNewObjectLayout;

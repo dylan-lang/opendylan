@@ -10,4 +10,4 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define suite pentium-test-suite ()
     suite win32-test-suite;
     suite threads-test-suite
-end; 
+end;

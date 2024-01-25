@@ -52,7 +52,7 @@ define method initialize
   end;
 end method initialize;
 
-
+
 /// Roots and items
 
 // Build the items for the first time when the sheet is fully attached
@@ -139,7 +139,7 @@ define sealed method gadget-items
     end
 end method gadget-items;
 
-
+
 /// Generic implementation of graph node panes
 
 define sealed class <graph-node-pane>
@@ -366,7 +366,7 @@ define sealed method node-icon-setter
   icon
 end method node-icon-setter;
 
-
+
 /// Graph control edges
 
 define open abstract primary class <graph-edge-pane> (<graph-edge>)
@@ -468,7 +468,7 @@ define method edge-attachment-points
   end
 end method edge-attachment-points;
 
-
+
 /// Basic graph layout pane class
 
 define abstract class <graph-control-layout>
@@ -557,7 +557,7 @@ define macro with-node-breadth-and-depth-functions
          ?body }
 end macro with-node-breadth-and-depth-functions;
 
-
+
 /// Event handling for edges
 
 define method handle-event
@@ -641,7 +641,7 @@ define sealed method set-edge-selection
   end
 end method set-edge-selection;
 
-
+
 /// Tree graphs
 
 define sealed class <tree-graph-pane> (<graph-control-pane>)
@@ -815,7 +815,7 @@ define method layout-graph-edges
   end
 end method layout-graph-edges;
 
-
+
 /// Directed graphs, both acyclic and cyclic
 
 define sealed class <DAG-graph-pane> (<graph-control-pane>)

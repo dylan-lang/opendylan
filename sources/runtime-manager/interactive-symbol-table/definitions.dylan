@@ -16,11 +16,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    definition, which is likely to be expensive.
 
 define macro defining-symbols
-  {defining-symbols (?st:expression) 
-     ?b:body 
+  {defining-symbols (?st:expression)
+     ?b:body
    end}
-   => 
-     {begin 
+   =>
+     {begin
         let tab = ?st;
         tab.performing-multiple-definitions? := #t;
         ?b;
@@ -85,8 +85,8 @@ end method;
 //    operation.
 
 define method symbol-table-define-symbol
-    (st :: <interactive-symbol-table>, 
-     name :: <string>, 
+    (st :: <interactive-symbol-table>,
+     name :: <string>,
      addr :: <remote-value>,
      #key language = $symbol-language-C, library = #f,
           file = #f, storage-status = #"public")
@@ -230,7 +230,7 @@ define method symbol-table-define-symbol
   end if;
 
   // And return the <remote-symbol> itself.
-  newsym;    
+  newsym;
 end method;
 
 
@@ -256,7 +256,7 @@ define method symbol-table-undefine-symbol
   let subtable = st.symbols-by-library[library];
   let target-sym = element(subtable.symbols-by-name, name, default: #f);
   if (target-sym)
-    let (page, page-offset) = 
+    let (page, page-offset) =
       page-relative-address(st.symbol-table-access-path,
                             target-sym.remote-symbol-address);
     let (list-index, sublist) =
@@ -265,7 +265,7 @@ define method symbol-table-undefine-symbol
       search-in-ordered-pair-sequence(sublist, page-offset);
     remove!(sublist, sublist[sublist-index]);
     if (size(sublist) == 0)
-      remove!(subtable.symbols-by-address, 
+      remove!(subtable.symbols-by-address,
               subtable.symbols-by-address[list-index]);
     end if;
     remove-key!(subtable.symbols-by-name, name);

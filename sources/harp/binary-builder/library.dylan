@@ -37,7 +37,7 @@ define module binary-builder
   use locators;
   use binary-manager;
 
-  export 
+  export
     <section-with-fixups>,
     actual-section, import-fixups, id-import-fixups,
     <binary-builder>,
@@ -65,17 +65,17 @@ define module binary-builder
     add-symbol-def,
     add-symbol-definition,
     add-binary-symbol-definition,
-    add-data, 
-    add-integer-data, 
-    add-integer-data-short, 
-    add-data-byte, 
+    add-data,
+    add-integer-data,
+    add-integer-data-short,
+    add-data-byte,
     add-data-string,
     add-fixup-data,
     select-binary-section,
     select-dylan-section,
     ensure-size-of-section-data,
     share-or-create,
-    
+
     $data-start-symbol,
     $data-end-symbol,
     $vars-start-symbol,
@@ -125,7 +125,7 @@ define module binary-builder
     add-imported-data-fixups,
     $imported-name-mangler,
     align-section-data
-    
+
     ;
 
 end module;

@@ -1246,7 +1246,7 @@ end method;
 
 
 define method ^debug-name (object) #f end; // !@#$ PATCH
-
+
 
 
 // We might have different types of obsolete instances for the purpose of
@@ -1257,7 +1257,7 @@ end &class;
 define primary &class <miscellaneous-obsolete-instance> (<object>)
 end &class;
 
-
+
 
 ////
 //// PROXIES

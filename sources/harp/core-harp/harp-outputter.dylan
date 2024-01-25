@@ -24,13 +24,13 @@ end class;
 
 
 
-//// Functions that are used by clients of HARP for the purposes of emitting 
+//// Functions that are used by clients of HARP for the purposes of emitting
 //// code:
 
 
 // MAKE-HARP-OUTPUTTER
-// makes an outputer for HARP assembler output. The filename 
-// will normally be a string (in which case, it should not include 
+// makes an outputer for HARP assembler output. The filename
+// will normally be a string (in which case, it should not include
 // an extension). Some outputters may permit other values (e.g. streams)
 //
 // The result of this function
@@ -38,10 +38,10 @@ end class;
 // described below.
 //
 // If type is not supplied, then it will default to
-// backend.default-harp-output-type. If supplied, then it may 
-// either be a symbol naming an output type (e.g. #"coff") or a 
+// backend.default-harp-output-type. If supplied, then it may
+// either be a symbol naming an output type (e.g. #"coff") or a
 // sequence of symbols naming a composite output type.
-// 
+//
 // If print-harp? is supplied as true, then a #"print-harp" outputter
 // type is created too.
 //
@@ -53,7 +53,7 @@ define sealed generic make-harp-outputter
     => (outputter :: <harp-outputter>);
 
 define method make-harp-outputter
-    (backend :: <harp-back-end>, filename, 
+    (backend :: <harp-back-end>, filename,
      #key type =  backend.default-harp-output-type, print-harp? = unsupplied())
     => (outputter :: <harp-outputter>)
   let print-harp? = if (supplied?(print-harp?)) print-harp? else print-harp-by-default end if;
@@ -75,7 +75,7 @@ end method;
 
 // A Model Object Protocol for the Harp Back End
 
-// This enables the Harp Back End to work directly with compiler model-objects, 
+// This enables the Harp Back End to work directly with compiler model-objects,
 // as well as maintaining compatibility with other clients at the same time
 
 
@@ -87,7 +87,7 @@ define method model-object-protocol(outputter :: <harp-outputter>) => ()
 end method;
 
 
-// This is an outputter predicate that determines if models are currently the unit of 
+// This is an outputter predicate that determines if models are currently the unit of
 // canonicalization
 
 define open generic model-object-protocol?(outputter :: <harp-outputter>)
@@ -189,7 +189,7 @@ define constant $dummy-model-object = unsupplied();
 // For Outputters that support the model-object protocol, constant-references in
 // generated code are interpreted as refering to models, not names of models;
 // The Client must ensure that references are only made to actual models;
-// Strings that are intended to be actual models must be explicitly turned into 
+// Strings that are intended to be actual models must be explicitly turned into
 // real models by Clients;
 // Bare strings continue to be names of models
 
@@ -316,7 +316,7 @@ define open generic output-line-comment
 // The import? keyword must be set to #t for externals from other libraries
 // Must be specialized by an outputter library
 //
-define open generic output-external 
+define open generic output-external
     (be :: <harp-back-end>, outputter :: <harp-outputter>, name,
      #key, #all-keys) => ();
 
@@ -329,7 +329,7 @@ define open generic output-implicit-externals
 // Name will normally be a <constant-reference> or <byte-string>
 // Must be specialized by an outputter library
 //
-define open generic output-public 
+define open generic output-public
     (be :: <harp-back-end>, outputter :: <harp-outputter>, name,
      #key, #all-keys) => ();
 
@@ -345,22 +345,22 @@ define open generic output-export
 // OUTPUT-DEFINITION defines the name symbolically at the current
 // point in the section.
 // Name will normally be a <constant-reference> or <byte-string>
-// If a section is given it should be a <symbol> describing where to 
+// If a section is given it should be a <symbol> describing where to
 // put the definition. The following sections have special meanings:-
 //      #"data"             - ambiguously traced data section (this is the default)
 //      #"ambiguous-data"   - synonym for the above
 //      #"variables"        - section traced as roots by the GC
 //      #"objects"          - section traced as a heap by the GC
 //      #"untraced-objects" - heap section, untraced by the GC
-//      #"untraced-data"    - untraced data section 
+//      #"untraced-data"    - untraced data section
 //      #"code"             - the code or text section
 //      #"init-code"        - separate initialization part of the code section
 //      #"elf-init-code"    - ELF initialization code
 //      #"elf-fini-code"    - ELF finalization code
 //
-// Must be specialized by an outputter library. 
+// Must be specialized by an outputter library.
 //
-define open generic output-definition 
+define open generic output-definition
     (be :: <harp-back-end>, outputter :: <harp-outputter>, name,
      #key, #all-keys) => ();
 
@@ -368,16 +368,16 @@ define open generic output-definition
 // OUTPUT-VARIABLE defines a variable and associates it with an
 // initial value. If the repeat key is given, it should be an integer
 // which specifies that the initial value should be repeated N times.
-// If public? is given a true value, then the name is declared to be 
-// public, as with output-public. If export? is given a true value, 
+// If public? is given a true value, then the name is declared to be
+// public, as with output-public. If export? is given a true value,
 // then the variable is exported. If import-value? is given a true value
-// then the initial value is imported from another library. If a section is 
+// then the initial value is imported from another library. If a section is
 // given, it should be specified as for output-definition.
 //
 // Must be specialized by an outputter library.
 //
 define open generic output-variable
-    (be :: <harp-back-end>, outputter :: <harp-outputter>, name, initial-value, 
+    (be :: <harp-back-end>, outputter :: <harp-outputter>, name, initial-value,
      #key, #all-keys) => ();
 
 
@@ -385,7 +385,7 @@ define open generic output-variable
 // outputter
 // Must be specialized by an outputter library
 //
-define open generic output-header 
+define open generic output-header
     (be :: <harp-back-end>, outputter :: <harp-outputter>) => ();
 
 
@@ -393,7 +393,7 @@ define open generic output-header
 // outputter
 // Must be specialized by an outputter library
 //
-define open generic output-footer 
+define open generic output-footer
     (be :: <harp-back-end>, outputter :: <harp-outputter>) => ();
 
 
@@ -401,7 +401,7 @@ define open generic output-footer
 // (e.g. with output-variable)
 // Must be specialized by an outputter library
 //
-define open generic output-data-start 
+define open generic output-data-start
     (be :: <harp-back-end>, outputter :: <harp-outputter>) => ();
 
 
@@ -409,16 +409,16 @@ define open generic output-data-start
 // (e.g. with output-lambda-preamble)
 // Must be specialized by an outputter library
 //
-define open generic output-code-start 
+define open generic output-code-start
     (be :: <harp-back-end>, outputter :: <harp-outputter>) => ();
 
 
-// OUTPUT-GLUE-SYMBOLS should be used for just one outputted file in 
-// a library, to define any library-specific symbols. If called, it should be 
+// OUTPUT-GLUE-SYMBOLS should be used for just one outputted file in
+// a library, to define any library-specific symbols. If called, it should be
 // called immediately before the call to output-footer
 // Must be specialized by an outputter library
 //
-define open generic output-glue-symbols 
+define open generic output-glue-symbols
     (be :: <harp-back-end>, outputter :: <harp-outputter>,
      #key, #all-keys) => ();
 
@@ -441,7 +441,7 @@ define open generic output-data-byte
     (be :: <harp-back-end>, outputter :: <harp-outputter>, byte) => ();
 
 
-// ELF Outputters use this emitter to emit type and size of data, so the 
+// ELF Outputters use this emitter to emit type and size of data, so the
 // Linker can create appropriate dynamic relocation records for them
 
 define open generic output-data-footer
@@ -459,7 +459,7 @@ end method;
 // Outputs the code for a compiled lambda
 // Must be specialized by an outputter library
 // The section keyword may be accepted to group initialization code.
-// Acceptable values are #"code" and #"init-code" with meanings as for 
+// Acceptable values are #"code" and #"init-code" with meanings as for
 // output-definition
 //
 define open generic output-compiled-lambda
@@ -515,12 +515,12 @@ define open generic make-harp-outputter-by-type
 //
 
 define open generic file-extension-for-outputter-type
-    (backend :: <harp-back-end>, type :: <symbol>) 
+    (backend :: <harp-back-end>, type :: <symbol>)
     => (extension :: <byte-string>);
 
 
 define open generic stream-type-for-outputter-type
-    (backend :: <harp-back-end>, type :: <symbol>) 
+    (backend :: <harp-back-end>, type :: <symbol>)
     => (stream-type :: <class>);
 
 define method stream-type-for-outputter-type
@@ -533,16 +533,16 @@ end method;
 // OPEN-OUTPUT-STREAM
 // A function to create a file stream given a name and an extension.
 // This has little business being in this library - but centralising
-// somewhere related to HARP will allow for expected future changes 
+// somewhere related to HARP will allow for expected future changes
 // to the streams library with as little pain as possible.
 //
 
-define open generic open-output-stream 
+define open generic open-output-stream
       (back-end :: <harp-back-end>, file-name, extension)  => (s :: <stream>);
 
 define method open-output-stream
-      (back-end :: <harp-back-end>, 
-       file-name :: <byte-string>, extension :: <byte-string>) 
+      (back-end :: <harp-back-end>,
+       file-name :: <byte-string>, extension :: <byte-string>)
       => (s :: <stream>)
   let full-name = concatenate(file-name, ".", extension);
   make(<file-stream>,
@@ -551,8 +551,8 @@ define method open-output-stream
 end method;
 
 define method open-output-stream
-      (back-end :: <harp-back-end>, 
-       file-name :: <byte-string>, type :: <symbol>) 
+      (back-end :: <harp-back-end>,
+       file-name :: <byte-string>, type :: <symbol>)
       => (s :: <stream>)
   let extension = file-extension-for-outputter-type(back-end, type);
   let stream-type = stream-type-for-outputter-type(back-end, type);
@@ -563,15 +563,15 @@ define method open-output-stream
 end method;
 
 define method open-output-stream
-      (back-end :: <harp-back-end>, 
-       file-name :: <locator>, type) 
+      (back-end :: <harp-back-end>,
+       file-name :: <locator>, type)
       => (s :: <stream>)
   open-output-stream(back-end, as(<string>, file-name), type);
 end method;
 
 
 // CLOSE-OUTPUT-STREAM
-// Provided for completeness - and so that outputter implementations 
+// Provided for completeness - and so that outputter implementations
 // are not obliged to know anything about streams.
 
 define method close-output-stream (s :: <stream>) => ()

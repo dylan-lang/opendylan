@@ -108,7 +108,7 @@ define method newline-sequence (stream :: <external-stream>)
   end;
 end method newline-sequence;
 
-
+
 /// Accessor Protocol
 
 // An attempt at a portable flexible interface to OS read/write/seek

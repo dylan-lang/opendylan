@@ -48,7 +48,7 @@ define test test-$yellow ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Color classes
 
 define sideways method make-test-instance
@@ -72,7 +72,7 @@ define test test-<dynamic-color> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// DC tests
 
 define test test-<brush> ()
@@ -115,7 +115,7 @@ define test test-<text-style> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Color functions
 
 define test test-color-ihs ()
@@ -154,7 +154,7 @@ define test test-make-rgb-color ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Text style tests
 
 define test default-text-styles-test ()
@@ -173,7 +173,7 @@ define test default-text-styles-test ()
   frame
 end test default-text-styles-test;
 
-
+
 /// Color tests
 
 define test color-equality-test ()
@@ -213,7 +213,7 @@ define test default-colors-test ()
   frame
 end test default-colors-test;
 
-
+
 /// Define the colors test suite
 
 define suite duim-colors-suite ()

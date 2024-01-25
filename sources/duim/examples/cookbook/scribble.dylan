@@ -67,7 +67,7 @@ define method clear-surface (sheet :: <scribble-pane>) => ()
   clear-box*(sheet, sheet-region(sheet))
 end method clear-surface;
 
-
+
 /// A wrapping frame
 define frame <scribble-frame> (<simple-frame>)
   pane surface (frame)
@@ -95,7 +95,7 @@ define method scribble (#rest args)
   apply(start-example-frame, <scribble-frame>, args)
 end method scribble;
 
-
+
 /*
 /// Scribble, using some sort of window system backing store
 //--- Well, if we had a way to make a window with a backing store...
@@ -120,7 +120,7 @@ end frame <gadget-enabling-frame>;
 
 */
 
-
+
 /*
 /// Scribble, using 'contain'
 
@@ -140,7 +140,7 @@ end method handle-event;
 contain(make-pane(<scribble-pane>));
 */
 
-
+
 /*
 /// Scribble, using output recording
 

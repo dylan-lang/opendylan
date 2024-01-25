@@ -120,7 +120,7 @@ define method select-node-text
     | default
 end method select-node-text;
 
-
+
 /// XML error handling
 
 define class <xml-error> (<simple-error>)
@@ -133,7 +133,7 @@ define function xml-error
              format-arguments: args))
 end function xml-error;
 
-
+
 /// XML parsing
 
 define constant $debug = #f;

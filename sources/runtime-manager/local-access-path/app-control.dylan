@@ -38,10 +38,10 @@ define method close-application-on-connection
 end method;
 
 ///// STOP
-//    This operation is only legal if the application is running. 
+//    This operation is only legal if the application is running.
 //    This performs an immediate "stamp on the brakes".
 
-define method stop-application 
+define method stop-application
     (conn :: <local-access-connection>) => ()
   nub-application-stop(conn.connection-process)
 end method;
@@ -62,7 +62,7 @@ end method;
 //  Now takes a resume keyword, which is a set of previously
 //  suspended threads to explicitly resume
 
-define method unhandled-continue-application 
+define method unhandled-continue-application
     (conn :: <local-access-connection>) => ()
   nub-application-continue-unhandled (conn.connection-process)
 end method;
@@ -70,7 +70,7 @@ end method;
 
 ///// SUSPEND-THREAD
 
-define method suspend-application-thread 
+define method suspend-application-thread
     (conn :: <local-access-connection>, thread :: <remote-thread>)
   nub-thread-stop(conn.connection-process, thread.nub-descriptor);
 end method;
@@ -78,7 +78,7 @@ end method;
 
 ///// RESUME-THREAD
 
-define method resume-application-thread 
+define method resume-application-thread
     (conn :: <local-access-connection>, thread :: <remote-thread>)
   nub-thread-continue (conn.connection-process, thread.nub-descriptor);
 end method;
@@ -109,7 +109,7 @@ end method;
 
 ///// STEP
 
-define method step-application 
+define method step-application
     (conn :: <local-access-connection>, n :: <integer>) => ()
   nub-application-step(conn.connection-process, n)
 end method;
@@ -117,7 +117,7 @@ end method;
 
 ///// STEP-OVER
 
-define method step-over-application 
+define method step-over-application
     (conn :: <local-access-connection>, n :: <integer>) => ()
   nub-application-step-over(conn.connection-process, n)
 end method;

@@ -82,7 +82,7 @@ define function set-hatch-window-size
     if ( ~ set-position? )
       flags := logior(flags, $SWP-NOMOVE);
     end if;
-    SetWindowPos(hatch-window, $NULL-HWND, 
+    SetWindowPos(hatch-window, $NULL-HWND,
 		 visible-rect.left-value,
 		 visible-rect.top-value,
 		 visible-rect.right-value - visible-rect.left-value,
@@ -113,9 +113,9 @@ define function hatch-window-function(hatch-window :: <HWND>,
 				      wParam, lParam)
 	=> value :: <integer>;
 
-  select ( Message ) 
+  select ( Message )
 
-    $WM-CREATE => 
+    $WM-CREATE =>
     /*
       // "Inside OLE" shows doing this, but GetProfileInt is an obsolete
       // Win16 function and there is no documentation telling anyone about
@@ -127,7 +127,7 @@ define function hatch-window-function(hatch-window :: <HWND>,
     */
       0;
 
-    $WM-PAINT => 
+    $WM-PAINT =>
       begin
 	let ps :: <LPPAINTSTRUCT> = make(<LPPAINTSTRUCT>);
 	let hatch-rect :: <LPRECT> = make(<LPRECT>);
@@ -151,19 +151,19 @@ define function hatch-window-function(hatch-window :: <HWND>,
     //    of the in-place parent will be used. if WM_SETCURSOR is
     //    not handled, then DefWindowProc sends the message to the
     //    window's parent.
-    // 
-    $WM-SETCURSOR => 
+    //
+    $WM-SETCURSOR =>
       SetCursor(LoadCursor(null-handle(<HINSTANCE>), $IDC-ARROW));
       1; // true
 
-    otherwise => 
+    otherwise =>
       DefWindowProc(hatch-window, Message, wParam, lParam);
   end select
 end hatch-window-function;
 
 define callback HatchWndProc :: <WNDPROC> = hatch-window-function;
 
-
+
 
 define function draw-hatch-handles
     (inside-rect :: <LPRECT>, // inner edge of border
@@ -193,7 +193,7 @@ define function draw-hatch-handles
     draw-handle(hdc, right - box-size,
 		top + truncate/(bottom - top - box-size, 2), box-size);
     draw-handle(hdc, right - box-size, bottom - box-size, box-size);
-  
+
     SetBkMode(hdc, bkmodeOld);
   end with-stack-structure;
   values()
@@ -215,7 +215,7 @@ define function draw-handle(hdc :: <HDC>, x :: <fixnum>, y :: <fixnum>,
   values()
 end draw-handle;
 
-
+
 define constant $bitmap-data =
   #[#x11, #x22, #x44, #x88, #x11, #x22, #x44, #x88];
 
@@ -228,7 +228,7 @@ define function draw-shading (outer-rect :: <LPRECT>, // outside edges
 			      hdc :: <HDC>,
 			      border-width :: <unsigned-fixnum>)
 	=> ();
- 
+
   if ( null-pointer?(*hatch-bits*) )
     *hatch-bits* := make(<PWORD>, element-count: size($bitmap-data));
     for ( bits in $bitmap-data, i from 0 )

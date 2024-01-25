@@ -124,7 +124,7 @@ define function compute-typecheckable-argument-mask
     end if
   end if
 end function;
-
+
 
 //// Cache Info Creation and Upgrading
 
@@ -207,7 +207,7 @@ define function compute-argument-precheck-mask (ds :: <dispatch-state>, cache)
       end case;
   if (m ~== 0) %ds-args-to-check-first(ds) := list(m) end;
 end function;
-
+
 //// Call site cache
 
 
@@ -240,7 +240,7 @@ define function handle-profiling-call-site-cache-head
   compute-headed-methods(ds);
   handle-simple-call-site-cache-head-methods-computed(ds, cache, old)
 end function;
-
+
 
 //// Unknown handler
 
@@ -280,7 +280,7 @@ define function cache-header-punt (ds :: <dispatch-state>, cache, e :: <cache-he
   let root = find-or-create-common-cache-header(%ds-gf(ds));
   install-cache-header-engine-node-next(e, root, %ds-gf(ds))
 end function;
-
+
 
 
 //define function make-simple-typechecked-gf-cache-info (m :: <integer>)
@@ -420,7 +420,7 @@ define function ensure-engine-for-simple-typechecked-gf-cache
         end method;
   walk(ds, discriminator(%ds-gf(ds)), walk)
 end function;
-
+
 
 define constant $profile-count-low-slot-offset  = 5;
 define constant $profile-count-high-slot-offset = 6;

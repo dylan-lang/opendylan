@@ -73,7 +73,7 @@ define method initialize-major-mode
   end
 end method initialize-major-mode;
 
-
+
 /// Shell mode buffers
 
 // Shell buffers consist of a set of (hard) sections, where each section
@@ -184,7 +184,7 @@ end method make;
 define sealed domain make (singleton(<simple-shell-input>));
 define sealed domain initialize (<simple-shell-input>);
 
-
+
 /// Shell mode methods
 
 // Methods should return #t when the current input section is complete,
@@ -257,7 +257,7 @@ define method terminate-shell
   #f
 end method terminate-shell;
 
-
+
 /// Shell mode commands
 
 define command activate-shell-input (frame)

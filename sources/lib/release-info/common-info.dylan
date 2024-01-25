@@ -17,7 +17,7 @@ define constant $release-web-address = "https://opendylan.org";
 define constant $license-agreement-filename   = "License.txt";
 define constant $help-filename                = "opendylan.chm";
 
-
+
 /// Release constants
 define constant $release-product-name       = "Open Dylan";
 define constant $release-product-identifier = "opendylan";
@@ -28,7 +28,7 @@ define constant $release-copyright
     "Portions Copyright (c) 2004-2023, Dylan Hackers\n"
     "Portions Copyright (c) 2001-2013, Ravenbrook Ltd.";
 
-
+
 /// Release info querying functions
 define method release-product-name () => (name :: <string>)
   $release-product-name
@@ -136,7 +136,7 @@ define method release-contains-library-pack? (pack :: <symbol>) => (installed? :
     & release-contains-library-pack?(pack)
 end method release-contains-library-pack?;
 
-
+
 /// Release disk layout information
 
 define function release-directory

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library corba-dylan
   use dylan; // threads
-  use generic-arithmetic; 
+  use generic-arithmetic;
   use big-integers;
   use collections; // table-extensions
   use system; // operating-system, date
@@ -21,7 +21,7 @@ define module corba-dylan
   use dylan-arithmetic,
     export: all,
     prefix: "dylan/";
-  use dylan-extensions, 
+  use dylan-extensions,
     export: {encode-single-float,
 	     decode-single-float,
 	     encode-double-float,

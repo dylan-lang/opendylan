@@ -29,7 +29,7 @@ define inline function next-index
   modulo(i + 1, size(queue-data(x)))
 end function;
 
-define method dood-queue-push-last 
+define method dood-queue-push-last
     (x :: <dood-queue>, e :: <dood-queue-element>) => (res :: <dood-queue-element>)
   without-bounds-checks
     queue-data(x)[queue-in(x)] := e;
@@ -52,7 +52,7 @@ define method dood-queue-push-last
       queue-data(x) := new-data;
     end if;
   end without-bounds-checks;
-  e			  
+  e
 end method;
 
 define inline method dood-queue-out (x :: <dood-queue>) => (res :: <integer>)
@@ -87,7 +87,7 @@ define macro with-saved-queue-frame
 	  end block }
 end macro;
 
-define inline method dood-queue-pop 
+define inline method dood-queue-pop
     (x :: <dood-queue>) => (res :: <dood-queue-element>)
   without-bounds-checks
     let e = queue-data(x)[queue-out(x)];

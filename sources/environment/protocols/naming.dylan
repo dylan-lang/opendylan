@@ -45,7 +45,7 @@ define open generic environment-object-unique-name
      #key, #all-keys)
  => (name :: <string>);
 
-
+
 /// Print constants
 
 define constant $default-qualify-names = #t;
@@ -58,7 +58,7 @@ define constant $list-separator        = ", ";
 define constant $interactive-record    = "[interactive]";
 define constant $warning-max-lines     = 6;
 
-
+
 /// Basic names
 
 define method environment-object-basic-name
@@ -187,7 +187,7 @@ define method environment-object-basic-name
   end
 end method environment-object-basic-name;
 
-
+
 /// Print methods
 
 define method print-specializers
@@ -297,13 +297,13 @@ define method print-source-location
              end-line + first-line, end-col);
     else
       format(stream, "%s:%d-%d", name,
-             start-line + first-line, 
+             start-line + first-line,
              end-line + first-line);
     end if
   end
 end method print-source-location;
 
-
+
 /// print-environment-object
 
 define method print-environment-object
@@ -318,7 +318,7 @@ define method print-environment-object
   end
 end method print-environment-object;
 
-
+
 /// print-anonymous-object
 
 define method print-anonymous-object
@@ -443,7 +443,7 @@ define method print-environment-object-id-name
   end
 end method print-environment-object-id-name;
 
-
+
 /// print-environment-object-name methods
 
 define method print-environment-object-name
@@ -727,7 +727,7 @@ define method print-environment-object-name
   end
 end method print-environment-object-name;
 
-
+
 /// Displaying names
 
 define method print-environment-object-to-string
@@ -764,7 +764,7 @@ define method environment-object-display-name
         args)
 end method environment-object-display-name;
 
-
+
 /// Unique names
 
 define method environment-object-unique-name
@@ -853,7 +853,7 @@ define function environment-object-typed-name
                    name)
 end function environment-object-typed-name;
 
-
+
 /// Application state
 
 define function thread-state-label
@@ -880,7 +880,7 @@ define function application-state-label
   end
 end function application-state-label;
 
-
+
 /// Compiler warnings
 
 define constant $newline-code = as(<integer>, '\n');

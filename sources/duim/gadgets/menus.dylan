@@ -173,7 +173,7 @@ define method display-menu
   sheet-mapped?(menu) := #t
 end method display-menu;
 
-
+
 /// Menu boxes
 
 define open abstract class <menu-box>
@@ -229,7 +229,7 @@ define sealed method gadget-selection-mode
   #"multiple"
 end method gadget-selection-mode;
 
-
+
 /// Menu buttons
 
 define open abstract class <menu-button>
@@ -304,7 +304,7 @@ define sealed inline method make
   apply(make, menu-button-selection-mode-class(selection-mode), initargs)
 end method make;
 
-
+
 /// Popup menus
 
 // Default implementation of menu chooser when handed a sequence of items.
@@ -376,7 +376,7 @@ define method make-menu-from-items
   end
 end method make-menu-from-items;
 
-
+
 /// Menu creation macros
 
 /*--- The problem with this is that we lose the variable 'menu'!

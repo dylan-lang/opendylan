@@ -25,7 +25,7 @@ define test test-$smallest-coordinate ()
              $smallest-coordinate < -10000)
 end test;
 
-
+
 /// Function tests
 
 define test test-do-coordinates ()
@@ -100,7 +100,7 @@ define test test-make-bounding-box ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Tests
 define test coordinates-test ()
   let x-count = 0;
@@ -134,7 +134,7 @@ define test coordinates-test ()
   check-true("do-endpoint-coordinates for bottom", bottom-count = 700);
 end test coordinates-test;
 
-
+
 /// Geometry class tests
 
 define sideways method make-test-instance

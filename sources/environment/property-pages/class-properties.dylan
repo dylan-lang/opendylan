@@ -16,7 +16,7 @@ define sideways method frame-property-types
                 #"subclasses", #"superclasses"))
 end method frame-property-types;
 
-
+
 /// Class Slots
 
 define sealed class <class-slot-wrapper> (<object-wrapper>)
@@ -182,7 +182,7 @@ define method filter-class-slots
   results
 end method filter-class-slots;
 
-
+
 /// Class methods page
 
 define sealed class <class-method-wrapper> (<object-wrapper>)
@@ -315,7 +315,7 @@ define method filter-class-methods
   results
 end method filter-class-methods;
 
-
+
 /// Init Keywords page
 
 define constant $class-keyword-filters
@@ -462,7 +462,7 @@ define method frame-keyword-label
   frame-default-object-name(frame, object)
 end method frame-keyword-label;
 
-
+
 /// Superclasses
 
 define sideways method make-frame-property-page-displayer
@@ -503,7 +503,7 @@ define method frame-ordered-class-superclasses
   #[]
 end method frame-ordered-class-superclasses;
 
-
+
 /// Subclasses
 
 define sideways method make-frame-property-page-displayer

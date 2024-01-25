@@ -62,7 +62,7 @@ end method;
 
 define method remote-thread-information
     (application :: <debug-target>, thread :: <remote-thread>)
-       => (dylan-thread? :: <boolean>, 
+       => (dylan-thread? :: <boolean>,
            remote-thread-name :: <string>,
            dylan-thread-object :: false-or(<remote-value>),
            dylan-thread-handle :: false-or(<remote-value>))
@@ -121,7 +121,7 @@ define method thread-current-active-handlers
     let teb = dylan-thread-environment-block-address(path, ap-thread);
     let addr = indexed-remote-value(teb, $TEB-current-handlers-offset);
     let handler-list = read-value(path, addr);
-    thread.cached-handlers := 
+    thread.cached-handlers :=
       canonicalize-sequence(application, handler-list)
   end unless;
   thread.cached-handlers
@@ -140,10 +140,10 @@ define method thread-current-local-variables
   unless (thread.cached-tlv)
     let path = application.debug-target-access-path;
     let teb = dylan-thread-environment-block-address(path, ap-thread);
-    let addr = 
+    let addr =
       indexed-remote-value(teb, $TEB-thread-local-variables-vector-offset);
     let tlv = read-value(path, addr);
-    let tlv-canonical = 
+    let tlv-canonical =
       canonicalize-sequence(application, tlv);
     let addr-first = indexed-remote-value(tlv, 2);
     let pairs = make(<vector>, size: tlv-canonical.size);
@@ -227,11 +227,11 @@ define method get-thread-interactor-level
     (application :: <debug-target>, thread :: <remote-thread>)
   => (interactor-level :: <integer>)
   let interactor-level = 0;
-  let (val, value-cell) = 
+  let (val, value-cell) =
     resolve-dylan-name(application, "*current-interactor-level*",
                        $dylan-internal, indirect?: #t);
   if (value-cell)
-    let remote-integer = 
+    let remote-integer =
       evaluate-thread-local-variable(application, thread, value-cell);
     interactor-level := dylan-integer-data(application, remote-integer);
   end if;
@@ -263,7 +263,7 @@ define method thread-current-mv-vector
 
     // Read the MV count. It is a raw integer. Create a vector big enough
     // to hold the multiple values.
-    block () 
+    block ()
       let mv-count = as-integer(read-value(path, mv-count-address));
 
       if ((mv-count < 0) | (mv-count > 64))
@@ -280,7 +280,7 @@ define method thread-current-mv-vector
       end for;
 
       // Cache it while the thread is stopped.
-      dm-thread.cached-mv := mv-space;  
+      dm-thread.cached-mv := mv-space;
     exception (pants :: <remote-access-violation-error>)
       dm-thread.cached-mv := #[];
     end block;
@@ -414,7 +414,7 @@ end method;
 define method create-thread-descriptor
     (application :: <debug-target>, thread :: <remote-thread>)
        => ()
-  let new-thread 
+  let new-thread
     = make (<application-thread>, remote-thread: thread);
   application.application-threads[thread] := new-thread;
 end method;
@@ -425,9 +425,9 @@ end method;
 //    <application-thread> and not allowing the UI to talk about
 //    <remote-thread>s at all!
 
-define method find-thread 
+define method find-thread
     (ap :: <debug-target>, remote-t :: <remote-thread>)
-      => (mapped-thread :: <application-thread>) 
+      => (mapped-thread :: <application-thread>)
   ap.application-threads[remote-t];
 end method;
 
@@ -452,7 +452,7 @@ end method;
 define method flush-thread-history
     (application :: <debug-target>, thread :: <remote-thread>) => ()
   let dm-thread = find-thread(application, thread);
-  // Status: not yet implemented.  
+  // Status: not yet implemented.
 end method;
 
 
@@ -501,7 +501,7 @@ define method retrieve-object-from-thread-history
      history-index :: <integer>)
   => (value :: <remote-value>)
   let dm-thread = find-thread(application, thread);
-  if ((history-index < 0) | 
+  if ((history-index < 0) |
       (history-index >= dm-thread.thread-registered-history.size))
     lookup-static-object(application, "%unbound", "internal")
   else
@@ -570,7 +570,7 @@ define method spawn-interactive-thread
     debugger-message("spawn-interactive-thread %= on Thread %=", tname, spy-thread);
 
     let address-of-name = download-byte-string(tname);
-    if (address-of-name & 
+    if (address-of-name &
         run-spy-on-thread(application,
                           spy-thread,
                           application.dylan-spy.spy-create-interactive-thread,

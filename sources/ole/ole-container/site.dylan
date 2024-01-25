@@ -37,7 +37,7 @@ define method site-initialization(doc :: <contained-object>) => ()
        format-to-string("Object%d",
 			(*storage-counter* := *storage-counter* + 1)));
   // create a sub-storage for the object
-  let ( hErr :: <HRESULT>, storage ) = 
+  let ( hErr :: <HRESULT>, storage ) =
     IStorage/CreateStorage(app-storage, storage-name,
 			   logior($STGM-READWRITE, $STGM-TRANSACTED,
 				  $STGM-SHARE-EXCLUSIVE),
@@ -150,7 +150,7 @@ define method init-object-in-site (site :: <contained-object>,
 
   let ole-object :: <LPOLEOBJECT> =
     dylan-interface(pointer-cast(<LPOLEOBJECT>, object-pointer));
-  site.document-ole-object := ole-object;	
+  site.document-ole-object := ole-object;
   site.document-open? := #t;
   let rect :: <LPRECT> = make(<LPRECT>);
 
@@ -221,7 +221,7 @@ define method init-object-in-site (site :: <contained-object>,
     end if;
   end if;
 
-  if ( created-new? ) 
+  if ( created-new? )
     // force new object to save to guarantee valid object in our storage.
     // OLE 1.0 objects may close w/o saving. this is NOT necessary if the
     // object is created FROM FILE; its data in storage is already valid.
@@ -250,14 +250,14 @@ define method container-host-names( app :: <container-app> )
  => (application-name, document-name)
   values(#f, #f)
 end;
-    
+
 
 
 define method paint-contained-document (site :: <contained-object>, hDC :: <HDC>)
  => ();
 
   unless ( null?(site.document-ole-object) )
-	
+
     let pRect :: <LPRECT> = make(<LPRECT>);
 
     // convert it to pixels

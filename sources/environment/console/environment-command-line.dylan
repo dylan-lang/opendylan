@@ -80,7 +80,7 @@ define method execute-main-command
   end
 end method execute-main-command;
 
-
+
 /// Main command
 
 define class <main-command> (<environment-main-command>)

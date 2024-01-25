@@ -13,7 +13,7 @@ define constant $legal-application-states = #[#"running",
                                               #"dead",
                                               #"post-mortem"];
 
-define method set-application-state 
+define method set-application-state
     (ap :: <access-path>, state :: <symbol>) => ()
   if (member? (state, $legal-application-states))
     ap.state := state;
@@ -45,19 +45,19 @@ define generic step-over (ap :: <access-path>, n :: <integer>) => ();
 
 define generic step-out (ap :: <access-path>) => ();
 
-define generic application-state-running? 
+define generic application-state-running?
     (ap :: <access-path>) => (running? :: <boolean>);
 
-define generic application-state-stopped? 
+define generic application-state-stopped?
     (ap :: <access-path>) => (stopped? :: <boolean>);
 
-define generic application-state-unstarted? 
+define generic application-state-unstarted?
     (ap :: <access-path>) => (unstarted? :: <boolean>);
 
-define generic application-state-post-mortem? 
+define generic application-state-post-mortem?
     (ap :: <access-path>) => (post-mortem? :: <boolean>);
 
-define generic kill-application 
+define generic kill-application
     (ap :: <access-path>, #key do-cleanups? = #f) => (success? :: <boolean>);
 
 
@@ -73,7 +73,7 @@ define open generic restart-application (conn :: <access-connection>) => ();
 
 ///// KILL-APPLICATION
 
-define method kill-application 
+define method kill-application
     (ap :: <access-path>,
      #key do-cleanups? = #f) => (success? :: <boolean>)
   let success-code = kill-app-on-connection (ap.connection);
@@ -107,7 +107,7 @@ define open generic close-application-on-connection
    (conn :: <access-connection>) => ();
 
 ///// STOP
-//    This operation is only legal if the application is running. 
+//    This operation is only legal if the application is running.
 //    This performs an immediate "stamp on the brakes".
 
 define method stop (ap :: <access-path>) => ()
@@ -119,7 +119,7 @@ define method stop (ap :: <access-path>) => ()
   end if
 end method;
 
-define open generic stop-application 
+define open generic stop-application
     (conn :: <access-connection>) => ();
 
 
@@ -158,7 +158,7 @@ define method continue
    end if
 end method;
 
-define open generic continue-application 
+define open generic continue-application
     (conn :: <access-connection>) => ();
 
 ///// CONTINUE-UNHANDLED
@@ -196,7 +196,7 @@ define method continue-unhandled
    end if
 end method;
 
-define open generic unhandled-continue-application 
+define open generic unhandled-continue-application
     (conn :: <access-connection>) => ();
 
 
@@ -212,7 +212,7 @@ define method suspend-thread
   end if
 end method;
 
-define open generic suspend-application-thread 
+define open generic suspend-application-thread
     (conn :: <access-connection>, thread :: <remote-thread>);
 
 
@@ -229,7 +229,7 @@ define method resume-thread
 end method;
 
 // Weakly resume Dylan threads at this level;
-// The hard-coded assumption is that the micro-spy in the 
+// The hard-coded assumption is that the micro-spy in the
 // debugger NUB will do the rest.
 // This is important in order not to let suspended threads
 // in an application run away on us.
@@ -241,7 +241,7 @@ define inline method dylan-resume-thread
   thread-state(thread) := "[Can't get thread state]";
 end method;
 
-define open generic resume-application-thread 
+define open generic resume-application-thread
     (conn :: <access-connection>, thread :: <remote-thread>);
 
 
@@ -280,7 +280,7 @@ define method step (ap :: <access-path>, n :: <integer>) => ()
   end if
 end method;
 
-define open generic step-application 
+define open generic step-application
     (conn :: <access-connection>, n :: <integer>) => ();
 
 
@@ -295,7 +295,7 @@ define method step-over (ap :: <access-path>, n :: <integer>) => ()
   end if
 end method;
 
-define open generic step-over-application 
+define open generic step-over-application
     (conn :: <access-connection>, n :: <integer>) => ();
 
 
@@ -316,22 +316,22 @@ define open generic step-out-application
 
 ///// APPLICATION-STATE-...?
 
-define method application-state-running? 
+define method application-state-running?
     (ap :: <access-path>) => (running? :: <boolean>)
   ap.state == #"running"
 end method;
 
-define method application-state-stopped? 
+define method application-state-stopped?
     (ap :: <access-path>) => (stopped? :: <boolean>)
   ap.state == #"stopped"
 end method;
 
-define method application-state-unstarted? 
+define method application-state-unstarted?
     (ap :: <access-path>) => (unstarted? :: <boolean>)
   ap.state == #"unstarted"
 end method;
 
-define method application-state-post-mortem? 
+define method application-state-post-mortem?
     (ap :: <access-path>) => (post-mortem? :: <boolean>)
   ap.state == #"post-mortem"
 end method;

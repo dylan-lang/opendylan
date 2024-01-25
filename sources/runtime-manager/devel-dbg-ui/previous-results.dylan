@@ -29,7 +29,7 @@ end class;
 
 define variable *history-table* = make (<stretchy-vector>, size: 0);
 
-define method add-history-value (v :: <remote-value>) 
+define method add-history-value (v :: <remote-value>)
   => (indx :: <integer>)
   let hv = #f;
   if (*open-application*)
@@ -49,7 +49,7 @@ define method add-history-value (v :: <remote-value>)
       end unless;
     end block;
   else
-    hv := make(<untracked-history-variable>, 
+    hv := make(<untracked-history-variable>,
                value: as-remote-value(0));    // This just won't happen!
   end if;
   add! (*history-table*, hv);
@@ -59,7 +59,7 @@ end method;
 define method obtain-value-from-history
     (application :: <application>, history :: <tracked-history-variable>)
          => (v :: <remote-value>)
-  let v = remote-object-value(application, 
+  let v = remote-object-value(application,
                               history.history-variable-tracked-object);
   if (v)
     v
@@ -74,7 +74,7 @@ define method obtain-value-from-history
   history.history-variable-value;
 end method;
 
-define method retrieve-history-value (indx :: <integer>) 
+define method retrieve-history-value (indx :: <integer>)
   => (v :: <remote-value>)
 
   if ((indx < 1) | (indx > size (*history-table*)))

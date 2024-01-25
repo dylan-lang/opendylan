@@ -164,7 +164,7 @@ define method find-gadget ( sheet :: duim/<sheet-with-medium-mixin> )
   if ( duim/sheet-handles-repaint?(sheet) &
 	~ instance?(sheet, duim/<top-level-sheet>) &
 	~ instance?(sheet, <ole-main-sheet>) )
-    values(#f, sheet)      
+    values(#f, sheet)
   else
     next-method()
   end if
@@ -265,7 +265,7 @@ define method any-UI? ( sheet :: duim/<sheet> ) => (UI? :: <boolean>);
     any?( any-UI?, duim/sheet-children(sheet) )
 end;
 
-
+
 // default dispatch properties
 
 define sealed method dispatch-doc-sheet ( dispatch :: <IDispatch> )

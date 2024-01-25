@@ -181,7 +181,7 @@ define method do-allocate-space
   end
 end method do-allocate-space;
 
-
+
 /// Back end and user hooks
 
 define method note-viewport-region-changed
@@ -196,7 +196,7 @@ define method note-viewport-position-changed
   #f
 end method note-viewport-position-changed;
 
-
+
 /// User-level control of scrolling
 
 // Returns the viewport of the pane, if there is one
@@ -288,7 +288,7 @@ define method relayout-parent
 end method relayout-parent;
 */
 
-
+
 /// Scrolling protocol
 
 define method sheet-scroll-range
@@ -337,7 +337,7 @@ define method page-scroll-amount
   page-scroll-amount(sheet-child(viewport), orientation) | next-method()
 end method page-scroll-amount;
 
-
+
 /// BITBLT
 
 define method scroll-viewport

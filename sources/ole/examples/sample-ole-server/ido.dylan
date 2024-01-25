@@ -39,7 +39,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method IDataObject/QueryGetData(this :: <CDataObject>,
 				       pformatetc :: <LPFORMATETC> )
 			=> status :: <HRESULT>;
-	
+
   OutputDebugString("In CDataObject::QueryGetData\r\n");
 
   // check the validity of the formatetc.
@@ -103,7 +103,7 @@ define method IDataObject/DAdvise(this :: <CDataObject>,
       CreateDataAdviseHolder();
     this.m-lpObj.m-lpDataAdviseHolder := result;
   end if;
-  
+
   // pass on to the DataAdviseHolder
   /* return */
   IDataAdviseHolder/Advise(this.m-lpObj.m-lpDataAdviseHolder, this,
@@ -147,7 +147,7 @@ define method IDataObject/GetData(this :: <CDataObject>,
 				  pformatetcIn :: <LPFORMATETC>,
 				  pmedium :: <LPSTGMEDIUM> )
 		=> status :: <HRESULT>;
-	
+
   OutputDebugString("In CDataObject::GetData\r\n");
 
   // Check to the FORMATETC and fill pmedium if valid.
@@ -202,7 +202,7 @@ end method IDataObject/GetData;
 
 
 define method IDataObject/DUnadvise(this :: <CDataObject>,
-				    dwConnection :: <integer>) 
+				    dwConnection :: <integer>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In CDataObject::DUnadvise\r\n");
@@ -295,14 +295,14 @@ define method IDataObject/GetCanonicalFormatEtc(this :: <CDataObject>,
 		=> status :: <HRESULT>;
 
   block(return)
-	
+
     OutputDebugString("In CDataObject::GetCanonicalFormatEtc\r\n");
-    
+
     if ( null?(pformatetcOut) )
       return( $E-INVALIDARG  );
     end if;
 
-    /* OLE2NOTE: we must make sure to set all out parameters to NULL. */ 
+    /* OLE2NOTE: we must make sure to set all out parameters to NULL. */
     pformatetcOut.ptd-value := null-pointer(<LPDVTARGETDEVICE>);
 
     if ( null?(pformatetc) )
@@ -323,14 +323,14 @@ define method IDataObject/GetCanonicalFormatEtc(this :: <CDataObject>,
     **    rendering and printer rendering. if should return
     **    DATA_S_SAMEFORMATETC if the input and output formatetc's are
     **    identical.
-    */ 
+    */
 
     copy-into!(pformatetcOut, pformatetc, size-of(<FORMATETC>));
 
     if ( null?(pformatetc.ptd-value) )
-      return( $DATA-S-SAMEFORMATETC  ); 
+      return( $DATA-S-SAMEFORMATETC  );
     else
-		
+
       pformatetcOut.ptd-value := null-pointer(<LPDVTARGETDEVICE>);
       return( $NOERROR );
     end if;
@@ -414,7 +414,7 @@ end method IDataObject/SetData;
 
 define method IDataObject/EnumFormatEtc(this :: <CDataObject>,
 					dwDirection :: <integer> )
-			  
+
  => ( status :: <HRESULT>,
       penumFormatEtc :: <Interface> /* LPENUMFORMATETC */ );
 

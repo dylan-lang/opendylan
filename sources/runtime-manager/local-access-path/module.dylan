@@ -9,8 +9,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module access-path-implementation
   use common-dylan, exclude: { format-to-string };
   use dylan-extensions,
-     import: {<machine-word>, 
-              <double-integer>, 
+     import: {<machine-word>,
+              <double-integer>,
               $minimum-unsigned-machine-word, integer-as-raw},
      export: all;
   use dylan-primitives;

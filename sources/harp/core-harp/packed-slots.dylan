@@ -23,7 +23,7 @@ define abstract class <slot-owner> (...)
 
   ...
 
-  slot slot-owner-packed-slot :: 
+  slot slot-owner-packed-slot ::
     type-union(<integer>, <slot-owner-unpacked-slots>) = 0,
     init-keyword: packed-slot-keyword:;
 
@@ -71,7 +71,7 @@ define method make
      #key slot-1-keyword-arg,
           ...
           slot-n-keyword-arg,
-     #all-keys) 
+     #all-keys)
     => (r :: <slot-owner-concrete-class>)
   let slots =
     make-compiled-lambda-packed-slot?(slot-1-keyword-arg,
@@ -89,7 +89,7 @@ define method make
 end method;
 
 
-* You can pack an object in its entirety by also adding the following dummy 
+* You can pack an object in its entirety by also adding the following dummy
   definitions, renaming previously defined <slot-owner> as <slot-owner-unpacked-slots>,
   and recoding make method above to just return slots
 
@@ -128,7 +128,7 @@ define macro packed-slots?-aux-definer
       (?slots:*) (?slot-params) (?slot-names) (?slot-args)
     end
   }
-    => { 
+    => {
 	 define packed-slots?-accessors "<" ## ?slot-owner ## ">" (0)
            ?slots
          end;
@@ -213,11 +213,11 @@ end macro;
 define macro packed-slots?-accessors-definer
   { define packed-slots?-accessors ?slot-owner:name (?count:expression)
     end
-  } 
+  }
     =>  { }
 
   { define packed-slots?-accessors  "<" ## ?slot-owner:name ## ">" (?count:expression)
-      ?:name \:: ?slot-type:name, 
+      ?:name \:: ?slot-type:name,
       #key ?width:expression = 1,
            ?init-keyword:symbol;
       ?more-slots:*
@@ -230,7 +230,7 @@ define macro packed-slots?-accessors-definer
 	   let packed-slot = ?slot-owner ## "-packed-slot"(instance);
 	   if (instance?(packed-slot, <integer>))
 	     let packed-value :: false-or(<integer>) = "pack-" ## ?name(value);
-	     ?slot-owner ## "-packed-slot"(instance) := 
+	     ?slot-owner ## "-packed-slot"(instance) :=
 	       if (packed-value)
 		 let mask :: <integer> = lognot(ash(lognot(ash(-1, ?width)), ?count));
 		 logior(logand(packed-slot, mask), packed-value)
@@ -256,7 +256,7 @@ define macro packed-slots?-accessors-definer
     }
 
   { define packed-slots?-accessors  ?slot-owner:name (?count:expression)
-      constant ?:name \:: ?slot-type:name, 
+      constant ?:name \:: ?slot-type:name,
       #key ?width:expression = 1,
            ?init-keyword:symbol;
       ?more-slots:*
@@ -272,7 +272,7 @@ define macro packed-slots?-accessors-definer
            ?more-slots
          end
     }
-end macro; 
+end macro;
 
 define macro packed-slots?-accessors-aux-definer
 
@@ -296,7 +296,7 @@ define macro packed-slots?-accessors-aux-definer
 	   "pack-" ## ?slot-type ## "?"(slot-value, ?width, ?count)
 	 end method;
     }
-end macro; 
+end macro;
 
 
 /// Some common conditional packing functions

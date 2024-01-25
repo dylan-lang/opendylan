@@ -69,11 +69,11 @@ define method window-function (hwnd :: <HWND>, message, wParam, lParam)
 
   select (message)
 
-    $WM-CLOSE => 
+    $WM-CLOSE =>
       DestroyWindow(hwnd);
       0;
-      
-    $WM-DESTROY => 
+
+    $WM-DESTROY =>
       PostQuitMessage(0);
       0;
 

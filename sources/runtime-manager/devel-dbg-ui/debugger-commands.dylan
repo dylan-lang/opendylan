@@ -313,7 +313,7 @@ end class;
 ///// <APPLICATION-CONTROL-COMMAND>
 
 
-define abstract class <application-control-command> 
+define abstract class <application-control-command>
      (<context-debugger-command>)
 end class;
 

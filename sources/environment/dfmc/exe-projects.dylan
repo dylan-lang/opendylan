@@ -166,7 +166,7 @@ define sealed method project-sources-changed?(project-object :: <exe-project>)
   #f
 end method project-sources-changed?;
 
-
+
 /// Project properties
 
 define sealed method env/project-read-only?

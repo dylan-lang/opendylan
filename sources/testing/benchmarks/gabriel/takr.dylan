@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Converted to Dylan via the miracle of emacs keyboard macros.
 
-define function tak0 (x, y, z) 
+define function tak0 (x, y, z)
   if (y >= x)
     z
   else
@@ -22,7 +22,7 @@ define function tak0 (x, y, z)
   end if
 end function tak0;
 
-define function tak1 (x, y, z) 
+define function tak1 (x, y, z)
   if (y >= x)
     z
   else
@@ -32,7 +32,7 @@ define function tak1 (x, y, z)
   end if
 end function tak1;
 
-define function tak2 (x, y, z) 
+define function tak2 (x, y, z)
   if (y >= x)
     z
   else
@@ -42,7 +42,7 @@ define function tak2 (x, y, z)
   end if
 end function tak2;
 
-define function tak3 (x, y, z) 
+define function tak3 (x, y, z)
   if (y >= x)
     z
   else
@@ -52,7 +52,7 @@ define function tak3 (x, y, z)
   end if
 end function tak3;
 
-define function tak4 (x, y, z) 
+define function tak4 (x, y, z)
   if (y >= x)
     z
   else
@@ -62,7 +62,7 @@ define function tak4 (x, y, z)
   end if
 end function tak4;
 
-define function tak5 (x, y, z) 
+define function tak5 (x, y, z)
   if (y >= x)
     z
   else
@@ -72,7 +72,7 @@ define function tak5 (x, y, z)
   end if
 end function tak5;
 
-define function tak6 (x, y, z) 
+define function tak6 (x, y, z)
   if (y >= x)
     z
   else
@@ -82,7 +82,7 @@ define function tak6 (x, y, z)
   end if
 end function tak6;
 
-define function tak7 (x, y, z) 
+define function tak7 (x, y, z)
   if (y >= x)
     z
   else
@@ -92,7 +92,7 @@ define function tak7 (x, y, z)
   end if
 end function tak7;
 
-define function tak8 (x, y, z) 
+define function tak8 (x, y, z)
   if (y >= x)
     z
   else
@@ -102,7 +102,7 @@ define function tak8 (x, y, z)
   end if
 end function tak8;
 
-define function tak9 (x, y, z) 
+define function tak9 (x, y, z)
   if (y >= x)
     z
   else
@@ -112,7 +112,7 @@ define function tak9 (x, y, z)
   end if
 end function tak9;
 
-define function tak10 (x, y, z) 
+define function tak10 (x, y, z)
   if (y >= x)
     z
   else
@@ -122,7 +122,7 @@ define function tak10 (x, y, z)
   end if
 end function tak10;
 
-define function tak11 (x, y, z) 
+define function tak11 (x, y, z)
   if (y >= x)
     z
   else
@@ -132,7 +132,7 @@ define function tak11 (x, y, z)
   end if
 end function tak11;
 
-define function tak12 (x, y, z) 
+define function tak12 (x, y, z)
   if (y >= x)
     z
   else
@@ -143,7 +143,7 @@ define function tak12 (x, y, z)
 end function tak12;
 
 
-define function tak13 (x, y, z) 
+define function tak13 (x, y, z)
   if (y >= x)
     z
   else
@@ -153,7 +153,7 @@ define function tak13 (x, y, z)
   end if
 end function tak13;
 
-define function tak14 (x, y, z) 
+define function tak14 (x, y, z)
   if (y >= x)
     z
   else
@@ -163,7 +163,7 @@ define function tak14 (x, y, z)
   end if
 end function tak14;
 
-define function tak15 (x, y, z) 
+define function tak15 (x, y, z)
   if (y >= x)
     z
   else
@@ -173,7 +173,7 @@ define function tak15 (x, y, z)
   end if
 end function tak15;
 
-define function tak16 (x, y, z) 
+define function tak16 (x, y, z)
   if (y >= x)
     z
   else
@@ -183,7 +183,7 @@ define function tak16 (x, y, z)
   end if
 end function tak16;
 
-define function tak17 (x, y, z) 
+define function tak17 (x, y, z)
   if (y >= x)
     z
   else
@@ -193,7 +193,7 @@ define function tak17 (x, y, z)
   end if
 end function tak17;
 
-define function tak18 (x, y, z) 
+define function tak18 (x, y, z)
   if (y >= x)
     z
   else
@@ -203,7 +203,7 @@ define function tak18 (x, y, z)
   end if
 end function tak18;
 
-define function tak19 (x, y, z) 
+define function tak19 (x, y, z)
   if (y >= x)
     z
   else
@@ -213,7 +213,7 @@ define function tak19 (x, y, z)
   end if
 end function tak19;
 
-define function tak20 (x, y, z) 
+define function tak20 (x, y, z)
   if (y >= x)
     z
   else
@@ -223,7 +223,7 @@ define function tak20 (x, y, z)
   end if
 end function tak20;
 
-define function tak21 (x, y, z) 
+define function tak21 (x, y, z)
   if (y >= x)
     z
   else
@@ -233,7 +233,7 @@ define function tak21 (x, y, z)
   end if
 end function tak21;
 
-define function tak22 (x, y, z) 
+define function tak22 (x, y, z)
   if (y >= x)
     z
   else
@@ -243,7 +243,7 @@ define function tak22 (x, y, z)
   end if
 end function tak22;
 
-define function tak23 (x, y, z) 
+define function tak23 (x, y, z)
   if (y >= x)
     z
   else
@@ -253,7 +253,7 @@ define function tak23 (x, y, z)
   end if
 end function tak23;
 
-define function tak24 (x, y, z) 
+define function tak24 (x, y, z)
   if (y >= x)
     z
   else
@@ -263,7 +263,7 @@ define function tak24 (x, y, z)
   end if
 end function tak24;
 
-define function tak25 (x, y, z) 
+define function tak25 (x, y, z)
   if (y >= x)
     z
   else
@@ -273,7 +273,7 @@ define function tak25 (x, y, z)
   end if
 end function tak25;
 
-define function tak26 (x, y, z) 
+define function tak26 (x, y, z)
   if (y >= x)
     z
   else
@@ -283,7 +283,7 @@ define function tak26 (x, y, z)
   end if
 end function tak26;
 
-define function tak27 (x, y, z) 
+define function tak27 (x, y, z)
   if (y >= x)
     z
   else
@@ -293,7 +293,7 @@ define function tak27 (x, y, z)
   end if
 end function tak27;
 
-define function tak28 (x, y, z) 
+define function tak28 (x, y, z)
   if (y >= x)
     z
   else
@@ -303,7 +303,7 @@ define function tak28 (x, y, z)
   end if
 end function tak28;
 
-define function tak29 (x, y, z) 
+define function tak29 (x, y, z)
   if (y >= x)
     z
   else
@@ -313,7 +313,7 @@ define function tak29 (x, y, z)
   end if
 end function tak29;
 
-define function tak30 (x, y, z) 
+define function tak30 (x, y, z)
   if (y >= x)
     z
   else
@@ -323,7 +323,7 @@ define function tak30 (x, y, z)
   end if
 end function tak30;
 
-define function tak31 (x, y, z) 
+define function tak31 (x, y, z)
   if (y >= x)
     z
   else
@@ -333,7 +333,7 @@ define function tak31 (x, y, z)
   end if
 end function tak31;
 
-define function tak32 (x, y, z) 
+define function tak32 (x, y, z)
   if (y >= x)
     z
   else
@@ -343,7 +343,7 @@ define function tak32 (x, y, z)
   end if
 end function tak32;
 
-define function tak33 (x, y, z) 
+define function tak33 (x, y, z)
   if (y >= x)
     z
   else
@@ -353,7 +353,7 @@ define function tak33 (x, y, z)
   end if
 end function tak33;
 
-define function tak34 (x, y, z) 
+define function tak34 (x, y, z)
   if (y >= x)
     z
   else
@@ -363,7 +363,7 @@ define function tak34 (x, y, z)
   end if
 end function tak34;
 
-define function tak35 (x, y, z) 
+define function tak35 (x, y, z)
   if (y >= x)
     z
   else
@@ -373,7 +373,7 @@ define function tak35 (x, y, z)
   end if
 end function tak35;
 
-define function tak36 (x, y, z) 
+define function tak36 (x, y, z)
   if (y >= x)
     z
   else
@@ -383,7 +383,7 @@ define function tak36 (x, y, z)
   end if
 end function tak36;
 
-define function tak37 (x, y, z) 
+define function tak37 (x, y, z)
   if (y >= x)
     z
   else
@@ -393,7 +393,7 @@ define function tak37 (x, y, z)
   end if
 end function tak37;
 
-define function tak38 (x, y, z) 
+define function tak38 (x, y, z)
   if (y >= x)
     z
   else
@@ -403,7 +403,7 @@ define function tak38 (x, y, z)
   end if
 end function tak38;
 
-define function tak39 (x, y, z) 
+define function tak39 (x, y, z)
   if (y >= x)
     z
   else
@@ -413,7 +413,7 @@ define function tak39 (x, y, z)
   end if
 end function tak39;
 
-define function tak40 (x, y, z) 
+define function tak40 (x, y, z)
   if (y >= x)
     z
   else
@@ -423,7 +423,7 @@ define function tak40 (x, y, z)
   end if
 end function tak40;
 
-define function tak41 (x, y, z) 
+define function tak41 (x, y, z)
   if (y >= x)
     z
   else
@@ -433,7 +433,7 @@ define function tak41 (x, y, z)
   end if
 end function tak41;
 
-define function tak42 (x, y, z) 
+define function tak42 (x, y, z)
   if (y >= x)
     z
   else
@@ -443,7 +443,7 @@ define function tak42 (x, y, z)
   end if
 end function tak42;
 
-define function tak43 (x, y, z) 
+define function tak43 (x, y, z)
   if (y >= x)
     z
   else
@@ -453,7 +453,7 @@ define function tak43 (x, y, z)
   end if
 end function tak43;
 
-define function tak44 (x, y, z) 
+define function tak44 (x, y, z)
   if (y >= x)
     z
   else
@@ -463,7 +463,7 @@ define function tak44 (x, y, z)
   end if
 end function tak44;
 
-define function tak45 (x, y, z) 
+define function tak45 (x, y, z)
   if (y >= x)
     z
   else
@@ -473,7 +473,7 @@ define function tak45 (x, y, z)
   end if
 end function tak45;
 
-define function tak46 (x, y, z) 
+define function tak46 (x, y, z)
   if (y >= x)
     z
   else
@@ -483,7 +483,7 @@ define function tak46 (x, y, z)
   end if
 end function tak46;
 
-define function tak47 (x, y, z) 
+define function tak47 (x, y, z)
   if (y >= x)
     z
   else
@@ -493,7 +493,7 @@ define function tak47 (x, y, z)
   end if
 end function tak47;
 
-define function tak48 (x, y, z) 
+define function tak48 (x, y, z)
   if (y >= x)
     z
   else
@@ -503,7 +503,7 @@ define function tak48 (x, y, z)
   end if
 end function tak48;
 
-define function tak49 (x, y, z) 
+define function tak49 (x, y, z)
   if (y >= x)
     z
   else
@@ -513,7 +513,7 @@ define function tak49 (x, y, z)
   end if
 end function tak49;
 
-define function tak50 (x, y, z) 
+define function tak50 (x, y, z)
   if (y >= x)
     z
   else
@@ -523,7 +523,7 @@ define function tak50 (x, y, z)
   end if
 end function tak50;
 
-define function tak51 (x, y, z) 
+define function tak51 (x, y, z)
   if (y >= x)
     z
   else
@@ -533,7 +533,7 @@ define function tak51 (x, y, z)
   end if
 end function tak51;
 
-define function tak52 (x, y, z) 
+define function tak52 (x, y, z)
   if (y >= x)
     z
   else
@@ -543,7 +543,7 @@ define function tak52 (x, y, z)
   end if
 end function tak52;
 
-define function tak53 (x, y, z) 
+define function tak53 (x, y, z)
   if (y >= x)
     z
   else
@@ -553,7 +553,7 @@ define function tak53 (x, y, z)
   end if
 end function tak53;
 
-define function tak54 (x, y, z) 
+define function tak54 (x, y, z)
   if (y >= x)
     z
   else
@@ -563,7 +563,7 @@ define function tak54 (x, y, z)
   end if
 end function tak54;
 
-define function tak55 (x, y, z) 
+define function tak55 (x, y, z)
   if (y >= x)
     z
   else
@@ -573,7 +573,7 @@ define function tak55 (x, y, z)
   end if
 end function tak55;
 
-define function tak56 (x, y, z) 
+define function tak56 (x, y, z)
   if (y >= x)
     z
   else
@@ -583,7 +583,7 @@ define function tak56 (x, y, z)
   end if
 end function tak56;
 
-define function tak57 (x, y, z) 
+define function tak57 (x, y, z)
   if (y >= x)
     z
   else
@@ -593,7 +593,7 @@ define function tak57 (x, y, z)
   end if
 end function tak57;
 
-define function tak58 (x, y, z) 
+define function tak58 (x, y, z)
   if (y >= x)
     z
   else
@@ -603,7 +603,7 @@ define function tak58 (x, y, z)
   end if
 end function tak58;
 
-define function tak59 (x, y, z) 
+define function tak59 (x, y, z)
   if (y >= x)
     z
   else
@@ -613,7 +613,7 @@ define function tak59 (x, y, z)
   end if
 end function tak59;
 
-define function tak60 (x, y, z) 
+define function tak60 (x, y, z)
   if (y >= x)
     z
   else
@@ -623,7 +623,7 @@ define function tak60 (x, y, z)
   end if
 end function tak60;
 
-define function tak61 (x, y, z) 
+define function tak61 (x, y, z)
   if (y >= x)
     z
   else
@@ -633,7 +633,7 @@ define function tak61 (x, y, z)
   end if
 end function tak61;
 
-define function tak62 (x, y, z) 
+define function tak62 (x, y, z)
   if (y >= x)
     z
   else
@@ -643,7 +643,7 @@ define function tak62 (x, y, z)
   end if
 end function tak62;
 
-define function tak63 (x, y, z) 
+define function tak63 (x, y, z)
   if (y >= x)
     z
   else
@@ -653,7 +653,7 @@ define function tak63 (x, y, z)
   end if
 end function tak63;
 
-define function tak64 (x, y, z) 
+define function tak64 (x, y, z)
   if (y >= x)
     z
   else
@@ -663,7 +663,7 @@ define function tak64 (x, y, z)
   end if
 end function tak64;
 
-define function tak65 (x, y, z) 
+define function tak65 (x, y, z)
   if (y >= x)
     z
   else
@@ -673,7 +673,7 @@ define function tak65 (x, y, z)
   end if
 end function tak65;
 
-define function tak66 (x, y, z) 
+define function tak66 (x, y, z)
   if (y >= x)
     z
   else
@@ -683,7 +683,7 @@ define function tak66 (x, y, z)
   end if
 end function tak66;
 
-define function tak67 (x, y, z) 
+define function tak67 (x, y, z)
   if (y >= x)
     z
   else
@@ -693,7 +693,7 @@ define function tak67 (x, y, z)
   end if
 end function tak67;
 
-define function tak68 (x, y, z) 
+define function tak68 (x, y, z)
   if (y >= x)
     z
   else
@@ -703,7 +703,7 @@ define function tak68 (x, y, z)
   end if
 end function tak68;
 
-define function tak69 (x, y, z) 
+define function tak69 (x, y, z)
   if (y >= x)
     z
   else
@@ -713,7 +713,7 @@ define function tak69 (x, y, z)
   end if
 end function tak69;
 
-define function tak70 (x, y, z) 
+define function tak70 (x, y, z)
   if (y >= x)
     z
   else
@@ -723,7 +723,7 @@ define function tak70 (x, y, z)
   end if
 end function tak70;
 
-define function tak71 (x, y, z) 
+define function tak71 (x, y, z)
   if (y >= x)
     z
   else
@@ -733,7 +733,7 @@ define function tak71 (x, y, z)
   end if
 end function tak71;
 
-define function tak72 (x, y, z) 
+define function tak72 (x, y, z)
   if (y >= x)
     z
   else
@@ -743,7 +743,7 @@ define function tak72 (x, y, z)
   end if
 end function tak72;
 
-define function tak73 (x, y, z) 
+define function tak73 (x, y, z)
   if (y >= x)
     z
   else
@@ -753,7 +753,7 @@ define function tak73 (x, y, z)
   end if
 end function tak73;
 
-define function tak74 (x, y, z) 
+define function tak74 (x, y, z)
   if (y >= x)
     z
   else
@@ -763,7 +763,7 @@ define function tak74 (x, y, z)
   end if
 end function tak74;
 
-define function tak75 (x, y, z) 
+define function tak75 (x, y, z)
   if (y >= x)
     z
   else
@@ -773,7 +773,7 @@ define function tak75 (x, y, z)
   end if
 end function tak75;
 
-define function tak76 (x, y, z) 
+define function tak76 (x, y, z)
   if (y >= x)
     z
   else
@@ -783,7 +783,7 @@ define function tak76 (x, y, z)
   end if
 end function tak76;
 
-define function tak77 (x, y, z) 
+define function tak77 (x, y, z)
   if (y >= x)
     z
   else
@@ -793,7 +793,7 @@ define function tak77 (x, y, z)
   end if
 end function tak77;
 
-define function tak78 (x, y, z) 
+define function tak78 (x, y, z)
   if (y >= x)
     z
   else
@@ -803,7 +803,7 @@ define function tak78 (x, y, z)
   end if
 end function tak78;
 
-define function tak79 (x, y, z) 
+define function tak79 (x, y, z)
   if (y >= x)
     z
   else
@@ -813,7 +813,7 @@ define function tak79 (x, y, z)
   end if
 end function tak79;
 
-define function tak80 (x, y, z) 
+define function tak80 (x, y, z)
   if (y >= x)
     z
   else
@@ -823,7 +823,7 @@ define function tak80 (x, y, z)
   end if
 end function tak80;
 
-define function tak81 (x, y, z) 
+define function tak81 (x, y, z)
   if (y >= x)
     z
   else
@@ -833,7 +833,7 @@ define function tak81 (x, y, z)
   end if
 end function tak81;
 
-define function tak82 (x, y, z) 
+define function tak82 (x, y, z)
   if (y >= x)
     z
   else
@@ -843,7 +843,7 @@ define function tak82 (x, y, z)
   end if
 end function tak82;
 
-define function tak83 (x, y, z) 
+define function tak83 (x, y, z)
   if (y >= x)
     z
   else
@@ -853,7 +853,7 @@ define function tak83 (x, y, z)
   end if
 end function tak83;
 
-define function tak84 (x, y, z) 
+define function tak84 (x, y, z)
   if (y >= x)
     z
   else
@@ -863,7 +863,7 @@ define function tak84 (x, y, z)
   end if
 end function tak84;
 
-define function tak85 (x, y, z) 
+define function tak85 (x, y, z)
   if (y >= x)
     z
   else
@@ -873,7 +873,7 @@ define function tak85 (x, y, z)
   end if
 end function tak85;
 
-define function tak86 (x, y, z) 
+define function tak86 (x, y, z)
   if (y >= x)
     z
   else
@@ -883,7 +883,7 @@ define function tak86 (x, y, z)
   end if
 end function tak86;
 
-define function tak87 (x, y, z) 
+define function tak87 (x, y, z)
   if (y >= x)
     z
   else
@@ -893,7 +893,7 @@ define function tak87 (x, y, z)
   end if
 end function tak87;
 
-define function tak88 (x, y, z) 
+define function tak88 (x, y, z)
   if (y >= x)
     z
   else
@@ -903,7 +903,7 @@ define function tak88 (x, y, z)
   end if
 end function tak88;
 
-define function tak89 (x, y, z) 
+define function tak89 (x, y, z)
   if (y >= x)
     z
   else
@@ -913,7 +913,7 @@ define function tak89 (x, y, z)
   end if
 end function tak89;
 
-define function tak90 (x, y, z) 
+define function tak90 (x, y, z)
   if (y >= x)
     z
   else
@@ -923,7 +923,7 @@ define function tak90 (x, y, z)
   end if
 end function tak90;
 
-define function tak91 (x, y, z) 
+define function tak91 (x, y, z)
   if (y >= x)
     z
   else
@@ -933,7 +933,7 @@ define function tak91 (x, y, z)
   end if
 end function tak91;
 
-define function tak92 (x, y, z) 
+define function tak92 (x, y, z)
   if (y >= x)
     z
   else
@@ -943,7 +943,7 @@ define function tak92 (x, y, z)
   end if
 end function tak92;
 
-define function tak93 (x, y, z) 
+define function tak93 (x, y, z)
   if (y >= x)
     z
   else
@@ -953,7 +953,7 @@ define function tak93 (x, y, z)
   end if
 end function tak93;
 
-define function tak94 (x, y, z) 
+define function tak94 (x, y, z)
   if (y >= x)
     z
   else
@@ -963,7 +963,7 @@ define function tak94 (x, y, z)
   end if
 end function tak94;
 
-define function tak95 (x, y, z) 
+define function tak95 (x, y, z)
   if (y >= x)
     z
   else
@@ -973,7 +973,7 @@ define function tak95 (x, y, z)
   end if
 end function tak95;
 
-define function tak96 (x, y, z) 
+define function tak96 (x, y, z)
   if (y >= x)
     z
   else
@@ -983,7 +983,7 @@ define function tak96 (x, y, z)
   end if
 end function tak96;
 
-define function tak97 (x, y, z) 
+define function tak97 (x, y, z)
   if (y >= x)
     z
   else
@@ -993,7 +993,7 @@ define function tak97 (x, y, z)
   end if
 end function tak97;
 
-define function tak98 (x, y, z) 
+define function tak98 (x, y, z)
   if (y >= x)
     z
   else
@@ -1003,7 +1003,7 @@ define function tak98 (x, y, z)
   end if
 end function tak98;
 
-define function tak99 (x, y, z) 
+define function tak99 (x, y, z)
   if (y >= x)
     z
   else

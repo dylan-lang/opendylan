@@ -32,7 +32,7 @@ define sealed method table-protocol
   values(resource-equal, resource-hash)
 end method table-protocol;
 
-
+
 /// Resource databases
 
 define abstract class <resource-database> (<object>)
@@ -122,7 +122,7 @@ end method store-resource-name;
 
 define sealed method store-new-resource
     (database :: <win32-resource-database>, name :: <raw-resource-id>) => ()
-  let resource = make(<resource-description>, 
+  let resource = make(<resource-description>,
 		      resource-id: name,
 		      resource-type: *current-type*);
   let wrapper  = make(<resource-wrapper>,

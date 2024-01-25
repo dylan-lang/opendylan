@@ -24,7 +24,7 @@ define constant <source-position> = type-union(<integer>, <source-position-inter
 
 
 // The class which corresponds to a source code location point within a lambda.
-// Locations are relative to the absolute source position associated with the 
+// Locations are relative to the absolute source position associated with the
 // lambda.
 //
 // NB the relative numbering starts at 0, not 1 as used sometimes by COFF.
@@ -60,7 +60,7 @@ ignore(make-relative-source-position-unpacked-slots);
 
 
 // The class which encapsulates the source record corresponding
-// to a lambda. 
+// to a lambda.
 
 define class <absolute-source-position> (<source-position-internal>)
 
@@ -76,15 +76,15 @@ define class <absolute-source-position> (<source-position-internal>)
 end class;
 
 
-define generic source-record-start-line 
+define generic source-record-start-line
     (pos :: <absolute-source-position>) => (line :: <integer>);
 
 
-define generic source-record-end-line 
+define generic source-record-end-line
     (pos :: <absolute-source-position>) => (line :: <integer>);
 
 
-define generic source-record-file-name 
+define generic source-record-file-name
     (pos :: <absolute-source-position>) => (file :: false-or(<byte-string>));
 
 
@@ -117,29 +117,29 @@ end method;
 //// Support for coercing <source-location> objects into <source-position>s
 
 
-define open generic locator-as-absolute-source-position 
+define open generic locator-as-absolute-source-position
     (locator) => (source-pos :: <absolute-source-position>);
 
 
-define open generic make-relative-source-position 
-    (abs :: <absolute-source-position>, 
+define open generic make-relative-source-position
+    (abs :: <absolute-source-position>,
      locator,
-     code-pos :: <integer>) 
+     code-pos :: <integer>)
      => (source-pos :: <relative-source-position>);
 
 
-define method locator-as-absolute-source-position 
+define method locator-as-absolute-source-position
     (locator :: <source-location>) => (source-pos :: <absolute-source-position>)
   make(<absolute-source-position>,
-       source-record: locator.source-location-source-record, 
+       source-record: locator.source-location-source-record,
        start-offset: locator.source-location-start-offset.source-offset-line,
        end-offset: locator.source-location-end-offset.source-offset-line)
 end method;
 
 
-define method make-relative-source-position 
-    (abs :: <absolute-source-position>, 
-     locator :: <source-location>, 
+define method make-relative-source-position
+    (abs :: <absolute-source-position>,
+     locator :: <source-location>,
      code-position :: <integer>)
      => (source-pos :: <relative-source-position>)
   let abs-sr = abs.source-position-source-record;
@@ -178,7 +178,7 @@ end method;
 /// This includes name and location information, in a similar manner to
 /// a <virtual-register>. We don't just use <virtual-register> because
 /// there is no need to hang on to all the baggage associated with how
-/// to do the register allocation. Instances of <named-variable> should be 
+/// to do the register allocation. Instances of <named-variable> should be
 /// as simple as possible, because they are persistently stored for incremental
 /// compilation.
 
@@ -189,7 +189,7 @@ end class;
 
 
 
-/// Define abstract classes for register and spill variables., and for 
+/// Define abstract classes for register and spill variables., and for
 /// variables naming indirections (for closures etc).
 /// We will eventually need separate subclasses for raw types too.
 
@@ -277,7 +277,7 @@ define method make-indirection-variable
 	harp-error("Attempt to make an indirection variable with no name or dependents");
     end if;
   else
-    make(<indirections-variable-in-indirection>, 
+    make(<indirections-variable-in-indirection>,
 	 indirection-offset: offset, indirections: sub-indirections);
   end if;
 end method;
@@ -287,38 +287,38 @@ end method;
 
 
 
-define method make-named-variable 
-      (be :: <harp-back-end>, name :: <byte-string>, 
+define method make-named-variable
+      (be :: <harp-back-end>, name :: <byte-string>,
        location :: <real-register>, with-frame :: <boolean>)
       => (var :: <named-variable>)
-  make(<named-variable-in-register>, name: name, enumeration: 
+  make(<named-variable-in-register>, name: name, enumeration:
        real-register-debug-info-enumeration(be, location));
 end method;
 
 
-define method make-named-variable 
-      (be :: <harp-back-end>, name :: <byte-string>, 
+define method make-named-variable
+      (be :: <harp-back-end>, name :: <byte-string>,
        location :: <spill>, with-frame :: <boolean>)
       => (var :: <named-variable>)
   if (with-frame)
-    make(<named-variable-in-spill>, name: name, 
+    make(<named-variable-in-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame));
   else
-    make(<named-variable-in-leaf-spill>, name: name, 
+    make(<named-variable-in-leaf-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame));
   end if;
 end method;
 
 
-define method make-named-variable 
-      (be :: <harp-back-end>, name :: <byte-string>, 
+define method make-named-variable
+      (be :: <harp-back-end>, name :: <byte-string>,
        location :: <integer>, with-frame :: <boolean>)
       => (var :: <named-variable>)
   if (with-frame)
-    make(<named-variable-in-spill>, name: name, 
+    make(<named-variable-in-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame));
   else
-    make(<named-variable-in-leaf-spill>, name: name, 
+    make(<named-variable-in-leaf-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame));
   end if;
 end method;
@@ -326,27 +326,27 @@ end method;
 
 
 define method make-named-indirections
-      (be :: <harp-back-end>, name :: <byte-string>, 
+      (be :: <harp-back-end>, name :: <byte-string>,
        indirections :: <simple-object-vector>,
        location :: <real-register>, with-frame :: <boolean>)
       => (var :: <named-variable>)
-  make(<indirections-variable-in-register>, name: name, 
+  make(<indirections-variable-in-register>, name: name,
        enumeration: real-register-debug-info-enumeration(be, location),
        indirections: indirections);
 end method;
 
 
 define method make-named-indirections
-      (be :: <harp-back-end>, name :: <byte-string>, 
+      (be :: <harp-back-end>, name :: <byte-string>,
        indirections :: <simple-object-vector>,
        location :: <spill>, with-frame :: <boolean>)
       => (var :: <named-variable>)
   if (with-frame)
-    make(<indirections-variable-in-spill>, name: name, 
+    make(<indirections-variable-in-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame),
 	 indirections: indirections);
   else
-    make(<indirections-variable-in-leaf-spill>, name: name, 
+    make(<indirections-variable-in-leaf-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame),
 	 indirections: indirections);
   end if;
@@ -354,16 +354,16 @@ end method;
 
 
 define method make-named-indirections
-      (be :: <harp-back-end>, name :: <byte-string>, 
+      (be :: <harp-back-end>, name :: <byte-string>,
        indirections :: <simple-object-vector>,
        location :: <integer>, with-frame :: <boolean>)
       => (var :: <named-variable>)
   if (with-frame)
-    make(<indirections-variable-in-spill>, name: name, 
+    make(<indirections-variable-in-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame),
 	 indirections: indirections);
   else
-    make(<indirections-variable-in-leaf-spill>, name: name, 
+    make(<indirections-variable-in-leaf-spill>, name: name,
 	 offset: spill-frame-pointer-offset(be, location, with-frame),
 	 indirections: indirections);
   end if;
@@ -372,14 +372,14 @@ end method;
 
 
 
-/// Back ends MUST specialize these: so that a platform-dependent 
+/// Back ends MUST specialize these: so that a platform-dependent
 /// debug-info encoding for variable locations can be determined.
 /// spill may be either a <spill> or an <integer> corresponding to an
 /// uncoloured arg-spill -  and both should be supported
 /// NB: there is no default implementation
 
 
-// spill-frame-pointer-offset returns an offset in bytes for the location of the 
+// spill-frame-pointer-offset returns an offset in bytes for the location of the
 // variable relative to the frame pointer
 
 define open generic spill-frame-pointer-offset
@@ -406,7 +406,7 @@ define open generic real-register-from-debug-info-enumeration
 
 /// Support for named variable tables:
 
-define method table-of-named-variables 
+define method table-of-named-variables
     (back-end :: <harp-back-end>, register :: <real-register>, with-frame :: <boolean>)
     => (table :: <object-table>)
   // Use separate table for real-registers
@@ -415,7 +415,7 @@ define method table-of-named-variables
   tables[index] | (tables[index] := make(<table>));
 end method;
 
-define method table-of-named-variables 
+define method table-of-named-variables
     (back-end :: <harp-back-end>, register, with-frame :: <boolean>)
     => (table :: <object-table>)
   // Use separate tables for with-frame & no-frame because
@@ -428,7 +428,7 @@ end method;
 // Share lists of named-variables by using their original shared vectors
 // as keys in a table
 
-define method table-of-vectors-of-named-variables 
+define method table-of-vectors-of-named-variables
     (back-end :: <harp-back-end>, with-frame :: <boolean>)
     => (table :: <object-table>)
   // Use separate tables for with-frame & no-frame because
@@ -443,9 +443,9 @@ end method;
 /// failing that, it reconstructs the list of named-variables
 
 define method map-registers-as-variables
-    (back-end :: <harp-back-end>, 
+    (back-end :: <harp-back-end>,
      with-frame :: <boolean>,
-     regs-in-scope :: <simple-object-vector>) 
+     regs-in-scope :: <simple-object-vector>)
     => (vars-in-scope :: <list>)
 
   let table =
@@ -456,28 +456,28 @@ define method map-registers-as-variables
     existing
   else
     let vars-in-scope :: <list> =
-      map-as(<list>, 
-	     method (reg) 
-	       map-register-as-variable(back-end, reg, with-frame) 
+      map-as(<list>,
+	     method (reg)
+	       map-register-as-variable(back-end, reg, with-frame)
 	     end,
 	     regs-in-scope);
     table[regs-in-scope] := vars-in-scope;
     vars-in-scope
   end if;
 
-end method; 
+end method;
 
 
 /// map-register-as-variable
 /// maps between <virtual-register> and <named-variable> representations
-/// of named variables. HARP uses <virtual-register> for register allocation 
-/// initially - but the debug info uses the simpler representation of 
+/// of named variables. HARP uses <virtual-register> for register allocation
+/// initially - but the debug info uses the simpler representation of
 /// <named-variable>.
 
-define method map-register-as-variable 
-    (back-end :: <harp-back-end>, 
-     reg :: <virtual-register>, 
-     with-frame :: <boolean>) 
+define method map-register-as-variable
+    (back-end :: <harp-back-end>,
+     reg :: <virtual-register>,
+     with-frame :: <boolean>)
     => (var :: <named-variable>)
   let location = reg.virtual-register-colour;
   let table = table-of-named-variables(back-end, location, with-frame);
@@ -488,25 +488,25 @@ define method map-register-as-variable
     let name = reg.virtual-register-name;
     let indirections = reg.virtual-register-named-indirections;
     let direct? = indirections.empty?;
-    unless (name) 
+    unless (name)
       if (direct?)
 	harp-warning(back-end, "Attempt to map an unnamed register as a variable");
 	name := "unknown";
       else name := "_Environment_";
       end if;
     end unless;
-    unless (location) 
+    unless (location)
       harp-warning(back-end, "Attempt to map an unallocated register as a variable");
     end unless;
     let new = if (direct?)
 		make-named-variable(back-end, name, location, with-frame);
-	      else 
+	      else
 		make-named-indirections(back-end, name, indirections, location, with-frame);
 	      end if;
     table[reg] := new;
     new;
   end if;
-end method; 
+end method;
 
 
 
@@ -518,11 +518,11 @@ end method;
 define class <debug-scopes-internal> (<object>)
 
   constant slot start-debug-scopes-internal :: <integer>,
-    required-init-keyword: start:; 
+    required-init-keyword: start:;
     // The position in the code of the start of this scope
 
   constant slot size-debug-scopes-internal :: <integer>,
-    required-init-keyword: size:; 
+    required-init-keyword: size:;
     // The position in the code of the end of this scope
 
 end class;
@@ -540,10 +540,10 @@ end;
 // Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
 ignore(make-debug-scopes-unpacked-slots);
 
-/// <debug-scope> 
+/// <debug-scope>
 /// Defines a contiguous liveness scope for a set of <named-variable>s
 /// Instances of <debug-scope> will be persistently stored in compiled lambdas.
-/// NB, the externalized information for debug info for variables is stored in a 
+/// NB, the externalized information for debug info for variables is stored in a
 /// scoped fashion because that's convenient for native debug formats. The scoping
 /// is re-constituted here, though - and HARP clients are not required to provide
 /// fully scoped variables, according to the source code. This permits any
@@ -552,13 +552,13 @@ ignore(make-debug-scopes-unpacked-slots);
 
 define abstract class <debug-scope-internal> (<object>)
   slot named-variables = #(),
-    init-keyword: variables:;  
+    init-keyword: variables:;
     // list of <named-variable>s for variables introduced in this scope
 
   slot nested-scopes :: type-union(<debug-scopes>, <list>) = #();
     // list of <debug-scope>s which are nested inside this one
 
-  slot debug-scope-internal-packed-slot :: 
+  slot debug-scope-internal-packed-slot ::
     type-union(<integer>, <debug-scope-internal-unpacked-slots>) = 0,
     init-keyword: slots:;
 
@@ -570,11 +570,11 @@ end class;
 define class <debug-scope-internal-unpacked-slots> (<object>)
 
   constant slot start-code-offset-internal :: <integer>,
-    required-init-keyword: start:; 
+    required-init-keyword: start:;
     // The position in the code of the start of this scope
 
   slot end-code-offset-internal :: <integer>,
-    required-init-keyword: end:; 
+    required-init-keyword: end:;
     // The position in the code of the end of this scope
 
 end class;
@@ -641,9 +641,9 @@ define method pack-debug-scope
      with-frame? :: <boolean>,
      named-variables :: <integer>,
      nested-scopes :: <integer>,
-     code-offsets :: <integer>) 
+     code-offsets :: <integer>)
     => (debug-scope :: <debug-scope>)
-  
+
   let start-offset :: <integer> = start-code-offset-internal(code-offsets);
   let end-offset :: <integer> = end-code-offset-internal(code-offsets);
   let start-scopes :: <integer> = start-debug-scopes(nested-scopes);
@@ -662,9 +662,9 @@ define method pack-debug-scope
      with-frame?,
      named-variables,
      nested-scopes,
-     code-offsets) 
+     code-offsets)
     => (debug-scope :: <debug-scope-internal>)
-  
+
   prototype
 
 end method;
@@ -756,14 +756,14 @@ define method pack-debug-scopes(back-end :: <harp-back-end>, debug-scopes :: <li
 	 debug-names-vector);
 end method;
 
-// Iterate over all debug-scopes in a specified range in a supplied vector 
+// Iterate over all debug-scopes in a specified range in a supplied vector
 // of all available scopes
 
 define macro for-debug-scope
   { for-debug-scope (?debug-scope:name in ?debug-scopes:expression of ?all-debug-scopes:expression)
      ?:body ?other
     end }
-    => { 
+    => {
 	let debug-scopes :: <debug-scopes> = ?debug-scopes;
 	let ?=debug-scope-start :: <integer> = start-debug-scopes(debug-scopes);
 	let ?=debug-scope-size :: <integer> = size-debug-scopes(debug-scopes);
@@ -788,7 +788,7 @@ define macro for-reversed-debug-scope
   { for-reversed-debug-scope (?debug-scope:name in ?debug-scopes:expression of ?all-debug-scopes:expression)
      ?:body ?other
     end }
-    => { 
+    => {
 	let debug-scopes :: <debug-scopes> = ?debug-scopes;
 	let ?=debug-scope-start :: <integer> = start-debug-scopes(debug-scopes);
 	let ?=debug-scope-size :: <integer> = size-debug-scopes(debug-scopes);
@@ -813,7 +813,7 @@ define macro for-debug-var
   { for-debug-var (?debug-var:name in ?debug-vars:expression of ?all-debug-vars:expression)
      ?:body ?other
     end }
-    => { 
+    => {
 	let vars :: <vector-32bit> = unpack-value-as-bitset(?debug-vars);
 	let all-vars :: <simple-object-vector> = ?all-debug-vars;
 	for (?debug-var :: <named-variable> in all-vars,
@@ -904,7 +904,7 @@ end class;
 
 
 define method make-debug-scope
-    (with-frame :: <boolean>, vars :: <list>, 
+    (with-frame :: <boolean>, vars :: <list>,
      start :: <integer>, finish :: <integer>)
     => (new :: <debug-scope-internal>)
 
@@ -938,18 +938,18 @@ end method;
 /// add-debug-scope
 ///
 /// Adds a new scope of live variables to an existing scope. The caller passes
-/// in contiguous ranges along with the live named virtual registers for each 
+/// in contiguous ranges along with the live named virtual registers for each
 /// range. The function calculates a nested scope representation from this data.
 ///
 /// Callers of this are expected to incrementally add ranges in ascending order
-/// of code location. The empty list should be used to represent an empty scope 
-/// for the first call to this function. Adjacent ranges are assumed to be 
+/// of code location. The empty list should be used to represent an empty scope
+/// for the first call to this function. Adjacent ranges are assumed to be
 /// contiguous, in the sense that any variable which is live in two adjacent ranges
 /// may be merged into a shared nested scope.
 
 define method add-debug-scope
-    (back-end :: <harp-back-end>, 
-     debug-scopes :: <list>, 
+    (back-end :: <harp-back-end>,
+     debug-scopes :: <list>,
      with-frame :: <boolean>,
      code-start :: <integer>,
      code-end :: <integer>,
@@ -966,11 +966,11 @@ end method;
 
 
 define method add-debug-scope-internal
-    (debug-scopes :: <list>, 
+    (debug-scopes :: <list>,
      with-frame :: <boolean>,
      code-start :: <integer>,
      code-end :: <integer>,
-     vars-to-add :: <list>) 
+     vars-to-add :: <list>)
     => (new-scopes :: <list>)
   let last-end = if (debug-scopes.empty?)
                    0;
@@ -982,29 +982,29 @@ define method add-debug-scope-internal
 end method;
 
 
-// apppend-to-debug-scopes 
-// Takes a list of scopes, and returns a new list which includes additional 
+// apppend-to-debug-scopes
+// Takes a list of scopes, and returns a new list which includes additional
 // range information. All consistency checks are performed
 
 define method append-to-debug-scopes
-    (debug-scopes :: <list>, 
+    (debug-scopes :: <list>,
      with-frame :: <boolean>,
      code-start :: <integer>,
      code-end :: <integer>,
      old-end :: <integer>,
      vars-to-add :: <list>,
-     top-level :: <boolean>) 
+     top-level :: <boolean>)
     => (new-scopes :: <list>)
 
   if (debug-scopes.empty?)
     list(make-debug-scope(with-frame, vars-to-add, code-start, code-end));
   elseif (debug-scopes.size == 1 & debug-scopes[0].end-code-offset == old-end)
-    merge-debug-scopes(debug-scopes[0], with-frame, 
-                       code-start, code-end, old-end, 
+    merge-debug-scopes(debug-scopes[0], with-frame,
+                       code-start, code-end, old-end,
                        vars-to-add, top-level);
   else
-    debug-scopes.tail := append-to-debug-scopes(debug-scopes.tail, with-frame, 
-                                                code-start, code-end, old-end, 
+    debug-scopes.tail := append-to-debug-scopes(debug-scopes.tail, with-frame,
+                                                code-start, code-end, old-end,
                                                 vars-to-add, top-level);
     debug-scopes;
   end if;
@@ -1017,21 +1017,21 @@ end method;
 // which has merged scope data. The new list might contain either one or two elements.
 
 define method merge-debug-scopes
-    (debug-scope :: <debug-scope-internal>, 
+    (debug-scope :: <debug-scope-internal>,
      with-frame :: <boolean>,
      code-start :: <integer>,
      code-end :: <integer>,
      old-end :: <integer>,
      vars-to-add :: <list>,
-     top-level :: <boolean>) 
+     top-level :: <boolean>)
     => (new-scopes :: <list>)
 
   local method make-disjoint-scopes ()
-          list(debug-scope, 
+          list(debug-scope,
                make-debug-scope(with-frame, vars-to-add, code-start, code-end));
         end method;
 
-  if (debug-scope.end-code-offset == old-end 
+  if (debug-scope.end-code-offset == old-end
       & debug-scope-same-frame?(debug-scope, with-frame))
     let existing-vars = debug-scope.named-variables;
     let (shared :: <list>, unshared?) =
@@ -1045,8 +1045,8 @@ define method merge-debug-scopes
 
       // If we get here, then it is worth sharing some of the current debug scope.
       if ((shared == existing-vars) | (shared.size == existing-vars.size))
-         // We need all the vars in existing-vars, so use the existing scope 
-        
+         // We need all the vars in existing-vars, so use the existing scope
+
          // First increase it's code range
          debug-scope.end-code-offset := code-end;
 
@@ -1060,9 +1060,9 @@ define method merge-debug-scopes
 	     else
 	       difference-vars(vars-to-add, existing-vars);
 	     end;
-           debug-scope.nested-scopes 
-             := append-to-debug-scopes(debug-scope.nested-scopes, 
-                                       with-frame, code-start, code-end, old-end, 
+           debug-scope.nested-scopes
+             := append-to-debug-scopes(debug-scope.nested-scopes,
+                                       with-frame, code-start, code-end, old-end,
                                        uniques, #f);
          end if;
 
@@ -1083,8 +1083,8 @@ define method merge-debug-scopes
          debug-scope.nested-scopes := list(sub-scope);
          debug-scope.named-variables := shared;
          // now try this process again
-         merge-debug-scopes(debug-scope, with-frame, 
-                            code-start, code-end, old-end, 
+         merge-debug-scopes(debug-scope, with-frame,
+                            code-start, code-end, old-end,
                             vars-to-add, top-level);
       end if;
     end if;
@@ -1238,20 +1238,20 @@ end method;
 
 
 
-//// Some printing methods 
+//// Some printing methods
 
 
 // print-debug-scopes
 // This is an exported interface for printing a list of scopes.
 
 
-define method print-debug-scopes 
+define method print-debug-scopes
     (be :: <harp-back-end>, scopes :: <list>, stream :: <stream>,
      #key all-scopes, all-names) => ()
   print-scopes(be, scopes, stream, 0);
 end method;
 
-define method print-debug-scopes 
+define method print-debug-scopes
     (be :: <harp-back-end>, scopes :: <debug-scopes>, stream :: <stream>,
      #key all-scopes, all-names) => ()
   print-scopes(be, scopes, stream, 0,
@@ -1307,22 +1307,22 @@ end method;
 
 define method print-object
    (object :: <named-indirection>, stream :: <stream>) => ()
-  format(stream, "[%s,%=]", 
-	 object.variable-name, 
+  format(stream, "[%s,%=]",
+	 object.variable-name,
 	 object.variable-indirection-offset);
 end;
 
 define method print-object
    (object :: <indirections-variable-in-indirection>, stream :: <stream>) => ()
-  format(stream, "[%=,%=]", 
-	 object.variable-indirections, 
+  format(stream, "[%=,%=]",
+	 object.variable-indirections,
 	 object.variable-indirection-offset);
 end;
 
 
 
 
-define method stack-description 
+define method stack-description
   (scope :: <debug-scope>) => (r :: <byte-string>)
   if (scope.debug-scope-with-frame?)
     "with frame";
@@ -1333,8 +1333,8 @@ end method;
 
 
 
-define method print-scopes 
-    (be :: <harp-back-end>, scopes :: <list>, 
+define method print-scopes
+    (be :: <harp-back-end>, scopes :: <list>,
      stream :: <stream>, indent :: <integer>,
      #key all-scopes, all-names)
     => ()
@@ -1343,8 +1343,8 @@ define method print-scopes
   end for;
 end method;
 
-define method print-scopes 
-    (be :: <harp-back-end>, scopes :: <debug-scopes>, 
+define method print-scopes
+    (be :: <harp-back-end>, scopes :: <debug-scopes>,
      stream :: <stream>, indent :: <integer>,
      #key all-scopes, all-names)
     => ()
@@ -1356,13 +1356,13 @@ define method print-scopes
 end method;
 
 
-define method print-scope 
-    (be :: <harp-back-end>, scope :: <debug-scope>, 
+define method print-scope
+    (be :: <harp-back-end>, scope :: <debug-scope>,
      stream :: <stream>, indent :: <integer>,
      #key all-scopes, all-names)
     => ()
   for (i from 0 below indent) format(stream, " ") end;
-  format(stream, "Start scope at %d %s for ", 
+  format(stream, "Start scope at %d %s for ",
          scope.start-code-offset, scope.stack-description);
   print-named-variables(be, scope.named-variables, stream,
 			all-names: all-names);
@@ -1375,7 +1375,7 @@ define method print-scope
 end method;
 
 
-define method print-named-variables 
+define method print-named-variables
     (be :: <harp-back-end>, vars :: <list>, stream :: <stream>,
      #key all-names) => ()
   if (vars.empty?)
@@ -1387,7 +1387,7 @@ define method print-named-variables
   end if;
 end method;
 
-define method print-named-variables 
+define method print-named-variables
     (be :: <harp-back-end>, vars, stream :: <stream>,
      #key all-names) => ()
   if (vars = 0 | vars = #[])
@@ -1410,7 +1410,7 @@ end method;
 define method print-named-variable
     (be :: <harp-back-end>, var :: <variable-in-register>, stream :: <stream>)
     => ()
-  format(stream, "%=/%= ", var.variable-name, 
+  format(stream, "%=/%= ", var.variable-name,
          real-register-from-debug-info-enumeration
            (be, var.variable-register-enumeration));
 end method;
@@ -1418,7 +1418,7 @@ end method;
 define method print-named-variable
     (be :: <harp-back-end>, var :: <indirections-variable-in-register>, stream :: <stream>)
     => ()
-  format(stream, "%=/%=/%= ", var.variable-name, 
+  format(stream, "%=/%=/%= ", var.variable-name,
          real-register-from-debug-info-enumeration
            (be, var.variable-register-enumeration),
 	 var.variable-indirections);
@@ -1435,14 +1435,14 @@ define variable dummy-back-end = make(<dummy-back-end>);
 
 define variable dummy-reg = make(<real-register>, pname: "dummy");
 
-define method real-register-debug-info-enumeration 
+define method real-register-debug-info-enumeration
     (backend :: <dummy-back-end>, register == dummy-reg)
-    => (enumeration :: <integer>)  
+    => (enumeration :: <integer>)
   999;
 end method;
 
 define method real-register-from-debug-info-enumeration
-    (backend :: <dummy-back-end>, enumeration == 999) 
+    (backend :: <dummy-back-end>, enumeration == 999)
     => (reg :: <real-register>)
   dummy-reg;
 end method;
@@ -1461,7 +1461,7 @@ define variable v9 = make-named-variable(dummy-back-end, "Var9", dummy-reg, #t);
 
 define variable test-scope = #();
 
-define method add-test-scope 
+define method add-test-scope
   (from :: <integer>, to :: <integer>, stack? :: <boolean>, #rest vars)
   format(*standard-output*, "\n\nAdd %= from %d to %d\n", vars, from, to);
   let new-scope = add-debug-scope-internal(test-scope, stack?, from, to, vars);
@@ -1492,29 +1492,29 @@ do-tests();
 
 // do-tests() is expected to generate output ending in
 //
-//  Start scope at 0 with frame for "Var1"/dummy 
-//    Start scope at 0 with frame for "Var0"/dummy 
+//  Start scope at 0 with frame for "Var1"/dummy
+//    Start scope at 0 with frame for "Var0"/dummy
 //    End scope at 10
-//    Start scope at 21 with frame for "Var2"/dummy 
-//      Start scope at 21 with frame for "Var3"/dummy 
-//        Start scope at 21 with frame for "Var4"/dummy 
-//          Start scope at 31 with frame for "Var5"/dummy 
+//    Start scope at 21 with frame for "Var2"/dummy
+//      Start scope at 21 with frame for "Var3"/dummy
+//        Start scope at 21 with frame for "Var4"/dummy
+//          Start scope at 31 with frame for "Var5"/dummy
 //          End scope at 40
-//          Start scope at 41 with frame for "Var6"/dummy 
+//          Start scope at 41 with frame for "Var6"/dummy
 //          End scope at 50
 //        End scope at 50
-//        Start scope at 51 with frame for "Var6"/dummy 
+//        Start scope at 51 with frame for "Var6"/dummy
 //        End scope at 60
 //      End scope at 60
 //    End scope at 70
 //  End scope at 70
-//  Start scope at 71 no frame for "Var1"/dummy 
-//    Start scope at 71 no frame for "Var2"/dummy 
+//  Start scope at 71 no frame for "Var1"/dummy
+//    Start scope at 71 no frame for "Var2"/dummy
 //    End scope at 80
-//    Start scope at 91 no frame for "Var4"/dummy "Var3"/dummy "Var2"/dummy 
-//      Start scope at 91 no frame for "Var5"/dummy "Var6"/dummy 
+//    Start scope at 91 no frame for "Var4"/dummy "Var3"/dummy "Var2"/dummy
+//      Start scope at 91 no frame for "Var5"/dummy "Var6"/dummy
 //      End scope at 100
-//      Start scope at 101 no frame for "Var7"/dummy "Var8"/dummy "Var9"/dummy 
+//      Start scope at 101 no frame for "Var7"/dummy "Var8"/dummy "Var9"/dummy
 //      End scope at 110
 //    End scope at 110
 //  End scope at 110
@@ -1530,17 +1530,17 @@ define method do-more-tests ()
   add-test-scope(81, 90, #t, v1);
 end method;
 
-// do-more-tests is expected to generate output ending in 
+// do-more-tests is expected to generate output ending in
 //  Start scope at 0 with frame for no variables
-//    Start scope at 0 with frame for "Var1"/dummy 
-//      Start scope at 0 with frame for "Var0"/dummy 
+//    Start scope at 0 with frame for "Var1"/dummy
+//      Start scope at 0 with frame for "Var0"/dummy
 //      End scope at 10
-//      Start scope at 21 with frame for "Var2"/dummy 
-//        Start scope at 21 with frame for "Var3"/dummy "Var4"/dummy 
+//      Start scope at 21 with frame for "Var2"/dummy
+//        Start scope at 21 with frame for "Var3"/dummy "Var4"/dummy
 //        End scope at 30
 //      End scope at 70
 //    End scope at 70
-//    Start scope at 81 with frame for "Var1"/dummy 
+//    Start scope at 81 with frame for "Var1"/dummy
 //    End scope at 90
 //  End scope at 90
 

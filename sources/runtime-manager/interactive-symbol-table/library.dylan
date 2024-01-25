@@ -39,7 +39,7 @@ define module interactive-symbol-table
      sort-symbol-table-by-address,
 
      // Related error classes....
-  
+
      <interactive-symbol-table-error>,
      <symbol-illegal-redefinition-error>,
      <symbol-illegal-redefinition-by-name-error>,

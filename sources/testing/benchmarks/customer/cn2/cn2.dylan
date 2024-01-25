@@ -134,10 +134,10 @@ define function load-cn2
         let first-token :: <byte-string> = first(tokens);
 	let first-token-end = first-token.size - 1;
 	if (first-token[first-token-end] == ':')
-          let first-token 
+          let first-token
             = as(<symbol>, copy-sequence(first-token, end: first-token-end));
           *attributes* := add!(*attributes*, first-token);
-          *domains*    := add!(*domains*, 
+          *domains*    := add!(*domains*,
                                map(string-to-integer, copy-sequence(tokens, start: 1)));
         end
       end
@@ -154,11 +154,11 @@ define function load-cn2
         let last-token :: <byte-string> = last(tokens);
 	let last-token-end = last-token.size - 1;
 	if (last-token[last-token-end] == ';')
-          let last-token 
+          let last-token
             = as(<symbol>, copy-sequence(last-token, end: last-token-end));
           class-table[last-token] := 1;
           *examples* := add!(*examples*,
-			     pair(last-token, 
+			     pair(last-token,
                                   map(string-to-integer,
                                       copy-sequence(tokens, end: tokens.size - 1))));
         end
@@ -369,7 +369,7 @@ define function evaluate-rank
     (node :: <node>) => (status :: <symbol>)
   let (class, index, length, total) = majority-class(node.node-qqs);
   if (total > 0)
-    node.node-rank 
+    node.node-rank
       := cn2-float(1 + length) / cn2-float(total + *classes*.size);
     let global-distribution :: <integer> = *global-distribution*[index];
     let glob-dist :: <cn2-float> = cn2-float(global-distribution);
@@ -394,7 +394,7 @@ define function significant?
     (node :: <node>) => (significant :: <boolean>)
   let qqs = node.node-qqs;
   let examples-at-node :: <integer> = reduce(\+, 0, map(size, qqs));
-  let ratio :: <cn2-float> 
+  let ratio :: <cn2-float>
     = examples-at-node / cn2-float(*global-number-of-examples*);
   let distance = reduce(\+, 0, map(method (x :: <list>, y :: <integer>)
 				     let quot :: <integer> = x.size;
@@ -419,7 +419,7 @@ define inline function worse?
   node1.node-rank < node2.node-rank
 end function worse?;
 
-/* 
+/*
 define function count-qqs
     (node :: <node>) => (count :: <integer>)
   reduce(\+, 0, map(size, node.node-qqs))

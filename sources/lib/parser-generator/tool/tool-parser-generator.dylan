@@ -25,12 +25,12 @@ define method parser-generator-invoke
     if (sym.key.size = 1)
       sym.key.first.keyval
     elseif (default.unsupplied?)
-      tool-error("exactly one %s must be specified", 
+      tool-error("exactly one %s must be specified",
 		 format-arguments: list(as(<string>, sym)),
-		 file: spec-file, 
+		 file: spec-file,
 		 line: if (sym.key.size > 1) sym.key.second.keyline end if);
     elseif (sym.key.size > 1)
-      tool-error("no more than one %s may be specified", 
+      tool-error("no more than one %s may be specified",
 		 format-arguments: list(as(<string>, sym)),
 		 file: spec-file, line: sym.key.second.keyline);
     else
@@ -44,7 +44,7 @@ define method parser-generator-invoke
     clean-build? := #t;
   end if;
   let parser-file = merge-locators(as(<file-locator>, single(#"parser")), spec-file);
-  let parser-file-modification-date = 
+  let parser-file-modification-date =
     block ()
       file-property(parser-file, #"modification-date")
     exception (c :: <file-system-error>)
@@ -121,7 +121,7 @@ define function date-as-string (date :: false-or(<date>)) => (r :: <string>)
     date := date + make(<day/time-duration>, days: 0);	// Stupid way to copy
     date.date-time-zone-offset := local-time-zone-offset();
     let (year, month, day, hours, minutes) = decode-date(date);
-    format-to-string("%d:%02d %d-%02d-%02d %s", 
+    format-to-string("%d:%02d %d-%02d-%02d %s",
 		     hours, minutes, year, month, day, local-time-zone-name())
   else
     "<no date>"

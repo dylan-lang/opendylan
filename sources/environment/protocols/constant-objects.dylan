@@ -13,7 +13,7 @@ define class <constant-object>
      <definition-object>)
 end class <constant-object>;
 
-
+
 /// Implementation
 
 define method environment-object-type-name

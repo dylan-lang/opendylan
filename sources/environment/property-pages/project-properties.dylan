@@ -25,7 +25,7 @@ define sideways method frame-default-property-type
   #"sources"
 end method frame-default-property-type;
 
-
+
 /// Project definitions property page
 
 define constant $definition-type-filters
@@ -197,7 +197,7 @@ define method definition-contents
   #[]
 end method definition-contents;
 
-
+
 /// Project libraries page
 
 
@@ -325,7 +325,7 @@ define method project-library-location-name
   end
 end method project-library-location-name;
 
-
+
 /// Project breakpoints property page
 
 /// Breakpoint property page
@@ -484,7 +484,7 @@ define sideways method refresh-frame-property-page
 end method refresh-frame-property-page;
 */
 
-
+
 /// Project sources tree
 
 //---*** Switch this to #f if we don't want subprojects to appear here.
@@ -665,7 +665,7 @@ define function first-line
 end function first-line;
 */
 
-
+
 /// Sources page
 
 define sideways method make-frame-property-page-displayer

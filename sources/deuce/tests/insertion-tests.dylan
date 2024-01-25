@@ -134,7 +134,7 @@ define test insert-string-into-line-test
   end for;
 end test;
 
-
+
 define test insert-interval-test
     (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   let intervals :: <vector> = vector();

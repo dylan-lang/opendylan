@@ -69,7 +69,7 @@ define method get-lambda-source-information-if-necessary
       = function-recorded-source-locations(path, sym);
     if (fname)
       lambda.lambda-runtime-filename := fname;
-      lambda.lambda-runtime-recorded-offsets := 
+      lambda.lambda-runtime-recorded-offsets :=
         map(pair, line-positions, code-offsets);
       lambda.lambda-runtime-linenumber := baseline;
     else
@@ -120,10 +120,10 @@ define method symbolic-name-compiled-lambda
   if (sym)
     let language = sym.remote-symbol-language;
     if (language == $symbol-language-Dylan)
-      make(<runtime-dylan-compiled-lambda>, 
+      make(<runtime-dylan-compiled-lambda>,
            target: application, entry-point-symbol: sym);
     else
-      make(<runtime-foreign-compiled-lambda>, 
+      make(<runtime-foreign-compiled-lambda>,
            target: application, entry-point-symbol: sym);
     end if
   else

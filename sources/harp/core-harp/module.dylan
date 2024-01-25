@@ -11,7 +11,7 @@ define module common-harp-imports
   use common-extensions,
     rename: { <stretchy-object-vector> => <stretchy-vector> },
     export: all;
-  use dylan-extensions, 
+  use dylan-extensions,
     import: { false-or, <abstract-integer>,
               \without-bounds-checks,
               element-no-bounds-check, element-no-bounds-check-setter,
@@ -38,15 +38,15 @@ end module;
 
 define module standard-imports
   use common-harp-imports, export: all;
-  use dylan, 
-    rename: { <stretchy-vector> => <any-stretchy-vector> }, 
+  use dylan,
+    rename: { <stretchy-vector> => <any-stretchy-vector> },
     export: all;
 end module;
 
 define module big-integer-imports
   use common-harp-imports, export: all;
-  use generic-arithmetic-dylan, 
-    rename: { <stretchy-vector> => <any-stretchy-vector> }, 
+  use generic-arithmetic-dylan,
+    rename: { <stretchy-vector> => <any-stretchy-vector> },
     export: all;
   use big-integers, export: all;
 end module;
@@ -67,7 +67,7 @@ define module harp-utils
     set-bit-in-set, set-bit-in-set!, set-bit-in-word,
     unset-bit-in-set, unset-bit-in-word,
     bit-set-offset, bit-set-mask,
-    bit-set-or, bit-set-or!, bit-set-and, 
+    bit-set-or, bit-set-or!, bit-set-and,
     bit-set-xor, bit-set-andc2,
     bit-set-or-andc2,
     copy-bit-set, clear-bit-set,
@@ -104,15 +104,15 @@ define module harp-registers
     allocated-preserved, allocated-preserved-setter,
     number-preserved, number-preserved-setter,
     raw-size, raw-size-setter,
-    next-ng-spill, next-ng-spill-setter, 
+    next-ng-spill, next-ng-spill-setter,
     next-gc-spill, next-gc-spill-setter,
     next-sf-spill, next-sf-spill-setter,
     next-df-spill, next-df-spill-setter,
-    ng-spill-central, ng-spill-central-setter, 
+    ng-spill-central, ng-spill-central-setter,
     gc-spill-central, gc-spill-central-setter,
     sf-spill-central, sf-spill-central-setter,
     df-spill-central, df-spill-central-setter,
-    <register>, <virtual-register>, 
+    <register>, <virtual-register>,
     <integer-virtual-register>,
     <floating-virtual-register>,
     <greg>, <nreg>, <sfreg>, <dfreg>,
@@ -233,12 +233,12 @@ define module harp-register-model-for-clients
     reg-frame, reg-stack, reg-caller-stack, reg-environment, reg-function,
     reg-mlist, reg-result, reg-result-out, reg-float-result,
     reg-arg-count, reg-c-arg-count, reg-mv-count,
-    reg-arg0, reg-arg1, reg-arg2, reg-arg3, 
-    reg-arg4, reg-arg5, reg-arg6, reg-arg7, 
-    reg-float-arg0, reg-float-arg1, reg-float-arg2, reg-float-arg3, 
-    reg-float-arg4, reg-float-arg5, reg-float-arg6, reg-float-arg7, 
-    reg-machine-arguments, reg-float-machine-arguments, 
-    reg-c-machine-arguments, reg-c-float-machine-arguments, 
+    reg-arg0, reg-arg1, reg-arg2, reg-arg3,
+    reg-arg4, reg-arg5, reg-arg6, reg-arg7,
+    reg-float-arg0, reg-float-arg1, reg-float-arg2, reg-float-arg3,
+    reg-float-arg4, reg-float-arg5, reg-float-arg6, reg-float-arg7,
+    reg-machine-arguments, reg-float-machine-arguments,
+    reg-c-machine-arguments, reg-c-float-machine-arguments,
     reg-arg-masks, reg-arg-masks-out, reg-link,
     reg-tmp1, reg-tmp2, reg-tmp3, reg-tmp4, reg-tmp5, reg-ftmp1, reg-ftmp2,
     reg-c-result, reg-c-result2, reg-c-float-result, reg-c-stack, reg-c-frame,
@@ -254,22 +254,22 @@ define module harp-constant-references
   use standard-imports;
   use harp-utils;
   export
-    <constant-reference>, 
-    <address-constant-reference>, 
+    <constant-reference>,
+    <address-constant-reference>,
     <indirect-constant-reference>,
     <thread-constant-reference>,
     <imported-constant-reference>,
     <interactor-constant-reference>,
-    <i-constant-reference>, 
-    <f-constant-reference>, 
-    <sf-constant-reference>, 
-    <df-constant-reference>, 
-    <i-address-constant-reference>, 
+    <i-constant-reference>,
+    <f-constant-reference>,
+    <sf-constant-reference>,
+    <df-constant-reference>,
+    <i-address-constant-reference>,
     <i-indirect-constant-reference>,
     <i-thread-constant-reference>,
-    <sf-address-constant-reference>, 
+    <sf-address-constant-reference>,
     <sf-indirect-constant-reference>,
-    <df-address-constant-reference>, 
+    <df-address-constant-reference>,
     <df-indirect-constant-reference>,
     cr-refers-to, cr-refers-to-object, cr-const-offset,
     model-object-as-string,
@@ -287,10 +287,10 @@ define module harp-constant-references
     <relative-address-constant>,
     relative-offset, relative-offset-setter,
     <debug-info-constant>,
-    <start-frame-marker>, <end-frame-marker>, 
+    <start-frame-marker>, <end-frame-marker>,
     <code-locator-constant>,
-    locator-live-variables, locator-live-variables-setter, 
-    locator-with-stack?, locator-with-stack?-setter, 
+    locator-live-variables, locator-live-variables-setter,
+    locator-with-stack?, locator-with-stack?-setter,
     locator-data, locator-data-setter;
 end module;
 
@@ -367,8 +367,8 @@ define module harp-vars
     asm-line-pos, asm-line-pos-setter,
     arg-spill-count, arg-spill-count-setter,
     named-variables-tables, named-variables-tables-setter,
-    external-references, external-references-setter, 
-    referenced-data-words, referenced-data-words-setter, 
+    external-references, external-references-setter,
+    referenced-data-words, referenced-data-words-setter,
     virtual-register-clashes, virtual-register-clashes-setter,
     make-harp-variables, make-harp-variables-internal,
     empty-code?, $empty-stretchy-vector,
@@ -379,7 +379,7 @@ end module;
 
 define module harp-op
   use standard-imports;
-  export 
+  export
     nil-fn, false-fn, no-template,
     <reg-fn>, <spread-fn>,
     <op>,
@@ -422,7 +422,7 @@ define module base-harp
   use harp-basic-block, export: all;
   use harp-op, export: all;
   use harp-vars, export: all;
-  use harp-cg-back-end, 
+  use harp-cg-back-end,
     import: {<harp-cg-back-end>, <local-variable>, <lambda-compiled-data>},
     export: all;
 
@@ -430,14 +430,14 @@ define module base-harp
 
   export
     // macros
-    \ins-op, \ins-op-setter, 
-    \ins-tag, \ins-tag-setter, 
-    \constant-fn, 
-    \for-instructions-in-basic-block, 
-    \for-instructions-in-basic-block-backwards, 
+    \ins-op, \ins-op-setter,
+    \ins-tag, \ins-tag-setter,
+    \constant-fn,
+    \for-instructions-in-basic-block,
+    \for-instructions-in-basic-block-backwards,
     \for-instruction-defs,  \for-instruction-uses,
     \set-def, \set-use,
-    \ins-operand-element, 
+    \ins-operand-element,
     \op-element, \op-element-setter,
     \update-op, \with-ops-in, \mark-reverse-ops,
     \with-xyz-macro-definer, \with-txyz-macro-definer,
@@ -455,11 +455,11 @@ define module base-harp
     copy-shared-variables, clear-shared-variables,
 
     // constants
-    instruction-op-index, instruction-special-index, 
-    instruction-defs-index, instruction-uses-index, 
+    instruction-op-index, instruction-special-index,
+    instruction-defs-index, instruction-uses-index,
     instruction-defs-slots, instruction-uses-slots,
     instruction-size, empty-rset,
-  
+
     // instruction-support
     <abstract-instruction-set>, default-abstract-instruction-set,
     parent-instruction-set, initialize-instruction-set-defaults,
@@ -478,11 +478,11 @@ define module base-harp
     big-endian?,
 
     // register-support
-    make-sf-register, make-df-register, 
-    make-g-register, make-n-register, 
+    make-sf-register, make-df-register,
+    make-g-register, make-n-register,
     make-register, move-reg, make-temp-register,
-    mark-vreg-no-reusage, note-vreg-dead, 
-    note-vrvect-truncated, colour, arg-spill-location, 
+    mark-vreg-no-reusage, note-vreg-dead,
+    note-vrvect-truncated, colour, arg-spill-location,
     \do-virtual-register-clashes,
     virtual-registers-clash, factorial-add,
 
@@ -501,21 +501,21 @@ define module base-harp
     bb-branch-inf, bb-branch-inf-setter,
 
     // bb
-    empty-bb?, find-bb, block-synonym, 
+    empty-bb?, find-bb, block-synonym,
     finish-bb, make-current-bb, make-current-this-bb,
     taag-out, conditional-branch-windup,
-    make-fall-thru-bb, add-destination-tags-to-bb, 
+    make-fall-thru-bb, add-destination-tags-to-bb,
     fast-nsubstitute,  replace-old-with-new!,
     bb-redirect, output-unconditional-branch-instruction,
-    ensure-room-in-array, ensure-room-in-vector, 
+    ensure-room-in-array, ensure-room-in-vector,
     instruction-uses, instruction-defs,
 
     // constant-ref-support
     ins--constant-ref, ins--indirect-constant-ref,
     ins--interactor-constant-ref,
     ins--sf-constant-ref, ins--sf-indirect-constant-ref,
-    ins--df-constant-ref, ins--df-indirect-constant-ref, 
-    ins--register-external, ins--reference-data, 
+    ins--df-constant-ref, ins--df-indirect-constant-ref,
+    ins--register-external, ins--reference-data,
     ins--reference-sf-data, ins--reference-df-data,
     labelled-constant-increment,
 
@@ -537,7 +537,7 @@ define module base-harp-for-clients
     \with-harp,
 
     // support
-    harp-error, harp-warning, harp-message, 
+    harp-error, harp-warning, harp-message,
 
     // harp-back-end
     <harp-back-end>, registers, instructions,
@@ -549,34 +549,34 @@ define module base-harp-for-clients
     big-endian?,
 
     // register-support
-    <register>, <real-register>, <virtual-register>, 
+    <register>, <real-register>, <virtual-register>,
     <integer-virtual-register>,
     <floating-virtual-register>,
     <greg>, <nreg>, <sfreg>, <dfreg>,
     really-new-greg, really-new-nreg,
-    make-sf-register, make-df-register, 
-    make-g-register, make-n-register, 
+    make-sf-register, make-df-register,
+    make-g-register, make-n-register,
     make-register, move-reg, make-temp-register,
-    arg-spill-location, 
+    arg-spill-location,
 
     // tag
     <tag>, make-tag,
 
     // constant-ref-support
-    <constant-reference>, 
-    <address-constant-reference>, 
+    <constant-reference>,
+    <address-constant-reference>,
     <indirect-constant-reference>,
-    <imported-constant-reference>, 
+    <imported-constant-reference>,
     <interactor-constant-reference>,
-    <sf-constant-reference>, 
+    <sf-constant-reference>,
     <df-constant-reference>,
-    cr-refers-to, cr-refers-to-object, 
+    cr-refers-to, cr-refers-to-object,
     model-object-as-string,
     ins--constant-ref, ins--indirect-constant-ref,
     ins--interactor-constant-ref,
     ins--sf-constant-ref, ins--sf-indirect-constant-ref,
     ins--df-constant-ref, ins--df-indirect-constant-ref,
-    ins--register-external, ins--reference-data, 
+    ins--register-external, ins--reference-data,
     ins--reference-sf-data, ins--reference-df-data,
 
     // compiled-lambda
@@ -593,106 +593,106 @@ end module;
 define module harp-instructions
   use standard-imports;
   use base-harp;
-  export   
+  export
     // harp-definitions
-    \with-none,   \with-u,      \with-uu, 
-    \with-uuu,    \with-uuuu,   \with-uuuuu,  
-    \with-uuuuuu, \with-ux,     \with-d, 
-    \with-du,     \with-duu,    \with-duuu,   
-    \with-duuuu,  \with-dux,    \with-dd, 
-    \with-ddu,    \with-dduu,   \with-dduuu, 
+    \with-none,   \with-u,      \with-uu,
+    \with-uuu,    \with-uuuu,   \with-uuuuu,
+    \with-uuuuuu, \with-ux,     \with-d,
+    \with-du,     \with-duu,    \with-duuu,
+    \with-duuuu,  \with-dux,    \with-dd,
+    \with-ddu,    \with-dduu,   \with-dduuu,
     \with-dduuuu, \with-ddux,   \with-ddux,
-    \with-t,      \with-tu,     \with-tuu, 
-    \with-tuuu,   \with-tuuuu,  \with-tuuuuu,  
-    \with-tuuuuuu,\with-tux,    \with-td, 
-    \with-tdu,    \with-tduu,   \with-tduuu,   
-    \with-tduuuu, \with-tdux,   \with-tdd, 
-    \with-tddu,   \with-tdduu,  \with-tdduuu, 
+    \with-t,      \with-tu,     \with-tuu,
+    \with-tuuu,   \with-tuuuu,  \with-tuuuuu,
+    \with-tuuuuuu,\with-tux,    \with-td,
+    \with-tdu,    \with-tduu,   \with-tduuu,
+    \with-tduuuu, \with-tdux,   \with-tdd,
+    \with-tddu,   \with-tdduu,  \with-tdduuu,
     \with-tdduuuu,\with-tddux,  \with-tddux,
 
     \define-du,   \define-duu,  \define-duuu,
     \define-duuuu,\define-uuuu, \define-ddu,
     \define-dduu, \define-dduuu,
     \define-tu,   \define-tuu,  \define-td,
-    \define-tdu,  \define-tddu, \define-tduu, 
-    \define-u,    \define-uu,   \define-uuu,  
-    \define-d,    \define-none, \define-tuuu, 
+    \define-tdu,  \define-tddu, \define-tduu,
+    \define-u,    \define-uu,   \define-uuu,
+    \define-d,    \define-none, \define-tuuu,
     \define-t,    \define-tduu, \define-tdduu,
 
-    \none-def,    \u-def,       \uu-def, 
-    \uuu-def,     \uuuu-def,    \uuuuu-def,  
-    \uuuuuu-def,  \ux-def,      \d-def, 
-    \du-def,      \duu-def,     \duuu-def,   
-    \duuuu-def,   \dux-def,     \dd-def, 
-    \ddu-def,     \dduu-def,    \dduuu-def, 
+    \none-def,    \u-def,       \uu-def,
+    \uuu-def,     \uuuu-def,    \uuuuu-def,
+    \uuuuuu-def,  \ux-def,      \d-def,
+    \du-def,      \duu-def,     \duuu-def,
+    \duuuu-def,   \dux-def,     \dd-def,
+    \ddu-def,     \dduu-def,    \dduuu-def,
     \dduuuu-def,  \ddux-def,    \ddux-def,
-    \t-def,       \tu-def,      \tuu-def, 
-    \tuuu-def,    \tuuuu-def,   \tuuuuu-def,  
-    \tuuuuuu-def, \tux-def,     \td-def, 
-    \tdu-def,     \tduu-def,    \tduuu-def,   
-    \tduuuu-def,  \tdux-def,    \tdd-def, 
-    \tddu-def,    \tdduu-def,   \tdduuu-def, 
+    \t-def,       \tu-def,      \tuu-def,
+    \tuuu-def,    \tuuuu-def,   \tuuuuu-def,
+    \tuuuuuu-def, \tux-def,     \td-def,
+    \tdu-def,     \tduu-def,    \tduuu-def,
+    \tduuuu-def,  \tdux-def,    \tdd-def,
+    \tddu-def,    \tdduu-def,   \tdduuu-def,
     \tdduuuu-def, \tddux-def,   \tddux-def,
 
-    \none-def-setter,    \u-def-setter,       \uu-def-setter, 
-    \uuu-def-setter,     \uuuu-def-setter,    \uuuuu-def-setter,  
-    \uuuuuu-def-setter,  \ux-def-setter,      \d-def-setter, 
-    \du-def-setter,      \duu-def-setter,     \duuu-def-setter,   
-    \duuuu-def-setter,   \dux-def-setter,     \dd-def-setter, 
-    \ddu-def-setter,     \dduu-def-setter,    \dduuu-def-setter, 
+    \none-def-setter,    \u-def-setter,       \uu-def-setter,
+    \uuu-def-setter,     \uuuu-def-setter,    \uuuuu-def-setter,
+    \uuuuuu-def-setter,  \ux-def-setter,      \d-def-setter,
+    \du-def-setter,      \duu-def-setter,     \duuu-def-setter,
+    \duuuu-def-setter,   \dux-def-setter,     \dd-def-setter,
+    \ddu-def-setter,     \dduu-def-setter,    \dduuu-def-setter,
     \dduuuu-def-setter,  \ddux-def-setter,    \ddux-def-setter,
-    \t-def-setter,       \tu-def-setter,      \tuu-def-setter, 
-    \tuuu-def-setter,    \tuuuu-def-setter,   \tuuuuu-def-setter,  
-    \tuuuuuu-def-setter, \tux-def-setter,     \td-def-setter, 
-    \tdu-def-setter,     \tduu-def-setter,    \tduuu-def-setter,   
-    \tduuuu-def-setter,  \tdux-def-setter,    \tdd-def-setter, 
-    \tddu-def-setter,    \tdduu-def-setter,   \tdduuu-def-setter, 
+    \t-def-setter,       \tu-def-setter,      \tuu-def-setter,
+    \tuuu-def-setter,    \tuuuu-def-setter,   \tuuuuu-def-setter,
+    \tuuuuuu-def-setter, \tux-def-setter,     \td-def-setter,
+    \tdu-def-setter,     \tduu-def-setter,    \tduuu-def-setter,
+    \tduuuu-def-setter,  \tdux-def-setter,    \tdd-def-setter,
+    \tddu-def-setter,    \tdduu-def-setter,   \tdduuu-def-setter,
     \tdduuuu-def-setter, \tddux-def-setter,   \tddux-def-setter,
 
-    \none-uze,    \u-uze,       \uu-uze, 
-    \uuu-uze,     \uuuu-uze,    \uuuuu-uze,  
-    \uuuuuu-uze,  \ux-uze,      \d-uze, 
-    \du-uze,      \duu-uze,     \duuu-uze,   
-    \duuuu-uze,   \dux-uze,     \dd-uze, 
-    \ddu-uze,     \dduu-uze,    \dduuu-uze, 
+    \none-uze,    \u-uze,       \uu-uze,
+    \uuu-uze,     \uuuu-uze,    \uuuuu-uze,
+    \uuuuuu-uze,  \ux-uze,      \d-uze,
+    \du-uze,      \duu-uze,     \duuu-uze,
+    \duuuu-uze,   \dux-uze,     \dd-uze,
+    \ddu-uze,     \dduu-uze,    \dduuu-uze,
     \dduuuu-uze,  \ddux-uze,    \ddux-uze,
-    \t-uze,       \tu-uze,      \tuu-uze, 
-    \tuuu-uze,    \tuuuu-uze,   \tuuuuu-uze,  
-    \tuuuuuu-uze, \tux-uze,     \td-uze, 
-    \tdu-uze,     \tduu-uze,    \tduuu-uze,   
-    \tduuuu-uze,  \tdux-uze,    \tdd-uze, 
-    \tddu-uze,    \tdduu-uze,   \tdduuu-uze, 
+    \t-uze,       \tu-uze,      \tuu-uze,
+    \tuuu-uze,    \tuuuu-uze,   \tuuuuu-uze,
+    \tuuuuuu-uze, \tux-uze,     \td-uze,
+    \tdu-uze,     \tduu-uze,    \tduuu-uze,
+    \tduuuu-uze,  \tdux-uze,    \tdd-uze,
+    \tddu-uze,    \tdduu-uze,   \tdduuu-uze,
     \tdduuuu-uze, \tddux-uze,   \tddux-uze,
 
-    \none-uze-setter,    \u-uze-setter,       \uu-uze-setter, 
-    \uuu-uze-setter,     \uuuu-uze-setter,    \uuuuu-uze-setter,  
-    \uuuuuu-uze-setter,  \ux-uze-setter,      \d-uze-setter, 
-    \du-uze-setter,      \duu-uze-setter,     \duuu-uze-setter,   
-    \duuuu-uze-setter,   \dux-uze-setter,     \dd-uze-setter, 
-    \ddu-uze-setter,     \dduu-uze-setter,    \dduuu-uze-setter, 
+    \none-uze-setter,    \u-uze-setter,       \uu-uze-setter,
+    \uuu-uze-setter,     \uuuu-uze-setter,    \uuuuu-uze-setter,
+    \uuuuuu-uze-setter,  \ux-uze-setter,      \d-uze-setter,
+    \du-uze-setter,      \duu-uze-setter,     \duuu-uze-setter,
+    \duuuu-uze-setter,   \dux-uze-setter,     \dd-uze-setter,
+    \ddu-uze-setter,     \dduu-uze-setter,    \dduuu-uze-setter,
     \dduuuu-uze-setter,  \ddux-uze-setter,    \ddux-uze-setter,
-    \t-uze-setter,       \tu-uze-setter,      \tuu-uze-setter, 
-    \tuuu-uze-setter,    \tuuuu-uze-setter,   \tuuuuu-uze-setter,  
-    \tuuuuuu-uze-setter, \tux-uze-setter,     \td-uze-setter, 
-    \tdu-uze-setter,     \tduu-uze-setter,    \tduuu-uze-setter,   
-    \tduuuu-uze-setter,  \tdux-uze-setter,    \tdd-uze-setter, 
-    \tddu-uze-setter,    \tdduu-uze-setter,   \tdduuu-uze-setter, 
+    \t-uze-setter,       \tu-uze-setter,      \tuu-uze-setter,
+    \tuuu-uze-setter,    \tuuuu-uze-setter,   \tuuuuu-uze-setter,
+    \tuuuuuu-uze-setter, \tux-uze-setter,     \td-uze-setter,
+    \tdu-uze-setter,     \tduu-uze-setter,    \tduuu-uze-setter,
+    \tduuuu-uze-setter,  \tdux-uze-setter,    \tdd-uze-setter,
+    \tddu-uze-setter,    \tdduu-uze-setter,   \tdduuu-uze-setter,
     \tdduuuu-uze-setter, \tddux-uze-setter,   \tddux-uze-setter,
 
     // instruction-macros
-    \instruction-set-definer, 
+    \instruction-set-definer,
 
     // bb-macros
     \output-instruction, \output-instruction-args,
 
     // harp-spread
     spread-none,   spread-du,     spread-duu,
-    spread-duuu,   spread-uuuu,   spread-duuuu, 
-    spread-uuuuu,  spread-uuuuuu, spread-ddu,  
-    spread-dduu,   spread-dduuu,  spread-tu,   
-    spread-tuu,    spread-td,     spread-tdu,  
+    spread-duuu,   spread-uuuu,   spread-duuuu,
+    spread-uuuuu,  spread-uuuuuu, spread-ddu,
+    spread-dduu,   spread-dduuu,  spread-tu,
+    spread-tuu,    spread-td,     spread-tdu,
     spread-tduu,   spread-tddu,   spread-tdduu,
-    spread-uu,     spread-uuu,    spread-d,    
+    spread-uu,     spread-uuu,    spread-d,
     spread-tuuu,   spread-t,      spread-u,
     spread-t-pop,
     default-overflow-function-clashes,
@@ -708,7 +708,7 @@ define module harp-instructions
     output-uuuu,   output-tdduu,output-dduuu,
 
     // core-instructions
-    <core-instruction-set>, default-core-instructions, 
+    <core-instruction-set>, default-core-instructions,
     ins--scl, harp-scl, harp-scl-setter,
     ins--strong-scl, harp-strong-scl, harp-strong-scl-setter,
     ins--move, harp-move-setter, // harp-move, // created in base-harp
@@ -730,7 +730,7 @@ end module;
 define module harp-instructions-for-clients
   use harp-instructions,
     export:
-    { 
+    {
     ins--scl,
     ins--strong-scl,
     ins--move,
@@ -754,7 +754,7 @@ end module;
 define module harp-templates
   use big-integer-imports;
   use base-harp;
-  export   
+  export
     // template-macros
     \template-function,
     \template-definer-macro-definer,
@@ -831,7 +831,7 @@ end module;
 define module harp-debug-info
   use standard-imports;
   use base-harp;
-  use source-records, 
+  use source-records,
     exclude: { source-record-start-line, source-record-end-line };
   export
     <source-position>,
@@ -846,26 +846,26 @@ define module harp-debug-info
     source-record-end-line,
     source-record-file-name,
     locator-as-absolute-source-position,
-    make-relative-source-position, 
-    <named-variable>, 
-    variable-name, 
+    make-relative-source-position,
+    <named-variable>,
+    variable-name,
     <variable-in-register>, <variable-in-spill>,
     <variable-in-frame-spill>, <variable-in-leaf-spill>,
     <variable-indirections>, <variable-indirection-offset>,
-    <named-variable-in-register>, 
-    <named-variable-in-spill>, 
+    <named-variable-in-register>,
+    <named-variable-in-spill>,
     <named-variable-in-leaf-spill>,
-    <indirections-variable-in-register>, 
+    <indirections-variable-in-register>,
     <indirections-variable-in-spill>,
     <indirections-variable-in-leaf-spill>,
-    <indirections-variable-in-indirection>, 
-    <named-indirection>, 
+    <indirections-variable-in-indirection>,
+    <named-indirection>,
     make-indirection-variable,
     variable-indirections, variable-indirection-offset,
     variable-register-enumeration, variable-frame-pointer-offset,
-    spill-frame-pointer-offset, 
-    real-register-debug-info-enumeration, 
-    real-register-from-debug-info-enumeration, 
+    spill-frame-pointer-offset,
+    real-register-debug-info-enumeration,
+    real-register-from-debug-info-enumeration,
     map-register-as-variable,
     <debug-scope>, <debug-scope-with-frame>, <debug-scope-no-frame>,
     debug-scope-with-frame?,
@@ -909,13 +909,13 @@ define module harp-outputter
     <harp-outputter>,
     outputter-line-pos, outputter-line-pos-setter,
     lambda-name, lambda-name-internal, lambda-name-internal-setter,
-    lambda-code, lambda-referenced-data, 
+    lambda-code, lambda-referenced-data,
     lambda-labels, lambda-location, external-lambda-location,
     lambda-variable-scopes, lambda-variable-scopes-internal, lambda-all-variable-scopes,
     lambda-all-variable-names,
-    lambda-all-locators, lambda-selected-locators, 
+    lambda-all-locators, lambda-selected-locators,
     lambda-frame-g-size, lambda-frame-n-size,
-    lambda-externals, lambda-harp-print-info, 
+    lambda-externals, lambda-harp-print-info,
     lambda-is-public?, lambda-is-export?,
     make-harp-outputter,
     make-interactive-print-outputter,
@@ -931,7 +931,7 @@ define module harp-outputter
     outputter-model-object, outputter-model-object-name,
     make-derived-model-object, make-string-model-object,
     outputter-name-unsupplied, outputter-name-supplied?,
-    canonical-code-object, canonical-data-object, 
+    canonical-code-object, canonical-data-object,
     canonical-lambda-object, canonical-interactor-object,
     output-compilation-record-data,
     output-comment,
@@ -946,7 +946,7 @@ define module harp-outputter
     output-footer,
     output-data-start,
     output-code-start,
-    output-glue-symbols, 
+    output-glue-symbols,
     output-data-item,
     output-data-byte,
     output-data-footer,
@@ -956,7 +956,7 @@ define module harp-outputter
     // Interface for implementors of the protocol
     <stream-wrapper-outputter>, outputter-stream,
     <harp-print-outputter>, <harp-interactive-print-outputter>,
-    <harp-assembler-outputter>, 
+    <harp-assembler-outputter>,
     <harp-streamed-assembler-outputter>,
     <harp-unstreamed-assembler-outputter>,
     <harp-binary-assembler-outputter>,
@@ -980,17 +980,17 @@ define module harp-dylan-parameterizations
   use standard-imports;
   export
     // function-offsets
-    function-xep-offset, function-iep-offset, function-mep-offset, 
+    function-xep-offset, function-iep-offset, function-mep-offset,
     function-keywords-offset, function-signature-offset,
     closure-environment-offset, keyword-closure-environment-offset,
-    method-size, keyword-method-size, 
-    simple-closure-size, keyword-closure-size, 
+    method-size, keyword-method-size,
+    simple-closure-size, keyword-closure-size,
     generic-function-engine-offset,
     engine-node-data-offset,
-    engine-node-properties-offset, engine-node-callback-offset, 
-    engine-node-data-1-offset, engine-node-data-2-offset, 
-    engine-node-data-3-offset, engine-node-entry-point-offset, 
-    signature-required-offset, signature-properties-offset, 
+    engine-node-properties-offset, engine-node-callback-offset,
+    engine-node-data-1-offset, engine-node-data-2-offset,
+    engine-node-data-3-offset, engine-node-entry-point-offset,
+    signature-required-offset, signature-properties-offset,
     mm-wrapper-subtype-mask-offset,
     cache-header-engine-node-next-offset,
     profiling-cache-header-engine-node-count-1-offset,
@@ -1114,19 +1114,19 @@ define module main-harp
   use harp-outputter;
   use harp-debug-info;
   use harp-dylan-parameterizations, export: all;
-  export  
+  export
 
     // indep-utils
-    prefer, rset-from-args, rset-from-list, prset-from-list, r-union, 
+    prefer, rset-from-args, rset-from-list, prset-from-list, r-union,
     list-from-register-vector, list-from-rset, list-from-prset,
     r-membr, signed-frame-pointer-offset,
-    frame-pointer-offset, 
+    frame-pointer-offset,
 
     // consistency
     harp-consistency-check, check-consistent-operand,
 
     // sdi
-    <new-sdi>, 
+    <new-sdi>,
     new-sdi-code-holder, new-sdi-preceding-sdis,
     new-sdi-code-fragment, new-sdi-code-fragment-setter,
 
@@ -1135,19 +1135,19 @@ define module main-harp
     set-liveness, set-thingy-vect, set-use-defs,
     allowable-colours, make-pref-vector,
     make-arg-spill, arg-spill?,
-    arg-spill-offset-to-arg-number, 
+    arg-spill-offset-to-arg-number,
     uniquely-spill,
 
     // asm-colour-graph
-    sort-by-block-clashes, select-spill, 
-    select-spill-by-colour, select-spill-by-number, 
-    the-real-dfreg, 
+    sort-by-block-clashes, select-spill,
+    select-spill-by-colour, select-spill-by-number,
+    the-real-dfreg,
 
     // asm-code-select
-    do-scheduling, 
+    do-scheduling,
     emit-2, emit-sdi, //    emit-1 is created in base-harp
     emit-constant-ref, emit-constant-ref-relative,
-    emit-constant-ref-with-opcode, emit-labelled-constant, 
+    emit-constant-ref-with-opcode, emit-labelled-constant,
 
     // asm-linearise
     linearise,
@@ -1156,7 +1156,7 @@ define module main-harp
     assemble-compiled-lambda,
     fill-compiled-lambda-code-and-labels, fill-code-for-item,
     compiled-lambda-size, code-item-code-and-label-size,
-    print-linearised-harp, 
+    print-linearised-harp,
     compiled-lambda-debug-scopes,
     strip-locators-from-debug-info,
     code-vector-class,
@@ -1201,7 +1201,7 @@ define module print-harp
   use harp-templates;
   use harp-debug-info;
   export
-    print-instructions, 
+    print-instructions,
     print-basic-blocks;
 end module;
 

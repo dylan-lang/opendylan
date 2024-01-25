@@ -1,4 +1,4 @@
-module:    dylan-user	
+module:    dylan-user
 Synopsis:  Win32 API for Windows Common Controls corresponding to
 	   "COMMCTRL.H" and "PRSHT.H"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -43,12 +43,12 @@ define module Win32-controls
 	     lpszText-value, lpszText-value-setter,
 	     dwData-value, dwData-value-setter,
 	     // types used in functions here:
-	     <WINDOWPOS>, <LPWINDOWPOS>, <PWINDOWPOS>, 
+	     <WINDOWPOS>, <LPWINDOWPOS>, <PWINDOWPOS>,
 	     hwndInsertAfter-value, hwndInsertAfter-value-setter,
 	     <DLGPROC>, <LPCDLGTEMPLATE>, style-value, style-value-setter,
 	     dwExtendedStyle-value, dwExtendedStyle-value-setter,
 	     cdit-value, cdit-value-setter, SendMessage };
- 
+
 
   // from "commctrl.h":
   export InitCommonControls, $ODT-HEADER, $ODT-TAB, $ODT-LISTVIEW,

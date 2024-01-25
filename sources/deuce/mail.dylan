@@ -200,7 +200,7 @@ end class <mail-body-section>;
 define sealed domain make (singleton(<mail-body-section>));
 define sealed domain initialize (<mail-body-section>);
 
-
+
 /// Divider lines
 
 // This is a subclass of <diagram-line> because it is meant to be part of the
@@ -267,7 +267,7 @@ define sealed method line-for-display-only?
   #t
 end method line-for-display-only?;
 
-
+
 /// Mail sending commands
 
 define command send-mail (frame, #key to, subject, body)

@@ -15,24 +15,24 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Support for normal C calls
 
-define open generic c-mangle 
+define open generic c-mangle
     (be :: <harp-back-end>, name :: <byte-string>)
      => (mangled :: <byte-string>);
 
-define method c-mangle 
+define method c-mangle
     (be :: <harp-back-end>, name :: <byte-string>)
      => (mangled :: <byte-string>)
   concatenate("_", name);
 end method;
 
-define method c-mangled-ref 
+define method c-mangled-ref
     (be :: <harp-back-end>, name :: <byte-string>)
      => (ref :: <constant-reference>)
   ins--constant-ref(be, c-mangle(be, name));
 end method;
 
 
-define method c-mangled-indirect-ref 
+define method c-mangled-indirect-ref
     (be :: <harp-back-end>, name :: <byte-string>)
      => (ref :: <constant-reference>)
   ins--indirect-constant-ref(be, c-mangle(be, name));
@@ -58,13 +58,13 @@ end method;
 /// Support for the Windows-specific STDCALL convention
 /// STDCALLs in Windows are name mangled specially.
 
-define method stdcall-mangle 
-    (be :: <harp-back-end>, name :: <byte-string>, number :: <byte-string>) 
+define method stdcall-mangle
+    (be :: <harp-back-end>, name :: <byte-string>, number :: <byte-string>)
      => (mangled :: <byte-string>)
   concatenate("_", name, "@", number);
 end method;
 
-define method stdcall-mangled-ref 
+define method stdcall-mangled-ref
     (be :: <harp-back-end>, name :: <byte-string>, number :: <byte-string>)
      => (ref :: <constant-reference>)
   ins--constant-ref(be, stdcall-mangle(be, name, number));
@@ -75,14 +75,14 @@ end method;
 
 /// Support for the various types of Dylan mangling
 ///
-/// We import raw-mangle from DFMC - and do global mangling by steam, 'cos 
+/// We import raw-mangle from DFMC - and do global mangling by steam, 'cos
 /// the DFMC interface is just too much hassle.
 
 
 define constant $harp-mangler = make(<mangler>);
 
-define method full-mangle 
-    (be :: <harp-back-end>, name :: <byte-string>, 
+define method full-mangle
+    (be :: <harp-back-end>, name :: <byte-string>,
      #key module = "dylan", library = "dylan")
     => (mangled-name :: <byte-string>)
   mangle-binding-spread($harp-mangler, name,
@@ -92,40 +92,40 @@ end method;
 
 define macro mangler-function-definer
   { define ?ref-opts mangler-function ?:name }
-    => { define method ?name 
+    => { define method ?name
                (be :: <harp-back-end>, name :: <byte-string>)
                => (ref :: <constant-reference>)
            ?ref-opts
          end method }
 
 ref-opts:
-  { indirect ?mangle-opts } 
+  { indirect ?mangle-opts }
     => { ins--indirect-constant-ref(be, ?mangle-opts) }
-  { direct ?mangle-opts } 
+  { direct ?mangle-opts }
     => { ins--constant-ref(be, ?mangle-opts) }
-  { ?mangle-opts } 
+  { ?mangle-opts }
     => { ins--constant-ref(be, ?mangle-opts) }
 
 mangle-opts:
   { }
     => { raw-mangle(be, name) }
-  { dylan } 
+  { dylan }
     => { full-mangle(be, name) }
-  { dispatch-engine } 
+  { dispatch-engine }
     => { full-mangle(be, name, module: "dispatch-engine") }
-  { extensions } 
+  { extensions }
     => { full-mangle(be, name, module: "dylan-extensions") }
-  { internal } 
+  { internal }
     => { full-mangle(be, name, module: "internal") }
-  { threads-prims } 
+  { threads-prims }
     => { full-mangle(be, name, module: "threads-primitives") }
-  { mw } 
+  { mw }
     => { full-mangle(be, name, module: "machine-word-lowlevel") }
-  { literal ... } 
+  { literal ... }
     => { concatenate($constant-prefix, ...) }
-  { iep ... } 
+  { iep ... }
     => { concatenate(..., $iep-suffix) }
-  { wrapper ... } 
+  { wrapper ... }
     => { concatenate(..., $wrapper-suffix) }
 end macro;
 
@@ -182,16 +182,16 @@ define indirect dispatch-engine mangler-function dylan-dispatch-engine-indirect-
 //// Name mangling for primitives
 
 
-define method primitive-name 
-    (be :: <harp-back-end>, name :: <byte-string>) 
+define method primitive-name
+    (be :: <harp-back-end>, name :: <byte-string>)
     => (prim-name :: <byte-string>)
   raw-mangle(be, concatenate("primitive-", name));
 end method;
 
 
 
-define method c-primitive-name 
-    (be :: <harp-back-end>, name :: <byte-string>) 
+define method c-primitive-name
+    (be :: <harp-back-end>, name :: <byte-string>)
     => (prim-name :: <byte-string>)
   c-mangle(be, raw-mangle(be, name));
 end method;
@@ -203,7 +203,7 @@ end method;
 
 
 
-define method entry-point-name 
+define method entry-point-name
     (be :: <harp-back-end>, name :: <byte-string>, num :: <integer>)
     => (name :: <byte-string>)
   raw-mangle(be, format-to-string("%s-%=", as-lowercase(name), num));
@@ -211,7 +211,7 @@ end method;
 
 
 
-define method entry-point-name 
+define method entry-point-name
     (be :: <harp-back-end>, name :: <byte-string>, num == #"dynamic")
     => (name :: <byte-string>)
   raw-mangle(be, as-lowercase(name));

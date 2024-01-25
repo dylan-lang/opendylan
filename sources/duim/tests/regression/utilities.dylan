@@ -43,7 +43,7 @@ define method test-popup-menu-callback
   display-menu(make-test-menu(owner: sheet-frame(gadget)), x: x, y: y)
 end method test-popup-menu-callback;
 
-
+
 /// Some useful test gadgets
 
 define method make-test-menu
@@ -55,7 +55,7 @@ define method make-test-menu
        activate-callback: test-activate-callback)
 end method make-test-menu;
 
-
+
 /// A useful graphic class
 
 define class <ellipse-pane> (<drawing-pane>)
@@ -76,7 +76,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-
+
 /// A useful text class
 
 define class <text-pane> (<drawing-pane>)

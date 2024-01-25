@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// FIND: simple-minded CL-style 
+// FIND: simple-minded CL-style
 
 define method find (x :: <object>, collection :: <collection>,
                     #key
@@ -15,7 +15,7 @@ define method find (x :: <object>, collection :: <collection>,
                     reverse-test? ::<boolean> = #f,
                     return-test? :: <boolean> = #f)
 
-  let tester = 
+  let tester =
     if (reverse-test?)
       method (x, y) test(y, x) end method;
     else
@@ -49,7 +49,7 @@ define method print-separated-collection
   end for;
 end method;
 
-// SEEN-INCLUDE-FILENAME-BEFORE?  
+// SEEN-INCLUDE-FILENAME-BEFORE?
 //
 // define method seen-include-filename-before? (name :: <string>)
 //  member?(name, *include-file-names*, test: \=);

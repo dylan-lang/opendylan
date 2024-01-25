@@ -100,7 +100,7 @@ define method type-estimate-debug-name(o :: <&object>) => (dn :: <string>)
     next-method()
   end
 end;
-
+
 ///
 /// Macro for defining <type-estimate> classes.
 ///
@@ -245,7 +245,7 @@ define function as-false-or-type-variable(x)
     make(<type-variable>, contents: x)
   end
 end;
-
+
 ///
 /// Top <type-estimate>.
 ///

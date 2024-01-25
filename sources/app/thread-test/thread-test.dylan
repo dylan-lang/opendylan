@@ -33,27 +33,27 @@ define function test-thread (i :: <integer>)
     *thread-id* := i;
 
     say("Thread %d launched with id %d.\n", i, *thread-id*);
-    
+
     with-lock(*launch-lock*)
       wait-for(*launch-note*);
     end with-lock;
-    
+
     say("Thread %d working.\n", i);
-    
+
     for(x from 0 below 100)
       say("Thread %d loop %=\n", i, x);
-      
+
       if(modulo(x, 5) == 0)
         thread-yield();
       end if;
     end for;
-    
+
     say("Thread %d finished with id %d.\n", i, *thread-id*);
 
   end block;
 end function;
 
-begin  
+begin
   let threads :: <vector> = make(<simple-object-vector>);
 
   let priorities = list($low-priority,

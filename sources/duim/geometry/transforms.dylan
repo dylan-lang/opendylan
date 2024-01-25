@@ -108,7 +108,7 @@ define protocol <<transform-protocol>> ()
 => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>);
 end protocol <<transform-protocol>>;
 
-
+
 /// The identity transform
 
 define sealed class <identity-transform> (<transform>)
@@ -173,7 +173,7 @@ define sealed inline method transform-components
   values(1, 0, 0, 1, transform.%tx, transform.%ty)
 end method transform-components;
 
-
+
 /// Conditions
 
 define open abstract class <transform-error> (<error>)
@@ -189,7 +189,7 @@ define method condition-to-string
   format-to-string("The transformation %= is singular", condition.%transform)
 end method condition-to-string;
 
-
+
 /// Constructors
 
 define sealed method make-translation-transform
@@ -212,7 +212,7 @@ define sealed inline method make
   make-translation-transform(tx, ty)
 end method make;
 
-
+
 /// Predicates
 
 define method \=
@@ -341,7 +341,7 @@ define sealed method rectilinear-transform?
   #t
 end method rectilinear-transform?;
 
-
+
 /// Inversion
 
 define sealed method invert-transform
@@ -363,7 +363,7 @@ define sealed method invert-transform
     end
 end method invert-transform;
 
-
+
 /// Composition operators
 
 define method compose-transforms
@@ -441,7 +441,7 @@ define method compose-transform-with-translation
   compose-transforms(make-translation-transform(tx, ty), transform)
 end method compose-transform-with-translation;
 
-
+
 /// Transforming and untransforming of "spread" points
 
 define sealed inline method transform-position
@@ -626,7 +626,7 @@ define sealed method untransform-box
          max(nx1, nx2), max(ny1, ny2))
 end method untransform-box;
 
-
+
 // Transforms all of the coordinate pairs in the sequence.  This returns
 // the original sequence if the transformation is the identity and COPY?
 // is false, otherwise it returns a new vector containing the result.
@@ -677,7 +677,7 @@ define method transform-coordinates-into!
   result
 end method transform-coordinates-into!;
 
-
+
 /// Mutable integer translation transforms
 
 define generic make-translation-transform-into!

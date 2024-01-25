@@ -9,8 +9,8 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 /// <byte-string>, <deque>, <list>, <simple-object-vector>, <stretchy-vector>,
@@ -218,7 +218,7 @@ define test type-for-copy-class-0 ()
   check-equal("", deque-instance().type-for-copy, deque-instance().object-class);
   check-equal("", complex-instance().type-for-copy, complex-instance().object-class);
   check-equal("",
-              stretchy-vector-instance().type-for-copy, 
+              stretchy-vector-instance().type-for-copy,
               stretchy-vector-instance().object-class);
   check-equal("", vector().type-for-copy, vector().object-class);
 end test;

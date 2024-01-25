@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
+
 /// Pretty stream testing
 
 register-stream-class-info("<pretty-stream>", <pretty-stream>,
@@ -51,7 +51,7 @@ define sideways method make-stream-tests-of-size
   tests
 end method make-stream-tests-of-size;
 
-
+
 /// Pretty printing interface testing
 
 define macro with-pretty-print-to-string

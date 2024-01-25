@@ -82,14 +82,14 @@ define method WinMain(hInstance :: <HINSTANCE>, hPrevInstance :: <HINSTANCE>,
 
     // message loop
     while ( GetMessage(msg, $NULL-HWND, 0, 0) )
-	        
+
       block(continue)
 	if ( IsInPlaceActive(*CSimpSvrApp*) )
-	  
+
 	  // Only key messages need to be sent to OleTranslateAccelerator.
 	  // Any other message would result in an extra FAR call to occur for
 	  // that message processing...
-	  
+
 	  if ( (msg.message-value >= $WM-KEYFIRST) &
 		(msg.message-value <= $WM-KEYLAST) )
 
@@ -106,13 +106,13 @@ define method WinMain(hInstance :: <HINSTANCE>, hPrevInstance :: <HINSTANCE>,
 	  end if;
 	end if;
 
-	TranslateMessage(msg);    /* Translates virtual key codes           */ 
-	DispatchMessage(msg);     /* Dispatches message to window           */ 
-	
+	TranslateMessage(msg);    /* Translates virtual key codes           */
+	DispatchMessage(msg);     /* Dispatches message to window           */
+
       end block;
     end while;
-			   
-   return(msg.wParam-value);    /* Returns the value from PostQuitMessage */ 
+
+   return(msg.wParam-value);    /* Returns the value from PostQuitMessage */
  end block;
 end method WinMain;
 
@@ -160,10 +160,10 @@ define method main-wnd-proc (hWnd :: <HWND>, message :: <integer>,
   block(return)
 
     select ( message )
-	        
-      $WM-CLOSE => 
+
+      $WM-CLOSE =>
 	OutputDebugString("*** In WM_CLOSE *** \r\n");
-	
+
 	// if there is still a document
 	let doc = GetDoc(*CSimpSvrApp*);
 	if ( ~ null?(doc) )
@@ -186,7 +186,7 @@ define method main-wnd-proc (hWnd :: <HWND>, message :: <integer>,
 	// if we were started by OLE, unregister the class factory, otherwise
 	// remove the ref count on our dummy OLE object
 	if ( IsStartedByOle(*CSimpSvrApp*) )
-	  CoRevokeClassObject(GetRegisterClass(*CSimpSvrApp*)); 
+	  CoRevokeClassObject(GetRegisterClass(*CSimpSvrApp*));
 	else
 	  Release(GetOleObject(*CSimpSvrApp*));
 	end if;
@@ -197,18 +197,18 @@ define method main-wnd-proc (hWnd :: <HWND>, message :: <integer>,
       $WM-COMMAND =>            // message: command from application menu
 	return(lCommandHandler(*CSimpSvrApp*, hWnd, message, wParam, lParam));
 
-      $WM-CREATE => 
+      $WM-CREATE =>
 	return(lCreateDoc(*CSimpSvrApp*, hWnd, message, wParam, lParam));
 
       $WM-DESTROY =>                   // message: window being destroyed
 	PostQuitMessage(0);
 
-      $WM-SIZE => 
+      $WM-SIZE =>
 	return(lSizeHandler(*CSimpSvrApp*, hWnd, message, wParam, lParam));
 
       otherwise =>                           // Passes it on if unproccessed
 	return(DefWindowProc(hWnd, message, wParam, lParam));
-	        
+
     end select;
     return(0);
   end block;
@@ -249,13 +249,13 @@ define method about-proc(hDlg :: <HWND>, message :: <integer>,
 			 wParam, lParam)
 		=> processed :: <boolean>;
 
-  select ( message ) 
-    $WM-INITDIALOG => #t;                /* message: initialize dialog box */ 
-    $WM-COMMAND =>                       /* message: received a command */ 
+  select ( message )
+    $WM-INITDIALOG => #t;                /* message: initialize dialog box */
+    $WM-COMMAND =>                       /* message: received a command */
       let button = LOWORD(wParam);
       if (button = $IDOK           /* "OK" box selected? */
-	    | button = $IDCANCEL)  /* System menu close command? */ 
-	EndDialog(hDlg, 1);        /* Exits the dialog box        */ 
+	    | button = $IDCANCEL)  /* System menu close command? */
+	EndDialog(hDlg, 1);        /* Exits the dialog box        */
 	#t
       else #f
       end if;
@@ -306,12 +306,12 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
 		=> value :: <integer>;
 
   block(return)
-	
-    select ( message ) 
+
+    select ( message )
       $WM-COMMAND =>            // message: command from application menu
 	return(lCommandHandler(*CSimpSvrApp*, hWnd, message, wParam, lParam));
 
-      $WM-PAINT => 
+      $WM-PAINT =>
 	// tell the app class to paint itself
 	unless ( null?(*CSimpSvrApp*) )
 	  let ps :: <PPAINTSTRUCT> = make(<PPAINTSTRUCT>);
@@ -321,12 +321,12 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
 	  destroy(ps);
 	end unless;
 
-      $WM-MENUSELECT => 
+      $WM-MENUSELECT =>
 	SetStatusText(*CSimpSvrApp*);
 
-      otherwise =>                     /* Passes it on if unproccessed    */ 
+      otherwise =>                     /* Passes it on if unproccessed    */
         return(DefWindowProc(hWnd, message, wParam, lParam));
-	
+
     end select;
     return(0);
   end block;

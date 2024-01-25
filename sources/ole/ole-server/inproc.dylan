@@ -17,8 +17,8 @@ end <ole-in-process-server>;
 
 define method after-initialize ( obj :: <ole-in-process-server> ) => ();
 
-  // Note: not clear whether the second argument below should be 
-  //  obj.obj-class-ID -- the Microsoft documentation says that it is usually 
+  // Note: not clear whether the second argument below should be
+  //  obj.obj-class-ID -- the Microsoft documentation says that it is usually
   //  CLSID_NULL (but doesn't say when it should be otherwise), but the
   //  examples show using the object's class ID.
   let ( status, cache ) =
@@ -33,7 +33,7 @@ define method after-initialize ( obj :: <ole-in-process-server> ) => ();
   obj.server-IViewObject := make(<CViewObject>,
 				 server-framework: obj,
 				 controlling-unknown: obj);
-end after-initialize;  
+end after-initialize;
 
 define method terminate (obj :: <ole-in-process-server>) => ();
   next-method();
@@ -43,7 +43,7 @@ define method terminate (obj :: <ole-in-process-server>) => ();
   if ( *initialized-hatch* )
     // Need to unregister the Windows class before the DLL is unloaded.
     // This call will fail if some other object still has an instance of
-    // a hatch window, but that's OK -- we'll do this again when that 
+    // a hatch window, but that's OK -- we'll do this again when that
     // object terminates.
     if ( UnregisterClass($hatch-class-name, application-instance-handle()) )
       Output-Debug-String("unregistered hatch\r\n"); // temporary???
@@ -62,7 +62,7 @@ end;
 define method IUnknown/QueryInterface( obj :: <ole-in-process-server>,
 				       rrid :: <REFIID> )
 		=> ( status :: <HRESULT> , Object :: <Interface> );
-  
+
   let ( status, interface ) = next-method();
 /*
   if( $enable-debug-messages )
@@ -87,7 +87,7 @@ define method query-cache-interface ( obj :: <ole-in-process-server>,
   else
     // Because the cache is aggregated on our object, it has incremented its
     // ref count, which needs to be un-done in order to know when the object
-    // is no longer being used.  Use `SubRef' instead of `Release' to 
+    // is no longer being used.  Use `SubRef' instead of `Release' to
     // decrement back to 0 without terminating.  (This gets used during
     // initialization before the real reference is established.)
     SubRef(obj);
@@ -95,7 +95,7 @@ define method query-cache-interface ( obj :: <ole-in-process-server>,
   interface
 end query-cache-interface;
 
-
+
 
 define function make-inproc-factory (rclsid :: <REFCLSID>,
 				     riid :: <REFIID>,
@@ -160,7 +160,7 @@ define function unregister-inproc-server (module-handle, #rest options)
   apply(register-or-unregister, #t, module-handle, options)
 end;
 
-
+
 
 define macro initialize-ole-server
   { initialize-ole-server(?class:expression, ?class-id:expression,
@@ -192,7 +192,7 @@ define function validate-inproc-server-options
  => ();
   // This function doesn't actually do anything, we just want to get an
   // error if any invalid options are passed.
-  
+
   // Note that the default values used here are just for the sake of type
   // validation; they are not necessarily the same default values that will
   // be actually used.

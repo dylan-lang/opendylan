@@ -23,13 +23,13 @@ define constant $mnemonic-asm-type$ = #"mnemonic-assembler";
 ///
 
 define method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $asm-type$) 
+       (backend :: <harp-back-end>, type == $asm-type$)
        => (extension :: <byte-string>)
   "asm";
 end method;
 
 define method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $mnemonic-asm-type$) 
+       (backend :: <harp-back-end>, type == $mnemonic-asm-type$)
        => (extension :: <byte-string>)
   "asm";
 end method;
@@ -68,17 +68,17 @@ end class;
 define sealed class <harp-binary-unstreamed-assembler-outputter> (<harp-unstreamed-assembler-outputter>,<harp-binary-assembler-outputter>)
 end class;
 
-define sealed method make (class == <harp-binary-assembler-outputter>, #rest keys, #key, #all-keys) 
+define sealed method make (class == <harp-binary-assembler-outputter>, #rest keys, #key, #all-keys)
     => (r :: <harp-binary-streamed-assembler-outputter>)
   apply(make, <harp-binary-streamed-assembler-outputter>, keys);
 end method;
 
-define sealed method make (class == <harp-assembler-outputter>, #rest keys, #key, #all-keys) 
+define sealed method make (class == <harp-assembler-outputter>, #rest keys, #key, #all-keys)
     => (r :: <harp-binary-streamed-assembler-outputter>)
   apply(make, <harp-binary-streamed-assembler-outputter>, keys);
 end method;
 
-define sealed method make (class == <harp-mnemonic-assembler-outputter>, #rest keys, #key, #all-keys) 
+define sealed method make (class == <harp-mnemonic-assembler-outputter>, #rest keys, #key, #all-keys)
     => (r :: <harp-mnemonic-streamed-assembler-outputter>)
   apply(make, <harp-mnemonic-streamed-assembler-outputter>, keys);
 end method;

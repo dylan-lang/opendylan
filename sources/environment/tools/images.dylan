@@ -63,7 +63,7 @@ define variable $debugger-window-small-icon  :: <label-type> = #f;
 define variable $describer-window-small-icon :: <label-type> = #f;
 define variable $find-window-small-icon      :: <label-type> = #f;
 
-
+
 /// environment-object-icon
 ///
 /// NB these functions deal with environment objects in a loose sense:
@@ -79,7 +79,7 @@ define method environment-object-icon
          environment-object-large-icon(project, object))
 end method environment-object-icon;
 
-
+
 /// Large icons
 
 define open generic environment-object-large-icon
@@ -90,7 +90,7 @@ define method environment-object-large-icon
   #f
 end method environment-object-large-icon;
 
-
+
 /// Small icons
 
 define open generic environment-object-small-icon

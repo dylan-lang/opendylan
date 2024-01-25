@@ -16,31 +16,31 @@ define test bank-0-request-tests ()
   let bankref = as(<bank>, corba/orb/file-to-object(orb, zero/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
-  
+
 define test bank-1-request-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, one/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
-  
+
 define test bank-2-request-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, two/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
-  
+
 define test bank-3-request-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, three/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
-  
+
 define test bank-4-request-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, four/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
-  
+
 define method do-bank-tests (orb :: corba/<orb>, bankref :: <bank>)
   let lodgement1 = 31.00;
   let lodgement2 = 53.17;

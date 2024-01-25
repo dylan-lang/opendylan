@@ -147,7 +147,7 @@ define method set-property
   end;
 end method set-property;
 
-
+
 /// Build command
 
 define class <abstract-link-command> (<project-command>)
@@ -388,7 +388,7 @@ define method compiler-condition-handler
   message(context, "missing handler for %s: %s", handler-type, warning-message)
 end method compiler-condition-handler;
 
-
+
 /// Link command
 
 define class <link-project-command> (<abstract-link-command>)
@@ -436,7 +436,7 @@ define method do-execute-command
                messages:             messages)
 end method do-execute-command;
 
-
+
 /// clean command
 
 define class <clean-command> (<project-command>)
@@ -464,7 +464,7 @@ define method do-execute-command
      error-handler:        curry(compiler-condition-handler, context))
 end method do-execute-command;
 
-
+
 ///---*** To do
 
 /*
@@ -478,7 +478,7 @@ end method do-execute-command;
   dood statistics
 */
 
-
+
 /// Build commands
 
 define command-group build

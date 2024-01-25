@@ -11,10 +11,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// instruments.
 
 // TODO: This is very incomplete, and what is there is based on my novice
-// understanding about MIDI! 
+// understanding about MIDI!
 
 // TODO: MIDI numbering is often one-based in speech, but zero-based in
-// implementation: we should probably do something to make it clear 
+// implementation: we should probably do something to make it clear
 // which is being used. The parameters below define the zero-based
 // implementation numberings.
 
@@ -44,9 +44,9 @@ define constant <midi-pitch>
 define constant $midi-min-velocity = 0;
 define constant $midi-max-velocity = 127;
 
-define constant <midi-velocity> 
-  = limited(<integer>, 
-            min: $midi-min-velocity, 
+define constant <midi-velocity>
+  = limited(<integer>,
+            min: $midi-min-velocity,
             max: $midi-max-velocity);
 
 //// MIDI pitch bend values
@@ -55,9 +55,9 @@ define constant $midi-pitch-bend-full-down = 1;
 define constant $midi-pitch-bend-central   = #x2000;
 define constant $midi-pitch-bend-full-up   = #x3FFF;
 
-define constant <midi-pitch-bend> 
-  = limited(<integer>, 
-            min: $midi-pitch-bend-full-down, 
+define constant <midi-pitch-bend>
+  = limited(<integer>,
+            min: $midi-pitch-bend-full-down,
             max: $midi-pitch-bend-full-up);
 
 //// MIDI parameters
@@ -90,7 +90,7 @@ define sealed concrete class <midi-instrument-family> (<object>)
     required-init-keyword: members:;
 end class;
 
-define method do-midi-instrument-family-members 
+define method do-midi-instrument-family-members
     (f :: <function>, mvf :: <midi-instrument-family>)
   do(f, midi-members(mvf))
 end method;
@@ -107,7 +107,7 @@ define method do-midi-instruments (f :: <function>)
   do(f, *midi-instruments*)
 end method;
 
-define method find-midi-instrument 
+define method find-midi-instrument
     (instrument-number :: <integer>, #key default = #f) => (maybe-instrument)
   element(*midi-instruments*, instrument-number, default: #f)
     | default
@@ -115,17 +115,17 @@ end method;
 
 define constant *midi-instrument-table* :: <object-table> = make(<object-table>);
 
-define method find-midi-instrument 
+define method find-midi-instrument
     (instrument-name :: <byte-string>, #key default = #f) => (maybe-instrument)
   element(*midi-instrument-table*, as(<symbol>, instrument-name), default: #f)
     | default
 end method;
 
-define method do-define-midi-instrument-family 
+define method do-define-midi-instrument-family
     (family-name :: <byte-string>, first-instrument-number :: <integer>,
        #rest member-names)
   let members = map-as(<simple-object-vector>,
-                       method (name, number) 
+                       method (name, number)
                          let instrument = make(<midi-instrument>, name: name, number: number);
                          push-last(*midi-instruments*, instrument);
                          element(*midi-instrument-table*, as(<symbol>, name)) := instrument;
@@ -138,7 +138,7 @@ define method do-define-midi-instrument-family
 end method;
 
 define macro midi-instrument-family-definer
-  { define midi-instrument-family 
+  { define midi-instrument-family
         ?family-name:expression from ?first-instrument-number:expression
       ?members:*
      end }
@@ -335,16 +335,16 @@ define sealed concrete class <midi-percussion> (<object>)
     required-init-keyword: number:;
 end class;
 
-define constant *midi-percussion* :: <deque> 
+define constant *midi-percussion* :: <deque>
   = make(<deque>);
 
-define constant *midi-percussion-table* :: <object-table> 
+define constant *midi-percussion-table* :: <object-table>
   = make(<object-table>);
 
-define method do-define-midi-percussion 
+define method do-define-midi-percussion
     (first-number :: <integer>, #rest sound-names) => ()
   for (number from first-number, sound-name in sound-names)
-    let object = make(<midi-percussion>, 
+    let object = make(<midi-percussion>,
                       name:   sound-name,
                       number: number);
     push-last(*midi-percussion*, object);
@@ -380,29 +380,29 @@ sounds:
 end macro;
 
 define midi-percussion from 35
-  sound "Acoustic Bass Drum"; 
-  sound "Bass Drum 1";        
-  sound "Side Stick";         
-  sound "Acoustic Snare";     
-  sound "Hand Clap";          
-  sound "Electric Snare";     
-  sound "Low Floor Tom";      
-  sound "Closed Hi-Hat";      
-  sound "High Floor Tom";     
-  sound "Pedal Hi-Hat";       
-  sound "Low Tom";            
-  sound "Open Hi-Hat";        
-  sound "Low-Mid Tom";        
-  sound "Hi-Mid Tom";         
-  sound "Crash Cymbal 1";     
-  sound "High Tom";           
-  sound "Ride Cymbal 1";      
-  sound "Chinese Cymbal";     
-  sound "Ride Bell";          
-  sound "Tambourine";         
-  sound "Splash Cymbal";      
-  sound "Cowbell";            
-  sound "Crash Cymbal 2";     
+  sound "Acoustic Bass Drum";
+  sound "Bass Drum 1";
+  sound "Side Stick";
+  sound "Acoustic Snare";
+  sound "Hand Clap";
+  sound "Electric Snare";
+  sound "Low Floor Tom";
+  sound "Closed Hi-Hat";
+  sound "High Floor Tom";
+  sound "Pedal Hi-Hat";
+  sound "Low Tom";
+  sound "Open Hi-Hat";
+  sound "Low-Mid Tom";
+  sound "Hi-Mid Tom";
+  sound "Crash Cymbal 1";
+  sound "High Tom";
+  sound "Ride Cymbal 1";
+  sound "Chinese Cymbal";
+  sound "Ride Bell";
+  sound "Tambourine";
+  sound "Splash Cymbal";
+  sound "Cowbell";
+  sound "Crash Cymbal 2";
   sound "Vibraslap";
   sound "Ride Cymbal 2";
   sound "Hi Bongo";
@@ -426,5 +426,5 @@ define midi-percussion from 35
   sound "Mute Cuica";
   sound "Open Cuica";
   sound "Mute Triangle";
-  sound "Open Triangle"; 
+  sound "Open Triangle";
 end midi-percussion;

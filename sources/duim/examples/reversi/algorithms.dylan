@@ -28,7 +28,7 @@ define method default-algorithm-for-player
   end
 end method default-algorithm-for-player;
 
-
+
 /// Random player
 
 install-algorithm(#"random", "Random");
@@ -44,7 +44,7 @@ define method choose-move-for-player
   end
 end method choose-move-for-player;
 
-
+
 /// 'Most pieces' player
 
 install-algorithm(#"most-pieces", "Most Pieces");
@@ -70,7 +70,7 @@ define method max-size
          0, sequence)
 end method max-size;
 
-
+
 /// 'Least pieces' player
 
 install-algorithm(#"least-pieces", "Least Pieces");
@@ -100,7 +100,7 @@ define method min-size
          #f, sequence)
 end method min-size;
 
-
+
 /// 'Minimize opponents choices' player
 
 install-algorithm(#"minimize-opponents-choices", "Minimize Opponents Choices");
@@ -130,7 +130,7 @@ define method choose-move-for-player
   choose-move-for-player(#"random", board, player, best-moves)
 end method choose-move-for-player;
 
-
+
 /// 'Corner aware algorithm' players
 
 define method play-algorithm-aware-of-corners

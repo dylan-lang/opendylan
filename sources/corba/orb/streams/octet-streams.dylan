@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// <MARSHALLING-OCTET-STREAM>
 
-define class <marshalling-octet-stream> (<marshalling-stream>) 
+define class <marshalling-octet-stream> (<marshalling-stream>)
 end class;
 
 define method align-input-stream (stream :: <marshalling-octet-stream>, alignment :: <integer>)

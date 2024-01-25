@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///// ENABLE-BREAKPOINT
 
 define method set-breakpoint-in-application
-    (conn :: <remote-access-connection>, ra :: <remote-value>) 
+    (conn :: <remote-access-connection>, ra :: <remote-value>)
        => (success :: <integer>)
   Rtmgr/RemoteNub/set-breakpoint(conn.nub, as-integer(ra));
 end method;
@@ -19,14 +19,14 @@ end method;
 ///// DISABLE-BREAKPOINT
 
 define method clear-breakpoint-in-application
-    (conn :: <remote-access-connection>, ra :: <remote-value>) 
+    (conn :: <remote-access-connection>, ra :: <remote-value>)
       => (success :: <integer>)
   Rtmgr/RemoteNub/clear-breakpoint(conn.nub, as-integer(ra));
 end method;
 
 
 define method recover-breakpoint-in-application
-    (conn :: <remote-access-connection>, thread :: <remote-thread>) 
+    (conn :: <remote-access-connection>, thread :: <remote-thread>)
        => ()
   Rtmgr/RemoteNub/recover-breakpoint(conn.nub, thread.rnub-descriptor);
 end method;
@@ -35,7 +35,7 @@ end method;
 ///// QUERY-BREAKPOINT?
 
 define method query-breakpoint-in-application
-    (conn :: <remote-access-connection>, ra :: <remote-value>) 
+    (conn :: <remote-access-connection>, ra :: <remote-value>)
       => (success :: <integer>)
   Rtmgr/RemoteNub/query-breakpoint(conn.nub, as-integer(ra));
 end method;

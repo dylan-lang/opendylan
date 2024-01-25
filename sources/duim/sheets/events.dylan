@@ -233,7 +233,7 @@ define sealed domain initialize (<window-repaint-event>);
 define sealed domain make (singleton(<timer-event>));
 define sealed domain initialize (<timer-event>);
 
-
+
 /// Event processing and handling
 
 define protocol <<input-sheet-protocol>> (<<sheet-protocol>>)
@@ -414,7 +414,7 @@ define method queue-event
   end
 end method queue-event;
 
-
+
 /// Sheet event queue hacking
 
 define method read-event
@@ -481,7 +481,7 @@ define method wait-for-event
   end
 end method wait-for-event;
 
-
+
 /// Standard input
 
 // Standard input model is to queue most events,
@@ -554,7 +554,7 @@ define method do-dispatch-event
   end
 end method do-dispatch-event;
 
-
+
 /// Repaint protocol
 
 define protocol <<repaint-handling-protocol>> ()
@@ -741,7 +741,7 @@ define method do-with-atomic-redisplay
   continuation(sheet)
 end method do-with-atomic-redisplay;
 
-
+
 /// Crossing events
 
 // We have fun here to generate enter/exit events for unmirrored sheets.
@@ -989,7 +989,7 @@ define method generate-crossing-events
   end
 end method generate-crossing-events;
 
-
+
 /// Event distribution
 
 // This and the other methods here could be on <port>, but we keep them
@@ -1121,7 +1121,7 @@ define method update-focus-for-exit-event
   pointer-sheet(pointer) := #f
 end method update-focus-for-exit-event;
 
-
+
 /// Function events
 
 define sealed class <function-event> (<frame-event>)

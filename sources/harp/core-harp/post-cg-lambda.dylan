@@ -23,7 +23,7 @@ define method pre-cg-lambda (backend :: <harp-back-end>) => ()
 end method;
 
 
-/// Y 13-jul-93 make not print anything when function name is nil 
+/// Y 13-jul-93 make not print anything when function name is nil
 
 /// Y 24Nov93. better check for defstruct stuff before printing. Maybe
 /// we should block any subfunction ?
@@ -37,32 +37,32 @@ end method;
 
 
 define open generic post-cg-lambda
-   (backend :: <harp-back-end>, outputter, harp-debug?, public?, export?, 
-    source-locator, section) 
+   (backend :: <harp-back-end>, outputter, harp-debug?, public?, export?,
+    source-locator, section)
    => (compiled-lambda :: <compiled-lambda>);
 
 
 
 define method post-cg-lambda
-    (backend :: <harp-back-end>, outputter, harp-debug?, public?, export?, 
+    (backend :: <harp-back-end>, outputter, harp-debug?, public?, export?,
      source-locator, section)
     => (compiled-lambda :: <compiled-lambda>)
   let vars = backend.variables;
   let bb :: <basic-block> = vars.top-block;
-  let print-stream 
-    = if (harp-debug?) 
-        make(<string-stream>, direction: #"output", 
+  let print-stream
+    = if (harp-debug?)
+        make(<string-stream>, direction: #"output",
              contents: make(<byte-string>, size: 1000));
-      else #f 
+      else #f
       end;
   code-gen-from-block(backend, bb, print-stream);
   resolve-sdis(backend);
   let print-info
-    = if (harp-debug?) 
+    = if (harp-debug?)
         stream-contents-as(<byte-string>, print-stream)
-      else #f 
+      else #f
       end;
-  let compiled-lambda 
+  let compiled-lambda
     = assemble-compiled-lambda(backend, print-info, public?, export?, source-locator);
   if (outputter)
     output-compiled-lambda(backend, outputter, compiled-lambda, section: section);
@@ -78,10 +78,10 @@ end method;
 // 	     backend.variables.sv-instructions.size);
 //   let result =
 //     as(<single-float>,
-//        (backend.variables.fp-instructions / 
+//        (backend.variables.fp-instructions /
 // 	  as(<single-float>, truncate/(estimate-harp-instructions-size(backend, backend.variables.function-name), 25))));
 //   format-out("\n### SV-INSTRUCTIONS RATIO %=\n", result);
-// 
+//
 //   slot-initialized?(backend.variables, code-vector)
 //     & (begin
 // 	format-out("\n### CODE-VECTOR %=\n", backend.variables.code-vector.size);

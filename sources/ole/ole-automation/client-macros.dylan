@@ -10,8 +10,8 @@ define open /*abstract*/ primary C-subtype <dispatch-client> (<C-interface>)
 end C-subtype <dispatch-client>;
 
 
-define open generic dispatch-client-uuid 
-	(this :: type-union(<class>, <dispatch-client>)) 
+define open generic dispatch-client-uuid
+	(this :: type-union(<class>, <dispatch-client>))
      => (uuid :: false-or(<LPGUID>));
 
 
@@ -19,9 +19,9 @@ define method dispatch-client-uuid (this :: <dispatch-client>)
  => (uuid :: false-or(<LPGUID>))
   dispatch-client-uuid(object-class(this))
 end;
-    
-define function make-dispatch-client 
-	(#key disp-interface :: false-or(<C-interface>) = #f, 
+
+define function make-dispatch-client
+	(#key disp-interface :: false-or(<C-interface>) = #f,
 	      class-id = #f, interface-ID = #f) => (r :: <LPDISPATCH>)
   if (class-id)
     create-dispatch(class-id, interface-ID: interface-ID | $IID-IDispatch)
@@ -74,13 +74,13 @@ define macro dispatch-client-help-definer
       { ?collection } { ?slots } { ?uuid } { ?getters } { ?body:* }
     end
   } => {
-    define ?modifiers dispatch-client-class ?name (?supers, <dispatch-client>) 
+    define ?modifiers dispatch-client-class ?name (?supers, <dispatch-client>)
 				       (?supers, ?collection)
       ?slots
     end dispatch-client-class ?name;
 
     define constant "$" ## ?name ## "-uuid" :: false-or(<LPGUID>) = ?uuid;
-    define method dispatch-client-uuid (class == ?name) 
+    define method dispatch-client-uuid (class == ?name)
 				    => (uuid :: false-or(<LPGUID>));
       "$" ## ?name ## "-uuid"
     end method dispatch-client-uuid;
@@ -90,15 +90,15 @@ define macro dispatch-client-help-definer
     define method make (class == ?name, #next next-method,
     			#rest keys,
 			#key address = #f,
-			     interface-ID :: false-or(<LPGUID>) = 
+			     interface-ID :: false-or(<LPGUID>) =
 			                 "$" ## ?name ## "-uuid",
 			#all-keys)
 		    => (r :: ?name)
       if (address)
 	next-method()
       else
-	next-method(class, 
-		    address: pointer-address(apply(make-dispatch-client, 
+	next-method(class,
+		    address: pointer-address(apply(make-dispatch-client,
 						   interface-ID: interface-ID, keys)))
       end if;
     end method make;
@@ -192,11 +192,11 @@ define macro define-dispid-getter
   } => {
     define sealed inline method ?name (this :: ?class-name) => (r)
       get-dispid( ( if (~ slot-initialized?(this, ?name ## "-internal"))
-		      ?name ## "-internal"(this) := 
+		      ?name ## "-internal"(this) :=
 			      get-id-of-name(this, get-c-name(?pn, ?rest))
 		    else
 		      ?name ## "-internal"(this)
-		    end if 
+		    end if
 		  ), ?rest
 		)
     end method ?name;
@@ -227,8 +227,8 @@ end macro get-dispid;
 define macro distribute-over-semicolons
   { distribute-over-semicolons(?macro:name, (?distributee:*), ()) } => { }
 
-  { 
-    distribute-over-semicolons(?macro:name, (?distributee:*), 
+  {
+    distribute-over-semicolons(?macro:name, (?distributee:*),
 			       (?item:*; ?rest:*))
   } => {
     ?macro ## ""((?distributee), (?item));
@@ -240,8 +240,8 @@ end macro distribute-over-semicolons;
 define macro distribute-over-commas
   { distribute-over-commas(?macro:name, (?distributee:*), ()) } => { }
 
-  { 
-    distribute-over-commas(?macro:name, (?distributee:*), 
+  {
+    distribute-over-commas(?macro:name, (?distributee:*),
 			       (?item:*, ?rest:*))
   } => {
     ?macro ## ""((?distributee), (?item));
@@ -253,8 +253,8 @@ end macro distribute-over-commas;
 define macro distribute-over-words
   { distribute-over-words(?macro:name, (?distributee:*), ()) } => { }
 
-  { 
-    distribute-over-words(?macro:name, (?distributee:*), 
+  {
+    distribute-over-words(?macro:name, (?distributee:*),
 			       (?item:name ?rest:*))
   } => {
     ?macro ## ""((?distributee), (?item));
@@ -265,25 +265,25 @@ end macro distribute-over-words;
 
 define macro define-stub
 
-  { 
+  {
     define-stub((?class-name:name),
 		(?pmods:* property ?:name, ?attributes:*))
   } => {
-    define property-stubs ?class-name (?pmods) (?pmods) (?pmods) 
+    define property-stubs ?class-name (?pmods) (?pmods) (?pmods)
 			  ?name () :: <object>;
   }
   // Note: This must not use the binding pattern (?:name :: ?type) because
   // that causes the type to be prematurely parsed as an expression and
   // then dylan-automation-type-macro can't deconstruct it.
-  { 
+  {
     define-stub((?class-name:name),
 		(?pmods:* property ?:name \:: ?type:*, ?attributes:*))
   } => {
-    define property-stubs ?class-name (?pmods) (?pmods) (?pmods) 
+    define property-stubs ?class-name (?pmods) (?pmods) (?pmods)
 			  ?name () :: dylan-automation-type-macro(?type);
   }
 
-  { 
+  {
     define-stub((?class-name:name),
 		(?pmods:* property ?:name (?arg-list), ?attributes:*))
   } => {
@@ -291,48 +291,48 @@ define macro define-stub
 			  ?name (?arg-list) :: <object>;
   }
 
-  { 
+  {
     define-stub((?class-name:name),
      (?pmods:* property ?:name (?arg-list) \:: ?type:*, ?attributes:*))
   } => {
     define property-stubs ?class-name (?pmods) (?pmods) (?pmods)
-			  ?name (?arg-list) 
+			  ?name (?arg-list)
 			  :: dylan-automation-type-macro(?type);
   }
 
-  { 
+  {
     define-stub((?class-name:name),
       (?modifiers function ?:name ?args => ?results, ?attributes:*)
 	       )
   } => {
-    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name 
+    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name
     		(?args) => (?results);
   }
 
-  { 
+  {
     define-stub((?class-name:name),
       (?modifiers member-function ?:name ?args => ?results, ?attributes:*)
 	       )
   } => {
-    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name 
+    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name
     		(?args) => (?results);
   }
 
-  { 
+  {
     define-stub((?class-name:name),
       (?modifiers function ?:name ?args, ?attributes:*)
 	       )
   } => {
-    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name 
+    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name
     		(?args) => ();
   }
 
-  { 
+  {
     define-stub((?class-name:name),
       (?modifiers member-function ?:name ?args, ?attributes:*)
 	       )
   } => {
-    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name 
+    define stub {?modifiers} $DISPATCH-METHOD ?name ?class-name
     		(?args) => ();
   }
 
@@ -350,15 +350,15 @@ define macro define-stub
   results:
     { ( ?arg-list ) } => { ?arg-list }
     { ?arg-list } => { ?arg-list }
-  
+
   arg-list:
     { } => { }
-    { ?:name, ... } => 
+    { ?:name, ... } =>
       { ?name :: <object>, ... }
     // Note: This must not use the binding pattern (?:name :: ?type) because
     // that causes the type to be prematurely parsed as an expression and
     // then dylan-automation-type-macro can't deconstruct it.
-    { ?:name \:: ?type:*, ... } => 
+    { ?:name \:: ?type:*, ... } =>
       { ?name :: dylan-automation-type-macro(?type), ... }
 
 end macro define-stub;
@@ -398,11 +398,11 @@ define macro property-stubs-getter-definer
     define property-stubs-getter ?class-name:name (?modifiers:*) ()
 				 ?:name (?args:*) \:: ?type:expression
   } => {
-    define inline method ?name (this :: ?class-name, ?args, 
+    define inline method ?name (this :: ?class-name, ?args,
     				#key default = $unsupplied) => (r)
-      let r = apply-over-args(simple-invoke, 
-			      (this, ?name ## "-disp-id"(this), 
-			       $DISPATCH-PROPERTYGET, $LOCALE-USER-DEFAULT, 
+      let r = apply-over-args(simple-invoke,
+			      (this, ?name ## "-disp-id"(this),
+			       $DISPATCH-PROPERTYGET, $LOCALE-USER-DEFAULT,
 			       default), (?args), ());
       if (unsupplied?(r))
 	error("No value received and no default specified getting property %s",
@@ -415,7 +415,7 @@ define macro property-stubs-getter-definer
       end if
     end method ?name;
     define stub-sealing ?name (this :: ?class-name, ?args);
-    distribute-over-words(\define-stub-modifier, 
+    distribute-over-words(\define-stub-modifier,
 			  (?name, (this :: ?class-name, ?args) => (r)),
 			  (?modifiers));
   }
@@ -435,21 +435,21 @@ end macro property-stubs-setter-definer;
 
 
 define macro setter-stub-definer
-  { 
-    define setter-stub {?modifiers} ?name:* ?class-name:name 
+  {
+    define setter-stub {?modifiers} ?name:* ?class-name:name
 		       (?args:*) \:: ?type:expression
   } => {
-    define method ?name ## "-setter" (v :: ?type, this :: ?class-name, ?args) 
+    define method ?name ## "-setter" (v :: ?type, this :: ?class-name, ?args)
 				  => (v :: ?type)
       // Note: empty ?args results in extra ',' which apply-over-args ignores.
-      apply-over-args(get-indexed-property-setter, 
+      apply-over-args(get-indexed-property-setter,
 		      (v, this, ?name ## "-disp-id"(this)), (?args), ())
     end method ?name ## "-setter";
-    define stub-sealing ?name ## "-setter" 
+    define stub-sealing ?name ## "-setter"
 	(v :: ?type, this :: ?class-name, ?args);
-    distribute-over-words(\define-stub-modifier, 
-			  (?name ## "-setter", (v :: ?type, 
-			  			this :: ?class-name, ?args) 
+    distribute-over-words(\define-stub-modifier,
+			  (?name ## "-setter", (v :: ?type,
+			  			this :: ?class-name, ?args)
 					    => (v :: ?type)), (?modifiers));
   }
 
@@ -471,29 +471,29 @@ end macro get-arg-type;
 
 
 define macro stub-definer
-  { 
-    define stub {?modifiers:*} ?type:expression ?:name ?class-name:name 
+  {
+    define stub {?modifiers:*} ?type:expression ?:name ?class-name:name
     		(?args:*) => ()
   } => {
     define inline method ?name (this :: ?class-name, ?args) => ()
-      apply-over-args(simple-invoke, 
-		      (this, ?name ## "-disp-id"(this), ?type, 
+      apply-over-args(simple-invoke,
+		      (this, ?name ## "-disp-id"(this), ?type,
 		       $LOCALE-USER-DEFAULT, #f), (?args), ());
     end method ?name;
     define stub-sealing ?name (this :: ?class-name, ?args);
-    distribute-over-words(\define-stub-modifier, 
+    distribute-over-words(\define-stub-modifier,
 			  (?name, (this :: ?class-name, ?args) => ()),
 			  (?modifiers));
   }
 
-  { 
-    define stub {?modifiers:*} ?type:expression ?:name ?class-name:name 
+  {
+    define stub {?modifiers:*} ?type:expression ?:name ?class-name:name
     		(?args:*) => (?results:*)
   } => {
-    define inline method ?name (this :: ?class-name, ?args, #key default = #f) 
+    define inline method ?name (this :: ?class-name, ?args, #key default = #f)
 			    => (?results)
-      let r = apply-over-args(simple-invoke, 
-			      (this, ?name ## "-disp-id"(this), ?type, 
+      let r = apply-over-args(simple-invoke,
+			      (this, ?name ## "-disp-id"(this), ?type,
 			       $LOCALE-USER-DEFAULT, default), (?args), ());
       if (subtype?(get-arg-type(?results), <dispatch-client>))
 	make(get-arg-type(?results), disp-interface: r)
@@ -502,7 +502,7 @@ define macro stub-definer
       end if
     end method ?name;
     define stub-sealing ?name (this :: ?class-name, ?args);
-    distribute-over-words(\define-stub-modifier, 
+    distribute-over-words(\define-stub-modifier,
 			  (?name, (this :: ?class-name, ?args) => (?results)),
 			  (?modifiers));
   }
@@ -510,13 +510,13 @@ end macro stub-definer;
 
 
 define macro apply-over-args
-  { 
+  {
     apply-over-args(?func:expression, (), (?args), (?post-args:*))
   } => {
     ?func(?args, ?post-args)
   }
 
-  { 
+  {
     apply-over-args(?func:expression, (?pre-args:*), (?args), (?post-args:*))
   } => {
     ?func(?pre-args, ?args, ?post-args)
@@ -530,9 +530,9 @@ end macro apply-over-args;
 
 
 define macro stub-sealing-definer
-  { 
-    define stub-sealing ?:name (?args) 
-  } => { 
+  {
+    define stub-sealing ?:name (?args)
+  } => {
     //define sealed domain ?name (?args)
   }
 

@@ -14,7 +14,7 @@ end class <test-suite-report>;
 install-report(#"test-suite", "Project test suite skeleton",
                <test-suite-report>);
 
-
+
 /// Report protocols
 
 // Write one test per definition, two suites per module (interface
@@ -261,7 +261,7 @@ define method create-multi-file-report-as
   error("Not yet implemented!")
 end method create-multi-file-report-as;
 
-
+
 /// Utilities
 
 define method namespace-exported-names

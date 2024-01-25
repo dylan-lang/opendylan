@@ -21,7 +21,7 @@ define abstract class <smtp-error> (<error>)
     required-init-keyword: code:;
   // Note that the response usually contains the error code at the
   // beginning of the string.
-  constant slot smtp-error-response :: <string>, 
+  constant slot smtp-error-response :: <string>,
     required-init-keyword: response:;
 end class;
 
@@ -61,7 +61,7 @@ define function check-smtp-response
   end;
 end function check-smtp-response;
 
-
+
 /// Session-level interface.
 
 // Interface macro.
@@ -80,7 +80,7 @@ define macro with-smtp-stream
 end macro;
 
 // Interface function.
-define method open-smtp-stream 
+define method open-smtp-stream
     (host, #key port = $default-smtp-port) => (stream :: <stream>)
   let helo-name = local-host-name();
   let stream = make(<tcp-socket>, host: host, port: port);
@@ -126,7 +126,7 @@ define method write-smtp-data-end
   check-smtp-response(stream);
 end method;
 
-define method format-smtp-line 
+define method format-smtp-line
     (stream :: <stream>, template :: <string>, #rest args) => ()
   when (*debug-smtp*)
     apply(format-out, template, args);
@@ -136,7 +136,7 @@ define method format-smtp-line
   write(stream, "\r\n");
 end method;
 
-
+
 /// Message-level interface.
 
 // Interface macro.
@@ -156,7 +156,7 @@ end macro;
 
 // Interface function.
 define method open-smtp-message-stream
-    (#key host, port = $default-smtp-port, 
+    (#key host, port = $default-smtp-port,
           from :: <string>, recipients :: <sequence>)
  => (stream :: <stream>)
   assert(host, "Host required in 'open-smtp-message-stream'");
@@ -177,9 +177,9 @@ define method close-smtp-message-stream
 end method;
 
 // Interface function.
-define method send-smtp-message 
-    (#key host, port = $default-smtp-port, 
-          from :: <string>, recipients :: <sequence>, 
+define method send-smtp-message
+    (#key host, port = $default-smtp-port,
+          from :: <string>, recipients :: <sequence>,
           body :: <string>)
   assert(host, "Host required in 'send-smtp-message'");
   with-smtp-message-stream (stream to host,
@@ -194,13 +194,13 @@ define method send-smtp-message
       end;
     finally
       if (line-start ~== i)
-        write(stream, "\r\n");        
+        write(stream, "\r\n");
       end;
     end;
   end;
 end method;
 
-
+
 /// Sample code
 
 /*

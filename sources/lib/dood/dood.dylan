@@ -70,7 +70,7 @@ define inline function make-object->address-table (#rest all-keys, #key size)
   // apply(make-two-level-table, all-keys)
 end function;
 
-define inline function make-address->object-table 
+define inline function make-address->object-table
     (#key size = $default-dood-table-size)
   // make-two-level-table()
   make(<dood-table>, size: size)
@@ -90,7 +90,7 @@ end function;
 //   size(x)
 // end function;
 
-define inline function make-weak-table 
+define inline function make-weak-table
     (kind :: false-or(<symbol>), #rest all-keys, #key size, #all-keys)
   if (kind == #"key")
     apply(make-weak-key-table, all-keys)
@@ -120,7 +120,7 @@ cslot:
   { ?mods:* slot ?slot-variable, ?rest:* }
     => { ?mods slot ?slot-variable, ?rest }
 slot-variable:
-  { ?slot-name :: ?:expression ?maybe-init-expression } 
+  { ?slot-name :: ?:expression ?maybe-init-expression }
     => { ?slot-name :: ?expression ?maybe-init-expression }
 slot-name:
   { ?:name } => { ?name ## "-state" }
@@ -130,7 +130,7 @@ maybe-init-expression:
 end macro;
 
 define macro dood-state-accessors-definer
-  { define dood-state-accessors using ?trampoline:name (?class:name) end } 
+  { define dood-state-accessors using ?trampoline:name (?class:name) end }
     => { }
 
   { define dood-state-accessors using ?trampoline:name (?class:name)
@@ -151,7 +151,7 @@ define macro dood-state-accessors-definer
     => { define inline method ?accessor (object :: ?class) => (val :: ?type)
 	   ?accessor ## "-state"(?trampoline(object))
 	 end method;
-         define inline method ?accessor ## "-setter" 
+         define inline method ?accessor ## "-setter"
 	     (value :: ?type, object :: ?class)
 	   ?accessor ## "-state"(?trampoline(object)) := value
          end method;
@@ -161,7 +161,7 @@ maybe-init-expression:
   { }                => { }
 end macro;
 
-// (gts,98sep20) moved from object.dylan to avoid emulator forward ref. issue. 
+// (gts,98sep20) moved from object.dylan to avoid emulator forward ref. issue.
 
 define constant <dood-segment-id> = <integer>;
 
@@ -174,11 +174,11 @@ end class;
 
 ignore(dood-segment-name);
 
-define generic dood-segment-instance? 
+define generic dood-segment-instance?
     (segment :: <dood-segment>, x) => (well? :: <boolean>);
 
 
-define method dood-segment-instance? 
+define method dood-segment-instance?
     (segment :: <dood-segment>, x) => (well? :: <boolean>)
   #t
 end method;
@@ -188,7 +188,7 @@ define class <dood-typed-segment> (<dood-segment>)
     required-init-keyword: type:;
 end class;
 
-define sealed method initialize 
+define sealed method initialize
     (segment :: <dood-typed-segment>, #key name, type, #all-keys)
   next-method();
   unless (name)
@@ -196,7 +196,7 @@ define sealed method initialize
   end unless;
 end method;
 
-define method dood-segment-instance? 
+define method dood-segment-instance?
     (segment :: <dood-typed-segment>, x) => (well? :: <boolean>)
   subtype?(x, dood-segment-type(segment))
 end method;
@@ -206,7 +206,7 @@ define class <dood-functional-segment> (<dood-segment>)
     required-init-keyword: test:;
 end class;
 
-define method dood-segment-instance? 
+define method dood-segment-instance?
     (segment :: <dood-functional-segment>, x) => (well? :: <boolean>)
   dood-segment-test(segment)(x)
 end method;
@@ -225,18 +225,18 @@ ignore(dood-segment-state-segment);
 define open primary class <dood> (<object>)
   slot dood-name = #f,
     init-keyword: name:;
-  slot dood-given-stream :: false-or(<stream>) = #f, 
+  slot dood-given-stream :: false-or(<stream>) = #f,
     init-keyword: stream:;
-  slot dood-backups? :: <boolean> = #t, 
+  slot dood-backups? :: <boolean> = #t,
     init-keyword: backups?:;
   slot dood-root = #f;
   slot dood-state  :: <dood-state> = make(<dood-state>);
   slot dood-backup :: <dood-state> = make(<dood-state>);
-  constant slot dood-world :: <dood-world> = dood-world-default(), 
+  constant slot dood-world :: <dood-world> = dood-world-default(),
     init-keyword: world:;
-  constant slot dood-read-only? :: <boolean> = #f, 
+  constant slot dood-read-only? :: <boolean> = #f,
     init-keyword: read-only?:;
-  constant slot dood-batch-mode? :: <boolean> = #t, 
+  constant slot dood-batch-mode? :: <boolean> = #t,
     init-keyword: batch-mode?:;
   constant slot dood-specified-user-version :: <integer> = $dood-version,
     init-keyword: version:;
@@ -246,19 +246,19 @@ define open primary class <dood> (<object>)
   /*
   // used for walking
   slot dood-current-mark :: <integer> = 0;
-  slot dood-walked-mark-addresses :: <table> 
+  slot dood-walked-mark-addresses :: <table>
      = make-weak-key-table(size: $default-dood-table-size);
-  slot dood-walked-objects :: <stretchy-vector> 
+  slot dood-walked-objects :: <stretchy-vector>
     = make(<stretchy-vector>);
   */
-  constant slot dood-back-pointers :: <dood-table> 
+  constant slot dood-back-pointers :: <dood-table>
     = make(<dood-table>);
   slot dood-walked-count :: <integer> = 0;
   slot dood-locator, init-keyword: locator:;
   slot dood-init-keys :: <simple-object-vector>;
-  slot dood-walk-queue :: <dood-queue> 
+  slot dood-walk-queue :: <dood-queue>
     = make(<dood-queue>);
-  constant slot dood-work :: <dood-queue> 
+  constant slot dood-work :: <dood-queue>
     = make(<dood-queue>);
   constant slot dood-default-segment :: <dood-segment> = make(<dood-segment>),
    init-keyword: default-segment:;
@@ -275,8 +275,8 @@ end method;
 
 define function make-default-segments () => (res :: <simple-object-vector>)
   // #[]
-  vector(make(<dood-typed-segment>, 
-  	      name: "symbol", 
+  vector(make(<dood-typed-segment>,
+  	      name: "symbol",
   	      type: type-union(<symbol>, <string>)))
 end function;
 
@@ -309,7 +309,7 @@ ignore(dood-dood); ignore(dood-dood-setter); // HACK: SHOULD USE CONSTANT ADJECT
 
 define method dood-flush-state (x :: <dood-state>) => (res :: <dood-state>)
   if (slot-initialized?(x, dood-stream-state))
-    make(<dood-state>, 
+    make(<dood-state>,
 	 dood:   dood-dood-state(x),
 	 stream: dood-stream-state(x));
   else
@@ -337,12 +337,12 @@ define inline method do-with-dood-state
   with-lock (dood-lock-state(state))
     if (dood-state(dood) == state)
       f1()
-    else 
+    else
       block ()
 	dood-exchange-states(dood);
 	if (dood-state(dood) == state)
 	  f2();
-	else 
+	else
 	  signal(make(<dood-proxy-error>));
 	end if;
       cleanup
@@ -358,14 +358,14 @@ define macro with-dood-state
 end macro;
 
 define method dood-open-stream
-    (dood :: <dood>, #rest extra-keys, #key, #all-keys) 
+    (dood :: <dood>, #rest extra-keys, #key, #all-keys)
  => (stream :: <dood-stream>)
   let all-keys = concatenate(extra-keys, dood-init-keys(dood));
-  apply(make, <dood-stream>, 
+  apply(make, <dood-stream>,
         buffer-vector: dood-world-buffer-pool(dood-world(dood)),
-        // number-of-buffers: $dood-default-number-of-buffers, 
-        // buffer-size:       $dood-default-buffer-size, 
-        // direction:         #"input-output", 
+        // number-of-buffers: $dood-default-number-of-buffers,
+        // buffer-size:       $dood-default-buffer-size,
+        // direction:         #"input-output",
         all-keys);
 end method;
 
@@ -393,7 +393,7 @@ define method dood-save-state (dood :: <dood>) => ()
 end method;
 
 define method dood-close-state-stream
-    (dood :: <dood>, state :: <dood-state>, 
+    (dood :: <dood>, state :: <dood-state>,
      #rest all-keys, #key abort? = #t, #all-keys) => ()
   if (slot-initialized?(state, dood-stream-state))
     apply(close, dood-stream-state(state), abort?: abort?, all-keys)
@@ -461,10 +461,10 @@ define method boot-predefines (dood :: <dood>) => ()
     (<dood-class-program-binding-proxy>, $dood-class-program-binding-proxy-class-id);
   register-predefine
     (<dood-program-module-proxy>, $dood-program-module-proxy-class-id);
-end method;  
+end method;
 
 /*
-define method dood-reset-live-objects 
+define method dood-reset-live-objects
     (dood :: <dood>, live-objects :: <set>) => ()
   let objects = make-address->object-table();
   format-out("NUMBER LIVE OBJECTS %=\n", size(live-objects));
@@ -497,7 +497,7 @@ define method dood-reset-live-objects
 end method;
 */
 
-define sealed method dood-initial-segment-states 
+define sealed method dood-initial-segment-states
     (dood :: <dood>) => (res :: <simple-object-vector>)
   let states
     = collecting (as <simple-object-vector>)
@@ -511,7 +511,7 @@ end method;
 define method dood-boot (dood :: <dood>) => ()
   dood-segment-states(dood)
     := dood-initial-segment-states(dood);
-  let segment   
+  let segment
     = dood-default-segment(dood);
   let segment-state
     = dood-lookup-segment-state-by-id(dood, dood-segment-id(segment));
@@ -555,12 +555,12 @@ define method make-dood-stream (#rest all-keys, #key locator, if-exists, directi
 end method;
 
 define method initialize
-    (dood :: <dood>, #rest all-keys, 
+    (dood :: <dood>, #rest all-keys,
      #key name, locator, if-exists, stream, backups?, segments, #all-keys)
   next-method();
   dood-init-keys(dood) := copy-sequence(all-keys);
   unless (segments)
-    dood-segments(dood) 
+    dood-segments(dood)
       := add(dood-segments(dood), dood-default-segment(dood));
   end unless;
   for (segment in dood-segments(dood), i :: <integer> from 0)
@@ -585,29 +585,29 @@ define method initialize
   end if;
   if (replaceable?
         | ~dood-booted?(dood)
-        |  dood-corrupted?(dood) 
-        |  dood-outdated?(dood) 
+        |  dood-corrupted?(dood)
+        |  dood-outdated?(dood)
         |  dood-user-outdated?(dood))
     unless (replaceable? | ~dood-booted?(dood))
       case
 	dood-outdated?(dood)
 	  => signal(make(<dood-version-warning>,
 			 dood:             dood,
-			 format-string:    "DOOD %= OUTDATED VERSION %= EXPECTED %=", 
+			 format-string:    "DOOD %= OUTDATED VERSION %= EXPECTED %=",
 			 format-arguments: vector(dood-name(dood) | "",
-						  dood-version(dood), 
+						  dood-version(dood),
 						  $dood-version)));
 	dood-user-outdated?(dood)
 	  => signal(make(<dood-user-version-warning>,
 			 dood:             dood,
-			 format-string:    "DOOD %= OUTDATED USER-VERSION %= EXPECTED %=", 
+			 format-string:    "DOOD %= OUTDATED USER-VERSION %= EXPECTED %=",
 			 format-arguments: vector(dood-name(dood) | "",
-						  dood-user-version(dood), 
+						  dood-user-version(dood),
 						  dood-specified-user-version(dood))));
 	dood-corrupted?(dood)
-	  => signal(make(<dood-corruption-warning>, 
+	  => signal(make(<dood-corruption-warning>,
 			 dood:             dood,
-			 format-string:    "DOOD %= CORRUPTED", 
+			 format-string:    "DOOD %= CORRUPTED",
 			 format-arguments: vector(dood-name(dood) | "")));
       end case;
     end unless;
@@ -620,37 +620,37 @@ end method;
 define method dood-close (dood :: <dood>, #rest all-keys, #key abort?) => ()
   // unless (abort?)
   //   dood-commit(dood);
-  // end unless; 
+  // end unless;
   apply(dood-close-state-stream, dood, dood-state(dood), all-keys);
   dood-close-state-stream(dood, dood-backup(dood), abort?: #f);
   dood-flush-state(dood);
   dood-clean-proxies(dood);
   dood-world-unregister-dood(dood-world(dood), dood);
 end method;
-
+
 /// BOOKKEEPING
 
 define abstract open primary dood-class <dood-mapped-object> (<object>)
-  // weak slot dood-pointer :: false-or(<address>) = #f, 
+  // weak slot dood-pointer :: false-or(<address>) = #f,
   //   // HACK: WONT WORK FOR NON-BATCH-MODE CAUSE IT WILL UNDO ATTACHMENT
   //   // reinit-expression: #f,
   //   init-keyword: pointer:;
 end dood-class;
 
-// define method dood-address 
-//     (dood :: <dood>, object :: <dood-mapped-object>) 
+// define method dood-address
+//     (dood :: <dood>, object :: <dood-mapped-object>)
 //  => (address :: false-or(<address>))
 //   let pointer = dood-pointer(object);
 //   pointer & untag(pointer)
 // end method;
-// 
+//
 // define method dood-address-setter
-//     (address :: <address>, dood :: <dood>, object :: <dood-mapped-object>) 
+//     (address :: <address>, dood :: <dood>, object :: <dood-mapped-object>)
 //  => (address :: <address>)
 //   dood-pointer(object) := tag-as-address(address);
 // end method;
-// 
-// define method dood-unregister-address 
+//
+// define method dood-unregister-address
 //     (dood :: <dood>, object :: <dood-mapped-object>)
 //   dood-pointer(object) := #f
 // end method;
@@ -658,7 +658,7 @@ end dood-class;
 define abstract open primary dood-class
     <dood-mapped-and-owned-object> (<dood-mapped-object>)
   // keyword slot dood:;
-  weak slot object-dood-state :: false-or(<dood-state>) = #f, 
+  weak slot object-dood-state :: false-or(<dood-state>) = #f,
     // HACK: WONT WORK FOR NON-BATCH-MODE CAUSE IT WILL UNDO ATTACHMENT
     // reinit-expression: #f,
     init-keyword: dood-state:;
@@ -672,21 +672,21 @@ define method initialize
   end when;
 end method;
 
-define inline method object-dood 
+define inline method object-dood
     (x :: <dood-mapped-and-owned-object>) => (res :: false-or(<dood>))
   let state = object-dood-state(x);
   state & dood-dood-state(state)
 end method;
 
-define inline method object-dood-setter 
-    (nv :: false-or(<dood>), x :: <dood-mapped-and-owned-object>) 
+define inline method object-dood-setter
+    (nv :: false-or(<dood>), x :: <dood-mapped-and-owned-object>)
  => (res :: false-or(<dood>))
   object-dood-state(x) := nv & dood-state(nv);
   nv
 end method;
 
-define method dood-register-object-dood 
-    (dood :: <dood>, object :: <dood-mapped-and-owned-object>) 
+define method dood-register-object-dood
+    (dood :: <dood>, object :: <dood-mapped-and-owned-object>)
   object-dood(object) := dood;
 end method;
 
@@ -707,7 +707,7 @@ define method dood-object-dood
 end method;
 */
 
-define method object-dood 
+define method object-dood
     (object /*, #key world = dood-world-default() */)
  => (dood :: false-or(<dood>))
   #f // dood-world-object-dood(world, object)
@@ -731,14 +731,14 @@ end method;
 // end function;
 
 define inline function first-level-table
-    (weak-kind :: false-or(<symbol>), tables :: <dood-table>, key) 
+    (weak-kind :: false-or(<symbol>), tables :: <dood-table>, key)
  => (table :: <dood-table>)
   element(tables, key, default: #f)
     | (element(tables, key) := make-weak-table(weak-kind));
 end function;
 
 define inline function two-level-table-element
-    (weak-kind :: false-or(<symbol>), tables :: <dood-table>, key, 
+    (weak-kind :: false-or(<symbol>), tables :: <dood-table>, key,
      first-key :: <function>, second-key :: <function>, default)
  => (value)
   let table :: <dood-table>
@@ -757,7 +757,7 @@ end function;
 
 /*
 define inline function two-level-table-remove-key!
-    (tables :: <dood-table>, key, 
+    (tables :: <dood-table>, key,
      first-key :: <function>, second-key :: <function>)
  => ()
   let key-1 = first-key(key);
@@ -772,7 +772,7 @@ define inline function two-level-table-remove-key!
 end function;
 */
 
-define method dood-address 
+define method dood-address
     (dood :: <dood>, object) => (address :: false-or(<address>))
   // element(dood-addresses(dood), object, default: #f)
   two-level-table-element
@@ -786,7 +786,7 @@ define method dood-address-setter
     (#"key", dood-addresses(dood), object, object-class, identity) := address;
 end method;
 
-define method dood-register-address 
+define method dood-register-address
     (dood :: <dood>, object, address :: <address>)
   dood-address(dood, object) := address
 end method;
@@ -801,33 +801,33 @@ end method;
 
 // define constant $dood-address-key-1-size
 //   = 10;
-// define constant $dood-address-key-1-mask 
+// define constant $dood-address-key-1-mask
 //   = ash(1, $dood-address-key-1-size) - 1;
-// 
-// define function dood-address-key-1 
+//
+// define function dood-address-key-1
 //     (address :: <address>) => (key :: <address>)
 //   ash(address, -$dood-address-key-1-size)
 // end function;
-// 
-// define function dood-address-key-2 
+//
+// define function dood-address-key-2
 //     (address :: <address>) => (key :: <address>)
 //   logand(address, $dood-address-key-1-mask)
 // end function;
 
 define inline function dood-object
-    (dood :: <dood>, address :: <address>, #rest optionals, #key default) 
+    (dood :: <dood>, address :: <address>, #rest optionals, #key default)
  => (object)
   apply(element, dood-objects(dood), address, optionals)
   // two-level-table-element
-  //   (#"value", dood-objects(dood), 
+  //   (#"value", dood-objects(dood),
   //    address, dood-address-key-1, dood-address-key-2, default)
 end function;
 
-define inline function dood-object-setter 
+define inline function dood-object-setter
     (object, dood :: <dood>, address :: <address>)
   element(dood-objects(dood), address) := object
   // two-level-table-element
-  //     (#"value", dood-objects(dood), 
+  //     (#"value", dood-objects(dood),
   //      address, dood-address-key-1, dood-address-key-2)
   //   := object;
 end function;
@@ -838,7 +838,7 @@ define function dood-register-object-maybe-read
     // used for wrapper proxies to avoid circularities
     let forwarding-address = dood-forwarding-address(dood);
     if (forwarding-address)
-      // format-out("FORWARDING %= TO %= FOR %=\n", 
+      // format-out("FORWARDING %= TO %= FOR %=\n",
       //            address, forwarding-address, object-class(object));
       dood-object(dood, forwarding-address) := object;
       dood-forwarding-address(dood) := #f; // ONE SHOT ONLY
@@ -851,7 +851,7 @@ define function dood-register-object-maybe-read
     dood-register-address(dood, object, address);
   end unless;
   dood-object(dood, address) := object;
-  dood-format("REGISTERING %= @ %d IN %s\n", 
+  dood-format("REGISTERING %= @ %d IN %s\n",
               object-class(object), address, dood-name(dood));
 end function;
 
@@ -897,11 +897,11 @@ define method dood-corrupted? (dood :: <dood>) => (res :: <boolean>)
   well?
 end method;
 
-define method dood-corrupted?-setter 
+define method dood-corrupted?-setter
     (x :: <boolean>, dood :: <dood>) => (res :: <boolean>)
   dood-write-at
-    (dood, 
-     tag-as-address(x, if (x) $dood-true-id else $dood-false-id end), 
+    (dood,
+     tag-as-address(x, if (x) $dood-true-id else $dood-false-id end),
      $dood-corruption-id);
   x
 end method;
@@ -918,7 +918,7 @@ define method dood-outdated? (dood :: <dood>) => (res :: <boolean>)
   let version = dood-version(dood);
   let well? =
   version ~= $dood-no-version   // valid version
-    & version ~= $dood-version;  // but wrong 
+    & version ~= $dood-version;  // but wrong
   dood-format("OUTDATED? %=\n", well?);
   well?
 end method;
@@ -936,7 +936,7 @@ define method dood-user-outdated? (dood :: <dood>) => (res :: <boolean>)
   let version = dood-user-version(dood);
   let well? =
   version ~= $dood-no-version   // valid version
-    & version ~= dood-specified-user-version(dood);  // but wrong 
+    & version ~= dood-specified-user-version(dood);  // but wrong
   dood-format("USER OUTDATED? %=\n", well?);
   well?
 end method;
@@ -944,17 +944,17 @@ end method;
 /// FORWARD DECLARED FOR EMULATOR
 
 define class <walk-info> (<object>)
-  constant slot walk-info-function :: <function> = identity, 
+  constant slot walk-info-function :: <function> = identity,
     init-keyword: function:;
-  constant slot walk-info-flush? :: <boolean> = #f, 
+  constant slot walk-info-flush? :: <boolean> = #f,
     init-keyword: flush?:;
-  constant slot walk-info-force? :: <boolean> = #t, 
+  constant slot walk-info-force? :: <boolean> = #t,
     init-keyword: force?:;
-  constant slot walk-info-parents? :: <boolean> = #f, 
+  constant slot walk-info-parents? :: <boolean> = #f,
     init-keyword: parents?:;
-  constant slot walk-info-commit? :: <boolean> = #f, 
+  constant slot walk-info-commit? :: <boolean> = #f,
     init-keyword: commit?:;
-  constant slot walk-info-batch? :: <boolean> = #t, 
+  constant slot walk-info-batch? :: <boolean> = #t,
     init-keyword: batch?:;
 end class;
 

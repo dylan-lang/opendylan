@@ -722,7 +722,7 @@ define function update-project-build-property
   end
 end function update-project-build-property;
 
-
+
 /// Debugging
 
 define sealed method project-debug-filename
@@ -795,7 +795,7 @@ define sealed method project-start-function-name-setter
   function-name
 end method project-start-function-name-setter;
 
-
+
 /// Project properties
 
 define sideways method env/session-property
@@ -1003,7 +1003,7 @@ define sealed method env/project-minor-version-setter
   version
 end method env/project-minor-version-setter;
 
-
+
 /// File extensions
 
 //--- These should really be defined in the project manager or somewhere
@@ -1037,7 +1037,7 @@ define sealed sideways method executable-file-extension
   $exe-file-extension
 end method executable-file-extension;
 
-
+
 /// Project source handling
 
 // TODO: should this be moved to environment-dfmc-database now that it gets
@@ -1097,7 +1097,7 @@ define sealed method %do-used-projects
   end
 end method %do-used-projects;
 
-
+
 /// Opening of projects
 
 define function abort-project-opening
@@ -1294,7 +1294,7 @@ define sealed method project-bin-location
   end
 end method project-bin-location;
 
-
+
 /// source-location-environment-object
 
 define sealed method source-location-environment-object
@@ -1317,7 +1317,7 @@ define sealed method find-source-record-library
   project & %maybe-make-library(project-object, project)
 end method find-source-record-library;
 
-
+
 /// Project warnings
 
 define constant $project-warnings  :: <object-table> = make(<object-table>);
@@ -1445,7 +1445,7 @@ define method note-project-warnings-updated
   broadcast($project-channel, message)
 end method note-project-warnings-updated;
 
-
+
 /// Project warning objects
 
 define sealed method warning-owner

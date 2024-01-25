@@ -337,7 +337,7 @@ define method do-next-input-buffer
   end
 end method do-next-input-buffer;
 
-
+
 
 //  We get here only when 'stream-output-buffer' is #f.  This can only
 // happen for two reasons, beginning of stream or we need to turn around

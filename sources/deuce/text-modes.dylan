@@ -20,7 +20,7 @@ define method mode-name
   "Fundamental"
 end method mode-name;
 
-
+
 /// Text mode
 
 define open class <text-mode> (<fundamental-mode>)

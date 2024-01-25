@@ -185,7 +185,7 @@ define macro poa-null-exception-definer
       define sealed domain make (subclass("portableserver/poa/<" ## ?exception ## ">"));
       define sealed domain initialize ("portableserver/poa/<" ## ?exception ## ">");
 
-      define constant "portableserver/poa/$" ## ?exception ## "-typecode" = 
+      define constant "portableserver/poa/$" ## ?exception ## "-typecode" =
 	make(<exception-typecode>,
 	     name: ?"exception",
 	     repository-id: format-to-string("IDL:omg.org/PortableServer/POA/%s:1.0", ?"exception"));
@@ -211,7 +211,7 @@ define macro poa-manager-null-exception-definer
       define sealed domain make (subclass("portableserver/poamanager/<" ## ?exception ## ">"));
       define sealed domain initialize ("portableserver/poamanager/<" ## ?exception ## ">");
 
-      define constant "portableserver/poamanager/$" ## ?exception ## "-typecode" = 
+      define constant "portableserver/poamanager/$" ## ?exception ## "-typecode" =
 	make(<exception-typecode>,
 	     name: ?"exception",
 	     repository-id: format-to-string("IDL:omg.org/portableserver/poamanager/%s:1/0", ?"exception"));
@@ -254,7 +254,7 @@ define method class-typecode (class == Portableserver/Poa/<InvalidPolicy>)
        name: "InvalidPolicy");
 end method;
 
-define class Portableserver/<ForwardRequest> (corba/<user-exception>) 
+define class Portableserver/<ForwardRequest> (corba/<user-exception>)
   slot Portableserver/ForwardRequest/forward-reference, required-init-keyword: forward-reference:;
 end class;
 

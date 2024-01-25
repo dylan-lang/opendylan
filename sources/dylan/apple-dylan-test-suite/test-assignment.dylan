@@ -12,8 +12,8 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // initialize

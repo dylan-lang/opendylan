@@ -6,22 +6,22 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define open abstract class <gl-pane> (<drawing-pane>) 
+define open abstract class <gl-pane> (<drawing-pane>)
   slot pane-gl-initialized? :: <boolean> = #f;
   slot pane-gl-context = #f;
 end class;
 
-define open generic handle-initialize-scene 
+define open generic handle-initialize-scene
     (pane :: <gl-pane>, medium :: <medium>) => ();
-define open generic handle-repaint-scene 
+define open generic handle-repaint-scene
     (pane :: <gl-pane>, medium :: <medium>) => ();
 
-define method handle-initialize-scene 
-    (pane :: <gl-pane>, medium :: <medium>) => () 
+define method handle-initialize-scene
+    (pane :: <gl-pane>, medium :: <medium>) => ()
 end method;
 
-define method handle-repaint-scene 
-    (pane :: <gl-pane>, medium :: <medium>) => () 
+define method handle-repaint-scene
+    (pane :: <gl-pane>, medium :: <medium>) => ()
 end method;
 
 define method handle-repaint
@@ -36,7 +36,7 @@ define method handle-repaint
     pane-gl-context(pane) := ghRC;
     wglMakeCurrent(dc, ghRC);
     handle-initialize-scene(pane, medium);
-    pane-gl-initialized?(pane) := #t; 
+    pane-gl-initialized?(pane) := #t;
   end;
   wglMakeCurrent(dc, pane-gl-context(pane));
   handle-repaint-scene(pane, medium);
@@ -59,15 +59,15 @@ define method setup-pixel-format (hdc :: <HDC>)
     ppfd.nVersion-value := 1;
     ppfd.dwFlags-value := logior($PFD-DRAW-TO-WINDOW, $PFD-SUPPORT-OPENGL ,
                                  $PFD-DOUBLEBUFFER);
-    ppfd.dwLayerMask-value := $PFD-MAIN-PLANE; 
-    ppfd.iPixelType-value := $PFD-TYPE-COLORINDEX; 
+    ppfd.dwLayerMask-value := $PFD-MAIN-PLANE;
+    ppfd.iPixelType-value := $PFD-TYPE-COLORINDEX;
     // TODO: This stuff needs to be parameterisable when making GL panes...
-    ppfd.cColorBits-value := 8; 
-    ppfd.cDepthBits-value := 16; 
-    ppfd.cAccumBits-value := 0; 
-    ppfd.cStencilBits-value := 0; 
- 
-    let pixelformat = ChoosePixelFormat(hdc, ppfd); 
+    ppfd.cColorBits-value := 8;
+    ppfd.cDepthBits-value := 16;
+    ppfd.cAccumBits-value := 0;
+    ppfd.cStencilBits-value := 0;
+
+    let pixelformat = ChoosePixelFormat(hdc, ppfd);
     SetPixelFormat(hdc, pixelformat, ppfd);
   end;
 end method;

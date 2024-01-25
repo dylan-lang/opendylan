@@ -32,7 +32,7 @@ define open generic frame-sheet-selection-empty?
 define open generic frame-sheet-selected-text
     (frame :: <frame>, sheet :: <abstract-sheet>) => (text :: false-or(<string>));
 
-
+
 /// <frame-selection-mixin>
 
 define open abstract class <frame-selection-mixin> (<frame-input-focus-mixin>)
@@ -54,7 +54,7 @@ define method note-frame-selection-updated
   #f
 end method note-frame-selection-updated;
 
-
+
 /// Selection commands
 
 define open abstract class <frame-selection-command> (<frame-focus-command>)
@@ -66,7 +66,7 @@ end class <frame-select-all-command>;
 define class <frame-deselect-all-command> (<frame-selection-command>)
 end class <frame-deselect-all-command>;
 
-
+
 /// Collection gadget selections
 
 define method execute-command-for-focus
@@ -101,7 +101,7 @@ define method command-available-for-focus?
     & ~empty?(gadget-selection(gadget))
 end method command-available-for-focus?;
 
-
+
 /// Text gadget selections
 
 define method execute-command-for-focus
@@ -127,7 +127,7 @@ define method command-available-for-focus?
   false?(selected-text(gadget))
 end method command-available-for-focus?;
 
-
+
 /// Default implementations
 
 define method frame-selection
@@ -266,7 +266,7 @@ define method frame-sheet-selected-text
   selected-text(gadget) | gadget-text(gadget)
 end method frame-sheet-selected-text;
 
-
+
 /// Selection command table
 
 define command-table *selection-command-table* (*global-command-table*)

@@ -660,7 +660,7 @@ define method notify-user-breakpoint-state-changes-failed
   start-dialog(dialog);
 end method notify-user-breakpoint-state-changes-failed;
 
-
+
 /// Tracing
 
 define method frame-trace-target

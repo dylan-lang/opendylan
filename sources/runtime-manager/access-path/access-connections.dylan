@@ -16,14 +16,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 ///// <DEBUGGER-CONNECTION>
-//    An instance of <debugger-connection> can be seen as an object that 
+//    An instance of <debugger-connection> can be seen as an object that
 //    has the capability of creating debugger nubs.
 
 define abstract class <debugger-connection> (<object>)
   slot connection-hostname :: <string>;
-  constant slot connection-open-tethers :: <stretchy-vector> 
+  constant slot connection-open-tethers :: <stretchy-vector>
     = make(<stretchy-vector>);
-  slot connection-process-list :: <stretchy-vector> 
+  slot connection-process-list :: <stretchy-vector>
     = make(<stretchy-vector>);
 end class;
 
@@ -64,7 +64,7 @@ end method;
 define abstract class <debugger-connection-failure> (<error>)
 end class;
 
-define class <open-debugger-connection-failure> 
+define class <open-debugger-connection-failure>
                   (<debugger-connection-failure>)
   constant slot attempted-connection-network-address :: <string>,
     required-init-keyword: network-address:;
@@ -76,7 +76,7 @@ define class <open-debugger-connection-password-mismatch>
     required-init-keyword: wrong-password:;
 end class;
 
-  
+
 ///// *OPEN-DEBUGGER-CONNECTIONS*
 //    Holds all open debugger connections.
 
@@ -138,7 +138,7 @@ end method;
 
 define method describe-debugger-connection
     (connection :: <remote-debugger-connection>) => (desc :: <string>)
-  format-to-string("%s (%s)", 
+  format-to-string("%s (%s)",
                    connection.connection-hostname,
                    connection.connection-network-address)
 end method;
@@ -162,10 +162,10 @@ end function;
 
 
 ///// <ACCESS-CONNECTION>
-//    Instances of <access-connection> relate directly to instances of 
-//    a debugger nub. They contain the information that is necessary to 
-//    communicate with a specific debugger nub from the access path. An 
-//    access connection can be local or remote, and (orthogonally) 32-bit 
+//    Instances of <access-connection> relate directly to instances of
+//    a debugger nub. They contain the information that is necessary to
+//    communicate with a specific debugger nub from the access path. An
+//    access connection can be local or remote, and (orthogonally) 32-bit
 //    or 64-bit.
 
 define open abstract class <access-connection> (<object>)
@@ -180,15 +180,15 @@ end class;
 
 
 ///// START-APPLICATION-ON-CONNECTION
-//    This function is called to initialize an instance of 
-//    <application-access-path> and calls the server function to create 
-//    the running process. If the access connection is local, then the 
-//    server returns a packaged process descriptor (a <NUB>) which is 
+//    This function is called to initialize an instance of
+//    <application-access-path> and calls the server function to create
+//    the running process. If the access connection is local, then the
+//    server returns a packaged process descriptor (a <NUB>) which is
 //    saved in the access connection.
 
 define open generic start-application-on-connection
   (conn :: <access-connection>,
-   command :: <string>, 
+   command :: <string>,
    arguments :: <string>,
    symbol-file-directories :: <sequence>,
    working-directory :: false-or(<string>),
@@ -197,10 +197,10 @@ define open generic start-application-on-connection
 
 
 ///// ATTACH-APPLICATION-ON-CONNECTION
-//    This function is called to initialize an instance of 
+//    This function is called to initialize an instance of
 //    <process-access-path> and calls the server function to attach to
-//    the running process. If the access connection is local, then the 
-//    server returns a packaged process descriptor (a <NUB>) which is 
+//    the running process. If the access connection is local, then the
+//    server returns a packaged process descriptor (a <NUB>) which is
 //    saved in the access connection.
 
 define open generic attach-application-on-connection

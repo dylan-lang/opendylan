@@ -32,7 +32,7 @@ define open generic variable-type
     (server :: <server>, variable :: <variable-object>)
  => (type :: false-or(<environment-object>));
 
-
+
 /// Project dispatching methods
 
 define method variable-value
@@ -50,7 +50,7 @@ define method variable-type
   server & variable-type(server, variable)
 end method variable-type;
 
-
+
 /// Implementation
 
 define method environment-object-type

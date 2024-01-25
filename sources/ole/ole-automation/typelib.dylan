@@ -113,7 +113,7 @@ define method add-object-to-library ( lib-creator :: <LPCREATETYPELIB>,
   end if;
 end method add-object-to-library;
 
-
+
 
 define macro checked-call
  { checked-call(?function:name(?args:*)) }
@@ -225,7 +225,7 @@ define method create-type-info ( lib-creator :: <LPCREATETYPELIB>,
 	    element(ref-table, component-typeinfo, default: #f);
 	  if ( ext-type == #f )
 	    // Not already converted.
-	    // For standard interfaces, try to use the official definitions. 
+	    // For standard interfaces, try to use the official definitions.
 	    if ( component-typeinfo == $IUnknown-type-info )
 	      ext-type := get-standard-typeinfo(ref-table, component-typeinfo,
 						$IID-IUnknown);
@@ -389,7 +389,7 @@ define method create-type-info ( lib-creator :: <LPCREATETYPELIB>,
   // Although from the way it is documented, it would seem that `LayOut'
   // doesn't have anything to do for a dispinterface, if it isn't called,
   // then when trying to read the resulting type library,
-  // ITypeInfo::GetTypeAttr fails with TYPE_E_INVALIDSTATE = 
+  // ITypeInfo::GetTypeAttr fails with TYPE_E_INVALIDSTATE =
   // "Invalid forward reference, or reference to uncompiled type."
   let layout-status = ICreateTypeInfo/LayOut(type-creator);
   check-ole-status(layout-status, "LayOut", type-creator);
@@ -445,7 +445,7 @@ define function get-standard-typeinfo(ref-table :: <table>,
     end if
   end if
 end get-standard-typeinfo;
-
+
 
 define method fetch-type-library (typeinfo :: <Dylan-Type-Info>,
 				  guid :: <REFGUID>,

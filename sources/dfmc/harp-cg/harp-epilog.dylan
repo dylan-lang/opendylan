@@ -12,7 +12,7 @@ define method emit-epilog
     (back-end :: <harp-back-end>, lambda :: <&iep>) => ()
   ins--tag(back-end, back-end.cg-variables.exit-tag);
   ins--rem(back-end, "function epilog");
-  
+
   if (instance?(lambda.function, <&c-callable-function>)
 	& lambda.function.c-modifiers ~= "__stdcall")
     ins--rts-and-drop(back-end, 0);
@@ -33,7 +33,7 @@ end method emit-epilog;
 // 	     back-end.cg-variables.runtime-references.size);
 //   format-out("\n### CG-REFERENCES %=\n", back-end.cg-variables.cg-references.size);
 //   format-out("\n### MODEL-REFERENCES %=\n", back-end.cg-variables.model-references.size);
-// 
+//
 //   format-out("\n### CG-TEMPORARIES %=\n", back-end.cg-variables.cg-temporaries.size);
 //   format-out("\n### TAGS %=\n", back-end.cg-variables.tags.size);
 // end method;

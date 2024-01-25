@@ -60,8 +60,8 @@ define method collocated-servant? (server-request :: <collocated-server-request>
       cache & #t;
     end if;
   end when;
-end method;    
-    
+end method;
+
 define method compute-collocated-servant (object :: <object-reference>, server-request :: <collocated-server-request>)
  => (servant :: false-or(portableserver/<servant>) , poa :: false-or(portableserver/<poa>), id :: false-or(<string>))
   if (collocated-server?(object))
@@ -89,7 +89,7 @@ define sideways method maybe-collocated-invoke (request :: corba/<request>, flag
     end if;
   end;
 end method;
-    
+
 define method collocated-invoke (server-request :: <collocated-server-request>, flags :: corba/<flags>)
  => (invoked? :: <boolean>, forwarded? :: <boolean>)
   let request = collocated-client-request(server-request);

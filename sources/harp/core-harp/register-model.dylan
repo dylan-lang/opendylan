@@ -90,7 +90,7 @@ define open primary class <register-model> (<object>)
   slot all-allocatable           :: <simple-object-vector>, init-value: $ev;
   slot not-preserved             :: <simple-object-vector>, init-value: $ev;
   slot c-not-preserved           :: <simple-object-vector>, init-value: $ev;
-  
+
 
 end;
 

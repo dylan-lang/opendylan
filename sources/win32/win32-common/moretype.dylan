@@ -17,7 +17,7 @@ end MAKEINTRESOURCE;
 // In Win32, RECT and RECTL, although structurally equivalent, are distinct
 // types for the sake of source code compatibility with Win16.  But since we
 // have no intention of ever supporting Win16 here, it is simpler to
-// unify them. 
+// unify them.
 define constant <RECTL> = <RECT>;
 define constant <PRECTL> = <PRECT>;
 define constant <LPRECTL> = <LPRECT>;
@@ -41,7 +41,7 @@ define constant $NULL-HINSTANCE :: <HINSTANCE> = null-pointer(<HINSTANCE>);
 // renamed to avoid conflicting with the Dylan type <boolean>.
 
 define inline-only function import-boolean
-    (value :: <integer>) => (b :: <boolean>) 
+    (value :: <integer>) => (b :: <boolean>)
   ~ zero?(value)
 end;
 
@@ -64,7 +64,7 @@ define inline method c-type-cast
 end method c-type-cast;
 */
 
-define inline-only function import-wchar 
+define inline-only function import-wchar
     (value :: <integer>) => (char :: <character>)
   as(<character>, value)
 end;

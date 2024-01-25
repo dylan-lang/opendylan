@@ -85,7 +85,7 @@ end;
 
 define sideways method emit-gluefile
     (back-end :: <llvm-back-end>, ld :: <library-description>, cr-names,
-     #key assembler-output? = unsupplied(), 
+     #key assembler-output? = unsupplied(),
           downloadable-data? = #f,
           debug-info? = #t,
           compilation-layer,
@@ -318,7 +318,7 @@ define sideways method emit-gluefile
   back-end.llvm-builder-module := #f;
 end;
 
-
+
 /// Compilation record init function naming
 
 define method glue-name-raw (name :: <byte-string>)

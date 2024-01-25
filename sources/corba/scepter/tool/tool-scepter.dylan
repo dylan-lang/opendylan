@@ -47,7 +47,7 @@ define method scepter-parse-options (scepter :: <tool-scepter>)
         end if;
       else
         error(make(<illegal-option>, source: #f, option-name: arg));
-      end if;  
+      end if;
     end unless;
   end for;
 end method;
@@ -146,7 +146,7 @@ define function date-as-string (date :: false-or(<date>)) => (r :: <string>)
     date := date + make(<day/time-duration>, days: 0);	// Stupid way to copy
     date.date-time-zone-offset := local-time-zone-offset();
     let (year, month, day, hours, minutes) = decode-date(date);
-    format-to-string("%d:%02d %d-%02d-%02d %s", 
+    format-to-string("%d:%02d %d-%02d-%02d %s",
 		     hours, minutes, year, month, day, local-time-zone-name())
   else
     "<no date>"

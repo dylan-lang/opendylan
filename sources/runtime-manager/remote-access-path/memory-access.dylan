@@ -34,11 +34,11 @@ define method register-vector-on-connection
   let register-vector =
     make (<vector>, size: (last-register - first-register + 1));
   for (i from first-general to last-general)
-    register-vector[i - 1] := 
+    register-vector[i - 1] :=
       nub-register-descriptor (#"general", i);
   end for;
   for (i from first-special to last-special)
-    register-vector[i - 1] := 
+    register-vector[i - 1] :=
       nub-register-descriptor (#"special", i);
   end for;
   register-vector;
@@ -47,11 +47,11 @@ end method;
 
 ///// READ-VALUE
 
-define method read-value-from-register 
+define method read-value-from-register
     (conn :: <remote-access-connection>, register :: <active-remote-register>,
      #key frame-index = #f)
       => (val :: <remote-value>)
-  let (value :: <RTARGET-ADDRESS>, error) = 
+  let (value :: <RTARGET-ADDRESS>, error) =
     if (frame-index)
       Rtmgr/RemoteNub/read-value-from-process-register-in-stack-frame
          (conn.nub, register.register-thread.rnub-descriptor,
@@ -69,7 +69,7 @@ define method read-value-from-register
   as-remote-value(value);
 end method;
 
-define method read-value-from-memory 
+define method read-value-from-memory
     (conn :: <remote-access-connection>, location :: <remote-value>)
       => (val :: <remote-value>)
   let (value :: <RTARGET-ADDRESS>, error) =
@@ -83,11 +83,11 @@ end method;
 
 ///// WRITE-VALUE
 
-define method write-value-to-register 
+define method write-value-to-register
     (conn :: <remote-access-connection>,
      register :: <active-remote-register>,
      value :: <remote-value>) => ()
-  let err = 
+  let err =
     Rtmgr/RemoteNub/write-value-to-process-register
     (conn.nub,
      register.register-thread.rnub-descriptor,
@@ -98,7 +98,7 @@ define method write-value-to-register
   end if;
 end method;
 
-define method write-value-to-memory 
+define method write-value-to-memory
     (conn :: <remote-access-connection>, address :: <remote-value>,
      value :: <remote-value>) => ()
   let err =
@@ -111,12 +111,12 @@ end method;
 
 ///// READ-SINGLE-FLOAT
 
-define method read-single-float-from-register 
+define method read-single-float-from-register
     (conn :: <remote-access-connection>,
      register :: <active-remote-register>)
        => (val :: <single-float>)
-  let (value, error) = 
-    Rtmgr/RemoteNub/read-single-float-from-process-register 
+  let (value, error) =
+    Rtmgr/RemoteNub/read-single-float-from-process-register
       (conn.nub, register.register-thread.rnub-descriptor, register.nub-descriptor);
   if (error ~= $access-ok)
     signal (make (<remote-access-violation-error>));
@@ -124,7 +124,7 @@ define method read-single-float-from-register
   value;
 end method;
 
-define method read-single-float-from-memory 
+define method read-single-float-from-memory
     (conn :: <remote-access-connection>, location :: <remote-value>)
        => (val :: <single-float>)
   let (value, error) =
@@ -139,13 +139,13 @@ end method;
 
 ///// WRITE-SINGLE-FLOAT
 
-define method write-single-float-to-register 
-    (conn :: <remote-access-connection>, 
+define method write-single-float-to-register
+    (conn :: <remote-access-connection>,
      register :: <active-remote-register>,
-     value :: <single-float>) 
+     value :: <single-float>)
        => ()
-  let error = 
-    Rtmgr/RemoteNub/write-single-float-to-process-register 
+  let error =
+    Rtmgr/RemoteNub/write-single-float-to-process-register
       (conn.nub, register.register-thread.rnub-descriptor, register.nub-descriptor,
        value);
   if (error ~= $access-ok)
@@ -153,9 +153,9 @@ define method write-single-float-to-register
   end if
 end method;
 
-define method write-single-float-to-memory 
+define method write-single-float-to-memory
     (conn :: <remote-access-connection>, address :: <remote-value>,
-     value :: <single-float>) 
+     value :: <single-float>)
        => ()
   let error =
     Rtmgr/RemoteNub/write-single-float-to-process-memory
@@ -167,12 +167,12 @@ end method;
 
 ///// READ-DOUBLE-FLOAT
 
-define method read-double-float-from-register 
+define method read-double-float-from-register
     (conn :: <remote-access-connection>,
      register :: <active-remote-register>)
        => (val :: <double-float>)
-  let (value, error) = 
-    Rtmgr/RemoteNub/read-double-float-from-process-register 
+  let (value, error) =
+    Rtmgr/RemoteNub/read-double-float-from-process-register
       (conn.nub, register.register-thread.rnub-descriptor, register.nub-descriptor);
   if (error ~= $access-ok)
     signal (make (<remote-access-violation-error>));
@@ -180,7 +180,7 @@ define method read-double-float-from-register
   value;
 end method;
 
-define method read-double-float-from-memory 
+define method read-double-float-from-memory
     (conn :: <remote-access-connection>, location :: <remote-value>)
        => (val :: <double-float>)
   let (value, error) =
@@ -194,13 +194,13 @@ end method;
 
 ///// WRITE-DOUBLE-FLOAT
 
-define method write-double-float-to-register 
-    (conn :: <remote-access-connection>, 
+define method write-double-float-to-register
+    (conn :: <remote-access-connection>,
      register :: <active-remote-register>,
-     value :: <double-float>) 
+     value :: <double-float>)
        => ()
-  let error = 
-    Rtmgr/RemoteNub/write-double-float-to-process-register 
+  let error =
+    Rtmgr/RemoteNub/write-double-float-to-process-register
       (conn.nub, register.register-thread.rnub-descriptor, register.nub-descriptor,
        value);
   if (error ~= $access-ok)
@@ -208,9 +208,9 @@ define method write-double-float-to-register
   end if
 end method;
 
-define method write-double-float-to-memory 
+define method write-double-float-to-memory
     (conn :: <remote-access-connection>, address :: <remote-value>,
-     value :: <double-float>) 
+     value :: <double-float>)
        => ()
   let error =
     Rtmgr/RemoteNub/write-double-float-to-process-memory
@@ -222,7 +222,7 @@ end method;
 
 ///// READ-BYTE-STRING
 
-define method read-byte-string-from-memory 
+define method read-byte-string-from-memory
    (conn :: <remote-access-connection>, address :: <remote-value>,
     length :: <integer>)
       => (val :: <byte-string>)
@@ -252,7 +252,7 @@ end method;
 ///// CALCULATE-STACK-ADDRESS
 
 define method calculate-stack-address-on-connection
-    (conn :: <remote-access-connection>, thread :: <remote-thread>, 
+    (conn :: <remote-access-connection>, thread :: <remote-thread>,
      offset :: <integer>)
        => (addr :: <remote-value>)
   as-remote-value
@@ -321,7 +321,7 @@ end method;
 ///// PERFORM-COFF-RELOCATION
 
 define method perform-coff-relocation-on-connection
-    (conn :: <remote-access-connection>, 
+    (conn :: <remote-access-connection>,
      ra :: <remote-value>, da :: <remote-value>,
      #key relative? = #f)
        => (worked? :: <boolean>)

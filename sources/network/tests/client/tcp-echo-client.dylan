@@ -21,7 +21,7 @@ end method;
 register-client("TCP Echo", tcp-echo-client);
 
 define method test-echo (client-socket)
-  let test-output = 
+  let test-output =
     with-input-from-string (input-stream = $test-input)
       with-output-to-string (output-stream)
         request-echo(client-socket, input-stream, output-stream)

@@ -31,7 +31,7 @@ define method initialize (this :: <vtable-type-info>, #rest args,
 			else
 			  0
 			end;
-  this.vtable-members := 
+  this.vtable-members :=
     if (this.nesting-level == 0)
       as(<simple-vector>, members)
     else
@@ -109,7 +109,7 @@ define method make-member-desc (func :: <vtable-member-description>,
     for ( i from 0 below total-number,
 	  argtype in argument-types )
       let elem :: <LPELEMDESC> = pointer-value-address(elems, index: i);
-      let direction-flags :: <U16> = 
+      let direction-flags :: <U16> =
 	set-typedesc(argtype, elem.tdesc-value);
       elem.idldesc-value.wIDLFlags-value := direction-flags;
     end for;
@@ -158,7 +158,7 @@ define method ITypeInfo/GetTypeAttr(typeinfo :: <vtable-type-info>)
   unless ( null?(base-type) )
     ta.cImplTypes-value := 1;
     unless ( instance?(base-type, <vtable-type-info>) )
-      // If vtable-members does not already include the inherited members, 
+      // If vtable-members does not already include the inherited members,
       // then add in the vtable size of the inherited type.
       let ( status, attributes :: <LPTYPEATTR> ) =
 	ITypeInfo/GetTypeAttr(base-type);

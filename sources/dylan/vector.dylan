@@ -548,7 +548,7 @@ end method;
 ///   CONCATENATE-AS
 ///   FILL!
 
-
+
 //
 // <SIMPLE-VECTOR>
 //
@@ -574,7 +574,7 @@ define inline method type-for-copy (vector :: <simple-vector>)
 end method type-for-copy;
 
 
-
+
 ///
 /// LIMITED VECTOR
 ///

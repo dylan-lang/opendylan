@@ -7,26 +7,26 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-/// *permit-leaf-frames?* controls whether the debug-info interface permits 
-/// local variable information for leaf-case function frames to be 
+/// *permit-leaf-frames?* controls whether the debug-info interface permits
+/// local variable information for leaf-case function frames to be
 /// made available.
 
 define variable *permit-leaf-frames?* = #t;
 
 
 
-define sideways method compiled-lambda-symbolic-name 
-    (context :: dfmc-<library-description>, compiled-lambda :: <harp-compiled-lambda>) 
+define sideways method compiled-lambda-symbolic-name
+    (context :: dfmc-<library-description>, compiled-lambda :: <harp-compiled-lambda>)
     => (name :: false-or(<byte-string>))
   compiled-lambda.lambda-name;
 end method;
 
 
 define sideways method back-end-symbolic-name-compiled-lambda
-    (back-end :: <harp-back-end>, 
-     context :: dfmc-<library-description>, 
+    (back-end :: <harp-back-end>,
+     context :: dfmc-<library-description>,
      name :: <byte-string>,
-     #key file-name) 
+     #key file-name)
     => (compiled-lambda :: false-or(<compiled-lambda>))
   let leaf-name = file-name.file-name-leaf-stem;
   block (found)
@@ -73,7 +73,7 @@ end method;
 
 
 
-define method nearest-mapping-for-line 
+define method nearest-mapping-for-line
     (locs, wanted-line :: <integer>)
      => (nearest :: false-or(<relative-source-position>),
          difference :: <integer>);
@@ -110,11 +110,11 @@ define inline function update-candidate-lambda
 end function;
 
 define sideways method back-end-source-position-compiled-lambda
-    (back-end :: <harp-back-end>, 
-     context :: dfmc-<library-description>, 
+    (back-end :: <harp-back-end>,
+     context :: dfmc-<library-description>,
      sr :: dfmc-<source-record>,
      line-no :: <integer>,
-     #key interactive-only? = #t) 
+     #key interactive-only? = #t)
     => (compiled-lambda :: false-or(<compiled-lambda>),
         code-offset :: false-or(<integer>))
 
@@ -176,7 +176,7 @@ define sideways method compiled-lambda-source-location
     (compiled-lambda :: <harp-compiled-lambda>, code-offset :: <integer>,
      #key exact? = #f,
           line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (source-location :: false-or(<source-location>),
         exact? :: <boolean>)
   let abs-loc = compiled-lambda.lambda-location;
@@ -203,7 +203,7 @@ define sideways method compiled-lambda-code-offset
     (compiled-lambda :: <harp-compiled-lambda>, source-location :: <source-location>,
      #key exact? = #f,
           line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (code-offset :: false-or(<integer>))
   let abs-loc = compiled-lambda.lambda-location;
   if (abs-loc & (source-location.source-location-source-record
@@ -225,9 +225,9 @@ end method;
 
 
 define sideways method compiled-lambda-mapped-source-locations
-    (compiled-lambda :: <harp-compiled-lambda>, 
+    (compiled-lambda :: <harp-compiled-lambda>,
      #key line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (locations :: <sequence>)
   let abs-loc = compiled-lambda.lambda-location;
   if (abs-loc)
@@ -239,9 +239,9 @@ end method;
 
 
 define sideways method compiled-lambda-mapped-code-offsets
-    (compiled-lambda :: <harp-compiled-lambda>, 
+    (compiled-lambda :: <harp-compiled-lambda>,
      #key line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (code-offsets :: <sequence>)
   let abs-loc = compiled-lambda.lambda-location;
   if (abs-loc)
@@ -257,20 +257,20 @@ define function absolute-locator-source-location
   make-line-location(abs-loc.source-position-source-record, line);
 end function;
 
-define function relative-locator-source-location 
-    (abs-loc :: <absolute-source-position>, 
-     rel-loc :: <relative-source-position>) 
+define function relative-locator-source-location
+    (abs-loc :: <absolute-source-position>,
+     rel-loc :: <relative-source-position>)
     => (location :: <source-location>);
   let line = abs-loc.start-offset-into-source-record + rel-loc.function-relative-line-number;
   make-line-location(abs-loc.source-position-source-record, line);
 end function;
 
-define function compiled-lambda-locators 
-    (compiled-lambda :: <harp-compiled-lambda>, 
-     line-only? :: <boolean>, 
+define function compiled-lambda-locators
+    (compiled-lambda :: <harp-compiled-lambda>,
+     line-only? :: <boolean>,
      interactive-only? :: <boolean>) => (locs :: <simple-object-vector>)
   ignore(interactive-only?);
-  if (line-only?) 
+  if (line-only?)
     compiled-lambda.lambda-selected-locators;
   else compiled-lambda.lambda-all-locators;
   end if;
@@ -291,9 +291,9 @@ end method;
 define constant $demangler = make(dfmc-<demangler>);
 
 define sideways method back-end-local-variable-debug-name-dylan-name
-    (back-end :: <harp-back-end>, 
-     context :: dfmc-<library-description>, 
-     symbolic-name :: <byte-string>) 
+    (back-end :: <harp-back-end>,
+     context :: dfmc-<library-description>,
+     symbolic-name :: <byte-string>)
     => (dylan-name :: <byte-string>)
   dfmc-demangle-name-locally($demangler, symbolic-name);
 end method;
@@ -301,13 +301,13 @@ end method;
 
 
 
-define sideways method local-variable-debug-name 
+define sideways method local-variable-debug-name
     (context :: dfmc-<library-description>, var :: <named-variable>)
     => (name :: <byte-string>)
   var.unique-variable-name;
 end method;
 
-define sideways method local-variable-debug-name 
+define sideways method local-variable-debug-name
     (context :: dfmc-<library-description>, var :: <variable-indirections>)
     => (name :: <byte-string>)
   var.unique-variable-name;
@@ -352,19 +352,19 @@ end method;
 
 
 
-define method local-variable-sub-indirections 
+define method local-variable-sub-indirections
     (var) => (offsets :: <simple-object-vector>)
   #[];
 end method;
 
 
-define method local-variable-sub-indirections 
+define method local-variable-sub-indirections
     (var :: <named-indirection>) => (offsets :: <simple-object-vector>)
   vector(var.variable-indirection-offset);
 end method;
 
 
-define method local-variable-sub-indirections 
+define method local-variable-sub-indirections
     (var :: <indirections-variable-in-indirection>) => (offsets :: <simple-object-vector>)
   let indirs = var.variable-indirections;
   let ind1 = var.variable-indirection-offset;
@@ -393,7 +393,7 @@ define sideways method compiled-lambda-local-variables
 		    return(process-variables-to-singularize(debug-vars-as-list(vars, all-vars)))
 		  end if;
 		end if
-	      else 
+	      else
 		return(process-variables-to-singularize(debug-vars-as-list(vars, all-vars)))
 	      end if;
 	    end for-debug-scope;
@@ -406,7 +406,7 @@ define sideways method compiled-lambda-local-variables
 end method;
 
 
-define function process-variables-to-singularize 
+define function process-variables-to-singularize
     (vars :: <list>) => (processed-vars :: <list>)
   // Instances of <variable-indirections> might correspond to multiple
   // variables. But clients of this interface expect a flattened sequence
@@ -433,7 +433,7 @@ end function;
 
 define method copy-var-with-indirections
     (this :: <indirections-variable-in-spill>, sub) => (new :: <variable-indirections>)
-  make(<indirections-variable-in-spill>, 
+  make(<indirections-variable-in-spill>,
        offset: this.variable-frame-pointer-offset,
        name: this.harp-variable-name,
        indirections: vector(sub));
@@ -441,7 +441,7 @@ end method;
 
 define method copy-var-with-indirections
     (this :: <indirections-variable-in-leaf-spill>, sub) => (new :: <variable-indirections>)
-  make(<indirections-variable-in-leaf-spill>, 
+  make(<indirections-variable-in-leaf-spill>,
        offset: this.variable-frame-pointer-offset,
        name: this.harp-variable-name,
        indirections: vector(sub));
@@ -449,7 +449,7 @@ end method;
 
 define method copy-var-with-indirections
     (this :: <indirections-variable-in-register>, sub) => (new :: <variable-indirections>)
-  make(<indirections-variable-in-register>, 
+  make(<indirections-variable-in-register>,
        enumeration: this.variable-register-enumeration,
        name: this.harp-variable-name,
        indirections: vector(sub));
@@ -457,18 +457,18 @@ end method;
 
 define method copy-var-with-indirections
     (this :: <indirections-variable-in-indirection>, sub) => (new :: <variable-indirections>)
-  make(<indirections-variable-in-indirection>, 
+  make(<indirections-variable-in-indirection>,
        indirection-offset: this.variable-indirection-offset,
        indirections: vector(sub));
 end method;
 
 
-define method unique-variable-name 
+define method unique-variable-name
     (var :: <named-variable>) => (name :: <byte-string>)
   var.harp-variable-name;
 end method;
 
-define method unique-variable-name 
+define method unique-variable-name
     (var :: <variable-indirections>) => (name :: <byte-string>)
   unique-variable-name(var.variable-indirections[0]);
 end method;
@@ -498,7 +498,7 @@ define function frame-boundaries-for-scopes
 
 end function;
 
-define method acceptable-scope? 
+define method acceptable-scope?
     (scope :: <debug-scope>) => (acceptable? :: <boolean>)
   if (scope.debug-scope-with-frame?)
     #t;
@@ -515,7 +515,7 @@ end method;
 
 
 define sideways method back-end-compilation-context-initializer-symbolic-name
-    (back-end :: <harp-back-end>, 
+    (back-end :: <harp-back-end>,
      context :: dfmc-<library-description>)
     => (symbolic-name :: <byte-string>, component-name :: <byte-string>)
   let plain-name = context.dfmc-library-description-emit-name;
@@ -531,12 +531,12 @@ end method;
 
 
 
-define generic file-name-leaf-stem 
+define generic file-name-leaf-stem
     (file-name) => (leaf-name :: false-or(<byte-string>));
 
-define method file-name-leaf-stem 
+define method file-name-leaf-stem
     (file-name :: <byte-string>) => (leaf-name :: <byte-string>)
-  // Not sure whether there's a utility for doing this short of 
+  // Not sure whether there's a utility for doing this short of
   // using the locators library. Here's a home grown version with
   // only limited portability
   let name-size = file-name.size;
@@ -544,7 +544,7 @@ define method file-name-leaf-stem
   if ((leaf-start == 0) & (ext-start == name-size))
     file-name;
   else
-    let leaf-end = if (ext-start > leaf-start) 
+    let leaf-end = if (ext-start > leaf-start)
                      ext-start
                    else name-size;
                    end if;
@@ -552,14 +552,14 @@ define method file-name-leaf-stem
   end if;
 end method;
 
-define method file-name-leaf-stem 
+define method file-name-leaf-stem
     (file-name :: <object>) => (leaf-name :: singleton(#f))
   #f;
 end method;
 
 
 define function file-name-stem-limits
-    (file-name :: <byte-string>) 
+    (file-name :: <byte-string>)
     => (leaf-start :: <integer>,
         ext-start :: <integer>)
   let name-size = file-name.size;
@@ -569,7 +569,7 @@ define function file-name-stem-limits
     select (file-name[i])
 
       // Assume that "." is the only possible extension delimiter
-      '.' 
+      '.'
         => ext-start := i;
 
       // But allow for Unix & MS-DOS pathname & drivename separators

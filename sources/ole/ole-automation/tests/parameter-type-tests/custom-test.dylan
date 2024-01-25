@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define macro interface-test-definer
-  { 
+  {
     define interface-test ?iface-type:name ?:name (?supers:*)
       ?tests
     end
@@ -16,10 +16,10 @@ define macro interface-test-definer
     define interface-test-interface ?iface-type ?name (?supers)
       ?tests
     end;
-    distribute-over-semicolons(\define-interface-test-method, 
+    distribute-over-semicolons(\define-interface-test-method,
 			       ("<S-" ## ?name ## ">"), (?tests));
     define function "test-" ## ?name (iface :: "<C-" ## ?name ## ">")
-      distribute-over-semicolons(\interface-test-tester, 
+      distribute-over-semicolons(\interface-test-tester,
 				 (iface), (?tests));
     end;
   }
@@ -47,16 +47,16 @@ define macro interface-test-interface-definer
 
   members:
     { } => { }
-    { 
-      parameter ?:name \:: (?ctype:*, ?ptype:*) = (?vals:*); 
-      ... 
-    } => { 
-      member-function "test-iparm-" ## ?name (p :: ?ctype) => (); 
+    {
+      parameter ?:name \:: (?ctype:*, ?ptype:*) = (?vals:*);
+      ...
+    } => {
+      member-function "test-iparm-" ## ?name (p :: ?ctype) => ();
       member-function "test-oparm-" ## ?name (p :: out-ref(?ctype)) => ();
       // Because of Bug ####, hack:
       // member-function "test-ioparm-" ## ?name (p :: inout-ref(?ctype)) => ();
       member-function "test-ioparm-" ## ?name (p :: ?ptype) => ();
-      ... 
+      ...
     }
     { test ?rest:*; ... } => { ... }
     { ?other:*; ...  } => { ?other; ... }
@@ -75,8 +75,8 @@ end;
 
 define macro define-interface-test-method
   {
-    define-interface-test-method((?class:name), 
-      (parameter ?:name \:: (?ctype:*, ?ptype:*) = 
+    define-interface-test-method((?class:name),
+      (parameter ?:name \:: (?ctype:*, ?ptype:*) =
 	(?v1:expression, ?v2:expression)))
   } => {
     define method "test-iparm-" ## ?name (this :: ?class, p) => (r :: <HRESULT>)
@@ -100,8 +100,8 @@ end;
 define macro distribute-over-semicolons
   { distribute-over-semicolons(?macro:name, (?distributee:*), ()) } => { }
 
-  { 
-    distribute-over-semicolons(?macro:name, (?distributee:*), 
+  {
+    distribute-over-semicolons(?macro:name, (?distributee:*),
 			       (?item:*; ?rest:*))
   } => {
     ?macro ## ""((?distributee), (?item));
@@ -115,9 +115,9 @@ define function check-OK (name :: <string>, r :: <HRESULT>) => ()
 end;
 
 
-define function parameter-test 
+define function parameter-test
 	(name :: <string>, iface,
-	 ifunc :: <function>, ofunc :: <function>, iofunc :: <function>, 
+	 ifunc :: <function>, ofunc :: <function>, iofunc :: <function>,
 	 ctype :: <type>, ptype :: <type>, v1, v2) => ()
   check-OK(format-to-string("Input parameter %s; C type: %=, value: %=",
 			    name, ctype, v1),
@@ -125,7 +125,7 @@ define function parameter-test
   with-stack-structure (out-ptr :: ptype)
     check-OK(format-to-string("Output parameter %s; C type: %=", name, ctype),
 	     ofunc(iface, out-ptr));
-    check-equal(format-to-string("Output parameter %s; C type: %=", 
+    check-equal(format-to-string("Output parameter %s; C type: %=",
 				 name, ctype),
 		out-ptr.pointer-value, v2);
   end;
@@ -133,10 +133,10 @@ define function parameter-test
     check-no-errors(format-to-string("Inout parameter %s: C type: %=, "
 			       "setting in value: %=", name, ctype, v2),
 		    inout-ptr.pointer-value := v2);
-    check-OK(format-to-string("In-out parameter %s; C type: %=, value: %=", 
+    check-OK(format-to-string("In-out parameter %s; C type: %=, value: %=",
 			      name, ctype, inout-ptr.pointer-value),
 	     iofunc(iface, inout-ptr));
-    check-equal(format-to-string("In-out parameter %s; C type: %=", 
+    check-equal(format-to-string("In-out parameter %s; C type: %=",
 				 name, ctype),
 		inout-ptr.pointer-value, v1);
   end;
@@ -146,7 +146,7 @@ end;
 define macro interface-test-tester
   {
     interface-test-tester((?iface:expression),
-      (parameter ?:name \:: (?ctype:*, ?ptype:*) = 
+      (parameter ?:name \:: (?ctype:*, ?ptype:*) =
 	(?v1:expression, ?v2:expression)))
   } => {
     parameter-test(?"name", ?iface, "test-iparm-" ## ?name,
@@ -154,9 +154,9 @@ define macro interface-test-tester
 		   ?ctype, ?ptype, ?v1, ?v2);
   }
 
-  { 
-    interface-test-tester((?iface:expression), (test (?:name) (?:body))) 
-  } => { 
+  {
+    interface-test-tester((?iface:expression), (test (?:name) (?:body)))
+  } => {
     begin
       let ?name = ?iface;
       ?body;

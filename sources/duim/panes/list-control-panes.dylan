@@ -77,7 +77,7 @@ define method note-gadget-items-changed
   end
 end method note-gadget-items-changed;
 
-
+
 /// Generic implementation of list item panes
 
 define sealed class <list-item-pane>

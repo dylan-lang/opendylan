@@ -162,7 +162,7 @@ define method note-command-disabled
      frame, command)
 end method note-command-disabled;
 
-
+
 /// Callbacks on command menus generate these events
 
 /// Command events
@@ -203,7 +203,7 @@ define method distribute-command-event
   end
 end method distribute-command-event;
 
-
+
 /// Make commands be legal callbacks for gadgets and frames
 
 //--- Should we be worried that the arguments are being ignored?

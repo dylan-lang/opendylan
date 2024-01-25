@@ -106,21 +106,21 @@ define method ensure-any-consistent (object :: corba/<any>)
   end if;
 end method;
 
-define open generic ensure-any-typecode-consistent (typecode, value) 
+define open generic ensure-any-typecode-consistent (typecode, value)
  => (coerce? :: <boolean>, new-value);
 
-define method ensure-any-typecode-consistent (typecode, value) 
+define method ensure-any-typecode-consistent (typecode, value)
  => (coerce? :: <boolean>, new-value)
-  ensure-any-native-type-consistent(typecode-native-type(typecode), value) 
-end method; 
+  ensure-any-native-type-consistent(typecode-native-type(typecode), value)
+end method;
 
-define open generic ensure-any-native-type-consistent (type, value) 
+define open generic ensure-any-native-type-consistent (type, value)
  => (coerce? :: <boolean>, new-value);
 
-define method ensure-any-native-type-consistent (type, value) 
+define method ensure-any-native-type-consistent (type, value)
  => (coerce? :: <boolean>, new-value)
   values(#f, #f)
-end method; 
+end method;
 
 define method check-any-value (any :: corba/<any>, object :: <object>)
   object
@@ -154,7 +154,7 @@ define method as (class :: subclass(corba/<struct>), object :: corba/<any>)
   check-any-as-class(class, object);
   as(class, corba/any/%value(object));
 end method;
-       
+
 /// STRUCT/ANONYMOUS-OBJECT COERCION
 
 define method as (class :: subclass(corba/<struct>), value :: <anonymous-object>)

@@ -224,7 +224,7 @@ define function available-machines
   machines
 end function available-machines;
 
-
+
 /// Connect command
 
 define class <connect-to-remote-machine-command> (<environment-command>)
@@ -282,7 +282,7 @@ define method open-remote-connection
   end
 end method open-remote-connection;
 
-
+
 /// Start application command
 
 define class <start-application-command> (<project-command>)
@@ -365,7 +365,7 @@ define method do-execute-command
      pause-before-termination?: #f)
 end method do-execute-command;
 
-
+
 /// Debug application command
 
 define class <debug-application-command> (<start-application-command>)
@@ -383,7 +383,7 @@ define command-line debug => <debug-application-command>
   flag share-console = "share the console with the application [off by default]";
 end command-line debug;
 
-
+
 /// Play command
 
 define class <play-command> (<environment-command>)
@@ -407,7 +407,7 @@ define method do-execute-command
   run(<debug-application-command>)
 end method do-execute-command;
 
-
+
 /// Abort thread command
 
 define class <abort-thread-command> (<project-command>)
@@ -433,7 +433,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Create thread command
 
 define class <create-thread-command> (<project-command>)
@@ -457,7 +457,7 @@ define method do-execute-command
           environment-object-display-name(project, thread, #f))
 end method do-execute-command;
 
-
+
 /// Suspend thread command
 
 define class <suspend-thread-command> (<project-command>)
@@ -481,7 +481,7 @@ define method do-execute-command
           environment-object-display-name(project, thread, #f))
 end method do-execute-command;
 
-
+
 /// Resume thread command
 
 define class <resume-thread-command> (<project-command>)
@@ -505,7 +505,7 @@ define method do-execute-command
           environment-object-display-name(project, thread, #f))
 end method do-execute-command;
 
-
+
 /// Continue application command
 
 define class <continue-application-command> (<project-command>)
@@ -539,7 +539,7 @@ define method do-execute-command
      end)
 end method do-execute-command;
 
-
+
 /// Stop application command
 
 define class <stop-application-command> (<application-command>)
@@ -557,7 +557,7 @@ define method do-execute-command
   close-application(project, wait-for-termination?: #t)
 end method do-execute-command;
 
-
+
 /// Restart application command
 
 define class <restart-application-command> (<application-command>)
@@ -579,7 +579,7 @@ define method do-execute-command
   execute-command(start-command)
 end method do-execute-command;
 
-
+
 /// Evaluate command
 
 define class <evaluate-code-command> (<application-command>)
@@ -634,7 +634,7 @@ define method do-execute-command
      end)
 end method do-execute-command;
 
-
+
 /// Word parsing
 ///---*** Should be in environment-commands
 
@@ -659,7 +659,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Application callbacks
 
 define sideways method initialize-application-client
@@ -842,7 +842,7 @@ define function application-continue-restart
   end
 end function application-continue-restart;
 
-
+
 /// Thread synchronization
 
 define method synchronize-application-call
@@ -875,7 +875,7 @@ define method synchronize-application-release
   end
 end method synchronize-application-release;
 
-
+
 ///---*** To do
 
 /*
@@ -889,7 +889,7 @@ end method synchronize-application-release;
   evaluate
 */
 
-
+
 /// Debugging commands
 
 define command-group debugging into environment

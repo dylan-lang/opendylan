@@ -44,7 +44,7 @@ define sealed method definition-code-location-character-offset
   0
 end method definition-code-location-character-offset;
 
-
+
 /// ID handling
 
 define sealed method find-compiler-database-proxy

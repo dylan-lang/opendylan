@@ -15,7 +15,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method download-object-files
     (application :: <debug-target>, coff-files :: <sequence>,
      #key library = "dylan") => ()
-  let transaction = 
+  let transaction =
     open-interactive-transaction(application, coff-files, dll-name: library);
   download-all-raw-data(transaction);
   define-all-symbols(transaction);
@@ -28,7 +28,7 @@ end method;
 //    The main interface to the interactive linker.
 
 define sideways method download-for-interactive-execution
-    (context :: <runtime-context>, coff-files :: <sequence>, 
+    (context :: <runtime-context>, coff-files :: <sequence>,
      library :: <byte-string>, entry-point :: <byte-string>)
         => (transaction-id)
 
@@ -44,7 +44,7 @@ end method;
 
 
 ///// DOWNLOAD-FOR-INTERACTIVE-EXECUTION-INTERNAL
-//    The internal interface must be called on the thread managing the 
+//    The internal interface must be called on the thread managing the
 //    application
 
 define method download-for-interactive-execution-internal

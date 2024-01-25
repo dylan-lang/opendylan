@@ -332,7 +332,7 @@ define method make-exit-button
   end
 end method make-exit-button;
 
-
+
 /// Property frames
 
 define method make-exit-buttons
@@ -366,7 +366,7 @@ define sideways method dialog-current-page-setter
   tab-control-current-page(property-frame-tab-control(dialog)) := page
 end method dialog-current-page-setter;
 
-
+
 /// Wizards
 
 define method dialog-needs-separator?

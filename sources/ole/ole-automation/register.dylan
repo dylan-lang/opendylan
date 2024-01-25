@@ -18,18 +18,18 @@ end format-guid;
 
 
 /* example from "Inside OLE":
-  
+
 REGEDIT
 HKEY_CLASSES_ROOT\Acme.Component.3 = Acme Component Version 3.0
 HKEY_CLASSES_ROOT\Acme.Component.3\CLSID = {42754580-16b7-11ce-80eb-00aa003d7352}
 
-HKEY_CLASSES_ROOT\Acme.Component = Acme Component 
+HKEY_CLASSES_ROOT\Acme.Component = Acme Component
 HKEY_CLASSES_ROOT\Acme.Component\CurVer = Acme.Component.3
 
 HKEY_CLASSES_ROOT\CLSID\{42754580-16b7-11ce-80eb-00aa003d7352} = Acme Component 3.0
 HKEY_CLASSES_ROOT\CLSID\{42754580-16b7-11ce-80eb-00aa003d7352}\ProgID = Acme.Component.3
 HKEY_CLASSES_ROOT\CLSID\{42754580-16b7-11ce-80eb-00aa003d7352}\VersionIndependentProgID = Acme.Component
-*/  
+*/
 
 define constant $clsid-prefix = "CLSID\\";
 
@@ -224,7 +224,7 @@ define method register-coclass (type-info :: <Dylan-Type-Info>,
  => ();
 
   AddRef(type-info);
-  let class-id :: <REFCLSID> = 
+  let class-id :: <REFCLSID> =
     if ( class-id ) as(<REFCLSID>, class-id) else type-info.guid-value end if;
   let title-string = title | coclass-title-string(type-info);
   register-automation-server(class-id, prog-id,

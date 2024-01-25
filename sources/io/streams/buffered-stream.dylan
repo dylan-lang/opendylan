@@ -80,7 +80,7 @@ define inline function ensure-output-buffer (stream :: <buffered-stream>) => ()
   end
 end function ensure-output-buffer;
 
-
+
 /// Buffered input protocol
 
 define inline function get-input-buffer
@@ -164,7 +164,7 @@ define macro with-input-buffer
        end }
 end macro with-input-buffer;
 
-
+
 /// Buffered output protocol
 
 define inline function get-output-buffer
@@ -225,7 +225,7 @@ define macro with-output-buffer
        end }
 end macro with-output-buffer;
 
-
+
 /// Single buffered streams
 
 define open generic stream-shared-buffer
@@ -252,7 +252,7 @@ define method do-release-output-buffer
   stream-output-buffer(stream) := #f
 end method do-release-output-buffer;
 
-
+
 /// Double buffered streams
 
 define open abstract primary class <double-buffered-stream> (<buffered-stream>)
@@ -382,7 +382,7 @@ define method do-force-output-buffers
   values()
 end method do-force-output-buffers;
 
-
+
 /// Readable stream protocol
 
 // Note that we don't implement 'unread-element' for buffered streams,
@@ -489,7 +489,7 @@ define method discard-input
   end
 end method discard-input;
 
-
+
 
 define method do-force-output
     (stream :: <buffered-stream>) => ()
@@ -514,7 +514,7 @@ define method discard-output
   end
 end method discard-output;
 
-
+
 /// Line-oriented I/O
 
 define method read-line
@@ -678,7 +678,7 @@ define method read-line-into!
   end
 end method read-line-into!;
 
-
+
 /// "High performance" functions
 
 // Skip over the next n elements, even if the stream isn't positionable
@@ -704,7 +704,7 @@ define method read-skip
   end
 end method read-skip;
 
-
+
 
 /// Writable stream protocol
 // This all uses the new buffer-dirty? flag.  Although double buffered

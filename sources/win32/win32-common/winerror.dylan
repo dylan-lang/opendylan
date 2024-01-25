@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                       *
 *   winerror.h --  error code definitions for the Win32 API functions   *
 *                                                                       *
-*   
+*
 *                                                                       *
 ************************************************************************/
 

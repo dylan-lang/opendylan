@@ -58,7 +58,7 @@ define test test-<copy/rename-disposition> ()
   //---*** Fill this in.
 end;
 
-
+
 /// File-system function test cases
 
 define test test-file-exists? ()
@@ -177,14 +177,14 @@ define test test-root-directories ()
   end;
 end test;
 
-
+
 /// Macro tests
 
 define test test-with-open-file-test ()
   // ---*** Fill this in.
 end test;
 
-
+
 /// File stream test utilities
 
 define variable *tbs* = 4;        // buffer-size for testing purposes
@@ -334,7 +334,7 @@ define method destroy-file-stream (the-stream :: <file-stream>) => ()
   delete-file(the-file-locator);
 end method;
 
-
+
 /// Miscellaneous tests
 
 // This is a hack to replace the uses of stream-contents in the existing
@@ -1318,7 +1318,7 @@ define test test-async-stream-async-tests ()
   close(s);
 end test test-async-stream-async-tests;
 
-
+
 /// Test suites
 
 // Prepend "system-" to distinguish from a test by the same name in the io test
@@ -1355,7 +1355,7 @@ define suite system-additional-streams-suite ()
   test test-multi-buffered-read-only;
 end suite;
 
-
+
 /// File system locators
 
 define sideways method make-test-instance

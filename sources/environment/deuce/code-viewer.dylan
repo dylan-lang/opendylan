@@ -337,7 +337,7 @@ define method do-handle-presentation-event
         menu-function: menu-function, keys)
 end method do-handle-presentation-event;
 
-
+
 /// Environment frame protocol
 
 define constant $code-viewer-no-source-message :: <byte-string>

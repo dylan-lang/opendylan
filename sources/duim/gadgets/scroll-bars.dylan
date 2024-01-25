@@ -65,7 +65,7 @@ define method sheet-vertical-scroll-bar-setter
   scroll-bar
 end method sheet-vertical-scroll-bar-setter;
 
-
+
 /// Scroll bar updating
 
 define sealed method update-scroll-bar

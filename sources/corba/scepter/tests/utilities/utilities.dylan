@@ -30,7 +30,7 @@ end method;
 define method scepter-default-front-end-class (scepter :: <test-scepter>)
  => (front-end-class :: subclass(<scepter-front-end>));
   scepter-front-end-class("file");
-end method;  
+end method;
 
 define method scepter-report-condition (scepter :: <test-scepter>, condition :: <simple-condition>)
  => ()
@@ -76,7 +76,7 @@ define method scepter-format-progress-end (scepter :: <test-scepter>, result, co
   else
     format(*standard-error*, "Aborted.");
   end if;
-end method;  
+end method;
 
 set-scepter(make(<test-scepter>, directory: working-directory()));
 
@@ -118,7 +118,7 @@ define method test-idl-file (files :: <table>,
                              filename :: <string>,
                              #key regression? :: <boolean>)
   let scepter = get-scepter();
-  with-progress (scepter, "Testing %s", filename)                             
+  with-progress (scepter, "Testing %s", filename)
     let file = files[as(<symbol>, filename)];
     scepter-sources(scepter) := sequence(<stretchy-vector>, file.idl-test-file-original-name);
     scepter-front-end(scepter) := make(scepter-front-end-class("file"), scepter: scepter);
@@ -184,7 +184,7 @@ define method add-idl-file!(files :: <table>,
                             #key
                             regression :: false-or(<string>) = #f,
                             setup :: <function> = identity)
-  files[as(<symbol>, filename)] := 
+  files[as(<symbol>, filename)] :=
     make(<idl-test-file>, name: filename, original: original, regression: regression, setup: setup);
 end method;
 
@@ -201,7 +201,7 @@ define method do-setup-1-idl-file (file :: <idl-test-file>)
       write(stream, file.idl-test-file-regression);
     end with-open-file;
   end if;
-end method;  
+end method;
 
 /*
 define method setup-1-idl-file (files :: <table>, file-name :: <string>)

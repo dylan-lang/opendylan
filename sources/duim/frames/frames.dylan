@@ -639,7 +639,7 @@ define sealed method default-text-style-setter
   ts
 end method default-text-style-setter;
 
-
+
 /// Accelerators
 
 // The idea here is to allow the accelerators to be set explicitly,
@@ -692,7 +692,7 @@ define method note-accelerators-changed
   #f
 end method note-accelerators-changed;
 
-
+
 /// Frame geometry
 
 // If the frame has not been layed out yet, return the default geometry,
@@ -782,7 +782,7 @@ define method set-frame-size
   end
 end method set-frame-size;
 
-
+
 /// Input focus
 
 define method frame-input-focus
@@ -811,7 +811,7 @@ define method frame-input-focus-setter
   new
 end method frame-input-focus-setter;
 
-
+
 /// Pointer cursors
 
 define method frame-cursor-override-setter
@@ -877,7 +877,7 @@ define method note-background-operation-finished
   end
 end method note-background-operation-finished;
 
-
+
 /// Command table handling
 
 define method frame-command-table
@@ -936,7 +936,7 @@ define method handle-id-activation
   end
 end method handle-id-activation;
 
-
+
 /// Menu bar handling
 
 // Back-ends specialize this to install sensible mnemonics for
@@ -1013,7 +1013,7 @@ define method frame-status-message-setter
   message
 end method frame-status-message-setter;
 
-
+
 /// Popup menu handling
 
 define method note-menu-attached
@@ -1028,7 +1028,7 @@ define method note-menu-detached
   remove!(frame-owned-menus(frame), menu)
 end method note-menu-detached;
 
-
+
 /// Frame initialization
 
 define method initialize
@@ -1139,7 +1139,7 @@ define method frame-top-level-sheet-class
   <top-level-sheet>
 end method frame-top-level-sheet-class;
 
-
+
 /// Creating frames
 
 // Create a frame of the specified type if one does not already exist,
@@ -1194,7 +1194,7 @@ define method find-frame
   frame
 end method find-frame;
 
-
+
 /// Attaching and detaching frames
 
 // Attach the frame to a frame manager
@@ -1312,7 +1312,7 @@ define method frame-wrapper
   sheet
 end method frame-wrapper;
 
-
+
 /// Frame-defining macrology
 
 define macro frame-definer
@@ -1503,7 +1503,7 @@ define method generate-panes
   frame-layout(frame)
 end method generate-panes;
 
-
+
 /// Frame titles and icons
 
 define method frame-title-setter
@@ -1537,7 +1537,7 @@ define method note-icon-changed
   #f
 end method note-icon-changed;
 
-
+
 /// Layout
 
 define method layout-frame
@@ -1619,7 +1619,7 @@ define method frame-top-level-sheet-size
   values(width, height)
 end method frame-top-level-sheet-size;
 
-
+
 /// Default button handling
 
 define method frame-default-button-setter
@@ -1632,7 +1632,7 @@ define method frame-default-button-setter
   new-button
 end method frame-default-button-setter;
 
-
+
 /// Mapping and unmapping
 
 define method frame-mapped?
@@ -1837,7 +1837,7 @@ define method synchronize-display (frame :: <basic-frame>) => ()
   _port & synchronize-display(_port)
 end method synchronize-display;
 
-
+
 /// Frame event distribution and queueing
 
 define method do-dispatch-event
@@ -1878,7 +1878,7 @@ define method make-event-queue
   make(<event-queue>)
 end method make-event-queue;
 
-
+
 /// Thread handling
 
 // Users can use these functions to make a function call in the frame's
@@ -1922,7 +1922,7 @@ define method apply-in-frame
   end
 end method apply-in-frame;
 
-
+
 /// Starting frames
 
 // Realizes and displays the frame's UI, then starts the frame's event loop.
@@ -2094,7 +2094,7 @@ define method handle-event
   end
 end method handle-event;
 
-
+
 /// Pointer documentation
 
 define method display-pointer-documentation

@@ -86,7 +86,7 @@ define method check-branch (union :: <ast-union>, union-branch :: <ast-union-bra
 	check-branch-by-label(union, union-branch, label);
     end case;
   end for;
-end method; 
+end method;
 
 define method check-before-add (union :: <ast-union>, union-branch :: <ast-union-branch>)
   check-branch(union, union-branch);

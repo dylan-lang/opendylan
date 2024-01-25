@@ -29,10 +29,10 @@ define inline method do-with-open-midi-device (f :: <function>, md :: <midi-devi
   end;
 end method;
 
-define macro with-open-midi-device 
+define macro with-open-midi-device
   { with-open-midi-device (?md:expression) ?:body end }
     => { do-with-open-midi-device(method () ?body end, ?md) }
 end macro;
 
-define open generic select-midi-instrument 
+define open generic select-midi-instrument
     (md :: <midi-device>, mc :: <midi-channel>, mv :: <midi-instrument>) => ();

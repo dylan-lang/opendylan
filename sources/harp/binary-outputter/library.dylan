@@ -40,7 +40,7 @@ define module binary-outputter
     do-export,
 
     assemble-harp-outputter
-    
+
     ;
 
 end module;

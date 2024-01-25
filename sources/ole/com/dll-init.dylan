@@ -70,7 +70,7 @@ define method IClassFactory/LockServer ( self :: <class-factory-with-lock>,
 end IClassFactory/LockServer;
 
 
-
+
 
 define variable *last-in-process-module* = #f;
 
@@ -90,8 +90,8 @@ define macro initialize-in-process-server
 				 ?validate-fn:expression = ignore,
 				 ?module-handle-fn:expression = ignore,
 				 ?args:expression ) }
-    => { 
-// These definitions are inside the macro expansion so that they will 
+    => {
+// These definitions are inside the macro expansion so that they will
 // reside in each user's DLL, not in the shared DLL for this library.
 
 define constant ?=COM%DLL-module-handle :: <hModule>

@@ -39,19 +39,19 @@ define constant <unsigned-short> = limited(<integer>, min: 0, max: #xffff);
 
 define constant <signed-long> =
   type-union(<integer>, <machine-word>);
-define constant <unsigned-long> = 
+define constant <unsigned-long> =
   type-union(limited(<integer>, min: 0), <machine-word>);
 
 define constant <signed-int> = <signed-long>;
 define constant <unsigned-int> = <unsigned-long>;
 
 /* // Can't do this because of sealing
-define sealed inline method c-type-cast 
+define sealed inline method c-type-cast
     ( type == <signed-long>, value :: <object> ) => (value :: <signed-long>)
   c-type-cast(<C-both-signed-long>, value)
 end method c-type-cast;
 
-define sealed inline method c-type-cast 
+define sealed inline method c-type-cast
     (type == <unsigned-long>, value :: <object>) => (value :: <unsigned-long>)
   c-type-cast(<C-both-unsigned-long>, value)
 end method c-type-cast;
@@ -90,7 +90,7 @@ define inline method LOWORD ( n :: <integer> ) => value :: <U16>;
 end LOWORD;
 
 define inline method HIWORD ( n :: <integer> ) => value :: <U16>;
-    logand( ash(n,-16), #xFFFF)  
+    logand( ash(n,-16), #xFFFF)
 end HIWORD;
 
 define inline method LOWORD ( n :: <machine-word> ) => value :: <U16>;
@@ -150,7 +150,7 @@ define inline method LOBYTE ( n :: <integer> ) => value :: <U8>;
 end LOBYTE;
 
 define inline method HIBYTE ( n :: <integer> ) => value :: <U8>;
-  logand(ash(n,-8), #xFF)  
+  logand(ash(n,-8), #xFF)
 end HIBYTE;
 
 define method LOBYTE ( n :: <machine-word> ) => value :: <U8>;
@@ -319,7 +319,7 @@ define method initialize (pointer :: <PLARGE-INTEGER>, #key value, #all-keys)
   values()
 end method initialize;
 
-
+
 
 // This equivalent for the Win32 `TEXT' macro will need some more work
 // if and when we support using the Unicode version of the API for NT.
@@ -338,14 +338,14 @@ define inline method TEXT (string :: <C-string>) => (value :: <C-string>)
   string
 end method;
 
-
+
 // The following slot accessor functions need to be declared as open generics
-// because they have methods defined in more than one library. 
+// because they have methods defined in more than one library.
 
 define macro open-accessor-definer
   { define open-accessor ?name:name } =>
     { define open inline-only generic ?name (struct) => (slot-value);
-      define open inline-only generic ?name ## "-setter" 
+      define open inline-only generic ?name ## "-setter"
           (new, struct) => (new); }
 end macro;
 
@@ -360,12 +360,12 @@ define open-accessor bottom-value;
 
 
 // This isn't used in this library, but methods are defined in both
-// "win32-dialog" and "win32-controls": 
+// "win32-dialog" and "win32-controls":
 
 define open-accessor flags-value;
 
 // This isn't used in this library, but methods are defined in both
-// "win32-kernel" and "win32-user": 
+// "win32-kernel" and "win32-user":
 define open-accessor offset-value;
 define open-accessor lpData-value;
 

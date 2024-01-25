@@ -324,7 +324,7 @@ define function make-entry-point-dbg-function
   values(dbg-function, dbg-parameters)
 end function;
 
-
+
 /// References
 
 define method llvm-entry-point-info
@@ -446,7 +446,7 @@ define method emit-reference
        operands: vector(func))
 end method;
 
-
+
 /// Entry point utility operations
 
 define function op--argument-count-error
@@ -547,7 +547,7 @@ define function op--parent-gf
   end ins--iterate
 end function;
 
-
+
 /// Apply entry point
 
 define entry-point-descriptor apply-xep
@@ -956,7 +956,7 @@ define entry-point-descriptor apply-mep
   end if
 end entry-point-descriptor;
 
-
+
 /// Dispatcher entry points
 
 // For direct method calls with fixed arguments only
@@ -1603,7 +1603,7 @@ define singular variable-arity outer entry-point-descriptor rest-key-mep-n
                    llvm-back-end-calling-convention-fast(be))
 end entry-point-descriptor;
 
-
+
 /// Accessor entry points
 
 define method op--slotacc-xep
@@ -1679,7 +1679,7 @@ define singular outer entry-point-descriptor slotacc-repeated-instance-setter-xe
                   value, a, inst, idx)
 end entry-point-descriptor;
 
-
+
 /// Dispatch engine entry points
 
 // Terminals

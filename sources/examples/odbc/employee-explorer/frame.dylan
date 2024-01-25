@@ -17,9 +17,9 @@ children:
     => { ?child, ... }
 end macro;
 
-define constant $boss-icon 
+define constant $boss-icon
   = read-image-as(<win32-icon>, "BOSS", #"icon", width: 16, height: 16);
-define constant $serf-icon 
+define constant $serf-icon
   = read-image-as(<win32-icon>, "SERF", #"icon", width: 16, height: 16);
 
 define frame <explorer-frame> (<simple-frame>)
@@ -32,9 +32,9 @@ define frame <explorer-frame> (<simple-frame>)
                                    exit-frame(sheet-frame(sheet))
                                  end)));
   menu-bar (frame)
-    make(<menu-bar>, children: vector(frame-file-menu(frame)));  
+    make(<menu-bar>, children: vector(frame-file-menu(frame)));
   pane frame-tree (frame)
-    make(<tree-control>, 
+    make(<tree-control>,
          roots: #[],
          children-generator:     subordinates,
          children-predicate:     subordinates?,
@@ -46,11 +46,11 @@ define frame <explorer-frame> (<simple-frame>)
              note-frame-selection-changed(frame, gadget-value(gadget));
            end);
   pane frame-table (frame)
-    make(<table-control>, 
+    make(<table-control>,
          items: #[],
-         headings:   
-           #["Last Name", "First Name", "Extension", "Reports To"], 
-         generators: 
+         headings:
+           #["Last Name", "First Name", "Extension", "Reports To"],
+         generators:
            vector(last-name, first-name, extension, compose(full-name, boss)),
          activate-callback:
            method (gadget :: <table-control>) => ()
@@ -80,18 +80,18 @@ define frame <explorer-frame> (<simple-frame>)
   keyword height: = 400;
 end frame;
 
-define method note-frame-selection-changed 
+define method note-frame-selection-changed
     (frame :: <explorer-frame>, item :: <object>) => ()
   let subs = subordinates(item);
   gadget-value(frame-tree(frame)) := item;
   gadget-items(frame-table(frame)) := subs;
-  gadget-label(frame-status-bar(frame)) 
+  gadget-label(frame-status-bar(frame))
     := format-to-string("%d subordinate(s)", size(subs));
-  gadget-label(frame-subordinates-label(frame)) 
+  gadget-label(frame-subordinates-label(frame))
     := format-to-string("Direct subordinates of '%s'", full-name(item));
 end method;
 
-define method handle-event 
+define method handle-event
     (frame :: <simple-frame>, event :: <frame-mapped-event>) => ()
   // Install the data and send out a fake change notification after initial
   // display to get all the panes in sync.

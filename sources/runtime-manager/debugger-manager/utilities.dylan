@@ -32,8 +32,8 @@ define method compilation-context-from-library
   if (application.debug-target-compilation-context)
     let component-name = lib.library-core-name;
     component-name-context
-      (application.debug-target-compilation-context, 
-       application, 
+      (application.debug-target-compilation-context,
+       application,
        component-name);
   else
     #f
@@ -54,7 +54,7 @@ define method compilation-context-from-symbol
         ($demangler, symbol.remote-symbol-name);
     if (dylan-libname)
       library-name-context
-        (application.debug-target-compilation-context, 
+        (application.debug-target-compilation-context,
          application,
          dylan-libname)
     else
@@ -130,7 +130,7 @@ define method call-frame-recorded-locations
   let frame-pointer-context = frame-pointer(path, ap-frame);
   let calling-ap-frame = previous-frame(path, ap-frame);
   let caller-frame-pointer-context =
-    if (calling-ap-frame) 
+    if (calling-ap-frame)
       frame-pointer(path, calling-ap-frame)
     else
       frame-pointer-context // Is better than zero!!
@@ -160,7 +160,7 @@ define method call-frame-recorded-locations
             // Call the access-path function to lookup runtime data.
             let (fname, base-line, base-addr, lines, byte-offsets)
               = function-recorded-source-locations(path, symbol);
-            step-over-locations := 
+            step-over-locations :=
               make-absolute-addresses(remove-duplicates(byte-offsets));
 	  end if;
 	end method;
@@ -176,11 +176,11 @@ define method call-frame-recorded-locations
       // ourselves to compiler-info lookup.
       let mapped-offsets = compiled-lambda-mapped-code-offsets
                              (lambda, interactive-only?: interactive?);
-      step-over-locations := 
+      step-over-locations :=
         make-absolute-addresses(remove-duplicates(mapped-offsets));
     else
       defer-to-runtime-information();
-    end if; 
+    end if;
   else
     // If this is a foreign call frame, then none of its recorded
     // code-locations can be considered safe for interaction, so don't even

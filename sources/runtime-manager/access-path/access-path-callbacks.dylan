@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// Clients are requested to set this up to enable spy calls 
+// Clients are requested to set this up to enable spy calls
 // in the debugger NUB to callback to the access-path
 
 define variable *current-access-paths* :: <stretchy-vector> =
@@ -55,7 +55,7 @@ define function create-thread-stop-reason-handler
   let process = make (<remote-process>,
                       nub-descriptor: process);
   let thread =
-    find-or-make-thread 
+    find-or-make-thread
     (path, thread, priority: priority);
   create-thread-event-handler
     (application, process: process, thread: thread);

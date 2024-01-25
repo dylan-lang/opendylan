@@ -138,7 +138,7 @@ define inline sealed sideways method make-source-offset
   end;
 end method;
 
-
+
 //// Range positions
 
 define class <big-range-position> (<object>)
@@ -238,7 +238,7 @@ define method make-range-position
              end-offset: end-offset)
 end method;
 
-
+
 //// Range source locations.
 
 define class <compiler-range-source-location> (<source-location>)

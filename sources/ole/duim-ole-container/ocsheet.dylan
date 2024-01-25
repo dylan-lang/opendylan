@@ -25,13 +25,13 @@ end method duim/note-child-removed;
 
 // Clicking outside of an OLE object deactivates it.
 define method duim/handle-button-event
-    (sheet :: <container-sheet-mixin>, 
-     event :: duim/<button-press-event>, 
+    (sheet :: <container-sheet-mixin>,
+     event :: duim/<button-press-event>,
      button == duim/$left-button) => ()
   for ( gadget :: <ole-gadget> in sheet.sheet-embedded-gadgets )
     let obj = gadget.sheet-contained-object;
     if ( obj )
-      container-UI-deactivate(obj); 
+      container-UI-deactivate(obj);
     end if;
   end for;
   next-method();
@@ -39,8 +39,8 @@ end method duim/handle-button-event;
 
 // Double clicking on an OLE object activates it.
 define method duim/handle-button-event
-    (sheet :: <container-sheet-mixin>, 
-     event :: duim/<double-click-event>, 
+    (sheet :: <container-sheet-mixin>,
+     event :: duim/<double-click-event>,
      button == duim/$left-button) => ()
   block(return)
     for ( gadget :: <ole-gadget> in sheet.sheet-embedded-gadgets )
@@ -56,7 +56,7 @@ define method duim/handle-button-event
             // deactivate any others
             container-UI-deactivate(obj.document-application);
           end unless;
-	  let status = 
+	  let status =
 	    with-stack-structure ( pmsg :: w/<LPMSG> )
 	      pmsg.w/hwnd-value := duim/window-handle(sheet);
 	      pmsg.w/message-value := w/$WM-LBUTTONDBLCLK;

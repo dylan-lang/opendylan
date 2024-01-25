@@ -25,11 +25,11 @@ end class;
 define constant $default-instrument = find-midi-instrument("Acoustic Grand Piano");
 
 define constant $midi-mapper-device
-  = make(<win32-midi-device>, 
-         id: as(<integer>, $MIDIMAPPER), 
+  = make(<win32-midi-device>,
+         id: as(<integer>, $MIDIMAPPER),
          channels: map-as(<simple-object-vector>,
-                          method (number) 
-                            make(<win32-midi-channel>, 
+                          method (number)
+                            make(<win32-midi-channel>,
                                  number: number,
                                  current-instrument:  $default-instrument)
                           end,
@@ -75,9 +75,9 @@ define sealed method select-midi-instrument
     (midi-handle(md), $MIDI-patch, midi-number(mc), midi-number(mv), 0);
 end method;
 
-define sealed method midi-on 
-    (md :: <win32-midi-device>, mc :: <win32-midi-channel>, 
-       pitch :: <midi-pitch>, velocity :: <midi-velocity>) 
+define sealed method midi-on
+    (md :: <win32-midi-device>, mc :: <win32-midi-channel>,
+       pitch :: <midi-pitch>, velocity :: <midi-velocity>)
  => ()
   if (~midi-open?(md))
     error("The MIDI device %= cannot used because it is not open.", md);
@@ -87,7 +87,7 @@ define sealed method midi-on
 end method;
 
 define sealed method midi-off
-    (md :: <win32-midi-device>, mc :: <win32-midi-channel>, 
+    (md :: <win32-midi-device>, mc :: <win32-midi-channel>,
        pitch :: <midi-pitch>)
  => ()
   if (~midi-open?(md))
@@ -98,7 +98,7 @@ define sealed method midi-off
 end method;
 
 define sealed method midi-pitch-bend
-    (md :: <win32-midi-device>, mc :: <win32-midi-channel>, 
+    (md :: <win32-midi-device>, mc :: <win32-midi-channel>,
        bend :: <integer>)
  => ()
   if (~midi-open?(md))
@@ -121,11 +121,11 @@ define method midi-error-string (id :: <integer>) => (message :: <byte-string>)
   end;
 end method;
 
-define method send-midi-message 
-    (handle :: <HMIDIOUT>, status :: <integer>, channel :: <integer>, 
-       data1 :: <integer>, data2 :: <integer>) 
+define method send-midi-message
+    (handle :: <HMIDIOUT>, status :: <integer>, channel :: <integer>,
+       data1 :: <integer>, data2 :: <integer>)
  => ()
-  let code 
+  let code
     = midiOutShortMsg(handle, logior(status, channel, ash(data1, 8), ash(data2, 16)));
   if (code ~== 0)
     error("Error sending MIDI message: %s.", midi-error-string(code));
@@ -133,9 +133,9 @@ define method send-midi-message
   code
 end method;
 
-define method send-midi-message 
-    (md :: <midi-device>, status :: <integer>, channel :: <midi-channel>, 
-       data1 :: <integer>, data2 :: <integer>) 
+define method send-midi-message
+    (md :: <midi-device>, status :: <integer>, channel :: <midi-channel>,
+       data1 :: <integer>, data2 :: <integer>)
  => ()
   send-midi-message
     (midi-handle(md), status, midi-number(channel), data1, data2);

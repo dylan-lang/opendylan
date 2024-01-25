@@ -179,7 +179,7 @@ define function most-recent-files-setter
   files
 end function most-recent-files-setter;
 
-
+
 /// Open a project
 
 define method frame-open-project
@@ -487,7 +487,7 @@ define function open-file
   end
 end function open-file;
 
-
+
 /// Open/Close file commands
 
 // No caller should need to supply a "deuce-frame:" argument: a more
@@ -523,7 +523,7 @@ define sideways method environment-open-file
 end method environment-open-file;
 
 
-
+
 /// Project error handling
 
 define class <project-error> (<format-string-condition>, <error>)
@@ -655,7 +655,7 @@ define method compiler-condition-handler
   environment-warning-message(message, owner: frame)
 end method compiler-condition-handler;
 
-
+
 /// Build command table
 
 define open generic frame-parse-project
@@ -1337,7 +1337,7 @@ define command-table *build-release-command-table* (*global-command-table*)
     documentation: $build-release-doc;
 end command-table *build-release-command-table*;
 
-
+
 /// Updating after a build
 
 define open generic frame-note-project-rebuilt
@@ -1377,7 +1377,7 @@ tune-in($project-channel,
         end,
         message-type: <project-warnings-updated-message>);
 
-
+
 /// Support for build-related Editor commands
 
 define table $compilation-functions =
@@ -1408,7 +1408,7 @@ define sideways method compile-project-location
   end;
 end method compile-project-location;
 
-
+
 /// Project command table
 
 define open generic frame-insert-source-file (frame :: <environment-frame>) => ();
@@ -1443,7 +1443,7 @@ define method do-frame-insert-source-file
   end
 end method do-frame-insert-source-file;
 
-
+
 /// Project command tables
 
 define command-table *project-reorder-files-command-table* (*global-command-table*)
@@ -1473,7 +1473,7 @@ define command-table *project-command-table* (*global-command-table*)
   include *project-settings-command-table*;
 end command-table *project-command-table*;
 
-
+
 /// Export commands
 
 define open generic frame-export-data
@@ -1641,7 +1641,7 @@ define command-table *export-command-table* (*global-command-table*)
     documentation: "Exports data to make it available to other applications.";
 end command-table *export-command-table*;
 
-
+
 /// Saving Project Databases
 
 define frame <save-databases-dialog> (<dialog-frame>)
@@ -1689,7 +1689,7 @@ define function save-all-project-databases (#key owner :: <frame>) => ()
   start-dialog(dialog);
 end function save-all-project-databases;
 
-
+
 /// Go menu browse commands
 
 define variable $home-bitmap :: <label-type> = "Home";
@@ -1857,7 +1857,7 @@ define command-table *browse-locations-command-table* (*global-command-table*)
     documentation: "Opens the profiler window.";
 end command-table *browse-locations-command-table*;
 
-
+
 /// Project Browser command table
 
 define constant $recent-projects-menu-items = 4;

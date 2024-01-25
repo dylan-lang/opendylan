@@ -21,7 +21,7 @@ define inline function lower-case-code?
   as(<integer>, 'a') <= code & code <= as(<integer>, 'z')
 end function lower-case-code?;
 
-
+
 /// Case-insensitive character comparisons
 
 define sealed method char-equal?
@@ -63,7 +63,7 @@ define sealed method char-greater?
   code1 > code2
 end method char-greater?;
 
-
+
 /// Case-insensitive string comparisons
 
 define sealed method string-equal?
@@ -178,7 +178,7 @@ define sealed method string-compare
   end
 end method string-compare;
 
-
+
 /// Predicates
 
 define sealed method alpha-char?
@@ -246,7 +246,7 @@ define sealed inline method any-whitespace-char?
   char == ' ' | char == '\t' | char == '\r' | char == '\n' | char == '\f'
 end method any-whitespace-char?;
 
-
+
 /// Other string utilities
 
 // Trims everything from the end that doesn't match the "keep" predicate

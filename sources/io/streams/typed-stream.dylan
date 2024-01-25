@@ -22,7 +22,7 @@ define function byte-to-byte (byte :: <byte>) => (byte :: <byte>)
   byte
 end function byte-to-byte;
 
-
+
 define open abstract class <typed-stream> (<basic-stream>)
   // Assume that
   slot sequence-type /* ---*** :: subclass(<sequence>) */ = <byte-string>;

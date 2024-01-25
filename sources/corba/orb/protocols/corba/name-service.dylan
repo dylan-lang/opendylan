@@ -11,4 +11,3 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 // define open generic cosnaming/namingcontext/list (x, y);
 // --- Claudio
- 

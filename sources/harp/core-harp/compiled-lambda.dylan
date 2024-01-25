@@ -44,7 +44,7 @@ define abstract primary open dood-class <compiled-lambda> (<lambda-compiled-data
             init-keyword: all-names:;
   // All Debuggable variable names for this lambda
 
-  constant slot compiled-lambda-packed-slot :: 
+  constant slot compiled-lambda-packed-slot ::
     type-union(<integer>, <compiled-lambda-unpacked-slots>) = 0,
     init-keyword: slots:;
   // packed slot or unpacked-slots of slots with extremely common value ranges
@@ -60,33 +60,33 @@ define primary dood-class <fully-compiled-lambda> (<compiled-lambda>)
   constant slot lambda-object-location :: false-or(<source-location>) = #f,
     init-keyword: object-location:;
   // Source location information for writing to object files.
-  
+
   lazy constant slot lambda-model-object, required-init-keyword: model:;
   // The model-object of the lambda
 
-  lazy constant slot lambda-code :: <vector>, 
+  lazy constant slot lambda-code :: <vector>,
      required-init-keyword: code:;
-  // A vector of code for the lambda, containing only integers (may be 
+  // A vector of code for the lambda, containing only integers (may be
   // a <byte-vector>). This will contain zeros where there are labels.
 
-  lazy constant slot lambda-referenced-data :: false-or(<vector>) = #f, 
+  lazy constant slot lambda-referenced-data :: false-or(<vector>) = #f,
     init-keyword: referenced-data:;
-  // A vector of data referenced by the lambda, containing only integers 
-  // (the class of vector will be as for lambda-code). This data will be 
+  // A vector of data referenced by the lambda, containing only integers
+  // (the class of vector will be as for lambda-code). This data will be
   // emitted immediately before the definition of the lambda-name (and
   // hence before the lambda-code). The primary purpose of this data is
   // to get FP constants into the code stream. These wil be referenced
   // as <indirect-constant-reference>s at a negative offset relative to
   // lambda-name. Lambda which do not need referenced data set this to #f.
 
-  lazy constant slot lambda-labels :: <simple-object-vector>, 
+  lazy constant slot lambda-labels :: <simple-object-vector>,
     required-init-keyword: labels:;
-  // A vector of labels (e.g. constant references) which are 
+  // A vector of labels (e.g. constant references) which are
   // associated with the code.
 
-  lazy constant slot lambda-externals :: <simple-object-vector> = #[], 
+  lazy constant slot lambda-externals :: <simple-object-vector> = #[],
     init-keyword: externals:;
-  // A vector of constant references which are external references from 
+  // A vector of constant references which are external references from
   // this lambda to an external linker unit
 
 end dood-class;
@@ -126,7 +126,7 @@ define primary dood-class <compiled-lambda-unpacked-slots> (<object>)
   constant slot lambda-frame-n-size-internal :: <integer> = 0, init-keyword: frame-n-size:;
   // Size (in backend units - e.g. words) of the raw stack frame
 
-  lazy constant slot lambda-harp-print-info-internal = #f, 
+  lazy constant slot lambda-harp-print-info-internal = #f,
     init-keyword: print-info:;
   // Either false, or a <byte-string> which contains the printed
   //  information which is useful for debugging the HARP
@@ -160,7 +160,7 @@ define method make
           print-info,
           public,
           export,
-     #all-keys) 
+     #all-keys)
     => (r :: <fully-compiled-lambda>)
   let slots =
     make-compiled-lambda-packed-slot?(frame-g-size,

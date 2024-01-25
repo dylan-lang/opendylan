@@ -60,7 +60,7 @@ define macro pop!
          end }
 end macro pop!;
 
-
+
 /// Protocols
 
 define macro protocol-definer
@@ -86,7 +86,7 @@ define macro protocol-definer
     => { define open generic ?function-name ?function-arglist }
 end macro protocol-definer;
 
-
+
 /// Node locking
 
 define macro with-node-locked
@@ -123,7 +123,7 @@ define macro with-thing-locked
          end }
 end macro with-thing-locked;
 
-
+
 /// Editor state binding
 
 define macro with-editor-state-bound

@@ -73,7 +73,7 @@ define class <idl-syntax-error-restart> (<simple-restart>)
   keyword format-string: = "Try to continue from IDL syntax error";
 end class;
 
-define method handle-idl-syntax-error 
+define method handle-idl-syntax-error
   (condition :: <idl-syntax-error>, next-handler :: <function>, token-stream :: <IDL-lexer>)
   let similar-error? = scepter-condition(get-scepter(), condition);
   if (condition.idl-parser-tag == $EOI-token)

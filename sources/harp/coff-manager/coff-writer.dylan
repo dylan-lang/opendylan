@@ -11,21 +11,21 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define generic write-coff-header
     (stream :: <stream>, coff-file :: <coff-file>) => ();
 
-define generic write-section-table 
+define generic write-section-table
     (stream :: <stream>, coff-file :: <coff-file>) => ();
 
 define generic write-relocations
     (stream :: <stream>, coff-file :: <coff-file>, section :: <coff-section>)
     => ();
 
-define generic write-line-numbers 
+define generic write-line-numbers
     (stream :: <stream>, coff-file :: <coff-file>, section :: <coff-section>)
     => ();
 
-define generic write-symbol-table 
+define generic write-symbol-table
     (stream :: <stream>, coff-file :: <coff-file>) => ();
 
-define generic write-string-table 
+define generic write-string-table
     (stream :: <stream>, coff-file :: <coff-file>) => ();
 
 define generic write-byte
@@ -34,7 +34,7 @@ define generic write-byte
 define generic write-short
     (stream :: <stream>, coff-file :: <coff-file>, short :: <coff-short>) => ();
 
-define generic write-word 
+define generic write-word
     (stream :: <stream>, coff-file :: <coff-file>, word :: <coff-word>) => ();
 
 
@@ -53,10 +53,10 @@ end method;
 define method write-coff-header
      (stream :: <stream>, coff-file :: <coff-file>) => ()
   write-short(stream, coff-file, coff-file.machine);
-  write-short(stream, coff-file, coff-file.sections.ordered-data.size);  
+  write-short(stream, coff-file, coff-file.sections.ordered-data.size);
   write-word (stream, coff-file, coff-file.time-stamp);
   write-word (stream, coff-file, coff-file.symbol-table-offset);
-  write-word (stream, coff-file, coff-file.symbols.ordered-data.size);  
+  write-word (stream, coff-file, coff-file.symbols.ordered-data.size);
   write-short(stream, coff-file, coff-file.header-size);
   write-short(stream, coff-file, coff-file.characteristics);
 end method;
@@ -77,7 +77,7 @@ end method;
 //   http://msdn2.microsoft.com/en-us/library/ms680341.aspx
 //
 define method write-coff-section-header
-     (stream :: <stream>, coff-file :: <coff-file>, 
+     (stream :: <stream>, coff-file :: <coff-file>,
       section :: <coff-section>, base :: <integer>) => ()
   let base-of-raw-data = base;
   let reloc-size = section.relocations.size;
@@ -90,8 +90,8 @@ define method write-coff-section-header
   write-word(stream, coff-file, section.rva-offset);
   write-word(stream, coff-file, section.section-data-size-in-image);
   write-word(stream, coff-file, base-of-raw-data);
-  write-word(stream, coff-file, if (reloc-size > 0) base-of-relocs else 0 end); 
-  write-word(stream, coff-file, if (lines-size > 0) base-of-lines  else 0 end); 
+  write-word(stream, coff-file, if (reloc-size > 0) base-of-relocs else 0 end);
+  write-word(stream, coff-file, if (lines-size > 0) base-of-lines  else 0 end);
   write-short(stream, coff-file, min(65535, reloc-size)); // $lnk-nreloc-ovfl
   write-short(stream, coff-file, lines-size);
   write-word(stream,
@@ -101,7 +101,7 @@ end method;
 
 
 define method write-section-name
-     (stream :: <stream>, coff-file :: <coff-file>, 
+     (stream :: <stream>, coff-file :: <coff-file>,
       name :: <coff-short-string>) => ()
   write-short-string(stream, coff-file, name);
 end method;
@@ -110,7 +110,7 @@ define constant byte-for-slash = as(<coff-byte>, '/');
 define constant byte-for-zero = as(<coff-byte>, '0');
 
 define method write-section-name
-     (stream :: <stream>, coff-file :: <coff-file>, 
+     (stream :: <stream>, coff-file :: <coff-file>,
       name :: <coff-long-string>) => ()
   let ascii-offset = format-to-string("%d", name.index);
   let padding-size = 7 - ascii-offset.size;
@@ -193,8 +193,8 @@ define method write-line-numbers
 end method;
 
 define method write-line-number
-    (stream :: <stream>, 
-     coff-file :: <coff-file>, 
+    (stream :: <stream>,
+     coff-file :: <coff-file>,
      line :: <coff-line-number-symbol>)
      => ()
   write-word(stream, coff-file, line.line-number-symbol.index);
@@ -202,8 +202,8 @@ define method write-line-number
 end method;
 
 define method write-line-number
-    (stream :: <stream>, 
-     coff-file :: <coff-file>, 
+    (stream :: <stream>,
+     coff-file :: <coff-file>,
      line :: <coff-line-number-relative>)
      => ()
   write-word(stream, coff-file, line.line-number-rva);
@@ -220,8 +220,8 @@ end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-symbol>) => ()
   write-symbol-name(stream, coff-file, symbol.symbol-name);
   write-word (stream, coff-file, symbol.symbol-value);
@@ -233,34 +233,34 @@ end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-auxiliary-symbol>) => ()
   error("Attempt to write an unknown auxiliary symbol.");
 end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-plain-auxiliary-symbol>) => ()
   write(stream, symbol.auxiliary-data);
 end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-empty-auxiliary-symbol>) => ()
   // That's right - do nothing
 end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-string-auxiliary-symbol>) => ()
-  let string = symbol.auxiliary-string; 
+  let string = symbol.auxiliary-string;
   let padding =  size-of-symbol - 1 - modulo(string.size - 1, size-of-symbol);
   write(stream, string);
   for (i from 1 to padding)
@@ -271,8 +271,8 @@ end method;
 // no support for more than 64k relocations.  Fortunately,
 // we don't use this.
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-section-auxiliary-symbol>) => ()
   let section = symbol.auxiliary-section;
   write-word (stream, coff-file, section.section-data-size-in-image);
@@ -287,12 +287,12 @@ end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-function-definition-auxiliary-symbol>) => ()
   write-word (stream, coff-file, symbol.auxiliary-tag.index);
   write-word (stream, coff-file, symbol.auxiliary-total-size);
-  write-word (stream, coff-file, 
+  write-word (stream, coff-file,
               symbol.auxiliary-line-numbers.line-file-offset);
   write-word (stream, coff-file, symbol.next-function-index);
   write-short(stream, coff-file, 0); // padding
@@ -300,8 +300,8 @@ end method;
 
 
 define method write-one-symbol
-     (stream :: <stream>, 
-      coff-file :: <coff-file>, 
+     (stream :: <stream>,
+      coff-file :: <coff-file>,
       symbol :: <coff-function-lines-auxiliary-symbol>) => ()
   write-word (stream, coff-file, 0); // padding
   write-short(stream, coff-file, symbol.auxiliary-line-number);
@@ -312,26 +312,26 @@ define method write-one-symbol
 end method;
 
 
-define method symbol-locator-section-number 
+define method symbol-locator-section-number
     (section :: <coff-section>) => (num :: <integer>)
   section.index;
 end method;
 
 
-define method symbol-locator-section-number 
+define method symbol-locator-section-number
     (section :: <coff-undefined-locator>) => (num :: <integer>)
   section.index;
 end method;
 
 
 define method write-symbol-name
-     (stream :: <stream>, coff-file :: <coff-file>, 
+     (stream :: <stream>, coff-file :: <coff-file>,
       name :: <coff-short-string>) => ()
   write-short-string(stream, coff-file, name);
 end method;
 
 define method write-symbol-name
-     (stream :: <stream>, coff-file :: <coff-file>, 
+     (stream :: <stream>, coff-file :: <coff-file>,
       name :: <coff-long-string>) => ()
   write-word(stream, coff-file, 0);
   write-word(stream, coff-file, name.index);
@@ -346,8 +346,8 @@ define method write-string-table
 end method;
 
 
-define method write-short-string 
-    (stream :: <stream>, coff-file :: <coff-file>, 
+define method write-short-string
+    (stream :: <stream>, coff-file :: <coff-file>,
      string :: <coff-short-string>) => ()
   let name = string.string-data;
   let padding-size = 8 - name.size;
@@ -358,33 +358,33 @@ define method write-short-string
 end method;
 
 
-define method write-byte 
+define method write-byte
     (stream :: <stream>, coff-file :: <coff-file>, byte :: <coff-byte>) => ()
   write-element(stream, byte);
 end method;
 
-define method write-byte 
+define method write-byte
     (stream :: <stream>, coff-file :: <coff-file>, byte :: <character>) => ()
   write-element(stream, as(<coff-byte>, byte));
 end method;
 
-define method write-short 
+define method write-short
     (stream :: <stream>, coff-file :: <coff-file>, short :: <coff-short>) => ()
   let b0 = logand(short, #xff);
   let w0 = ash(short, -8);
   let b1 = logand(w0, #xff);
   if (coff-file.big-endian?)
-    write-element(stream, b1); write-element(stream, b0); 
+    write-element(stream, b1); write-element(stream, b0);
   else
-    write-element(stream, b0); write-element(stream, b1); 
+    write-element(stream, b0); write-element(stream, b1);
   end if;
 end method;
 
-define method write-word 
+define method write-word
     (stream :: <stream>, coff-file :: <coff-file>, word :: <coff-word>) => ()
   if (word.zero?)
-    write-element(stream, 0); write-element(stream, 0); 
-    write-element(stream, 0); write-element(stream, 0); 
+    write-element(stream, 0); write-element(stream, 0);
+    write-element(stream, 0); write-element(stream, 0);
   else
     let b0 :: <integer> = generic-logand(word, #xff);
     let w0 :: <integer> = generic-ash(word, -8);
@@ -394,11 +394,11 @@ define method write-word
     let w2 = ash(w1, -8);
     let b3 = logand(w2, #xff);
     if (coff-file.big-endian?)
-      write-element(stream, b3); write-element(stream, b2); 
-      write-element(stream, b1); write-element(stream, b0); 
+      write-element(stream, b3); write-element(stream, b2);
+      write-element(stream, b1); write-element(stream, b0);
     else
-      write-element(stream, b0); write-element(stream, b1); 
-      write-element(stream, b2); write-element(stream, b3); 
+      write-element(stream, b0); write-element(stream, b1);
+      write-element(stream, b2); write-element(stream, b3);
     end if;
   end if;
 end method;

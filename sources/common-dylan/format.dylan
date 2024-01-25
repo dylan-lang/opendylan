@@ -25,7 +25,7 @@ define function buffer-contents
   as(<byte-string>, buffer)
 end function buffer-contents;
 
-
+
 /// User assertions (maybe export this?)
 
 define macro user-assert
@@ -45,7 +45,7 @@ define function user-assertion-error
              format-arguments: format-arguments))
 end function user-assertion-error;
 
-
+
 /// format-to-string
 
 define function print-format
@@ -110,7 +110,7 @@ define function format-to-string
   buffer-contents(buffer)
 end function format-to-string;
 
-
+
 /// Basic object printing
 
 define function object-name
@@ -228,7 +228,7 @@ define method print-unique-name
   print-string(buffer, "}");
 end method print-unique-name;
 
-
+
 /// Number/string conversion
 
 define constant $number-characters :: <byte-string>
@@ -493,7 +493,7 @@ define method number-to-string
   integer-to-string(integer, base: 10)
 end method number-to-string;
 
-
+
 /// Machine-word/string conversion
 
 define function machine-word-to-string
@@ -570,7 +570,7 @@ define function string-to-machine-word
   values(value, next-key)
 end function string-to-machine-word;
 
-
+
 /// Condition/string conversion
 
 define open generic condition-to-string
@@ -602,7 +602,7 @@ define method print-pretty-name
   print-string(buffer, message)
 end method print-pretty-name;
 
-
+
 /// Collection printing
 
 define constant $collection-empty-text    = "size 0";
@@ -727,7 +727,7 @@ define function print-elements
   end
 end function print-elements;
 
-
+
 /// Method printing
 
 define function print-method

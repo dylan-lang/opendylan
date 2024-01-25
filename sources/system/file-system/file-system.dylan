@@ -39,7 +39,7 @@ end class <file-does-not-exist-error>;
 define sealed class <invalid-file-permissions-error> (<file-error>)
 end class <invalid-file-permissions-error>;
 
-
+
 /// Locators
 
 define constant <pathname> = type-union(<string>, <file-system-locator>);
@@ -62,7 +62,7 @@ define sealed method as
   as(<native-file-locator>, string)
 end method as;
 
-
+
 /// Condition reporting
 
 define method condition-to-string
@@ -81,7 +81,7 @@ define method condition-to-string
                    file-error-locator(error))
 end method condition-to-string;
 
-
+
 /// And now, the functions ...
 
 /// Given a pathname, returns its fully expanded form.

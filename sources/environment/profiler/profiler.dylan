@@ -136,7 +136,7 @@ define method profiler-show-foreign-functions?-setter
   foreign?
 end method profiler-show-foreign-functions?-setter;
 
-
+
 /// Utilities
 
 define method profiler-has-results?
@@ -165,7 +165,7 @@ define method perform-profiler-transaction
   perform-application-transaction(frame.ensure-frame-project, function)
 end method perform-profiler-transaction;
 
-
+
 /// Property page handling
 
 define method refresh-frame
@@ -260,7 +260,7 @@ define method frame-note-application-state-changed
   end
 end method frame-note-application-state-changed;
 
-
+
 /// Profiler command table
 
 define command-table *profiler-file-io-command-table* (*global-command-table*)

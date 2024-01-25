@@ -26,7 +26,7 @@ end class <server-locator>;
 define open abstract class <physical-locator> (<locator>)
 end class <physical-locator>;
 
-
+
 /// Stream protocols
 
 define open generic close
@@ -38,7 +38,7 @@ define method close (object :: <closable-object>, #key) => ()
 end method close;
 
 
-
+
 /// Base locator protocols
 
 // Open protocols

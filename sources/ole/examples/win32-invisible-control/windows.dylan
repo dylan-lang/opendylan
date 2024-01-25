@@ -15,7 +15,7 @@ define constant $image-height = 32;
 define function register-window-classes (hInstance :: <HINSTANCE>) => ();
 
   with-stack-structure( wc :: <PWNDCLASS> )
-	
+
     // Fill in window class structure with parameters that describe the
     // main window.
 
@@ -127,14 +127,14 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
 			   wParam, lParam)
 		=> value :: <integer>;
 
-  select ( message ) 
+  select ( message )
 
-    $WM-PAINT => 
+    $WM-PAINT =>
       // unless during initial creation of window
       unless ( null-handle?(*the-application*.doc-window) )
 	with-stack-structure( ps :: <PPAINTSTRUCT> )
 	  let hDC :: <HDC> = BeginPaint(hWnd, ps);
-	  draw-control(*the-application*, hDC, $NULL-RECT); 
+	  draw-control(*the-application*, hDC, $NULL-RECT);
 	  EndPaint(hWnd, ps);
 	end with-stack-structure;
       end unless;
@@ -152,7 +152,7 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
 end method Doc-Wnd-Proc;
 
 define callback DocWndProc :: <WNDPROC> = Doc-Wnd-Proc;
-
+
 define constant $caption-message :: <string> = "Dylan OCX";
 
 // Draw an image to represent the control at design time.

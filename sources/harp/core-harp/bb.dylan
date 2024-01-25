@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// **********Thought of the day, Make the special slot share with the opcode
 //// But we do not want to allocate conses.
-//// Cases: 
+//// Cases:
 //// branch instructions (opcode . tag)
 //// we make jst instructions end the block and update the others slot
 //// there and then.
@@ -112,7 +112,7 @@ define method make-fall-thru-bb (backend :: <harp-back-end>) => ()
 end;
 
 
-define method add-destination-tags-to-bb 
+define method add-destination-tags-to-bb
     (backend :: <harp-back-end>, tags :: <list>) => ()
   unless (tags.empty?)
     let current :: <basic-block> = backend.variables.current-bb;
@@ -161,12 +161,12 @@ end;
 
 
 
-define method output-unconditional-branch-instruction 
+define method output-unconditional-branch-instruction
     (backend :: <harp-back-end>, taag :: <tag>) => ()
   let bb :: <basic-block> = find-bb(backend, taag);
   let current :: <basic-block> = backend.variables.current-bb;
-  if (empty-bb?(backend, current) & 
-      ~ (bb == current & 
+  if (empty-bb?(backend, current) &
+      ~ (bb == current &
          begin harp-warning(backend, "An infinite loop"); #t end))
     bb-redirect(current, bb);
   else
@@ -249,4 +249,4 @@ end;
 
 
 
-	 
+

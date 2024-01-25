@@ -22,7 +22,7 @@ define method tie/account/name (account :: <demo-account>)
  => (name :: corba/<string>)
   get-property(object-properties(account), name:);
 end method;
-  
+
 define method tie/account/balance (account :: <demo-account>)
  => (balance :: corba/<float>)
   get-property(object-properties(account), balance:, default: 0.0);

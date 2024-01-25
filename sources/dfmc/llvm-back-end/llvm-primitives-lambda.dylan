@@ -190,7 +190,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   op--boolean(be, cmp)
 end;
 
-
+
 /// Discriminator/engine-node Initialization
 
 define side-effecting stateless dynamic-extent &runtime-primitive-descriptor primitive-initialize-engine-node
@@ -490,7 +490,7 @@ define side-effecting stateless dynamic-extent mapped &runtime-primitive-descrip
   discriminator
 end;
 
-
+
 /// Apply
 
 define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-xep-apply
@@ -779,7 +779,7 @@ define side-effecting stateless indefinite-extent can-unwind c-callable auxiliar
   ins--extractvalue(be, mv, 0)
 end;
 
-
+
 /// Dynamic method and closure creation
 
 define method op--init-signature

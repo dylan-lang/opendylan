@@ -20,7 +20,7 @@ define method number-to-hex-string
   machine-word-to-string(machine-word, prefix: $hex-prefix)
 end method number-to-hex-string;
 
-
+
 /// Flag handling
 
 define inline method flag-set?

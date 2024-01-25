@@ -79,7 +79,7 @@ define method do-execute-protection-callback
   #f
 end method do-execute-protection-callback;
 
-
+
 /// Text gadget protocols and support classes
 
 define open abstract class <text-gadget> (<value-gadget>) end;
@@ -203,7 +203,7 @@ define method gadget-state-setter
   state
 end method gadget-state-setter;
 
-
+
 /// Text gadget classes
 
 // A single-line text editing field
@@ -374,13 +374,13 @@ define method gadget-value-printer
 end method gadget-value-printer;
 */
 
-
+
 /// Password fields
 
 define open abstract class <password-field> (<text-field>)
 end class <password-field>;
 
-
+
 /// Multi-line text editors
 
 define protocol <<text-editor-protocol>> (<<text-field-protocol>>)
@@ -420,7 +420,7 @@ define open abstract class <text-editor>
     init-keyword: word-wrap?:;
 end class <text-editor>;
 
-
+
 /// "Rich" text editors
 
 define protocol <<rich-text-editor-protocol>> (<<text-editor-protocol>>)
@@ -458,7 +458,7 @@ define method paragraph-format-setter
   gadget.%paragraph-format := paragraph-format
 end method paragraph-format-setter;
 
-
+
 /// Text changed events
 
 define sealed class <text-changing-gadget-event> (<gadget-event>)

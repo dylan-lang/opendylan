@@ -26,7 +26,7 @@ define constant $format-condition-arguments-id
          name: "format-condition-arguments",
          module: $dylan-extensions-module-id);
 
-
+
 /// Printing support
 
 define method environment-object-type-name

@@ -15,13 +15,13 @@ define method add-declarator (root :: <ast-root>, declarator :: <ast-sequence>)
 end method;
 
 define method add-declarator (root :: <ast-root>, declarator :: <ast-string>)
-  declarator.declarator-scoped-name := add!(declarator.declarator-scoped-name, 
+  declarator.declarator-scoped-name := add!(declarator.declarator-scoped-name,
                                             make(<ast-identifier>, label: "local type"));
   add-to-scope(root, declarator);
 end method;
 
 define method add-declarator (root :: <ast-root>, declarator :: <ast-array>)
-  declarator.declarator-scoped-name := add!(declarator.declarator-scoped-name, 
+  declarator.declarator-scoped-name := add!(declarator.declarator-scoped-name,
                                             make(<ast-identifier>, label: "local type"));
   add-to-scope(root, declarator);
 end method;

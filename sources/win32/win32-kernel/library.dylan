@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for non-GUI system services in "KERNEL32.DLL"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -29,7 +29,7 @@ define module Win32-kernel
 	     offset-value, offset-value-setter,
 	     cb-value, cb-value-setter, dwFlags-value, dwFlags-value-setter,
 	     cbData-value, cbData-value-setter,
-	     lpData-value, lpData-value-setter, 
+	     lpData-value, lpData-value-setter,
 	     dwSize-value, dwSize-value-setter,
 	     wFlags-value, wFlags-value-setter,
 	     u-value, u-value-setter, wSecond-value, wSecond-value-setter,

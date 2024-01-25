@@ -11,9 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// Started by Tony (8 Apr 94)
 
 
-/// DEFINE TEMPLATE-DEFINER-MACRO defines an infix macro for defining templates for 
+/// DEFINE TEMPLATE-DEFINER-MACRO defines an infix macro for defining templates for
 /// a given instruction set. The macros so defined adds a function definition
-/// into the code-gen-fn slot of the named op(s) for the instruction set. If 
+/// into the code-gen-fn slot of the named op(s) for the instruction set. If
 /// the SELF option is used, then the actual op is passed as a parameter.
 
 
@@ -66,8 +66,8 @@ end macro;
 
 
 /// DEFINE LOCAL-TEMPLATE defines a function into a namespace parallel
-/// to the module namespace, and accessible via LOCAL-FN. If the SELF 
-/// option is used, then the value of the normal named module variable 
+/// to the module namespace, and accessible via LOCAL-FN. If the SELF
+/// option is used, then the value of the normal named module variable
 /// is passed as a parameter.
 
 
@@ -78,25 +78,25 @@ define macro local-template-definer
 
   // If we use the "self" option, then the self parameter is passed by
   // currying
-  { define local-template (?backend:name) (?name1:name, ?names:*) 
+  { define local-template (?backend:name) (?name1:name, ?names:*)
       options (self);
-      ?body:* 
+      ?body:*
     end }
-    => { define constant ?name1 ## "-template" 
+    => { define constant ?name1 ## "-template"
            = template-function (?backend, <integer>) options (self); ?body end;
 
-         define-curried-template-functions ?name1 ## "-template" 
-           (?name1, ?names) 
+         define-curried-template-functions ?name1 ## "-template"
+           (?name1, ?names)
          end }
 
   // If we don't use "self", then make a template function which just
   // doesn't accept the self parameter, by pretending that it uses option (self)
 
   { define local-template (?backend:name) (?name1:name, ?names:*) ?body:* end }
-    => { define constant ?name1 ## "-template" 
+    => { define constant ?name1 ## "-template"
            = template-function (?backend, <object>) options (self); ?body end;
-         define-shared-template-functions ?name1 ## "-template" 
-           (?name1, ?names) 
+         define-shared-template-functions ?name1 ## "-template"
+           (?name1, ?names)
          end }
 
 end macro;
@@ -144,7 +144,7 @@ end macro;
 
 
 
-// TEMPLATE-FUNCTION constructs the lambda which performs the pattern match 
+// TEMPLATE-FUNCTION constructs the lambda which performs the pattern match
 //
 // The arguments passed to the lambda are (backend, op, ....)
 // By default, the op parameter does not appear in the patterns. However, it
@@ -199,7 +199,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:*, ?a2:*, ?a3:*, ?a4:*, ?a5:*, ?a6:*, ?a7:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -208,7 +208,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:*, ?a2:*, ?a3:*, ?a4:*, ?a5:*, ?a6:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -217,7 +217,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:*, ?a2:*, ?a3:*, ?a4:*, ?a5:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -226,7 +226,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:*, ?a2:*, ?a3:*, ?a4:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -235,7 +235,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:*, ?a2:*, ?a3:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -244,7 +244,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:*, ?a2:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -253,7 +253,7 @@ define macro template-function-aux
          end
 	}
 
-  { template-function-aux (?backend:name, ?op:name) 
+  { template-function-aux (?backend:name, ?op:name)
       (pattern ( ?a1:name ?opts:* ) ?stuff:*) ()
       ?patterns:*
     end }
@@ -276,14 +276,14 @@ define macro compile-clauses
   { compile-clauses (?parameters:*) end }
     => { pattern-error(?parameters) }
 
-  { compile-clauses (?parameters:*) 
+  { compile-clauses (?parameters:*)
       pattern (?p-params:*) ?:body ?other-patterns:*
     end }
     => { compile-one-clause ((?p-params) (?parameters))
            (?p-params)
            ?body
          fail
-           compile-clauses (?parameters) ?other-patterns end 
+           compile-clauses (?parameters) ?other-patterns end
          end }
 
 other-patterns:
@@ -301,8 +301,8 @@ end macro;
 define macro compile-one-clause
 
   // First recurse over all the bindings
-  { compile-one-clause ((?pvar:name ?opts:*, ?prest:*) (?mvar:name, ?mrest:*) ) (?any-conditions:*) 
-      ?match-body:body 
+  { compile-one-clause ((?pvar:name ?opts:*, ?prest:*) (?mvar:name, ?mrest:*) ) (?any-conditions:*)
+      ?match-body:body
     fail ?fail-body:body
     end }
     => { let ?pvar = ?mvar;
@@ -314,10 +314,10 @@ define macro compile-one-clause
   // Finally perform the tests
 
   { compile-one-clause (() ()) (?conditions:*)
-      ?match-body:body 
+      ?match-body:body
     fail ?fail-body:body
     end }
-    => { let match? = 
+    => { let match? =
 	   compile-one-test (?conditions)
 	     ?match-body
            end;

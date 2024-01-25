@@ -27,7 +27,7 @@ end method;
 
 define sideways method output-compilation-record-data
   (back-end :: <harp-native-back-end>, name :: <byte-string>, compiled-lambda) => ()
-  case 
+  case
     *current-compilation* =>
       let compiled-lambda =
 	if (*loose-mode?*)
@@ -63,7 +63,7 @@ define sideways method emit-library-initializer
         ins--tag(back-end, return-tag);
         ins--rts-and-drop(back-end, 0);
       end with-harp-emitter;
-  
+
   output-compiled-lambda(back-end, stream,
                          initializer,
                          section: #"init-code",
@@ -96,7 +96,7 @@ define sideways method emit-library-initializer
 			   emit-call-used(back-end);
 			   ins--move(back-end, init-dylan-library, local-init-ref);
 			   ins--jmp(back-end, so-entry, 1);
-			   
+
 			   ins--tag(back-end, return-tag);
 			   ins--rts-and-drop(back-end, 0);
 			 end with-harp-emitter,
@@ -110,7 +110,7 @@ define sideways method emit-library-initializer
 							   harp-debug: harp-output?,
 							   public: #f,
 							   export: #f)
-			       
+
 			   emit-call-crs(back-end);
 			   ins--rts-and-drop(back-end, 0);
 
@@ -136,7 +136,7 @@ define sideways method emit-executable-entry-points
   output-external(back-end, stream, init-dylan-library);
   output-external(back-end, stream, dylandllentry);
 
-  let dllentry = 
+  let dllentry =
     invoke-harp(back-end,
 		method (back-end :: <harp-back-end>)
                   ins--move(back-end, init-dylan-library, name-ref);
@@ -153,7 +153,7 @@ define sideways method emit-executable-entry-points
 
   let dylanexeentry = constant-ref(c-name(back-end, "dylan_main"));
   output-external(back-end, stream, dylanexeentry);
-  let exeentry = 
+  let exeentry =
     invoke-harp(back-end,
                 method(back-end :: <harp-back-end>)
 		    ins--move(back-end, init-dylan-library, name-ref);
@@ -172,7 +172,7 @@ define sideways method emit-executable-entry-points
   let dylanexeentry = constant-ref(dylan-main);
   output-external(back-end, stream, dylanexeentry);
 
-  let exeentry = 
+  let exeentry =
     invoke-harp(back-end,
 		method(back-end :: <harp-back-end>)
 		    ins--move(back-end, init-dylan-library, name-ref);
@@ -208,7 +208,7 @@ define sideways method emit-executable-entry-points
 
   output-external(back-end, stream, exit-application);
 
-  let exeentry = 
+  let exeentry =
     invoke-harp(back-end,
 		method (back-end :: <harp-back-end>)
                   ins--call(back-end, name-ref, 0);
@@ -241,7 +241,7 @@ define sideways method emit-shared-library-entry-points
   let dylandllexit = constant-ref(c-name(back-end, "DylanSOExit"));
   output-external(back-end, stream, dylandllexit);
 
-  let dllexit = 
+  let dllexit =
     invoke-harp-asm(back-end,
                     method (back-end :: <harp-back-end>)
                       ins--call(back-end, dylandllexit, 0);
@@ -250,7 +250,7 @@ define sideways method emit-shared-library-entry-points
                     section: #"elf-fini-code",
                     harp-debug: harp-output?,
                     export: #f);
-  
+
   output-compiled-lambda(back-end, stream, dllexit,
                          section: #"elf-fini-code",
 			 debug-info?: debug-info?);

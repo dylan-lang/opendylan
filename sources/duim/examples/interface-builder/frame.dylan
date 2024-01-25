@@ -181,7 +181,7 @@ define method frame-refresh-representation
   refresh-representation(frame, model)
 end method frame-refresh-representation;
 
-
+
 /// File saving
 
 define method frame-save-file
@@ -209,7 +209,7 @@ define method frame-save-as-file
   end
 end method frame-save-as-file;
 
-
+
 /// Properties
 
 define method frame-sheet-properties
@@ -221,7 +221,7 @@ define method frame-sheet-properties
   end
 end method frame-sheet-properties;
 
-
+
 /// Start it up
 define method start-interface-builder () => ()
   let frame = make(<interface-builder>, title: "Interface Builder");

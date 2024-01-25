@@ -21,7 +21,7 @@ define method clear-function
 end method clear-function;
 
 // Dispatch properties
-define method n-lines-property 
+define method n-lines-property
     (dispatch :: <scribble-dispatch>) => (n-lines :: <integer>)
   let frame :: <scribble-frame> = dispatch.ocx-frame;
   let sheet = frame.surface;

@@ -23,7 +23,7 @@ define constant <resource-type>
 // define constant $scroll-bar-class :: <integer> = #x0084;
 // define constant $combo-box-class  :: <integer> = #x0085;
 
-
+
 /// Basic protocols
 
 define generic resource-id
@@ -42,7 +42,7 @@ define generic window-position
 define generic window-size
     (resource :: <window-resource>) => (w :: <integer>, h :: <integer>);
 
-define abstract class <window-resource> (<resource>) 
+define abstract class <window-resource> (<resource>)
   slot window-class :: <resource-id>;
 end class <window-resource>;
 
@@ -72,7 +72,7 @@ define generic lookup-control
 define generic dialog-menu
     (dialog :: <top-window-resource>) => (id :: <resource-id>);
 
-
+
 /// Describing resources
 
 define generic describe-resource

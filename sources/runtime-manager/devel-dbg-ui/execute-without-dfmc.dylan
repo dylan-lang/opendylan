@@ -35,7 +35,7 @@ define function install-first-compilation-context () => ()
     leaf;
   end method;
 
-  let top-level-lib = 
+  let top-level-lib =
      strip-extension(strip-to-leaf(*opening-command*.application-filename));
   let project = #f; /* lookup-named-project(top-level-lib); */
   let context = #f;

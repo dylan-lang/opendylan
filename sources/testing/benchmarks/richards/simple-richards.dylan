@@ -63,7 +63,7 @@ define method run-task (tcb :: <task-control-block>)
 		end;
   run(tcb, message)
 end method;
-				      
+
 define abstract class <task-state> (<object>)
   // Default initializers put the task in the Waiting state
   slot packet-pending? = #f;
@@ -267,7 +267,7 @@ end;
 
 define method create-worker (i, p, w, s)
   let id = make(<worker-task-rec>,
-		ident: i, priority: p, input: w, 
+		ident: i, priority: p, input: w,
 		packet-pending?: s.packet-pending?,
 		task-waiting?: s.task-waiting?,
 		task-holding?: s.task-holding?,
@@ -279,7 +279,7 @@ end;
 
 define method create-handler (i, p, w, s)
   let id = make(<handler-task-rec>,
-		ident: i, priority: p, input: w, 
+		ident: i, priority: p, input: w,
 		packet-pending?: s.packet-pending?,
 		task-waiting?: s.task-waiting?,
 		task-holding?: s.task-holding?);
@@ -289,7 +289,7 @@ end;
 
 define method create-device (i, p, w, s)
   let id = make(<device-task-rec>,
-		ident: i, priority: p, input: w, 
+		ident: i, priority: p, input: w,
 		packet-pending?: s.packet-pending?,
 		task-waiting?: s.task-waiting?,
 		task-holding?: s.task-holding?);
@@ -331,7 +331,7 @@ define method richards ()
   end;
 end;
 
-     
+
 define method find-task (identity)
   let tk = *state*.task-table[identity - 1];
   if (tk == $null-task)

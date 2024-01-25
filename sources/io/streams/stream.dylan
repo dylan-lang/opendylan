@@ -167,7 +167,7 @@ define method stream-at-end? (stream :: <basic-stream>) => (at-end? :: <boolean>
 end method stream-at-end?;
 
 
-
+
 /// Positionable stream protocol
 
 define open abstract class <basic-positionable-stream> (<basic-stream>,
@@ -272,7 +272,7 @@ define method \=
 end method \=;
 */
 
-
+
 /// Readable stream protocol
 
 define method stream-input-available?
@@ -280,7 +280,7 @@ define method stream-input-available?
   #t
 end method stream-input-available?;
 
-
+
 /// Writable stream protocol
 
 // Everything about force-output except doesn't wait if the stream is
@@ -293,7 +293,7 @@ define method do-force-output
   ignore(stream);
 end method;
 
-
+
 /// Stream contents accessing protocol
 
 define generic stream-sequence-class
@@ -304,7 +304,7 @@ define method stream-sequence-class
   <vector>
 end method stream-sequence-class;
 
-
+
 /// Stream locking
 
 define open generic stream-locked?
@@ -347,7 +347,7 @@ define macro with-stream-locked
        end }
 end macro with-stream-locked;
 
-
+
 /// "High performance" functions
 
 define open generic read-skip

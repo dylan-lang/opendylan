@@ -50,7 +50,7 @@ define method profile-as-ior (type-id :: <string>, host :: <string>, port :: <in
 		   profiles
 		 end);
 end method;
-  
+
 define method parse-ior (buffer :: <marshalling-buffer>)
  => (ior :: iop/<ior>)
   unencapsulate-object(class-typecode(iop/<ior>), buffer);

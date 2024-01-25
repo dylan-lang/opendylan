@@ -20,7 +20,7 @@ define module memory-manager
     garbage-collection-stats,
     maybe-collect-garbage,
     collect-garbage?, collect-garbage!,
-    collect-garbage, 
+    collect-garbage,
     mark-garbage, block-promotion,
     room,
     enable-gc-messages,

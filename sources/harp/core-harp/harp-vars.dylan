@@ -17,7 +17,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // sv-instructions locally in methods.
 // There is a preserving-instructions macro which updates local bindings
 // in bodies of code that can grow the instructions vector; currently this
-// only happens during linearisation in adding branch blocks after 
+// only happens during linearisation in adding branch blocks after
 // code-generation is complete
 
 define constant <instructions-vector> = <simple-object-vector>;
@@ -31,7 +31,7 @@ define constant $empty-stretchy-vector = make(<stretchy-vector>);
 define constant $empty-named-variables-tables = make-named-variables();
 
 
-// A class which defines a random collection of variables for use during 
+// A class which defines a random collection of variables for use during
 // HARP code generation.
 
 
@@ -91,15 +91,15 @@ define primary class <harp-variables> (<object>)
   slot vreg-state :: <vreg-state>;
 
   // "The function name or model-object"
-  slot function-name, 
+  slot function-name,
     init-value: "Unnamed", init-keyword: function-name:;
 
   // "Support for defasm"
-  slot compiling-defasm :: <boolean>, 
+  slot compiling-defasm :: <boolean>,
     init-value: #f, init-keyword: defasm:;
 
   // "Support for defasm"
-  slot compiling-call-in :: <boolean>, 
+  slot compiling-call-in :: <boolean>,
     init-value: #f, init-keyword: call-in:;
 
   // "A count of emitted integers on an assembler line"
@@ -109,7 +109,7 @@ define primary class <harp-variables> (<object>)
   slot arg-spill-count :: <integer> = 0;
 
   // "Used by the debug info management code"
-  slot named-variables-tables :: <simple-object-vector> 
+  slot named-variables-tables :: <simple-object-vector>
     = $empty-named-variables-tables;
 
   // "A record of the external references to constants"
@@ -127,23 +127,23 @@ define primary class <harp-variables> (<object>)
   // i = virtual-register-id. For every pair of virtual-registers,
   // there is only one bit entry. This enables tighter bit-packing
   // and reduces space by a factor of 3 for 128 virtual-registers,
-  // 
+  //
   //   nwords = 128!/32 + 2 = 128.129/64 + 2 = 260 words
-  // 
+  //
   // compared to:
-  // 
+  //
   //   nwords = 128.(128/32 + 2) = 768 words
-  // 
-  // 
+  //
+  //
   // Saves space by a factor approaching 2 at infinity.
-  // 
+  //
   //    Nosa  Jan 25, 1999
-  // 
+  //
   // Each individual virtual-register entry is a superset of neighbours
-  // 
+  //
 
 end;
-  
+
 
 define generic make-harp-variables
     (backend, name, #key, #all-keys) => (new :: <harp-variables>);

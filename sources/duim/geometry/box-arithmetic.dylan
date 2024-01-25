@@ -144,7 +144,7 @@ define method region-union
   apply(make-region-union, concatenate(region1.%regions, region2.%regions))
 end method region-union;
 
-
+
 /// General region intersection
 
 define sealed class <region-intersection> (<region-set>)
@@ -292,7 +292,7 @@ define method region-intersection
   apply(make-region-intersection, concatenate(region1.%regions, region2.%regions))
 end method region-intersection;
 
-
+
 /// General region difference
 
 define sealed class <region-difference> (<region-set>)
@@ -375,7 +375,7 @@ define method region-difference
   make-region-difference(region1, region2)
 end method region-difference;
 
-
+
 /// Simple box (LTRB) arithmetic
 /// These operate only on <integer>'s, so be careful!
 
@@ -611,7 +611,7 @@ define sealed method ltrb-difference
   end
 end method ltrb-difference;
 
-
+
 /// Special cases for sets of boxes
 
 define sealed class <box-set> (<region-set>)

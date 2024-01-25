@@ -191,7 +191,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   op--call-libm(be, "atanf", vector(x))
 end;
 
-
+
 /// Double Float
 
 define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-double-float-as-raw
@@ -371,7 +371,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   op--call-libm(be, "atan", vector(x))
 end;
 
-
+
 /// Inter-float Conversions
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-as-double

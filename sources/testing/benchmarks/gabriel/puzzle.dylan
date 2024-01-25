@@ -136,17 +136,17 @@ define function puzzle-start ()
   definepiece(0, 1, 3, 0);
   definepiece(0, 3, 0, 1);
   definepiece(0, 0, 1, 3);
-  
+
   definepiece(1, 2, 0, 0);
   definepiece(1, 0, 2, 0);
   definepiece(1, 0, 0, 2);
-  
+
   definepiece(2, 1, 1, 0);
   definepiece(2, 1, 0, 1);
   definepiece(2, 0, 1, 1);
-  
+
   definepiece(3, 1, 1, 1);
-  
+
   *piece-count*[0] := 13;
   *piece-count*[1] := 3;
   *piece-count*[2] := 1;

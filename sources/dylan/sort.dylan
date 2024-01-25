@@ -57,7 +57,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //  Tightened up a bit by Scott McKay, February 1999
 
 
-
+
 //// Simple Sorting Algorithms
 
 define inline function sort-range-check
@@ -145,7 +145,7 @@ define sealed method insertion-sort!
                             start: _start, end: _end)
 end method insertion-sort!;
 
-
+
 //// Recursive Sorting Algorithms
 
 // $small-sort-size -- internal

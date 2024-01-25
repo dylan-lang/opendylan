@@ -101,7 +101,7 @@ define open generic application-stop-reason-message
     (application :: <application>)
  => (message :: false-or(<string>));
 
-
+
 /// Application handling
 
 define open generic run-application
@@ -144,7 +144,7 @@ define open generic make-project-application
  => (application :: <application>);
 
 
-
+
 /// Application state implementation
 
 define method application-running?
@@ -169,7 +169,7 @@ define function application-tethered?
   application & ~application.application-closed?
 end function application-tethered?;
 
-
+
 /// Implementation
 
 define method perform-application-transaction
@@ -397,7 +397,7 @@ define method update-application
     & update-application(application, progress-callback: progress-callback)
 end method update-application;
 
-
+
 /// Proxy handling
 
 //--- This default method means that the objects will never get linked, so

@@ -11,9 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-with-ops-in pentium-instructions (copy-words-down, copy-words-up, 
+with-ops-in pentium-instructions (copy-words-down, copy-words-up,
                                   copy-words-down-w, copy-words-up-w,
-                                  copy-bytes-down, copy-bytes-up, 
+                                  copy-bytes-down, copy-bytes-up,
                                   fill-words, fill-words-w)
   c-preserved-destroys-fn := all-c-preserved-fn;
 end with-ops-in;
@@ -40,16 +40,16 @@ with-ops-in pentium-instructions (copy-words-up)     info := list(#"up") end;
 with-ops-in pentium-instructions (copy-words-down-w) info := list(#"w") end;
 with-ops-in pentium-instructions (copy-words-up-w)   info := list(#"w",#"up") end;
 
-define method is-copy-up? (info :: <list>) 
+define method is-copy-up? (info :: <list>)
   member?(#"up", info);
 end method;
 
-define method is-copy-w? (info :: <list>) 
+define method is-copy-w? (info :: <list>)
   member?(#"w", info);
 end method;
 
 
-define pentium-template (copy-words-down, copy-words-up, 
+define pentium-template (copy-words-down, copy-words-up,
                          copy-words-down-w, copy-words-up-w)
   options (self);
 
@@ -161,7 +161,7 @@ end pentium-template;
 define pentium-template (fill-bytes)
   pattern (be, at, how-many, with)
     // first do all full words
-    harp-out (be) 
+    harp-out (be)
       move(be, eax, with);
       and(be, eax, eax, #xff); // strip all but the low byte
       asl(be, ecx, eax, 8);    // get the second byte

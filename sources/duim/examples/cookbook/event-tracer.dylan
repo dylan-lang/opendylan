@@ -57,7 +57,7 @@ define method record-event
   repaint-sheet(column, $everywhere)
 end method record-event;
 
-
+
 /// Event tracing
 
 define frame <event-tracer> (<simple-frame>)

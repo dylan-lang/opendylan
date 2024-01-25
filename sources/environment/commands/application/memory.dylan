@@ -44,7 +44,7 @@ define method show-property
               separator: " - ")
 end method show-property;
 
-
+
 /// Display memory command
 
 define class <display-memory-command> (<application-command>)
@@ -103,7 +103,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Nearto application command
 
 define class <near-to-object-command> (<application-command>)
@@ -123,7 +123,7 @@ define method do-execute-command
   error("Not yet implemented!")
 end method do-execute-command;
 
-
+
 ///---*** To do
 
 /*
@@ -138,7 +138,7 @@ end method do-execute-command;
   heap-statistics
 */
 
-
+
 /// Debugging commands
 
 define command-group memory into environment

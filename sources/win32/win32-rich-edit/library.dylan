@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for "rich edit" controls in "RICHEDIT.H", "RICHED32.DLL"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /* Automatically generated from "library.src"; do not edit. */
 
 
-// Note: there isn't any "RICHED32.LIB"; the user needs to 
+// Note: there isn't any "RICHED32.LIB"; the user needs to
 //       do an explicit dynamic load of "RICHED32.DLL".
 
 define library Win32-Rich-Edit

@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                             *
 * shellapi.h -  SHELL.DLL functions, types, and definitions                   *
 *                                                                             *
-* 
+*
 *                                                                             *
 \*****************************************************************************/
 define C-subtype <HDROP> ( <HANDLE> ) end;

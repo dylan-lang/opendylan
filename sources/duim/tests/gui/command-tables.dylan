@@ -36,7 +36,7 @@ define command-table *edit-command-table* (*global-command-table*)
     documentation: "Paste from the clipboard";
 end command-table *edit-command-table*;
 
-
+
 /// File command table
 
 define method frame-new (frame :: <frame>)
@@ -54,7 +54,7 @@ define command-table *file-command-table* (*global-command-table*)
   include *exit-command-table*;
 end command-table *file-command-table*;
 
-
+
 /// Nested command table
 
 define command-table *nested-command-table* (*global-command-table*)
@@ -62,7 +62,7 @@ define command-table *nested-command-table* (*global-command-table*)
   menu-item "Edit" = *edit-command-table*;
 end command-table *nested-command-table*;
 
-
+
 /// Surgery command table
 
 define method frame-add-items (frame :: <frame>)
@@ -90,7 +90,7 @@ define command-table *surgery-command-table* (*global-command-table*)
     documentation: "Remove the extra menu items from the Proceed menu";
 end command-table *surgery-command-table*;
 
-
+
 /// Proceed command table
 
 define method add-proceed-items
@@ -144,7 +144,7 @@ define command-table *proceed-command-table* (*global-command-table*)
     documentation: "Resume!";
 end command-table *proceed-command-table*;
 
-
+
 /// Class-based commands
 
 define class <show-subclasses> (<basic-command>)
@@ -189,7 +189,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Test command table
 
 define command-table *test-command-table* (*global-command-table*)
@@ -201,7 +201,7 @@ define command-table *test-command-table* (*global-command-table*)
   menu-item "Proceed" = *proceed-command-table*;
 end command-table *test-command-table*;
 
-
+
 /// Now build a simple-frame
 
 define frame <command-table-test-frame> (<simple-frame>)

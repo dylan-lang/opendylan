@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sealed method enumerate-resources
-    (handle :: <HINSTANCE>, 
+    (handle :: <HINSTANCE>,
      #key database :: false-or(<resource-database>) = #f)
  => (success? :: <boolean>)
   assert(~null-handle?(handle), "Invalid handle to resource module");
@@ -28,7 +28,7 @@ define sealed method enumerate-resource-types
     (hModule :: <HANDLE>,		// module handle
      lpType  :: <LPTSTR>,		// address of resource type
      lParam  :: <lparam-type>)		// extra parameter, could be used for error checking
- => (value :: <boolean>)      
+ => (value :: <boolean>)
   unless (null-pointer?(lpType))
     processing-type(*current-database*, lpType);
     // Find the names of all resources of type lpType
@@ -38,14 +38,14 @@ define sealed method enumerate-resource-types
 end method enumerate-resource-types;
 
 define callback EnumResTypeProc :: <ENUMRESTYPEPROC> = enumerate-resource-types;
-  
+
 
 define sealed method enumerate-resource-names
     (hModule :: <HANDLE>,		// module handle
      lpType  :: <LPCTSTR>,		// address of resource type
      lpName  :: <LPTSTR>,		// address of resource name
      lParam  :: <lparam-type>)		// extra parameter, could be used for error checking
- => (value :: <boolean>)      
+ => (value :: <boolean>)
   unless (null-pointer?(lpName))
     store-resource-name(*current-database*, lpName);
     // Find the languages of all resources of type lpType and name lpName
@@ -64,7 +64,7 @@ define sealed method enumerate-resource-languages
      wLang   :: <integer>,		// resource language
      lParam  :: <lparam-type>)		// extra parameter, could be used for error checking
  => (value :: <boolean>)
-  let hResInfo :: <HANDLE> = 
+  let hResInfo :: <HANDLE> =
     FindResourceEx(hModule, lpType, lpName, wLang);
   debug-message("    Language: %=", wLang);
   let resource-size = SizeofResource(hModule, hResInfo);

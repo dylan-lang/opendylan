@@ -12,7 +12,7 @@ define method check-marshalling (message, typecode, input, #key coerce = identit
     do-check-marshalling(*single-marshalling-stream*, message, typecode, input, coerce, test);
   else
     with-marshalling-stream (stream, inner-stream: #f)
-      do-check-marshalling(stream, message, typecode, input, coerce, test); 
+      do-check-marshalling(stream, message, typecode, input, coerce, test);
     end;
   end;
 end method;

@@ -32,7 +32,7 @@ define macro debugger-print-directives-definer
 
    classes:
     { } => { }
-    { ?treated-class, ...} 
+    { ?treated-class, ...}
       => { make(<debugger-print-directive>, ?treated-class), ...}
 
    treated-class:

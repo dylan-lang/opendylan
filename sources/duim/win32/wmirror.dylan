@@ -81,7 +81,7 @@ define sealed method handle-sheet
   mirror & mirror-sheet(mirror)
 end method handle-sheet;
 
-
+
 /// Empty methods on non-window mirrors
 
 define method mirror-edges
@@ -116,7 +116,7 @@ define method destroy-mirror
   sheet-direct-mirror(sheet) := #f
 end method destroy-mirror;
 
-
+
 /// Window class registration
 
 // Names of "classes" (in Microsoft Windows terminology) for windows:
@@ -224,7 +224,7 @@ define sealed method dialog-window?
   window-class = $dialog-class-atom
 end method dialog-window?;
 
-
+
 /// Mirror creation and destruction
 
 define sealed class <window-mirror> (<win32-mirror>)
@@ -476,7 +476,7 @@ define sealed method note-mirror-destroyed
   next-method()
 end method note-mirror-destroyed;
 
-
+
 /// Mirror DC handling
 
 define sealed method get-DC
@@ -589,7 +589,7 @@ define function repaint-in-DC-recursive
   end
 end function repaint-in-DC-recursive;
 
-
+
 /// Mirror manipulation
 
 // For non-top-level sheets, we just show the window
@@ -632,7 +632,7 @@ define sealed method mirror-visible?
   IsWindowVisible(handle)
 end method mirror-visible?;
 
-
+
 /// Window mirrors
 
 define sealed method mirror-edges
@@ -698,7 +698,7 @@ define sealed method screen-to-client-position
   end
 end method screen-to-client-position;
 
-
+
 /// Win32 panes
 
 define open abstract class <win32-pane-mixin>
@@ -727,7 +727,7 @@ define sealed method do-with-atomic-redisplay
   end
 end method do-with-atomic-redisplay;
 
-
+
 /// Port defaults
 
 define method port-default-foreground

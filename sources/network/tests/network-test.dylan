@@ -57,7 +57,7 @@ define function tcp-server-one-shot ()
       exception (xep :: <incomplete-read-error>)
       end block;
     end;
-  end;    
+  end;
 end function;
 
 define test tcp-test ()
@@ -98,9 +98,9 @@ define function udp-server-one-shot()
         close(conn);
       end block;
     end;
-  end;    
+  end;
 end function;
-  
+
 define test udp-test ()
   let server :: <thread> = make (<thread>, function: udp-server-one-shot);
   sleep(0.5);
@@ -136,7 +136,7 @@ define test server-socket-test ()
     assert-instance?(<internet-address>, local-host(socket));
     close(socket);
   end if;
-  
+
   assert-no-errors(socket := make(<server-socket>,
                                   port: 8888,
                                   protocol: "tcp"));
@@ -146,8 +146,8 @@ define test server-socket-test ()
     close(socket);
   end if;
 
-end test;  
- 
+end test;
+
 define suite address-test-suite ()
   test ipv4-address-test;
   test ipv4-numeric-address-test;

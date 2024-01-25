@@ -72,7 +72,7 @@ define method do-set-sheet-cursor
   cursor
 end method do-set-sheet-cursor;
 
-
+
 /// Test Display
 
 define method initialize-display
@@ -84,7 +84,7 @@ define method initialize-display
                                         region: region);
 end method initialize-display;
 
-
+
 /// Test Medium
 
 define class <test-medium> (<basic-medium>)
@@ -106,7 +106,7 @@ define method clear-graphic-operations (medium :: <test-medium>)
   graphic-operations(medium).size := 0;
 end method clear-graphic-operations;
 
-
+
 /// Pixmaps
 
 define class <test-pixmap> (<pixmap>)
@@ -184,7 +184,7 @@ define method beep (medium :: <test-port>) => ()
   format-out("\nBeep!")
 end method beep;
 
-
+
 /// Test Mirrors
 
 define class <test-mirror> (<mirror>)
@@ -254,7 +254,7 @@ define method set-mirror-edges
   mirror.%region := set-box-edges(mirror.%region, left, top, right, bottom)
 end method set-mirror-edges;
 
-
+
 /// Test Frame Manager
 
 define class <test-frame-manager> (<basic-frame-manager>)
@@ -284,7 +284,7 @@ define method make-frame-manager
   make(class, port: _port, palette: palette)
 end method make-frame-manager;
 
-
+
 /// Test panes
 
 define class <test-pane-mixin>
@@ -858,7 +858,7 @@ end method class-for-make-pane;
 
 
 
-
+
 /// Make functions
 
 define method make-test-pane
@@ -893,7 +893,7 @@ define method make-test-frame
   end
 end method make-test-frame;
 
-
+
 /// Debugging support
 
 define table $gadget-class-names :: <object-table>

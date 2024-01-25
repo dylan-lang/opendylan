@@ -50,7 +50,7 @@ define function read-rules (inp :: <stream>)
   end iterate;
 end;
 
-define inline function whitespace-char? 
+define inline function whitespace-char?
     (char :: <byte-character>) => (whitespace? :: <boolean>)
   member?(char, " \t\n\r\f");
 end;

@@ -274,7 +274,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   res
 end;
 
-
+
 /// Fixups
 
 define side-effecting stateless dynamic-extent auxiliary &runtime-primitive-descriptor primitive-symbol-fixup

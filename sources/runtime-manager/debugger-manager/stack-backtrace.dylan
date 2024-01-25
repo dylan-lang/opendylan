@@ -96,7 +96,7 @@ end method;
 ///// CALL-FRAME-RETURN-ADDRESS
 //    Returns the return address of a call frame.
 
-define method call-frame-return-address 
+define method call-frame-return-address
     (application :: <debug-target>, f :: <call-frame>)
        => (fp :: <remote-value>)
   f.call-frame-return-address-cache
@@ -129,7 +129,7 @@ define method locate-call-frame-function
     if (entry-point)
       f.called-function-symbol := entry-point;
       f.called-function-offset := offset;
-      f.call-frame-calling-dylan? := 
+      f.call-frame-calling-dylan? :=
          (entry-point.remote-symbol-language == $symbol-language-Dylan);
       if (f.call-frame-calling-dylan?)
         // TODO: Get the model object from the compiler.
@@ -153,7 +153,7 @@ define method call-frame-function
          f.call-frame-function-model-object-cache)
 end method;
 */
-define method call-frame-function 
+define method call-frame-function
     (application :: <debug-target>, frame :: <call-frame>)
        => (func-sym :: false-or (<remote-symbol>),
            func-obj :: false-or(<remote-value>),
@@ -165,7 +165,7 @@ define method call-frame-function
   if (func-sym & mangled-name-is-iep?(func-sym.remote-symbol-name))
     let func-name = mangle-map-iep-to-method(func-sym.remote-symbol-name);
     let dll = func-sym.remote-symbol-library;
-    let sym = 
+    let sym =
       symbol-table-find-symbol(application.debug-target-symbol-table,
                                func-name, library: dll);
     if (sym)
@@ -187,7 +187,7 @@ end method;
 
 
 ///// DYLAN-CALL-FRAME?
-//    Decides whether a function frame is running Dylan code. 
+//    Decides whether a function frame is running Dylan code.
 //    TODO: Decide the precise technique for doing this.
 
 define method dylan-call-frame?

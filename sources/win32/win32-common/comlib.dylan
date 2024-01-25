@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  This library defines data types, constants (including error codes),
 	   and structure accessors that are shared by the other libraries for
 	   the various parts of the Win32 API.
@@ -26,7 +26,7 @@ define module Win32-common
 		     	pointer-cast, destroy, \with-stack-structure,
 		        pointer-value-address, c-type-cast,
 		        c-callable-wrapper-definer, \with-c-string } ;
-  use machine-words, 
+  use machine-words,
     export: {%logior, %logand};
   use Dylan-extensions,
     import: { <abstract-integer>, <big-integer>,
@@ -342,10 +342,10 @@ define module Win32-common
 	$ERROR-DHCP-ADDRESS-CONFLICT;
 
   // types from "first.dylan":
-  export <FARPROC>, <PROC>, <LPARAM>, <LRESULT>, <WPARAM>, 
+  export <FARPROC>, <PROC>, <LPARAM>, <LRESULT>, <WPARAM>,
 	<UINT>, <PUINT>, <LPUINT>, <LPULONG>, <C-void**>, <LPLPVOID>,
 	<LARGE-INTEGER>,  <PLARGE-INTEGER>,
-	<ULARGE-INTEGER>, <PULARGE-INTEGER>; 
+	<ULARGE-INTEGER>, <PULARGE-INTEGER>;
   export LowPart-value, LowPart-value-setter,
 	HighPart-value, HighPart-value-setter;
   export <RECTL>, <PRECTL>, <LPRECTL>, <LPCRECTL>;

@@ -30,15 +30,15 @@ define method initialize ( this :: <DUIM-OCX>, #rest ignore,
 end initialize;
 
 // The window to be embedded in the container application has to have style
-// $WS-CHILD in order to work properly, but Windows does not allow us to 
+// $WS-CHILD in order to work properly, but Windows does not allow us to
 // create a child window without specifying a parent, but DUIM creates the
 // mirrors long before we get a window handle from the container.  So create
-// a window to server as a temporary parent.  This window will never be 
+// a window to server as a temporary parent.  This window will never be
 // mapped to the screen.
 define constant $window-class-name = "DUIM-top-level-window";
 define variable *foster-window* :: false-or(<HWND>)= #f;
 define function get-foster-parent-window() => window :: <HWND>;
-  *foster-window* | 
+  *foster-window* |
   begin
   let port = duim/default-port(); // force registration of window classes
   let handle :: <HWND>
@@ -114,7 +114,7 @@ end method;
 
 // Unfortunatly, DUIM does not yet seem to have any corresponding event
 // for when the focus is lost.		???
-
+
 
 define generic ocx-frame ( obj :: <object> ) => ( frame :: <ocx-frame> );
 

@@ -23,10 +23,10 @@ define method invoke-harp
           call-in = #f,        // true if we're a foreign callable function
           static = #f,         // true if we're a static (file local) function
           public = ~ static,   // true if we're a public function
-          export = unsupplied(), 
+          export = unsupplied(),
                                // true if lambda is exported
           source-locator = #f, // #f, or a source location for the lambda start
-          harp-debug = unsupplied(),   
+          harp-debug = unsupplied(),
                                // if true, then record debug output in compiled lambda
           check = check-consistency-by-default)
    => (compiled-lambda :: <compiled-lambda>)
@@ -39,7 +39,7 @@ define method invoke-harp
   let old-vars = backend.variables;
   let code-gen-complete? = #f;
   block ()
-    let new-vars = make-harp-variables(backend, function-name, 
+    let new-vars = make-harp-variables(backend, function-name,
                                        defasm: defasm, call-in: call-in,
 				       prototype: old-vars);
     backend.variables := new-vars;

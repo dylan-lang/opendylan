@@ -62,7 +62,7 @@ end method make;
 define sealed domain make (subclass(<bounding-box>));
 define sealed domain initialize (<bounding-box>);
 
-
+
 /// General bounding boxes
 
 define sealed class <general-box> (<bounding-box>)
@@ -184,7 +184,7 @@ define sealed method box-invalidated?
   box.%left = $largest-coordinate
 end method box-invalidated?;
 
-
+
 /// Simple bounding boxes
 
 define sealed class <simple-box> (<bounding-box>)
@@ -302,7 +302,7 @@ define sealed method box-invalidated?
   box.%width = $smallest-coordinate
 end method box-invalidated?;
 
-
+
 /// The rest of the box protocol...
 
 define sealed method region-equal
@@ -403,7 +403,7 @@ define function box-sizes-equal
                    left2, top2, right2, bottom2)
 end function box-sizes-equal;
 
-
+
 /// Convenience functions
 
 // Guaranteed to cons a new box unless INTO is supplied

@@ -39,7 +39,7 @@ define method download-byte-string-into
       // (Client should have checked anyway, but just in case).
       #f
     else
-      let destination-addr = 
+      let destination-addr =
         byte-indexed-remote-value(static-block.static-block-base-address,
                                   static-block.block-byte-cursor);
       write-byte-string(access-path, destination-addr, bytes,
@@ -104,13 +104,13 @@ define method download-remote-value-vector-into
     #f
   else
     let i = 0;
-    let destination-first = 
+    let destination-first =
       download-remote-value-into(access-path, static-block, value-vector[i]);
     let destination-this = destination-first;
     let limit = size(value-vector);
     i := i + 1;
     while (destination-this & (i < limit))
-      destination-this := 
+      destination-this :=
         download-remote-value-into(access-path, static-block, value-vector[i]);
       i := i + 1;
     end while;

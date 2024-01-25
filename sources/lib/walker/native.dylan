@@ -13,7 +13,7 @@ define inline function walker-allocate-simple-object (class :: <class>) => (valu
   system-allocate-simple-instance(class)
 end function;
 
-define inline function walker-allocate-repeated-object 
+define inline function walker-allocate-repeated-object
     (class :: <class>, size) => (value)
   let repeated-slot :: <repeated-slot-descriptor> = repeated-slot-descriptor(class);
   let size-slot :: <slot-descriptor> = size-slot-descriptor(repeated-slot);

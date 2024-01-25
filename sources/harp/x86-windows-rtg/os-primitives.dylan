@@ -18,7 +18,7 @@ define win-fun runtime-external win-ExitProcess    = "ExitProcess",             
 
 define used-by-client win32-runtime-primitive exit-application
   // On entry: raw-int-status
-  //    
+  //
   // On exit: entire process is terminated
   arg0 status;
   op--stdcall-c(be, win-ExitProcess, status);

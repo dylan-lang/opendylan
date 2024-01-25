@@ -163,7 +163,7 @@ define method sheet-layed-out?-setter
   layed-out?
 end method sheet-layed-out?-setter;
 
-
+
 /// Making displays
 
 define macro with-display-locked
@@ -239,7 +239,7 @@ define method port-display-class (_port :: <port>) => (class)
   <standard-display>
 end method port-display-class;
 
-
+
 /// Attaching sheets to displays
 
 // Attach a sheet to a display, interposing a top-level sheet

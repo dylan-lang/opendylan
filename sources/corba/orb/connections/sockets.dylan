@@ -28,7 +28,7 @@ define method receive-connections
   block()
     while (#t)
       let reply-socket =
-	accept(server-socket, 
+	accept(server-socket,
 	       force-output-before-read?: #f,
 	       element-type: <byte>);
       connection-callback(reply-socket);

@@ -42,7 +42,7 @@ define method initialize ( obj :: <sample-control-object>,
   // in the window object (using register-C-Dylan-object from the C-FFI
   // library) instead of in a global variable.
   *the-application* := obj;
-  
+
   // app initialization
   register-window-classes(obj.app-module-handle);
 
@@ -78,7 +78,7 @@ define method terminate (obj :: <sample-control-object>) => ();
   values()
 end method terminate ;
 
-
+
 // The OLE-part-... methods are called by the "ole-control-framework" library.
 
 // Return the document window:
@@ -141,7 +141,7 @@ define method OLE-part-set-ambient-property
   obj.design-mode? := ~ user-mode?;
 end method;
 
-
+
 
 
 define method data-changed(obj :: <sample-control-object>) => ()
@@ -155,7 +155,7 @@ define method data-changed(obj :: <sample-control-object>) => ()
   // OLE-util-view-changed(obj); // force update of container's copy
 end method;
 
-
+
 // Draw the object into an arbitrary DC
 define method draw-control(obj :: <sample-control-object>,
 		   hDC :: <HDC>, rect :: <LPRECT>)
@@ -180,13 +180,13 @@ define method OLE-part-draw-metafile (obj :: <sample-control-object>,
   $S-OK;
 end method;
 
-define method OLE-part-requested-size ( obj :: <sample-control-object> ) 
+define method OLE-part-requested-size ( obj :: <sample-control-object> )
  => (width :: <integer>, height :: <integer>);
 
   values( $image-width, $image-height )
 end method;
 
-
+
 
 define constant $data-stream-name :: <LPOLESTR> =
   as(<LPOLESTR>, "InvsCtl"); // arbitrary name for internal identification
@@ -253,7 +253,7 @@ define method OLE-part-init-new (obj :: <sample-control-object>)
   $S-OK
 end;
 
-
+
 
 // IDispatch interface
 

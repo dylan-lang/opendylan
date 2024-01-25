@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 /// OP--POP-ANY-SEH-HANDLERS
-/// This is responsible for the minimal amount of interaction between the 
+/// This is responsible for the minimal amount of interaction between the
 /// Dylan NLX implementation, and the Windows SEH mechanism. Just before
 /// popping the stack, we look to see if it will make any of the registered
 /// SEH handlers stale. If so, then they get popped first. In practice,

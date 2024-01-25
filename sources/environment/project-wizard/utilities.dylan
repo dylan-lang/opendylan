@@ -70,7 +70,7 @@ define function maybe-ensure-project-directory
   end;
 end function maybe-ensure-project-directory;
 
-
+
 /// ----------------------------------------------------------------------
 /// CHOICE
 /// Class encapsulating an object and a flag determining whether or not
@@ -175,7 +175,7 @@ define sealed method \= (choice1 :: <choice>, choice2 :: <choice>)
 end method;
 
 
-
+
 /// ----------------------------------------------------------------------
 /// FILE-BROWSE PANE CLASS
 /// A "gadget" incorporating a text field and a "Browse..." button.
@@ -232,7 +232,7 @@ define function file-browse-pane-enabled?-setter
 end function;
 
 
-
+
 /// ----------------------------------------------------------------------
 /// TEXT-FIELD-OPTION PANE CLASS
 
@@ -291,7 +291,7 @@ end function;
 
 
 /* #### MULTI-LINE TEXT #############################
-
+
 /// ----------------------------------------------------------------------
 /// MULTI-LINE TEXT PANE CLASS
 
@@ -318,7 +318,7 @@ define method make
 end method initialize;
 
 
-
+
 /// ----------------------------------------------------------------------
 /// MULTI-PAGE PANE CLASS
 

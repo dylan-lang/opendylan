@@ -133,7 +133,7 @@ define sealed method line-for-display-only?
   #f
 end method line-for-display-only?;
 
-
+
 /// Text lines
 
 // A line containing text
@@ -335,7 +335,7 @@ define method as
   string
 end method as;
 
-
+
 /// Diagram lines
 
 // A line containing arbitrary text and/or diagrams.  Note that Deuce

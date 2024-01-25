@@ -210,7 +210,7 @@ define method region-intersects-region?
   right >= left & bottom >= top
 end method region-intersects-region?;
 
-
+
 /// Lines x Rectangles
 
 define method region-contains-region?

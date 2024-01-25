@@ -14,14 +14,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The hierarchy has now got rather complicated. There is a type hierarchy
 // of integer (meaning integer/pointer) and float, and float is subdivided
-// into single & double (as for registers). Into this we mixin the concepts 
+// into single & double (as for registers). Into this we mixin the concepts
 // of address constants and indirect constants. There is also a notion of
 // an imported constant (imported from another library). Currently, this
 // is supported for indirect constants only, since DLL importing implies
 // an indirection.
 
 define primary open abstract class <constant-reference> (<object>)
-  constant slot cr-refers-to-object,           // Canonical Object we refer to  
+  constant slot cr-refers-to-object,           // Canonical Object we refer to
     required-init-keyword: refers-to:;
   constant slot cr-const-offset :: <integer>,  // Address offset from the constant
     required-init-keyword: const-offset:;
@@ -82,17 +82,17 @@ end class;
 
 // The instantiable general constant reference classes
 
-define abstract open class <i-address-constant-reference> 
+define abstract open class <i-address-constant-reference>
       (<i-constant-reference>, <address-constant-reference>)
-// THIS ONE GETS SUBCLASSED BY IDVM 
+// THIS ONE GETS SUBCLASSED BY IDVM
 end class;
 
 define class <i-address-constant-reference-internal>
-      (<i-address-constant-reference>) 
+      (<i-address-constant-reference>)
 end class;
 
 define sealed method make
-    (class == <i-address-constant-reference>, #key const-offset = 0, refers-to) 
+    (class == <i-address-constant-reference>, #key const-offset = 0, refers-to)
     => (r :: <i-address-constant-reference-internal>)
   make(<i-address-constant-reference-internal>,
        const-offset: const-offset, refers-to: refers-to);
@@ -100,12 +100,12 @@ end method;
 
 
 
-define abstract class <i-indirect-constant-reference> 
+define abstract class <i-indirect-constant-reference>
       (<i-constant-reference>, <indirect-constant-reference>)
 end class;
 
-define class <i-indirect-constant-reference-internal> 
-      (<i-indirect-constant-reference>) 
+define class <i-indirect-constant-reference-internal>
+      (<i-indirect-constant-reference>)
 end class;
 
 // On Windows, DLL imports require indirections, and code is compiled
@@ -113,23 +113,23 @@ end class;
 // where there is no extra indirection for imports.
 
 define class <i-address-constant-reference-imported>
-      (<i-address-constant-reference>, <imported-constant-reference>) 
+      (<i-address-constant-reference>, <imported-constant-reference>)
 end class;
 
 define class <i-indirect-constant-reference-imported>
-      (<i-indirect-constant-reference>, <imported-constant-reference>) 
+      (<i-indirect-constant-reference>, <imported-constant-reference>)
 end class;
 
-define class <i-thread-constant-reference> 
+define class <i-thread-constant-reference>
     (<i-address-constant-reference>, <thread-constant-reference>)
 end class;
 
 define class <interactor-indirect-constant-reference>
-      (<i-indirect-constant-reference>, <interactor-constant-reference>) 
+      (<i-indirect-constant-reference>, <interactor-constant-reference>)
 end class;
 
 define sealed method make
-    (class == <interactor-constant-reference>, #key const-offset = 0, refers-to) 
+    (class == <interactor-constant-reference>, #key const-offset = 0, refers-to)
     => (r :: <interactor-indirect-constant-reference>)
   make(<interactor-indirect-constant-reference>,
        const-offset: const-offset, refers-to: refers-to);
@@ -140,46 +140,46 @@ end method;
 // The instantiable float constant reference classes
 
 
-define class <sf-address-constant-reference> 
+define class <sf-address-constant-reference>
       (<sf-constant-reference>, <address-constant-reference>)
 end class;
 
-define abstract class <sf-indirect-constant-reference> 
+define abstract class <sf-indirect-constant-reference>
       (<sf-constant-reference>, <indirect-constant-reference>)
 end class;
 
-define class <sf-indirect-constant-reference-internal> 
+define class <sf-indirect-constant-reference-internal>
       (<sf-indirect-constant-reference>)
 end class;
 
 
-define class <sf-address-constant-reference-imported> 
+define class <sf-address-constant-reference-imported>
       (<sf-address-constant-reference>, <imported-constant-reference>)
 end class;
 
-define class <sf-indirect-constant-reference-imported> 
+define class <sf-indirect-constant-reference-imported>
       (<sf-indirect-constant-reference>, <imported-constant-reference>)
 end class;
 
 
-define class <df-address-constant-reference> 
+define class <df-address-constant-reference>
       (<df-constant-reference>, <address-constant-reference>)
 end class;
 
-define abstract class <df-indirect-constant-reference> 
+define abstract class <df-indirect-constant-reference>
       (<df-constant-reference>, <indirect-constant-reference>)
 end class;
 
-define class <df-indirect-constant-reference-internal> 
+define class <df-indirect-constant-reference-internal>
       (<df-indirect-constant-reference>)
 end class;
 
 
-define class <df-address-constant-reference-imported> 
+define class <df-address-constant-reference-imported>
       (<df-address-constant-reference>, <imported-constant-reference>)
 end class;
 
-define class <df-indirect-constant-reference-imported> 
+define class <df-indirect-constant-reference-imported>
       (<df-indirect-constant-reference>, <imported-constant-reference>)
 end class;
 
@@ -203,13 +203,13 @@ define method constant-reference-class-selector
 end method;
 
 
-define sealed method make 
-    (class == <i-constant-reference>, 
+define sealed method make
+    (class == <i-constant-reference>,
      #key address-mode :: <symbol> = #"address",
           import? :: <boolean> = #f,
-          const-offset = 0, refers-to) 
+          const-offset = 0, refers-to)
     => (r :: <i-constant-reference>)
-  let wanted-class = 
+  let wanted-class =
     constant-reference-class-selector(<i-address-constant-reference>,
                                       <i-indirect-constant-reference-internal>,
                                       <i-address-constant-reference-imported>,
@@ -219,13 +219,13 @@ define sealed method make
 end method;
 
 
-define sealed method make 
-    (class == <sf-constant-reference>, 
+define sealed method make
+    (class == <sf-constant-reference>,
      #key address-mode :: <symbol> = #"address",
           import? :: <boolean> = #f,
-          const-offset = 0, refers-to) 
+          const-offset = 0, refers-to)
     => (r :: <sf-constant-reference>)
-  let wanted-class = 
+  let wanted-class =
     constant-reference-class-selector(<sf-address-constant-reference>,
                                       <sf-indirect-constant-reference-internal>,
                                       <sf-address-constant-reference-imported>,
@@ -235,13 +235,13 @@ define sealed method make
 end method;
 
 
-define sealed method make 
-    (class == <df-constant-reference>, 
+define sealed method make
+    (class == <df-constant-reference>,
      #key address-mode :: <symbol> = #"address",
           import? :: <boolean> = #f,
-          const-offset = 0, refers-to) 
+          const-offset = 0, refers-to)
     => (r :: <df-constant-reference>)
-  let wanted-class = 
+  let wanted-class =
     constant-reference-class-selector(<df-address-constant-reference>,
                                       <df-indirect-constant-reference-internal>,
                                       <df-address-constant-reference-imported>,
@@ -251,28 +251,28 @@ define sealed method make
 end method;
 
 
-define sealed method make 
+define sealed method make
     (class == <constant-reference>, #rest keys, #key, #all-keys)
     => (r :: <i-constant-reference>)
   apply(make, <i-constant-reference>, keys);
 end method;
 
-define sealed method make 
-    (class == <address-constant-reference>, #rest keys, #key, #all-keys) 
+define sealed method make
+    (class == <address-constant-reference>, #rest keys, #key, #all-keys)
     => (r :: <i-address-constant-reference>)
   apply(make, <i-address-constant-reference>, keys);
 end method;
 
 
-define sealed method make 
-    (class == <indirect-constant-reference>, #rest keys, #key, #all-keys) 
+define sealed method make
+    (class == <indirect-constant-reference>, #rest keys, #key, #all-keys)
     => (r :: <i-indirect-constant-reference-internal>)
   apply(make, <i-indirect-constant-reference-internal>, keys);
 end method;
 
 
-define sealed method make 
-    (class == <imported-constant-reference>, #rest keys, #key, #all-keys) 
+define sealed method make
+    (class == <imported-constant-reference>, #rest keys, #key, #all-keys)
     => (r :: <i-indirect-constant-reference-imported>)
   error("Not yet implemented");
 end method;
@@ -287,14 +287,14 @@ end method;
 
 define abstract open primary class <labelled-constant> (<object>)
   // The location in the code vector. This must be set after SDI resolution
-  slot labelled-constant-index :: <integer> = 0; 
-  // The size of the constant (in backend dependent units). 
+  slot labelled-constant-index :: <integer> = 0;
+  // The size of the constant (in backend dependent units).
   constant slot labelled-constant-size  :: <integer>, required-init-keyword: size:;
 end class;
 
 
 define abstract open primary class <explicit-labelled-constant> (<labelled-constant>)
-  slot labelled-constant-reference :: <constant-reference>, 
+  slot labelled-constant-reference :: <constant-reference>,
        init-keyword: constant-reference:;
 end class;
 
@@ -313,7 +313,7 @@ define class <labelled-relative-constant> (<explicit-labelled-constant>)
 end class;
 
 
-/// And a subclass for opcodes with constants (some assemblers - 
+/// And a subclass for opcodes with constants (some assemblers -
 /// especially the Intel X86 - make it difficult to build these by steam.
 
 
@@ -323,7 +323,7 @@ define class <labelled-constant-with-opcode> (<explicit-labelled-constant>)
 end class;
 
 
-/// <code-address-constant> describes a reference which is based on the 
+/// <code-address-constant> describes a reference which is based on the
 /// current code location
 
 define abstract class <code-address-constant> (<labelled-constant>)
@@ -372,12 +372,12 @@ end class;
 
 define class <code-locator-constant> (<debug-info-constant>)
 
-  // The live variables slot is used during code generation, but will be 
+  // The live variables slot is used during code generation, but will be
   // emptied after HARP has done its work
   slot locator-live-variables :: <vector> = #[],
     init-keyword: variables:;
 
-  slot locator-data :: <object>, 
+  slot locator-data :: <object>,
     required-init-keyword: data:;
 
   slot locator-with-stack? :: <boolean>,

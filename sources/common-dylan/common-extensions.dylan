@@ -16,7 +16,7 @@ define inline constant unsupplied  = method () $unsupplied end;
 define inline constant unsupplied? = method (x) x == $unsupplied; end;
 define inline constant supplied?   = method (x) ~(x == $unsupplied); end;
 
-
+
 /// Basic utilities
 
 define inline function false?
@@ -29,7 +29,7 @@ define inline function true?
   object ~== #f
 end function true?;
 
-
+
 define open generic concatenate!
     (sequence :: <sequence>, #rest more-sequences)
  => (result-sequence :: <sequence>);

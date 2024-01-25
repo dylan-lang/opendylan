@@ -17,7 +17,7 @@ define test test-$identity-transform ()
      0,  10,  100, 200)
 end test;
 
-
+
 /// Transform test suites
 
 define constant *translate-up-10+10*   = make-translation-transform(+10,+10);
@@ -135,7 +135,7 @@ define test transform-position-test ()
   end
 end test transform-position-test;
 
-
+
 /// Sheet delta transforms
 
 define test sheet-delta-transform-test ()
@@ -158,7 +158,7 @@ define test sheet-delta-transform-test ()
               make-translation-transform(250, 400));
 end test sheet-delta-transform-test;
 
-
+
 /// Define the transforms test suite
 
 define suite duim-transforms-suite ()

@@ -27,7 +27,7 @@ define class <simple-entry-tracepoint>
                   (<entry-tracepoint>)
 end class;
 
-define method make 
+define method make
   (class == <entry-tracepoint>, #rest keys, #key, #all-keys)
     => (entry-tracepoint)
   apply (make, <simple-entry-tracepoint>, keys)
@@ -54,7 +54,7 @@ define class <simple-return-tracepoint>
                       (<return-tracepoint>)
 end class;
 
-define method make 
+define method make
     (class == <return-tracepoint>, #rest keys, #key, #all-keys)
       => (return-tracepoint)
   apply (make, <simple-return-tracepoint>, keys);
@@ -94,25 +94,25 @@ end method;
 
 
 ///// HANDLE-DEBUG-POINT-EVENT (<ENTRY-TRACEPOINT>)
-//    When an <entry-tracepoint> is encountered, the appropriate 
+//    When an <entry-tracepoint> is encountered, the appropriate
 //    <return-tracepoint> needs to be created and registered. The
 //    callback for the <entry-tracepoint> also has to be invoked,
 //    hence this method uses next-method().
 
-define method handle-debug-point-event 
+define method handle-debug-point-event
     (app :: <debug-target>, bp :: <entry-tracepoint>,
-     thr :: <remote-thread>) 
+     thr :: <remote-thread>)
        => (interested? :: <boolean>)
   // We have just entered the trace callee.
-  let trace-callee-frame 
+  let trace-callee-frame
     = initialize-stack-trace (app.debug-target-access-path, thr);
   let trace-caller-frame
     = previous-frame (app.debug-target-access-path, trace-callee-frame);
-  let ptr 
+  let ptr
     = frame-pointer (app.debug-target-access-path, trace-caller-frame);
-  let ret-addr 
+  let ret-addr
     = frame-return-address (app.debug-target-access-path, trace-callee-frame);
-  let return-point = 
+  let return-point =
     make-return-tracepoint (app, bp, thr,
                             address: ret-addr,
                             callback: bp.return-callback,
@@ -131,9 +131,9 @@ end method;
 //    Otherwise, this is not an interesting event, and the application
 //    should be allowed to continue (as far as this debug-point is
 //    concerned, at least).
-define method handle-debug-point-event 
+define method handle-debug-point-event
     (app :: <debug-target>, bp :: <return-tracepoint>,
-     thr :: <remote-thread>) 
+     thr :: <remote-thread>)
        => (interested? :: <boolean>)
 
   let top-frame = initialize-stack-trace
@@ -183,14 +183,14 @@ define method dylan-trace-entry-arguments
 
   local method inspect-next-value () => (val :: <remote-value>)
           if (values-inspected < args-in-registers)
-            let register = 
+            let register =
               enumeration-code-to-register
                 (path, argument-register-codes[values-inspected]);
             let thread-register = active-register(path, thread, register);
             values-inspected := values-inspected + 1;
             read-value(path, thread-register);
 	  else
-            let position = 
+            let position =
               calculate-stack-address
                 (path, thread, 1 + values-inspected - args-in-registers);
             values-inspected := values-inspected + 1;
@@ -199,10 +199,10 @@ define method dylan-trace-entry-arguments
 	end method;
 
   // Inspect the signature properties
-  let (required-count, 
-       value-count, 
-       takes-rest?, 
-       takes-keys?, 
+  let (required-count,
+       value-count,
+       takes-rest?,
+       takes-keys?,
        takes-all-keys?,
        default-rest-values?,
        default-values?)
@@ -214,7 +214,7 @@ define method dylan-trace-entry-arguments
   // Initialize the return values from this information.
   let required-arguments = make(<vector>, size: required-count);
   let rest-vector = #f;
-  let keyword-arguments = 
+  let keyword-arguments =
     if (keys) make(<vector>, size: keys.size) else #f end if;
 
   for (req-i from 0 below required-count)

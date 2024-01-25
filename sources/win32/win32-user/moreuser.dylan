@@ -19,7 +19,7 @@ define inline function CreateDialog(hInstance, lpName, hWndParent,
 				    lpDialogFunc);
   CreateDialogParam(hInstance, lpName, hWndParent, lpDialogFunc, 0)
 end CreateDialog;
- 
+
 define inline function CreateDialogIndirect(hInstance, lpTemplate, hWndParent,
 					  lpDialogFunc);
   CreateDialogIndirectParam(hInstance, lpTemplate, hWndParent,
@@ -55,7 +55,7 @@ define inline function MAKEWPARAM(l, h); MAKELONG(l, h) end;
 define inline function MAKELPARAM(l, h); MAKELONG(l, h) end;
 define inline function MAKELRESULT(l, h); MAKELONG(l, h) end;
 
-// This one handled specially because some of the parameters need to 
+// This one handled specially because some of the parameters need to
 // accept values outside the range of an <integer>:
 define C-function CreateWindowEx
   parameter dwExStyle  :: <DWORD>;

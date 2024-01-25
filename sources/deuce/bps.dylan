@@ -209,7 +209,7 @@ define sealed domain initialize (<permanent-bp>);
 define sealed domain make (singleton(<permanent-moving-bp>));
 define sealed domain initialize (<permanent-moving-bp>);
 
-
+
 /// BP motion
 
 define sealed method move-bp!

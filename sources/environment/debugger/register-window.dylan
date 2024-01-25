@@ -107,7 +107,7 @@ define method generate-frame-title
               frame-default-object-name(frame, thread))
 end method generate-frame-title;
 
-
+
 /// Register handling
 
 define sealed class <register-wrapper> (<object-wrapper>)

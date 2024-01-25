@@ -102,7 +102,7 @@ define method class-for-command-line
   end
 end method class-for-command-line;
 
-
+
 /// Command superclasses
 
 define open abstract class <project-command> (<environment-command>)
@@ -129,7 +129,7 @@ define method ensure-property-available
   end
 end method ensure-property-available;
 
-
+
 /// Project context
 
 define class <project-context> (<server-context>)

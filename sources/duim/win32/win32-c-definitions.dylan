@@ -710,7 +710,7 @@ end C-struct <ACTCTX>;
 define sealed domain make (singleton(<PACTCTX>));
 define sealed domain initialize (<PACTCTX>);
 define inline constant <PCACTCTX> = /* const */ <PACTCTX>;
-
+
 define macro callback-definer
   { define callback ?new:name :: ?ftype:name = ?old:name } =>
         { ?ftype ## "-callback-wrapper" (?new, ?old) }
@@ -776,7 +776,7 @@ define macro <ENUMRESLANGPROC>-callback-wrapper
  end C-callable-wrapper }
 end;
 
-
+
 define inline-only C-function Arc
   parameter hdc1       :: <HDC>;
   parameter int2       :: <C-int>;
@@ -2147,7 +2147,7 @@ define function win32-error-message
   end with-stack-structure;
 end;
 
-
+
 define function application-instance-handle () => (hInstance :: <HINSTANCE>)
   pointer-cast(<HINSTANCE>, GetModuleHandle($NULL-string))
 end function application-instance-handle;

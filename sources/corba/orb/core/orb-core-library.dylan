@@ -36,7 +36,7 @@ define module orb-core
   use sockets;
   export
     <adaptor>,
-    orb-adaptor, orb-adaptor-setter, 
+    orb-adaptor, orb-adaptor-setter,
     orb-adaptor-lock,
     adaptor-create-reference,
     wait-for-orb-port,

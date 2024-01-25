@@ -252,7 +252,7 @@ end method repaint-panes;
 
 install-test(<recording-test-frame>, "Recording -- graphics");
 
-
+
 /// Simple drawing tests with scrolling
 
 define frame <scrolling-recording-test-frame> (<simple-frame>)
@@ -322,7 +322,7 @@ end method repaint-panes;
 
 install-test(<scrolling-recording-test-frame>, "Recording -- scrolling");
 
-
+
 /// Scribble, using output recording
 
 define class <scribble-recording-pane> (<recording-pane>)
@@ -426,7 +426,7 @@ end method popup-scribble-menu;
 
 install-test(<scribble-recording-frame>, "Recording -- Scribble");
 
-
+
 /// 'with-room-for-graphics' test
 
 define class <wrfg-pane> (<recording-pane>)

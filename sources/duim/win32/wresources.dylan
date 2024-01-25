@@ -22,7 +22,7 @@ define inline function pointer-address-32
   %logand(\%+(p, 3), as(<machine-word>, #xFFFFFFFC))
 end function pointer-address-32;
 
-
+
 /// Basic types and classes
 
 define constant <raw-resource-id> = <LPTSTR>;
@@ -40,7 +40,7 @@ define constant <resource-type>
 // define constant $scroll-bar-class :: <integer> = #x0084;
 // define constant $combo-box-class  :: <integer> = #x0085;
 
-
+
 /// Basic protocols
 
 define generic resource-id
@@ -80,7 +80,7 @@ define generic lookup-resource
 define generic lookup-control
     (window :: <window-resource>, id :: <resource-id>) => (resource :: <window-resource>);
 
-
+
 /// Decoding
 
 define sealed method decode-resource
@@ -94,7 +94,7 @@ define sealed method decode-resource
   end
 end method decode-resource;
 
-
+
 /// Encoding
 
 define sealed method encode-resource
@@ -117,7 +117,7 @@ define sealed method encode-resource
   as(<raw-resource-id>, as(<C-string>, resource-id))
 end method encode-resource;
 
-
+
 /// Resource classes
 
 define sealed class <resource-wrapper>
@@ -202,7 +202,7 @@ end class <cursor-resource>;
 define sealed domain make (singleton(<cursor-resource>));
 define sealed domain initialize (<cursor-resource>);
 
-
+
 /// Dialog resources
 
 define sealed class <dialog-resource>
@@ -248,7 +248,7 @@ define sealed method register-child
 end method register-child;
 
 
-
+
 /// Control resources
 
 define sealed class <control-resource>
@@ -283,7 +283,7 @@ define sealed method get-resource-id
   control-template(control).id-value
 end method get-resource-id;
 
-
+
 /// Toolbar resources
 
 define sealed class <toolbar-resource>
@@ -320,7 +320,7 @@ define sealed method table-protocol
   values(resource-equal, resource-hash)
 end method table-protocol;
 
-
+
 /// Resource databases
 
 define abstract class <resource-database> (<object>)
@@ -523,7 +523,7 @@ define sealed method retrieve-resource
   end
 end method retrieve-resource;
 
-
+
 /// Grokking of simple resources
 
 //--- $RT-ACCELERATOR  not yet handled

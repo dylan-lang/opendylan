@@ -8,12 +8,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define /* exported */ macro custom-interface-definer
-  { 
+  {
     define ?modifiers:* custom-interface ?class-name:name (?superclass:name)
-      ?slots-and-stuff:* 
-    end 
-  } => { 
-    define ?modifiers custom-interface-class ?class-name (?superclass) 
+      ?slots-and-stuff:*
+    end
+  } => {
+    define ?modifiers custom-interface-class ?class-name (?superclass)
       uuid { ?slots-and-stuff };
       vtable-slots { ?slots-and-stuff };
       vtable-inits { ?slots-and-stuff };
@@ -27,25 +27,25 @@ define /* exported */ macro custom-interface-definer
 end macro custom-interface-definer;
 
 define macro custom-interface-class-definer
-  { 
-    define ?modifiers:* custom-interface-class 
+  {
+    define ?modifiers:* custom-interface-class
 	    ?class-name:name (?superclass:name)
       uuid { ?typelib-clauses };
       vtable-slots { ?vtable-slots };
       vtable-inits { ?vtable-inits };
-    end 
+    end
   } => {
     define ?modifiers COM-interface ?class-name ( ?superclass )
     end ?class-name;
 
     define C-struct ?class-name ## "-vstruct"
-      sealed inline-only slot "vtbl-" ## ?superclass :: 
+      sealed inline-only slot "vtbl-" ## ?superclass ::
 	      ?superclass ## "-vstruct", getter: #f, setter: #f;
       ?vtable-slots;     //  slot vtbl-Frob :: <C-function-pointer>;
       pointer-type-name: ?class-name ## "-vptr";
     end C-struct ?class-name ## "-vstruct";
 
-    define constant "$IID-" ## ?class-name :: <REFIID> = 
+    define constant "$IID-" ## ?class-name :: <REFIID> =
 	    as(<REFIID>, ?typelib-clauses);
 
     define variable ?class-name ## "-v-table" :: <C-COM-vtbl> = $null-vtable;
@@ -70,7 +70,7 @@ define macro custom-interface-class-definer
      // the variable is called `typelib-clauses' for the sake of clearer
      // error messages if an undefined clause is encountered.
   typelib-clauses:
-    { } => { } 
+    { } => { }
     { uuid ?uuid:expression ; ... } => { ?uuid }
     // ignore clauses processed elsewhere
     { client-class ?ignore:* ; ... } => { ... }
@@ -88,41 +88,41 @@ define macro custom-interface-class-definer
     { locale ?stuff-to-ignore:* ; ... } => { ... }
     // anything else is an error.
   vtable-slots:
-    { } => { } 
-    { 
+    { } => { }
+    {
       member-function ?function-name:name ?ignore:* ;
       ...
-    } => { 
+    } => {
       sealed inline-only slot "vtbl-" ## ?function-name
 	    :: <C-function-pointer>;
       ...
     }
-    { 
+    {
       function ?function-name:name ?ignore:* ;
       ...
-    } => { 
+    } => {
       sealed inline-only slot "vtbl-" ## ?function-name
 	    :: <C-function-pointer>;
       ...
     }
-    { 
+    {
       vtable-member ?function-name:name ?ignore:* ;
       ...
-    } => { 
+    } => {
       sealed inline-only slot "vtbl-" ## ?function-name
 	    :: <C-function-pointer>;
       ...
     }
-    { 
+    {
       constant property ?property-name:name ?ignore:* ; ...
-    } => { 
+    } => {
       sealed inline-only slot "vtbl-" ## ?property-name
 	    :: <C-function-pointer>;
       ...
     }
-    { 
+    {
       ?maybe-virtual:* property ?property-name:name ?ignore:* ; ...
-    } => { 
+    } => {
       sealed inline-only slot "vtbl-" ## ?property-name
 	    :: <C-function-pointer>;
       sealed inline-only slot "vtbl-set_" ## ?property-name
@@ -132,41 +132,41 @@ define macro custom-interface-class-definer
     { ?stuff-to-ignore:* ; ... } => { ... }
 
   vtable-inits:
-    { } => { } 
-    { 
+    { } => { }
+    {
       member-function ?function-name:name ?stuff-to-ignore:* ;
       ...
-    } => { 
+    } => {
       let fn :: <C-function-pointer> = "CCW_" ## ?function-name;
       new-vtbl."vtbl-" ## ?function-name := fn;
       ...
     }
-    { 
+    {
       function ?function-name:name ?stuff-to-ignore:* ;
       ...
-    } => { 
+    } => {
       let fn :: <C-function-pointer> = "CCW_" ## ?function-name;
       new-vtbl."vtbl-" ## ?function-name := fn;
       ...
     }
-    { 
+    {
       vtable-member ?function-name:name ?stuff-to-ignore:* ;
       ...
-    } => { 
+    } => {
       let fn :: <C-function-pointer> = "CCW_" ## ?function-name;
       new-vtbl."vtbl-" ## ?function-name := fn;
       ...
     }
-    { 
+    {
       constant property ?property-name:name ?ignore:* ; ...
-    } => { 
-      let fn :: <C-function-pointer> = "CCW_" ## ?property-name; 
+    } => {
+      let fn :: <C-function-pointer> = "CCW_" ## ?property-name;
       new-vtbl."vtbl-" ## ?property-name := fn;
       ...
     }
-    { 
+    {
       ?maybe-virtual:* property ?property-name:name ?ignore:* ; ...
-    } => { 
+    } => {
       let fn :: <C-function-pointer> = "CCW_" ## ?property-name;
       new-vtbl."vtbl-" ## ?property-name := fn;
       let fn :: <C-function-pointer> = "CCW_set_" ## ?property-name;
@@ -175,24 +175,24 @@ define macro custom-interface-class-definer
     }
     { ?stuff-to-ignore:* ; ... } => { ... }
 end macro custom-interface-class-definer;
-
+
 
 define macro custom-interface-methods-definer
-  { 
+  {
     define ?modifiers:* custom-interface-methods ?class-name:name
       class-options { ?c-client-class:* };
       methods { ?methods:* };
-    end 
-  } => { 
+    end
+  } => {
     emit-client-class(?c-client-class, ?modifiers);
     distribute-over-semicolons(\member-clauses, (?c-client-class, ?class-name),
 			       (?methods));
   }
 c-client-class:
   { } => { <C-interface>, <C-interface> } // default
-  { client-class ?c-class-name:name (?client-superclass:name); 
+  { client-class ?c-class-name:name (?client-superclass:name);
     ?stuff-to-ignore:* } => { ?c-class-name, ?client-superclass }
-  { client-class ?c-class-name:name; 
+  { client-class ?c-class-name:name;
     ?stuff-to-ignore:* } => { ?c-class-name, <C-interface> }
   { ?stuff-to-ignore:* ; ... } => { ... }
 end macro custom-interface-methods-definer;
@@ -207,8 +207,8 @@ end;
 define macro member-clauses
 
     // with explicit result declaration:
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( vtable-member ?function-name:name (?argument-list:*) => (?results:*),
 	    ?function-options ))
   } => {
@@ -216,14 +216,14 @@ define macro member-clauses
     emit-c-functions( ?function-name [ ?c-interface-class ]
 	(?argument-list) => (?results) );
 
-    emit-dylan-method ?function-name [ ?c-interface-class, ?class-name ] 
-		(?argument-list) (?argument-list) => (?results) 
+    emit-dylan-method ?function-name [ ?c-interface-class, ?class-name ]
+		(?argument-list) (?argument-list) => (?results)
 	end;
   }
 
     // with implicit status result:
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( member-function ?function-name:name (?argument-list:*) => (?result:*),
 	     ?function-options ))
   } => {
@@ -238,8 +238,8 @@ define macro member-clauses
   }
 
     // with implicit status result:
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( function ?function-name:name (?argument-list:*) => (?result:*),
 	     ?function-options ))
   } => {
@@ -253,20 +253,20 @@ define macro member-clauses
       end;
   }
 
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( constant property ?property-name:name :: ?property-type:expression,
 		?function-options ))
   } => {
-    member-clauses((?c-interface-class, ?super, ?class-name), 
+    member-clauses((?c-interface-class, ?super, ?class-name),
     ( vtable-member ?property-name () => (value :: ?property-type) ));
   }
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( constant property ?property-name:name :: ?property-type:expression
        = ?value:expression, ?function-options ))
   } => {
-    member-clauses((?c-interface-class, ?super, ?class-name), 
+    member-clauses((?c-interface-class, ?super, ?class-name),
     ( vtable-member ?property-name () => (value :: ?property-type) ));
 
     define inline method ?property-name ( this :: ?class-name )
@@ -274,26 +274,26 @@ define macro member-clauses
       ?value
     end;
   }
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( constant property ?property-name:name = ?value:expression,
 	?function-options ))
   } => {
-    member-clauses((?c-interface-class, ?super, ?class-name), 
+    member-clauses((?c-interface-class, ?super, ?class-name),
     ( vtable-member ?property-name () => (value :: object-class(?value)) ));
 
     define inline method ?property-name ( this :: ?class-name ) => ( value )
       ?value
     end;
   }
-  { 
-    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  {
+    member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     ( ?maybe-virtual:* property ?property-name:name :: ?property-type:*,
 		?function-options ))
   } => {
-    member-clauses((?c-interface-class, ?super, ?class-name), 
+    member-clauses((?c-interface-class, ?super, ?class-name),
     ( vtable-member ?property-name () => (value :: ?property-type) ));
-    member-clauses((?c-interface-class, ?super, ?class-name), 
+    member-clauses((?c-interface-class, ?super, ?class-name),
     ( vtable-member "set_" ## ?property-name (value :: ?property-type)
        => ()));
 
@@ -312,12 +312,12 @@ define macro member-clauses
     end;
 
   }
-  { member-clauses((?c-interface-class:name, ?super:name, ?class-name:name), 
+  { member-clauses((?c-interface-class:name, ?super:name, ?class-name:name),
     (?rest:*)) } => { }
 function-options:
     // Ignore options that only apply to a dispatch interface or that
     // only affect the type info; they are not documented as being supported
-    // here, but may be received when passed on by `define dual-interface'. 
+    // here, but may be received when passed on by `define dual-interface'.
     { } => { }
     { name: ?function-name:expression, ... } => { ... }
     { disp-id: ?value:expression, ... } => { ... }
@@ -328,7 +328,7 @@ function-options:
 end macro member-clauses;
 
 define macro emit-c-functions
-  { 
+  {
     emit-c-functions( ?function-name:name [ ?c-interface-class:name ]
 		       (?c-in-args)
                        => ( ?value:name :: ?result-type:*, ?c-out-args) )
@@ -346,11 +346,11 @@ define macro emit-c-functions
       ?c-in-args ;
       ?c-out-args ;
       result ?value :: c-type-macro(?result-type);
-      indirect: #t; 
+      indirect: #t;
       c-modifiers: "__stdcall";
     end;
   }
-  { 
+  {
     emit-c-functions( ?function-name:name [ ?c-interface-class:name ]
 		       (?c-in-args) => () )
   } => {
@@ -363,7 +363,7 @@ define macro emit-c-functions
     define inline-only C-function "CV_" ## ?function-name
       input parameter This :: ?c-interface-class;
       ?c-in-args ;
-      indirect: #t; 
+      indirect: #t;
       c-modifiers: "__stdcall";
     end;
   }
@@ -390,7 +390,7 @@ end macro;
 
 // This should be done as an inlined generic function instead of a macro,
 // but compiler Bug 3612 needs to be fixed first.
-define macro c-type-macro 
+define macro c-type-macro
   { c-type-macro( ?c-type ) } => { ?c-type }
 c-type:
   { <integer> }		=> { <C-long> }
@@ -410,7 +410,7 @@ c-type:
   { ?type:expression }	=> { ?type } // hope it's already a C type
 end;
 
-define macro c-pointer-type-macro 
+define macro c-pointer-type-macro
   { c-pointer-type-macro( ?c-type ) } => { ?c-type }
 c-type:
   { <integer> }		=> { <C-long*> }
@@ -440,7 +440,7 @@ c-type:
   { ?type:* } => { pointer-type(c-type-macro(?type)) } // won't work, but ...   ???
 end;
 
-
+
 
 define macro emit-dylan-method
   { emit-dylan-method ?function-name:name [ ?c-interface-class:expression,
@@ -519,13 +519,13 @@ d-type:
   { ?type:expression }	=> { ?type } // hope it's already a Dylan type
 end;
 
-
+
 
 define macro distribute-over-semicolons
   { distribute-over-semicolons(?macro:name, (?distributee:*), ()) } => { }
 
-  { 
-    distribute-over-semicolons(?macro:name, (?distributee:*), 
+  {
+    distribute-over-semicolons(?macro:name, (?distributee:*),
 			       (?item:*; ?rest:*))
   } => {
     ?macro ## ""((?distributee), (?item));

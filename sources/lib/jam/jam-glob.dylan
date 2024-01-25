@@ -118,7 +118,7 @@ define function glob-match-function
                   union1: regex,
                   union2: parse-glob-pattern(pattern));
   end for;
-  
+
   let dfa
     = regular-expression-dfa(make(<concatenation-regular-expression>,
                                   head: regex,
@@ -128,7 +128,7 @@ define function glob-match-function
                                <simple-object-vector>,
                              transition-collection-size: 256,
                              state-class: <match-dfa-state>);
-  
+
   method (match-string :: <byte-string>) => (match? :: <boolean>);
     block (return)
       for (char in match-string,

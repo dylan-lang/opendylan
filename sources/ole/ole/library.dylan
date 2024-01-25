@@ -1,5 +1,5 @@
-module:    Dylan-user	
-Synopsis:  This is a Dylan library to act as an interface to OLE2.  
+module:    Dylan-user
+Synopsis:  This is a Dylan library to act as an interface to OLE2.
 	   This enables Dylan programs to use OLE
 	   in a manner very similar to usage from C++ without MFC.
 Author:    David N. Gray
@@ -32,7 +32,7 @@ define module OLE
   use Win32-common;
   use Win32-GDI, import: { <LOGPALETTE>, <LPLOGPALETTE> };
   use Win32-User, import: { <LPMSG>, <LPHWND> };
-	
+
   // This module includes the following interfaces:
   export $IID-IOleAdviseHolder, IOleAdviseHolder/Advise,
 		IOleAdviseHolder/Unadvise, IOleAdviseHolder/EnumAdvise,

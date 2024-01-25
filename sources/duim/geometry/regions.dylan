@@ -55,7 +55,7 @@ define protocol <<region-protocol>> ()
  => (region :: <region>);
 end protocol <<region-protocol>>;
 
-
+
 /// The basic region classes
 
 define method untransform-region
@@ -112,7 +112,7 @@ define method region-empty? (region :: <region>) => (true? :: <boolean>)
   #f
 end method region-empty?;
 
-
+
 /// Nowhere
 
 define sealed class <nowhere> (<region>)
@@ -216,7 +216,7 @@ define method transform-region
   region
 end method transform-region;
 
-
+
 /// Points
 
 define protocol <<point-protocol>> (<<region-protocol>>)
@@ -316,7 +316,7 @@ define sealed method region-intersection
   end
 end method region-intersection;
 
-
+
 /// Region Sets
 
 define method region-set-function (region :: <region>) => (function)

@@ -81,7 +81,7 @@ define method do-collection-elements
                          function: function)
 end method do-collection-elements;
 
-
+
 /// Shared utility
 
 define method do-collection-contents

@@ -40,7 +40,7 @@ define constant $text-field-extra-height :: <integer> = 8;      // in pixels
 define constant $text-editor-extra-width  :: <integer> = 0;     // in pixels
 define constant $text-editor-extra-height :: <integer> = 12;    // in pixels
 
-
+
 /// The Win32 backend gadgets protocol
 
 define protocol <<win32-gadgets-protocol>> ()
@@ -55,7 +55,7 @@ define protocol <<win32-gadgets-protocol>> ()
     (gadget :: <win32-gadget-mixin>, handle :: <HWND>, image :: <image>) => ();
 end protocol <<win32-gadgets-protocol>>;
 
-
+
 /// Win32 gadgets
 
 define open abstract class <win32-gadget-mixin> (<gadget>, <win32-pane-mixin>)
@@ -250,7 +250,7 @@ define sealed method activate-win32-gadget
   next-method()
 end method activate-win32-gadget;
 
-
+
 /// Gadget id handling
 
 define sealed method gadget->id
@@ -312,7 +312,7 @@ define sealed method register-gadget-id
   id
 end method register-gadget-id;
 
-
+
 /// Exit, cancel, default button, etc.
 
 define method handle-command-for-id
@@ -399,7 +399,7 @@ end method cancel-gadget;
 
 //---*** What do we do about setting the color and font of a gadget?
 
-
+
 /// "Subgadgets"
 
 // This is the class of gadgets that are created by Windows as a
@@ -438,7 +438,7 @@ define sealed method gadget-documentation
   gadget-documentation(subgadget-owner(gadget))
 end method gadget-documentation;
 
-
+
 /// Subclassed windows gadgets
 
 /// This is the class of gadgets that need to see the control's events
@@ -492,7 +492,7 @@ define sealed method note-mirror-created
   gadget.%old-WndProc := make(<WNDPROC>, address: old-wndproc)
 end method note-mirror-created;
 
-
+
 /// Layout gadget mixins
 
 // This is the class of gadgets that also behave as a layout of any
@@ -508,7 +508,7 @@ define method initialize
   sheet-mirror-accepts-children?(gadget) := #f
 end method initialize;
 
-
+
 /// Labels
 
 define sealed class <win32-label>
@@ -605,7 +605,7 @@ define sealed method do-compose-space
   end
 end method do-compose-space;
 
-
+
 /// Separators
 
 define sealed class <win32-separator>
@@ -680,7 +680,7 @@ define sealed method draw-separator
   end
 end method draw-separator;
 
-
+
 /// Text gadgets
 
 /// Note that some of the methods below are on written on <text-gadget>
@@ -906,7 +906,7 @@ end method text-selection-setter;
 
 //---*** Still need to implement 'text-field-modified?' and setter
 
-
+
 /// Win32 text field implementation class
 
 // The superclass of <win32-text-field> and <win32-password-field>.
@@ -956,7 +956,7 @@ define sealed method handle-control-message
   #f
 end method handle-control-message;
 
-
+
 /// Text fields
 
 define sealed class <win32-text-field>
@@ -980,7 +980,7 @@ define sealed method win32-text-gadget-options
   %logior($ES-AUTOHSCROLL, next-method())
 end method win32-text-gadget-options;
 
-
+
 /// Password fields
 
 define sealed class <win32-password-field>
@@ -1004,7 +1004,7 @@ define sealed method win32-text-gadget-options
   %logior($ES-PASSWORD, $ES-AUTOHSCROLL, next-method())
 end method win32-text-gadget-options;
 
-
+
 /// Text editors
 
 define sealed class <win32-text-editor>
@@ -1108,7 +1108,7 @@ define sealed method do-compose-space
        height: height, min-height: min-height, max-height: max-height)
 end method do-compose-space;
 
-
+
 /// Buttons
 
 define abstract class <win32-button-mixin>
@@ -1373,7 +1373,7 @@ define sealed method initialize-sheet-from-resource
   end
 end method initialize-sheet-from-resource;
 
-
+
 /// Push buttons
 
 define sealed class <win32-push-button>
@@ -1428,7 +1428,7 @@ define sealed method gadget-default?-setter
   default?
 end method gadget-default?-setter;
 
-
+
 /// Radio buttons
 
 define sealed class <win32-radio-button>
@@ -1460,7 +1460,7 @@ define sealed method do-compose-space
   end
 end method do-compose-space;
 
-
+
 /// Check buttons
 
 define sealed class <win32-check-button>
@@ -1492,7 +1492,7 @@ define sealed method do-compose-space
   end
 end method do-compose-space;
 
-
+
 /// Group boxes
 
 // Can you believe that these are a class of button in Windows? :-)
@@ -1603,7 +1603,7 @@ define sealed method do-allocate-space
   end
 end method do-allocate-space;
 
-
+
 /// Scroll bars
 
 define sealed class <win32-scroll-bar>
@@ -1789,7 +1789,7 @@ define sealed method handle-scrolling
   end
 end method handle-scrolling;
 
-
+
 /// General collection gadget handling
 
 define class <win32-collection-gadget-mixin>
@@ -1829,7 +1829,7 @@ define sealed method set-single-selection-gadget-selection
   end
 end method set-single-selection-gadget-selection;
 
-
+
 /// List boxes
 
 define sealed class <win32-list-box>
@@ -2046,7 +2046,7 @@ define sealed method handle-command
   end
 end method handle-command;
 
-
+
 /// Option boxes
 
 define sealed class <win32-option-box>
@@ -2192,7 +2192,7 @@ define sealed method cancel-gadget
   end
 end method cancel-gadget;
 
-
+
 /// Combo boxes
 
 define sealed class <win32-combo-box>
@@ -2448,7 +2448,7 @@ define sealed method text-selection-setter
   text-selection-setter(range, gadget.%text-field)
 end method text-selection-setter;
 
-
+
 /// Viewports
 
 define sealed class <win32-viewport>
@@ -2528,7 +2528,7 @@ define method erase-background
   end
 end method erase-background;
 
-
+
 /// Borders
 
 define sealed class <win32-border>

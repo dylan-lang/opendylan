@@ -109,7 +109,7 @@ define method op--resume
   end if;
 end;
 
-
+
 /// Bind Exit Frame
 
 define method initialize-bef-struct-type (back-end :: <llvm-back-end>) => ()

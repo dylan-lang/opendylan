@@ -220,13 +220,13 @@ define function jam-expand-arg-colon
                 as(<file-locator>, strip-grist(name)).locator-base;
               end
             end if;
-            
+
           // S - Filename suffix
           'S' =>
             if (replace?)
               method (name :: <byte-string>) => (modified :: <byte-string>);
                 let locator = as(<file-locator>, strip-grist(name));
-                  
+
                 as(<byte-string>,
                    make(<file-locator>,
                         directory: locator.locator-directory,
@@ -245,7 +245,7 @@ define function jam-expand-arg-colon
                 end if
               end
             end if;
-            
+
           // D - Directory path
           'D', 'P' =>
             if (replace?)
@@ -302,7 +302,7 @@ define function jam-expand-arg-colon
             else
               extract-grist
             end if;
-          
+
 
           // U - Uppercased expansion
           'U' =>
@@ -399,7 +399,7 @@ define method jam-expand-arg
   evaluate-statement(jam, arg)
 end method;
 
-
+
 /// Argument list expansion.
 
 // jam-expand-list
@@ -420,7 +420,7 @@ define method jam-expand-list
   result
 end method;
 
-
+
 /// Statement evaluation
 
 // evaluate-statement
@@ -581,7 +581,7 @@ define method evaluate-statement
   let values = jam-expand-list(jam, statement.switch-values);
 
   let the-value = element(values, 0, default: "");
-  
+
   block (return)
     for (the-case in statement.switch-cases)
       if (the-case.case-match-function(the-value))
@@ -683,7 +683,7 @@ define method evaluate-statement
       for (i from 0, param in params)
         jam-variable(jam, param) := if (lol.size > i) lol[i] else #f end;
       end for;
-      
+
       block (return)
         let result = #[];
         for (statement in statements)
@@ -701,7 +701,7 @@ define method evaluate-statement
         return(return-condition.return-condition-values);
       end block
     end method;
-  
+
   jam-rule(jam, statement.ruledef-name) := rule-function;
   #[];
 end method;
@@ -750,7 +750,7 @@ define method evaluate-statement
   #[]
 end method;
 
-
+
 /// if/while condition evaluation
 
 // $jam-false - constant
@@ -845,7 +845,7 @@ define class <jam-gt-expression> (<jam-composite-expression>) end;
 define class <jam-ge-expression> (<jam-composite-expression>) end;
 */
 
-
+
 /// Rule invocation interface
 
 define method jam-invoke-rule
@@ -856,7 +856,7 @@ define method jam-invoke-rule
   if (action)
     apply(jam-invoke-action, jam, action, lol);
   end if;
-    
+
   let rule-function = jam-rule(jam, rulename);
   if (rule-function)
     apply(rule-function, jam, lol)

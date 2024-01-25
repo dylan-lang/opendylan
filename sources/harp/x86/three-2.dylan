@@ -19,20 +19,20 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 with-ops-in pentium-instructions (add, sub, and, or, eor,
                                   asl, asr, asr-unsafe, lsr, rol, ror,
                                   muls, mulu, divs, divu, mods,
-                                  addv, subv, addc, subc, mulv, divv, 
-                                  add-trap, sub-trap, muls-trap, 
+                                  addv, subv, addc, subc, mulv, divv,
+                                  add-trap, sub-trap, muls-trap,
                                   ld, ldh, ldb, ldh-signed, ldb-signed)
   c-preserved-destroys-fn
     :=  pentium-method (duu)
-          destroys-tmp1-if(ic/spill-ref(duu-def(1)) 
-                           | ic/spill-ref(duu-uze(1)) 
+          destroys-tmp1-if(ic/spill-ref(duu-def(1))
+                           | ic/spill-ref(duu-uze(1))
                            | ic/spill-ref(duu-uze(2))) // conservative
         end pentium-method;
 end with-ops-in;
 
 
-with-ops-in pentium-instructions (and2-mem, or2-mem, add2-mem, sub2-mem, 
-                                  add2-mem-locked, sub2-mem-locked, 
+with-ops-in pentium-instructions (and2-mem, or2-mem, add2-mem, sub2-mem,
+                                  add2-mem-locked, sub2-mem-locked,
                                   eor2-mem, and2-byte-mem, or2-byte-mem,
                                   xadd-mem-locked,
                                   ld-index, ldb-index, ldh-index,
@@ -164,7 +164,7 @@ with-ops-in pentium-instructions (fbeq, fbne, fblt, fble, fbge,
 end;
 
 
-with-ops-in pentium-instructions (copy-words-up,   copy-words-down, 
+with-ops-in pentium-instructions (copy-words-up,   copy-words-down,
                                   copy-words-up-w, copy-words-down-w)
   destroys-fn := constant-fn(vector(esi, edi, ecx));
   clash-fn := pentium-method (uuu)
@@ -202,18 +202,18 @@ with-ops-in pentium-instructions (fill-bytes)
 end;
 
 
-with-ops-in pentium-instructions (st, sth, stb, set-teb, st-teb, 
+with-ops-in pentium-instructions (st, sth, stb, set-teb, st-teb,
                                   st-index, stb-index, sth-index,
                                   ld-index-scaled, ldh-index-scaled,
                                   ldh-index-scaled-signed,
-	                          extract-bits, ldbits, fld, fst, dld, dst, 
+	                          extract-bits, ldbits, fld, fst, dld, dst,
                                   fld-index, dld-index,
                                   fld-index-scaled, dld-index-scaled, dld-index-scale-2,
                                   fst-index, dst-index,
                                   fst-index-scaled, dst-index-scaled, dst-index-scale-2,
-                                  bits-mem, bitc-mem, and2-mem, or2-mem, 
-                                  eor2-mem, add2-mem, sub2-mem, 
-                                  add2-mem-locked, sub2-mem-locked, 
+                                  bits-mem, bitc-mem, and2-mem, or2-mem,
+                                  eor2-mem, add2-mem, sub2-mem,
+                                  add2-mem-locked, sub2-mem-locked,
                                   and2-byte-mem, or2-byte-mem,
                                   xadd-mem-locked)
   disallow-fn := tmp2-fn;
@@ -228,7 +228,7 @@ end;
 with-ops-in pentium-instructions (and2-byte-mem, or2-byte-mem)
   clash-fn := pentium-method (uuuu)
                 list(list(uuuu-uze(4), esi, edi));
-              end pentium-method; 		  
+              end pentium-method;
 end;
 
 
@@ -249,7 +249,7 @@ with-ops-in pentium-instructions (mulx, mulux)
 		 prefer(dduu-def(1), $vector-eax);
 		 prefer(dduu-def(2), $vector-edx);
 		 prefer(dduu-uze(1), $vector-eax);
-               end pentium-method; 
+               end pentium-method;
 end with-ops-in;
 
 
@@ -257,7 +257,7 @@ end with-ops-in;
 with-ops-in pentium-instructions (divs, divu, mods)
   clash-fn := pentium-method (duu)
                 list(list(duu-uze(2), eax, edx));
-              end pentium-method; 		  
+              end pentium-method;
 end;
 
 
@@ -266,7 +266,7 @@ with-ops-in pentium-instructions (divx, divux, truncatex)
                 list(list(dduu-uze(2), eax, edx),
                      list(dduu-def(1), edx),
                      list(dduu-def(2), eax));
-              end pentium-method; 		  
+              end pentium-method;
 end;
 
 with-ops-in pentium-instructions (divxx, divuxx, truncatexx)
@@ -276,7 +276,7 @@ with-ops-in pentium-instructions (divxx, divuxx, truncatexx)
                      list(dduuu-uze(1), edx),
                      list(dduuu-def(1), edx),
                      list(dduuu-def(2), eax));
-              end pentium-method; 		  
+              end pentium-method;
 end;
 
 
@@ -285,7 +285,7 @@ with-ops-in pentium-instructions (divv)
                 concatenate
                   (default-overflow-function-clashes(backend, ins),
                    list(list(duu-uze(2), eax, edx)));
-              end pentium-method; 		  
+              end pentium-method;
 end;
 
 
@@ -300,7 +300,7 @@ with-ops-in pentium-instructions (divs, divu, divv)
   prefer-fn := pentium-method (duu)
 		 prefer(duu-def(1), $vector-eax);
 		 prefer(duu-uze(1), $vector-eax);
-               end pentium-method; 		  
+               end pentium-method;
 end;
 
 
@@ -309,7 +309,7 @@ with-ops-in pentium-instructions (divx, divux, truncatex)
 		 prefer(dduu-def(1), $vector-eax);
 		 prefer(dduu-def(2), $vector-edx);
 		 prefer(dduu-uze(1), $vector-eax);
-               end pentium-method; 		  
+               end pentium-method;
 end;
 
 
@@ -319,7 +319,7 @@ with-ops-in pentium-instructions (divxx, divuxx, truncatexx)
 		 prefer(dduuu-def(2), $vector-edx);
 		 prefer(dduuu-uze(1), $vector-eax);
 		 prefer(dduuu-uze(2), $vector-edx);
-               end pentium-method; 		  
+               end pentium-method;
 end;
 
 
@@ -327,11 +327,11 @@ with-ops-in pentium-instructions (mods)
   prefer-fn := pentium-method (duu)
 		 prefer(duu-def(1), $vector-edx);
 		 prefer(duu-uze(1), $vector-eax);
-               end pentium-method; 		  
+               end pentium-method;
 end;
 
 
-with-ops-in pentium-instructions (copy-words-up, copy-words-down, 
+with-ops-in pentium-instructions (copy-words-up, copy-words-down,
                                   copy-words-up-w, copy-words-down-w)
   prefer-fn := pentium-method (uuu)
 		 prefer(uuu-uze(1), $vector-edi);
@@ -369,20 +369,20 @@ end;
 /// As an experiment, catch the reverse-op case with an error message - the
 /// allocator should avoid generating these.
 
-define method three-2 
-    (be :: <harp-x86-back-end>, ins :: <function>, 
+define method three-2
+    (be :: <harp-x86-back-end>, ins :: <function>,
      d :: <real-register>, s1, s2)
   call-local(rdest, be, ins, d, s1, s2);
 end method;
 
-define method three-2 
-    (be :: <harp-x86-back-end>, ins :: <function>, 
+define method three-2
+    (be :: <harp-x86-back-end>, ins :: <function>,
      d :: <object>, s1, s2)
   call-local(sdest, be, ins, d, s1, s2);
 end method;
 
 define method commut (x)
-  if (x == local-fn(and2) | x == local-fn(or2) | 
+  if (x == local-fn(and2) | x == local-fn(or2) |
       x == local-fn(add2) | x == local-fn(xor2))
     x;
   end if;
@@ -406,7 +406,7 @@ define local-pentium-template rdest
   // non-commutative and operands in 'wrong' order - moan.
   pattern (be, i by noncom, d, s, r is d)
     harp-error("Reverse operation detected ! %=", list(i, d, s, d));
-					       
+
   // now we know the three operands are distinct. In generating 2
   // address code for 3 address instructions, we will have to do a
   // move. Uniquely, this processor has instructions that better
@@ -432,24 +432,24 @@ define local-pentium-template sdest
   // two addressable, same dest and first arg, second register/const
   pattern (be, i, d, r is d, s :: <m/const-ref> by colour)
     i(be, d, s);
-	
+
   // commutative, source and destination in 'wrong' order, other 'easy'
   pattern (be, i by commut, d, s :: <m/const-ref> by colour, r is d)
     i(be, d, s);
-	
+
   // commutative but both source and destination are spill
   pattern (be, i by commut, d, r is d, s)
     harp-out (be) move(be, reg--tmp1, s) end harp-out;
     i(be, d, reg--tmp1);
-	
+
   pattern (be, i by commut, d, s, r is d)
     harp-out (be) move(be, reg--tmp1, s) end harp-out;
     i(be, d, reg--tmp1);
-	
+
   // non-commutative and operands in 'wrong' order - whinge.
   pattern (be, i by noncom, d, s, r is d)
     harp-error("Reverse operation detected ! %=", list(i, d, s, d));
-	 
+
   // now we know the three operands are distinct. In generating 2
   // address code for 3 address instructions, we will have to do a move.
   // Got to try and put a register/constant operand in the operation ...

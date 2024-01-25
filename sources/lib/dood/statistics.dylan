@@ -6,18 +6,18 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method dood-as-memory-object 
+define method dood-as-memory-object
     (dood :: <dood>, disk-object) => (res)
   disk-object
 end method;
 
-define method dood-as-memory-object 
+define method dood-as-memory-object
     (dood :: <dood>, disk-object :: <dood-proxy>) => (res)
   // dood-proxy-value(disk-object)
   disk-object
 end method;
 
-define function dood-statistics 
+define function dood-statistics
     (dood :: <dood>, #key filter-set = #[], aggregate-set = #[])
   walker-instance-statistics
     (#t, curry(dood-as-memory-object, dood), object-class,

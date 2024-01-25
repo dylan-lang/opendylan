@@ -281,7 +281,7 @@ define method op--unlikely
   cmp
 end method;
 
-
+
 /// Overflow trap
 
 define method op--overflow-trap
@@ -289,7 +289,7 @@ define method op--overflow-trap
   op--call-error-iep(be, #"machine-word-overflow");
 end method;
 
-
+
 /// IEP calls
 
 define method iep-function

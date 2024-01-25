@@ -25,50 +25,50 @@ define variable *disp-interface-3* :: false-or(<disp-type-info-3>) = #f;
 define variable *disp-interface-4* :: false-or(<disp-type-info-4>) = #f;
 
 
-define test ole-macro-test 
+define test ole-macro-test
     (name: "ole-macro-test",
      description: "test ole macros")
-  if (*factory*)    
+  if (*factory*)
     // check passing an integer in the first interface
     check-not-crash("setting integer in interface-1",
 		    *disp-interface-1*.disp-type-info-1/integer := 12345);
-    check-equal("checking integer in interface-1", 
+    check-equal("checking integer in interface-1",
 		*disp-interface-1*.disp-type-info-1/integer, 12345);
-    
+
     // check passing a boolean in the second interface
     check-not-crash("setting boolean in interface-2",
 		    *disp-interface-2*.disp-type-info-2/boolean := #t);
-    check-true("checking boolean in interface-2", 
+    check-true("checking boolean in interface-2",
 	       *disp-interface-2*.disp-type-info-2/boolean);
-    
+
     // check passing a character in the second interface
     check-not-crash("setting character in interface-2",
 		    *disp-interface-2*.disp-type-info-2/character := 'm');
-    check-equal("checking character in interface-2", 
+    check-equal("checking character in interface-2",
 		*disp-interface-2*.disp-type-info-2/character, 'm');
-    
+
     // check passing an integer in the third interface
     check-not-crash("setting integer in interface-3",
-		    *disp-interface-3*.disp-type-info-3/another-integer 
+		    *disp-interface-3*.disp-type-info-3/another-integer
 			:= 56789);
-    check-equal("checking integer in interface-3", 
+    check-equal("checking integer in interface-3",
 		*disp-interface-3*.disp-type-info-3/another-integer, 56789);
-  
+
     // make sure ole server is diferentiating between the interfaces
     check-equal("checking integer again in interface-1",
 		*disp-interface-1*.disp-type-info-1/integer, 12345);
-    
+
     // check calling functions on different interfaces
     // check calling function on interface-1
     check-not-crash("call simple method double-internal-integer-value",
 	    disp-type-info-1/double-internal-integer-value(*disp-interface-1*));
     check-equal("check double-internal-integer-value",
 		*disp-interface-1*.disp-type-info-1/integer, 12345 * 2);
-    
+
     // check calling function on interface-2
     check-true("check does-string-equal-hello?",
        disp-type-info-2/does-string-equal-hello?(*disp-interface-2*, "hello"));
-    
+
     // check calling function on interface-3
     check-equal("call multiply on interface-3 passing 2 integers",
 		disp-type-info-3/multiply(*disp-interface-3*, 4, 7), 28);
@@ -76,7 +76,7 @@ define test ole-macro-test
     // test inheritance
     check-not-crash("setting integer in interface-4",
 		  *disp-interface-4*.disp-type-info-4/another-integer := -4040);
-    check-equal("checking integer in interface-4", 
+    check-equal("checking integer in interface-4",
 		*disp-interface-4*.disp-type-info-4/another-integer, -4040);
     check-equal("get id in interface-4",
 		*disp-interface-4*.disp-type-info-4/id, 707);
@@ -84,16 +84,16 @@ define test ole-macro-test
   end if;
 end test ole-macro-test;
 
-define method setup-ole-tests ()  
+define method setup-ole-tests ()
   OLE-initialize();
   *factory* := make-object-factory(*test-coclass-type-info*);
-  multiple-assign((*disp-interface-1*, *disp-interface-2*, 
-		   *disp-interface-3*, *disp-interface-4*) := 
+  multiple-assign((*disp-interface-1*, *disp-interface-2*,
+		   *disp-interface-3*, *disp-interface-4*) :=
 		  make-test-OLE-macros());
 end method setup-ole-tests;
 
 define method cleanup-ole-tests ()
-  if (*factory*) 
+  if (*factory*)
     revoke-registration(*factory*);
     Release(*disp-interface-1*);
     Release(*disp-interface-2*);
@@ -103,7 +103,7 @@ define method cleanup-ole-tests ()
   end if;
 end method cleanup-ole-tests;
 
-define suite ole-macro-suite 
+define suite ole-macro-suite
   (setup-function: setup-ole-tests,
    cleanup-function: cleanup-ole-tests)
   test ole-macro-test;
@@ -124,7 +124,7 @@ define method run-suite ()
     exception ( condition :: <error> )
       format-out("Error during registration:\n%s\n", condition);
     end block;
-  else 
+  else
     run-test-application(ole-macro-suite);
   end if;
 end method run-suite;

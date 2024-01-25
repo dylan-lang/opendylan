@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define function create-test-stream () => (istream :: <LPSTREAM>)
   let (status :: <HRESULT>, istg :: <Interface>)
     = StgCreateDocfile($NULL-OLESTR,
-                       $STGM-READWRITE + $STGM-SHARE-EXCLUSIVE 
+                       $STGM-READWRITE + $STGM-SHARE-EXCLUSIVE
                          + $STGM-CREATE + $STGM-DELETEONRELEASE,
                        0);
   check-ole-status(status, "StgCreateDocfile", $null-interface);

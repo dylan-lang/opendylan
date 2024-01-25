@@ -76,14 +76,14 @@ define method doc-wnd-proc (hWnd :: <HWND>,
   select (app & message)
     $WM-COMMAND =>            // command from application menu
       command-handler(app, hWnd, wParam, lParam);
-    $WM-PAINT => 
+    $WM-PAINT =>
       with-stack-structure (ps :: <PPAINTSTRUCT>)
 	let hDC :: <HDC> = BeginPaint(hWnd, ps);
 	paint-doc(app, hDC);
 	EndPaint(hWnd, ps);
 	0
       end with-stack-structure;
-    $WM-MENUSELECT => 
+    $WM-MENUSELECT =>
       set-status-text(app);
       0;
     otherwise =>	// Passes it on if unprocessed

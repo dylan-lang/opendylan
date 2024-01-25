@@ -23,7 +23,7 @@ define leaf runtime-primitive reset-guard-page
   //   tmp1   - protection :  the protection setting
   // On exit:
   //   Never exits.
-  //   The protection of the memory page is reset, and 
+  //   The protection of the memory page is reset, and
   //   the unwind chain is re-invoked.
 
   arg0 arg0;
@@ -54,7 +54,7 @@ define leaf runtime-primitive reset-guard-page
   ins--add(be, stack, stack, 4); // get rid of old-prot
   ins--pop(be, be-frame);
 
-  // The guard is now back in place - so continue with the unwind. 
+  // The guard is now back in place - so continue with the unwind.
   // To avoid recoding lots of the NLX code, we reset the MV area
   // from the BE frame itself, and re-invoke primitive-nlx
   ins--ld(be, values-vec, be-frame, BE-values-vector-offset);
@@ -62,7 +62,7 @@ define leaf runtime-primitive reset-guard-page
   ins--push(be, arg0);
   ins--move(be, arg0, be-frame);
   ins--call(be, primitive-nlx-ref, 1);
-  
+
 end runtime-primitive;
 
 
@@ -84,7 +84,7 @@ define win32-runtime-primitive dylan-stack-overflow-handler
 
   nreg base-addr, page-size, protection;
 
-  local 
+  local
     method protected-op (be)
       op--call-iep(be, dylan-stack-overflow-error);
     end method,

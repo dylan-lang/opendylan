@@ -201,7 +201,7 @@ define method call-mep-apply(back-end :: <harp-back-end>, c, result, function, n
 
   let meth = c.call-effective-function;
 
-  let number-required 
+  let number-required
     = meth & spec-argument-number-required(signature-spec(meth));
 
   if (instance?(meth, <&method>) & size(arguments) > number-required)
@@ -223,13 +223,13 @@ define method call-mep-apply(back-end :: <harp-back-end>, c, result, function, n
 
 end method call-mep-apply;
 
-define inline method arguments-in-registers 
+define inline method arguments-in-registers
     (back-end :: <harp-back-end>, arguments :: <sequence>)
  => (r :: <integer>);
   min(arguments.size, back-end.registers.arguments-passed-in-registers);
 end method;
 
-define inline method arguments-in-registers 
+define inline method arguments-in-registers
     (back-end :: <harp-back-end>, arguments :: <integer>)
  => (r :: <integer>);
   min(arguments, back-end.registers.arguments-passed-in-registers);
@@ -241,14 +241,14 @@ define inline method arguments-on-stack
   max(arguments.size - back-end.registers.arguments-passed-in-registers, 0);
 end method;
 
-define method c-arguments-in-registers 
+define method c-arguments-in-registers
     (back-end :: <harp-back-end>, arguments :: <sequence>)
  => (r :: <integer>);
   min(arguments.size,
       back-end.registers.c-arguments-passed-in-registers);
 end method;
 
-define method c-arguments-in-registers 
+define method c-arguments-in-registers
     (back-end :: <harp-back-end>, arguments :: <integer>)
  => (r :: <integer>);
   min(arguments,
@@ -294,7 +294,7 @@ define method stack-allocate-vector(back-end :: <harp-back-end>, result, number-
     stack-allocate-vector-for-tail-call(back-end, result, number-values, arguments);
   else
     stack-allocate-vector-for-normal-call(back-end, result, number-values, arguments);
-  end if;    
+  end if;
 
 end method stack-allocate-vector;
 */
@@ -524,7 +524,7 @@ define method move-stack-arguments-to-virtuals
  stack-spill0 :: <number>, stack-offset0 :: <number>) => (arguments :: <sequence>)
   for (offset from stack-offset0,
        argument in arguments,
-       stack-args = #() then 
+       stack-args = #() then
 	 pair(safe-register(back-end, argument, stack-spill0, offset),
 	      stack-args))
   finally stack-args.reverse;
@@ -564,7 +564,7 @@ define method return-address-shift(back-end :: <harp-back-end>, c :: <simple-cal
 end method return-address-shift;
 
 define method same-optionals-as-caller?(back-end :: <harp-back-end>, c :: <simple-call>) => (same-optionals?)
-  
+
   let sad = find-key(c.arguments,
                      method(arg)
                        instance?(arg, <lexical-rest-variable>)

@@ -17,11 +17,11 @@ end macro presentation-action-definer;
 define macro command-translator-definer
 end macro command-translator-definer;
 
-
+
 define macro drag-and-drop-translator-definer
 end macro drag-and-drop-translator-definer;
 
-
+
 /// Basic global presentation translators
 
 define presentation-translator identity-translator

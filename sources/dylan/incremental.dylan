@@ -108,7 +108,7 @@ define function remove-incomplete-domain-handler
     end block
   end unless;
 end function;
-
+
 
 
 
@@ -157,7 +157,7 @@ begin
   remove-generic-function-incomplete-domain
     := remove-incomplete-domain-handler;
 end;
-
+
 
 //// COMPLETENESS DEFERRED ADDITIONS
 
@@ -246,7 +246,7 @@ define method handle-generic-completeness-change (g :: <generic-function>)
     end if
   end if
 end method;
-
+
 
 
 define method complete-dependent-generic-function (g :: <incremental-generic-function>,
@@ -291,7 +291,7 @@ define method complete-dependent-generic-function (g :: <incremental-generic-fun
   */
   note-type-completeness-change(g)
 end method;
-
+
 
 //// Generic function definition/redefinition
 
@@ -347,7 +347,7 @@ define function %redefine-generic
   %%define-generic
     (gf, debug-name, module, sealed?, #f, signature)
 end function;
-
+
 
 //// Class definition/redefinition
 
@@ -510,7 +510,7 @@ define method find-old-slot (sd :: <slot-descriptor>, slotvec :: <simple-object-
     #f
   end
 end method;
-
+
 
 
 define method %redefine-class-of-new-structure (class :: <class>, dependents :: <list>,
@@ -682,7 +682,7 @@ define method remove-implementation-class-slot-methods (ic :: <implementation-cl
     end if;
   end for;
 end method;
-
+
 
 
 define method overwrite-slot-descriptor (osd :: <slot-descriptor>, nsd :: <slot-descriptor>)

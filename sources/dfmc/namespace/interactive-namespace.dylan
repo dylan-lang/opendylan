@@ -262,7 +262,7 @@ define function models-in-interactive-use?
   ~ld.library-forms-dynamic? & ~empty?(ld.project-library-interactive-contexts)
 end function;
 
-
+
 define method library-description-in-context
     (cx :: <interactive-library-description>,
      ld :: <interactive-library-description>)
@@ -465,7 +465,7 @@ define method library-dynamically-bound-in?
               end;
 end method;
 
-
+
 define open generic active-lexical-variables
     (runtime-context) => (variables-and-values :: <sequence>);
 
@@ -680,7 +680,7 @@ define function merge-interactive-layer (layer :: <interactive-layer>, tid)
   end;
 end function;
 
-
+
 // TODO: Don't need to copy libraries which we won't allow modifying by
 // interactive execution, if there is such a thing...  More generally,
 // don't need to copy libraries until either try to execute something
@@ -738,7 +738,7 @@ define method close-library-description
 end method;
 
 
-
+
 define abstract class <interactive-namespace> (<namespace>)
   constant slot interactive-namespace-project-namespace :: <namespace>,
     required-init-keyword: original:;
@@ -888,7 +888,7 @@ define method binding-interactive? (binding :: <module-binding>)
   instance?(binding.binding-home, <interactive-module>)
 end method;
 
-
+
 define method initial-binding-properties
     (b :: <canonical-module-binding>, models?, dependents?)
   let p = b.canonical-binding-properties;

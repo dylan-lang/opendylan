@@ -32,7 +32,7 @@ end class <htmlhelp>;
 // Initialize the default help system on Windows
 *default-help-system* := make(<htmlhelp>);
 
-
+
 /// Windows help display
 
 define constant <c-string-help-command> = <help-run-macro>;
@@ -105,7 +105,7 @@ define sealed method display-help
   end
 end method display-help;
 
-
+
 /// Registry utilities
 
 define class <registry-entry-lookup-error> (<simple-error>)
@@ -174,7 +174,7 @@ define method read-registry-string
 end method read-registry-string;
 */
 
-
+
 /// Installation checking
 
 define generic check-help-system-installed
@@ -210,7 +210,7 @@ define sealed method help-system-installed?
   end
 end method help-system-installed?;
 
-
+
 /// Help display
 
 

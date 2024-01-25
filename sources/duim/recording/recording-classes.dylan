@@ -324,7 +324,7 @@ define method highlight-output-record
   end
 end method highlight-output-record;
 
-
+
 /// Getting and setting output record positions
 
 // Returns sheet's edges relative to its parent
@@ -391,7 +391,7 @@ define method set-sheet-size
     := set-box-edges(sheet-region(record), left, top, right, bottom)
 end method set-sheet-size;
 
-
+
 /// Composite output record mixin
 
 // Note that this must precede <output-record-element-mixin> in any CPL.
@@ -548,7 +548,7 @@ define method do-lower-sheet
   #f
 end method do-lower-sheet;
 
-
+
 /// Repainting
 
 // Repainting an output record first normalizes the drawing state, then
@@ -638,7 +638,7 @@ define method handle-repaint
      record, region)
 end method handle-repaint;
 
-
+
 /// Geometry maintenance
 
 // Updates the region of RECORD to be large enough to hold the new child,
@@ -804,7 +804,7 @@ define method do-recompute-region
   values(left, top, right, bottom)
 end method do-recompute-region;
 
-
+
 /// Default methods for incremental redisplay
 
 define method copy-display-state (record :: <output-record>, old-is-ok?)
@@ -823,7 +823,7 @@ define method find-child-output-record
   #f
 end method find-child-output-record;
 
-
+
 /// Basic output record classes
 
 define open abstract primary class <basic-leaf-record>

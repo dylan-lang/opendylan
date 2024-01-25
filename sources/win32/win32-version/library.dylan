@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for version management -- "WINVER.H" and "VERSION.DLL"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

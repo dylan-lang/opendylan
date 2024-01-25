@@ -161,9 +161,9 @@ define method build-dynamic-environment
     let i = 0;
     let built-frame = #f;
     let this-upf :: <remote-value> = upf;
-    let (previous :: <remote-value>, 
-         call-fp :: <remote-value>, 
-         cleanup-addr :: <remote-value>) = 
+    let (previous :: <remote-value>,
+         call-fp :: <remote-value>,
+         cleanup-addr :: <remote-value>) =
        read-unwind-protect(application, upf);
     while (~(this-upf = $UPF-last))
       let frame-in-hand = built-frame;
@@ -177,8 +177,8 @@ define method build-dynamic-environment
       ignore(built-frame.unwind-protect-call-frame-pointer);
       seq[i] := built-frame;
       i := i + 1;
-      let (new-upf :: <remote-value>, 
-           new-call-fp :: <remote-value>, 
+      let (new-upf :: <remote-value>,
+           new-call-fp :: <remote-value>,
            new-cleanup-addr :: <remote-value>) =
          read-unwind-protect(application, this-upf);
       this-upf := new-upf;
@@ -197,7 +197,7 @@ end method;
 //    build the actual <bind-exit-frame> object.
 
 define method build-bind-exit
-    (application :: <debug-target>, thread :: <remote-thread>, 
+    (application :: <debug-target>, thread :: <remote-thread>,
      bxf :: <remote-value>)
        => (bxf-object :: <bind-exit-frame>)
   let (heap-mv-vector, stack-mv-vector, up-chain, call-fp, continuation)

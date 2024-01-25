@@ -23,7 +23,7 @@ define win32-runtime-primitive spy-fixup-imported-dylan-data
   nreg fixup-start, fixup-end;
 
   op--c-load-arguments(be, fixup-start, fixup-end);
-  op--call-iep(be, primitive-reference(fixup-imported-dylan-data), 
+  op--call-iep(be, primitive-reference(fixup-imported-dylan-data),
 	       fixup-start, fixup-end);
   ins--rts(be);
 

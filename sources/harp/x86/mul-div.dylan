@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// three address multiply. Odd.
 
 ///                                   (signed)
-///               DIV       IDIV       IMUL       MUL    
+///               DIV       IDIV       IMUL       MUL
 /// D/A,r/m32    f7 /6     f7 /7      f7 /5      f7 /4
 /// r32,r/m32                         0f af /r
 /// r32,r/m32,i8                      6b /r ib
@@ -64,7 +64,7 @@ define local-pentium-template (can-mul)
     harp-out (be) move(be, reg--tmp1, r) end;
     call-local(can-mul, be, reg--tmp1, reg--tmp1, s);
     harp-out (be) move(be, d, reg--tmp1) end;
-  
+
 end local-pentium-template;
 
 
@@ -121,13 +121,13 @@ define constant divu = #b110000;
 define constant divs = #b111000;
 
 
-with-ops-in pentium-instructions (divu, divux, divuxx) 
-  info := divu 
+with-ops-in pentium-instructions (divu, divux, divuxx)
+  info := divu
 end with-ops-in;
 
 
-with-ops-in pentium-instructions (divs, mods, divx, divxx, truncatex, truncatexx) 
-  info := divs 
+with-ops-in pentium-instructions (divs, mods, divx, divxx, truncatex, truncatexx)
+  info := divs
 end with-ops-in;
 
 
@@ -148,7 +148,7 @@ define pentium-template (divu, divs)
     emit(be, #xf7);
     emit-m-c-spill-dest(be, s, i);
     harp-out (be) move(be, d, eax) end;
-   
+
   // Need an extra temporary register for the /constant case
   pattern (be, i :: <integer> by op-info, d, r, s :: <ac/const-ref> by colour)
     harp-out (be)
@@ -172,7 +172,7 @@ define pentium-template (mods)
     emit(be, #xf7);
     emit-m-c-spill-dest(be, s, i);
     harp-out (be) move(be, d, edx) end;
-   
+
   // Need an extra temporary register for the /constant case
   pattern (be, i :: <integer> by op-info, d, r, s :: <ac/const-ref> by colour)
     harp-out (be)
@@ -197,7 +197,7 @@ define pentium-template (divux, divx, truncatex)
     emit-m-c-spill-dest(be, s, i);
     if (rem)  harp-out (be) move(be,  rem, edx) end end;
     if (quot) harp-out (be) move(be, quot, eax) end end;
-   
+
   // Need an extra temporary register for the /constant case
   pattern (be, i, quot :: any, rem :: any, r, s :: <ac/const-ref> by colour)
     harp-out (be) move(be, reg--tmp1, s) end;
@@ -216,11 +216,11 @@ define pentium-template (divuxx, divxx, truncatexx)
     emit-m-c-spill-dest(be, s, i);
     if (rem)  harp-out (be) move(be,  rem, edx) end end;
     if (quot) harp-out (be) move(be, quot, eax) end end;
-   
+
   // Need an extra temporary register for the /constant case
   pattern (be, i, quot :: any, rem :: any, low, high, s :: <ac/const-ref> by colour)
     harp-out (be) move(be, reg--tmp1, s) end;
     harp-reapply(be, i, quot, rem, low, high, reg--tmp1);
 
 end pentium-template;
-    
+

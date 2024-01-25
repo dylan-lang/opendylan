@@ -84,7 +84,7 @@ end class;
 
 
 ///// WALK-FROM
-//    The recusive unit of the remote tracer. 
+//    The recusive unit of the remote tracer.
 
 define method walk-from
     (walker :: <remote-walker>, instance-address :: <remote-value>)
@@ -116,7 +116,7 @@ define method walk-from
 	    #"no-repeat" =>
 	      wrec.wrapper-total-storage := wrec.wrapper-total-storage +
 		(wrec.wrapper-slot-count + 1) * bytes-per-slot;
-	      walker.remote-walker-total-storage := 
+	      walker.remote-walker-total-storage :=
 		walker.remote-walker-total-storage +
 		(wrec.wrapper-slot-count + 1) * bytes-per-slot;
               unless (wrec.wrapper-terminal?)
@@ -128,9 +128,9 @@ define method walk-from
 	    #"byte-repeat" =>
 	      let (should-be-integer, ok) =
 		dylan-object-immediate-value
-                  (application, 
+                  (application,
                    slot-element(wrec.wrapper-repeat-count-offset));
-	      let number-repeats = 
+	      let number-repeats =
 		if (ok & instance?(should-be-integer, <integer>))
                   should-be-integer
 		else
@@ -139,7 +139,7 @@ define method walk-from
 	      wrec.wrapper-total-storage := wrec.wrapper-total-storage +
 		(wrec.wrapper-slot-count + 1) * bytes-per-slot +
 		number-repeats;
-	      walker.remote-walker-total-storage := 
+	      walker.remote-walker-total-storage :=
 		walker.remote-walker-total-storage +
 		(wrec.wrapper-slot-count + 1) * bytes-per-slot +
 		number-repeats;
@@ -152,9 +152,9 @@ define method walk-from
 	    #"slot-repeat" =>
 	      let (should-be-integer, ok) =
 		dylan-object-immediate-value
-                  (application, 
+                  (application,
                    slot-element(wrec.wrapper-repeat-count-offset));
-	      let number-repeats = 
+	      let number-repeats =
 		if (ok & instance?(should-be-integer, <integer>))
                   should-be-integer
 		else
@@ -163,7 +163,7 @@ define method walk-from
 	      wrec.wrapper-total-storage := wrec.wrapper-total-storage +
 		(wrec.wrapper-slot-count + 1) * bytes-per-slot +
 		number-repeats * bytes-per-slot;
-	      walker.remote-walker-total-storage := 
+	      walker.remote-walker-total-storage :=
 		walker.remote-walker-total-storage +
 		(wrec.wrapper-slot-count + 1) * bytes-per-slot +
 		number-repeats * bytes-per-slot;
@@ -211,13 +211,13 @@ define method add-new-wrapper-record
      actual-address :: <remote-value>)
   => (rec :: <wrapper-information-tuple>)
 
-  let (symbolic-name, presented-name, module-name, slot-count, 
+  let (symbolic-name, presented-name, module-name, slot-count,
        repeat-information, repeat-offset)
          = wrapper-trace-information(walker.remote-walker-debug-target,
                                      actual-address);
   let terminal? = #f;
 
-  format-out("Creating wrapper record for %s:%s ", 
+  format-out("Creating wrapper record for %s:%s ",
              presented-name, module-name);
 
   select (walker.remote-walker-class-status)
@@ -294,7 +294,7 @@ define method display-walk-results (walker :: <remote-walker>) => ()
     let this-storage = entry.wrapper-total-storage;
     let fc = as(<single-float>, this-count);
     let fs = as(<single-float>, this-storage);
-    let pc = ((fc * 100.0) / finst); 
+    let pc = ((fc * 100.0) / finst);
     let ps = ((fs * 100.0) / fstor);
     let count-percent = floor(pc);
     let storage-percent = floor(ps);
@@ -306,7 +306,7 @@ define method display-walk-results (walker :: <remote-walker>) => ()
   end for;
   sep();
   format-out("Total instances examined: %d\n", total-instances);
-  format-out("Number of different classes of object: %d\n", 
+  format-out("Number of different classes of object: %d\n",
              size(walker.remote-walker-wrapper-statistics));
   format-out("Total memory consumption of data structure: %d bytes.\n",
              total-storage);

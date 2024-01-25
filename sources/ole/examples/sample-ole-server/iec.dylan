@@ -91,13 +91,13 @@ define method IExternalConnection/ReleaseConnection
   OutputDebugString("In CExternalConnection::ReleaseConnection\r\n");
 
   if ( logand(extconn,$EXTCONN-STRONG) ~= 0 )
-		
+
     let dwSave :: <integer> = (this.m-dwStrong := this.m-dwStrong - 1);
 
     if ( zero?(dwSave) & fLastReleaseCloses )
       IOleObject/Close(this.m-lpObj.m-OleObject, $OLECLOSE-SAVEIFDIRTY);
     end if;
-    dwSave 
+    dwSave
   else
     0
   end if

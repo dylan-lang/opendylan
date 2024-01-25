@@ -10,8 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// NEAREST-SYMBOLS-FROM-NUB
 
-define method nearest-symbols-from-nub 
-    (conn :: <remote-access-connection>, address :: <remote-value>) 
+define method nearest-symbols-from-nub
+    (conn :: <remote-access-connection>, address :: <remote-value>)
       => (any-luck? :: <boolean>,
           where-is-it? :: <NUBLIBRARY>,
           gimme-handle :: <NUBHANDLE>)
@@ -31,7 +31,7 @@ end method;
 
 ///// COLLECT-NEAREST-SYMBOLS
 
-define method collect-nearest-symbols 
+define method collect-nearest-symbols
     (conn :: <remote-access-connection>, lib :: <remote-library>,
      lookups :: <NUBHANDLE>)
        => (closest :: <remote-symbol>,
@@ -147,10 +147,10 @@ end method;
 
 ///// FIND-SYMBOL-IN-LIBRARY
 
-define method find-symbol-in-library 
+define method find-symbol-in-library
     (conn :: <remote-access-connection>,
      lib :: <remote-library>,
-     name :: <string>) 
+     name :: <string>)
        => (maybe-sym :: false-or(<remote-symbol>))
   let (found, address :: <RTARGET-ADDRESS>, type, is-func,
        debug-start :: <RTARGET-ADDRESS>, debug-end :: <RTARGET-ADDRESS>,
@@ -165,7 +165,7 @@ define method find-symbol-in-library
             library: lib, debug-start: as-remote-value(debug-start),
             debug-end: as-remote-value(debug-end), absolute-end: as-remote-value(lasta));
     else
-      make (<remote-symbol>, name: name, address: as-remote-value(address),  
+      make (<remote-symbol>, name: name, address: as-remote-value(address),
             language: classify-symbolic-name(conn, name), library: lib);
     end if;
   else
@@ -177,7 +177,7 @@ end method;
 ///// SYMBOL-RELATIVE-ADDRESS
 
 define method symbol-relative-address-on-connection
-  (conn :: <remote-access-connection>, 
+  (conn :: <remote-access-connection>,
    path :: <access-path>, address :: <remote-value>)
      => (sym-if-found :: false-or(<remote-symbol>),
          offset       :: <abstract-integer>)
@@ -192,7 +192,7 @@ define method symbol-relative-address-on-connection
        debug-start :: <RTARGET-ADDRESS>,
        debug-end :: <RTARGET-ADDRESS>,
        language :: <abstract-integer>,
-       last-address :: <RTARGET-ADDRESS>) = 
+       last-address :: <RTARGET-ADDRESS>) =
           Rtmgr/RemoteNub/closest-symbol(conn.nub, as-integer(address));
 
   if (foundit == 1)

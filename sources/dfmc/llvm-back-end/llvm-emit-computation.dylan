@@ -71,7 +71,7 @@ define sideways method emit-reference
   ins--load(back-end, defined-constant, alignment: word-size)
 end method;
 
-
+
 /// Temporary values
 
 define method emit-reference
@@ -440,7 +440,7 @@ define method emit-global-merge-assignment
   emit-result-assignment(back-end, c, temp, mv);
 end method;
 
-
+
 /// Computations
 
 define method emit-computations

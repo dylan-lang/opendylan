@@ -1,5 +1,5 @@
 module:    native-instructions
-Synopsis:  A more complex HARP instruction set 
+Synopsis:  A more complex HARP instruction set
            (intended as a placeholder for the instructions).
 Author:    Tony Mann
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -32,7 +32,7 @@ define instruction-set <complex-instruction-set>
   dduu op bigit16-div;
   dduuu op bigit32-div;
        op load-code-offset, spread: spread-tdu;
-       op block-call, block-jump, block-call-with-count, 
+       op block-call, block-jump, block-call-with-count,
            block-jump-with-count, spread: spread-uu;
        op bsr, spread: spread-t;
 //     op jsr-alien, s-jsr-alien, spread: spread-tuu;
@@ -48,7 +48,7 @@ with-ops-in default-complex-instructions (bsr)
 end with-ops-in;
 
 
-define instruction-function load-code-offset 
+define instruction-function load-code-offset
     (backend :: <harp-complex-back-end>, dest, tag :: <tag>, offset, #key op)
   load-some-address(backend, op, dest, tag, offset);
 end;
@@ -57,7 +57,7 @@ end;
 define method implicit-uses-for-nregs
    (regs :: <register-model>, nregs :: <integer>, #key leaf-case = #f)
   if (nregs >= 0)
-    let masks = 
+    let masks =
       if (leaf-case) regs.reg-arg-masks else reg.reg-arg-masks-out end if;
     masks[nregs];
   else
@@ -65,7 +65,7 @@ define method implicit-uses-for-nregs
   end if;
 end;
 
-define instruction-function block-call 
+define instruction-function block-call
     (backend :: <harp-complex-back-end>, thing, nregs :: <integer>, #key op)
   let regs = backend.registers;
   output-instruction(backend, op, thing, regs.reg-result-out,
@@ -105,7 +105,7 @@ define instruction-function bsr
     (backend :: <harp-complex-back-end>,
      tag :: <tag>, nregs :: <integer>, #key op)
   let regs = backend.registers;
-  output-instruction(backend, op, tag, 
+  output-instruction(backend, op, tag,
                      vector(regs.reg-result-out, regs.reg-mv-count),
                      implicit-uses-for-nregs(regs, nregs));
   let dest-bb = find-bb(backend, tag);
@@ -128,7 +128,7 @@ with-ops-in default-complex-instructions (bsr)
   end method;
 end with-ops-in;
 
-define instruction-function trap 
+define instruction-function trap
     (backend :: <harp-complex-back-end>, d, n, arg, #key op)
   output-instruction(backend, op, #f, d, n, arg);
 end;
@@ -141,13 +141,13 @@ end;
 /// anything else ever being put there. This fact is crucial for the use this
 /// op is designed for ie the Fortran interface.
 
-define instruction-function address-of 
+define instruction-function address-of
     (backend :: <harp-complex-back-end>, def, uze, #key op)
   uniquely-spill(backend, uze);
   output-du(backend, op, def, uze);
 end;
 
-define instruction-function scl 
+define instruction-function scl
     (backend :: <harp-complex-back-end>, thing, #key op)
   output-instruction(backend, op, thing);
 end;

@@ -78,7 +78,7 @@ define method test-background-busy-cursor (sheet :: <sheet>) => ()
          end)
 end method test-background-busy-cursor;
 
-
+
 /// Install the test
 
 install-test(<cursor-test-frame>, "Cursors");

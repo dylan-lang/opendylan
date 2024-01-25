@@ -34,54 +34,54 @@ define internal-iep runtime-external repeated-instance-setter
 
 define leaf runtime-function slotacc-single-q-instance-getter-xep
   // On entry: XEP convention with args (accmeth, inst)
-  //    
+  //
   // On exit:  Tail call the appropriate IEP
-  // 
+  //
   op--slotacc-xep(be, 2, single-instance-getter);
 end runtime-function;
 
 define leaf runtime-function slotacc-single-q-instance-setter-xep
   // On entry: XEP convention with args (value, accmeth, inst)
-  //    
+  //
   // On exit:  Tail call the appropriate IEP
-  // 
+  //
   op--slotacc-xep(be, 3, single-instance-setter);
 end runtime-function;
 
 define leaf runtime-function slotacc-single-q-class-getter-xep
   // On entry: XEP convention with args (accmeth, inst)
-  //    
+  //
   // On exit:  Tail call the appropriate IEP
-  // 
+  //
   op--slotacc-xep(be, 2, single-class-getter);
 end runtime-function;
 
 define leaf runtime-function slotacc-single-q-class-setter-xep
   // On entry: XEP convention with args (value, accmeth, inst)
-  //    
+  //
   // On exit:  Tail call the appropriate IEP
-  // 
+  //
   op--slotacc-xep(be, 3, single-class-setter);
 end runtime-function;
 
 define leaf runtime-function slotacc-repeated-instance-getter-xep
   // On entry: XEP convention with args (accmeth, inst, idx)
-  //    
+  //
   // On exit:  Tail call the appropriate IEP
-  // 
+  //
   op--slotacc-xep(be, 3, repeated-instance-getter);
 end runtime-function;
 
 define leaf runtime-function slotacc-repeated-instance-setter-xep
   // On entry: XEP convention with args (value, accmeth, inst, idx)
-  //    
+  //
   // On exit:  Tail call the appropriate IEP
-  // 
+  //
   op--slotacc-xep(be, 4, repeated-instance-setter);
 end runtime-function;
 
 
-define method op--slotacc-xep 
+define method op--slotacc-xep
     (be :: <harp-back-end>, required, iep-ref)
   let optionals? = #f;
   let keys? = #f;
@@ -93,7 +93,7 @@ define method op--slotacc-xep
       ins--move(be, mlist, dylan-false);
       ins--jmp(be, iep-ref, max-num-arg-regs, mlist: #t, function: #t);
     end method;
-  op--general-xep-support(be, required, optionals?, keys?, xep-continuation, 
+  op--general-xep-support(be, required, optionals?, keys?, xep-continuation,
                           check-specializers?: #f);
 end method;
 
@@ -128,7 +128,7 @@ define runtime-primitive set-accessor-method-xep
 	  ins--move(be, xep, ref);
 	  ins--bra(be, have-xep);
 	end method;
- 
+
   op--do-case(be, c0, slotacc-single-q-instance-getter-xep-ref);
   op--do-case(be, c1, slotacc-single-q-instance-setter-xep-ref);
   op--do-case(be, c2, slotacc-single-q-class-getter-xep-ref);
@@ -153,9 +153,9 @@ end runtime-primitive;
 /*  Now unused
 define leaf runtime-function gf-iep
   // On entry: Args as IEP convention for entry to a GF
-  //    
+  //
   // On exit:  Tail call the first engine node
-  // 
+  //
   op--gf-iep-jump-to-engine-node(be);
 end runtime-function;
 */
@@ -167,7 +167,7 @@ define method op--gf-iep-jump-to-engine-node (be :: <harp-back-end>)
     mlist mlist;
     greg engine, gf;
     nreg entry;
-  
+
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
     ins--move(be, gf, function);
@@ -234,7 +234,7 @@ define method op--rest-key-xep-internal (be :: <harp-back-end>, required)
     ins--sub(be, last-key, rest-vec, 8);  // get last key skipping count
     op--tail-call-process-keys-for-xep
       (be, rest-vec, last-key, required,
-       set-mlist: dylan-false, 
+       set-mlist: dylan-false,
        set-function: function);
   end with-harp;
 end method;
@@ -257,7 +257,7 @@ define method op--rest-key-mep-preserving
     nreg mlist-reg;
     ins--move(be, mlist-reg, mlist);
     let regs-pushed = 0;
-    let (rest-vec, last-key) 
+    let (rest-vec, last-key)
       = op--rest-key-mep-internal(be, required, regs-pushed);
     op--tail-call-process-keys(be, rest-vec, last-key, required,
                                set-mlist: mlist-reg,
@@ -266,7 +266,7 @@ define method op--rest-key-mep-preserving
 end method;
 
 
-define method op--rest-key-mep-preserving 
+define method op--rest-key-mep-preserving
     (be :: <harp-back-end>, required == #"dynamic")
   with-harp (be)
     function function;
@@ -274,7 +274,7 @@ define method op--rest-key-mep-preserving
     ins--push(be, mlist);
     ins--push(be, function);
     let regs-pushed = 2;
-    let (rest-vec, last-key) = 
+    let (rest-vec, last-key) =
       op--rest-key-mep-internal(be, required, regs-pushed);
     ins--pop(be, function);
     ins--pop(be, mlist);
@@ -283,7 +283,7 @@ define method op--rest-key-mep-preserving
 end method;
 
 
-define method op--rest-key-mep-internal 
+define method op--rest-key-mep-internal
     (be :: <harp-back-end>, required, pushes :: <integer>)
     => (rest-vec :: <register>, last-key :: <register>)
   with-harp (be)
@@ -381,10 +381,10 @@ end entry-point;
 
 // Obsolete: old-style GF XEPs before the "engine-node" convention
 //
-// Under the "old" discriminator implementation, the dynamic case GF XEP 
+// Under the "old" discriminator implementation, the dynamic case GF XEP
 // has an inconsistent convention, and always vectors up all of the arguments
 // into a single sequence. However, with the engine-node implementation supported
-// here, the dynamic case GF XEP has the normal consistent behaviour. 
+// here, the dynamic case GF XEP has the normal consistent behaviour.
 // For testing purposes, we currently re-define a new GF XEP here.
 // In the future, the "real" entry point code should be replaced with the
 // one defined here.
@@ -394,17 +394,17 @@ define entry-point gf-xep (be :: <harp-back-end>, required, limit: 6)
   op--outer-gf-xep(be, required, #f, #f, op--simple-gf-xep-internal);
 end entry-point;
 
-define method op--simple-gf-xep-internal 
+define method op--simple-gf-xep-internal
     (be :: <harp-back-end>, required :: <integer>)
   #f;
 end method;
 
-define method op--simple-gf-xep-internal 
+define method op--simple-gf-xep-internal
     (be :: <harp-back-end>, required == #"dynamic")
   // The dynamic case is not like that for simple XEPs.
   // We must work with the dynamic version of the GF discriminator
   // function, which takes a #rest arg. This case is therefore
-  // like op--rest-xep with 0 requireds. We actually implement it 
+  // like op--rest-xep with 0 requireds. We actually implement it
   // in this way - although it's slightly sub-optimal since we
   // know all the argument registers are full.
   op--vector-up-rest-args(be, 0, 0);
@@ -427,7 +427,7 @@ define entry-point gf-optional-xep (be :: <harp-back-end>, required, limit: 6)
   op--outer-gf-xep(be, required, #t, #f, op--gf-optional-xep-internal);
 end entry-point;
 
-define method op--gf-optional-xep-internal 
+define method op--gf-optional-xep-internal
     (be :: <harp-back-end>, required :: <integer>)
   // The normal case is just like rest-xep
   op--vector-up-rest-args(be, required, 0);
@@ -437,23 +437,23 @@ end method;
 
 // This implementation vectors up the #rest before vectoring up everything else
 
-define method op--gf-optional-xep-internal 
+define method op--gf-optional-xep-internal
     (be :: <harp-back-end>, required == #"dynamic")
-  // The optionals should be vectored up first - and then the resultant 
+  // The optionals should be vectored up first - and then the resultant
   // args vectored up - taking care to keep the count correct
   //
 
-/*  // Kludge disabled 
+/*  // Kludge disabled
   // TEMPORARY KLUDGE : .......................
-  // We heap allocate the optionals vector, because the default 
+  // We heap allocate the optionals vector, because the default
   // GF discriminator for optionals (the only function which uses this XEP)
   // attempts to do an optimized tail call to apply. The compiler knows how
-  // to evacuate one level of stack-vector to the heap - but it doesn't 
+  // to evacuate one level of stack-vector to the heap - but it doesn't
   // consider that the vector might itself refer to stack allocated data.
   //
-  // Eventually, the compiler will optimize tail calls to apply where the 
+  // Eventually, the compiler will optimize tail calls to apply where the
   // optionals are passed straight on to the applied function. We will
-  // then be able to avoid heap allocating the optionals and this kludge 
+  // then be able to avoid heap allocating the optionals and this kludge
   // can be removed.
 */
   with-harp (be)
@@ -482,12 +482,12 @@ define method op--gf-optional-xep-internal
     // along with the already vectored #rest
     op--number-required(be, argc);
     ins--add(be, argc, argc, 1);
-  
+
     // Now vector up these pseudo arguments (using the doctored arg count);
     // All argument registers are pushed unto the stack, and #rest becomes
     // the only argument register
     op--vector-up-rest-args(be, 0, 0);
-    
+
     // Now adjust the count.
     // The real count is the count of the first alloc
     // plus 12 + bytes%(max-num-arg-regs)
@@ -512,11 +512,11 @@ end method;
 
 
 
-/// General support for XEPs 
+/// General support for XEPs
 
 
-define method op--outer-xep 
-    (be :: <harp-back-end>, required, optionals?, keywords?, 
+define method op--outer-xep
+    (be :: <harp-back-end>, required, optionals?, keywords?,
      continuation :: <function>)
   let xep-continuation =
     method (be :: <harp-back-end>, required)
@@ -528,7 +528,7 @@ define method op--outer-xep
 end method;
 
 
-define method op--outer-gf-xep 
+define method op--outer-gf-xep
     (be :: <harp-back-end>, required, optionals?, keywords?,
      continuation :: <function>)
   let xep-continuation =
@@ -536,7 +536,7 @@ define method op--outer-gf-xep
       continuation(be, required);
       op--gf-iep-jump-to-engine-node(be);
     end method;
-  op--general-xep-support(be, required, optionals?, keywords?, xep-continuation, 
+  op--general-xep-support(be, required, optionals?, keywords?, xep-continuation,
                           check-specializers?: #f);
 end method;
 
@@ -544,10 +544,10 @@ end method;
 define method op--general-xep-support
     (be :: <harp-back-end>, required, opts?, keys?,
      continuation :: <function>,
-     #key 
+     #key
      live-mlist? = #t,
-     check-args? = #t, 
-     check-stack? = #t, 
+     check-args? = #t,
+     check-stack? = #t,
      check-specializers? = #t)
   with-harp (be)
     arg-count args;
@@ -567,7 +567,7 @@ define method op--general-xep-support
 end method;
 
 
-define method op--tail-call-iep 
+define method op--tail-call-iep
     (be :: <harp-back-end>, #key keyword-method? = #f, live-mlist? = #t)
   with-harp (be)
     function function;
@@ -591,7 +591,7 @@ define method op--tail-call-iep
                      be.function-iep-offset
                    else be.function-mep-offset;
                    end if;
-      ins--jmp-indirect(be, function, offset, max-num-arg-regs, 
+      ins--jmp-indirect(be, function, offset, max-num-arg-regs,
                         mlist: live-mlist?, arg-count: #f);
     end if;
   end with-harp;

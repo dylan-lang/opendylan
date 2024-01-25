@@ -22,28 +22,28 @@ define constant $zero = list("ZERO");
 
 define method dump-at (dood :: <dood>, address :: <address>) => (next-address)
   format-out("%d:\t", address);
-  block () 
+  block ()
     let value = dood-read-at(dood, address);
     let value-at = dood-object(dood, address, default: #f);
     if (instance?(value-at, <byte-string>) | instance?(value-at, <symbol>))
       format-out("%=\n", value-at);
       address + dood-instance-size(dood, value-at)
     else
-      case 
-	$tag-pairs? & pair?(value) | address?(value)        => 
+      case
+	$tag-pairs? & pair?(value) | address?(value)        =>
 	  let address = untag(value);
 	  let object  = dood-object(dood, address, default: $zero);
 	  if ($tag-pairs? & pair?(value))
-  	    format-out("!@%d", address); 
+  	    format-out("!@%d", address);
 	  else
-  	    format-out("@%d", address); 
+  	    format-out("@%d", address);
 	  end if;
 	  unless (object == $zero)
-	    format-out(" -> %=", object); 
+	    format-out(" -> %=", object);
 	  end unless;
-	integer?(value)        => 
+	integer?(value)        =>
 	  format-out(" %d", untag(value));
-	byte-character?(value) => 
+	byte-character?(value) =>
 	  format-out("'%s'", as(<character>, untag(value)));
       end case;
       format-out("\n");
@@ -54,7 +54,7 @@ define method dump-at (dood :: <dood>, address :: <address>) => (next-address)
   end block;
 end method;
 
-define method dump-range 
+define method dump-range
     (dood :: <dood>, from-address :: <address>, below-address :: <address>)
   let old-dood-debug? = *dood-debug?*;
   *dood-debug?* := #f;
@@ -76,5 +76,5 @@ end method;
 define method dump (dood :: <dood>)
   dump-range(dood, $dood-free-address-id, $dood-predefines-begin);
   dump-range(dood, $dood-predefines-begin, dood-free-address(dood));
-  values(); 
+  values();
 end method;

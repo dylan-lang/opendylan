@@ -37,7 +37,7 @@ define constant $GUID-SIMPLE :: <REFGUID> =
 
 
 define method initialize (this :: <CSimpSvrApp>, #rest ignore, #key ) => ();
-	
+
   OutputDebugString("In CSimpSvrApp's Constructor \r\n");
   next-method();
 
@@ -85,7 +85,7 @@ end method initialize ;
 
 
 define method terminate (this :: <CSimpSvrApp>) => ();
-  
+
   OutputDebugString("In CSimpSvrApp's Destructor\r\n");
 
   next-method();
@@ -141,7 +141,7 @@ define function fInitApplication (this :: <CSimpSvrApp>,
 				  hInstance :: <HINSTANCE>)
 	=> ok? :: <boolean>;
   block(return)
-	
+
       /* CStabilize stabilize(this); */
    with-stack-structure ( wc :: <PWNDCLASS> )
 
@@ -255,29 +255,29 @@ define function fInitInstance(this :: <CSimpSvrApp>, hInstance :: <HINSTANCE>,
   if ( null?( this.m-hAppWnd ) )
     cerror("Continue", "CreateWindow error #x%x", GetLastError() );
     values(#f, $null-interface)
-  else 
+  else
     ole-util-init();
 
     // if not started by OLE, then show the Window, and create a "fake"
-    // object, else Register a pointer to IClassFactory so that OLE can 
+    // object, else Register a pointer to IClassFactory so that OLE can
     // instruct us to make an object at the appropriate time.
     let lpClassFactory :: <Interface> = $NULL-interface;
     if ( ~ this.m-fStartByOle )
-      
+
       ShowAppWnd(this, nCmdShow);
       let ( status, object ) = CreateObject(this.m-lpDoc, $IID-IOleObject);
       this.m-OleObject := object;
       InvalidateRect( GethDocWnd(this.m-lpDoc), $NULL-RECT, #t);
-      
+
     else
-      
+
       lpClassFactory := make(<CClassFactory>, app: this,
 			     controlling-unknown: this);
 
       // shouldn't pass an API an object with a zero ref count
       AddRef(lpClassFactory);
 
-      let ( status, regnum ) = 
+      let ( status, regnum ) =
 	CoRegisterClassObject($GUID-SIMPLE, lpClassFactory,
 			      $CLSCTX-LOCAL-SERVER, $REGCLS-SINGLEUSE);
       if ( SUCCEEDED?(status) )
@@ -345,41 +345,41 @@ define method lCommandHandler(this :: <CSimpSvrApp>, hWnd :: <HWND>,
 			      message, wParam, lParam ) => value :: <integer>;
 
  block(return)
-	
+
      /* CStabilize stabilize(this); */
    //@@WTK WIN32, UNICODE
    //switch (wParam) {
-   select ( LOWORD(wParam) ) 
+   select ( LOWORD(wParam) )
      // bring up the About box
-     $IDM-ABOUT => 
+     $IDM-ABOUT =>
        DialogBox(this.m-hInst,		// current instance
 		 TEXT("AboutBox"),		// resource to use
 		 this.m-hAppWnd,	// parent handle
 		 About);		// About() instance address
 
      // exit the application
-     $IDM-EXIT => 
+     $IDM-EXIT =>
        SendMessage(hWnd, $WM-SYSCOMMAND, $SC-CLOSE, 0);
 
-     $IDM-RED => 
+     $IDM-RED =>
        SetColor(GetObj(this.m-lpDoc), 128, 0, 0);
        InvalidateRect(GethDocWnd(this.m-lpDoc), $NULL-RECT, #t);
 
-     $IDM-GREEN => 
+     $IDM-GREEN =>
        SetColor(GetObj(this.m-lpDoc), 0,128, 0);
        InvalidateRect(GethDocWnd(this.m-lpDoc), $NULL-RECT, #t);
 
-     $IDM-BLUE => 
+     $IDM-BLUE =>
        SetColor(GetObj(this.m-lpDoc), 0, 0, 128);
        InvalidateRect(GethDocWnd(this.m-lpDoc), $NULL-RECT, #t);
 
-     $IDM-ROTATE => 
+     $IDM-ROTATE =>
        RotateColor(GetObj(this.m-lpDoc));
        InvalidateRect(GethDocWnd(this.m-lpDoc), $NULL-RECT, #t);
 
-     otherwise => 
+     otherwise =>
        return( DefWindowProc(hWnd, message, wParam, lParam) );
-                   
+
    end select;   // end of switch
    return( 0 );
  end block;
@@ -543,7 +543,7 @@ end PaintApp;
 
 define function ParseCommandLine(this :: <CSimpSvrApp>, lpCmdLine :: <LPSTR>)
  => ();
-	
+
   // use utility function in the COM library
   this.m-fStartByOle := OLE-util-started-by-OLE?();
   values();
@@ -628,7 +628,7 @@ define method IsInPlaceActive(this :: <CSimpSvrApp>)
       retval := IsInPlaceActive(obj);
     end unless;
   end unless;
-  
+
   retval
 end method IsInPlaceActive;
 

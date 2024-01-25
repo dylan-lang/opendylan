@@ -32,15 +32,15 @@ end;
 // of instructions.
 //
 
-define open generic code-item-increment 
+define open generic code-item-increment
     (backend :: <harp-back-end>) => (res :: <integer>);
 
-define method code-item-increment 
+define method code-item-increment
     (backend :: <harp-back-end>) => (res :: <integer>)
   1;
 end;
 
-// Harp Clients can set a back-end flag, "bind-exit-frame?" during code generation to 
+// Harp Clients can set a back-end flag, "bind-exit-frame?" during code generation to
 // preserve all callee-safe registers for stack-frames of current function that builds
 // a bind-exit frame.
 

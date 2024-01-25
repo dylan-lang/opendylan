@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-/// This is the "standard" instruction set, for use with all native 
+/// This is the "standard" instruction set, for use with all native
 /// back ends.
 
 
@@ -52,7 +52,7 @@ define instruction-set <instruction-set>
        op t-push, remove-optionals, spread: spread-uu;
        op rts-and-drop, adjust-stack, spread: spread-u;
        op load-count-adjusting-stack, spread: spread-tduu, stack-dependent: #t;
- 
+
        op rts, spread: spread-none;
        op end-cleanup, spread: spread-td, flag: #t;
        op pea, spread: spread-tu, flag: #t, for-effective-address: #t;
@@ -62,8 +62,8 @@ define instruction-set <instruction-set>
        op call-indirect, spread: spread-uuu, flag: #t;   // disallow leaf case
        op jmp, jmp-alien, spread: spread-uuuuu, does-jump: #t;
        op jmp-indirect, spread: spread-uuuuuu, does-jump: #t;
-       op load-stack-arg-half-signed, load-stack-arg-half-unsigned, 
-          load-stack-arg-byte-signed, load-stack-arg-byte-unsigned, 
+       op load-stack-arg-half-signed, load-stack-arg-half-unsigned,
+          load-stack-arg-byte-signed, load-stack-arg-byte-unsigned,
             spread: spread-tdu, eliminatable: #t, stack-dependent: #t;
        op load-address-of-stack-arg-n,
             spread: spread-tdu, eliminatable: #t, stack-dependent: #t;
@@ -75,8 +75,8 @@ define instruction-set <instruction-set>
 
   uu    op pop-mem, push-mem, flag: #t;
 
-  uuuu op and2-mem, or2-mem, add2-mem, sub2-mem, 
-          add2-mem-locked, sub2-mem-locked, 
+  uuuu op and2-mem, or2-mem, add2-mem, sub2-mem,
+          add2-mem-locked, sub2-mem-locked,
 	  eor2-mem;
 
   duuu  op xadd-mem-locked;
@@ -113,9 +113,9 @@ define instruction-set <instruction-set>
 	   dgetexp, dgetman, dint, dlog10, dlog2,
 	   dloge, dlogep1, dmove, dneg, dsin,
 	   dsinh, dsqrt, dtan, dtanh, eliminatable: #t;
-  duu  op fadd, fdiv, fld, fmul, fsub, ld-double, 
+  duu  op fadd, fdiv, fld, fmul, fsub, ld-double,
            dmul, ddiv, dadd, dsub, dld, eliminatable: #t;
-  tuu  op fbeq, fbge, fbgt, fble, fblt, fbne, fbnge,  
+  tuu  op fbeq, fbge, fbgt, fble, fblt, fbne, fbnge,
            dble, dbge, dbne, dblt, dbeq, fbngt, fbnle, fbnlt;
   uuu  op fst, dst, st-double;
   du   op move-to-sfreg, move-from-sfreg,

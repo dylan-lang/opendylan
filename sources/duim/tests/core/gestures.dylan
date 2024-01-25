@@ -45,7 +45,7 @@ end test mouse-gestures-test;
 define test keyboard-gestures-test ()
 end test keyboard-gestures-test;
 
-
+
 /// Define the gestures test suite
 
 define suite duim-gestures-suite ()

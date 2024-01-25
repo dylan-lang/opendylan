@@ -20,7 +20,7 @@ end method;
 define inline method import-<vector>
     (v :: <POINTER-VECTOR>,
      #key sz) => (vector :: Rtmgr/RemoteNub/<RTARGET-ADDRESS-SEQ>)
-  
+
   let size :: <integer> = sz | v.size;
   let vector = make (Rtmgr/RemoteNub/<RTARGET-ADDRESS-SEQ>,
 		     size: size, fill: 0);
@@ -251,7 +251,7 @@ define corba-method Rtmgr/RemoteNub/get-library-filename
   let name-length :: <integer> =
     nub-get-library-filename-length(process, dll);
   let C-filename = make (<byte-string>, size: name-length);
-  nub-get-library-filename 
+  nub-get-library-filename
     (process, dll, name-length, C-filename);
   C-filename
 end corba-method;
@@ -967,7 +967,7 @@ define corba-method Rtmgr/RemoteNub/get-lexical-variable-name
  => (result :: CORBA/<string>)
   let process = remote-process(rnub);
   let name-length :: <integer> =
-    nub-get-lexical-variable-name-length 
+    nub-get-lexical-variable-name-length
     (process, table, variable);
   let variable-name = make (<byte-string>, size: name-length);
   nub-get-lexical-variable-name
@@ -986,10 +986,10 @@ end corba-method;
 define corba-method Rtmgr/RemoteNub/lookup-symbol-name
     (rnub :: <RemoteNub-implementation>, table :: Rtmgr/RemoteNub/<RNUBHANDLE>, sym :: Rtmgr/RemoteNub/<NUB-INDEX>)
  => (result :: CORBA/<string>)
-  let process = remote-process(rnub);       
+  let process = remote-process(rnub);
   let name-length =
     nub-lookup-symbol-name-length(process, table, sym);
-  let name = make(<byte-string>, size: name-length); 
+  let name = make(<byte-string>, size: name-length);
   nub-lookup-symbol-name
   (process, table, sym, name-length, name);
   name
@@ -1247,22 +1247,22 @@ define corba-method Rtmgr/RemoteNub/open-local-tether
     (rnub :: <RemoteNub-implementation>, command :: CORBA/<string>, arguments :: CORBA/<string>, paths :: Rtmgr/RemoteNub/<STRING-SEQ>, lib-paths :: Rtmgr/RemoteNub/<STRING-SEQ>, working-directory :: CORBA/<string>, create-shell :: Rtmgr/RemoteNub/<NUBINT>)
  => (result :: Rtmgr/RemoteNub/<RNUB>, success :: Rtmgr/RemoteNub/<NUBINT>)
   let symfile-c-strings = map(curry(as, <C-string>), paths);
-  let symfile-dir-array = make(<C-string*>, 
+  let symfile-dir-array = make(<C-string*>,
                                element-count: symfile-c-strings.size);
   for (i :: <integer> from 0 below symfile-c-strings.size)
     symfile-dir-array[i] := symfile-c-strings[i];
   end for;
 
   let lsp-c-strings = map(curry(as, <C-string>), lib-paths);
-  let lsp-dir-array = make(<C-string*>, 
+  let lsp-dir-array = make(<C-string*>,
                            element-count: lsp-c-strings.size);
   for (i :: <integer> from 0 below lsp-c-strings.size)
     lsp-dir-array[i] := lsp-c-strings[i];
   end for;
 
   let (proc, success)
-    = open-local-tether(command, 
-                        arguments, 
+    = open-local-tether(command,
+                        arguments,
                         paths.size,
                         symfile-dir-array,
                         lib-paths.size,
@@ -1288,7 +1288,7 @@ define corba-method Rtmgr/RemoteNub/attach-local-tether
  => (result :: Rtmgr/RemoteNub/<RNUB>, success :: Rtmgr/RemoteNub/<NUBINT>)
 
   let symfile-c-strings = map(curry(as, <C-string>), symbol-paths);
-  let symfile-dir-array = make(<C-string*>, 
+  let symfile-dir-array = make(<C-string*>,
                                element-count: symfile-c-strings.size);
   for (i :: <integer> from 0 below symfile-c-strings.size)
     symfile-dir-array[i] := symfile-c-strings[i];

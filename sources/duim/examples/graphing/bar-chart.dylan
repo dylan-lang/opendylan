@@ -273,7 +273,7 @@ define method set-bar-chart-selection
   chart
 end method set-bar-chart-selection;
 
-
+
 /*
 chart := contain(make(<bar-chart>, width: 200, height: 100));
 

@@ -20,13 +20,13 @@ define c-runtime-primitive call-first-dylan-function
   //   func       - A Dylan <function> object to be called
   //   n          - the number of args to pass to the Dylan function
   //   #rest args - the args to pass to func
-  // A new TEB will be created, & then the function will be called 
+  // A new TEB will be created, & then the function will be called
   // via its XEP with all the args
   // On exit:
   //  Any MVs from the call to the function, in Dylan format
 
   // Set up the Thread Environment Block before the call
-  op--call-dylan-function-from-c(be); 
+  op--call-dylan-function-from-c(be);
 end c-runtime-primitive;
 
 
@@ -49,7 +49,7 @@ define c-runtime-primitive call-dylan-function
           end with-harp;
         end method;
 
-  op--call-dylan-function-from-c(be, code-after: epilog); 
+  op--call-dylan-function-from-c(be, code-after: epilog);
 end c-runtime-primitive;
 
 
@@ -80,7 +80,7 @@ define c-runtime-primitive spy-call-dylan-function
         end method;
 
   op--call-dylan-function-from-c
-    (be, code-before: prolog, code-after: epilog); 
+    (be, code-before: prolog, code-after: epilog);
 end c-runtime-primitive;
 
 
@@ -99,14 +99,14 @@ define c-runtime-primitive call-dylan-function-returning-all-values
             result result;
             c-result c-result;
             nreg size, buffer, start;
-            
+
             ins--move(be, start, 0);
             op--buffer-up-remaining-values(be, buffer, size, start);
             ins--move(be, c-result, op--make-vector-from-data(be, buffer, size));
           end with-harp;
         end method;
 
-  op--call-dylan-function-from-c(be, code-after: epilog); 
+  op--call-dylan-function-from-c(be, code-after: epilog);
 end c-runtime-primitive;
 
 
@@ -122,18 +122,18 @@ define method op--call-dylan-function-from-c
     arg-count argc;
     function function;
     stack stack;
-  
+
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
     op--c-load-arguments(be, func, count);
-  
+
     // Do anything necessary before the call
     code-before(be);
-  
+
     // Setup any args for the XEP call
 
     op--map-calling-convention(be, count, 2);
- 
+
     // Call the XEP
     ins--move(be, function, func);
     ins--move(be, argc, count);
@@ -141,7 +141,7 @@ define method op--call-dylan-function-from-c
 
     // Do anything necessary after the call
     code-after(be);
-  
+
     ins--rts(be);
 
   end with-harp;
@@ -268,7 +268,7 @@ end c-runtime-primitive;
 
 
 
-define internal-variable runtime-external invoke-dylan-under-coded-restart 
+define internal-variable runtime-external invoke-dylan-under-coded-restart
    = "spy-invoke-dylan-under-coded-restart";
 
 
@@ -306,7 +306,7 @@ define method op--make-thunk-function-object-from-iep
     op--allocate-method(be, func, template, #f, #f);
     ins--st(be, iep, func, be.function-mep-offset);
   end with-harp;
-end method; 
+end method;
 
 
 define c-runtime-primitive spy-read-location-through-barrier
@@ -389,7 +389,7 @@ define generic-c-runtime-primitive spy-exit-application;
 // This one is not a primitive - but it seems vaguely related somehow:
 
 
-// default-tlv-vector is a variable used by the threads primitives. It is 
+// default-tlv-vector is a variable used by the threads primitives. It is
 // defined here simply so that we can get it traced as an ambiguous root by the GC.
 //
 define c runtime-variable default-tlv-vector = "default_tlv_vector",

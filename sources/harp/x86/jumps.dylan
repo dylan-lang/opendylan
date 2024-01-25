@@ -32,7 +32,7 @@ end method;
 
 
 define local-pentium-template (jump-indirect)
-  
+
   pattern (be, return :: any, d :: <real-register> by colour, o :: <integer>)
     emit(be, grp5);
     emit-reg-offset(be, d, o, jmp-indirect-code(return));
@@ -93,11 +93,11 @@ end pentium-template;
 define pentium-template (jmp, jmp-alien)
   options (self);
 
-  pattern (be, i, dest :: <ispill> by colour, nregs, 
+  pattern (be, i, dest :: <ispill> by colour, nregs,
            ret-addr-shift, count :: any, adjust :: any)
     harp-error("Attempt to tail call with a spill.");
 
-  pattern (be, alien? :: <boolean> by op-info, dest, nregs, 
+  pattern (be, alien? :: <boolean> by op-info, dest, nregs,
            ret-addr-shift, count :: any, adjust :: any)
     harp-out (be) move-return-address(be, count, ret-addr-shift, adjust) end;
     if (alien?) harp-out (be) clear-direction-flag(be) end end;

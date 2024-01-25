@@ -76,7 +76,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //                     101  ebp
 //                     110  esi
 //                     111  edi
-      
+
 
 
 define constant flt-esc = #b11011000;  // low 3 bits are opcode
@@ -92,8 +92,8 @@ define constant mf-single =   #b000;
 define constant mf-double =   #b100;
 
 
-define method emit-fspill-operand 
-    (be :: <harp-x86-back-end>, spill :: <fspill>, ex :: <integer>, 
+define method emit-fspill-operand
+    (be :: <harp-x86-back-end>, spill :: <fspill>, ex :: <integer>,
      #key hilo = 0)
   let offset :: <integer> = hilo + signed-frame-pointer-offset(be, spill);
   if (signed-eight-bits?(offset))
@@ -107,12 +107,12 @@ end method;
 
 
 
-define method emit-f-constant-operand 
-    (be :: <harp-x86-back-end>, 
-     const-ref :: <indirect-constant-reference>, 
-     ex :: <integer>, 
+define method emit-f-constant-operand
+    (be :: <harp-x86-back-end>,
+     const-ref :: <indirect-constant-reference>,
+     ex :: <integer>,
      #key hilo = 0)
-  let shifted-const-ref = 
+  let shifted-const-ref =
     if (hilo.zero?)
       const-ref
     else
@@ -127,15 +127,15 @@ define method emit-f-constant-operand
 end method;
 
 
-define method emit-f-c-spill-operand 
-    (be :: <harp-x86-back-end>, float :: <fspill>, ex :: <integer>, 
+define method emit-f-c-spill-operand
+    (be :: <harp-x86-back-end>, float :: <fspill>, ex :: <integer>,
      #key hilo = 0)
   emit-fspill-operand(be, float, ex, hilo: hilo);
 end method;
 
 
-define method emit-f-c-spill-operand 
-    (be :: <harp-x86-back-end>, float :: <indirect-constant-reference>, ex :: <integer>, 
+define method emit-f-c-spill-operand
+    (be :: <harp-x86-back-end>, float :: <indirect-constant-reference>, ex :: <integer>,
      #key hilo = 0)
   emit-f-constant-operand(be, float, ex, hilo: hilo);
 end method;
@@ -189,7 +189,7 @@ define method push-integer-internal
 end method;
 
 define method push-double-integer (be :: <harp-x86-back-end>, low, high)
-  harp-out (be) 
+  harp-out (be)
     push(be, high);
     push(be, low);
   end;
@@ -215,7 +215,7 @@ define method pop-double (be :: <harp-x86-back-end>, spill-ref :: <dfspill>)
   emit-fspill-operand(be, spill-ref, mc-fstp);
 end method;
 
-define method pop-double 
+define method pop-double
     (be :: <harp-x86-back-end>, dest :: <pentium-float-register>)
   emit(be, flt-esc + mf-double + 1);
   emit-reg-direct(be, dest, mc-fstp);

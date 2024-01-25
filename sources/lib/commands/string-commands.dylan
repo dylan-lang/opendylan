@@ -65,7 +65,7 @@ define macro string-command-slots-definer
     => { define string-command-slots ?class ?more-slots end; }
 end macro string-command-slots-definer;
 
-
+
 /// Argument substitution
 
 define method string-for-command
@@ -129,7 +129,7 @@ define sealed method find-char
   end
 end method find-char;
 
-
+
 /// Value printing
 
 define open generic object-to-string (object) => (string :: <string>);
@@ -176,7 +176,7 @@ define method object-to-string
   end
 end method object-to-string;
 
-
+
 /// Sample usage
 
 /*

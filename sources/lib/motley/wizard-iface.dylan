@@ -34,24 +34,24 @@ end macro check-winfunc;
 
 define macro with-key
   { with-key (?:name = ?key:expression, ?subkey:expression) ?:body end } =>
-  { let ?name :: <HKEY> = 
-      check-winfunc(RegOpenKeyEx(?key, ?subkey, 0, 
+  { let ?name :: <HKEY> =
+      check-winfunc(RegOpenKeyEx(?key, ?subkey, 0,
 				 $KEY-QUERY-VALUE + $KEY-ENUMERATE-SUB-KEYS));
-    block () 
+    block ()
       ?body
     cleanup
       check-winfunc(RegCloseKey(?name));
     end; }
 end macro with-key;
 
-define function registry-key-string-value (key :: <HKEY>, 
+define function registry-key-string-value (key :: <HKEY>,
 					   value-name :: false-or(<LPDWORD>))
                                        => (r :: false-or(<string>))
   let r = make(<C-string>, size: 1024);
   with-stack-structure (length :: <LPDWORD>)
     pointer-value(length) := 1024;
     let val :: <LPDWORD> = value-name | null-pointer(<LPDWORD>);
-    let (status, type) = 
+    let (status, type) =
             RegQueryValueEx(key, null-pointer(<LPCSTR>), val, r, length);
     if (status = $ERROR-SUCCESS & type = $REG-SZ)
       r
@@ -66,8 +66,8 @@ define macro with-subkeys
 	   until:
 	     begin
 	       let status = RegEnumKey(?key, index, ?name, 1024);
-	       if (status ~= $ERROR-NO-MORE-ITEMS) 
-		 check-winfunc("RegEnumKey", status) 
+	       if (status ~= $ERROR-NO-MORE-ITEMS)
+		 check-winfunc("RegEnumKey", status)
 	       end;
 	       status = $ERROR-NO-MORE-ITEMS
 	     end)
@@ -81,7 +81,7 @@ end macro with-subkeys;
 /*
 define macro with
   { with () ?:body end } => { ?body }
-  { with (?:name ?rest:*; ?next:*) ?:body end } 
+  { with (?:name ?rest:*; ?next:*) ?:body end }
     => { "with-" ## ?name (?rest) with (?next) ?body end end }
 end macro with;
 */
@@ -90,7 +90,7 @@ end macro with;
 define function hex-to-integer (hex :: <string>) => (r :: <integer>)
   let r :: <integer> = 0;
   for (char in hex)
-    r := r * 16 + 
+    r := r * 16 +
 	    if ('0' <= char & char <= '9')
 	      as(<integer>, char) - as(<integer>, '0')
 	    else
@@ -112,7 +112,7 @@ define constant registry-type-library-path = tail;
 //	r[*].registry-type-library-path: a <string> with the path of a type
 //					 library.
 
-define function get-registry-type-libraries 
+define function get-registry-type-libraries
     () => (r :: <sequence>)
   let r = make(<deque>);
   let hkey :: <HKEY> = $HKEY-CLASSES-ROOT;
@@ -142,9 +142,9 @@ define function get-registry-type-libraries
 		with-key (win32-key = langid-key, "win32")
 		  let win32-location = registry-key-string-value(win32-key, #f);
 		  if (win32-location)
-		    push-last(r, 
+		    push-last(r,
 		      pair(
-			concatenate-as(<string>, libname, 
+			concatenate-as(<string>, libname,
 				       " (", libver-name, ") ", langname),
 			concatenate-as(<string>, win32-location)));
 		  end if;
@@ -162,32 +162,32 @@ define function get-registry-type-libraries
     end with-subkeys;
 
   end with-key;
-  r := sort!(r, test: method (a,b) 
-  			a.registry-type-library-name.as-lowercase < 
-			b.registry-type-library-name.as-lowercase 
+  r := sort!(r, test: method (a,b)
+  			a.registry-type-library-name.as-lowercase <
+			b.registry-type-library-name.as-lowercase
 		      end method)
 end function get-registry-type-libraries;
 
 
-// Extract the short name of a type library.  If there are any problems 
+// Extract the short name of a type library.  If there are any problems
 // opening the type library, an <error> will be signalled.
 // DEPRECATED in favor of get-type-library-information.
 
-define function get-type-library-short-name 
+define function get-type-library-short-name
 	(path :: type-union(<string>, <locator>)) => (short-name :: <string>)
   get-type-library-information(path)
 end function get-type-library-short-name;
 
 
-// Extract the short name of a type library.  
+// Extract the short name of a type library.
 // Also get the names of all of the interfaces and coclasses in a type library,
 // as candidates for the interface section of a spec file.
 // If there are any problems opening the type library, an <error> will be
 // signalled.
 
 define function get-type-library-information
-	(path :: type-union(<string>, <locator>)) 
-     => (short-name :: <string>, 
+	(path :: type-union(<string>, <locator>))
+     => (short-name :: <string>,
 	 interfaces :: <sequence>)
   with-ole
     let lib = make(<type-library>, file: path);

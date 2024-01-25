@@ -49,7 +49,7 @@ define method download-sections-into-region
      end if
   end method;
 
-  let application = 
+  let application =
     trans.transaction-downloader-target.interactive-application;
   let path = application.debug-target-access-path;
   let number-of-sections = size(sections);
@@ -62,7 +62,7 @@ define method download-sections-into-region
     let sname = sections[i].section-name.string-data;
     section-sizes[i] := sections[i].raw-data-size;
     section-vectors[i] := sections[i].section-data;
-    section-alignments[i] := 
+    section-alignments[i] :=
        if (section-names-equivalent?(sname, ".dyfix"))
          1
        else
@@ -72,15 +72,15 @@ define method download-sections-into-region
 
   let sum-of-section-sizes = reduce(\+, 0, section-sizes);
   let sum-of-alignments = reduce(\+, 0, section-alignments);
-  let base-addresses = make(<vector>, 
-                            size: number-of-sections, 
+  let base-addresses = make(<vector>,
+                            size: number-of-sections,
                             fill: $illegal-address);
   let lowest-address = $illegal-address;
   let highest-address = $illegal-address;
 
   // The size for the block is the sum of the section sizes, plus the
   // largest potential number of bytes needed for alignment padding.
-  let conservative-block-size = 
+  let conservative-block-size =
     sum-of-section-sizes + sum-of-alignments;
 
   // If the interactive region is being used for the first time, then we
@@ -130,7 +130,7 @@ end method;
 
 define method initialize-interactive-region
     (application :: <debug-target>, region :: <interactive-region>) => ()
-  let allocator-sym = 
+  let allocator-sym =
     find-symbol(application.debug-target-access-path,
                 region.region-allocator-name,
                 library: application.application-dylan-runtime-library);
@@ -159,14 +159,14 @@ define method find-block-in-region
        => (request-block :: false-or(<static-block>), fresh? :: <boolean>)
   let request-block = #f;
   let fresh? = #f;
-  let application = 
+  let application =
     trans.transaction-downloader-target.interactive-application;
   let thread = trans.transaction-thread;
 
   local method round-up-to-page
                  (byte-count :: <integer>) => (num-pages :: <integer>)
     let path = application.debug-target-access-path;
-    let page-byte-size = 
+    let page-byte-size =
           remote-virtual-page-size(path) * remote-value-byte-size(path);
     let (pages, remainder) = truncate/(byte-count, page-byte-size);
     pages + 1;
@@ -199,7 +199,7 @@ define method find-block-in-region
             library,
             request-block.static-block-base-address,
             indexed-remote-value
-               (request-block.static-block-base-address, 
+               (request-block.static-block-base-address,
                 request-block.static-block-size - 1),
             region.region-classification);
         fresh? := #t;
@@ -210,7 +210,7 @@ define method find-block-in-region
 
     // If there is room for the request in the current static block, then
     // use it.
-    let avail-size = 
+    let avail-size =
       region.region-current-static-block.static-block-remaining-size;
 
     if (avail-size >= request-size)
@@ -239,7 +239,7 @@ define method find-block-in-region
          thread-for-spy: thread);
 
     if (request-block)
-      add!(region.region-allocated-static-blocks, 
+      add!(region.region-allocated-static-blocks,
            region.region-current-static-block);
       region.region-current-static-block := request-block;
 
@@ -251,7 +251,7 @@ define method find-block-in-region
             library,
             request-block.static-block-base-address,
             indexed-remote-value
-               (request-block.static-block-base-address, 
+               (request-block.static-block-base-address,
                 request-block.static-block-size - 1),
             region.region-classification);
         fresh? := #t;
@@ -262,7 +262,7 @@ define method find-block-in-region
   end block;
 
   // Return whatever we found.
-  values(request-block, fresh?);  
+  values(request-block, fresh?);
 end method;
 
 

@@ -117,7 +117,7 @@ define function step-all-threads-out-of-mm (application :: <debug-target>)
  => ()
   let access-path = application.debug-target-access-path;
 
-  // Returns true if the stack frame belongs to a know MM function 
+  // Returns true if the stack frame belongs to a know MM function
   //
   local method mm-stack-frame? (frame :: <stack-frame>) => (well? :: <boolean>)
     let address = frame-instruction-address(access-path, frame);

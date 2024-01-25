@@ -57,7 +57,7 @@ define method initialize
     as(Rtmgr/<NubServer>,
        CORBA/ORB/create-reference(orb, location));
 
-  let password-ok = 
+  let password-ok =
     block ()
       Rtmgr/NubServer/verify-local-password
 	(server,
@@ -96,15 +96,15 @@ end class;
 
 
 ///// START-APPLICATION-ON-CONNECTION
-//    This function is called to initialize an instance of 
-//    <application-access-path> and calls the server function to create 
-//    the running process. If the access connection is local, then the 
-//    server returns a packaged process descriptor (a <NUB>) which is 
+//    This function is called to initialize an instance of
+//    <application-access-path> and calls the server function to create
+//    the running process. If the access connection is local, then the
+//    server returns a packaged process descriptor (a <NUB>) which is
 //    saved in the access connection.
 
 define method start-application-on-connection
   (conn :: <remote-access-connection>,
-   command :: <string>, 
+   command :: <string>,
    arguments :: <string>,
    symbol-file-directories :: <sequence>,
    working-directory :: false-or(<string>),
@@ -136,8 +136,8 @@ define method start-application-on-connection
   let (process, success) =
     Rtmgr/RemoteNub/open-local-tether
     (conn.nub,
-     command, 
-     arguments, 
+     command,
+     arguments,
      as(<STRING-SEQ>, symbol-file-directories),
      as(<STRING-SEQ>, library-search-paths),
      working-directory | "",
@@ -153,10 +153,10 @@ end method;
 
 
 ///// ATTACH-APPLICATION-ON-CONNECTION
-//    This function is called to initialize an instance of 
+//    This function is called to initialize an instance of
 //    <process-access-path> and calls the server function to attach to
-//    the running process. If the access connection is local, then the 
-//    server returns a packaged process descriptor (a <NUB>) which is 
+//    the running process. If the access connection is local, then the
+//    server returns a packaged process descriptor (a <NUB>) which is
 //    saved in the access connection.
 
 define method attach-application-on-connection
@@ -182,7 +182,7 @@ define method attach-application-on-connection
   let (process, success) =
     Rtmgr/RemoteNub/attach-local-tether
     (conn.nub,
-     as-integer(process.nub-descriptor),  
+     as-integer(process.nub-descriptor),
      process.remote-process-name,
      process.remote-process-system-identifier,
      process.remote-process-actual-identifier,

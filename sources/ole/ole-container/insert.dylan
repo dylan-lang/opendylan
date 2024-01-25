@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define method insert-object-from-dialog 
+define method insert-object-from-dialog
     (app :: <container-app>,
      doc-window :: <HWND>,
      #rest options,
@@ -21,7 +21,7 @@ define method insert-object-from-dialog
      #all-keys)
  => ( doc :: false-or(<contained-object>) )
 
-  // OleUIInsertObject and the associated data structure 
+  // OleUIInsertObject and the associated data structure
   // <LPOLEUIINSERTOBJECT> are in the OLE-Dialogs library.
 
   let io :: <LPOLEUIINSERTOBJECT> = make(<LPOLEUIINSERTOBJECT>);
@@ -103,7 +103,7 @@ define method insert-object-from-dialog
       unless ( iret = $OLEUI-CANCEL ) // unless user pressed "Cancel" button
 	// report an error
 	let scode :: <SCODE> = io.sc-value;
-	MessageBox(app.container-frame-window,  
+	MessageBox(app.container-frame-window,
 		   if ( (iret = $OLEUI-IOERR-SCODEHASERROR) & FAILED?(scode) )
 		     format-to-string("OleCreate... scode = %=:\n%s",
 				      scode,
@@ -111,9 +111,9 @@ define method insert-object-from-dialog
 		   else
 		     format-to-string("OleUIInsertObject error %d\n(%s)",
 				      iret,  insert_error_name(iret))
-		   end if, 
-		   failure-title, /* window title */ 
-		   /* icon and button: */ 
+		   end if,
+		   failure-title, /* window title */
+		   /* icon and button: */
 		   logior($MB-ICONEXCLAMATION, $MB-OK));
       end unless;
     end if;
@@ -142,8 +142,8 @@ define function copy-guid ( id :: <REFGUID> ) => ( copy :: <REFGUID> )
   new
 end;
 
-define method insert_error_name(err :: <fixnum>) => name :: <string>; 
-  select ( err ) 
+define method insert_error_name(err :: <fixnum>) => name :: <string>;
+  select ( err )
     $OLEUI-IOERR-LPSZFILEINVALID =>       "OLEUI_IOERR_LPSZFILEINVALID";
     $OLEUI-IOERR-LPSZLABELINVALID =>      "OLEUI_IOERR_LPSZLABELINVALID";
     $OLEUI-IOERR-HICONINVALID =>          "OLEUI_IOERR_HICONINVALID";
@@ -160,7 +160,7 @@ define method insert_error_name(err :: <fixnum>) => name :: <string>;
 end method insert_error_name;
 
 
-
+
 
 define method insert-object-by-class (app :: <container-app>,
 				      doc-window :: <HWND>,

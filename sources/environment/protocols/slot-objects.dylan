@@ -58,7 +58,7 @@ define open generic slot-allocation
     (server :: <server>, slot :: <slot-object>)
  => (keywords :: <sequence>);
 
-
+
 /// Project dispatching methods
 
 define method slot-class
@@ -128,7 +128,7 @@ define method slot-allocation
   slot-allocation(server, slot)
 end method slot-allocation;
 
-
+
 /// Implementation
 
 define method environment-object-type

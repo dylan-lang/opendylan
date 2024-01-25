@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method fpu-duplicate (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11000000);
 end method;
-						       
+
 // define method fpu-push-0 (be :: <harp-x86-back-end>)
 //   emit(be, #b11011001, #b11101110);
 // end method;
@@ -42,7 +42,7 @@ end method;
 define method fpu-push-2 (be :: <harp-x86-back-end>)
   fpu-push-1(be); fpu-duplicate(be); fpu-add(be);
 end method;
-					  
+
 define method fpu-add (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11000001);
 end method;
@@ -70,7 +70,7 @@ end method;
 define method fpu-halve (be :: <harp-x86-back-end>)
   fpu-push-2(be); fpu-div(be);
 end method;
-					  
+
 define method fpu-sqrt (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11111010);
 end method;
@@ -118,7 +118,7 @@ end method;
 define method fpu-raw-arctan (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11110011);
 end method;
-					  
+
 define method fpu-tan (be :: <harp-x86-back-end>)
   fpu-raw-tan(be); fpu-discard(be);
 end method;
@@ -126,11 +126,11 @@ end method;
 define method fpu-atan (be :: <harp-x86-back-end>)
   fpu-push-1(be);  fpu-raw-arctan(be);
 end method;
-					  
+
 define method fpu-raise (be :: <harp-x86-back-end>)
   fpu-duplicate(be); fpu-round(be); fpu-duplicate(be);
-  fpu-exch2(be); fpu-subr(be); fpu-raise-mant(be); 
-  fpu-push-1(be); fpu-add(be); fpu-scale(be); 
+  fpu-exch2(be); fpu-subr(be); fpu-raise-mant(be);
+  fpu-push-1(be); fpu-add(be); fpu-scale(be);
   fpu-pop-down(be);
 end method;
 
@@ -141,30 +141,30 @@ end method;
 define method fpu-log-e (be :: <harp-x86-back-end>)
   fpu-push-loge-2(be); fpu-exch(be); fpu-logarithm(be);
 end method;
-					  
+
 define method fpu-one-minus-sq (be :: <harp-x86-back-end>)
-  fpu-duplicate(be); fpu-mul(be); fpu-push-1(be); 
+  fpu-duplicate(be); fpu-mul(be); fpu-push-1(be);
   fpu-subr(be); fpu-sqrt(be);
 end method;
-					  
+
 define method fpu-sinh (be :: <harp-x86-back-end>)
-  fpu-raise-e(be); fpu-duplicate(be); fpu-push-1(be); 
+  fpu-raise-e(be); fpu-duplicate(be); fpu-push-1(be);
   fpu-divr(be); fpu-sub(be); fpu-halve(be);
 end method;
 
 define method fpu-cosh (be :: <harp-x86-back-end>)
-  fpu-raise-e(be); fpu-duplicate(be); fpu-push-1(be); 
+  fpu-raise-e(be); fpu-duplicate(be); fpu-push-1(be);
   fpu-divr(be); fpu-add(be); fpu-halve(be);
 end method;
 
 define method fpu-tanh (be :: <harp-x86-back-end>)
-  fpu-duplicate(be); fpu-add(be); fpu-raise-e(be); 
+  fpu-duplicate(be); fpu-add(be); fpu-raise-e(be);
   fpu-duplicate(be); fpu-push-1(be); fpu-sub(be);
   fpu-exch(be); fpu-push-1(be); fpu-add(be); fpu-div(be);
 end method;
 
 define method fpu-atanh (be :: <harp-x86-back-end>)
-  fpu-duplicate(be); fpu-push-1(be); fpu-add(be); 
+  fpu-duplicate(be); fpu-push-1(be); fpu-add(be);
   fpu-exch(be); fpu-push-1(be); fpu-subr(be); fpu-div(be);
   fpu-log-e(be); fpu-halve(be);
 end method;
@@ -212,7 +212,7 @@ with-ops-in pentium-instructions (dtan, ftan)
 end with-ops-in;
 
 
-//// For these ops, the 387 trans code is defined as a constant in the same 
+//// For these ops, the 387 trans code is defined as a constant in the same
 //// way - but the info field is encoded with these constants:
 
 
@@ -267,7 +267,7 @@ end with-ops-in;
 
 
 
-//// For these ops, the info field is encoded with #t or #f to 
+//// For these ops, the info field is encoded with #t or #f to
 //// indicate whether the operands are doubles.
 
 

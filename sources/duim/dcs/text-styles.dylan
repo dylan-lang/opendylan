@@ -44,7 +44,7 @@ define protocol <<text-style-protocol>> ()
     (style :: <text-style>) => (true? :: <boolean>);
 end protocol <<text-style-protocol>>;
 
-
+
 /// Text styles
 
 define sealed class <standard-text-style> (<text-style>)
@@ -210,7 +210,7 @@ define sealed method make-text-style
   text-style
 end method make-text-style;
 
-
+
 /// Text style merging
 
 define sealed method fully-merged-text-style?
@@ -290,7 +290,7 @@ define function merge-text-style-sizes
   end
 end function merge-text-style-sizes;
 
-
+
 /// Device fonts
 
 define sealed class <device-font> (<text-style>)
@@ -325,7 +325,7 @@ define sealed method fully-merged-text-style? (style :: <device-font>) => (true?
   #t
 end method fully-merged-text-style?;
 
-
+
 /// Initializations
 
 // Not really used yet...

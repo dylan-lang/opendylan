@@ -13,7 +13,7 @@ define constant $llvm-object-pointer-type :: <llvm-type> = $llvm-i8*-type;
 define constant $object-pointer-undef
   = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
 
-
+
 /// Memoized pointer types
 
 define inline method llvm-pointer-to
@@ -25,7 +25,7 @@ define inline method llvm-pointer-to
          := make(<llvm-pointer-type>, pointee: type))
 end method;
 
-
+
 /// Built-in types
 
 define method initialize-type-table
@@ -161,7 +161,7 @@ define method llvm-register-types
   end for;
 end method;
 
-
+
 /// Object types
 
 define method llvm-object-type
@@ -204,7 +204,7 @@ define method llvm-class-type
     type
   else
     let islots = class.^instance-slot-descriptors;
-    let rslotd = class.^repeated-slot-descriptor; 
+    let rslotd = class.^repeated-slot-descriptor;
     let elements
       = make(<simple-object-vector>,
              size: if (rslotd) islots.size + 2 else islots.size + 1 end);
@@ -308,7 +308,7 @@ define method llvm-repeated-type
   make(<llvm-integer-type>, width: repeated-representation-size(o) * 8)
 end method;
 
-
+
 /// Code types
 
 // Lambdas (internal entry points)

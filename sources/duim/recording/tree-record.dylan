@@ -254,7 +254,7 @@ define method do-children-overlapping-region
   end
 end method do-children-overlapping-region;
 
-
+
 /// Utilities...
 
 // Like 'find-key', but searches coordinate sorted sets for a given child
@@ -339,7 +339,7 @@ define method index-for-position
   end
 end method index-for-position;
 
-
+
 /// Tree output history
 
 define sealed class <tree-output-history>

@@ -23,7 +23,7 @@ define open generic do-duim-object-children
      duim-object :: <duim-object>)
  => ();
 
-
+
 /// DUIM IDs
 
 define constant $duim-sheets-library-id
@@ -113,7 +113,7 @@ define constant $frame-status-bar-id
          name: "%status-bar",
          module: $duim-frames-internals-module-id);
 
-
+
 // DUIM classes
 
 define user-object-class <duim-port> (<duim-object>)
@@ -136,7 +136,7 @@ define user-object-class <duim-gadget> (<duim-sheet>)
   binding <gadget>, module: duim-gadgets, library: duim-gadgets;
 end user-object-class <duim-gadget>;
 
-
+
 /// Project dispatching methods
 
 define method duim-object-composite?
@@ -220,7 +220,7 @@ define method get-environment-object-primitive-name
   end
 end method get-environment-object-primitive-name;
 
-
+
 /// Some convenience functions built on these protocols
 
 define function duim-object-children
@@ -229,7 +229,7 @@ define function duim-object-children
   collect-environment-objects(do-duim-object-children, server, object)
 end function duim-object-children;
 
-
+
 /// Printing support
 
 define method environment-object-type-name

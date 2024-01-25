@@ -244,7 +244,7 @@ define method literal-hash (s :: <&singleton>, depth :: <integer>, state :: <has
   end;
 end;
 
-
+
 define method literal-mergable? (type :: <&union>) => (well?)
   *merge-types?*
 end method;

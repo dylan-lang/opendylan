@@ -22,7 +22,7 @@ define constant $ftp-protocol    = "ftp";
 define constant $file-protocol   = "file";
 define constant $mailto-protocol = "mailto";
 
-
+
 /// Web locators
 
 define sealed abstract class <web-locator> (<locator>)
@@ -59,7 +59,7 @@ define sealed method string-as-locator
   end
 end method string-as-locator;
 
-
+
 /// URLs
 
 define sealed abstract class <url> (<web-locator>, <physical-locator>)
@@ -123,7 +123,7 @@ define sealed method string-as-locator
   string-as-url(string)
 end method string-as-locator;
 
-
+
 /// Servers
 
 define sealed abstract class <server-url> (<server-locator>, <url>)
@@ -280,7 +280,7 @@ define method file-parser
   string-as-url(text, protocol: $file-protocol)
 end method file-parser;
 
-
+
 /// URL directories
 
 define sealed class <directory-url>
@@ -435,7 +435,7 @@ define sealed method locator-as-string
   end
 end method locator-as-string;
 
-
+
 /// File index locators
 
 // These might be better called <fragment-locator> to follow the terminology in
@@ -477,7 +477,7 @@ define sealed method \=
   & (locator-index(locator1) = locator-index(locator2))
 end method \=;
 
-
+
 /// CGI locators
 
 // These might be better called <query-locator> to follow the terminology in
@@ -511,7 +511,7 @@ define sealed method \=
   & locator-cgi-string(locator1) = locator-cgi-string(locator2)
 end method \=;
 
-
+
 /// Mail-to locators
 
 define sealed class <mail-to-locator> (<url>)
@@ -562,7 +562,7 @@ define sealed method \=
  => (equal? :: <boolean>)
   locator-address(locator1) = locator-address(locator2)
 end method \=;
-
+
 /// Utilities
 
 define sealed method parse-url

@@ -12,7 +12,7 @@ define variable *V* = 4;  /// Yeah, hack!
 
 define constant $dylan-namespace
   = make(<dylan-name-context>, library: "dylan", module: "dylan");
-define constant $internal-namespace 
+define constant $internal-namespace
   = make(<dylan-name-context>, library: "dylan", module: "internal");
 
 
@@ -43,7 +43,7 @@ define class <downloaded-string-expression> (<downloaded-object-expression>)
 
 end class;
 
-define class <downloaded-raw-string-expression> 
+define class <downloaded-raw-string-expression>
                 (<downloaded-string-expression>)
 end class;
 
@@ -168,7 +168,7 @@ define method get-block-for-object
   if (application.further-downloading-possible?)
     let object-size = object.downloaded-expression-size;
     let current-block = application.current-static-block;
-    if (current-block & 
+    if (current-block &
          (current-block.static-block-remaining-size >= object-size))
       current-block
     else
@@ -187,16 +187,16 @@ end method;
 
 define method begin-new-static-block
     (application :: <application>) => (maybe-block :: false-or(<static-block>))
-  
+
   if (application.further-downloading-possible?)
     debugger-message("Attempting to allocate some new interactive memory...");
-    let new-block = 
+    let new-block =
       allocate-single-static-block
         (application.debug-target-access-path,
          application.runtime-allocator-primitive.remote-symbol-address);
     if (new-block)
       if (application.current-static-block)
-        add!(application.allocated-static-blocks, 
+        add!(application.allocated-static-blocks,
              application.current-static-block);
       end if;
       application.current-static-block := new-block;
@@ -280,7 +280,7 @@ define method download-object-into-runtime
       if (application.runtime-byte-string-wrapper)
         let str = object.expression-string;
         let sz = integer-as-tagged-remote-value(size(str));
-        let wrapper = 
+        let wrapper =
           application.runtime-byte-string-wrapper.remote-symbol-address;
         let reference =
           download-remote-value-into
@@ -365,7 +365,7 @@ define method download-object-into-runtime
                        mangle-in-context
                          ("<simple-object-vector>",
                           $dylan-namespace,
-                          as-wrapper?: #t), 
+                          as-wrapper?: #t),
                        library: lib);
       end unless;
 
@@ -375,7 +375,7 @@ define method download-object-into-runtime
         let vector-size = size(object.expression-vector-elements);
         let vector-object = make(<vector>, size: vector-size + 2);
         let i = 2;
-        vector-object[0] := 
+        vector-object[0] :=
           application.runtime-sov-wrapper.remote-symbol-address;
         vector-object[1] :=
           integer-as-tagged-remote-value(vector-size);
@@ -387,7 +387,7 @@ define method download-object-into-runtime
            (application.debug-target-access-path, my-block, vector-object);
       else
         #f
-      end if;  
+      end if;
     else
       #f
     end if
@@ -431,7 +431,7 @@ define method download-object-into-runtime
         application.runtime-pair-wrapper :=
            find-symbol(application.debug-target-access-path,
                        mangle-in-context("<pair>", $dylan-namespace,
-                                         as-wrapper?: #t), 
+                                         as-wrapper?: #t),
                        library: lib);
       end unless;
       unless (application.runtime-empty-list-object)
@@ -448,13 +448,13 @@ define method download-object-into-runtime
       if (application.runtime-pair-wrapper &
           application.runtime-empty-list-object)
 
-        let tail-reference = 
+        let tail-reference =
           application.runtime-empty-list-object.remote-symbol-address;
         let object-reference = #f;
         let wrapper =
           application.runtime-pair-wrapper.remote-symbol-address;
         let i = size(object.expression-list-elements) - 1;
-        
+
         while ((i >= 0) & (tail-reference))
           let value = object.expression-list-elements[i].expression-value;
           let node = vector(wrapper, value, tail-reference);

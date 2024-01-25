@@ -19,8 +19,8 @@ define class <basic-block> (<object>)
   //// slots for dataflow analysis and general flow of control information
   slot bb-taags :: <list>, init-value: #();
 				// a list of tags attached to entry of this
-				// block 
-                                
+				// block
+
   slot bb-fall-thru, init-value: #f;
 				// the block which should follow this one in
 				// linearised code sequence if possible
@@ -43,7 +43,7 @@ define class <basic-block> (<object>)
 				// this one
 
   //// live register info
-  
+
   slot bb-defs, init-value: #f;
 	         		// registers this block defines before
 				// using
@@ -62,7 +62,7 @@ define class <basic-block> (<object>)
   //// other stuff
 
 
-  slot bb-copy-of, init-value: #f; 
+  slot bb-copy-of, init-value: #f;
                                 // a <basic-block>;
 
 end;
@@ -89,7 +89,7 @@ end;
 
 
 
-define constant $empty-basic-block = 
+define constant $empty-basic-block =
     make(<basic-block>, start: 0, end: 0);
 
 define constant <simple-basic-block-vector> =
@@ -109,8 +109,8 @@ define leaf packed-slots bb-properties (<basic-block>, <object>)
 				// for leaf case optimization
                                 // It is also used as a flag from the
 				// compiler to the backend for blocks
-				// that are before the argument moving 
-  
+				// that are before the argument moving
+
   field   slot bb-stack-state = 0, field-size: 3;
 		         	// the state of the stack when this block is
 				// executed - can be one of before, with,

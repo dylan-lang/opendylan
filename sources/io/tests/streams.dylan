@@ -14,7 +14,7 @@ define sideways method make-test-instance(cls == <buffer>) => (object)
   make(<buffer>)
 end;
 
-
+
 /// Stream convenience function tests
 
 register-stream-test(<stream>, do-test-read-character, direction: #"input");
@@ -91,7 +91,7 @@ define method do-test-new-line
 end method;
 
 
-
+
 /// Positionable stream convenience function tests
 
 register-stream-test(<positionable-stream>, do-test-current-position);
@@ -120,7 +120,7 @@ define method do-test-final-position
 end method;
 
 
-
+
 /// Buffered stream tests
 
 register-stream-test(<buffered-stream>, do-test-get-input-buffer, direction: #"input");
@@ -178,7 +178,7 @@ define method do-test-force-output-buffers
   //---*** Fill this in...
 end method;
 
-
+
 /// Sequence stream tests
 
 register-stream-test(<sequence-stream>, do-test-type-for-sequence-stream);
@@ -294,7 +294,7 @@ register-stream-class-info("<unicode-string-stream>", <unicode-string-stream>,
                            element-type: <unicode-character>);
 */
 
-
+
 /// Wrapper stream testing
 
 register-stream-test(<wrapper-stream>, do-test-inner-stream);
@@ -362,7 +362,7 @@ define sideways method make-stream-tests-of-size
   tests
 end method make-stream-tests-of-size;
 
-
+
 /// Test wrapper stream subclass
 // This subclass always converts characters read from the inner stream
 // to upper case.
@@ -443,7 +443,7 @@ define method write-element
   write-element(stream.inner-stream, as-uppercase(elt))
 end method write-element;
 
-
+
 /// Miscellaneous stream testing
 
 // Note:  Refs to <unicode-character> and <unicode-string-stream> have been
@@ -570,7 +570,7 @@ define test test-with-input-from-string ()
               end);
 end;
 
-
+
 /// Indenting stream tests
 register-stream-class-info("<indenting-stream>", <indenting-stream>,
                            input-stream?: #f,
@@ -654,7 +654,7 @@ define test test-with-indentation ()
               end);
 end;
 
-
+
 /// Miscellaneous stream tests
 
 // This is a hack to replace the uses of stream-contents in the existing

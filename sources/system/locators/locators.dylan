@@ -34,7 +34,7 @@ define open generic locator-base
 
 define open generic locator-extension
     (locator :: <locator>) => (extension :: false-or(<string>));
-
+
 /// Locator classes
 
 define open abstract class <directory-locator> (<physical-locator>)
@@ -87,7 +87,7 @@ define sealed method make
        name:      name)
 end method make;
 
-
+
 /// Locator coercion
 
 define open generic locator-as-string
@@ -110,7 +110,7 @@ define sealed sideways method as
   string-as-locator(class, string)
 end method as;
 
-
+
 /// Locator conditions
 
 define class <locator-error> (<format-string-condition>, <error>)
@@ -123,7 +123,7 @@ define function locator-error
              format-arguments: format-arguments))
 end function locator-error;
 
-
+
 /// Useful locator protocols
 
 define open generic locator-test
@@ -166,7 +166,7 @@ define method locator-path
   #()
 end method locator-path;
 
-
+
 /// Simplify locator
 
 // Simplify (or normalize) locator by collapsing redundant separators and
@@ -225,7 +225,7 @@ define method resolve-locator
 end method;
 
 
-
+
 /// Subdirectory locator
 
 define open generic subdirectory-locator
@@ -243,7 +243,7 @@ define method subdirectory-locator
        relative?: locator.locator-relative?)
 end method subdirectory-locator;
 
-
+
 /// File locator
 
 // Make a <file-locator> that is a child of `directory`. If more than one name
@@ -268,7 +268,7 @@ define method file-locator
 end method;
 
 
-
+
 /// Relative locator
 
 define open generic relative-locator
@@ -329,7 +329,7 @@ define method relative-locator
   end
 end method relative-locator;
 
-
+
 /// Merge locators
 
 // Construct a new locator from `locator` by copying missing or incomplete
@@ -340,7 +340,7 @@ define open generic merge-locators
     (locator :: <physical-locator>, from-locator :: <physical-locator>)
  => (merged-locator :: <physical-locator>);
 
-
+
 /// Merge locators
 
 define method merge-locators
@@ -402,7 +402,7 @@ define method merge-locators
   end
 end method;
 
-
+
 /// Locator protocols
 
 define sideways method supports-open-locator?

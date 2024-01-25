@@ -113,9 +113,9 @@ end method;
 define method active-dylan-lexical-variables
     (application :: <debug-target>, dm-frame :: <call-frame>,
      #key arguments-only? = #f)
-      => (names :: <sequence>, 
+      => (names :: <sequence>,
           types :: <sequence>,
-          models :: <sequence>, 
+          models :: <sequence>,
           vals :: <sequence>,
           locations :: <sequence>)
   let names = #[];
@@ -134,7 +134,7 @@ define method active-dylan-lexical-variables
            let val = as-remote-value(0);
            let location = #f;
            block ()
-             let r-inactive = 
+             let r-inactive =
                enumeration-code-to-register(path, base-register);
              let r-active =
                active-register(path, thread, r-inactive);
@@ -155,8 +155,8 @@ define method active-dylan-lexical-variables
           let (arg-vector, lex-vector) =
             seperate-arguments-and-lexicals(application, dm-frame);
           let count =
-            if (arguments-only?) 
-              size(arg-vector) 
+            if (arguments-only?)
+              size(arg-vector)
 	    else
               size(arg-vector) + size(lex-vector)
 	    end if;
@@ -206,7 +206,7 @@ define method active-dylan-lexical-variables
         locs := make(<vector>, size: count);
         for (local-variable in local-variables-from-compiler)
           let debug-name = local-variable-debug-name(context, local-variable);
-          let real-name = 
+          let real-name =
             local-variable-debug-name-dylan-name(context, debug-name);
           let (base-register, indirections) =
             local-variable-location(context, local-variable);
@@ -240,8 +240,8 @@ define method number-of-active-dylan-variables
           let (arg-vector, lex-vector) =
             seperate-arguments-and-lexicals(application, dm-frame);
           count :=
-            if (arguments-only?) 
-              size(arg-vector) 
+            if (arguments-only?)
+              size(arg-vector)
 	    else
               size(arg-vector) + size(lex-vector)
 	    end if;

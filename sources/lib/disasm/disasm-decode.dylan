@@ -76,11 +76,11 @@ end method integer-to-segment-override;
 // define method immediate-size(imm :: <byte-immediate-value>) => (int :: <integer>)
 //   1
 // end method immediate-size;
-// 
+//
 // define method immediate-size(imm :: <short-immediate-value>) => (int :: <integer>)
 //   2
 // end method immediate-size;
-// 
+//
 // define method immediate-size(imm :: <word-immediate-value>) => (int :: <integer>)
 //   4
 // end method immediate-size;
@@ -962,7 +962,7 @@ define method decode-opcode-without-prefixes(code-vector :: <byte-vector>, index
 		get-word-immediate(code-vector, new-index, end-index, external-table)
 	      end;
 	    values(make-proper-opcode("mov", vector(reg-arg, imm-to-imm-arg(imm))), new-new-index);
-	    
+
 	  end;
 	#xc0, #xc1 =>
 	  begin
@@ -1372,7 +1372,7 @@ define method decode-opcode-without-prefixes(code-vector :: <byte-vector>, index
 	    let (offset, new-new-index) = get-byte-offset(code-vector, new-index, end-index);
 	    values(make-proper-opcode("jcxz", vector(offset-to-arg(offset))), new-new-index)
 	  end;
-	#xe4, #xe5, #xe6, #xe7 => 
+	#xe4, #xe5, #xe6, #xe7 =>
 	  begin
 	    let (imm-byte, new-new-index) = get-byte-immediate(code-vector, new-index, end-index);
 	    let imm-byte-arg = imm-to-imm-arg(imm-byte);

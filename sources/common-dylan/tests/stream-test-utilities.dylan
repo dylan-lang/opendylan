@@ -190,7 +190,7 @@ define method test-stream
   end
 end method test-stream;
 
-
+
 /// Test stream classes
 
 define abstract class <test-stream> (<positionable-stream>)
@@ -445,7 +445,7 @@ define method make-stream-tests-of-size
   tests
 end method make-stream-tests-of-size;
 
-
+
 /// Core stream tests
 
 register-stream-test(<stream>, test-close);
@@ -473,7 +473,7 @@ define method test-stream-element-type
                       info.info-class-info.info-element-type))
 end method test-stream-element-type;
 
-
+
 /// Stream reading tests
 
 register-stream-test(<stream>, test-stream-size, direction: #"input");
@@ -685,7 +685,7 @@ define function check-at-end-of-stream
                   read-element(stream))
 end function check-at-end-of-stream;
 
-
+
 /// Stream writing tests
 
 register-stream-test(<stream>, test-write-element, direction: #"output");
@@ -725,7 +725,7 @@ define method test-discard-output
   //---*** Fill this in...
 end method test-discard-output;
 
-
+
 /// Positionable stream tests
 
 register-stream-test(<positionable-stream>, test-stream-position);
@@ -747,7 +747,7 @@ define method test-adjust-stream-position
   //---*** Fill this in...
 end method test-adjust-stream-position;
 
-
+
 /// Stream conditions
 
 define sideways method test-condition-class

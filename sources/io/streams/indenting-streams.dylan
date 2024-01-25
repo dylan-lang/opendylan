@@ -41,7 +41,7 @@ author: William Lott, Peter S. Housel
 //   inner-stream(stream :: <indenting-stream>)
 //      Returns the inner-stream.
 
-
+
 
 define sealed class <indenting-stream> (<wrapper-stream>)
   slot is-space-column :: false-or(<integer>) = 0;

@@ -8,8 +8,8 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 define method complex-instance (#key real = 3, imag = 2)

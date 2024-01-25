@@ -43,7 +43,7 @@ end pentium-template;
 with-ops-in pentium-instructions (push-mem)
   c-preserved-destroys-fn
     :=  pentium-method (uu)
-          destroys-tmp1-if(ic/spill-ref(uu-uze(1)) 
+          destroys-tmp1-if(ic/spill-ref(uu-uze(1))
                            | ic/spill-ref(uu-uze(2)))
         end pentium-method;
 end with-ops-in;
@@ -85,7 +85,7 @@ define pentium-template push
     emit(be, #x50 + d.real-register-number);
 
   // or a spill ...
-  
+
   pattern (be, d :: <sf-ic/spill-ref> by colour)
     emit(be, #xff);
     emit-f-c-spill-operand(be, d, #b110000);
@@ -125,7 +125,7 @@ define pentium-template t-push
     end if;
 end pentium-template;
 
-   
+
 
 define pentium-template t-pop
   pattern (be, d, stack)

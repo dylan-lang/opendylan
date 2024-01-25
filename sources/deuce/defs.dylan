@@ -20,7 +20,7 @@ define inline function false
   #f
 end function false;
 
-
+
 /// Simpler table accessors
 
 define function gethash
@@ -42,7 +42,7 @@ define inline function remhash (table :: <table>, key) => ()
   remove-key!(table, key)
 end function remhash;
 
-
+
 /// Sequence hacking
 
 define inline function range-check
@@ -318,7 +318,7 @@ define method remove-at!
   sv
 end method remove-at!;
 
-
+
 /// File hacking
 
 define method get-file-property
@@ -335,7 +335,7 @@ define method get-file-property
   end
 end method get-file-property;
 
-
+
 /// Ticks
 
 // With 29 bits of positive integer, it will take 125 days to wrap this

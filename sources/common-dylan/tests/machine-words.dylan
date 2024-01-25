@@ -15,7 +15,7 @@ define test test-<machine-word> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Variables
 
 define test test-$machine-word-size ()
@@ -42,7 +42,7 @@ define test test-as-unsigned ()
   //---** What can we do here?
 end test;
 
-
+
 /// Basic and signed single word operations
 
 define test test-%logior ()
@@ -160,7 +160,7 @@ define test test-%shift-right ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Overflow signalling operations
 
 define test test-so%+ ()
@@ -187,7 +187,7 @@ define test test-so%shift-left ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Signed double word operations
 
 define test test-d%floor/ ()
@@ -210,7 +210,7 @@ define test test-d%divide ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Unsigned single word operations
 
 define test test-u%+ ()
@@ -249,7 +249,7 @@ define test test-u%< ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Unsigned double word operations
 
 define test test-ud%divide ()

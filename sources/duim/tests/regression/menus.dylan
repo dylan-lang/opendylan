@@ -26,7 +26,7 @@ install-test
    "the menu items invokes the callback such that a message appears "
    "in the status bar.");
 
-
+
 /// Bug 3879: DUIM: Fails to display some menu separator items
 
 define command-table *foo* (*global-command-table*)
@@ -62,7 +62,7 @@ install-test
    "DUIM: Fails to display some menu separator items",
    "There should be only one separator between \"Test\" and \"Foo\".");
 
-
+
 /// Bug 3884: DUIM: Mishandling '&' and 'mnemonic:'
 
 define frame <bug-3884-frame> (<simple-frame>)
@@ -84,7 +84,7 @@ install-test
    "The menu item in this test window should have the letter 'i' as "
    "its mnemonic.");
 
-
+
 /// Bug 4334: ENV: popup menu behavior is strange [and non-standard]
 
 define frame <bug-4334-frame> (<simple-frame>)

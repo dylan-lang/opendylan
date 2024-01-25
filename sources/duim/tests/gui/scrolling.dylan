@@ -84,7 +84,7 @@ define method do-compose-space
        height: height, min-height: 100, max-height: max-height)
 end method do-compose-space;
 
-
+
 /// grid display pane
 
 define sealed class <checkboard-pane> (<drawing-pane>)
@@ -191,7 +191,7 @@ define method test-gadget-scrolling
           title: "Gadget Scrolling Test")
 end method test-gadget-scrolling;
 
-
+
 /// Advanced scrolling
 
 define method make-spreadsheet
@@ -220,7 +220,7 @@ define method test-advanced-scrolling
           title: "Advanced Scrolling Test")
 end method test-advanced-scrolling;
 
-
+
 /// Hand-rolled scrolling
 
 define sealed class <hand-rolled-scrolling-pane>
@@ -312,7 +312,7 @@ define method test-hand-rolled-scrolling
   start-frame(test-frame)
 end method test-hand-rolled-scrolling;
 
-
+
 /// Scrolling frame
 
 define variable $scrolling-test-frame-tests

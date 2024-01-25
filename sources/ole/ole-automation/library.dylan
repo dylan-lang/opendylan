@@ -1,5 +1,5 @@
-module:    Dylan-user	
-Synopsis:  Dylan library to act as an interface to OLE Automation.  
+module:    Dylan-user
+Synopsis:  Dylan library to act as an interface to OLE Automation.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -52,7 +52,7 @@ define module OLE-Automation
 
   // from "typeinfo.dylan":
   export <function-description>, <variable-description>,
-	 <constant-description>, <Disp-Type-Info>, 
+	 <constant-description>, <Disp-Type-Info>,
 	 make-funcdesc, Disp-Invoke, Disp-GetIDsOfNames;
   export LHashValOfName;
   export <Dylan-Type-Info>;
@@ -94,7 +94,7 @@ define module OLE-Automation
 
   // from "client-macros.dylan":
   export <dispatch-client>, dispatch-client-definer, dispatch-client-uuid;
-    
+
   // from "vtable-macros.dylan" and "dual.dylan":
   export vtable-type-information, dispatch-type-information;
   export <vtable-type-info>, <dual-type-info>, <vtable-member-description>;

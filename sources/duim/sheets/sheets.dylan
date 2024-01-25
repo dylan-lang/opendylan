@@ -253,7 +253,7 @@ define generic sheet-flags
 define generic sheet-flags-setter
     (flags :: <integer>, sheet :: <sheet>) => (flags :: <integer>);
 
-
+
 /// Basic sheet implementation class
 
 define open abstract primary class <basic-sheet> (<sheet>)
@@ -783,7 +783,7 @@ define method sheet-help-source-setter
   gethash(sheet.%help-sources, sheet) := locator
 end method sheet-help-source-setter;
 
-
+
 /// Cursors
 
 define constant $pointer-cursors :: <simple-object-vector>
@@ -829,7 +829,7 @@ define method sheet-cursor-setter
   cursor
 end method sheet-cursor-setter;
 
-
+
 /// Carets
 
 define open abstract class <sheet-with-caret-mixin> (<abstract-sheet>)
@@ -849,7 +849,7 @@ define method note-sheet-attached (sheet :: <sheet-with-caret-mixin>) => ()
   end
 end method note-sheet-attached;
 
-
+
 /// Genealogy
 
 define method sheet-child
@@ -1079,7 +1079,7 @@ define method do-replace-child
   substitute!(sheet-children(sheet), old-child, new-child)
 end method do-replace-child;
 
-
+
 /// Traversing sheet regions
 
 // When a sequence is used to store children, DUIM requires that the
@@ -1197,7 +1197,7 @@ define sealed method do-children-overlapping-region
   end
 end method do-children-overlapping-region;
 
-
+
 /// Sheet transforms
 
 // Returns the transform that maps SHEET's coordinate system all
@@ -1241,7 +1241,7 @@ define method sheet-ancestor?
   end
 end method sheet-ancestor?;
 
-
+
 /// Cached geometry
 
 define method note-region-changed (sheet :: <sheet>) => ()
@@ -1302,7 +1302,7 @@ define method invalidate-cached-transform (sheet :: <basic-sheet>) => ()
   sheet-cached-device-transform(sheet) := #f
 end method invalidate-cached-transform;
 
-
+
 /// Functions that work on all sheets
 
 define method do-sheet-children
@@ -1354,7 +1354,7 @@ define method sheet-mapped-children (sheet :: <sheet>) => (children :: <sequence
   choose(sheet-mapped?, sheet-children(sheet))
 end method sheet-mapped-children;
 
-
+
 /// Raising and lowering
 
 define method raise-sheet

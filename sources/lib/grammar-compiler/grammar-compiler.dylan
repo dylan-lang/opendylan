@@ -35,7 +35,7 @@ define abstract class <sealed-constructor> (<object>) end;
 define sealed domain make(subclass(<sealed-constructor>));
 define sealed domain initialize(<sealed-constructor>);
 
-
+
 define class <rule> (<sealed-constructor>)
   constant slot rule-index :: <index>, required-init-keyword: index:;
   constant slot rule-lhs :: <non-terminal>, required-init-keyword: lhs:;
@@ -89,7 +89,7 @@ end;
 
 define class <item-set-table> (<table>, <sealed-constructor>) end;
 
-define sealed method table-protocol 
+define sealed method table-protocol
     (table :: <item-set-table>) => (test :: <function>, hash :: <function>)
   values(\=, item-set-hash)
 end method table-protocol;
@@ -123,7 +123,7 @@ define inline method item-terminal-left? (item :: <item>)
   ~empty?(item) & instance?(item.item-first-term, <terminal>);
 end;
 
-
+
 define /* EXPORTED */ class <grammar> (<sealed-constructor>)
   constant slot grammar-rules :: <simple-object-vector>,
     required-init-keyword: rules:;
@@ -230,7 +230,7 @@ define inline function item-rule-index (item :: <item>)
   item.item-rule.rule-index
 end;
 
-
+
 define /* EXPORTED */ function compile-grammar-rules
     (rules :: <sequence>, #key error-rules :: <sequence> = #[])
  => (grammar :: <grammar>)
@@ -610,7 +610,7 @@ define function determine-lookaheads (gv :: <gvars>)
 end;
 
 ///
-/// Propagate the lookaheads 
+/// Propagate the lookaheads
 ///
 
 define function propagate-the-lookaheads (gv :: <gvars>)
@@ -623,7 +623,7 @@ define function propagate-the-lookaheads (gv :: <gvars>)
       loop()
     end;
   end;
-end;  
+end;
 
 define function define-actions (gv :: <gvars>)
   let nstates = gv.%grammar-number-states;

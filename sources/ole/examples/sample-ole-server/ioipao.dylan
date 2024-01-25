@@ -47,7 +47,7 @@ define method IOleInPlaceActiveObject/OnDocWindowActivate
   end if;
 
   // No frame level tools to remove...
-  
+
   $S-OK
 end method IOleInPlaceActiveObject/OnDocWindowActivate;
 
@@ -88,7 +88,7 @@ define method IOleInPlaceActiveObject/OnFrameWindowActivate(this :: <COleInPlace
 
   // set the focus to the object window if we are activating.
   /*    if (fActivate)
-	  SetFocus(m_lpObj.m_lpDoc.GethDocWnd()); */ 
+	  SetFocus(m_lpObj.m_lpDoc.GethDocWnd()); */
 
   $S-OK
 end method IOleInPlaceActiveObject/OnFrameWindowActivate;

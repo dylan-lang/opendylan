@@ -71,7 +71,7 @@ define inline function rgb->luminosity
   0.299 * r + 0.587 * g + 0.114 * b
 end function rgb->luminosity;
 
-
+
 /// RGB Colors
 
 define sealed class <rgb-color> (<color>)
@@ -215,7 +215,7 @@ define sealed method color-luminosity
   rgb->luminosity(color.%red, color.%green, color.%blue)
 end method color-luminosity;
 
-
+
 /// Foreground and background (indirect) inks
 
 define sealed class <foreground> (<ink>)
@@ -240,7 +240,7 @@ define constant $background :: <background> = make(<background>);
 
 define constant $default-background :: <rgb-color> = $white;
 
-
+
 /// Contrasting colors
 
 define sealed class <contrasting-color> (<color>)

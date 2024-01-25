@@ -78,7 +78,7 @@ define method cl-position-if
   end
 end method cl-position-if;
 
-
+
 // Returns the whole value in which ITEM was found
 define generic cl-find
     (sequence :: <sequence>, item,
@@ -146,7 +146,7 @@ define method cl-find-if
   end
 end method cl-find-if;
 
-
+
 // Like FIND, but the sequence is a CL-style alist
 define generic cl-assoc
     (sequence :: <sequence>, item,
@@ -220,7 +220,7 @@ define method cl-assoc-if
   end
 end method cl-assoc-if;
 
-
+
 // Counts each occurrence of ITEM in the sequence
 define generic cl-count
     (sequence :: <sequence>, item,
@@ -286,7 +286,7 @@ define method cl-count-if
   end
 end method cl-count-if;
 
-
+
 // Like CL REMOVE
 define generic cl-remove
     (sequence :: <sequence>, item,
@@ -436,7 +436,7 @@ define method cl-remove-if!
   end
 end method cl-remove-if!;
 
-
+
 define generic cl-substitute
     (sequence :: <sequence>, newitem, olditem,
      #key test, key, start, end: finish, from-end?, count)
@@ -568,7 +568,7 @@ define method cl-substitute-if!
   end
 end method cl-substitute-if!;
 
-
+
 // Like CL REMOVE-DUPLICATES
 define method cl-remove-duplicates
     (sequence :: <sequence>, #rest keys,
@@ -640,7 +640,7 @@ define method cl-remove-duplicates!
   sequence
 end method cl-remove-duplicates!;
 
-
+
 define generic cl-search
     (sequence1 :: <sequence>, sequence2 :: <sequence>,
      #key test, key, start1, start2, end1, end2, from-end?)
@@ -880,7 +880,7 @@ define method cl-search
     end;
     let telt1 = sequence1[start1];
     let tkey1 = if (key) key(telt1) else telt1 end;
-    for (i from start2, 
+    for (i from start2,
 	 until: (end2 & i = end2) | empty?(sequence2))
       let telt2 = head(sequence2);
       let rest2 = tail(sequence2);
@@ -1072,7 +1072,7 @@ cl-search(#(1), #(1), end1: 0); => 0
 cl-search(#(1), #(1), end1: 0, from-end?: #t); => 1
 |*/
 
-
+
 define generic cl-mismatch
     (sequence1 :: <sequence>, sequence2 :: <sequence>,
      #key test, key, start1, start2, end1, end2, from-end?)
@@ -1420,7 +1420,7 @@ define method cl-mismatch
   end
 end method cl-mismatch;
 
-
+
 define method cl-merge
     (result-type, sequence1 :: <sequence>, sequence2 :: <sequence>, predicate,
      #key key)

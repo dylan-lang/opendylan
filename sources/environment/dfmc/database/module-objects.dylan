@@ -377,7 +377,7 @@ define sealed method find-definition-in-module
   end
 end method find-definition-in-module;
 
-
+
 /// ID handling
 
 define sealed method find-compiler-database-proxy

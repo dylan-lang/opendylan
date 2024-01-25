@@ -15,26 +15,26 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Simple Apply XEPs
 
-/// This is the most primitive form of apply via XEPs. 
+/// This is the most primitive form of apply via XEPs.
 /// On entry, the calling convention is as for a normal XEP call,
 /// (with the destination function in the function register).
 //
-/// The compiler should call the appropriate apply-xep rather than the 
-/// xep associated with the function object. The apply-xep will spread 
+/// The compiler should call the appropriate apply-xep rather than the
+/// xep associated with the function object. The apply-xep will spread
 /// out the rest arguments before tail-calling the function xep.
 /// Only the dynamic case will look at the arg count. By using
 /// apply-xep-n, the compiler is making a guarantee that it is passing
-/// n normal arguments before the vector argument. In the dynamic case, 
+/// n normal arguments before the vector argument. In the dynamic case,
 /// the arg-count should include the rest parameter itself - and hence
 /// there should be a minimum value of 1.
 ///
 /// In this apply-xep context, the "required" arguments are taken to be
-/// all the arguments apart from the last. This is slightly loose 
-/// terminology - and it implies nothing about the expectations of the 
+/// all the arguments apart from the last. This is slightly loose
+/// terminology - and it implies nothing about the expectations of the
 /// destination function - which will do its own checks in the XEP.
-/// 
+///
 /// WARNING
-/// Don't try and tail call one of these if the vector was stack 
+/// Don't try and tail call one of these if the vector was stack
 /// allocated in your frame! There is no support here to preserve
 /// the count convention. In this sense, apply-xep is just like a normal
 /// xep.
@@ -66,16 +66,16 @@ define method op--apply-xep-discriminating-special
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
     let elements-in-regs = max-num-arg-regs - required;
     let argvec = be.registers.reg-machine-arguments[required];
-  
+
     // First get hold of the vector arg
     ins--move(be, vec, argvec);
     op--vector-size(be, size, vec);
-  
+
     // Now check its size, before deciding what to do.
     // If the size is <= elements-in-regs, the stack stays the same.
     // Otherwise we extend.
     ins--ble(be, vector-in-registers, size, elements-in-regs);
-    
+
     // Extend the stack by size-in-bytes minus 4 * elements-in-regs
 
     // decrement size by elements in regs
@@ -107,7 +107,7 @@ define method op--apply-xep-discriminating-special
       ins--ld(be, reg, vec, 8 + 4 * (i - required));
     end;
     ins--jmp-indirect(be, function, be.function-xep-offset, max-num-arg-regs);
-  
+
     // Handle the case where no arguments go on the stack.
 
     ins--tag(be, vector-in-registers);
@@ -131,14 +131,14 @@ define method op--apply-xep-discriminating-special
 end method;
 
 
-define open generic op--apply-xep-discriminating 
+define open generic op--apply-xep-discriminating
     (be :: <harp-back-end>, required);
 
-define method op--apply-xep-discriminating 
+define method op--apply-xep-discriminating
     (be :: <harp-back-end>, required)
 
   op--check-apply-special-case(be, required);
-  
+
   with-harp (be)
     stack stack;
     function function;
@@ -146,13 +146,13 @@ define method op--apply-xep-discriminating
     tmp 1, tmp, vec;
     nreg size, dummy;
     tag zero-vector, one-vector;
-  
+
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
     let top-size = op--shuffle-size-for-apply(be, required);
     let req-index = op--multiply-by-4(be, top-size);
 
     // First get hold of the vector arg
-    ins--ld(be, vec, stack, req-index);   
+    ins--ld(be, vec, stack, req-index);
     op--vector-size(be, size, vec);
 
     // Now check its size, before deciding what to do.
@@ -171,7 +171,7 @@ define method op--apply-xep-discriminating
     // The arg count is the same as the supplied number
     op--calculate-supplied-number-for-apply(be, argc, required);
     ins--jmp-indirect(be, function, be.function-xep-offset, max-num-arg-regs);
-  
+
     // Handle the shrink-stack case.
     // We actually do this by putting the return address where the
     // vector was, calling with one less arg, followed by a return.
@@ -203,7 +203,7 @@ define method op--extend-stack-for-apply
     function function;
     arg-count argc;
     nreg nsize, first-opt, hole-start;
-  
+
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
     // Handle the extend-stack case
@@ -250,16 +250,16 @@ end method;
 
 
 define method op--calculate-required-number-for-apply
-    (be :: <harp-back-end>, 
-     dest :: <register>, 
+    (be :: <harp-back-end>,
+     dest :: <register>,
      required :: <integer>)
   ins--move(be, dest, required);
 end method;
 
 
 define method op--calculate-required-number-for-apply
-    (be :: <harp-back-end>, 
-     dest :: <register>, 
+    (be :: <harp-back-end>,
+     dest :: <register>,
      required == #"dynamic")
   // In the dynamic case, the arg count is one less than the
   // number of supplied parameters
@@ -273,16 +273,16 @@ end method;
 
 
 define method op--calculate-supplied-number-for-apply
-    (be :: <harp-back-end>, 
-     dest :: <register>, 
+    (be :: <harp-back-end>,
+     dest :: <register>,
      required :: <integer>)
   ins--move(be, dest, required + 1);
 end method;
 
 
 define method op--calculate-supplied-number-for-apply
-    (be :: <harp-back-end>, 
-     dest :: <register>, 
+    (be :: <harp-back-end>,
+     dest :: <register>,
      required == #"dynamic")
   // In the dynamic case, the arg count is one less than the
   // number of supplied parameters
@@ -313,7 +313,7 @@ define method op--check-apply-special-case
 	       i + 1);
       ins--tag(be, continue);
     end;
-      
+
 
   end with-harp;
 end method;
@@ -334,7 +334,7 @@ end method;
 
 
 define method op--shuffle-size-for-apply
-    (be :: <harp-back-end>, requireds == #"dynamic") 
+    (be :: <harp-back-end>, requireds == #"dynamic")
     => (r :: <register>);
   with-harp (be)
     arg-count argc;

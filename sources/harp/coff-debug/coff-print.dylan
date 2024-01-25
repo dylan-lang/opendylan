@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sideways method print-object
    (object :: <coff-string>, stream :: <stream>) => ()
-  let type = 
+  let type =
     select (object by instance?)
       <coff-long-string>  => "long-string";
       <coff-short-string> => "short-string";
@@ -24,55 +24,55 @@ define sideways method print-object
 end method;
 
 define sideways method print-object
-   (object :: <coff-auxiliary-symbol>, 
+   (object :: <coff-auxiliary-symbol>,
     stream :: <stream>) => ()
   format(stream, "{coff-aux-symbol UNKOWN TYPE}");
 end method;
 
 
 define sideways method print-object
-   (object :: <coff-plain-auxiliary-symbol>, 
+   (object :: <coff-plain-auxiliary-symbol>,
     stream :: <stream>) => ()
   format(stream, "{coff-plain-auxiliary-symbol UNKOWN TYPE}");
 end method;
 
 
 define sideways method print-object
-   (object :: <coff-empty-auxiliary-symbol>, 
+   (object :: <coff-empty-auxiliary-symbol>,
     stream :: <stream>) => ()
   format(stream, "{coff-empty-auxiliary-symbol}");
 end method;
 
 
 define sideways method print-object
-   (object :: <coff-string-auxiliary-symbol>, 
+   (object :: <coff-string-auxiliary-symbol>,
     stream :: <stream>) => ()
   format(stream, "{coff-string-aux-symbol %=}", object.auxiliary-string);
 end method;
 
 
 define sideways method print-object
-   (object :: <coff-function-lines-auxiliary-symbol>, 
+   (object :: <coff-function-lines-auxiliary-symbol>,
     stream :: <stream>) => ()
-  format(stream, "{coff-function-lines-aux-symbol line %d}", 
+  format(stream, "{coff-function-lines-aux-symbol line %d}",
          object.auxiliary-line-number);
 end method;
 
 
 define sideways method print-object
-   (object :: <coff-section-auxiliary-symbol>, 
+   (object :: <coff-section-auxiliary-symbol>,
     stream :: <stream>) => ()
-  format(stream, "{coff-section-aux-symbol %=}", 
+  format(stream, "{coff-section-aux-symbol %=}",
          object.auxiliary-section.section-name.string-data);
 end method;
 
 
 define sideways method print-object
-   (object :: <coff-function-definition-auxiliary-symbol>, 
+   (object :: <coff-function-definition-auxiliary-symbol>,
     stream :: <stream>) => ()
-  format(stream, 
-         "{coff-function-definition-aux-symbol tag %d linenumbers %d}", 
-         object.auxiliary-tag.index, 
+  format(stream,
+         "{coff-function-definition-aux-symbol tag %d linenumbers %d}",
+         object.auxiliary-tag.index,
          if (object.auxiliary-line-numbers)
            object.auxiliary-line-numbers.line-file-offset;
          else 0;
@@ -105,19 +105,19 @@ define sideways method print-object
 end method;
 
 
-define method relocation-type-and-contents 
+define method relocation-type-and-contents
     (object :: <coff-absolute-relocation>)
      => (type :: <byte-string>, contents :: <byte-string>)
   values("coff-reloc", object.relocation-symbol.symbol-name.string-data);
 end method;
 
-define method relocation-type-and-contents 
+define method relocation-type-and-contents
     (object :: <coff-relative-relocation>)
      => (type :: <byte-string>, contents :: <byte-string>)
   values("coff-relative-reloc", object.relocation-symbol.symbol-name.string-data);
 end method;
 
-define method relocation-type-and-contents 
+define method relocation-type-and-contents
     (object :: <coff-interactor-relocation>)
      => (type :: <byte-string>, contents)
   values("coff-interactor-reloc", object.interactor-handle);
@@ -125,7 +125,7 @@ end method;
 
 
 define sideways method print-object
-   (object :: <coff-line-number-symbol>, 
+   (object :: <coff-line-number-symbol>,
     stream :: <stream>) => ()
   format(stream, "{coff-line-number-symbol %=}",
          object.line-number-symbol.symbol-name.string-data);
@@ -133,17 +133,17 @@ end method;
 
 
 define sideways method print-object
-   (object :: <coff-line-number-relative>, 
+   (object :: <coff-line-number-relative>,
     stream :: <stream>) => ()
   format(stream, "{coff-line-number %d @ #X%x}",
          object.line-number, object.line-number-rva);
 end method;
 
 
-define method print-coff-file 
+define method print-coff-file
      (coff-file :: <coff-file>,
-      #key 
-       stream = *standard-output*, 
+      #key
+       stream = *standard-output*,
        verbose?        = #f,
        relocs?         = verbose?,
        lines?          = verbose?,
@@ -152,7 +152,7 @@ define method print-coff-file
        exports?        = verbose?,
        debug?          = verbose?,
        fixups-offsets? = verbose?,
-       fixups?         = verbose?) 
+       fixups?         = verbose?)
       => ()
   format(stream, "\n++++ COFF file ++++\n\n");
   format(stream, "machine:            #X%x\n", coff-file.machine);
@@ -166,14 +166,14 @@ define method print-coff-file
   if (strings?) print-coff-strings(stream, coff-file) end;
   if (exports?) print-exports(stream, coff-file) end;
   if (fixups? | fixups-offsets?)
-    print-fixups(stream, coff-file, fixups-offsets?) 
+    print-fixups(stream, coff-file, fixups-offsets?)
   end;
   if (debug?)   print-debug-info(stream, coff-file) end;
   format(stream, "\n++++ end of COFF file ++++\n\n");
 end method;
 
 
-define method print-coff-sections 
+define method print-coff-sections
      (stream :: <stream>, coff-file :: <coff-file>, #key relocs?, lines?) => ()
   for (section in coff-file.sections.ordered-data)
     let prefix = section.prefix-type;
@@ -192,13 +192,13 @@ define method print-coff-sections
 end method;
 
 
-define method prefix-type 
+define method prefix-type
     (section :: <coff-section>) => (name :: <byte-string>)
   "";
 end method;
 
 
-define method prefix-type 
+define method prefix-type
     (section :: <coff-bss-section>) => (name :: <byte-string>)
   "BSS ";
 end method;
@@ -212,7 +212,7 @@ define method print-section-relocations
   else
     format(stream, "\n");
     for (reloc in section.relocations)
-      let the-type = 
+      let the-type =
         select (reloc by instance?)
           <coff-relative-relocation> => "Relative";
           <coff-absolute-relocation> => "Absolute";
@@ -241,14 +241,14 @@ define method print-section-line-numbers
 end method;
 
 
-define method print-one-line-number 
+define method print-one-line-number
     (stream :: <stream>, line :: <coff-line-number-symbol>) => ()
   format(stream, "       %=\n",
          line.line-number-symbol.symbol-name.string-data);
 end method;
 
 
-define method print-one-line-number 
+define method print-one-line-number
     (stream :: <stream>, line :: <coff-line-number-relative>) => ()
   format(stream, "               Line %s @ %s\n",
          pad-out(line.line-number,  4),
@@ -272,7 +272,7 @@ define method print-one-symbol
          pad-out(symbol.section.index, 2),
          pad-out(symbol.symbol-type,   4, hex: #t),
          pad-out(symbol.storage-class, 2, hex: #t),
-         symbol.aux-symbols.size, 
+         symbol.aux-symbols.size,
          symbol.symbol-name.string-data);
 end method;
 
@@ -298,9 +298,9 @@ end method;
 define method print-one-symbol
      (stream :: <stream>, symbol :: <coff-section-auxiliary-symbol>) => ()
   let section = symbol.auxiliary-section;
-  format(stream, 
+  format(stream,
          "        *   len: %s relocs: %s lines-num: %s "
-         "sum: %s num: %s selection: %s\n", 
+         "sum: %s num: %s selection: %s\n",
          pad-out(section.raw-data-size,        6, hex: #t),
          pad-out(section.relocations.size,     4),
          pad-out(section.line-numbers.size,    4),
@@ -311,15 +311,15 @@ end method;
 
 
 define method print-one-symbol
-     (stream :: <stream>, 
-      symbol :: <coff-function-definition-auxiliary-symbol>) 
+     (stream :: <stream>,
+      symbol :: <coff-function-definition-auxiliary-symbol>)
   => ()
-  let offset 
+  let offset
     = if (symbol.auxiliary-line-numbers)
         symbol.auxiliary-line-numbers.line-file-offset;
       else 0
       end if;
-  format(stream, 
+  format(stream,
          "        *   tag: %s size: %s line-nums: %s next-fn: %s\n",
          pad-out(symbol.auxiliary-tag.index,     4),
          pad-out(symbol.auxiliary-total-size,    4),
@@ -330,9 +330,9 @@ end method;
 
 define method print-one-symbol
      (stream :: <stream>,
-      symbol :: <coff-function-lines-auxiliary-symbol>) 
+      symbol :: <coff-function-lines-auxiliary-symbol>)
   => ()
-  format(stream, 
+  format(stream,
          "        *   line-number: %s next-fn: %s\n",
          pad-out(symbol.auxiliary-line-number,   4),
          pad-out(symbol.next-function-index,     4));
@@ -386,7 +386,7 @@ define method print-fixups
         let base-name = reloc.relocation-symbol.symbol-name.string-data;
         format(stream, "\n   Relocations based at %s", base-name);
         rindex := rindex + 1;
-        rindex := print-fixups-sequence(stream, coff-file, start, data-stream, 
+        rindex := print-fixups-sequence(stream, coff-file, start, data-stream,
                                         relocs, rindex, print-offsets?);
       end while;
       format(stream, "\n");
@@ -400,13 +400,13 @@ end method;
 
 
 define method print-fixups-sequence
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       start :: <integer>,
       data-stream :: <stream>,
       relocs :: <vector>,
       reloc-index :: <integer>,
-      print-offsets? :: <boolean>) 
+      print-offsets? :: <boolean>)
      => (new-reloc-index :: <integer>)
   let num = read-encoded-fixup-number(data-stream, coff-file);
   if (num > 0)
@@ -417,7 +417,7 @@ define method print-fixups-sequence
     let last-position = 0;
     format(stream, "\n  %s relocations for %s", pad-out(num, 5), import-name);
     for (i from 0 below num)
-      let (position, prefix) = 
+      let (position, prefix) =
         read-encoded-fixup-position(data-stream, coff-file, last-position);
       last-position := position;
       if (print-offsets?)
@@ -425,7 +425,7 @@ define method print-fixups-sequence
         format(stream, "%s%d", prefix, position);
       end if;
     end for;
-    print-fixups-sequence(stream, coff-file, start, data-stream, 
+    print-fixups-sequence(stream, coff-file, start, data-stream,
                           relocs, next-index, print-offsets?);
   else reloc-index;
   end if;
@@ -486,21 +486,21 @@ end method;
 
 
 define method print-info-by-type
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       type :: <integer>,
       limit :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   format(stream, "Debug-info in unknown format of type %d\n", type);
 end method;
 
 define method print-info-by-type
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       type == 1,
       limit :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let position = 4;   // we've just read the type
   format(stream, "Debug info in Microsoft CodeView 4 format\n");
@@ -517,11 +517,11 @@ end method;
 
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index :: <integer>,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let start = data-stream.stream-position - 4;
   print-info-header(stream, index, "UNKNOWN");
@@ -529,11 +529,11 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == 1,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let flags = read-word(data-stream, coff-file);
   let version = read-sized-string(data-stream);
@@ -542,28 +542,28 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == 2,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let type = read-short(data-stream, coff-file);
   let register = read-short(data-stream, coff-file);
   let name = read-sized-string(data-stream);
   print-info-header(stream, index, "Register");
-  format(stream, "type: %s register: %s name: %s\n", 
+  format(stream, "type: %s register: %s name: %s\n",
          pad-out(type, 4, hex: #t),
          pad-out(register, 2, hex: #t),
          name);
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == 4,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let type = read-short(data-stream, coff-file);
   let name = read-sized-string(data-stream);
@@ -572,21 +572,21 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == 6,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   print-info-header(stream, index, "End of Block", thats-all: #t);
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == 9,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let signature = read-word(data-stream, coff-file);
   let name = read-sized-string(data-stream);
@@ -595,11 +595,11 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x200,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let offset = read-signed-word(data-stream, coff-file);
   let type   = read-short(data-stream, coff-file);
@@ -613,11 +613,11 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x201,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let offset  = read-word(data-stream, coff-file);
   let segment = read-short(data-stream, coff-file);
@@ -631,11 +631,11 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x202,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let offset  = read-word(data-stream, coff-file);
   let segment = read-short(data-stream, coff-file);
@@ -649,23 +649,23 @@ define method print-info-by-index
 end method;
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x204,
       length :: <integer>,
-      data-stream :: <stream>) 
-     => ()  
+      data-stream :: <stream>)
+     => ()
   print-info-header(stream, index, "Local  Proc Start");
   print-procedure-start-info(stream, coff-file, data-stream);
 end method;
 
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x205,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   print-info-header(stream, index, "Global Proc Start");
   print-procedure-start-info(stream, coff-file, data-stream);
@@ -673,11 +673,11 @@ end method;
 
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x207,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let parent  = read-word(data-stream, coff-file);
   let p-end   = read-word(data-stream, coff-file);
@@ -686,18 +686,18 @@ define method print-info-by-index
   let segment = read-short(data-stream, coff-file);
   let name    = read-sized-string(data-stream);
   print-info-header(stream, index, "Block Start 16:32");
-  format(stream, 
+  format(stream,
          "pParent: %x pEnd: %x length: %x @ %x:%x name: %s\n",
          parent, p-end, length, segment, offset, name);
 end method;
 
 
 define method print-info-by-index
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
       index == #x209,
       length :: <integer>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let offset  = read-word(data-stream, coff-file);
   let segment = read-short(data-stream, coff-file);
@@ -710,9 +710,9 @@ end method;
 
 
 define method print-procedure-start-info
-     (stream :: <stream>, 
+     (stream :: <stream>,
       coff-file :: <coff-file>,
-      data-stream :: <stream>) 
+      data-stream :: <stream>)
      => ()
   let parent  = read-word(data-stream, coff-file);
   let p-end   = read-word(data-stream, coff-file);
@@ -725,18 +725,18 @@ define method print-procedure-start-info
   let type    = read-short(data-stream, coff-file);
   let flags   = read-byte(data-stream);
   let name    = read-sized-string(data-stream);
-  format(stream, 
+  format(stream,
          "pParent: %x pEnd: %x pNext: %x length: %x FrameOn: %x FrameOff: %x ",
          parent, p-end, next, length, d-start, d-end);
-  format(stream, 
+  format(stream,
          "@ %x:%x type: %x flags: %x name: %s\n",
-         segment, offset, type, flags, 
+         segment, offset, type, flags,
          name);
 end method;
 
 define method print-info-header
-     (stream :: <stream>, 
-      index :: <integer>, 
+     (stream :: <stream>,
+      index :: <integer>,
       meaning :: <string>,
       #key thats-all = #f) => ()
   let past-end = meaning.size;
@@ -748,7 +748,7 @@ end method;
 
 
 
-define method read-sized-string 
+define method read-sized-string
       (data-stream :: <stream>) => (str :: <string>)
   let len = read-byte(data-stream);
   let str = make(<string>, size: len);

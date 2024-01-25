@@ -85,7 +85,7 @@ end method;
 
 define macro typecode-functions-definer
   { define typecode-functions (?type-name:expression, ?typecode:expression) end }
-    => 
+    =>
     {
      define method object-typecode (object :: ?type-name)
       => (typecode :: <typecode>)

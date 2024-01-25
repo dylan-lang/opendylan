@@ -12,11 +12,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
  * This header file corresponds to version 2.2.x of the WinSock API
  * specification.
  *
- * This file includes parts which are 
+ * This file includes parts which are
  * of the University of California.  All rights reserved.  The
  * Berkeley Software License Agreement specifies the terms and
  * conditions for redistribution.
- */ 
+ */
 define inline-only constant $WINSOCK-VERSION            =
 	MAKEWORD(2,2);
 define inline constant <u-char> = <C-unsigned-char>;

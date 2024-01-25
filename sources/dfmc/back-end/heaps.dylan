@@ -1177,7 +1177,7 @@ define macro with-merged-literal
          if (changed?) ?lvalue := ?variable end;
          ?body }
 end macro;
-
+
 // external visibility
 
 define method do-export (heap :: <model-heap>, e)
@@ -1547,7 +1547,7 @@ define method export-references
     (heap :: <model-heap>, e :: <object>, ct?) => ()
 end method;
 
-
+
 // Claim world.
 
 define function heap-element-seen?

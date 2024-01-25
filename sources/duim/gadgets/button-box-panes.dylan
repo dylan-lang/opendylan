@@ -215,7 +215,7 @@ define method note-gadget-disabled
   update-button-enabled-states(box, #f)
 end method note-gadget-disabled;
 
-
+
 /// Generic implementation of button-box using just buttons
 
 define sealed class <button-box-pane-mixin> (<gadget-box-pane-mixin>)

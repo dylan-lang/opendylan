@@ -59,7 +59,7 @@ define COM-interface <CExternalConnection> ( <IExternalConnection> )
 
   constant slot get-obj :: <basic-ole-server>,
     required-init-keyword: server-framework: ;
-  
+
   slot strong-connection-count :: <unsigned-fixnum>, init-value: 0;
 
 end <CExternalConnection>;

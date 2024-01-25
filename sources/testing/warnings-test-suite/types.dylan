@@ -20,7 +20,7 @@ end class <class-with-two-primary-superclasses>;
 
 ignore(<class-with-two-primary-superclasses>);
 
-
+
 /// Inconsistent class precedence list
 
 define class <class-1> (<object>)
@@ -40,7 +40,7 @@ end class <inconsistent-cpl>;
 
 ignore(<inconsistent-cpl>);
 
-
+
 /// Abstract classes
 
 define abstract class <abstract-class> (<object>)
@@ -60,7 +60,7 @@ end class <abstract-with-concrete-superclass>;
 ignore(make-of-uninstantiable-class,
        <abstract-with-concrete-superclass>);
 
-
+
 /// Keywords
 
 define class <required-keyword-class> (<object>)
@@ -89,7 +89,7 @@ ignore(%a,
        make-wrong-keyword-type,
        make-wrong-keyword);
 
-
+
 /// Slots
 
 define abstract class <problem-class> (<object>)
@@ -108,7 +108,7 @@ ignore(<problem-class>,
        wrong-default-slot,
        duplicate-slot);
 
-
+
 /// Sealing
 
 define class <sealing-violation> (<function>)
@@ -116,7 +116,7 @@ end class <sealing-violation>;
 
 ignore(<sealing-violation>);
 
-
+
 /// Branch types
 
 define function badly-typed-if
@@ -189,7 +189,7 @@ ignore(badly-typed-if,
        badly-typed-select,
        badly-typed-block);
 
-
+
 /// False-or typing
 
 define function false-or-type-problem

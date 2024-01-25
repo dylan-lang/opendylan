@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 // For Dylan on the Pentium with a conservative GC, allocate-raw-area
-// does nothing. Allocate-local-area allocates spill space for both 
+// does nothing. Allocate-local-area allocates spill space for both
 // G and N type spills.
 
 
@@ -17,7 +17,7 @@ define pentium-template allocate-raw-area
   pattern (be)
     #f;
 end pentium-template;
-    
+
 
 define pentium-template allocate-local-area
   pattern (be)

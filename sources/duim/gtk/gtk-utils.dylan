@@ -13,7 +13,7 @@ define sealed class <sealed-constructor-mixin> (<object>) end;
 define sealed domain make (subclass(<sealed-constructor-mixin>));
 define sealed domain initialize (<sealed-constructor-mixin>);
 
-
+
 /// Error handling
 
 define function not-yet-implemented
@@ -37,7 +37,7 @@ define inline-only function gtk-debug (#rest args)
   *gtk-debug* & apply(duim-debug-message, args)
 end;
 
-
+
 /// String conversion utilities
 
 // We're running on Unix where the newline convention is '\n'

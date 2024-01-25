@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro llvm-asm-suite-definer
   { define llvm-asm-suite ?suite-name:name (?keyword-args:*) ?options end }
     => { define variable ?suite-name
-           = make-suite(?"suite-name", 
+           = make-suite(?"suite-name",
                         llvm-asm-suite-components(?"suite-name", ?options),
                         ?keyword-args) }
 options:
     { } => { }
     { ?option; ... } => { ?option, ... }
-    
+
 option:
     { directory ?:expression } => { ?expression }
 end macro llvm-asm-suite-definer;
@@ -41,7 +41,7 @@ define function llvm-asm-suite-components
 
     let directory-worklist :: <deque> = make(<deque>);
     push-last(directory-worklist, llvm-tests-directory);
-    
+
     while (~empty?(directory-worklist))
       let suite-directory = pop(directory-worklist);
 

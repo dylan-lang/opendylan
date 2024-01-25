@@ -26,7 +26,7 @@ define frame <database-viewer> (<simple-frame>)
          children:
            vector(make(<menu-button>,
                        label: "New Select Viewer",
-                       activate-callback: 
+                       activate-callback:
                          method (#rest args)
 			   let name = choose-string(title: "Database name", owner: frame);
 			   name & spawn-database-viewer(name)
@@ -83,7 +83,7 @@ define frame <database-viewer> (<simple-frame>)
 		      end
 		    end);
   pane sql-pane (frame)
-    make(<combo-box>, 
+    make(<combo-box>,
          items:             #(),
          activate-callback: sql-entry-callback);
   pane results-pane (frame)
@@ -96,7 +96,7 @@ define frame <database-viewer> (<simple-frame>)
     vertically (spacing: 2)
       make(<separator>);
       horizontally (spacing: 2, y-alignment: #"center")
-        make(<label>, label: "Select"); 
+        make(<label>, label: "Select");
         frame.sql-pane;
       end;
       make(<separator>);
@@ -107,23 +107,23 @@ define frame <database-viewer> (<simple-frame>)
          children: vector(file-menu(frame)));
   status-bar (frame)
     make(<status-bar>);
-  keyword title:  
+  keyword title:
     = format-to-string("Select Viewer on %s", $default-database-viewer-database);
   keyword width:  = $default-database-viewer-width;
   keyword height: = $default-database-viewer-height;
 end frame;
 
-define method choose-string 
+define method choose-string
     (#key title = "Select a string",
           port = default-port(),
           owner)
  => (string :: false-or(<string>))
   with-frame-manager (frame-manager(owner))
-    let text-field 
+    let text-field
       = make(<text-field>, activate-callback: exit-dialog);
     let dialog
-      = make(<dialog-frame>, 
-	     title: title, 
+      = make(<dialog-frame>,
+	     title: title,
 	     owner: owner,
 	     layout: text-field,
 	     input-focus: text-field);
@@ -132,7 +132,7 @@ define method choose-string
   end
 end method choose-string;
 
-define method spawn-database-viewer 
+define method spawn-database-viewer
     (database :: <string>) => ()
   let connection = open-database(database);
   make-application-thread
@@ -168,7 +168,7 @@ end method sql-entry-callback;
 
 define method display-query-results
     (frame :: <database-viewer>, pane :: <table-control>, query :: <byte-string>,
-       headings :: <sequence>, results :: <sequence>) 
+       headings :: <sequence>, results :: <sequence>)
  => ()
   // Remove the existing columns.
   for (i from columns-displayed(frame) - 1 to 0 by -1)
@@ -185,25 +185,25 @@ define method display-query-results
     end;
     // Install the items.
     // This little gyration works around what I think is a DUIM bug.
-    gadget-items(pane) := #[]; 
+    gadget-items(pane) := #[];
     gadget-items(pane) := results;
-    gadget-label(frame-status-bar(frame)) 
-      := format-to-string("%d records returned for query: \"%s\"", 
+    gadget-label(frame-status-bar(frame))
+      := format-to-string("%d records returned for query: \"%s\"",
                           size(results), query);
   end;
 end method;
 
-define method compute-query-columns 
+define method compute-query-columns
     (headings :: <sequence>) => (columns :: <sequence>)
-  map(method (heading, i) 
-        make(<table-column>, 
-             heading: heading, 
+  map(method (heading, i)
+        make(<table-column>,
+             heading: heading,
              generator: rcurry(element, i));
       end,
       headings, range(from: 0))
 end method;
 
-define method history-add 
+define method history-add
     (seq :: <sequence>, entry :: <string>) => (new-seq :: <sequence>)
   // Ugly!
   let seq = remove(seq, entry, test: \=);

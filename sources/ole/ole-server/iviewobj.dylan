@@ -1,5 +1,5 @@
 Module:    OLE-Server
-Synopsis:  Implement the IViewObject[2] interface for drawing 
+Synopsis:  Implement the IViewObject[2] interface for drawing
 	   in-process OLE servers (including OLE controls).
 Author:    David N. Gray
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -15,12 +15,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // will respond to QueryInterface for either $IID-IViewObject or
 // $IID-IViewObject2.
 
-define COM-interface <CViewObject> ( <IViewObject2> ) 
+define COM-interface <CViewObject> ( <IViewObject2> )
   constant slot get-obj :: <ole-in-process-server>,
 		required-init-keyword: server-framework: ;
   slot default-IViewObject :: <LPVIEWOBJECT2> = $null-interface;
 
-  slot view-advise-sink    :: <LPADVISESINK> = $null-interface; 
+  slot view-advise-sink    :: <LPADVISESINK> = $null-interface;
 //  slot view-frozen-aspects :: <fixnum> = 0;
   slot view-advise-aspects :: <fixnum> = 0;
   slot view-advise-flags   :: <fixnum> = 0;
@@ -105,10 +105,10 @@ define method IViewObject/Draw (this :: <CViewObject>,
  => (status :: <HRESULT>)
 
   debug-out("IViewObject/Draw aspect=%d\n", aspect);
-    
+
   // Delegate iconic, thumbnail, and printed representations.
   if ( ~ logtest(aspect, $supported-aspects) )
-    
+
     /* return */
     IViewObject/Draw(this.default-IViewObject, aspect, piece-index,
 		     aspect-info, device-info, hICDev, hDC, pRectBounds,
@@ -211,7 +211,7 @@ define method IViewObject/Freeze (this :: <CViewObject>,
 				  aspect-info /* :: <LPVOID> */)
  => (status :: <HRESULT>, freeze-key :: <fixnum>)
 
-  Output-Debug-String("IViewObject/Freeze\r\n");    
+  Output-Debug-String("IViewObject/Freeze\r\n");
 
   //---- freezing is not yet implemented.		???
   values( $E-NOTIMPL, 0 )
@@ -238,7 +238,7 @@ define method IViewObject/Unfreeze (this :: <CViewObject>,
 				    freeze-key /* :: <fixnum> */)
  => (status :: <HRESULT>)
 
-  Output-Debug-String("IViewObject/Unfreeze\r\n");    
+  Output-Debug-String("IViewObject/Unfreeze\r\n");
   //---- freezing is not yet implemented.
   values( $E-NOTIMPL )
 end method IViewObject/Unfreeze;
@@ -280,7 +280,7 @@ define method IViewObject/SetAdvise(this :: <CViewObject>,
   this.view-advise-aspects := aspects;
   this.view-advise-flags := advise-flags;
   AddRef(advise-sink);
-			
+
   $S-OK
 end method IViewObject/SetAdvise;
 
@@ -380,7 +380,7 @@ define method IViewObject2/GetExtent(this :: <CViewObject>,
  => (status :: <HRESULT>)
 
   debug-out("IViewObject2/GetExtent aspect=%d\n", aspect);
-    
+
   if ( ~ logtest($DVASPECT-CONTENT, aspect) )
     IViewObject2/GetExtent(this.default-IViewObject,
 			   aspect, piece-index, device-info, extent-ptr)

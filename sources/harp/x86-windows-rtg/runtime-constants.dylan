@@ -10,5 +10,5 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $not-yet-relocated-data = #x3;  // Invalid tag value
 
-define runtime-literal not-yet-relocated-string 
+define runtime-literal not-yet-relocated-string
   = "not-yet-relocated-string", data: "Data not yet relocated.";

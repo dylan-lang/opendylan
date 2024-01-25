@@ -101,9 +101,9 @@ define open abstract class <debug-target> (<object>)
     init-value: #f;
   slot application-dylan-runtime-library :: false-or(<remote-library>),
     init-value: #f;
-  constant slot library-initialization-trackers :: <table> 
+  constant slot library-initialization-trackers :: <table>
     = make(<table>);
-  constant slot library-component-names :: <string-table> 
+  constant slot library-component-names :: <string-table>
     = make(<string-table>);
   slot application-executable :: false-or(<remote-library>) = #f;
 
@@ -134,23 +134,23 @@ define open abstract class <debug-target> (<object>)
 
   // ***************** PRIMITIVES FROM THE RUNTIME ***************
   constant slot nlx-primitive :: <runtime-primitive>
-    = make(<runtime-primitive>, 
+    = make(<runtime-primitive>,
 	   runtime-name: "primitive_nlx");
   constant slot debug-message-primitive :: <runtime-primitive>
-    = make(<runtime-primitive>, 
+    = make(<runtime-primitive>,
 	   runtime-name: "primitive_debug_message");
   constant slot invoke-debugger-primitive :: <runtime-primitive>
-    = make(<runtime-primitive>, 
+    = make(<runtime-primitive>,
 	   runtime-name: "primitive_invoke_debugger");
   constant slot exit-application-primitive :: <runtime-primitive>
-    = make(<runtime-primitive>, 
+    = make(<runtime-primitive>,
 	   runtime-name: "_spy_exit_application");
   constant slot class-breakpoint-primitive :: <runtime-primitive>
-    = make(<runtime-primitive>, 
+    = make(<runtime-primitive>,
 	   runtime-name: "_class_allocation_break");
   constant slot wrapper-wrapper-primitive :: <runtime-primitive>
     = make(<runtime-primitive>,
-	   runtime-name: 
+	   runtime-name:
 		mangle-in-context("<mm-wrapper>", $dylan-internal,
 				   as-wrapper?: #t,
 				   as-static-object?: #t));
@@ -249,15 +249,15 @@ end method;
 define method address-corresponds-to-primitive?
     (application :: <debug-target>, address :: <remote-value>,
      primitive :: <runtime-primitive>) => (answer :: <boolean>)
-  if (primitive.last-matched-address & 
+  if (primitive.last-matched-address &
          (primitive.last-matched-address = address))
     #t
   elseif (primitive.runtime-symbol)
     let primsym = primitive.runtime-symbol;
     let (closest, offset)
-      = symbol-relative-address(application.debug-target-access-path, 
+      = symbol-relative-address(application.debug-target-access-path,
                                 address);
-    if (closest & 
+    if (closest &
         (closest.remote-symbol-address = primsym.remote-symbol-address))
       primitive.last-matched-address := address;
       #t
@@ -302,7 +302,7 @@ end method;
 //    Called once the application has unloaded the DLL (remote library)
 //    that contains the lowlevel runtime system, this function de-caches
 //    the information about runtime primitives.
-define method invalidate-runtime-primitives 
+define method invalidate-runtime-primitives
      (application :: <debug-target>) => ()
   let path = application.debug-target-access-path;
   let lib = application.application-dylan-runtime-library;

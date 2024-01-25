@@ -18,7 +18,7 @@ define open abstract class corba/<request> (corba/<pseudo-object>)
 end class;
 
 /// NB not in standard but needed
-define open generic corba/request/add-exception 
+define open generic corba/request/add-exception
     (request :: corba/<request>,
     exception-type :: <typecode>)
  => ();
@@ -56,7 +56,7 @@ define open generic corba/request/get-response
     (request :: corba/<request>,
      response-flags :: corba/<Flags>)
  => ();
-    
+
 /// CONTEXTS
 
 define open abstract class corba/<Context> (corba/<pseudo-object>)

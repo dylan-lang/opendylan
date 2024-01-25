@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for "DDE"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -35,7 +35,7 @@ define module Win32-DDE
 	     $CF-BITMAP, $CF-DIB, $CF-DIF, $CF-ENHMETAFILE, $CF-METAFILEPICT,
 	     $CF-OEMTEXT, $CF-PALETTE, $CF-PENDATA, $CF-RIFF, $CF-SYLK,
 	     $CF-TEXT, $CF-TIFF, $CF-WAVE, $CF-UNICODETEXT };
- 
+
 
   // from "dde.h":
   export $WM-DDE-FIRST, $WM-DDE-INITIATE, $WM-DDE-TERMINATE,

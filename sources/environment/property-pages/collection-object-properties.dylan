@@ -20,7 +20,7 @@ define sideways method frame-default-property-type
   #"elements"
 end method frame-default-property-type;
 
-
+
 /// Collection wrapper
 //
 // This object encapsulates a key and matching element from a collection
@@ -131,7 +131,7 @@ define method frame-sort-collection-contents
   end
 end method frame-sort-collection-contents;
 
-
+
 /// Elements property page
 
 define sideways method make-frame-property-page-displayer
@@ -174,7 +174,7 @@ define method frame-print-collection-content
   end
 end method frame-print-collection-content;
 
-
+
 /// Browsing of collection entries
 
 define method frame-browse-collection-wrapper-key

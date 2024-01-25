@@ -213,7 +213,7 @@ define inline method forward-iteration-protocol
      copy-state)
 end method forward-iteration-protocol;
 
-
+
 /// Fast buffer copying
 
 define inline function buffer-ref

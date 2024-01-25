@@ -203,7 +203,7 @@ define method draw-graphic
    draw-image(medium, $pixmap-to-test, xcen, ycen);
 end method draw-graphic;
 
-
+
 /// The main frame definition and the layout of the various gadgets
 
 define command-table *graphics-test-file-comtab* (*global-command-table*)
@@ -318,7 +318,7 @@ define method frame-pixmap-bitblt
                medium, 50, 200)
 end method frame-pixmap-bitblt;
 
-
+
 /// Drawing accuracy
 
 define class <graphics-grid-pane> (<drawing-pane>)
@@ -440,7 +440,7 @@ define method animate-rectangles
   end;
 end method animate-rectangles;
 
-
+
 /// Graphics frame
 
 define variable $graphics-test-frame-tests

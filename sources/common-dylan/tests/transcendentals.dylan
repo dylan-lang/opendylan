@@ -32,7 +32,7 @@ define test test-$double-e ()
               $double-e);
 end test;
 
-
+
 /// Function tests
 
 // The tests below are partially based on the elementary functions

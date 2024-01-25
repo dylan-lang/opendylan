@@ -30,7 +30,7 @@ define method general-property-types
   end
 end method general-property-types;
 
-
+
 /// Number objects
 
 define method general-property-types
@@ -40,7 +40,7 @@ define method general-property-types
               #[#"decimal", #"hex", #"octal", #"binary"])
 end method general-property-types;
 
-
+
 /// Application object memory page
 
 define sideways method make-frame-property-page-displayer

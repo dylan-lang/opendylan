@@ -47,15 +47,15 @@ define constant $dylan-extensions
   = make(<dylan-name-context>, library: "dylan", module: "dylan-extensions");
 
 
-define method demangle-qualified-name 
-  (s :: <byte-string>) 
+define method demangle-qualified-name
+  (s :: <byte-string>)
      => (lib :: <byte-string>,
          mod :: <byte-string>,
          name :: <byte-string>)
   let (name, mod, lib) = demangle-binding-spread($demangler, s);
   values (lib | "",
-          mod | "", 
-          name);  
+          mod | "",
+          name);
 end method;
 
 define method demangle-dylan-name
@@ -96,11 +96,11 @@ define method mangle-local-dylan-name
   mangle-name-locally($basic-mangler, s)
 end method;
 
-define method mangle-in-context 
+define method mangle-in-context
   (s :: <byte-string>, cxt :: <dylan-name-context>,
    #key as-wrapper? = #f,
         as-static-object? = #f,
-        as-entry-point? = #f) 
+        as-entry-point? = #f)
      => (mangled :: <byte-string>)
   let lib = cxt.context-library;
   let mod = cxt.context-module;
@@ -193,8 +193,8 @@ define open generic obtain-component-name
     (application :: <debug-target>, libname :: <string>)
        => (name :: <string>);
 
-define method obtain-component-name 
-    (application :: <debug-target>, libname :: <string>) 
+define method obtain-component-name
+    (application :: <debug-target>, libname :: <string>)
        => (name :: <string>)
   let cc = application.debug-target-compilation-context;
   if (cc)
@@ -216,7 +216,7 @@ end method;
 
 ///// MANGLED-NAME-TO-REMOTE-LIBRARY
 //    Given a dylan mangled name, find a <remote-library> object that
-//    should be defining it. 
+//    should be defining it.
 define method mangled-name-to-remote-library
     (application :: <debug-target>, name :: <byte-string>)
          => (search-library :: <remote-library>)

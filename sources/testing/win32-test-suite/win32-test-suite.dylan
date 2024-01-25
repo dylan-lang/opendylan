@@ -10,4 +10,4 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define suite win32-test-suite ()
     suite generic-test-suite;
     suite c-ffi-test
-end; 
+end;

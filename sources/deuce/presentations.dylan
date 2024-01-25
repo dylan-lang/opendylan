@@ -72,7 +72,7 @@ define method do-cursor-at-position
   #f                        // use the window's default
 end method do-cursor-at-position;
 
-
+
 /// Simple presentation handlers
 
 define sealed class <blank-area> (<object>)

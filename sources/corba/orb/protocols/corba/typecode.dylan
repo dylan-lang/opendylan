@@ -210,7 +210,7 @@ define method initialize (typecode :: <type-typecode>, #key incomplete?)
 end method;
 
 define abstract class <membered-typecode> (<type-typecode>)
-  slot typecode-members :: <sequence> = #[], init-keyword: members:; 
+  slot typecode-members :: <sequence> = #[], init-keyword: members:;
 end class;
 
 define method typecode-count (typecode :: <membered-typecode>)

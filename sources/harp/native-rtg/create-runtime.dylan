@@ -17,7 +17,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// This one starts the whole shooting match.
 
-define method create-dylan-runtime 
+define method create-dylan-runtime
     (#key back-end-class = <harp-back-end>,
       base-file-name = "runtime",
       client-file-name = "dylan-support",
@@ -35,16 +35,16 @@ define method create-dylan-runtime
 end method;
 
 
-define method generate-runtime 
+define method generate-runtime
     (back-end :: <harp-back-end>,
      file-name :: <byte-string>,
      print-harp? :: <boolean>,
      client? :: <boolean>,
      type)
   let make-keys = if (type) vector(type: type) else #[] end;
-  let outputter =  apply(make-harp-outputter, 
-                         back-end, file-name, 
-                         print-harp?: print-harp?, 
+  let outputter =  apply(make-harp-outputter,
+                         back-end, file-name,
+                         print-harp?: print-harp?,
                          make-keys);
   block ()
     output-dylan-runtime(back-end, outputter, client?: client?);
@@ -59,12 +59,12 @@ end method;
 //// Call this to create the code for the entire low-level runtime support.
 
 
-define method output-dylan-runtime 
+define method output-dylan-runtime
     (be :: <harp-back-end>, outputter, #key client? = #f)
 
   let output-one-fn =
     method (name :: <byte-string>, fn :: <function>, #rest keys)
-      apply(invoke-harp, be, fn, name, 
+      apply(invoke-harp, be, fn, name,
             outputter: outputter, harp-debug: #t, keys);
     end method;
 
@@ -108,7 +108,7 @@ define method test-functions
 
   let output-one-fn =
     method (name :: <byte-string>, fn :: <function>, #rest keys)
-      apply(invoke-harp, back-end, fn, name, 
+      apply(invoke-harp, back-end, fn, name,
             outputter: outputter, harp-debug: #t, keys);
     end method;
 

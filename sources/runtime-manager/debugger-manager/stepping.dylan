@@ -47,9 +47,9 @@ define method align-thread-to-source-location
     block ()
       for (frame-address-list-pair in context-sets)
         apply-thread-stepping-control
-          (path, 
-           thread, 
-           tail(frame-address-list-pair), 
+          (path,
+           thread,
+           tail(frame-address-list-pair),
            $step-operation-step-over,
            stack-frame: head(frame-address-list-pair));
       end for;
@@ -95,15 +95,15 @@ define method instruct-thread-to-step-over
     let (fp-context, parent-fp-context, return-address, bp-addresses)
       = call-frame-recorded-locations(application, call-frame);
     let ap-frame = call-frame.ap-frame-description;
-    apply-thread-stepping-control(path, 
-                                  thread, 
+    apply-thread-stepping-control(path,
+                                  thread,
                                   bp-addresses,
                                   $step-operation-step-over,
                                   stack-frame: ap-frame);
     if (calling-frame)
       let ap-frame = calling-frame.ap-frame-description;
-      apply-thread-stepping-control(path, 
-                                    thread, 
+      apply-thread-stepping-control(path,
+                                    thread,
                                     vector(return-address),
                                     $step-operation-step-out,
                                     stack-frame: ap-frame);
@@ -152,8 +152,8 @@ define method instruct-thread-to-step-out
         = call-frame-recorded-locations(application, calling-frame);
       if (bp-addresses.size > 0)
         let ap-frame = calling-frame.ap-frame-description;
-        apply-thread-stepping-control(path, 
-                                      thread, 
+        apply-thread-stepping-control(path,
+                                      thread,
                                       bp-addresses,
                                       $step-operation-step-out,
                                       stack-frame: ap-frame);
@@ -204,7 +204,7 @@ define method instruct-thread-to-step-into
           let (sig, addr, keys) = remote-method-inspect(application, m);
           addr
         end method;
- 
+
   local method function-object-breakpoint-addresses (f :: <remote-value>)
                   => (addrs :: false-or(<sequence>))
           let classification = classify-dylan-object(application, f);

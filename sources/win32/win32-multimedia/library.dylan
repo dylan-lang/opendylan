@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for multimedia from "MMSYSTEM.H" and "WINMM.DLL"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -25,13 +25,13 @@ define module Win32-multimedia
 	     c-type-cast};
   use Win32-common,
     export: {// data types used as arguments and fields:
-	     <HANDLE>, <HDC>, <HMODULE>, <HTASK>, <HWND>, 
+	     <HANDLE>, <HDC>, <HMODULE>, <HTASK>, <HWND>,
 	     <LPARAM>, <LPBYTE>, <LPCSTR>, <LPDWORD>, <LPSTR>,
 	     <LPUINT>, <LPVOID>, <LPWORD>, <LRESULT>, <LPRECT>,
 	     // fields of a RECT:
-	     left-value, top-value, right-value, bottom-value, 
+	     left-value, top-value, right-value, bottom-value,
 	     left-value-setter, top-value-setter,
-	     right-value-setter, bottom-value-setter, 
+	     right-value-setter, bottom-value-setter,
 	     // generics with methods defined in both libraries:
 	     cb-value, cb-value-setter, cbSize-value, cbSize-value-setter,
 	     dwFlags-value, dwFlags-value-setter,

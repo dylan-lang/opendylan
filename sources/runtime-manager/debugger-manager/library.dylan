@@ -30,7 +30,7 @@ define module debugger-manager
     export: all;
   use tether-downloader;
   use interactive-symbol-table;
-  use dfmc-derived-information, 
+  use dfmc-derived-information,
     rename: {<source-locator> => <dfmc-source-locator>};
   use dfmc-namespace;
   use source-records;
@@ -348,7 +348,7 @@ define module dm-internals
   use debugger-manager;
   use tether-downloader;
   use interactive-symbol-table;
-  use dfmc-derived-information, 
+  use dfmc-derived-information,
     rename: {<source-locator> => <dfmc-source-locator>};
   use dfmc-namespace;
   use dfmc-mangling;

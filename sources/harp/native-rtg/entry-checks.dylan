@@ -14,13 +14,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// STACK CHECK
 
-define method op--stack-check 
+define method op--stack-check
     (be :: <harp-back-end>, tag :: <tag>)
   // Do nothing for now;
 end method;
 
 
-define method op--stack-overflow-error-call 
+define method op--stack-overflow-error-call
     (be :: <harp-back-end>)
 end method;
 
@@ -30,14 +30,14 @@ end method;
 /// ARG COUNT CHECK
 
 
-define method op--arg-count-check 
-    (be :: <harp-back-end>, tag :: <tag>, 
+define method op--arg-count-check
+    (be :: <harp-back-end>, tag :: <tag>,
      received-args, required-args == 0, optionals? == #t)
   // no test needed for a method which has no requireds & takes opts
 end method;
 
-define method op--arg-count-check 
-    (be :: <harp-back-end>, tag :: <tag>, 
+define method op--arg-count-check
+    (be :: <harp-back-end>, tag :: <tag>,
      received-args, required-args, optionals?)
   // generate an arg check against a constant
   let required = op--required-args-for-check(be, required-args);
@@ -56,14 +56,14 @@ define method invalid-args-branch-fn
 end method;
 
 
-define method op--required-args-for-check 
-      (be :: <harp-back-end>, required-args :: <integer>) 
+define method op--required-args-for-check
+      (be :: <harp-back-end>, required-args :: <integer>)
       => (r :: <integer>);
   required-args;
 end;
 
-define method op--required-args-for-check 
-      (be :: <harp-back-end>, required-args == #"dynamic") 
+define method op--required-args-for-check
+      (be :: <harp-back-end>, required-args == #"dynamic")
       => (r :: <register>);
   let reg = make-n-register(be);
   op--number-required(be, reg);
@@ -71,12 +71,12 @@ define method op--required-args-for-check
 end;
 
 
-define method op--args-error-call 
+define method op--args-error-call
     (be :: <harp-back-end>, args, required)
   // Report inappropriate argument count in an XEP call.
-  // This should be smart about about cleaning up the stack and 
-  // returning, to allow the error handler function to return (if it 
-  // has a restart handler, for example). But it's not really worth 
+  // This should be smart about about cleaning up the stack and
+  // returning, to allow the error handler function to return (if it
+  // has a restart handler, for example). But it's not really worth
   // doing that until the error handler gets passed all the arguments.
   let regs = be.registers;
   let function = regs.reg-function;
@@ -120,7 +120,7 @@ end method;
 
 
 define method op--preserve-args-for-specializer-check
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      value, type, specs,
      #key spare1, spare2, frame?)
   // Build a stack frame around the call
@@ -169,24 +169,24 @@ define method op--restore-args-for-specializer-check
 end method;
 
 
-define method op--store-args-for-specializer-error-call 
+define method op--store-args-for-specializer-error-call
     (be :: <harp-back-end>, value :: <register>, type :: <register>)
   op--store-specializer-saved-registers(be, value: value, type: type);
 end method;
 
-define method op--retrieve-args-for-specializer-error-call 
+define method op--retrieve-args-for-specializer-error-call
     (be :: <harp-back-end>, value :: <register>, type :: <register>)
   op--load-specializer-saved-registers(be, value: value, type: type);
 end method;
 
 
-define method op--specializer-error-call 
+define method op--specializer-error-call
     (be :: <harp-back-end>)
   with-harp (be)
     greg value, type;
     // NB: register convention at this point is that
     // there is already a function frame, and the value and type
-    // parameters were saved with op--push-args-for-specializer-error-call 
+    // parameters were saved with op--push-args-for-specializer-error-call
     op--retrieve-args-for-specializer-error-call(be, value, type);
     op--call-iep(be, dylan-type-check-error, value, type);
     ins--rts(be);
@@ -198,7 +198,7 @@ end method;
 // OP--SPECIALIZER-CHECKS-VIA-LOOP
 // Checks all arguments against the expected specializer types, using a loop
 // for the arguments passed on the stack. The function assumes that all argument
-// registers are full. 
+// registers are full.
 //
 // req-num is a register containing the total number of required arguments times 4,
 // or is an integer count of the number of required arguments
@@ -222,7 +222,7 @@ define method op--specializer-checks-via-loop
     function function;
     result result;
     tag loop-start, loop-finished;
-      
+
     ins--move(be, arg-num, req-num);
     ins--ld(be, specs, function, be.function-signature-offset);
     ins--ld(be, specs, specs, be.signature-required-offset);
@@ -241,7 +241,7 @@ define method op--specializer-checks-via-loop
           ins--ld(be, type, specs, spec-index);
           // Don't check if the type is <object>
           ins--beq(be, reg-done, type, object-class-class);
-          // Otherwise check by calling into Dylan 
+          // Otherwise check by calling into Dylan
 	  unless (i == 0)
 	    // load arg register from preserved set
 	    op--load-specializer-saved-arg-register(be, i);
@@ -286,7 +286,7 @@ end method;
 
 // OP--SPECIALIZER-CHECKS-IN-LINE
 // Checks all arguments against the expected specializer types, using an
-// in-line test for each argument. 
+// in-line test for each argument.
 //
 // required is an integer count of the number of required arguments
 
@@ -299,7 +299,7 @@ define method op--specializer-checks-in-line
       function function;
       result result;
       tag done;
-      
+
       ins--ld(be, specs, function, be.function-signature-offset);
       ins--ld(be, specs, specs, be.signature-required-offset);
       op--load-index-scaled(be, type, specs, arg-num, 8);
@@ -332,7 +332,7 @@ end method;
 // On entry:
 //   arg-count: contains the number of required parameters times 4
 //   function:  contains function object as normal
-// On exit  
+// On exit
 //   The function IEP is tail-called
 //   MList, Function, Arg0 are preserved.
 
@@ -340,7 +340,7 @@ define leaf runtime-primitive check-specializers
   arg-count arg-count;
   tag err-tag;
 
-  // Build a stack frame around the call 
+  // Build a stack frame around the call
   ins--preserve-registers-entry(be);
   op--specializer-checks-via-loop(be, err-tag, arg-count);
   op--tail-call-iep(be, keyword-method?: #"unknown");
@@ -361,7 +361,7 @@ define method op--tail-call-check-specializers
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
     ins--move(be, argc, arg-num);
-    ins--jmp(be, primitive-check-specializers-ref, max-num-arg-regs, 
+    ins--jmp(be, primitive-check-specializers-ref, max-num-arg-regs,
              mlist: #t, arg-count: #t, function: #t);
   end with-harp;
 end method;

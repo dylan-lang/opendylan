@@ -61,7 +61,7 @@ define method terminate (obj :: <ole-control-framework>) => ();
 end method terminate;
 
 
-
+
 
 define COM-interface <CProvideClassInfo> ( <IProvideClassInfo> )
 
@@ -85,11 +85,11 @@ define method IProvideClassInfo2/GetGUID (this :: <CProvideClassInfo2>,
 					  kind :: <fixnum>,
 					  pGUID :: <REFGUID>)
  => (status :: <HRESULT>);
-  
+
   select ( kind )
     $GUIDKIND-DEFAULT-SOURCE-DISP-IID =>
       // outgoing dispinterface, labeled [source, default].
-      
+
       let typeinfo = this.get-obj.object-default-source-interface;
       let ID = typeinfo.guid-value;
       %memcpy(pGUID, ID, size-of(<CLSID>));

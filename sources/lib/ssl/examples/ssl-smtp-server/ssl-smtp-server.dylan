@@ -18,8 +18,8 @@ define method smtp-server () => ();
 	     method ()
 	       block ()
 		 format-out("Responding to client at %s port: %d\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);      
+			    reply-socket.remote-host.host-name,
+			    reply-socket.remote-port);
 		 write-line(reply-socket, "220 foohost ESMTP");
 		 let greeting = read-line(reply-socket, on-end-of-stream: #"eoi");
 		 format-out("read greeting %s\n", greeting);
@@ -48,12 +48,12 @@ define method smtp-server () => ();
 		 end until;
 		 close(reply-socket);
 		 format-out("Connection to %s port: %d closed\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);      
+			    reply-socket.remote-host.host-name,
+			    reply-socket.remote-port);
 	       exception (condition :: <recoverable-socket-condition>)
 		 close(reply-socket, abort?: #t);
 		 format-out("Connection to %s port: %d aborted\n",
-			    reply-socket.remote-host.host-name, 
+			    reply-socket.remote-host.host-name,
 			    reply-socket.remote-port);
 	       end block;
 	     end method);

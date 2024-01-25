@@ -113,7 +113,7 @@ define method note-gadget-value-changed
   end
 end method note-gadget-value-changed;
 
-
+
 /// Tab buttons
 
 define sealed class <tab-button> (<radio-button>, <simple-pane>)

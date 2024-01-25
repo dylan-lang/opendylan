@@ -135,7 +135,7 @@ define constant $DW-LANG-hi-user :: <integer> = 65535;
 // From llvm/DebugInfo.h
 define constant $flag-artificial :: <integer> = ash(1, 6);
 
-
+
 /// Debug information constructor functions
 
 define inline function i32

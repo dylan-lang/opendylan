@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 ///// The following constant is used to terminate iterations along
-//    CONS-cell chains. 
+//    CONS-cell chains.
 //    This is completely arbitrary, but there is no practical way to
 //    determine that a list is circular at the moment.
 
@@ -33,17 +33,17 @@ define method remote-instance?
     // sure that it is indeed a dylan object!). At the moment, return
     // #f if the object is tagged. Also return #f if the supposed class
     // is in fact not a class at all.
-    let instance-classification = 
+    let instance-classification =
       classify-dylan-object(application, instance);
-    let class-classification = 
+    let class-classification =
       classify-dylan-object(application, class-instance);
     if (instance-classification == $character-type)
-      let character-class =      
+      let character-class =
         lookup-static-object
            (application, "<character>", "dylan");
       answer := (character-class & (character-class = class-instance));
     elseif (instance-classification == $integer-type)
-      let integer-class =      
+      let integer-class =
         lookup-static-object
            (application, "<integer>", "dylan");
       answer := (integer-class & (integer-class = class-instance));
@@ -67,7 +67,7 @@ define method remote-instance?
       if (ok & (instance-wrapper = class-wrapper))
         answer := #t
       else
-        let (actual-class, ok) = 
+        let (actual-class, ok) =
           wrapper-to-class(application, instance-wrapper);
         answer := remote-subclass?(application, actual-class, class-instance);
       end if;
@@ -106,7 +106,7 @@ end method;
 //    Determines whether one remote value is a subclass of another.
 
 define method remote-subclass?
-    (application :: <debug-target>, sub :: <remote-value>, 
+    (application :: <debug-target>, sub :: <remote-value>,
      super :: <remote-value>)
        => (answer :: <boolean>)
   // Both remote values must be classifiable as classes for this
@@ -150,7 +150,7 @@ define method remote-member?
     (application :: <debug-target>, instance :: <remote-value>,
      collection-instance :: <remote-value>)
         => (answer :: <boolean>)
-  let (keys, vals) = 
+  let (keys, vals) =
      remote-collection-inspect(application, collection-instance);
   member?(instance, vals, test: \=);
 end method;
@@ -165,11 +165,11 @@ end method;
 define method remote-collection-inspect
     (application :: <debug-target>, collection-instance :: <remote-value>,
      #key first-index = 0, last-index = #f)
-        => (key-sequence :: false-or(<sequence>), 
+        => (key-sequence :: false-or(<sequence>),
             value-sequence :: <sequence>)
   // Find out the type of the instance. If it is not a collection of
   // any sort we know about, there's not much we can do!
-  let instance-type = 
+  let instance-type =
     classify-dylan-object(application, collection-instance);
 
   // And now dispatch to a more specific function.
@@ -187,7 +187,7 @@ define method remote-collection-inspect
 
     $array-type =>
       remote-array-linear-inspect
-         (application, collection-instance, 
+         (application, collection-instance,
           first-index: first-index, last-index: last-index);
 
     $stretchy-vector-type =>
@@ -218,7 +218,7 @@ define method remote-collection-inspect
 
     $limited-array-type =>
       remote-limited-array-linear-inspect
-         (application, collection-instance, 
+         (application, collection-instance,
           first-index: first-index, last-index: last-index);
 
     $limited-stretchy-vector-type =>
@@ -243,7 +243,7 @@ define method remote-vector-inspect
   let value-sequence = make(<vector>, size: last-index - first-index + 1);
   let j = 0;
   for (i from first-index to last-index)
-    value-sequence[j] := 
+    value-sequence[j] :=
       dylan-vector-element(application, vector-instance, i);
     j := j + 1;
   end for;
@@ -262,7 +262,7 @@ define method remote-limited-vector-inspect
   let value-sequence = make(<vector>, size: last-index - first-index + 1);
   let j = 0;
   for (i from first-index to last-index)
-    value-sequence[j] := 
+    value-sequence[j] :=
       dylan-limited-vector-element(application, vector-instance, i);
     j := j + 1;
   end for;
@@ -281,7 +281,7 @@ define method remote-array-linear-inspect
   let value-sequence = make(<vector>, size: last-index - first-index + 1);
   let j = 0;
   for (i from first-index to last-index)
-    value-sequence[j] := 
+    value-sequence[j] :=
       dylan-multidimensional-array-row-major-element
         (application, array-instance, i);
     j := j + 1;
@@ -301,7 +301,7 @@ define method remote-limited-array-linear-inspect
   let value-sequence = make(<vector>, size: last-index - first-index + 1);
   let j = 0;
   for (i from first-index to last-index)
-    value-sequence[j] := 
+    value-sequence[j] :=
       dylan-limited-array-row-major-element
         (application, array-instance, i);
     j := j + 1;
@@ -379,12 +379,12 @@ define method remote-table-inspect
   let value-sequence = make(<stretchy-vector>, size: 0);
   if (empty-entry)
     for (i from 0 below keys-limit)
-      let this-key :: <remote-value> 
+      let this-key :: <remote-value>
          = dylan-entry-vector-element(application, keys-vector, i);
       unless (this-key = empty-entry)
         if ((j >= first-index) & (j <= last-index))
           add!(key-sequence, this-key);
-          add!(value-sequence, 
+          add!(value-sequence,
                dylan-entry-vector-element(application, vals-vector, i));
           j := j + 1;
         end if;
@@ -435,7 +435,7 @@ end method;
 define method remote-deque-inspect
     (application :: <debug-target>, deq-instance :: <remote-value>,
      #key first-index = 0, last-index = #f)
-        => (key-sequence :: false-or(<sequence>), 
+        => (key-sequence :: false-or(<sequence>),
             value-sequence :: <sequence>)
   let limit = dylan-deque-size(application, deq-instance);
   unless (last-index & (last-index < limit))
@@ -474,7 +474,7 @@ end method;
 ///// REMOTE-GENERIC-FUNCTION-INSPECT
 //    Returns information about a generic function.
 
-define method remote-generic-function-inspect 
+define method remote-generic-function-inspect
     (application :: <debug-target>, gf-instance :: <remote-value>)
        => (signature :: <remote-value>,
            methods :: <sequence>)
@@ -539,7 +539,7 @@ define method remote-signature-inspect
   let sig-keys = #f;
   let sig-key-types = #f;
 
-  let (limit-required, 
+  let (limit-required,
        limit-values,
        rest?,
        keys?,
@@ -549,11 +549,11 @@ define method remote-signature-inspect
      dylan-signature-properties(application, sig);
 
   if (default-rest?)
-    got-sig-rest-type := 
+    got-sig-rest-type :=
       lookup-static-object(application, "<object>", "dylan");
   end if;
   if (default-vals?)
-    got-sig-value-types := 
+    got-sig-value-types :=
       vector(lookup-static-object(application, "<object>", "dylan"));
   end if;
 
@@ -561,7 +561,7 @@ define method remote-signature-inspect
     $signature-required-only-type =>
       sig-required-types :=
 	canonicalize-sequence
-	  (application, 
+	  (application,
            dylan-signature-required(application, sig),
            max-size-override: limit-required);
 
@@ -685,7 +685,7 @@ end method;
 ///// REMOTE-CLASS-INSPECT
 //    Returns information about a class.
 
-define method remote-class-inspect 
+define method remote-class-inspect
     (application :: <debug-target>, ci :: <remote-value>,
      #key use-incarnation: iclass = #f)
        => (direct-subs :: <sequence>,
@@ -697,7 +697,7 @@ define method remote-class-inspect
   let iclass-object = iclass | dylan-class-iclass(application, ci);
   values
     (canonicalize-sequence
-       (application, 
+       (application,
         dylan-iclass-direct-subclasses(application, iclass-object)),
      canonicalize-sequence
        (application,
@@ -775,7 +775,7 @@ define method remote-slot-inspect
   let slot-init-req? =
     remote-boolean-to-actual-boolean
        (dylan-slot-init-keyword-required(application, slot-instance));
-  let slot-init-val = 
+  let slot-init-val =
     nullify-if-false(dylan-slot-init-value(application, slot-instance));
   let slot-spec = dylan-slot-specializer(application, slot-instance);
 
@@ -836,8 +836,8 @@ define method remote-range-inspect
             end-val :: false-or(<remote-value>),
             step-val :: <remote-value>)
   // This cannot be assumed to work, but it probably will in most cases.
-  local method compute-end 
-                  (starting :: <remote-value>, 
+  local method compute-end
+                  (starting :: <remote-value>,
                    stepping :: <remote-value>,
                    sizeval :: <remote-value>)
                      => (ending :: <remote-value>)
@@ -848,7 +848,7 @@ define method remote-range-inspect
     integer-as-tagged-remote-value(d)
   end method;
 
-  let range-classification = 
+  let range-classification =
     classify-dylan-object(application, range-instance);
 
   let start-val = integer-as-tagged-remote-value(0);
@@ -925,7 +925,7 @@ define method classify-runtime-value
     $user-defined-type                  => #"dylan-general-object";
     $integer-type                       => #"dylan-integer";
     $character-type                     => #"dylan-character";
-    $unknown-type                       => 
+    $unknown-type                       =>
       if (foreign-address-is-function?(application, value))
 	#"foreign-function"
       else
@@ -1064,7 +1064,7 @@ define method wrapper-trace-information
     slot-count := 0
   end block;
 
-  values(symbolic-name, presented-name, module-name, slot-count, 
+  values(symbolic-name, presented-name, module-name, slot-count,
          repeat-information, repeat-offset);
 end method;
 
@@ -1094,7 +1094,7 @@ define method dylan-object-size
           let element-count-address =
             indexed-remote-value(instance, fixed-slot-count + 1);
           let element-count-tagged = read-value(path, element-count-address);
-          let element-count = 
+          let element-count =
             tagged-remote-value-as-integer(element-count-tagged);
           values((fixed-slot-count + 1) * 4, fixed-slot-count, element-count);
         end if;
@@ -1124,7 +1124,7 @@ define method dylan-class-slot-storage
       descriptors :: <sequence>,
       vals :: <sequence>)
   let iclass-object = iclass | dylan-class-iclass(application, class-instance);
-  let class-storage-object = 
+  let class-storage-object =
     dylan-iclass-class-storage(application, iclass-object);
   let storage-spaces =
     canonicalize-sequence(application, class-storage-object);
@@ -1176,7 +1176,7 @@ end method;
 //                        offset at which the element count may be found.
 //      element-size   -  Returns an integer giving the byte-size of each
 //                        element for those cases where the elements are not
-//                        <remote-value>-sized. If this is #f, then the 
+//                        <remote-value>-sized. If this is #f, then the
 //                        elements are all "standard" dylan objects.
 //      element-offset -  If the class has a repeated slot, this returns the
 //                        offset at which the 0th element can be found.
@@ -1210,9 +1210,9 @@ define method dylan-class-browser-information
   let (fixed-slot-count, vector-scaling) =
     dylan-wrapper-properties(application, wrapper);
   let has-byte-repeats? = (vector-scaling == 1);
-  let slot-storage-vector = 
+  let slot-storage-vector =
     dylan-iclass-class-storage(application, iclass-object);
-  let slotd-vec = 
+  let slotd-vec =
     dylan-iclass-instance-slot-descriptors(application, iclass-object);
   let slotd-count = dylan-vector-size(application, slotd-vec);
   let rdescriptor =
@@ -1241,7 +1241,7 @@ define method dylan-class-browser-information
   for (i from 0 below slotd-count)
     let remote-descriptor = dylan-vector-element(application, slotd-vec, i);
     let remote-getter = dylan-slot-getter(application, remote-descriptor);
-    let (lib, mod, slot-name) = 
+    let (lib, mod, slot-name) =
       dylan-instance-symbolic-name(application, remote-getter);
     slots[i] := pair(slot-name, i + 1);
     navigation[slot-name] := (i + 1);
@@ -1296,10 +1296,10 @@ define method remote-collection-size
         return(cons-count)
       end block;
 
-    $vector-type => 
+    $vector-type =>
       dylan-vector-size(application, collection-instance);
 
-    $array-type => 
+    $array-type =>
       dylan-multidimensional-array-size(application, collection-instance);
 
     $stretchy-vector-type =>
@@ -1307,10 +1307,10 @@ define method remote-collection-size
                   (application, collection-instance);
       dylan-stretchy-vector-size(application, svr);
 
-    $limited-vector-type => 
+    $limited-vector-type =>
       dylan-limited-vector-size(application, collection-instance);
 
-    $limited-array-type => 
+    $limited-array-type =>
       dylan-limited-array-size(application, collection-instance);
 
     $limited-stretchy-vector-type =>

@@ -33,8 +33,8 @@ define module dfmc-harp-cg
     export: all;
   use streams-internals;
   use big-integers, prefix: "generic-", export: all;
-  use dfmc-core, 
-    exclude: 
+  use dfmc-core,
+    exclude:
       { engine-node$k-raw-byte-repeated-instance-slot-getter,
         smen$s-nrequired,
         stchen$v-checkedmask,
@@ -186,7 +186,7 @@ define module dfmc-harp-cg
     op--allocation-count, op--initialize-allocation-count,
 
     op--floge, op--fetox, op--fsin, op--fcos, op--ftan, op--fasin, op--facos, op--fatan,
-    op--dloge, op--detox, op--dsin, op--dcos, op--dtan, op--dasin, op--dacos, op--datan, 
+    op--dloge, op--detox, op--dsin, op--dcos, op--dtan, op--dasin, op--dacos, op--datan,
 
     <runtime-object>,
     make-runtime-reference, make-runtime-object,
@@ -249,5 +249,5 @@ define module dfmc-harp-cg
 
     ;
 
-    
+
 end module;

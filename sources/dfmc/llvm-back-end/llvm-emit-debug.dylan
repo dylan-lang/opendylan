@@ -231,7 +231,7 @@ define method llvm-dynamic-signature-dbg-types
   values(return-type, parameter-types)
 end method;
 
-
+
 /// Local variable declarations
 
 define method emit-dbg-local-variable
@@ -384,7 +384,7 @@ define method llvm-reference-dbg-type
   end if
 end method;
 
-
+
 /// Computation variable scope handling
 
 define thread variable *computation-dbg-scope-table* :: false-or(<object-table>)
@@ -460,7 +460,7 @@ define method assign-computation-dbg-scope
                                 c.cleanups, c.next-computation);
 end method;
 
-
+
 /// Computation source line tracking
 
 define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()

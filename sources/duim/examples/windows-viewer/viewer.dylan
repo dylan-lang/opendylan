@@ -119,7 +119,7 @@ define method note-selected-window
   update-window-styles(frame, handle)
 end method note-selected-window;
 
-
+
 /// Window information
 
 define method update-window-info
@@ -176,7 +176,7 @@ define method print-window-info
          if (top-child) window-name(top-child) else "" end);
 end method print-window-info;
 
-
+
 /// Window styles
 
 define method update-window-styles

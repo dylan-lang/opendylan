@@ -71,7 +71,7 @@ define method op--allocate-traced
       0 => op--call-c(be, alloc, byte-size, wrapper);
       1 => apply(op--call-c, be, alloc-s1, byte-size, wrapper, slots);
       2 => apply(op--call-c, be, alloc-s2, byte-size, wrapper, slots);
-      otherwise => 
+      otherwise =>
         // Suboptimal - but rare. (case never used currently)
         // Initialize all slots with the first slot value (known safe)
 	// Fill in the proper values at the end.
@@ -87,7 +87,7 @@ end method;
 
 
 define method op--allocate-from-template
-     (be :: <harp-back-end>, new :: <register>, 
+     (be :: <harp-back-end>, new :: <register>,
       template :: <register>, byte-size)
   with-harp (be)
     c-result c-result;
@@ -100,7 +100,7 @@ end method;
 
 
 define method op--perform-allocation-filled-internal
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      allocator)
   with-harp (be)
@@ -109,7 +109,7 @@ define method op--perform-allocation-filled-internal
     nreg byte-size;
 
     ins--asl(be, byte-size, word-size, 2);
-    op--call-c(be, allocator, byte-size, wrapper, 
+    op--call-c(be, allocator, byte-size, wrapper,
 	       no-to-fill, fill, rep-size, rep-size-slot);
     ins--move(be, result, c-result);
   end with-harp;
@@ -117,37 +117,37 @@ end method;
 
 
 define method op--perform-allocation-filled
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot)
   op--perform-allocation-filled-internal
-    (be, word-size, wrapper, 
+    (be, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      alloc-s-r);
 end method;
 
 
 define method op--perform-allocation-filled-leaf
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot)
   op--perform-allocation-filled-internal
-    (be, word-size, wrapper, 
+    (be, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      alloc-leaf-s-r);
 end method;
 
 
 define method op--perform-allocation-filled-wrapper
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot)
   op--perform-allocation-filled-internal
-    (be, word-size, wrapper, 
+    (be, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      alloc-wrapper-s-r);
 end method;
 
 
 define method op--perform-allocation-filled-linked-internal
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot, assoc,
      allocator)
   with-harp (be)
@@ -164,27 +164,27 @@ end method;
 
 
 define method op--perform-allocation-filled-exact-awl
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot, assoc)
   op--perform-allocation-filled-linked-internal
-    (be, word-size, wrapper, 
+    (be, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot, assoc,
      alloc-exact-awl-s-r);
 end method;
 
 
 define method op--perform-allocation-filled-weak-awl
-    (be :: <harp-back-end>, word-size, wrapper, 
+    (be :: <harp-back-end>, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot, assoc)
   op--perform-allocation-filled-linked-internal
-    (be, word-size, wrapper, 
+    (be, word-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot, assoc,
      alloc-weak-awl-s-r);
 end method;
 
 
 define method op--perform-repeated-byte-allocation
-    (be :: <harp-back-end>, byte-size, wrapper, 
+    (be :: <harp-back-end>, byte-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      #key fill-bytes? = #t)
 
@@ -195,10 +195,10 @@ define method op--perform-repeated-byte-allocation
 
     if (fill-bytes?)
       op--untaggify(be, byte-fill, fill);
-      op--call-c(be, alloc-leaf-s-rbf, byte-size, wrapper, 
+      op--call-c(be, alloc-leaf-s-rbf, byte-size, wrapper,
 		 no-to-fill, fill, rep-size, rep-size-slot, byte-fill);
     else
-        op--call-c(be, alloc-leaf-s-rb, byte-size, wrapper, 
+        op--call-c(be, alloc-leaf-s-rb, byte-size, wrapper,
 	         no-to-fill, fill, rep-size, rep-size-slot);
     end if;
 
@@ -208,7 +208,7 @@ end method;
 
 
 define method op--perform-repeated-byte-allocation-terminated
-    (be :: <harp-back-end>, byte-size, wrapper, 
+    (be :: <harp-back-end>, byte-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      #key fill-words? = #t)
 
@@ -219,10 +219,10 @@ define method op--perform-repeated-byte-allocation-terminated
 
     op--untaggify(be, byte-fill, fill);
     if (fill-words?)
-      op--call-c(be, alloc-leaf-s-rbfz, byte-size, wrapper, 
+      op--call-c(be, alloc-leaf-s-rbfz, byte-size, wrapper,
 		 no-to-fill, fill, rep-size, rep-size-slot, byte-fill);
     else
-      op--call-c(be, alloc-leaf-rbfz, byte-size, wrapper, 
+      op--call-c(be, alloc-leaf-rbfz, byte-size, wrapper,
 		 rep-size, rep-size-slot, byte-fill);
     end if;
     ins--move(be, result, c-result);
@@ -257,7 +257,7 @@ define runtime-primitive allocate-filled
   nreg wrapper, no-to-fill, fill, rep-size, rep-size-slot;
 
   op--load-arguments(be, arg0, wrapper, no-to-fill, fill, rep-size, rep-size-slot);
-  op--perform-allocation-filled(be, arg0, wrapper, 
+  op--perform-allocation-filled(be, arg0, wrapper,
 				no-to-fill, fill, rep-size, rep-size-slot);
   op--rts-dropping-n-args(be, 6);
 end runtime-primitive;
@@ -282,7 +282,7 @@ define runtime-primitive allocate-filled-in-leaf-pool
   nreg wrapper, no-to-fill, fill, rep-size, rep-size-slot;
 
   op--load-arguments(be, arg0, wrapper, no-to-fill, fill, rep-size, rep-size-slot);
-  op--perform-allocation-filled-leaf(be, arg0, wrapper, 
+  op--perform-allocation-filled-leaf(be, arg0, wrapper,
 				     no-to-fill, fill, rep-size, rep-size-slot);
   op--rts-dropping-n-args(be, 6);
 end runtime-primitive;
@@ -306,8 +306,8 @@ define runtime-primitive allocate-weak-in-awl-pool
   nreg wrapper, no-to-fill, fill, rep-size, rep-size-slot, assoc;
 
   op--load-arguments(be, arg0, wrapper, no-to-fill, fill, rep-size, rep-size-slot, assoc);
-  op--perform-allocation-filled-weak-awl(be, arg0, wrapper, 
-					 no-to-fill, fill, 
+  op--perform-allocation-filled-weak-awl(be, arg0, wrapper,
+					 no-to-fill, fill,
 					 rep-size, rep-size-slot, assoc);
   op--rts-dropping-n-args(be, 7);
 end runtime-primitive;
@@ -331,8 +331,8 @@ define runtime-primitive allocate-in-awl-pool
   nreg wrapper, no-to-fill, fill, rep-size, rep-size-slot, assoc;
 
   op--load-arguments(be, arg0, wrapper, no-to-fill, fill, rep-size, rep-size-slot, assoc);
-  op--perform-allocation-filled-exact-awl(be, arg0, wrapper, 
-					  no-to-fill, fill, 
+  op--perform-allocation-filled-exact-awl(be, arg0, wrapper,
+					  no-to-fill, fill,
 					  rep-size, rep-size-slot, assoc);
   op--rts-dropping-n-args(be, 7);
 end runtime-primitive;
@@ -354,7 +354,7 @@ define runtime-primitive allocate-wrapper
   nreg wrapper, no-to-fill, fill, rep-size, rep-size-slot;
 
   op--load-arguments(be, arg0, wrapper, no-to-fill, fill, rep-size, rep-size-slot);
-  op--perform-allocation-filled-wrapper(be, arg0, wrapper, 
+  op--perform-allocation-filled-wrapper(be, arg0, wrapper,
 					no-to-fill, fill, rep-size, rep-size-slot);
   op--rts-dropping-n-args(be, 6);
 end runtime-primitive;
@@ -384,7 +384,7 @@ define runtime-primitive byte-allocate-filled
         repeated-size(raw, NOT tagged)
         repeated slot offset
      On exit:
-        A pointer to an area of memory. 
+        A pointer to an area of memory.
 */
   arg0 arg0;
   arg0 word-size;
@@ -392,17 +392,17 @@ define runtime-primitive byte-allocate-filled
   result result;
   nreg byte-size, wrapper, no-to-fill, fill, rep-size, rep-size-slot;
 
-  op--load-arguments(be, arg0, byte-size, wrapper, no-to-fill, 
+  op--load-arguments(be, arg0, byte-size, wrapper, no-to-fill,
                      fill, rep-size, rep-size-slot);
   ins--asl(be, total-size, word-size, 2);     // get the word size in bytes
   ins--add(be, total-size, total-size, byte-size); // add the byte part
   ins--add(be, total-size, total-size, 3);         // Word align
   ins--and(be, total-size, total-size, ash(-1, 2));
-  
+
   // call MM primitive
-  op--perform-repeated-byte-allocation(be, total-size, wrapper, 
+  op--perform-repeated-byte-allocation(be, total-size, wrapper,
 				       no-to-fill, fill, rep-size, rep-size-slot);
-  
+
   op--rts-dropping-n-args(be, 7);
 end runtime-primitive;
 
@@ -428,18 +428,18 @@ define runtime-primitive byte-allocate-filled
   result result;
   nreg byte-size, wrapper, no-to-fill, fill, rep-size, rep-size-slot;
 
-  op--load-arguments(be, arg0, byte-size, wrapper, no-to-fill, 
+  op--load-arguments(be, arg0, byte-size, wrapper, no-to-fill,
                      fill, rep-size, rep-size-slot);
   ins--asl(be, total-size, word-size, 2);     // get the word size in bytes
   ins--add(be, total-size, total-size, byte-size); // add the byte part
   ins--add(be, total-size, total-size, 3);         // Word align
   ins--and(be, total-size, total-size, ash(-1, 2));
-  
+
   // Allocate. Don't fill bytes because streams buffers don't need it
-  op--perform-repeated-byte-allocation(be, total-size, wrapper, 
+  op--perform-repeated-byte-allocation(be, total-size, wrapper,
 				       no-to-fill, fill, rep-size, rep-size-slot,
 				       fill-bytes?: #f);
-  
+
   op--rts-dropping-n-args(be, 7);
 end runtime-primitive;
 
@@ -449,7 +449,7 @@ define runtime-primitive byte-allocate-filled-terminated
 /*
      On entry:
         word-size  - the base size in words of the allocation
-        byte-size  - the additional size in bytes of the allocation 
+        byte-size  - the additional size in bytes of the allocation
                      INCLUDING the null terminator
         MM class wrapper
         number of slots to fill
@@ -465,17 +465,17 @@ define runtime-primitive byte-allocate-filled-terminated
   result result;
   nreg byte-size, wrapper, no-to-fill, fill, rep-size, rep-size-slot, null-offset;
 
-  op--load-arguments(be, arg0, byte-size, wrapper, no-to-fill, 
+  op--load-arguments(be, arg0, byte-size, wrapper, no-to-fill,
                      fill, rep-size, rep-size-slot);
   ins--asl(be, total-size, word-size, 2);     // get the word size in bytes
   ins--add(be, total-size, total-size, byte-size); // add the byte part
   ins--sub(be, null-offset, total-size, 1);  // index for the null-terminator *****
   ins--add(be, total-size, total-size, 3);         // Word align
   ins--and(be, total-size, total-size, ash(-1, 2));
-  
+
   // Allocate. Don't fill words because strings don't have fixed slots
   op--perform-repeated-byte-allocation-terminated
-    (be, total-size, wrapper, 
+    (be, total-size, wrapper,
      no-to-fill, fill, rep-size, rep-size-slot,
      fill-words?: #f);
 
@@ -500,13 +500,13 @@ define runtime-primitive allocate-vector
 end runtime-primitive;
 
 
-define method op--allocate-vector 
-    (be :: <harp-back-end>, vec :: <register>, word-size, 
+define method op--allocate-vector
+    (be :: <harp-back-end>, vec :: <register>, word-size,
      #key fill = dylan-unbound)
   with-harp (be)
     nreg vec-size-in-bytes;
     c-result c-result;
-    
+
     ins--asl(be, vec-size-in-bytes, word-size, 2);  // get the size in bytes
     ins--add(be, vec-size-in-bytes, vec-size-in-bytes, 8); // allow for header
     op--call-c(be, alloc-rf, vec-size-in-bytes, dylan-sov-class, word-size, 1, fill);
@@ -532,7 +532,7 @@ define runtime-primitive vector
 
   ins--move(be, size-in-words, arg0);
 
-  // The easiest strategy is to manipulate the reg-args in-place on the 
+  // The easiest strategy is to manipulate the reg-args in-place on the
   // stack to make the vector
   op--vector-case-generator(be, size-in-words);
 
@@ -580,7 +580,7 @@ end method;
 
 
 define method op--copy-vector-internal
-     (be :: <harp-back-end>, stack-vec :: <register>) 
+     (be :: <harp-back-end>, stack-vec :: <register>)
      => (heap-vec :: <register>)
   with-harp (be)
     arg-count argc;
@@ -605,7 +605,7 @@ end method;
 
 
 define method op--make-vector-from-data
-     (be :: <harp-back-end>, data-start :: <register>, size-in-words) 
+     (be :: <harp-back-end>, data-start :: <register>, size-in-words)
      => (heap-vec :: <register>)
   with-harp (be)
     c-result c-result;
@@ -628,7 +628,7 @@ define method op--make-vector-from-data
 end method;
 
 define runtime-primitive copy-vector
-  // On entry:  vector 
+  // On entry:  vector
   // On exit:   new-vector
 
   arg0 arg0;
@@ -737,7 +737,7 @@ define method op--prim-make-closure
     result result;
     nreg env-size;
     reg  template, fn;
-    
+
     op--load-arguments(be, template, env-size);
     op--make-closure(be, fn, template, env-size, keyword?);
     ins--move(be, result, fn);
@@ -773,7 +773,7 @@ define method op--prim-make-closure-with-signature
     result result;
     nreg env-size;
     reg  template, fn, signature;
-    
+
     op--load-arguments(be, template, signature, env-size);
     op--make-closure(be, fn, template, env-size, keyword?);
     ins--move(be, result, fn);
@@ -788,7 +788,7 @@ define runtime-primitive initialize-closure
   // On entry:
   //    (closure, env-size, environment-data...)
   // On exit:
-  
+
   op--prim-initialize-closure(be, #f);
 end runtime-primitive;
 
@@ -797,7 +797,7 @@ define runtime-primitive initialize-keyword-closure
   // On entry:
   //    (closure, env-size, environment-data...)
   // On exit:
-  
+
   op--prim-initialize-closure(be, #t);
 end runtime-primitive;
 
@@ -807,10 +807,10 @@ define method op--prim-initialize-closure
   with-harp (be)
     nreg env-size, bytes-to-drop;
     reg  closure;
-  
+
     op--load-arguments(be, closure, env-size);
     op--initialize-closure-environment(be, bytes-to-drop,
-				       closure, 
+				       closure,
                                        env-size, 2,
                                        keyword?);
     ins--rts-and-drop(be, bytes-to-drop);
@@ -825,7 +825,7 @@ define runtime-primitive make-closure-with-environment
   //    (template, env-size, environment-data...)
   // On exit:
   //    the new closure
-  
+
   op--prim-make-closure-with-environment(be, #f);
 end runtime-primitive;
 
@@ -835,7 +835,7 @@ define runtime-primitive make-keyword-closure-with-environment
   //    (template, env-size, environment-data...)
   // On exit:
   //    the new closure
-  
+
   op--prim-make-closure-with-environment(be, #t);
 end runtime-primitive;
 
@@ -846,9 +846,9 @@ define method op--prim-make-closure-with-environment
     result result;
     nreg env-size, bytes-to-drop;
     reg  template, fn;
-  
+
     op--load-arguments(be, template, env-size);
-    op--make-closure-with-environment(be, fn, bytes-to-drop, template, 
+    op--make-closure-with-environment(be, fn, bytes-to-drop, template,
                                       env-size, 2, keyword?);
     ins--move(be, result, fn);
     ins--rts-and-drop(be, bytes-to-drop);
@@ -863,7 +863,7 @@ define runtime-primitive make-closure-with-environment-signature
   // On exit:
   //    the new closure
 
-  op--prim-make-closure-with-environment-signature(be, #f);  
+  op--prim-make-closure-with-environment-signature(be, #f);
 end runtime-primitive;
 
 
@@ -873,7 +873,7 @@ define runtime-primitive make-keyword-closure-with-environment-signature
   // On exit:
   //    the new closure
 
-  op--prim-make-closure-with-environment-signature(be, #t);  
+  op--prim-make-closure-with-environment-signature(be, #t);
 end runtime-primitive;
 
 
@@ -883,9 +883,9 @@ define method op--prim-make-closure-with-environment-signature
     result result;
     nreg env-size, bytes-to-drop;
     reg  template, signature, fn;
-  
+
     op--load-arguments(be, template, signature, env-size);
-    op--make-closure-with-environment(be, fn, bytes-to-drop, template, 
+    op--make-closure-with-environment(be, fn, bytes-to-drop, template,
                                       env-size, 3, keyword?);
     ins--move(be, result, fn);
     ins--st(be, signature, result, be.function-signature-offset);
@@ -900,7 +900,7 @@ define runtime-primitive make-method-with-signature
   //    (template, signature)
   // On exit:
   //    the new method
-  
+
   op--prim-make-method-with-signature(be, #f);
 end runtime-primitive;
 
@@ -910,7 +910,7 @@ define runtime-primitive make-keyword-method-with-signature
   //    (template, signature)
   // On exit:
   //    the new method
-  
+
   op--prim-make-method-with-signature(be, #t);
 end runtime-primitive;
 
@@ -921,7 +921,7 @@ define method op--prim-make-method-with-signature
     result result;
     reg  template, signature, fn;
     nreg dummy;
-  
+
     // Allocate a new function object
     op--load-arguments(be, template, signature);
     op--allocate-method(be, fn, template, keyword?, #f);
@@ -933,9 +933,9 @@ end method;
 
 
 define method op--make-closure
-    (be :: <harp-back-end>, 
-     fn :: <register>, 
-     template :: <register>, 
+    (be :: <harp-back-end>,
+     fn :: <register>,
+     template :: <register>,
      env-size :: <register>,
      keyword-closure? :: <boolean>)
   with-harp (be)
@@ -946,7 +946,7 @@ end method;
 
 
 define method op--make-closure-with-environment
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      fn :: <register>, bytes-to-drop :: <register>,
      template :: <register>, env-size :: <register>,
      num-args :: <integer>,
@@ -1004,7 +1004,7 @@ end method;
 
 
 define method op--initialize-closure-environment
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      bytes-to-drop :: <register>,
      fn :: <register>,
      env-size :: <register>,
@@ -1057,8 +1057,8 @@ define method op--initialize-closure-environment
 end method;
 
 
-define method op--allocate-method 
-    (be :: <harp-back-end>, dest :: <register>, template :: <register>, 
+define method op--allocate-method
+    (be :: <harp-back-end>, dest :: <register>, template :: <register>,
      keyword? :: <boolean>, closure? :: <boolean>,
      #key env-size)
   with-harp (be)
@@ -1079,17 +1079,17 @@ define method op--allocate-method
 end method;
 
 
-define method environment-offset 
+define method environment-offset
     (be :: <harp-back-end>, keyword-closure? :: <boolean>) => (o :: <integer>)
-  if (keyword-closure?) 
-    be.keyword-closure-environment-offset 
-  else be.closure-environment-offset 
+  if (keyword-closure?)
+    be.keyword-closure-environment-offset
+  else be.closure-environment-offset
   end;
 end method;
 
 
 
-define method function-size 
+define method function-size
     (be :: <harp-back-end>, keyword? :: <boolean>, closure? :: <boolean>)
     => (s :: <integer>)
   if (closure?)

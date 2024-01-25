@@ -13,7 +13,7 @@ define sideways method op--preserve-mlist-for-mep-apply
     stack stack;
 
     // Pentium note: we suffer some serious register pressure here.
-    // This is worse than for XEPs with optionals because we have to 
+    // This is worse than for XEPs with optionals because we have to
     // preserve MList too. The ugly but workable solution I've adopted
     // is to preserve MList on the stack, just past all the optional arguments.
     // We rely on the code in the IEP to remove it afterwards, because we
@@ -53,7 +53,7 @@ define sideways method op--push-registers-for-remove-optionals
     arg-count argc;
     mlist mlist;
     function function;
-  
+
     // NB arg0 & function are just not touched
     ins--push(be, argc);
     ins--push(be, mlist);

@@ -75,7 +75,7 @@ define method handle-debug-point-event
     if ((top-frame-pointer = bp.used-frame) |
         ((bp.calling-frame) & (calling-frame-pointer) &
          (bp.calling-frame = calling-frame-pointer)))
-      bp.dylan-function-result := 
+      bp.dylan-function-result :=
         remote-call-result(application.debug-target-access-path, thread);
       remote-restore-context(application.debug-target-access-path, thread,
                              bp.stored-context);
@@ -120,7 +120,7 @@ define method handle-debug-point-event
     if ((top-frame-pointer = bp.used-frame) |
         ((bp.calling-frame) & (calling-frame-pointer) &
          (bp.calling-frame = calling-frame-pointer)))
-      bp.dylan-function-result := 
+      bp.dylan-function-result :=
         remote-call-result(application.debug-target-access-path, thread);
       remote-restore-context(application.debug-target-access-path, thread,
                              bp.stored-context);
@@ -130,9 +130,9 @@ define method handle-debug-point-event
       application.current-interactor-level := bp.interactor-cookie;
       let ret-seq =
         select (bp.interactor-result-spec)
-          #"single-value" => 
+          #"single-value" =>
              vector(bp.dylan-function-result);
-          #"multiple-value" => 
+          #"multiple-value" =>
              canonicalize-sequence(application, bp.dylan-function-result);
         end select;
       apply(handle-interactor-return,
@@ -177,7 +177,7 @@ define method invoke-dylan
                          library: dylan-library);
     end if;
 
-  let invoker = 
+  let invoker =
     if (dylan-runtime)
       find-symbol(application.debug-target-access-path,
                   "call_dylan_function_returning_all_values",
@@ -185,7 +185,7 @@ define method invoke-dylan
     end if;
 
   if (invoker)
-    let top-frame = 
+    let top-frame =
       initialize-stack-trace(application.debug-target-access-path, thread);
     let top-frame-pointer =
       frame-pointer(application.debug-target-access-path, top-frame);
@@ -200,8 +200,8 @@ define method invoke-dylan
     let (return-address, context) =
       if (restart-trampoline)
         call-debugger-function(
-              application, 
-              apply, 
+              application,
+              apply,
               remote-call,
               application.debug-target-access-path,
               thread,
@@ -225,7 +225,7 @@ define method invoke-dylan
               argument-list);
       end if;
 
-    let debug-point = 
+    let debug-point =
       make(<dylan-return-breakpoint>,
            address: return-address,
            callback: return-callback,
@@ -236,7 +236,7 @@ define method invoke-dylan
            cookie: application.current-interactor-level,
            saved-mv-vector: thread-current-mv-vector(application, thread));
 
-    application.current-interactor-level := 
+    application.current-interactor-level :=
       application.current-interactor-level + 1;
 
     register-debug-point(application, debug-point);
@@ -260,7 +260,7 @@ define method handle-interactor-return
      transaction-id :: <object>,
      #rest return-values)
        => (stop? :: <boolean>)
-  let transaction-id 
+  let transaction-id
   = element(application.interactor-deferred-id-table,
 	    transaction-id,
 	    default: #f)
@@ -280,7 +280,7 @@ end method;
 
 
 ///// SETUP-INTERACTOR
-//    A more general API to begin running an interactive form, either in 
+//    A more general API to begin running an interactive form, either in
 //    Dylan or C. This returns an object to be considered a "unique ID"
 //    for the evaluation.
 //    Arguments:
@@ -304,7 +304,7 @@ define method setup-interactor
                   "spy_call_interactive_function",
                   library: application.application-dylan-runtime-library);
 
-  let invoker = 
+  let invoker =
     if (symbolic-dll)
       symbol-table-find-symbol
                  (application.debug-target-symbol-table,
@@ -321,7 +321,7 @@ define method setup-interactor
   if (invoker)
     // We have our C-callable entry point. Now read as much stack
     // context information as we need.
-    let top-frame = 
+    let top-frame =
       initialize-stack-trace(application.debug-target-access-path, thread);
     let top-frame-pointer =
       frame-pointer(application.debug-target-access-path, top-frame);
@@ -372,7 +372,7 @@ define method setup-interactor
            cookie: application.current-interactor-level,
            saved-mv-vector: thread-current-mv-vector(application, thread));
 
-    application.current-interactor-level := 
+    application.current-interactor-level :=
       application.current-interactor-level + 1;
 
     // Perform the breakpoint registration.
@@ -403,7 +403,7 @@ define method C-setup-interactor
   if (invoker.runtime-entry-point)
     // We have our C-callable entry point. Now read as much stack
     // context information as we need.
-    let top-frame = 
+    let top-frame =
       initialize-stack-trace(application.debug-target-access-path, thread);
     let top-frame-pointer =
       frame-pointer(application.debug-target-access-path, top-frame);

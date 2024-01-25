@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Icon loading.
 
-define method load-taskbar-icon 
+define method load-taskbar-icon
     (name :: <byte-string>) => (handle :: <HANDLE>)
   LoadImage
     (application-instance-handle(), name, $IMAGE-ICON, 16, 16, $LR-DEFAULTCOLOR);
@@ -123,7 +123,7 @@ define method remove-icon () => ()
     data.cbSize-value := size-of(<NOTIFYICONDATA>);
     data.hWnd-value   := null-pointer(<HWND>);
     data.uId-value    := $our-icon-id;
-    // data.uFlags-value := 0; 
+    // data.uFlags-value := 0;
     Shell-NotifyIcon($NIM-DELETE, data);
   end;
 end method;
@@ -147,7 +147,7 @@ define method stop-status-display () => ()
 end method;
 
 define method display-status-icon (icon, tip) => ()
-  ensure-status-display(); 
+  ensure-status-display();
   change-icon(icon);
   if (tip) change-tip(tip) end;
 end method;

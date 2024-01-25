@@ -9,7 +9,7 @@ define library scepter-tests
   use common-dylan;
   use io;
   use system;
-  use parser-run-time; 
+  use parser-run-time;
   use c-lexer;
   use testworks;
   use scepter;
@@ -35,7 +35,7 @@ define module scepter-tests
     all-idl,
     neo-idl,
     orbix-demo-idl,
-    orbix-include-idl, 
+    orbix-include-idl,
     corba-core-idl,
     corba-services-idl,
     damaged-idl;

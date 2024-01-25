@@ -20,17 +20,17 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /////   2. functions, including simple primitives & entry point primitives
 ///// The second pass of each of these may be invoked independently of the others
 /////
-///// This files defines macros for using the registration mechanism, as 
+///// This files defines macros for using the registration mechanism, as
 ///// well as some registration support functions.
 
 
 ///// DLL support
 /////
 ///// There is a small amount of runtime support for each client DLL, and a large
-///// amount of runtime support for the base (Dylan) DLL. The registration 
-///// mechanism permits registration for each of these independently. The 
+///// amount of runtime support for the base (Dylan) DLL. The registration
+///// mechanism permits registration for each of these independently. The
 ///// two resultant bodies of runtime code are referred to as the "client"
-///// and "base" runtimes, respectively. By default, registrations are for the 
+///// and "base" runtimes, respectively. By default, registrations are for the
 ///// base runtime only, but the macros provide mechanism for registering
 ///// in the client as well as or instead of the base.
 
@@ -43,32 +43,32 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// Literals variables & external constants:
 
 
-/// Defining literals within the runtime:- 
+/// Defining literals within the runtime:-
 
 define macro runtime-literal-definer
-  { define ?lit-type runtime-literal ?:name 
+  { define ?lit-type runtime-literal ?:name
       = ?string:expression, #key ?data:expression, ?section:expression = #"untraced-data"}
     => { define variable ?name = #f;
-         register-constant(method (be :: <harp-back-end>, outputter) 
+         register-constant(method (be :: <harp-back-end>, outputter)
                              let ref = constant-mangled-ref(be, ?string);
                              ?name := ref;
                              ?lit-type(be, outputter, ref, ?data, ?section);
                            end method,
                            ?#"name") }
 lit-type:
-  { } 
+  { }
     => { output-literal }
-  { raw } 
+  { raw }
     => { output-raw-literal }
-  { byte } 
+  { byte }
     => { output-raw-byte-literal }
 end macro;
 
 
 // Literal dumping support
 
-define method output-literal (be :: <harp-back-end>, 
-                              outputter, 
+define method output-literal (be :: <harp-back-end>,
+                              outputter,
                               ref :: <constant-reference>,
                               lit :: <byte-string>,
                               given-section :: <symbol>)
@@ -86,8 +86,8 @@ define method output-literal (be :: <harp-back-end>,
 end method;
 
 
-define method output-raw-literal (be :: <harp-back-end>, 
-                                  outputter, 
+define method output-raw-literal (be :: <harp-back-end>,
+                                  outputter,
                                   ref :: <constant-reference>,
                                   lit :: <vector>,
                                   section :: <symbol>)
@@ -99,8 +99,8 @@ define method output-raw-literal (be :: <harp-back-end>,
 end method;
 
 
-define method output-raw-byte-literal (be :: <harp-back-end>, 
-                                       outputter, 
+define method output-raw-byte-literal (be :: <harp-back-end>,
+                                       outputter,
                                        ref :: <constant-reference>,
                                        lit :: <vector>,
                                        section :: <symbol>)
@@ -115,19 +115,19 @@ end method;
 
 
 
-/// Defining variables within the runtime:- 
+/// Defining variables within the runtime:-
 
 define macro runtime-variable-definer
-  { define ?var-type runtime-variable ?:name = ?string:expression, 
-           #key ?data:expression = 0, 
-                ?ref:expression = #f, 
+  { define ?var-type runtime-variable ?:name = ?string:expression,
+           #key ?data:expression = 0,
+                ?ref:expression = #f,
                 ?repeat:expression = #f,
-                ?section:expression = #"untraced-data", 
-                ?base?:expression = #t, 
-                ?public?:expression = #t, 
+                ?section:expression = #"untraced-data",
+                ?base?:expression = #t,
+                ?public?:expression = #t,
                 ?client?:expression = #f}
     => { define variable ?name = #f;
-         register-constant(method (be :: <harp-back-end>, outputter) 
+         register-constant(method (be :: <harp-back-end>, outputter)
 			     let mangle = ?var-type;
                              let ref = mangle(be, ?string);
 			     let repeat = ?repeat;
@@ -137,7 +137,7 @@ define macro runtime-variable-definer
                              ?name := ref;
                              output-variable(be, outputter, ref,
 					     (?ref & ins--constant-ref(be, ?ref))
-					      | ?data, 
+					      | ?data,
                                              repeat: repeat,
                                              public?: ?public?,
                                              section: ?section);
@@ -147,15 +147,15 @@ define macro runtime-variable-definer
                            client?: ?client?,
                            base?: ?base?) }
 var-type:
-  { } 
+  { }
     => { mangled-indirect-ref }
-  { direct } 
+  { direct }
     => { mangled-ref }
-  { c } 
+  { c }
     => { c-mangled-ref }
-  { c-full } 
+  { c-full }
     => { c-full-mangled-ref }
-  { c-full-indirect } 
+  { c-full-indirect }
     => { c-full-mangled-indirect-ref }
 end macro;
 
@@ -164,12 +164,12 @@ end macro;
 /// Defining external constants:-
 
 define macro runtime-external-definer
-  { define ?ext-type runtime-external ?:name 
-      = ?string:expression, #key ?data:* = #f, 
-                                 ?base?:expression = #t, 
+  { define ?ext-type runtime-external ?:name
+      = ?string:expression, #key ?data:* = #f,
+                                 ?base?:expression = #t,
                                  ?client?:expression = #f }
     => { define variable ?name = #f;
-         register-constant(method (?=be :: <harp-back-end>, outputter) 
+         register-constant(method (?=be :: <harp-back-end>, outputter)
                              let ref = if (?data)
                                          ?ext-type(?=be, ?string, ?data);
                                        else
@@ -183,27 +183,27 @@ define macro runtime-external-definer
                            base?: ?base?) }
 
 ext-type:
-  { } 
+  { }
     => { constant-mangled-ref }
-  { dylan-library } 
+  { dylan-library }
     => { dylan-library-constant-mangled-ref }
-  { dylan-internal } 
+  { dylan-internal }
     => { dylan-internal-constant-mangled-ref }
-  { dylan-internal-indirect } 
+  { dylan-internal-indirect }
     => { dylan-internal-variable-mangled-ref }
-  { dylan-wrapper } 
+  { dylan-wrapper }
     => { dylan-library-wrapper-mangled-ref }
-  { dylan-iep } 
+  { dylan-iep }
     => { dylan-library-iep-mangled-ref }
-  { c-fun } 
+  { c-fun }
     => { c-mangled-ref }
-  { c-indirect } 
+  { c-indirect }
     => { c-mangled-indirect-ref }
-  { c-full-indirect } 
+  { c-full-indirect }
     => { c-full-mangled-indirect-ref }
-  { win-fun } 
+  { win-fun }
     => { stdcall-mangled-ref }
-  { unmangled } 
+  { unmangled }
     => { ins--constant-ref }
   { ?:name }
     => { "dylan-" ## ?name ## "-mangled-ref" }
@@ -212,13 +212,13 @@ end macro;
 
 
 
-/// Defining variables within the runtime:- 
+/// Defining variables within the runtime:-
 
 /*
 define macro runtime-alias-definer
   { define runtime-alias ?:name = ?alias:name }
     => { define variable ?name = #f;
-         register-constant(method (be :: <harp-back-end>, outputter) 
+         register-constant(method (be :: <harp-back-end>, outputter)
                              ?name := ?alias;
                            end method,
                            ?#"name") }
@@ -231,15 +231,15 @@ end macro;
 //// Simple primitives and functions
 
 
-// Defining a simple primitive/function does 3 things:- 
+// Defining a simple primitive/function does 3 things:-
 //   1. defines what HARP code is generated for a primitive
 //   2. adds the code generation function to a list of registered primitives
 //   3. defines a variable which contains a constant reference
-//      for that primitive, so that it may be referenced from others 
+//      for that primitive, so that it may be referenced from others
 
 
 define macro runtime-function-aux-definer
-  { define ?adjectives runtime-function-aux ?:name 
+  { define ?adjectives runtime-function-aux ?:name
         (?mangler:expression, ?name-string:expression, ?options:*)
       ?body:*
     end }
@@ -253,7 +253,7 @@ define macro runtime-function-aux-definer
          end method;
 
          register-function
-           (method (be :: <harp-back-end>, outputter, output-one-fn :: <function>, 
+           (method (be :: <harp-back-end>, outputter, output-one-fn :: <function>,
                     #key limit, #all-keys)
               ignore(outputter);
               ignore(limit);
@@ -265,37 +265,37 @@ define macro runtime-function-aux-definer
             ?options) }
 
 options:
-  { } 
+  { }
     => { base?: #t, client?: #f }  // the defaults
-  { shared ... } 
+  { shared ... }
     => { client?: #t, base?: #t, ... }
-  { client ... } 
+  { client ... }
     => { client?: #t, base?: #f, ... }
-  { base ... } 
+  { base ... }
     => { client?: #f, base?: #t, ... }
   { ?:name ... }
     => {  ... }
 
 adjectives:
-  { } 
+  { }
     => { export: #"code-stub" }  // the defaults
-  { leaf ... } 
+  { leaf ... }
     => { defasm: #t, ... }
-  { frame ... } 
+  { frame ... }
     => { defasm: #f, ... } // actually the default anyway
-  { call-in ... } 
+  { call-in ... }
     => { call-in: #t, ... }
-  { no-export ... } 
+  { no-export ... }
     => { export: #f, ... }
-  { no-public ... } 
+  { no-public ... }
     => { public: #f, ... }
   { init ... }
     => { section: #"init-code", ... }
-  { shared ... } 
+  { shared ... }
     => { export: #f, ... }
-  { client ... } 
+  { client ... }
     => { export: #f, ... }
-  { base ... } 
+  { base ... }
     => { export: #"code-stub", ... }
   { no ?:name ... }
     => { ?#"name", #f, ... }
@@ -305,7 +305,7 @@ end macro;
 
 
 define macro runtime-function-definer
-  { define ?adjectives:* runtime-function ?:name 
+  { define ?adjectives:* runtime-function ?:name
       ?body:*
     end }
     => { define ?adjectives runtime-function-aux ?name
@@ -315,7 +315,7 @@ define macro runtime-function-definer
 end macro;
 
 define macro runtime-primitive-definer
-  { define used-by-client ?adjectives:* runtime-primitive ?:name 
+  { define used-by-client ?adjectives:* runtime-primitive ?:name
       ?body:*
     end }
     => { define ?adjectives runtime-primitive ?name ?body end;
@@ -323,8 +323,8 @@ define macro runtime-primitive-definer
            = primitive-name(?=be, as-lowercase(?"name")),
              client?: #t
        }
-             
-  { define ?adjectives:* runtime-primitive ?:name 
+
+  { define ?adjectives:* runtime-primitive ?:name
       ?body:*
     end }
     => { define ?adjectives runtime-function-aux "primitive-" ## ?name
@@ -362,7 +362,7 @@ end macro;
 
 
 define macro c-runtime-primitive-definer
-  { define used-by-client ?adjectives:* c-runtime-primitive ?:name 
+  { define used-by-client ?adjectives:* c-runtime-primitive ?:name
       ?body:*
     end }
     => { define ?adjectives c-runtime-primitive ?name ?body end;
@@ -370,7 +370,7 @@ define macro c-runtime-primitive-definer
            = c-primitive-name(?=be, as-lowercase(?"name")),
              client?: #t
        }
-             
+
   { define ?adjectives:* c-runtime-primitive ?:name
       ?body:*
     end }
@@ -386,7 +386,7 @@ end macro;
 
 
 define macro entry-point-definer
-  { define entry-point ?:name 
+  { define entry-point ?:name
         (?be:name :: ?be-type:expression, ?num:variable, #key ?limit:expression = 9)
       ?body:*
     end }
@@ -401,12 +401,12 @@ define macro entry-point-definer
 
          register-function
            (method (be :: <harp-back-end>, outputter, output-one-fn :: <function>,
-                    #key limit = ?limit, #all-keys) 
+                    #key limit = ?limit, #all-keys)
 	      let limit :: <integer> =
 		if (instance?(limit, <function>)) limit(be)
 		else limit end;
               ignore(outputter);
-              ?name ## "-refs" 
+              ?name ## "-refs"
                 := output-entry-point-set
                      (be,
                       output-one-fn,
@@ -420,16 +420,16 @@ end macro;
 // Entry point support
 
 define method output-entry-point-set
-    (be :: <harp-back-end>, 
-     output-one-fn :: <function>, 
-     emitter-fn :: <function>, 
-     name-stem :: <byte-string>, 
+    (be :: <harp-back-end>,
+     output-one-fn :: <function>,
+     emitter-fn :: <function>,
+     name-stem :: <byte-string>,
      limit :: <integer>)
     => (refs :: <vector>)
 
   local method output-an-entry-point (r) => (ref :: <constant-reference>)
           let name = entry-point-name(be, name-stem, r);
-          output-one-fn(name, method (be) emitter-fn(be, r) end, 
+          output-one-fn(name, method (be) emitter-fn(be, r) end,
                         defasm: #t, export: #"code-stub");
           ins--constant-ref(be, name);
         end;
@@ -446,12 +446,12 @@ end method;
 
 
 
-//// Switch tables 
+//// Switch tables
 
 
 
 define macro runtime-switch-table-definer
-  { define runtime-switch-table ?:name 
+  { define runtime-switch-table ?:name
       size   ?size:expression;
       prolog (?prolog:*);
       epilog (?epilog:*);
@@ -468,7 +468,7 @@ define macro runtime-switch-table-definer
 		  prolog (?prolog)
 		  epilog (?epilog)
 		  ?cases
-                end; 
+                end;
               ?name := output-table(?=be, outputter, ?"name", ?name ## "-entries", ?size);
             end method,
             ?#"name");
@@ -476,7 +476,7 @@ define macro runtime-switch-table-definer
          // Register a function for each special case of the table
          register-function
            (method (?=be :: <harp-back-end>, outputter, ?=output-one-fn :: <function>,
-                    #key limit, #all-keys) 
+                    #key limit, #all-keys)
               ignore(limit);
               ignore(outputter);
               output-table-entries ?name ## "-entries"
@@ -492,20 +492,20 @@ end macro;
 
 define macro output-table-entries
 
-  { output-table-entries ?:name 
+  { output-table-entries ?:name
       prolog (?prolog:*)
       epilog (?epilog:*)
     end }
     => { #() }
 
-  { output-table-entries ?:name 
+  { output-table-entries ?:name
       prolog (?prolog:*)
       epilog (?epilog:*)
       ?cases => ?:body;
       ?other-cases:*
     end }
     => { begin
-       
+
            local method gen-table-entry (?=be :: <harp-back-end>)
                    with-harp (?=be)
                      ?prolog;
@@ -537,13 +537,13 @@ end macro;
 
 define macro output-table-data-entries
 
-  { output-table-data-entries ?:name 
+  { output-table-data-entries ?:name
       prolog (?prolog:*)
       epilog (?epilog:*)
     end }
     => { #() }
 
-  { output-table-data-entries ?:name 
+  { output-table-data-entries ?:name
       prolog (?prolog:*)
       epilog (?epilog:*)
       ?cases => ?:body;
@@ -553,7 +553,7 @@ define macro output-table-data-entries
 
            let res = output-table-data-entry
                        (?=be, ?cases, ?"name");
-           pair(res, 
+           pair(res,
                 output-table-data-entries ?name
                   prolog (?prolog)
                   epilog (?epilog)
@@ -578,8 +578,8 @@ end macro;
 
 
 define method output-table-entry
-    (be :: <harp-back-end>, 
-     output-one-fn :: <function>, 
+    (be :: <harp-back-end>,
+     output-one-fn :: <function>,
      emitter-fn :: <function>,
      cases,
      name-stem :: <byte-string>)
@@ -590,7 +590,7 @@ define method output-table-entry
 end method;
 
 define method output-table-data-entry
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      cases,
      name-stem :: <byte-string>)
     => (ref-info :: <pair>)
@@ -600,14 +600,14 @@ define method output-table-data-entry
 end method;
 
 
-define method table-entry-name 
+define method table-entry-name
     (be :: <harp-back-end>, name :: <byte-string>, cases :: <vector>)
     => (name :: <byte-string>)
   raw-mangle(be, format-to-string("%s-%=", as-lowercase(name), cases[0]));
 end method;
 
 
-define method table-entry-name 
+define method table-entry-name
     (be :: <harp-back-end>, name :: <byte-string>, cases == #"default")
     => (name :: <byte-string>)
   raw-mangle(be, format-to-string("%s-default", as-lowercase(name)));
@@ -615,7 +615,7 @@ end method;
 
 
 define method output-table
-    (be :: <harp-back-end>, outputter, 
+    (be :: <harp-back-end>, outputter,
      name :: <byte-string>, entries :: <list>,
      table-size :: <integer>) => (ref :: <constant-reference>)
   // entries is a list of pairs, where each pair is of the form
@@ -646,7 +646,7 @@ end method;
 
 ignore(op--jump-into-switch-table);
 
-define method op--jump-into-switch-table 
+define method op--jump-into-switch-table
     (be :: <harp-back-end>, table :: <constant-reference>, offset-in-bytes)
   with-harp (be)
     nreg dest;
@@ -663,8 +663,8 @@ end method;
 
 /// General support, including name lookup
 //
-// The registration mechanism works in two stages. An ordered sequence 
-// of symbols is used to key into a table of output functions. 
+// The registration mechanism works in two stages. An ordered sequence
+// of symbols is used to key into a table of output functions.
 
 define method register
     (seq :: <stretchy-vector>, table :: <table>, fn :: <function>, name :: <symbol>)
@@ -674,14 +674,14 @@ define method register
 end method;
 
 
-define method lookup-fn 
+define method lookup-fn
     (val :: <symbol>, table :: <table>) => (fn :: <function>)
   table[val];
 end method;
 
 
 
-/// Now the specific support. 
+/// Now the specific support.
 /// This is divided into two parallel register sets, one for the base
 /// runtime, and one for the client runtime.
 
@@ -700,7 +700,7 @@ end macro;
 
 /// Registration is also separated into two distinct
 /// registers - one for data (literals and constants), and the other for code
-/// (primitives, functions, entry-points etc). 
+/// (primitives, functions, entry-points etc).
 
 
 
@@ -723,7 +723,7 @@ end method;
 */
 
 define method register-constant
-     (output-fn :: <function>, name :: <symbol>, 
+     (output-fn :: <function>, name :: <symbol>,
       #key client? = #f, base? = (~ client?))
       => ()
   if (base?)
@@ -738,8 +738,8 @@ end method;
 
 define method output-data
      (be :: <harp-back-end>, outputter, #key client? = #f) => ()
-  let (runtime-data, data-table) = 
-    if (client?) 
+  let (runtime-data, data-table) =
+    if (client?)
       values(*client-runtime-data*, *client-data-table*)
     else values(*base-runtime-data*, *base-data-table*)
     end;
@@ -772,7 +772,7 @@ end method;
 */
 
 define method register-function
-     (output-function :: <function>, name :: <symbol>, 
+     (output-function :: <function>, name :: <symbol>,
       #key client? = #f, base? = (~ client?))
       => ()
   if (base?)
@@ -788,11 +788,11 @@ define method register-function
 end method;
 
 define method output-functions
-     (be :: <harp-back-end>, outputter, output-one-fn :: <function>, 
+     (be :: <harp-back-end>, outputter, output-one-fn :: <function>,
       #key limit = #f, client? = #f, #all-keys) => ()
   let output-keys = if (limit) vector(limit: limit) else #[] end;
-  let (runtime-functions, functions-table) = 
-    if (client?) 
+  let (runtime-functions, functions-table) =
+    if (client?)
       values(*client-runtime-functions*, *client-functions-table*)
     else values(*base-runtime-functions*, *base-functions-table*)
     end;

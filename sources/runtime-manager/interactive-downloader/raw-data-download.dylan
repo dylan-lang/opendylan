@@ -10,12 +10,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    The top-level function to download the raw data.
 
 define method download-all-raw-data (trans :: <interactive-transaction>) => ()
-  for (section-class in #[#"compiled-code", 
-                          #"data", 
+  for (section-class in #[#"compiled-code",
+                          #"data",
 
 			  // imports _must_ precede fixups
                           #"dylan-import",
-                          #"dylan-fixup", 
+                          #"dylan-fixup",
 
                           #"dylan-exact",
                           #"dylan-static",

@@ -14,7 +14,7 @@ define function make-keyboard-gesture
   make(<keyboard-gesture>, keysym: keysym, modifiers: modifiers)
 end function make-keyboard-gesture;
 
-
+
 //---*** cpage: 1998.08.12 These are (hopefully) temporary hacks to
 //              allow me to experiment with using Windows APIs better
 //              without having to modify/build DUIM. Sideways methods
@@ -29,7 +29,7 @@ define open generic order-frames
 define open generic restore-frame
     (frame :: <frame>) => (frame :: <frame>);
 
-
+
 /// Command handling
 
 define open generic command-available?

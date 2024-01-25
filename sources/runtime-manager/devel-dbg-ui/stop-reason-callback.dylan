@@ -10,7 +10,7 @@ define method react-to-stop-reason
                 (application :: <application>,
                  stop-reason :: <create-process-stop-reason>)
                  => (interested? :: <boolean>)
-   
+
    if (*current-debugger-options*.show-debug-output?)
      debugger-message ("Application has started running.");
    end if;
@@ -102,7 +102,7 @@ define method react-to-stop-reason
      debugger-message ("  From: %s",
                        stop-reason.stop-reason-library.library-image-name);
    end if;
-   let library-name = 
+   let library-name =
      strip-hqn-prefix
        (as-lowercase(stop-reason.stop-reason-library.library-core-name));
    let plausible-module-names =
@@ -112,7 +112,7 @@ define method react-to-stop-reason
             concatenate(library-name, "-internal"),
             concatenate(library-name, "-extensions"));
    for (module-name in plausible-module-names)
-     let context = make(<dylan-name-context>, 
+     let context = make(<dylan-name-context>,
                         library: library-name, module: module-name);
      add!(application.application-likely-namespaces, context);
    end for;
@@ -158,7 +158,7 @@ define method react-to-stop-reason
 end method;
 
 define method react-to-stop-reason
-    (application :: <application>, 
+    (application :: <application>,
      stop-reason :: <source-step-out-stop-reason>)
   => (interested? :: <boolean>)
   debugger-message("Thread finished STEP-OUT operation.");
@@ -166,7 +166,7 @@ define method react-to-stop-reason
 end method;
 
 define method react-to-stop-reason
-    (application :: <application>, 
+    (application :: <application>,
      stop-reason :: <source-step-over-stop-reason>)
   => (interested? :: <boolean>)
   debugger-message("Thread finished STEP-OVER operation.");
@@ -174,7 +174,7 @@ define method react-to-stop-reason
 end method;
 
 define method react-to-stop-reason
-    (application :: <application>, 
+    (application :: <application>,
      stop-reason :: <source-step-into-stop-reason>)
   => (interested? :: <boolean>)
   debugger-message("Thread finished STEP-INTO operation.");
@@ -206,8 +206,8 @@ define method react-to-stop-reason
   else
     debugger-message("Restarts available:");
     for (i from 1 to size(restart-set))
-      debugger-message("  %d : %s", 
-                        i, 
+      debugger-message("  %d : %s",
+                        i,
                         remote-restart-description(restart-set[i - 1]));
     end for;
   end if;
@@ -364,7 +364,7 @@ define method react-to-stop-reason
 end method;
 
 define method react-to-stop-reason
-    (application :: <application>, 
+    (application :: <application>,
      stop-reason :: <stack-overflow-exception-stop-reason>)
         => (interested? :: <boolean>)
   let chance-message =
@@ -384,7 +384,7 @@ define method react-to-stop-reason
 end method;
 
 define method react-to-stop-reason
-    (application :: <application>, 
+    (application :: <application>,
      stop-reason :: <integer-overflow-exception-stop-reason>)
         => (interested? :: <boolean>)
   let chance-message =

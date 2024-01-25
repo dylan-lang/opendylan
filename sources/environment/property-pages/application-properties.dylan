@@ -21,7 +21,7 @@ define sideways method frame-default-property-type
   #"threads"
 end method frame-default-property-type;
 
-
+
 /// Application threads property page
 
 define sideways method make-frame-property-page-displayer
@@ -75,7 +75,7 @@ define method thread-label
   thread-state-label(project, state)
 end method thread-label;
 
-
+
 /// Application components property page
 
 define sideways method make-frame-property-page-displayer

@@ -9,13 +9,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///// WAIT-FOR-STOP-REASON-WITH-TIMEOUT
 //    Called if the timeout keyword is supplied.
 
-define method wait-for-stop-reason-with-timeout 
+define method wait-for-stop-reason-with-timeout
     (conn :: <local-access-connection>, timeout :: <integer>,
      #key profile-at = #f)
   => (code :: <integer>)
   let code :: <integer> =
-    if (profile-at) 
-      nub-profile-wait-for-stop-reason-with-timeout 
+    if (profile-at)
+      nub-profile-wait-for-stop-reason-with-timeout
         (conn.connection-process, timeout, profile-at);
     else
       nub-wait-for-stop-reason-with-timeout
@@ -28,7 +28,7 @@ end method;
 ///// WAIT-FOR-STOP-REASON-NO-TIMEOUT
 //    Called if no timeout keyword is supplied.
 
-define method wait-for-stop-reason-no-timeout 
+define method wait-for-stop-reason-no-timeout
     (conn :: <local-access-connection>,
      #key profile-at = #f) => (code :: <integer>)
   let code :: <integer> =
@@ -116,7 +116,7 @@ end method;
 //    All stop reasons are associated with the thread that generated
 //    them. This function returns a handle on that thread.
 
-define method get-debug-event-thread 
+define method get-debug-event-thread
     (conn :: <local-access-connection>)=> (thr :: <NUBTHREAD>)
   nub-stop-reason-thread (conn.connection-process);
 end method;
@@ -126,7 +126,7 @@ end method;
 //    This function is currently pointless, since there is only one
 //    <remote-process>.
 
-define method get-debug-event-process 
+define method get-debug-event-process
     (conn :: <local-access-connection>) => (proc :: <remote-process>)
   let nub-process = nub-stop-reason-process (conn.connection-process);
   let process = make (<remote-process>,
@@ -160,7 +160,7 @@ end method;
 //    Returns the address that the application was trying to access when
 //    an access violation occurred.
 
-define method get-exception-violation-address 
+define method get-exception-violation-address
   (conn :: <local-access-connection>)
     => (ptr :: <remote-value>)
   nub-stop-reason-violation-address (conn.connection-process);

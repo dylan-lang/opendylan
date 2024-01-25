@@ -381,7 +381,7 @@ define function generate-runtime
   end;
 end function;
 
-
+
 /// Main program
 
 begin

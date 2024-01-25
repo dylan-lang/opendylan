@@ -86,7 +86,7 @@ define macro with-spacing
          make(<spacing>, child: _child, ?options) }
 end macro with-spacing;
 
-
+
 /// Group boxes, aka labelled borders
 
 define open abstract class <group-box>

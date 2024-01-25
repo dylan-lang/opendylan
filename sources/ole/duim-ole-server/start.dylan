@@ -40,7 +40,7 @@ define method duim/port-start-frame
     let doc = App.get-doc;
 
     // if not started by OLE, then show the Window, and create a "fake"
-    // object, else Register a pointer to IClassFactory so that OLE can 
+    // object, else Register a pointer to IClassFactory so that OLE can
     // instruct us to make an object at the appropriate time.
     if ( ~ App.started-by-ole? )
       let obj = apply(make, class, doc: doc, class-args);
@@ -73,7 +73,7 @@ define method duim/make-event-queue
   #f
 end method duim/make-event-queue;
 
-
+
 
 define method frame-registration-parameters( frame :: <embeddable-frame> )
  => (prog-id, title, short-title);
@@ -142,13 +142,13 @@ define method ole-event-loop ( frame :: <embeddable-frame> )
   end with-stack-structure
 end method ole-event-loop;
 
-
+
 
 // (Originally, these actions were in response to a WM_CLOSE message.)
 define method close-app ( App :: <DUIM-server-app> ) => ();
 
   Output-Debug-String("close-app\r\n");
-  
+
   // if there is still a document
   let doc = App.get-doc;
   if ( doc )

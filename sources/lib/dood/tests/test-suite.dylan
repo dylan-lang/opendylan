@@ -11,12 +11,12 @@ define variable d = #f;
 
 define method force-mkdb ()
   // dood-world-reset(dood-world-default());
-  make(<dood>, locator: "d", direction: #"input-output", 
+  make(<dood>, locator: "d", direction: #"input-output",
        if-exists: #"replace");
 end method;
 
 define method do-store
-    (object, 
+    (object,
      #key dood, name, reopen? = dood, close? = ~dood, buffer-size = 100,
      #all-keys)
   let dood
@@ -42,7 +42,7 @@ define method do-store
   end block;
 end method;
 
-define method do-load 
+define method do-load
     (#key name, dood, flush? = ~name, close? = ~dood, buffer-size = 100, #all-keys)
   let dood
     = if (dood)
@@ -141,7 +141,7 @@ define test collections ()
   check-equal("VECTOR", store(vector(1, 2, 3)), load());
   check-equal("NESTED VECTOR", store(vector(1, 2, vector(3))), load());
   check-equal("STRETCHY-VECTOR", store(stretchy-vector(1, 2, 3)), load());
-  check-equal("NESTED STRETCHY-VECTOR", 
+  check-equal("NESTED STRETCHY-VECTOR",
               store(stretchy-vector(stretchy-vector(1), 2, 3)), load());
   check-equal("DEQUE", store(deque(1, 2, 3)), load());
   check-equal("NESTED DEQUE", store(deque(deque(1), 2, 3)), load());
@@ -152,14 +152,14 @@ end test;
 define constant $reinit-value = 55;
 
 define dood-class <weak-object> (<object>)
-  weak slot weak-object, 
+  weak slot weak-object,
     reinit-expression: $reinit-value,
     init-value: 0, init-keyword: object:;
 end dood-class;
 
 define test weak-slots ()
-  check-true("WEAK REINITED", 
-             begin 
+  check-true("WEAK REINITED",
+             begin
                store(make(<weak-object>, object: $reinit-value - 1));
                weak-object(load()) = $reinit-value
              end);
@@ -169,55 +169,55 @@ define dood-class <lazy-object> (<object>)
   lazy slot lazy-object, init-keyword: object:;
 end dood-class;
 
-define method lazy-slot-checks 
-    (class :: <class>, name :: <byte-string>, 
+define method lazy-slot-checks
+    (class :: <class>, name :: <byte-string>,
      getter :: <function>, private-getter :: <function>)
   check-true(concatenate(name, " SHALLOW LAZY"),
-             begin 
-               store(make(class, object: "ABC")); 
+             begin
+               store(make(class, object: "ABC"));
                instance?(private-getter(load()), <dood-slot-value-proxy>)
              end);
   check-equal(concatenate(name, " FULFILLS SHALLOW PROMISE"),
-              begin 
-                store(make(class, object: "ABC")); 
+              begin
+                store(make(class, object: "ABC"));
                 getter(load())
               end,
               "ABC");
-  local method make-deep-lazy-object (value) 
+  local method make-deep-lazy-object (value)
           list(list(make(class, object: value)))
         end method;
   local method deep-lazy-object (start)
           head(head(start))
         end method;
   check-true(concatenate(name, " DEEPLY LAZY"),
-             begin 
-               store(make-deep-lazy-object("ABC")); 
-               instance?(private-getter(deep-lazy-object(load())), 
+             begin
+               store(make-deep-lazy-object("ABC"));
+               instance?(private-getter(deep-lazy-object(load())),
                          <dood-slot-value-proxy>)
              end);
   check-equal(concatenate(name, " FULFILLS DEEP PROMISE"),
-              begin 
-                store(make-deep-lazy-object("ABC")); 
+              begin
+                store(make-deep-lazy-object("ABC"));
                 getter(deep-lazy-object(load()))
               end,
               "ABC");
   check-true(concatenate(name, " DOUBLY DEEPLY LAZY ONCE"),
-             begin 
-               store(make-deep-lazy-object(make-deep-lazy-object("ABC"))); 
-               instance?(private-getter(deep-lazy-object(load())), 
+             begin
+               store(make-deep-lazy-object(make-deep-lazy-object("ABC")));
+               instance?(private-getter(deep-lazy-object(load())),
                          <dood-slot-value-proxy>)
              end);
   check-true(concatenate(name, " DOUBLY DEEPLY LAZY TWICE"),
-             begin 
-               store(make-deep-lazy-object(make-deep-lazy-object("ABC"))); 
+             begin
+               store(make-deep-lazy-object(make-deep-lazy-object("ABC")));
                instance?(private-getter
                           (deep-lazy-object
-                            (getter(deep-lazy-object(load())))), 
+                            (getter(deep-lazy-object(load())))),
                          <dood-slot-value-proxy>)
              end);
   check-equal(concatenate(name, " FULFILLS DOUBLY DEEP PROMISE"),
-              begin 
-                store(make-deep-lazy-object(make-deep-lazy-object("ABC"))); 
+              begin
+                store(make-deep-lazy-object(make-deep-lazy-object("ABC")));
                 getter(deep-lazy-object(getter(deep-lazy-object(load()))))
               end,
               "ABC");
@@ -225,9 +225,9 @@ end method;
 
 define test lazy-slots ()
   lazy-slot-checks(<lazy-object>, "LAZY", lazy-object, private-lazy-object);
-  check-true("LAZY DOES WRITE BACK", 
-             begin 
-               store(make(<lazy-object>, object: "ABC")); 
+  check-true("LAZY DOES WRITE BACK",
+             begin
+               store(make(<lazy-object>, object: "ABC"));
                let obj = load();
                lazy-object(obj);
                private-lazy-object(obj) = "ABC"
@@ -238,24 +238,24 @@ define test lazy-table ()
   let tbl
     = as-explicit-key-collection
         (<dood-lazy-table>, list(pair(1, 2), pair(3, 4)));
-  check-true("LAZY TABLE IS LAZY", 
+  check-true("LAZY TABLE IS LAZY",
              begin
                store(tbl);
-               every?(rcurry(instance?, <dood-address-proxy>), 
+               every?(rcurry(instance?, <dood-address-proxy>),
                       dood-lazy-table-data(load()))
              end);
   check-equal("LAZY TABLE READS BACK", store(tbl), load());
 end test;
 
 define dood-class <disk-object> (<object>)
-  disk slot disk-object, 
+  disk slot disk-object,
     init-value: 0, init-keyword: object:;
 end dood-class;
 
 define test disk-slots ()
   lazy-slot-checks(<disk-object>, "DISK", disk-object, private-disk-object);
-  check-true("DOESN'T WRITE BACK", 
-             begin 
+  check-true("DOESN'T WRITE BACK",
+             begin
                store(make(<disk-object>, object: "ABC"));
                let obj = load();
                disk-object(obj);
@@ -283,21 +283,21 @@ define method match?
 end method;
 
 define test mapped-objects ()
-  check-true("MAPPED TREE", 
-             begin 
+  check-true("MAPPED TREE",
+             begin
 	       let tree
-		 = make(<mapped-object>, 
+		 = make(<mapped-object>,
 			left:  make(<mapped-object>, left: #(1, 2), right: 3),
 			right: make(<mapped-object>, left: 4, right: #(1, 2)));
                store(tree);
                match?(tree, load(), make(<table>))
              end);
-  check-true("MAPPED GRAPH", 
-             begin 
+  check-true("MAPPED GRAPH",
+             begin
 	       let shared-tree
 		 = make(<mapped-object>, left: #(1, 2), right: #(3, 4));
 	       let tree
-		 = make(<mapped-object>, 
+		 = make(<mapped-object>,
 			left:  make(<mapped-object>, left: shared-tree, right: 5),
 			right: make(<mapped-object>, left: 6, right: shared-tree));
                store(tree);
@@ -310,24 +310,24 @@ define dood-class <mapped-and-owned-object> (<dood-mapped-and-owned-object>)
 end dood-class;
 
 define test mapped-and-owned-objects ()
-  check-true("MAPPED AND OWNED", 
-             begin 
-               store(make(<mapped-and-owned-object>, 
-			  value: make(<mapped-and-owned-object>, 
+  check-true("MAPPED AND OWNED",
+             begin
+               store(make(<mapped-and-owned-object>,
+			  value: make(<mapped-and-owned-object>,
                                       value: list(1, 2))));
                mapped-value(mapped-value(load())) = #(1, 2)
              end);
 end test;
 
 define method store-load-test (name, dood, object)
-  check-equal(name, 
-              do-store(object, dood: dood), 
+  check-equal(name,
+              do-store(object, dood: dood),
               do-load(dood: dood, flush?: #f));
 end method;
 
 define test rewrites ()
-  let dood = 
-    make(<dood>, locator: "RRR", direction: #"input-output", 
+  let dood =
+    make(<dood>, locator: "RRR", direction: #"input-output",
          if-exists: #"replace");
   block ()
     for (i from 1 below 10,
@@ -340,7 +340,7 @@ define test rewrites ()
 end test;
 
 define dood-class <reinit-object> (<object>)
-  slot reinit-object, 
+  slot reinit-object,
     init-value: 0, init-keyword: object:;
 end dood-class;
 
@@ -350,18 +350,18 @@ define method dood-reinitialize (dood :: <dood>, object :: <reinit-object>) => (
 end method;
 
 define test reinitialization ()
-  check-true("USER REINITIALIZATION", 
-             begin 
-               store(make(<reinit-object>, object: 1)); 
+  check-true("USER REINITIALIZATION",
+             begin
+               store(make(<reinit-object>, object: 1));
                reinit-object(load()) = 1 + 1
              end);
 end test;
 
 define test reusing ()
   check-equal("REUSING A DOOD THROUGH WORLD LOOKUP",
-              make(<dood>, locator: "XXX", direction: #"input-output", 
+              make(<dood>, locator: "XXX", direction: #"input-output",
                    if-exists: #"replace"),
-              begin 
+              begin
                 let d = make(<dood>, locator: "XXX");
                 block ()
                   d
@@ -406,7 +406,7 @@ end class;
 
 define method dood-make-cross-proxy
     (dood :: <dood>, object, external-dood :: <dood>) => (object)
-  make(<dood-cross-binding-proxy>, 
+  make(<dood-cross-binding-proxy>,
        dood-name: dood-name(external-dood),
        name:      external-name(object))
 end method;
@@ -417,7 +417,7 @@ define method dood-external-object (dood :: <dood>, name)
       if (external-name(object) == name)
         return(object)
       end if;
-    end for;  
+    end for;
   end block;
 end method;
 
@@ -445,7 +445,7 @@ end test;
 */
 
 ///
-/// 
+///
 ///
 
 define class <external-dooded-object> (<object>)
@@ -468,12 +468,12 @@ end class;
 define method make-external-dooded-proxy
     (dood :: <dood>, object :: <external-dooded-object>) => (proxy)
   format-out("MAKING EXT DOODED PROXY %= %=\n", dood-name(dood), external-name(object));
-  make(<external-dooded-proxy>, 
+  make(<external-dooded-proxy>,
        dood-name: dood-name(dood),
        name:      external-name(object))
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <external-dooded-object>)
  => (proxy :: type-union(<external-dooded-proxy>, <external-dooded-object>))
   if (dood-name(dood) == external-dood-name(object))
@@ -492,7 +492,7 @@ define method external-dooded-object (dood :: <dood>, name)
       if (external-name(object) == name)
         return(object)
       end if;
-    end for;  
+    end for;
   end block;
 end method;
 
@@ -504,9 +504,9 @@ end method;
 define test external-dooded-proxies ()
   /*
   dood-world-reset(dood-world-default());
-  let i = make(<external-dooded-object>, 
+  let i = make(<external-dooded-object>,
 	       dood-name: #"INT", name: #"I", value: list(1));
-  let e = make(<external-dooded-object>, 
+  let e = make(<external-dooded-object>,
 	       dood-name: #"EXT", name: #"E", value: list(2));
   let (obj, ext-dood) = do-store(list(e), name: "EXT", close?: #f);
   let (obj, int-dood) = do-store(list(i, e), name: "INT", close?: #f);
@@ -525,9 +525,9 @@ define test external-dooded-proxies ()
   */
   // TRY SAME WITHOUT FIRST COMMITTING E TO EXT
   // dood-world-reset(dood-world-default());
-  let i = make(<external-dooded-object>, 
+  let i = make(<external-dooded-object>,
 	       dood-name: #"INT", name: #"I", value: list(1));
-  let e = make(<external-dooded-object>, 
+  let e = make(<external-dooded-object>,
 	       dood-name: #"EXT", name: #"E", value: list(2));
   let (obj, ext-dood) = do-store(#(), name: "EXT", close?: #f);
   let (obj, int-dood) = do-store(list(i, e), name: "INT", close?: #f);
@@ -548,8 +548,8 @@ define test external-dooded-proxies ()
   dood-close(int-dood, abort?: #t);
 end test;
 
-define suite dood-test-suite 
-    (setup-function:   method () d := force-mkdb() end, 
+define suite dood-test-suite
+    (setup-function:   method () d := force-mkdb() end,
      cleanup-function: method () dood-close(d) end)
   test primitives;
   test program-bindings;

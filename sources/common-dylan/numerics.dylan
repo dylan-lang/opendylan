@@ -21,7 +21,7 @@ define method integer-length
   $machine-word-size - %count-high-zeros(word)
 end method;
 
-
+
 /// Floating point
 
 define constant <float-classification>
@@ -45,7 +45,7 @@ end;
 define generic float-digits (float :: <float>) => (digits :: <integer>);
 define generic float-precision (float :: <float>) => (digits :: <integer>);
 
-
+
 /// Single float
 
 // ----------------------------------------------------------------
@@ -204,7 +204,7 @@ end;
 define constant $single-float-epsilon :: <single-float>
   = scale-float(1.0s0, 1 - $ieee-754-single-float-digits);
 
-
+
 /// Double float
 
 // ----------------------------------------------------------------

@@ -243,10 +243,10 @@ end;
 // Issue 1091: remove on <range> can return an invalid object (https://github.com/dylan-lang/opendylan/issues/1091)
 define test issue-1091 ()
   let test-range = range(from: 1, size: 1);
-  check-false("one element range is not empty", empty?(test-range)); 
+  check-false("one element range is not empty", empty?(test-range));
   check-equal("one element range has size 1", 1, size(test-range));
   test-range := remove(test-range, 1);
-  check-true("empty range is empty", empty?(test-range)); 
+  check-true("empty range is empty", empty?(test-range));
   check-equal("empty range has size 0", 0, size(test-range));
 end;
 

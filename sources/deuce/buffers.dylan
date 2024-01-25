@@ -483,7 +483,7 @@ define method gc-buffer
   do-lines(gc-line, buffer)
 end method gc-buffer;
 
-
+
 /// Non-file buffers
 
 // Mixin for buffers that contain random textual/graphical data,
@@ -586,7 +586,7 @@ define function make-initial-buffer
   buffer
 end function make-initial-buffer;
 
-
+
 /// File buffers
 
 // Mixin for buffers that contain textual/graphical data gotten by
@@ -897,7 +897,7 @@ end class <file-buffer>;
 define sealed domain make (singleton(<file-buffer>));
 define sealed domain initialize (<file-buffer>);
 
-
+
 /// Special purpose buffers
 
 // Mixin for buffers that contain "special purpose" data, e.g.,
@@ -959,7 +959,7 @@ define open abstract class <basic-special-purpose-buffer>
     (<special-purpose-buffer-mixin>, <basic-buffer>)
 end class <basic-special-purpose-buffer>;
 
-
+
 /// Buffer coercions
 
 define method as-file-buffer
@@ -1011,7 +1011,7 @@ define method as-file-buffer
   new-buffer
 end method as-file-buffer;
 
-
+
 /// Navigation within buffers
 
 define method do-lines
@@ -1066,7 +1066,7 @@ define method as
   end
 end method as;
 
-
+
 /// Line navigation within buffers
 
 // 'line-next' returns #f for the last line in a section, so you need to
@@ -1187,7 +1187,7 @@ define method bp-node
   line-node(bp-line(bp), buffer: bp-buffer(bp))
 end method bp-node;
 
-
+
 /// Adding and removing nodes to buffers
 
 define sealed method add-node!
@@ -1262,7 +1262,7 @@ define sealed method update-buffer-line-count
   end
 end method update-buffer-line-count;
 
-
+
 /// Mode syntax tables
 
 define sealed inline method word-syntax-table

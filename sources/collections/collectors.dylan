@@ -92,7 +92,7 @@ define constant <stretchy-sequence-type>
 //  = type-union(subclass(<stretchy-sequence>), <limited-stretchy-sequence-type>);
   = subclass(<stretchy-sequence>);
 
-define inline method collector-protocol 
+define inline method collector-protocol
     (class :: <stretchy-sequence-type>, #key)
   => (new-collector      :: <stretchy-sequence>,
       add-first          :: <function>,
@@ -153,7 +153,7 @@ end class;
 
 define method box (object) make(<box>, object: object) end;
 
-define inline method collector-protocol 
+define inline method collector-protocol
     (class :: subclass(<number>), #key from = 0, by = \+)
   => (new-collector      :: <box>,
       add-first          :: <function>,
@@ -162,10 +162,10 @@ define inline method collector-protocol
       add-sequence-last  :: <function>,
       collection         :: <function>)
   values(box(from),
-         method (collector, value) 
+         method (collector, value)
            collector.object := by(value, collector.object);
          end,
-         method (collector, value) 
+         method (collector, value)
            collector.object := by(collector.object, value);
          end,
          sequence-collection-not-yet-implemented,

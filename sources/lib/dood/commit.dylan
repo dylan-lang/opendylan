@@ -14,7 +14,7 @@ define function check-not-read-only (dood :: <dood>)
 end function;
 
 define method dood-commit
-    (dood :: <dood>, 
+    (dood :: <dood>,
      #key flush?, dump?, break?, parents?, clear? = #t, stats?, size) => ()
   check-not-read-only(dood);
   dood-initialize-walker!(dood);
@@ -31,7 +31,7 @@ define method dood-commit
   block ()
     local method commit-root (object, id)
 	    dood-walk-from
-	      (dood, identity, object, 
+	      (dood, identity, object,
                batch?: batch?, parents?: parents?, commit?: #t);
 	    dood-write-at(dood, walked-pointer(dood, object), id);
 	  end method;
@@ -39,13 +39,13 @@ define method dood-commit
     // commit-root(dood-proxies(dood), $dood-proxies-id);
     commit-root(dood-root(dood), $dood-root-id);
     dood-write-at
-      (dood, disk-pointer(dood, $dood-version), 
+      (dood, disk-pointer(dood, $dood-version),
        $dood-version-id);
     dood-write-at
-      (dood, disk-pointer(dood, dood-specified-user-version(dood)), 
+      (dood, disk-pointer(dood, dood-specified-user-version(dood)),
        $dood-user-version-id);
     dood-write-at
-      (dood, disk-pointer(dood, dood-free-address(dood)), 
+      (dood, disk-pointer(dood, dood-free-address(dood)),
        $dood-free-address-id);
     dood-force-output(dood);
     unless (break?)
@@ -53,7 +53,7 @@ define method dood-commit
     end unless;
     dood-force-output(dood);
     if (dump?)
-      dump(dood); 
+      dump(dood);
     end if;
   cleanup
     if (clear?)
@@ -71,8 +71,8 @@ define method dood-commit
       dood-statistics(dood);
     end if;
   end block;
-end method;  
-  
+end method;
+
 /*
 define method dood-shallow-commit
     (dood :: <dood>, object) => (pointer :: <pointer>)

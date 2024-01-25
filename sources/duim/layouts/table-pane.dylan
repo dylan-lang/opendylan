@@ -387,7 +387,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<table-layout-pane>));
 define sealed domain initialize (<table-layout-pane>);
 
-
+
 /// Grid panes
 
 define open abstract class <grid-layout> (<table-layout>)

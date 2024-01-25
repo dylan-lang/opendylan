@@ -17,7 +17,7 @@ define method display-message
   (result ~= 0)
 end method display-message;
 
-
+
 /// File open/save dialogs
 
 define method make-open-file-name
@@ -62,7 +62,7 @@ define method display-save-as-dialog
   GetSaveFileName(file)
 end method display-save-as-dialog;
 
-
+
 /// Color dialog
 
 /*
@@ -85,7 +85,7 @@ define method display-color-dialog
   display-message(window, "Color dialog not yet implemented!")
 end method display-color-dialog;
 
-
+
 /// Font dialog
 
 define method make-font-choice
@@ -109,7 +109,7 @@ define method display-font-dialog
   ChooseFont(font-choice);
 end method display-font-dialog;
 
-
+
 /// Find and replace dialogs
 
 define method make-find-options
@@ -141,7 +141,7 @@ define method display-replace-dialog
   null-pointer?(ReplaceText(options))
 end method display-replace-dialog;
 
-
+
 /// Printer dialogs
 
 define method display-page-setup-dialog

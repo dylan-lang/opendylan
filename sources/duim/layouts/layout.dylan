@@ -69,7 +69,7 @@ define method do-allocate-space
   #f
 end method do-allocate-space;
 
-
+
 /// Layout Mixin
 
 define open abstract class <layout-mixin> (<layout>)
@@ -97,7 +97,7 @@ define method sheet-layed-out-to-size?
   & width = old-width & height = old-height
 end method sheet-layed-out-to-size?;
 
-
+
 /// Space Requirement Mixin
 
 // This class manages a space requirement object for panes that don't
@@ -168,7 +168,7 @@ define method reset-space-requirement
   pane-space-requirement(pane) := space-requirement
 end method reset-space-requirement;
 
-
+
 /// Cached Space Requirements
 
 // If both <cached-space-requirement-mixin> and <space-requirement-mixin>
@@ -239,7 +239,7 @@ define method reset-space-requirement
   pane.%space-requirement-cache := #f
 end method reset-space-requirement;
 
-
+
 /// Client Overridability
 
 // Bits 15..16  of 'sheet-flags' are reserved for fixed space requirements
@@ -336,7 +336,7 @@ define method compose-space
   end
 end method compose-space;
 
-
+
 /// Wrapping Layout Mixin
 
 // This class gets used when the pane in question uses exactly the same
@@ -399,7 +399,7 @@ define method do-allocate-space
   end
 end method do-allocate-space;
 
-
+
 /// Generally useful layout function
 /// Used all over to satisfy constraints
 
@@ -498,7 +498,7 @@ define function compose-space-for-items
   sizes
 end function compose-space-for-items;
 
-
+
 /// The basic layout pane
 
 // The internal layout panes (boxes, tables) are all built on this.
@@ -510,7 +510,7 @@ define open abstract class <layout-pane>
      <basic-sheet>)
 end class <layout-pane>;
 
-
+
 /// Horizontal and vertical layout mixins
 
 define open abstract class <horizontal-layout-mixin> (<layout>)
@@ -558,7 +558,7 @@ define method initialize
   end;
 end method initialize;
 
-
+
 /// Layout borders
 
 define open abstract class <layout-border-mixin> (<layout>)
@@ -566,7 +566,7 @@ define open abstract class <layout-border-mixin> (<layout>)
     init-keyword: border:;
 end class <layout-border-mixin>;
 
-
+
 /// Alignment hacking
 
 define method sheet-interpret-alignment
@@ -613,7 +613,7 @@ define method layout-align-sheet-y
   sheet-y-alignment(sheet, layout-y-alignment(layout), top, bottom, key: key)
 end method layout-align-sheet-y;
 
-
+
 /// Fixed layouts
 
 // Fixed layouts can have any number of children, but there's no layout
@@ -649,7 +649,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<fixed-layout-pane>));
 define sealed domain initialize (<fixed-layout-pane>);
 
-
+
 /// Pinboards
 
 // Pinboards are like fixed layouts, except that they enforce
@@ -692,7 +692,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<pinboard-layout-pane>));
 define sealed domain initialize (<pinboard-layout-pane>);
 
-
+
 /// Stacks
 
 // Stack layouts position all of their children at the top-left

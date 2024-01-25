@@ -20,7 +20,7 @@ define sideways method frame-default-property-type
   #"contents"
 end method frame-default-property-type;
 
-
+
 /// Slot wrapper
 //
 // This object encapsulates a slot name and value
@@ -72,7 +72,7 @@ define method frame-sort-object-contents
   end
 end method frame-sort-object-contents;
 
-
+
 /// Property page
 
 define sideways method make-frame-property-page-displayer
@@ -113,7 +113,7 @@ define method frame-print-object-content
   end
 end method frame-print-object-content;
 
-
+
 /// Browsing of slot entries
 
 define method frame-browse-slot-wrapper-getter

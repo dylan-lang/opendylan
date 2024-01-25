@@ -1,10 +1,10 @@
-Module: dylan-user 
+Module: dylan-user
 Author:    Neal Feinberg, Sonya E. Keene, Robert O. Mathews, P. Tucker Withington
 Synopsis:  The library and module definitions of the position component.
-Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington, 
-	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc. 
-	Reproduced by permission of Addison-Wesley Longman 
-	Publishing Company, Inc.  All rights reserved. No further 
+Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
+	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc.
+	Reproduced by permission of Addison-Wesley Longman
+	Publishing Company, Inc.  All rights reserved. No further
 	copying, downloading or transmitting of this material
 	is allowed without the prior written permission of the
 	publisher.
@@ -17,7 +17,7 @@ define library angle
   use sixty-unit;
   use say;
   use dylan;
-end library angle; 
+end library angle;
 
 // Interface module
 define module angle
@@ -28,7 +28,7 @@ define module angle
   // Shared protocol
   use say, export: all;
   use sixty-unit, import: { encode-total-seconds }, export: all;
-end module angle; 
+end module angle;
 
 // Interface module
 define module position
@@ -38,7 +38,7 @@ define module position
   create angle, distance, latitude, longitude;
   // Shared protocol
   use say, export: all;
-end module position; 
+end module position;
 
 // Implementation module
 define module angle-implementation
@@ -48,7 +48,7 @@ define module angle-implementation
   use sixty-unit;
   use say-implementor;
   use dylan;
-end module angle-implementation; 
+end module angle-implementation;
 
 // Implementation module
 define module position-implementation
@@ -58,4 +58,4 @@ define module position-implementation
   use angle;
   use say-implementor;
   use dylan;
-end module position-implementation; 
+end module position-implementation;

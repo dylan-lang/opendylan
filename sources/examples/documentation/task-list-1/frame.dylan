@@ -17,9 +17,9 @@ define frame <task-frame> (<simple-frame>)
 // definition of menu bar
   pane task-menu-bar (frame)
     make(<menu-bar>,
-         children: vector(frame.file-menu, 
-                          frame.edit-menu,  
-                          frame.task-menu,  
+         children: vector(frame.file-menu,
+                          frame.edit-menu,
+                          frame.task-menu,
                           frame.help-menu));
 // definition of menus
   pane file-menu (frame)
@@ -57,7 +57,7 @@ define frame <task-frame> (<simple-frame>)
   pane save-as-menu-button (frame)
     make(<menu-button>, label: "Save As...",
          activate-callback: save-as-file,
-         documentation: 
+         documentation:
            "Saves the current file with a new name.");
   pane exit-menu-button (frame)
     make(<menu-button>, label: "Exit",
@@ -94,7 +94,7 @@ define frame <task-frame> (<simple-frame>)
          activate-callback: frame-remove-task,
          accelerator: make-keyboard-gesture
                         (#"d", #"control", #"shift"),
-         documentation: 
+         documentation:
            "Remove the selected task from the list.");
 
   //Commands in the Help menu
@@ -102,7 +102,7 @@ define frame <task-frame> (<simple-frame>)
     make(<menu-button>, label: "About",
          activate-callback: about-task,
          accelerator: make-keyboard-gesture(#"f1"),
-         documentation: 
+         documentation:
            "Display information about the application.");
 
 // definition of buttons
@@ -137,7 +137,7 @@ define frame <task-frame> (<simple-frame>)
                   frame.save-button;
                   frame.add-button;
                   frame.remove-button
-                end); 
+                end);
 
 // definition of status bar
   pane task-status-bar (frame)
@@ -154,7 +154,7 @@ define frame <task-frame> (<simple-frame>)
 // main layout
   pane task-layout (frame)
     vertically ()
-      frame.task-list; 
+      frame.task-list;
       frame.priority-box;
     end;
 
@@ -174,12 +174,12 @@ define method initialize
   refresh-task-frame(frame);
 end method initialize;
 
-define method prompt-for-task 
+define method prompt-for-task
    (#key title = "Type text of new task", owner)
- => (name :: false-or(<string>), 
+ => (name :: false-or(<string>),
      priority :: false-or(<priority>))
   let task-text
-    = make(<text-field>, 
+    = make(<text-field>,
            label: "Task text:",
            activate-callback: exit-dialog);
   let priority-field
@@ -189,7 +189,7 @@ define method prompt-for-task
            value-key: second,
            value: #"medium");
   let frame-add-task-dialog
-    = make(<dialog-frame>, 
+    = make(<dialog-frame>,
            title: title,
            owner: owner,
            layout: vertically ()

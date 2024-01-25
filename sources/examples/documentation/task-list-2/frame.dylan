@@ -53,7 +53,7 @@ define frame <task-frame> (<simple-frame>)
                   frame.save-button;
                   frame.add-button;
                   frame.remove-button
-                end); 
+                end);
 
 // definition of status bar
   pane task-status-bar (frame)
@@ -70,7 +70,7 @@ define frame <task-frame> (<simple-frame>)
 // main layout
   pane task-layout (frame)
     vertically ()
-      frame.task-list; 
+      frame.task-list;
       frame.priority-box;
     end;
 
@@ -90,12 +90,12 @@ define method initialize
   refresh-task-frame(frame);
 end method initialize;
 
-define method prompt-for-task 
+define method prompt-for-task
    (#key title = "Type text of new task", owner)
- => (name :: false-or(<string>), 
+ => (name :: false-or(<string>),
      priority :: false-or(<priority>))
   let task-text
-    = make(<text-field>, 
+    = make(<text-field>,
            label: "Task text:",
            activate-callback: exit-dialog);
   let priority-field
@@ -105,7 +105,7 @@ define method prompt-for-task
            value-key: second,
            value: #"medium");
   let frame-add-task-dialog
-    = make(<dialog-frame>, 
+    = make(<dialog-frame>,
            title: title,
            owner: owner,
            layout: vertically ()
@@ -284,9 +284,9 @@ define command-table *edit-command-table* (*global-command-table*)
     documentation: "Paste the selection in the clipboard at the current position.";
 end command-table *edit-command-table*;
 
-// Definition of the Task menu 
+// Definition of the Task menu
 
-define command-table *task-command-table* 
+define command-table *task-command-table*
     (*global-command-table*)
   menu-item "Add..." = frame-add-task,
     accelerator: make-keyboard-gesture(#"a", #"control", #"shift"),
@@ -306,7 +306,7 @@ end command-table *help-command-table*;
 
 // Definition of the overall menu bar
 
-define command-table *task-list-command-table* 
+define command-table *task-list-command-table*
     (*global-command-table*)
   menu-item "File" = *file-command-table*;
   menu-item "Edit" = *edit-command-table*;

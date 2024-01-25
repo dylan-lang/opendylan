@@ -54,7 +54,7 @@ end module bit-set;
 
 define module collectors
   create collector-protocol,
-         \collecting, 
+         \collecting,
          \collect-into, \collect-first-into, \collect-last-into,
          \collect, \collect-first, \collect-last,
          \collected;
@@ -78,8 +78,8 @@ define module table-extensions
   use dylan;
   use dylan-extensions,
     import: { <string-table>, <hash-state>,
-              collection-hash, sequence-hash, 
-              collection-hash!, sequence-hash!, 
+              collection-hash, sequence-hash,
+              collection-hash!, sequence-hash!,
               values-hash,
               string-hash,
               case-insensitive-string-hash,

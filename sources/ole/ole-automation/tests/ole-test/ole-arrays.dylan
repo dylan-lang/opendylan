@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *array* = #f;
 
-define test ole-array-test 
+define test ole-array-test
   (name: "ole-array-test",
    description: "tests the <ole-vector> and <ole-array> data types")
 
@@ -52,7 +52,7 @@ define test ole-array-test
   check-equal("a[1,0]", *array*[1,0], 1100);
   check-equal("a[1,2]", *array*[1,2], 1102);
 
-  check-not-crash("destroy int array", 
+  check-not-crash("destroy int array",
 		  begin
 		    let a = *array*;
 		    *array* := #f;

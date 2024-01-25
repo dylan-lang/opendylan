@@ -69,7 +69,7 @@ define method run-task (tcb :: <task-control-block>)
 		end;
   run(tcb, message)
 end method;
-				      
+
 define abstract primary class <task-state> (<object>)
   // Default initializers put the task in the Waiting state
   sealed slot packet-pending? :: <boolean> = #f;
@@ -309,7 +309,7 @@ end method;
 
 define method create-worker (i, p, w, s) => (worker :: <worker-task-rec>)
   let id = make(<worker-task-rec>,
-		ident: i, priority: p, input: w, 
+		ident: i, priority: p, input: w,
 		packet-pending?: s.packet-pending?,
 		task-waiting?: s.task-waiting?,
 		task-holding?: s.task-holding?,
@@ -321,7 +321,7 @@ end method;
 
 define method create-handler (i, p, w, s) => (handler :: <handler-task-rec>)
   let id = make(<handler-task-rec>,
-		ident: i, priority: p, input: w, 
+		ident: i, priority: p, input: w,
 		packet-pending?: s.packet-pending?,
 		task-waiting?: s.task-waiting?,
 		task-holding?: s.task-holding?);
@@ -331,7 +331,7 @@ end method;
 
 define method create-device (i, p, w, s) => (device :: <device-task-rec>)
   let id = make(<device-task-rec>,
-		ident: i, priority: p, input: w, 
+		ident: i, priority: p, input: w,
 		packet-pending?: s.packet-pending?,
 		task-waiting?: s.task-waiting?,
 		task-holding?: s.task-holding?);
@@ -373,7 +373,7 @@ define method richards ()
   end;
 end method;
 
-     
+
 define method find-task (identity :: <integer>) => (task :: <task-control-block>)
   let tk = *state*.task-table[identity - 1];
   if (tk == $null-task)

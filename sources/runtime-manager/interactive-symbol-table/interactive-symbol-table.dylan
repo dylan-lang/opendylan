@@ -32,10 +32,10 @@ define sealed class <remote-library-subtable> (<object>)
 
   // (Not constant due to use of idiom x := sort!(x). Maybe could be
   // constant).
-  slot symbols-by-address :: <stretchy-vector> = 
+  slot symbols-by-address :: <stretchy-vector> =
     make(<stretchy-vector>);
 
-  constant slot symbols-by-name :: <string-table> = 
+  constant slot symbols-by-name :: <string-table> =
     make(<string-table>);
 
   // Maps <remote-object-file> to a <string-table> for the symbols static
@@ -153,7 +153,7 @@ end class;
 //    The error class that describes an attempt to redefine a symbol in
 //    a table that does not allow redefinition.
 
-define abstract class <symbol-illegal-redefinition-error> 
+define abstract class <symbol-illegal-redefinition-error>
                        (<interactive-symbol-table-error>)
   constant slot redefined-name :: <string>,
     required-init-keyword: name:;

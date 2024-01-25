@@ -119,7 +119,7 @@ define method print-object (buffer :: <buffer>, stream) => ()
 end method print-object;
 */
 
-
+
 /// Internal buffering protocols
 
 define open generic buffer-subsequence

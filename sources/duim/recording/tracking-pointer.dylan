@@ -98,7 +98,7 @@ define sealed method do-tracking-pointer
   end
 end method do-tracking-pointer;
 
-
+
 /// 'dragging-output'
 
 //---*** Do this

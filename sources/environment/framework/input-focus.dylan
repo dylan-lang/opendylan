@@ -29,7 +29,7 @@ define method handle-event
   note-frame-input-focus-changed(frame)
 end method handle-event;
 
-
+
 /// Focus commands
 
 define open abstract class <frame-focus-command> (<basic-command>)

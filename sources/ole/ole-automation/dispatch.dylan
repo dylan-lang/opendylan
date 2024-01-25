@@ -23,7 +23,7 @@ define method initialize(this :: <Simple-Dispatch>, #rest args, #key) => ();
   unless (this.typeinfo)
     this.typeinfo := this.dispatch-type-information;
   end;
-  unless (this.typeinfo) 
+  unless (this.typeinfo)
     error("No typeinfo available for instance of subclass of <Simple-Dispatch>");
   end unless;
   unless ( instance?( this.typeinfo, <collection> ) )
@@ -93,7 +93,7 @@ define method IDispatch/GetTypeInfo(this :: <Simple-Dispatch>,
 
   if( itinfo ~= 0 )
     values( $DISP-E-BADINDEX, $null-interface )
-  else 
+  else
     let info = element(this.typeinfo, lcid);
     AddRef(info);
     values( $S-OK, info )
@@ -128,7 +128,7 @@ define sideways method IDispatch/GetTypeInfo(this :: <IDispatch>, itinfo, lcid)
   values( $E-NOTIMPL, $NULL-interface )
 end method IDispatch/GetTypeInfo;
 
-
+
 
 //  ---  parameter lists for Invoke  ---
 
@@ -275,7 +275,7 @@ define method destroy-dispparams (this :: <LPDISPPARAMS>) => ();
   destroy(this);
 end;
 
-
+
 // Easy way to call a dispatch method which has only positional arguments
 // and doesn't use the locale.
 define method call-simple-method ( instance /* :: <LPDISPATCH> */,
@@ -319,7 +319,7 @@ define function simple-invoke ( instance /* :: <LPDISPATCH> */,
 	result := pointer-value(varResult);
       end unless;
     end if;
-    // Don't call VariantClear(varResult) here because we don't want to 
+    // Don't call VariantClear(varResult) here because we don't want to
     // deallocate the object that is being passed back as the `result'.
     varResult.vt-value := $VT-EMPTY;
   end with-stack-structure;
@@ -381,7 +381,7 @@ define method get-property(instance /* :: <LPDISPATCH> */,
     else
       result := pointer-value(varResult)
     end if;
-    // Don't call VariantClear(varResult) here because we don't want to 
+    // Don't call VariantClear(varResult) here because we don't want to
     // deallocate the object that is being passed back as the `result'.
     varResult.vt-value := $VT-EMPTY;
   end with-stack-structure;
@@ -396,7 +396,7 @@ define method get-property(instance /* :: <LPDISPATCH> */,
 			   locale = $LOCALE-USER-DEFAULT,
 			   #all-keys)
  => ( value :: <object> );
-  
+
   let disp-id :: <disp-id> =
     get-id-of-name(instance, name, locale: locale,
 		   undefined-ok?: supplied?(default));
@@ -445,10 +445,10 @@ define method set-property(instance /* :: <LPDISPATCH> */,
       with-stack-structure ( idptr :: <LPDISPID> )
 	pointer-value(arg) := value;
 	params.rgvarg-value := arg;
-        pointer-value(idptr) := $DISPID-PROPERTYPUT; 
+        pointer-value(idptr) := $DISPID-PROPERTYPUT;
 	params.rgdispidNamedArgs-value := idptr;
-	params.cArgs-value := 1; 
-	params.cNamedArgs-value := 1; 
+	params.cArgs-value := 1;
+	params.cNamedArgs-value := 1;
 	let status =
 	  IDispatch/Invoke(instance, dispid, $IID-NULL,
 			   locale, invoke-flags,
@@ -543,7 +543,7 @@ define method set-indexed-property (new-value,
 				    invoke-flags :: <integer>,
 				    #rest indexes)
  => ( new-value :: <object> )
-  
+
   let dispparams :: <LPDISPPARAMS> =
     apply(make-dispparams, vector(new-value),
 	  vector($DISPID-PROPERTYPUT), indexes);

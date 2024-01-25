@@ -28,8 +28,8 @@ end class;
 
 
 /// Abstract class <coff-string> is a superclass of all strings classes
-/// for a COFF file. There are 2 concrete representations of strings. 
-/// Large strings are represented in the string table, whereas small strings 
+/// for a COFF file. There are 2 concrete representations of strings.
+/// Large strings are represented in the string table, whereas small strings
 /// are not.
 
 define abstract class <coff-string> (<coff-unit>)
@@ -38,7 +38,7 @@ define abstract class <coff-string> (<coff-unit>)
 end class;
 
 
-/// Class <coff-long-string> contains the data for each string which is 
+/// Class <coff-long-string> contains the data for each string which is
 /// represented in a string table.
 
 
@@ -47,7 +47,7 @@ end class;
 
 
 
-/// Class <coff-short-string> contains the data for each string which is 
+/// Class <coff-short-string> contains the data for each string which is
 /// represented in-line. This corresponds to strings of length 8 or less.
 
 
@@ -69,7 +69,7 @@ end class;
 
 
 define class <coff-symbol> (<coff-symbol-record>)
-  constant slot symbol-name :: <coff-string>, 
+  constant slot symbol-name :: <coff-string>,
     required-init-keyword: name:;
   slot symbol-value :: <integer> = 0,
     init-keyword: value:;
@@ -84,14 +84,14 @@ define class <coff-symbol> (<coff-symbol-record>)
 end class;
 
 
-/// Class <coff-auxiliary-symbol> describes an auxiliary symbol 
+/// Class <coff-auxiliary-symbol> describes an auxiliary symbol
 /// entry in a COFF symbol table
 
 define abstract class <coff-auxiliary-symbol> (<coff-symbol-record>)
 end class;
 
 
-/// A <coff-string-auxiliary-symbol> contains just a string, as used 
+/// A <coff-string-auxiliary-symbol> contains just a string, as used
 /// in .file declarations.
 
 define class <coff-string-auxiliary-symbol> (<coff-auxiliary-symbol>)
@@ -100,7 +100,7 @@ define class <coff-string-auxiliary-symbol> (<coff-auxiliary-symbol>)
 end class;
 
 
-/// A <coff-empty-auxiliary-symbol> pads up the extra space taken by 
+/// A <coff-empty-auxiliary-symbol> pads up the extra space taken by
 /// a long <coff-string-auxiliary-symbol>
 
 define class <coff-empty-auxiliary-symbol> (<coff-auxiliary-symbol>)
@@ -132,13 +132,13 @@ define abstract class <coff-chained-auxiliary-symbol> (<coff-auxiliary-symbol>)
     init-keyword: next-function:;
   // But this slot is an alternative representation of the same data
   // which may be used temporarily while reading a file
-  constant slot auxiliary-next-function-index :: <integer> = 0,  
+  constant slot auxiliary-next-function-index :: <integer> = 0,
     init-keyword: next-function-index:;
 end class;
 
 
 
-define method next-function-index 
+define method next-function-index
     (symbol :: <coff-chained-auxiliary-symbol>) => (index :: <integer>)
   let next-function = symbol.auxiliary-next-function;
   if (next-function)
@@ -157,7 +157,7 @@ define class <coff-function-definition-auxiliary-symbol> (<coff-chained-auxiliar
     required-init-keyword: tag:;
   // But this slot is an alternative representation of the same data
   // which may be used temporarily while reading a file
-  constant slot auxiliary-tag-index :: <integer> = 0,  
+  constant slot auxiliary-tag-index :: <integer> = 0,
     init-keyword: tag-index:;
   slot auxiliary-total-size :: <integer> = 0,
     init-keyword: total-size:;
@@ -166,7 +166,7 @@ define class <coff-function-definition-auxiliary-symbol> (<coff-chained-auxiliar
     init-keyword: line-numbers:;
   // But this slot is an alternative representation of the same data
   // which may be used temporarily while reading a file
-  constant slot auxiliary-line-numbers-offset :: <integer> = 0,  
+  constant slot auxiliary-line-numbers-offset :: <integer> = 0,
     init-keyword: line-numbers-offset:;
 end class;
 
@@ -189,8 +189,8 @@ define class <coff-plain-auxiliary-symbol> (<coff-auxiliary-symbol>)
 end class;
 
 
-define method make 
-    (class == <coff-auxiliary-symbol>, #rest keys, #key, #all-keys) 
+define method make
+    (class == <coff-auxiliary-symbol>, #rest keys, #key, #all-keys)
     => (r :: <coff-plain-auxiliary-symbol>)
   apply(make, <coff-plain-auxiliary-symbol>, keys);
 end method;
@@ -198,7 +198,7 @@ end method;
 
 
 
-/// Abstract class <coff-symbol-locator> is the object that describes the 
+/// Abstract class <coff-symbol-locator> is the object that describes the
 /// section for COFF symbols. This might be a real section (<coff-section>)
 /// or it might be undefined (<coff-undefined-locator>).
 
@@ -211,7 +211,7 @@ define open generic big-endian? (obj :: <object>) => (be? :: <boolean>);
 /// Class <coff-section> contains the data in a COFF section.
 
 define abstract class <coff-section> (<binary-section>, <coff-symbol-locator>)
-  constant slot coff-data-units :: <integer> = 1, 
+  constant slot coff-data-units :: <integer> = 1,
     init-keyword: units:;             // size of an element in bytes
   constant slot big-endian? :: <boolean> = #f,
     init-keyword: big-endian?:;
@@ -229,7 +229,7 @@ define abstract class <coff-section> (<binary-section>, <coff-symbol-locator>)
     init-keyword: lines-pointer:;     // Pointer to lines (need not be used)
   slot linenumbers-number :: <integer> = 0,
     init-keyword: lines-number:;      // Number of lines (need not be used)
-  slot relocations :: <vector> = make(<stretchy-vector>),  
+  slot relocations :: <vector> = make(<stretchy-vector>),
     init-keyword: relocations:;       // vector of <coff-relocation>s
   slot line-numbers :: <vector> = make(<stretchy-vector>),
     init-keyword: line-numbers:;
@@ -238,8 +238,8 @@ end class;
 ignore(coff-data-units); // TODO: WHY IS THIS UNREFERENCED?
 
 
-/// A <coff-bss-section> contains data which is not represented in the 
-/// COFF file - so it requires special treatment. For these sections, the 
+/// A <coff-bss-section> contains data which is not represented in the
+/// COFF file - so it requires special treatment. For these sections, the
 /// raw-data-size slot is always used to determine the size of the section data.
 
 define class <coff-bss-section> (<coff-section>)
@@ -253,8 +253,8 @@ define class <coff-normal-section> (<coff-section>)
 end class;
 
 
-define method make 
-    (class == <coff-section>, #rest keys, #key flags, #all-keys) 
+define method make
+    (class == <coff-section>, #rest keys, #key flags, #all-keys)
     => (r :: <coff-section>)
   if (generic-logand(flags, $cnt-uninitialized-data) = 0)
     // This isn't an unitialized section - so it's normal
@@ -267,22 +267,22 @@ end method;
 
 
 
-// section-data-size-in-file is an accessor which determines how much space 
+// section-data-size-in-file is an accessor which determines how much space
 // the section data physically consumes in a coff file.
 
-define method section-data-size-in-file 
+define method section-data-size-in-file
     (section :: <coff-section>) => (r :: <integer>)
   section.raw-data-size;
 end method;
 
 
-define method section-data-size-in-file 
+define method section-data-size-in-file
     (section :: <coff-bss-section>) => (r :: <integer>)
   0;
 end method;
 
 
-// section-data-size-in-image is an accessor which determines how much space 
+// section-data-size-in-image is an accessor which determines how much space
 // the section data physically consumes when loaded in an application
 
 define method section-data-size-in-image
@@ -364,7 +364,7 @@ end class;
 /// A <coff-interactor-relocation>, however may not
 
 define class <coff-interactor-relocation> (<coff-relocation>)
-  constant slot interactor-handle :: <object>, 
+  constant slot interactor-handle :: <object>,
     required-init-keyword: handle:;
 end class;
 
@@ -378,8 +378,8 @@ end class;
 
 
 
-define sealed method make 
-    (class == <coff-relocation>, #rest keys, #key type, #all-keys) 
+define sealed method make
+    (class == <coff-relocation>, #rest keys, #key type, #all-keys)
     => (r :: <coff-relocation>)
   let wanted-class =
     select (type)
@@ -393,9 +393,9 @@ end method;
 
 
 /// Abstract COFF tables
-/// These are containers for tables, but are not actually collections 
+/// These are containers for tables, but are not actually collections
 /// themselves. Data is represented as both tables and a sequence,
-/// because each turns out to be useful for different stages of the 
+/// because each turns out to be useful for different stages of the
 /// coff manipulation process
 
 
@@ -419,17 +419,17 @@ define class <coff-duplicated-table> (<coff-table>)
 end class;
 
 
-define generic coff-element 
+define generic coff-element
     (table :: <coff-table>, key, #key model-object) => elt;
 
-define generic coff-element-setter 
+define generic coff-element-setter
     (val, table :: <coff-table>, key, #key model-object) => val;
 
 
 /// The default methods for these generics are keyed by strings.
 
 
-define method coff-element 
+define method coff-element
   (coff-table :: <coff-table>, key, #key model-object = unsupplied()) => (elt)
   if (supplied?(model-object))
     coff-table.id-table-data[model-object];
@@ -447,7 +447,7 @@ define method coff-element-setter
   end if;
 end method;
 
-define method binary-table-member? 
+define method binary-table-member?
       (coff-table :: <coff-table>, key, #key model-object = unsupplied())
    => (boolean :: <object>)
    if (supplied?(model-object))
@@ -472,7 +472,7 @@ define method binary-element-add!
 end method;
 
 define method binary-element-add!
-      (coff-table :: <coff-duplicated-table>, 
+      (coff-table :: <coff-duplicated-table>,
        key,
        newval, #key model-object = unsupplied()) => (newval)
   add!(coff-table.ordered-data, newval);
@@ -495,24 +495,24 @@ end class;
 
 
 define method binary-element-add!
-      (coff-table :: <coff-symbol-table>, 
-       key :: <byte-string>, 
+      (coff-table :: <coff-symbol-table>,
+       key :: <byte-string>,
        newval :: <coff-symbol>,
        #key model-object = unsupplied()) => (newval)
   // fill in the symbol number (starting from 0)
-  newval.index := coff-table.ordered-data.size; 
+  newval.index := coff-table.ordered-data.size;
   next-method();
 end method;
 
 
 define method binary-element-add!
-      (coff-table :: <coff-symbol-table>, 
+      (coff-table :: <coff-symbol-table>,
        dummy-key :: <byte-string>,
        newval :: <coff-auxiliary-symbol>,
        #key model-object = unsupplied()) => (newval)
   // auxiliary symbols are not put in the table - only in the ordered data
   // fill in the symbol number (starting from 0)
-  newval.index := coff-table.ordered-data.size; 
+  newval.index := coff-table.ordered-data.size;
   add!(coff-table.ordered-data, newval);
   newval;
 end method;
@@ -529,18 +529,18 @@ end class;
 
 
 define method binary-element-add!
-      (coff-table :: <coff-section-table>, 
-       key :: <byte-string>, 
+      (coff-table :: <coff-section-table>,
+       key :: <byte-string>,
        newval :: <coff-section>,
        #key model-object = unsupplied()) => (newval)
   next-method();
   // fill in the section number (starting from 1)
-  newval.index := coff-table.ordered-data.size; 
+  newval.index := coff-table.ordered-data.size;
   newval;
 end method;
 
 
-/// string tables (these are not duplicated tables, because 
+/// string tables (these are not duplicated tables, because
 /// the ordered-data and the table hold different objects)
 
 define class <coff-string-table> (<coff-table>)

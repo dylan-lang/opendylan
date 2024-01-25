@@ -49,7 +49,7 @@ define macro with-builder-function
          end block }
 end macro;
 
-
+
 /// Value transformation
 
 define sealed generic default-value-function
@@ -72,7 +72,7 @@ define inline function llvm-builder-value
   builder.llvm-builder-value-function(builder, value)
 end function;
 
-
+
 /// Global variables
 
 define generic llvm-builder-define-global
@@ -157,7 +157,7 @@ define function llvm-builder-global-defined?
       end if
 end function;
 
-
+
 /// Global constructor entries
 
 define constant $ctor-function-type
@@ -216,7 +216,7 @@ define function llvm-builder-finish-ctor
   end unless;
 end function;
 
-
+
 /// Local variables
 
 define constant <llvm-local-value>
@@ -272,7 +272,7 @@ define function llvm-builder-local-defined?
       end if
 end function;
 
-
+
 /// Basic block insertion
 
 define function ins--block
@@ -295,7 +295,7 @@ define function ins--block
   builder.llvm-builder-basic-block := basic-block
 end function;
 
-
+
 /// Instruction insertion
 
 define inline method builder-insert
@@ -350,7 +350,7 @@ define macro with-insert-before-terminator
 	 end block }
 end macro;
 
-
+
 /// Metadata attachments
 
 define function ins--dbg
@@ -427,7 +427,7 @@ define inline function builder-metadata
   end if
 end function;
 
-
+
 /// Instruction definitions
 
 define macro instruction-set-definer

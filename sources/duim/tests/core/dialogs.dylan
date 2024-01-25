@@ -29,7 +29,7 @@ define test test-<wizard-page> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Dialog test suites
 
 define test notify-user-test ()
@@ -67,7 +67,7 @@ define test choose-from-menu-test ()
   #f
 end test choose-from-menu-test;
 
-
+
 /// Wizard tests
 
 define frame <test-wizard> (<wizard-frame>)
@@ -127,7 +127,7 @@ define method test-wizards
   end
 end method test-wizards;
 
-
+
 /// Define the menus test suite
 
 define suite duim-dialogs-suite ()

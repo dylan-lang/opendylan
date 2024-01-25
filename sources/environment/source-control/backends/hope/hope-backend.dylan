@@ -36,7 +36,7 @@ define method note-source-control-system-selected
 end method note-source-control-system-selected;
 
 
-
+
 /// Argument parsing
 
 define class <hope-command-options> (<source-control-command-options>)
@@ -111,7 +111,7 @@ define method source-control-command-info
        options: options)
 end method source-control-command-info;
 
-
+
 /// Commands
 
 define abstract class <hope-command>
@@ -332,7 +332,7 @@ define hope-command remove
   keyword pattern-string: = *remove-command-string*;
 end;
 
-
+
 /// HOPE compound and unit heuristication
 
 define variable *hope-source-directories* :: <vector>
@@ -433,7 +433,7 @@ define method read-version-file
   end
 end method read-version-file;
 
-
+
 /// Initialization
 
 define settings <Harlequin_HIS-user-settings> (<current-user-software-settings>)

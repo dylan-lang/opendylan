@@ -151,7 +151,7 @@ define protocol <<gadget-protocol>> ()
     (state :: <gadget-state>, gadget :: <abstract-gadget>) => (state :: <gadget-state>);
 end protocol <<gadget-protocol>>;
 
-
+
 /// Basic gadget definition
 
 // Note that only the concrete gadget classes have a <style-descriptor>,
@@ -268,7 +268,7 @@ define method gadget-state-setter
   state
 end method gadget-state-setter;
 
-
+
 /// Basic gadget methods
 
 // Make gadgets have no label by default
@@ -295,7 +295,7 @@ define method update-gadget (gadget :: <gadget>) => ()
   #f
 end method update-gadget;
 
-
+
 /// Callbacks
 
 // Could be 'false-or(<class>, <command>, <function>, <list>)', but it's not worth it
@@ -354,7 +354,7 @@ define method callback-for-command
          head(command-type))
 end method callback-for-command;
 
-
+
 /// Enabling and disabling of gadgets
 
 define sealed inline method gadget-enabled?
@@ -388,7 +388,7 @@ define method note-gadget-disabled (client, gadget :: <gadget>) => ()
   #f
 end method note-gadget-disabled;
 
-
+
 /// Value gadgets
 
 define open abstract class <value-gadget> (<gadget>)
@@ -563,7 +563,7 @@ define method gadget-state-setter
   state
 end method gadget-state-setter;
 
-
+
 /// Value-changing (formerly "dragging") gadgets
 
 define protocol <<changing-value-gadget-protocol>> ()
@@ -603,7 +603,7 @@ define method do-execute-value-changing-callback
   #f
 end method do-execute-value-changing-callback;
 
-
+
 /// Action gadget mixin
 
 define open abstract class <action-gadget> (<gadget>)
@@ -653,7 +653,7 @@ define open abstract class <basic-action-gadget>
     (<action-gadget-mixin>, <basic-gadget>)
 end class <basic-action-gadget>;
 
-
+
 /// "Updatable" gadgets
 
 define protocol <<updatable-gadget-protocol>> (<<gadget-protocol>>)
@@ -695,7 +695,7 @@ define method do-execute-update-callback
   #f
 end method do-execute-update-callback;
 
-
+
 /// Key-press gadget mixins
 
 define protocol <<key-press-gadget-protocol>> (<<gadget-protocol>>)
@@ -738,7 +738,7 @@ define method do-execute-key-press-callback
   #f
 end method do-execute-key-press-callback;
 
-
+
 /// Popup menu gadget mixins
 
 define protocol <<popup-menu-gadget-protocol>> (<<gadget-protocol>>)
@@ -783,7 +783,7 @@ define method do-execute-popup-menu-callback
   #f
 end method do-execute-popup-menu-callback;
 
-
+
 /// Oriented gadgets
 
 define open abstract class <oriented-gadget-mixin> (<abstract-gadget>)
@@ -820,7 +820,7 @@ define method gadget-pane-default-layout-class
   end
 end method gadget-pane-default-layout-class;
 
-
+
 /// Labelled gadgets
 
 define open abstract class <labelled-gadget> (<abstract-gadget>)
@@ -1048,7 +1048,7 @@ define method draw-image-label (medium, label :: <image-label>, x, y,
   draw-image(medium, image, x, y)
 end method draw-image-label;
 
-
+
 /// Mixins for accelerators and mnemonics
 
 define constant <accelerator> = type-union(<character>, <keyboard-gesture>);
@@ -1114,7 +1114,7 @@ define method compute-mnemonic-from-label
   values(label, explicit-mnemonic | mnemonic, ~explicit-mnemonic & index)
 end method compute-mnemonic-from-label;
 
-
+
 /// Command table support
 
 // Some things here get used in command table menus.  We need a back-pointer
@@ -1130,7 +1130,7 @@ define method gadget-command (gadget :: <gadget>) => (command)
   #f
 end method gadget-command;
 
-
+
 /// Range gadgets
 
 // In effect, the default is a continuous slider ranging from 0 to 1
@@ -1259,7 +1259,7 @@ define method gadget-state-setter
   next-method()
 end method gadget-state-setter;
 
-
+
 /// Slug gadget mixin
 
 define open abstract class <slug-gadget-mixin> (<range-gadget-mixin>)
@@ -1320,7 +1320,7 @@ define method gadget-state-setter
   next-method()
 end method gadget-state-setter;
 
-
+
 /// Scrollable gadgets
 
 // Mix-in for things that might implement their own scrolling
@@ -1390,7 +1390,7 @@ define sealed method gadget-scrolling-vertically?
   vertically?
 end method gadget-scrolling-vertically?;
 
-
+
 /// Gadgets with borders
 
 // Mix-in for things that might implement their own borders
@@ -1439,7 +1439,7 @@ define sealed method border-type-setter
   borders
 end method border-type-setter;
 
-
+
 /// Default button
 
 define open abstract class <default-gadget-mixin> (<action-gadget-mixin>)
@@ -1467,7 +1467,7 @@ define method gadget-default?-setter
   default?
 end method gadget-default?-setter;
 
-
+
 /// Scrolling sheets
 
 define open abstract class <scrolling-sheet-mixin> (<abstract-sheet>)
@@ -1694,7 +1694,7 @@ define method viewport-fencepost? (sheet) => (true? :: <boolean>)
   #f
 end method viewport-fencepost?;
 
-
+
 /// Callbacks on gadgets generate these events
 
 define open abstract class <gadget-event> (<basic-event>)

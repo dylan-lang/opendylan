@@ -100,7 +100,7 @@ define method make-table-control-children
   children
 end method make-table-control-children;
 
-
+
 /// Generic implementation of table item panes
 
 define sealed class <table-item-pane>
@@ -237,7 +237,7 @@ end class <table-item-label-button>;
 define sealed domain make (singleton(<table-item-label-button>));
 define sealed domain initialize (<table-item-label-button>);
 
-
+
 /// Mapping items <-> indices
 
 define sealed method item-to-index

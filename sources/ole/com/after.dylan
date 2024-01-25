@@ -68,14 +68,14 @@ define constant $IID-IdylanObject :: <REFGUID> =
   make-GUID(#x14FF2830, #x550F, #x11CF,
 	    #x89, #xF1, #x02, #x07, #x01, #x19, #xF6, #x39);
 
-
+
 //====================================================
 //	"IClassFactory" interface
 //====================================================
 
 /* The following is a minimal implementation that can be inherited,
    but may need to be overridden depending on the requirements of the
-   particular application.  */  
+   particular application.  */
 define method IClassFactory/LockServer ( self :: <IClassFactory>,
 					 fLock :: <boolean> )
 	=> status :: <HRESULT>;
@@ -91,7 +91,7 @@ define constant IStream/Write = ISequentialStream/Write;
 
 define inline constant %memcpy = copy-into!; // from C-FFI library
 
-
+
 //====================================================
 //	convenience accessors
 //====================================================
@@ -100,7 +100,7 @@ define sealed method indexed-medium( ptr :: <LPSTGMEDIUM>, index :: <integer>)
  => ptr :: <LPSTGMEDIUM>;
   // Given pointer to array, return pointer to indexed element.
   if ( zero?(index) )
-    ptr 
+    ptr
   else
     pointer-value-address(ptr, index: index)
   end if

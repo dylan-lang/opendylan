@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define method assemble-compiled-lambda
-    (backend :: <harp-back-end>, print-info, public?, export?, source-locator) 
+    (backend :: <harp-back-end>, print-info, public?, export?, source-locator)
     => (code :: <compiled-lambda>)
 
   let vars = backend.variables;
@@ -21,7 +21,7 @@ define method assemble-compiled-lambda
     compiled-lambda-referenced-data(backend, vars.referenced-data-words);
   let (code-size, labels-size, debug-info-size) = compiled-lambda-size(backend);
   let name = vars.function-name;
-  let code = make(code-vector-class(backend), size: code-size); 
+  let code = make(code-vector-class(backend), size: code-size);
   let labels = make(<simple-object-vector>, size: labels-size);
   let debug-info = make(<simple-object-vector>, size: debug-info-size);
   // debug-info is a vector of any <debug-info-constant>s
@@ -34,7 +34,7 @@ define method assemble-compiled-lambda
   let (location, all-locators, selected-locators)
     = strip-locators-from-debug-info(backend, debug-info, source-locator);
   let state = vars.vreg-state;
-  make(<compiled-lambda>, code: code, labels: labels, 
+  make(<compiled-lambda>, code: code, labels: labels,
        public: public?, export: export?,
        scopes: debug-scopes, all-scopes: all-debug-scopes, all-names: all-debug-names,
        location: location, object-location: source-locator,
@@ -68,7 +68,7 @@ define method compiled-lambda-debug-scopes
         let min :: <integer> = locator.labelled-constant-index;
         let max :: <integer> = next-locator.labelled-constant-index - 1;
         if (max < min) max := min end;
-        let new-scope 
+        let new-scope
           = update-scope-from-debug-info(backend, scopes, locator, min, max);
         process-scopes(new-scope, next, next-locator);
       else
@@ -77,7 +77,7 @@ define method compiled-lambda-debug-scopes
           pack-debug-scopes(backend, update-scope-from-debug-info(backend, scopes, locator, pos, pos));
         else
           // don't bother to process a stack state marker if it's
-          // the last piece of debug info - because the empty scope would 
+          // the last piece of debug info - because the empty scope would
           // be assumed anyway.
          pack-debug-scopes(backend, scopes);
         end if;
@@ -88,7 +88,7 @@ end method;
 
 
 // SCL gets told about any named registers which are found to be live
-// However, it is possible (but rare) that the live register won't have 
+// However, it is possible (but rare) that the live register won't have
 // even been coulourd due to elimination, if the SCL instruction
 // is just after a MOVE. Filter that out here
 define method coloured-subset
@@ -117,8 +117,8 @@ end method;
 
 
 define method update-scope-from-debug-info
-    (backend :: <harp-back-end>, scopes :: <list>, 
-     locator :: <code-locator-constant>, 
+    (backend :: <harp-back-end>, scopes :: <list>,
+     locator :: <code-locator-constant>,
      min-pos :: <integer>, max-pos :: <integer>)
     => (scopes :: <list>)
   let vars = locator.locator-live-variables.coloured-subset;
@@ -130,8 +130,8 @@ end method;
 
 
 define method update-scope-from-debug-info
-    (backend :: <harp-back-end>, scopes :: <list>, 
-     locator :: <start-frame-marker>, 
+    (backend :: <harp-back-end>, scopes :: <list>,
+     locator :: <start-frame-marker>,
      min-pos :: <integer>, max-pos :: <integer>)
     => (scopes :: <list>)
   add-debug-scope(backend, scopes, #t, min-pos, max-pos, #[]);
@@ -139,8 +139,8 @@ end method;
 
 
 define method update-scope-from-debug-info
-    (backend :: <harp-back-end>, scopes :: <list>, 
-     locator :: <end-frame-marker>, 
+    (backend :: <harp-back-end>, scopes :: <list>,
+     locator :: <end-frame-marker>,
      min-pos :: <integer>, max-pos :: <integer>)
     => (scopes :: <list>)
   add-debug-scope(backend, scopes, #f, min-pos, max-pos, #[]);
@@ -148,7 +148,7 @@ end method;
 
 
 define method strip-locators-from-debug-info
-    (backend :: <harp-back-end>, debug-info :: <simple-object-vector>, source-locator) 
+    (backend :: <harp-back-end>, debug-info :: <simple-object-vector>, source-locator)
     => (abs-location :: false-or(<absolute-source-position>),
         all-locators :: <simple-object-vector>,
         selected-locators)
@@ -191,18 +191,18 @@ define method choose-code-locators
 	   else result
 	   end if
 	 end)
-  finally 
+  finally
     as(<simple-object-vector>, result);
   end for;
 end method;
 
 
 // Choose those locators which are interesting enough to be selected
-// for the source locators in a line-only debug format. We pick the 
+// for the source locators in a line-only debug format. We pick the
 // first one we encounter for a particular line (for now).
 // Encode selected-locators as bitsets representing availability wrt all-locators
 
-define method choose-interesting-locators 
+define method choose-interesting-locators
     (backend :: <harp-back-end>, all-locators :: <simple-object-vector>)
     => (selected-locators)
   let found :: <list> = #();
@@ -228,7 +228,7 @@ end method;
 
 
 define method fill-compiled-lambda-code-and-labels
-    (backend :: <harp-back-end>, 
+    (backend :: <harp-back-end>,
      code :: <vector>, labels :: <simple-object-vector>, debug-info :: <simple-object-vector>)
     => ();
   fill-code-and-labels-from-code-sequence
@@ -237,25 +237,25 @@ end method;
 
 
 define generic fill-code-and-labels-from-code-sequence
-    (backend :: <harp-back-end>, 
+    (backend :: <harp-back-end>,
      code :: <vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
      debug-info :: <simple-object-vector>, debug-info-index :: <integer>,
      vec :: <sequence>)
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>);
 
 /// For back ends with BYTE-ALIGNED code.
 
 define method fill-code-and-labels-from-code-sequence
-    (backend :: <harp-back-end>, 
+    (backend :: <harp-back-end>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
      debug-info :: <simple-object-vector>, debug-info-index :: <integer>,
      vec :: <sequence>)
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>);
   for (item in vec)
     if (instance?(item, <byte>))
@@ -264,10 +264,10 @@ define method fill-code-and-labels-from-code-sequence
       code[code-index] := item;
       inc!(code-index, 1);
     else
-      let (new-c, new-l, new-o) 
-	= fill-code-for-item(backend, item, 
-			     code, code-index, 
-			     labels, labels-index, 
+      let (new-c, new-l, new-o)
+	= fill-code-for-item(backend, item,
+			     code, code-index,
+			     labels, labels-index,
 			     debug-info, debug-info-index);
       code-index := new-c;
       labels-index := new-l;
@@ -281,13 +281,13 @@ end method;
 /// Use simple-integer-vectors (code-increment=2) to avoid integer overflows.
 
 define method fill-code-and-labels-from-code-sequence
-    (backend :: <harp-back-end>, 
+    (backend :: <harp-back-end>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
      debug-info :: <simple-object-vector>, debug-info-index :: <integer>,
      vec :: <sequence>)
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>);
   for (item in vec)
     if (instance?(item, <integer>))
@@ -296,10 +296,10 @@ define method fill-code-and-labels-from-code-sequence
       code[code-index] := item;
       inc!(code-index, 1);
     else
-      let (new-c, new-l, new-o) 
-	= fill-code-for-item(backend, item, 
-			     code, code-index, 
-			     labels, labels-index, 
+      let (new-c, new-l, new-o)
+	= fill-code-for-item(backend, item,
+			     code, code-index,
+			     labels, labels-index,
 			     debug-info, debug-info-index);
       code-index := new-c;
       labels-index := new-l;
@@ -311,7 +311,7 @@ end method;
 
 
 /// fill-code-for-item fills the code, labels and debug-infovectors, given
-/// a complex code item (integers are assumed to have been taken care of 
+/// a complex code item (integers are assumed to have been taken care of
 /// before invoking this function - for efficiency's sake).
 /// Default methods are provided for all known types of complex code item for
 /// byte and word aligned back ends.
@@ -320,23 +320,23 @@ end method;
 
 
 define generic fill-code-for-item
-    (backend :: <harp-back-end>, item, 
+    (backend :: <harp-back-end>, item,
      code :: <vector>, code-index :: <integer>,
      labels :: <vector>, labels-index :: <integer>,
-     debug-info :: <vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>);
 
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <byte>, 
+    (backend :: <harp-back-end>, item :: <byte>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   code[code-index] := item;
   values(code-index + 1, labels-index, debug-info-index);
@@ -344,12 +344,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <new-sdi>, 
+    (backend :: <harp-back-end>, item :: <new-sdi>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   fill-code-and-labels-from-code-sequence
     (backend, code, code-index, labels, labels-index, debug-info, debug-info-index,
@@ -364,12 +364,12 @@ define inline method labelled-constant-code-increment
 end;
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <debug-info-constant>, 
+    (backend :: <harp-back-end>, item :: <debug-info-constant>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   // set this to help the outputters
   item.labelled-constant-index := code-index;
@@ -380,14 +380,14 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <relative-address-constant>, 
+    (backend :: <harp-back-end>, item :: <relative-address-constant>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
-  // Fill in the code with the offset from start of lambda 
+  // Fill in the code with the offset from start of lambda
   // to permit block blatting in the linker.
   fill-code-with-item
     (backend,
@@ -402,12 +402,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <explicit-labelled-constant>, 
+    (backend :: <harp-back-end>, item :: <explicit-labelled-constant>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   // Fill in the code with the offset to permit block blatting in the linker.
   fill-code-with-item
@@ -420,12 +420,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <labelled-constant-with-opcode>, 
+    (backend :: <harp-back-end>, item :: <labelled-constant-with-opcode>,
      code :: <byte-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   // Fill in the code with the offset to permit block blatting in the linker.
   code[code-index] := item.opcode-value;
@@ -438,12 +438,12 @@ define method fill-code-for-item
 end method;
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <integer>, 
+    (backend :: <harp-back-end>, item :: <integer>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   code[code-index] := item;
   values(code-index + 1, labels-index, debug-info-index);
@@ -451,12 +451,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <new-sdi>, 
+    (backend :: <harp-back-end>, item :: <new-sdi>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   fill-code-and-labels-from-code-sequence
     (backend, code, code-index, labels, labels-index, debug-info, debug-info-index,
@@ -465,12 +465,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <debug-info-constant>, 
+    (backend :: <harp-back-end>, item :: <debug-info-constant>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   // set this to help the outputters
   item.labelled-constant-index := code-index;
@@ -481,14 +481,14 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <relative-address-constant>, 
+    (backend :: <harp-back-end>, item :: <relative-address-constant>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
-  // Fill in the code with the offset from start of lambda 
+  // Fill in the code with the offset from start of lambda
   // to permit block blatting in the linker.
   fill-code-with-item
     (backend,
@@ -503,12 +503,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <explicit-labelled-constant>, 
+    (backend :: <harp-back-end>, item :: <explicit-labelled-constant>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   // Fill in the code with the offset to permit block blatting in the linker.
   fill-code-with-item
@@ -521,12 +521,12 @@ end method;
 
 
 define method fill-code-for-item
-    (backend :: <harp-back-end>, item :: <labelled-constant-with-opcode>, 
+    (backend :: <harp-back-end>, item :: <labelled-constant-with-opcode>,
      code :: <simple-integer-vector>, code-index :: <integer>,
      labels :: <simple-object-vector>, labels-index :: <integer>,
-     debug-info :: <simple-object-vector>, debug-info-index :: <integer>) 
-    => (new-code-index :: <integer>, 
-        new-labels-index :: <integer>, 
+     debug-info :: <simple-object-vector>, debug-info-index :: <integer>)
+    => (new-code-index :: <integer>,
+        new-labels-index :: <integer>,
         new-debug-info-index :: <integer>)
   // Fill in the code with the offset to permit block blatting in the linker.
   code[code-index] := item.opcode-value;
@@ -540,14 +540,14 @@ end method;
 
 
 define generic fill-code-with-item
-    (backend :: <harp-back-end>, val :: <integer>, 
+    (backend :: <harp-back-end>, val :: <integer>,
      code :: <vector>, index :: <integer>) => ();
 
 // Strictly for byte-aligned backends with constant increment 4.
 // Add a new method otherwise.
 
 define inline method fill-code-with-item
-    (backend :: <harp-back-end>, val :: <integer>, 
+    (backend :: <harp-back-end>, val :: <integer>,
      code :: <byte-vector>, index :: <integer>) => ()
   fill-code-with-word(backend, val, code, index);
 end method;
@@ -556,17 +556,17 @@ end method;
 // Add a new method otherwise.
 
 define inline method fill-code-with-item
-    (backend :: <harp-back-end>, val :: <integer>, 
+    (backend :: <harp-back-end>, val :: <integer>,
      code :: <simple-integer-vector>, index :: <integer>) => ()
   code[index]     := val;
 end method;
 
 define generic fill-code-with-word
-    (backend :: <harp-back-end>, val :: <abstract-integer>, 
+    (backend :: <harp-back-end>, val :: <abstract-integer>,
      code :: <vector>, index :: <integer>) => ();
 
 define method fill-code-with-word
-    (backend :: <harp-back-end>, val :: <abstract-integer>, 
+    (backend :: <harp-back-end>, val :: <abstract-integer>,
      code :: <byte-vector>, index :: <integer>) => ()
   let (b0, b1, b2, b3) = split-word-into-bytes(val, backend.big-endian?);
   code[index]     := b0;
@@ -576,7 +576,7 @@ define method fill-code-with-word
 end method;
 
 define method fill-code-with-word
-    (backend :: <harp-back-end>, val :: <abstract-integer>, 
+    (backend :: <harp-back-end>, val :: <abstract-integer>,
      code :: <simple-integer-vector>, index :: <integer>) => ()
   let (b0, b1) = split-word-into-halves(val, backend.big-endian?);
   code[index]     := b0;
@@ -585,13 +585,13 @@ end method;
 
 
 define generic fill-code-with-double-word
-    (backend :: <harp-back-end>, 
-     low :: <abstract-integer>, high :: <abstract-integer>, 
+    (backend :: <harp-back-end>,
+     low :: <abstract-integer>, high :: <abstract-integer>,
      code :: <vector>, index :: <integer>) => ();
 
 define method fill-code-with-double-word
-    (backend :: <harp-back-end>, 
-     low :: <abstract-integer>, high :: <abstract-integer>, 
+    (backend :: <harp-back-end>,
+     low :: <abstract-integer>, high :: <abstract-integer>,
      code :: <byte-vector>, index :: <integer>) => ()
   if (backend.big-endian?)
     fill-code-with-word(backend, high, code, index);
@@ -603,8 +603,8 @@ define method fill-code-with-double-word
 end method;
 
 define method fill-code-with-double-word
-    (backend :: <harp-back-end>, 
-     low :: <abstract-integer>, high :: <abstract-integer>, 
+    (backend :: <harp-back-end>,
+     low :: <abstract-integer>, high :: <abstract-integer>,
      code :: <simple-integer-vector>, index :: <integer>) => ()
   if (backend.big-endian?)
     fill-code-with-word(backend, high, code, index);
@@ -616,11 +616,11 @@ define method fill-code-with-double-word
 end method;
 
 
-define generic split-word-into-bytes 
+define generic split-word-into-bytes
     (word :: <abstract-integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>);
 
-define method split-word-into-bytes 
+define method split-word-into-bytes
     (word :: <integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>)
   if (word.zero?)
@@ -638,7 +638,7 @@ define method split-word-into-bytes
   end if;
 end method;
 
-define method split-word-into-bytes 
+define method split-word-into-bytes
     (word :: <abstract-integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>)
   if (word.zero?)
@@ -656,11 +656,11 @@ define method split-word-into-bytes
   end if;
 end method;
 
-define generic split-word-into-halves 
+define generic split-word-into-halves
     (word :: <abstract-integer>, big-endian?)
     => (b0 :: <integer>, b1 :: <integer>);
 
-define method split-word-into-halves 
+define method split-word-into-halves
     (word :: <integer>, big-endian?)
     => (b0 :: <integer>, b1 :: <integer>)
   if (word.zero?)
@@ -676,7 +676,7 @@ define method split-word-into-halves
   end if;
 end method;
 
-define method split-word-into-halves 
+define method split-word-into-halves
     (word :: <abstract-integer>, big-endian?)
     => (b0 :: <integer>, b1 :: <integer>)
   if (word.zero?)
@@ -694,10 +694,10 @@ end method;
 
 
 
-/// compiled-lambda-size determines how much code there is for a lambda, 
+/// compiled-lambda-size determines how much code there is for a lambda,
 /// and also how many labels are associated with the lambda.
 
-define open generic compiled-lambda-size (backend :: <harp-back-end>) 
+define open generic compiled-lambda-size (backend :: <harp-back-end>)
     => (code-size :: <integer>, labels-size :: <integer>, debug-info-size :: <integer>);
 
 
@@ -707,14 +707,14 @@ define open generic compiled-lambda-size (backend :: <harp-back-end>)
 /// the PowerPC (shorts in simple-integer-vectors). Add a new method only if there
 /// is a discrepancy between code generation granularity and code-vector medium.
 
-define method compiled-lambda-size (backend :: <harp-back-end>) 
+define method compiled-lambda-size (backend :: <harp-back-end>)
     => (code-size :: <integer>, labels-size :: <integer>, debug-info-size :: <integer>)
   code-vector-code-and-label-size(backend, backend.variables.code-vector);
 end method;
 
 
-define method code-vector-code-and-label-size 
-    (backend :: <harp-back-end>, vec :: <sequence>) 
+define method code-vector-code-and-label-size
+    (backend :: <harp-back-end>, vec :: <sequence>)
     => (code-size :: <integer>, labels-size :: <integer>, debug-info-size :: <integer>)
   let code-size :: <integer> = 0;
   let labels-size :: <integer> = 0;
@@ -746,27 +746,27 @@ end method;
 /// For completeness, theres also an <integer> method - although integers should
 /// have been handled at a higher level.
 
-define open generic code-item-code-and-label-size 
-    (backend :: <harp-back-end>, item) 
+define open generic code-item-code-and-label-size
+    (backend :: <harp-back-end>, item)
     => (code-size :: <integer>, labels-size :: <integer>);
 
 
 
-define method code-item-code-and-label-size 
+define method code-item-code-and-label-size
     (backend :: <harp-back-end>, item :: <integer>)
     =>  (code-size :: <integer>, labels-size :: <integer>)
   values(1, 0);
 end method;
 
 
-define method code-item-code-and-label-size 
+define method code-item-code-and-label-size
     (backend :: <harp-back-end>, item :: <new-sdi>)
     =>  (code-size :: <integer>, labels-size :: <integer>)
   code-vector-code-and-label-size(backend, item.new-sdi-code-holder);
 end method;
 
 
-define method code-item-code-and-label-size 
+define method code-item-code-and-label-size
     (backend :: <harp-back-end>, item :: <labelled-constant>)
     =>  (code-size :: <integer>, labels-size :: <integer>)
   values(labelled-constant-code-increment(backend, item), 1);
@@ -819,7 +819,7 @@ define compiled-lambda-referenced-data-method
 //
 
 define open generic print-linearised-harp
-     (backend :: <harp-back-end>, 
-      stream :: <stream>, 
-      blk-vector :: <simple-basic-block-vector>, 
+     (backend :: <harp-back-end>,
+      stream :: <stream>,
+      blk-vector :: <simple-basic-block-vector>,
       blk-num :: <integer>) => ();

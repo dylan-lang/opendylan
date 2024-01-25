@@ -71,7 +71,7 @@ end method IOleWindow/GetWindow;
 
 
 define method IOleWindow/ContextSensitiveHelp(this :: <COleInPlaceSite>,
-					      fEnterMode :: <boolean>) 
+					      fEnterMode :: <boolean>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::ContextSensitiveHelp\r\n");
@@ -80,7 +80,7 @@ define method IOleWindow/ContextSensitiveHelp(this :: <COleInPlaceSite>,
 
     app.m-fCSHMode := fEnterMode;
   end if;
- $S-OK 
+ $S-OK
 end method IOleWindow/ContextSensitiveHelp;
 
 //**********************************************************************
@@ -110,13 +110,13 @@ end method IOleWindow/ContextSensitiveHelp;
 //********************************************************************
 
 
-define method IOleInPlaceSite/CanInPlaceActivate(this :: <COleInPlaceSite>) 
+define method IOleInPlaceSite/CanInPlaceActivate(this :: <COleInPlaceSite>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::CanInPlaceActivate\r\n");
 
   // return S_OK to indicate we can in-place activate
-  $S-OK 
+  $S-OK
 
 end method IOleInPlaceSite/CanInPlaceActivate;
 
@@ -147,7 +147,7 @@ end method IOleInPlaceSite/CanInPlaceActivate;
 //********************************************************************
 
 
-define method IOleInPlaceSite/OnInPlaceActivate(this :: <COleInPlaceSite>) 
+define method IOleInPlaceSite/OnInPlaceActivate(this :: <COleInPlaceSite>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::OnInPlaceActivate\r\n");
@@ -162,7 +162,7 @@ define method IOleInPlaceSite/OnInPlaceActivate(this :: <COleInPlaceSite>)
       dylan-interface(pointer-cast(<LPOLEINPLACEOBJECT>, interface));
 
     // return S_OK to indicate we can in-place activate.
-    $S-OK 
+    $S-OK
   end if
 end method IOleInPlaceSite/OnInPlaceActivate;
 
@@ -201,12 +201,12 @@ define method IOleInPlaceSite/OnUIActivate(this :: <COleInPlaceSite>)
   // site.m-lpDoc.m-fAddMyUI := #f;
   site.m-lpDoc.m-fInPlaceActive := #t;
   site.m-fInPlaceActive := #t;
-  
+
   let ( status, handle ) = IOleWindow/GetWindow(site.m-lpInPlaceObject);
   site.m-hwndIPObj := handle;
 
   // return S_OK to continue in-place activation
-  $S-OK 
+  $S-OK
 end method IOleInPlaceSite/OnUIActivate;
 
 //**********************************************************************
@@ -257,7 +257,7 @@ end method IOleInPlaceSite/OnUIActivate;
 
 define method IOleInPlaceSite/GetWindowContext(this :: <COleInPlaceSite>,
 	lprcPosRect :: <LPRECT>, lprcClipRect :: <LPRECT>,
-	lpFrameInfo :: <LPOLEINPLACEFRAMEINFO>) 
+	lpFrameInfo :: <LPOLEINPLACEFRAMEINFO>)
  => ( status :: <HRESULT>,
       lpFrame :: <LPOLEINPLACEFRAME>, lpDoc :: <LPOLEINPLACEUIWINDOW> );
 
@@ -323,11 +323,11 @@ end method IOleInPlaceSite/GetWindowContext;
 
 
 define method IOleInPlaceSite/Scroll(this :: <COleInPlaceSite>,
-				     scrollExtent :: <SIZE>) 
+				     scrollExtent :: <SIZE>)
 	=> status :: <HRESULT>;
-	
+
   OutputDebugString("In IOIPS::Scroll\r\n");
-  $E-FAIL 
+  $E-FAIL
 end method IOleInPlaceSite/Scroll;
 
 //**********************************************************************
@@ -359,7 +359,7 @@ end method IOleInPlaceSite/Scroll;
 
 
 define method IOleInPlaceSite/OnUIDeactivate(this :: <COleInPlaceSite>,
-					     fUndoable :: <boolean>) 
+					     fUndoable :: <boolean>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::OnUIDeactivate\r\n");
@@ -403,13 +403,13 @@ end method IOleInPlaceSite/OnUIDeactivate;
 //********************************************************************
 
 
-define method IOleInPlaceSite/OnInPlaceDeactivate(this :: <COleInPlaceSite>) 
+define method IOleInPlaceSite/OnInPlaceDeactivate(this :: <COleInPlaceSite>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::OnInPlaceDeactivate\r\n");
 
   let site = this.m-pSite;
-  unless ( null?(site.m-lpInPlaceObject) ) 
+  unless ( null?(site.m-lpInPlaceObject) )
     Release(site.m-lpInPlaceObject);
     site.m-lpInPlaceObject := null-pointer(<LPOLEINPLACEOBJECT>);
   end unless;
@@ -444,7 +444,7 @@ end method IOleInPlaceSite/OnInPlaceDeactivate;
 //********************************************************************
 
 
-define method IOleInPlaceSite/DiscardUndoState(this :: <COleInPlaceSite>) 
+define method IOleInPlaceSite/DiscardUndoState(this :: <COleInPlaceSite>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::DiscardUndoState\r\n");
@@ -479,7 +479,7 @@ end method IOleInPlaceSite/DiscardUndoState;
 //********************************************************************
 
 
-define method IOleInPlaceSite/DeactivateAndUndo(this :: <COleInPlaceSite>) 
+define method IOleInPlaceSite/DeactivateAndUndo(this :: <COleInPlaceSite>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::DeactivateAndUndo\r\n");
@@ -520,7 +520,7 @@ end method IOleInPlaceSite/DeactivateAndUndo;
 
 
 define method IOleInPlaceSite/OnPosRectChange(this :: <COleInPlaceSite>,
-					      lprcPosRect :: <LPCRECT>) 
+					      lprcPosRect :: <LPCRECT>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPS::OnPosRectChange\r\n");
@@ -534,7 +534,7 @@ define method IOleInPlaceSite/OnPosRectChange(this :: <COleInPlaceSite>,
   IOleObject/GetExtent(site.m-lpOleObject, $DVASPECT-CONTENT, site.m-pSizel);
   let rect :: <LPRECT> = make(<LPRECT>);
   GetClientRect(site.m-lpDoc.m-hDocWnd, rect);
-  
+
   // tell the object its new size
   IOleInPlaceObject/SetObjectRects(site.m-lpInPlaceObject, lprcPosRect, rect);
   destroy(rect);

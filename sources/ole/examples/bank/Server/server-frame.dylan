@@ -61,8 +61,8 @@ define frame <server-frame> (<simple-frame>)
   constant slot log :: <deque>, init-value: make(<deque>, size: $log-size, fill: "");
 
   pane log-pane (frame)
-     make(<list-box>, 
-          selection-mode: #"none", 
+     make(<list-box>,
+          selection-mode: #"none",
           borders: #"output",
           items: frame.log);
 

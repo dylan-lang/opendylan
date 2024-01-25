@@ -54,7 +54,7 @@ define class <optional-parameter> (<parameter>)
     required-init-keyword: default-value:;
 end class <optional-parameter>;
 
-
+
 /// Protocols
 
 // Should probably be limited collections
@@ -86,7 +86,7 @@ define open generic method-generic-function
  => (function :: false-or(<generic-function-object>));
 
 
-
+
 /// Project dispatching methods
 
 define method function-parameters
@@ -127,7 +127,7 @@ define method method-generic-function
   server & method-generic-function(server, function)
 end method method-generic-function;
 
-
+
 /// Function names
 
 define method environment-object-type-name
@@ -150,7 +150,7 @@ define method environment-object-type-name
   "Foreign function"
 end method environment-object-type-name;
 
-
+
 /// Convenience functions
 
 define function generic-function-object-methods

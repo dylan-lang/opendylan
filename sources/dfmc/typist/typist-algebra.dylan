@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 /// Implementation of the typist algebra.  (NB: No macro-defining macros!)
 ///
-
+
 ///
 /// Normalization of <type-estimate>s.
 ///
@@ -479,7 +479,7 @@ define method type-estimate-normalize(val :: <type-estimate-values>)
     end
   end
 end;
-
+
 ///
 /// Unions of <type-estimate>s.
 ///
@@ -618,7 +618,7 @@ define type-estimate-union-rules
          unionees: concatenate(type-estimate-unionees(u1),
                                type-estimate-unionees(u2)));
 end;
-
+
 ///
 /// Intersections of <type-estimate>s.
 ///
@@ -643,7 +643,7 @@ define type-estimate-intersection-rules
   te1 :: <type-estimate>, te2 :: <type-estimate> <-
     error("*** type-estimate-intersection not implemented yet.")
 end;
-
+
 ///
 /// Differences of <type-estimate>s.
 ///
@@ -668,7 +668,7 @@ define type-estimate-difference-rules
   te1 :: <type-estimate>, te2 :: <type-estimate> <-
     error("*** type-estimate-difference not implemented yet.")
 end;
-
+
 ///
 /// Base of <type-estimate>s.  See DRM, p. 48.
 ///
@@ -747,7 +747,7 @@ define method type-estimate-base
   // This is kind of a guess, but the only reasonable one.
   bot
 end;
-
+
 ///
 /// Structural matching, mostly useful in the test suite.
 ///
@@ -834,7 +834,7 @@ define type-estimate-match?-rules
 
   te1, te2, <type-estimate-bottom> <- #t;
 end;
-
+
 ///
 /// Instance? of <type-estimate>s.
 ///
@@ -907,7 +907,7 @@ define type-estimate-instance?-rules
            & (~type-estimate-max(te) | x <= type-estimate-max(te)),
            #t);
 end;
-
+
 ///
 /// Disjointness of <type-estimate>s.
 ///
@@ -1259,7 +1259,7 @@ define function ^classes-guaranteed-disjoint?(c1 :: <&class>, c2 :: <&class>)
     val
   end
 end;
-
+
 ///
 /// Subtypeness of <type-estimate>s.  See DRM pp. 48, 72, 73, and 124.
 ///
@@ -1789,7 +1789,7 @@ define method type-estimate-subtype?(s :: <type-estimate-limited-instance>,
   values(#t, #t)
 end;
 
-
+
 ///
 /// Retraction of type-estimates.
 ///

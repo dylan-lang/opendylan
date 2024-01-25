@@ -147,7 +147,7 @@ define method CSimpleSite-Create(lpDoc :: <CSimpleDoc>)
   // count goes to 0, it will be deleted.
   AddRef(lpTemp);
 
-  lpTemp 
+  lpTemp
 end method CSimpleSite-Create;
 
 //**********************************************************************
@@ -281,7 +281,7 @@ define method CloseOleObject(this :: <CSimpleSite>) => ();
   let OleObject = this.m-lpOleObject;
 
   unless ( null?(OleObject) )
-    
+
     if ( this.m-fInPlaceActive )
       let ( status, object ) =
 	QueryInterface(OleObject, $IID-IOleInPlaceObject);
@@ -338,7 +338,7 @@ define method UnloadOleObject(this :: <CSimpleSite>) => ();
   OutputDebugString( "In CSimpleSite::UnloadOleObject \r\n");
 
   if ( ~ null?(this.m-lpOleObject) )
-	   
+
     CloseOleObject(this); // ensure object is closed; NOP if already closed
 
     let ( status, interface ) =
@@ -347,7 +347,7 @@ define method UnloadOleObject(this :: <CSimpleSite>) => ();
     if ( ~ null?(interface) )
       let lpViewObject :: <LPVIEWOBJECT> =
 	pointer-cast(<LPVIEWOBJECT>, interface);
-	           
+
       // Remove the view advise
       IViewObject/SetAdvise(lpViewObject, this.m-dwDrawAspect, 0,
 			    $null-interface);
@@ -396,7 +396,7 @@ end method UnloadOleObject;
 
 
 define method InitObject(this :: <CSimpleSite>, fCreateNew :: <boolean>) => ();
-	
+
   // let stabilize :: <CStabilize> = make(<CStabilize>, this);
   let rect :: <LPRECT> = make(<LPRECT>);
 
@@ -428,7 +428,7 @@ define method InitObject(this :: <CSimpleSite>, fCreateNew :: <boolean>) => ();
   //  embedding container's context
   OleSetContainedObject(this.m-lpOleObject, #t);
 
-  if ( fCreateNew ) 
+  if ( fCreateNew )
     // force new object to save to guarantee valid object in our storage.
     // OLE 1.0 objects may close w/o saving. this is NOT necessary if the
     // object is created FROM FILE; its data in storage is already valid.
@@ -492,7 +492,7 @@ define method PaintObj(this :: <CSimpleSite>, hDC :: <HDC>) => ();
   // between the time that CSimpleSite is instantiated
   // and OleUIInsertObject returns.
   unless ( null?(this.m-lpOleObject) )
-	
+
     let pRect :: <LPRECT> = make(<LPRECT>);
 
     // convert it to pixels

@@ -25,11 +25,11 @@ end;
 // pentium-method defines methods for pentium clash functions etc.
 
 
-define macro pentium-method 
+define macro pentium-method
   { pentium-method () ?:body end }
     => { method (?=backend :: <harp-x86-back-end>, ?=ins :: <integer>)
-           ignore(?=backend); 
-           ignore(?=ins); 
+           ignore(?=backend);
+           ignore(?=ins);
            ?body
          end }
 

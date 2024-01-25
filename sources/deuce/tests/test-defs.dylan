@@ -114,7 +114,7 @@ define sealed class <testing-structural-diagram-line>
 end class;
 
 
-
+
 // -=- Data structures for testing -=-
 
 // lines, sections, nodes, container and buffer
@@ -255,7 +255,7 @@ define function testing-intervals
 end function;
 
 
-
+
 // -=- Common test functions -=-
 
 define function last-line-from

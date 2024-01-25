@@ -25,13 +25,13 @@ define runtime-variable oblist-cursor = "%oblist_cursor", data: sov-header-size;
 
 
 // size in bytes of allocation increments for the oblist
-define constant initial-oblist-size = 1024;  
+define constant initial-oblist-size = 1024;
 
 
 
 define init runtime-primitive preboot-symbols
   // On entry:
-  //    
+  //
   // On exit:
   //    A vector of all the symbols which have been interned so far
   //    All symbols registered in this package are flushed.
@@ -65,7 +65,7 @@ define init runtime-primitive make-symbol
   result result;
   greg name;
 
-  op--load-arguments(be, name); 
+  op--load-arguments(be, name);
   op--make-symbol(be, result, name);
   ins--rts-and-drop(be, 0);
 end runtime-primitive;
@@ -166,7 +166,7 @@ define method op--lookup-symbol
     // No symbol was found, so return false
     ins--tag(be, not-found);
     ins--move(be, symbol, dylan-false);
-    
+
     ins--tag(be, all-done);
   end with-harp;
 end method;
@@ -174,7 +174,7 @@ end method;
 
 // TUU op to compare the names of two symbols and branch if they match
 define method op--branch-if-matching
-    (be :: <harp-back-end>, match :: <tag>, 
+    (be :: <harp-back-end>, match :: <tag>,
      name1 :: <register>, name2 :: <register>)
   with-harp (be)
     tag no-match, match-char, loop;

@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $Scribble-class-ID = "{E714C9C0-B2C4-11D0-8A14-02070119F639}";
 
 // For in-place activation, don't include "Exit" in the menu.
-define method frame-container-menus 
+define method frame-container-menus
     (frame :: <scribble-frame>) => (edit-menus, object-menus, help-menus)
   values(make(<menu>,
 	      label: "Scribble",

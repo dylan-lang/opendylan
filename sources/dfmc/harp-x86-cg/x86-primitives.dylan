@@ -89,16 +89,16 @@ define sideways method op--store-bit-index
     (back-end :: <harp-x86-back-end>, result, value, base, index, offset, bit) => ()
 
   select (value)
-    0 => 
+    0 =>
       ins--bitc-mem(back-end, base, index, offset, bit);
-    1 => 
+    1 =>
       ins--bits-mem(back-end, base, index, offset, bit);
     otherwise =>
       let set-bit-tag = make-tag(back-end);
       let done-tag = make-tag(back-end);
       ins--bne(back-end, set-bit-tag, value, 0);
       ins--bitc-mem(back-end, base, index, offset, bit);
-      ins--bra(back-end, done-tag);      
+      ins--bra(back-end, done-tag);
       ins--tag(back-end, set-bit-tag);
       ins--bits-mem(back-end, base, index, offset, bit);
       ins--tag(back-end, done-tag);

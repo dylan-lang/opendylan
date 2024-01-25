@@ -26,7 +26,7 @@ define method ensure-window-valid
   window-valid?(handle) & handle
 end method ensure-window-valid;
 
-
+
 /// Class name
 
 define method window-class-name
@@ -55,7 +55,7 @@ define method get-window-class-description
   name
 end method get-window-class-description;
 
-
+
 /// Window label
 
 define method window-label
@@ -94,7 +94,7 @@ define method window-name
   end
 end method window-name;
 
-
+
 /// Window children
 
 define variable *parent* :: false-or(<HWND>) = #f;
@@ -169,7 +169,7 @@ define method window-top-child
   ensure-window-valid(GetTopWindow(handle))
 end method window-top-child;
 
-
+
 /// Window geometry
 
 define sealed method get-window-edges
@@ -201,7 +201,7 @@ define sealed method get-client-edges
 end method get-client-edges;
 
 
-
+
 /// Menu handling
 
 /*---*** Not ready yet...
@@ -239,7 +239,7 @@ define method menu-items
 end method menu-items;
 */
 
-
+
 /// Styles
 
 define constant $basic-styles
@@ -351,7 +351,7 @@ define method decode-window-styles
   styles
 end method decode-window-styles;
 
-
+
 /// Button class information
 
 define constant $button-styles
@@ -403,7 +403,7 @@ define method get-window-class-description
   end
 end method get-window-class-description;
 
-
+
 /// Combo box class information
 
 define constant $combo-box-styles
@@ -438,7 +438,7 @@ define method get-window-class-description
   end
 end method get-window-class-description;
 
-
+
 /// Edit control class information
 
 define constant $edit-control-styles
@@ -474,7 +474,7 @@ define method get-window-class-description
   end
 end method get-window-class-description;
 
-
+
 /// List box class information
 
 define constant $list-box-styles
@@ -508,7 +508,7 @@ define method get-window-class-description
   "List Box"
 end method get-window-class-description;
 
-
+
 /// Scroll bar class information
 
 define constant $scroll-bar-styles
@@ -540,7 +540,7 @@ define method get-window-class-description
   end
 end method get-window-class-description;
 
-
+
 /// Static class information
 
 define constant $static-styles

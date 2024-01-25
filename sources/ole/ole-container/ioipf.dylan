@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define open primary COM-interface <container-ole-in-place-frame>
-	( <IOleInPlaceFrame> ) 
+	( <IOleInPlaceFrame> )
   constant slot get-app :: <container-app>, required-init-keyword: App:;
 end <container-ole-in-place-frame>;
 
 
 // Returns the frame window handle
-define method IOleWindow/GetWindow(this :: <container-ole-in-place-frame>) 
+define method IOleWindow/GetWindow(this :: <container-ole-in-place-frame>)
 	=> ( status :: <HRESULT>, hwnd :: <HWND> );
 
   OutputDebugString("IOleWindow/GetWindow\r\n");
@@ -50,14 +50,14 @@ end method IOleWindow/GetWindow;
 
 
 define method IOleWindow/ContextSensitiveHelp(this :: <container-ole-in-place-frame>,
-					      enter-mode? :: <boolean>) 
+					      enter-mode? :: <boolean>)
  => status :: <HRESULT>;
 
   OutputDebugString("IOleWindow/ContextSensitiveHelp\r\n");
 
   this.get-app.help-menu-mode := enter-mode?;
 
-  $S-OK 
+  $S-OK
 end method IOleWindow/ContextSensitiveHelp;
 
 //**********************************************************************
@@ -91,7 +91,7 @@ end method IOleWindow/ContextSensitiveHelp;
 
 
 define method IOleInPlaceUIWindow/GetBorder
-    (this :: <container-ole-in-place-frame>, lprectBorder :: <LPRECT>) 
+    (this :: <container-ole-in-place-frame>, lprectBorder :: <LPRECT>)
  => status :: <HRESULT>;
 
   OutputDebugString("IOleInPlaceUIWindow/GetBorder\r\n");
@@ -103,7 +103,7 @@ define method IOleInPlaceUIWindow/GetBorder
   else
     // get the rect for the entire frame.
     GetClientRect(frame-window, lprectBorder);
-    $S-OK 
+    $S-OK
   end if;
 end method IOleInPlaceUIWindow/GetBorder;
 
@@ -139,9 +139,9 @@ end method IOleInPlaceUIWindow/GetBorder;
 
 define method IOleInPlaceUIWindow/RequestBorderSpace
     (this :: <container-ole-in-place-frame>,
-     lpborderwidths :: <LPCBORDERWIDTHS> ) 
+     lpborderwidths :: <LPCBORDERWIDTHS> )
 	=> status :: <HRESULT>;
-	
+
   OutputDebugString("IOleInPlaceUIWindow/RequestBorderSpace\r\n");
   if ( container-request-border-space(this.get-app,
                                       lpborderwidths.left-value,
@@ -216,7 +216,7 @@ end;
 
 define method IOleInPlaceUIWindow/SetBorderSpace
     (this :: <container-ole-in-place-frame>,
-     lpborderwidths :: <LPCBORDERWIDTHS>) 
+     lpborderwidths :: <LPCBORDERWIDTHS>)
  => status :: <HRESULT>;
 
   OutputDebugString("IOleInPlaceUIWindow/SetBorderSpace\r\n");
@@ -225,8 +225,8 @@ define method IOleInPlaceUIWindow/SetBorderSpace
   if ( null-pointer?(lpborderwidths) )
     // Server does not need any space; container should keep or restore
     // its own tool bar.
-    container-release-border-space(app); 
-    $S-OK 
+    container-release-border-space(app);
+    $S-OK
   elseif ( null-handle?(app.container-frame-window) )
     $E-NOTIMPL
   else
@@ -322,7 +322,7 @@ define method IOleInPlaceUIWindow/SetActiveObject
   app.in-place-active-object := new-active-object;
 
   unless ( new-name = app.active-object-name )
-    app.active-object-name := 
+    app.active-object-name :=
       if ( empty?(new-name) ) "" else as(<byte-string>, new-name) end if;
     note-active-object-name(app, new-name);
   end unless;
@@ -339,7 +339,7 @@ define method note-active-object-name ( app :: <object>, name :: <object> )
   values()
 end method;
 
-
+
 define open generic container-insert-menus (app, shared-menu)
  => (file-count :: <integer>, edit-count :: <integer>,
      help-count :: <integer>);
@@ -373,7 +373,7 @@ end method;
 define method IOleInPlaceFrame/SetMenu(this :: <container-ole-in-place-frame>,
 				       shared-menu :: <HMENU>,
 				       holemenu :: <HOLEMENU>,
-				       active-object-handle :: <HWND>) 
+				       active-object-handle :: <HWND>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("IOleInPlaceFrame/SetMenu\r\n");
@@ -401,7 +401,7 @@ define method IOleInPlaceFrame/SetMenu(this :: <container-ole-in-place-frame>,
       // MSDN says:
       //   An SDI container's implementation of this method should call the
       //   Windows SetMenu function. An MDI container should send a
-      //   WM_MDISETMENU message, using hmenuShared as the menu to install. 
+      //   WM_MDISETMENU message, using hmenuShared as the menu to install.
       SetMenu(frame-window, new-menu);
 
       // install the OLE dispatching code:
@@ -414,9 +414,9 @@ end method IOleInPlaceFrame/SetMenu;
 
 // Removes the container menus from the combined menu
 define method IOleInPlaceFrame/RemoveMenus
-    (this :: <container-ole-in-place-frame>, shared-menu :: <HMENU>) 
+    (this :: <container-ole-in-place-frame>, shared-menu :: <HMENU>)
  => status :: <HRESULT>;
-	
+
   OutputDebugString("IOleInPlaceFrame/RemoveMenus\r\n");
 
   while( GetMenuItemCount(shared-menu) > 0 )
@@ -425,20 +425,20 @@ define method IOleInPlaceFrame/RemoveMenus
   $S-OK
 end method IOleInPlaceFrame/RemoveMenus;
 
-
+
 
 define open generic container-set-status-text
     (app :: <container-app>, text :: <string>) => (status :: <HRESULT>);
 
 define method container-set-status-text
     (app :: <container-app>, text :: <string>) => (status :: <HRESULT>);
-  // This default method reports that the container does not support a 
+  // This default method reports that the container does not support a
   // status bar.  Applications will likely provide an override method.
   $E-FAIL
 end method;
 
 define method IOleInPlaceFrame/SetStatusText
-    (this :: <container-ole-in-place-frame>, message-text :: <LPCOLESTR>) 
+    (this :: <container-ole-in-place-frame>, message-text :: <LPCOLESTR>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("IOleInPlaceFrame/SetStatusText\r\n");
@@ -469,7 +469,7 @@ define method note-enable-modeless ( app :: <container-app>,
   values()
 end;
 
-// This function is called to dispatch an accelerator key belonging to the 
+// This function is called to dispatch an accelerator key belonging to the
 // container which was received by the message loop of an embedded server.
 define method IOleInPlaceFrame/TranslateAccelerator
     (this :: <container-ole-in-place-frame>, msg :: <LPMSG>,
@@ -485,9 +485,9 @@ define method IOleInPlaceFrame/TranslateAccelerator
     $E-UNEXPECTED
   else
     // We have already been given the command ID, so we could use that
-    // directly, but going back through TranslateAccelerator simplifies 
+    // directly, but going back through TranslateAccelerator simplifies
     // the protocol for users of this library.
-    // Note that we need to use the container's frame window, not the 
+    // Note that we need to use the container's frame window, not the
     // window that originally received the message.
     if ( (~ zero?(TranslateAccelerator(window, accel, msg)))
 	  | TranslateMDISysAccel(window, msg) )

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // the "application object" class for DUIM containers
 
-define open COM-interface <duim-container-app> ( <container-app> ) 
+define open COM-interface <duim-container-app> ( <container-app> )
 
   sealed constant slot app-frame :: <container-frame-mixin>,
 		required-init-keyword: frame:;
@@ -101,7 +101,7 @@ define method container-set-status-text (app :: <duim-container-app>,
 					 text :: <string>)
  => (status :: <HRESULT>)
   // Note: this is being done in a slightly convoluted way so that if the
-  // application is itself an embedded server, the message will be 
+  // application is itself an embedded server, the message will be
   // forwarded to the next level container, even if this container doesn't
   // support a status bar itself.
   let frame = app.app-frame;
@@ -130,7 +130,7 @@ end method container-set-status-text;
 //   container-size-changed
 
 
-
+
 
 define method container-insert-menus(app :: <duim-container-app>,
 				     shared-menu :: w/<HMENU>)
@@ -143,7 +143,7 @@ define method container-insert-menus(app :: <duim-container-app>,
     frame-active-container-menus(frame);
   let help-count :: <fixnum> =
     insert-menu-group(shared-menu, help-menu-bar, frame);
-  let edit-count :: <fixnum> = 
+  let edit-count :: <fixnum> =
     insert-menu-group(shared-menu, edit-menu-bar, frame);
   let file-count :: <fixnum> =
     insert-menu-group(shared-menu, file-menu-bar, frame);
@@ -181,7 +181,7 @@ define method insert-menu-group ( hmenuShared :: w/<HMENU>,
  => count :: <fixnum>;
 
   let mirror = duim/sheet-direct-mirror(sub-menu);
-  let sub-hmenu :: w/<HMENU> = 
+  let sub-hmenu :: w/<HMENU> =
     if ( mirror )
       duim/window-handle(mirror)
     else
@@ -242,7 +242,7 @@ define method OLE-part-release-menu (obj :: <basic-DUIM-OLE-server>,
   values()
 end method;
 */
-
+
 
 define method note-enable-modeless (app :: <duim-container-app>,
 				    enable? :: <boolean>) => ()

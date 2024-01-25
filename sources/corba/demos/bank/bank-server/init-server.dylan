@@ -18,7 +18,7 @@ define constant $user-name :: <string> = "";
 define constant $user-password :: <string>  = "";
 
 define method initialize-server ()
-  let location-service = get-location-service();  
+  let location-service = get-location-service();
 
   // get reference to ORB
   let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Open Dylan ORB");
@@ -27,10 +27,10 @@ define method initialize-server ()
   let RootPOA = CORBA/ORB/resolve-initial-references(orb, "RootPOA");
 
   with-dbms ($dbms)
-     // connect to the database 
+     // connect to the database
      let database = make(<database>, datasource-name: $datasource-name);
      let user =  make(<user>, user-name: $user-name, password: $user-password);
-     let connection = connect(database, user); 
+     let connection = connect(database, user);
 
      // make the server frame, initialize and refresh it.
      let server-frame = make(<server-frame>, connection: connection);
@@ -39,7 +39,7 @@ define method initialize-server ()
 
      //  make the bank servant
      let bank = make(<bank-implementation>, connection: connection, poa: RootPOA, name: "Dylan Bank", server-frame: server-frame);
-    
+
      // get the servant's object reference from the poa
      let bank-reference = PortableServer/POA/servant-to-reference(bank.poa, bank);
 
@@ -51,12 +51,12 @@ define method initialize-server ()
      register-bank(orb, location-service, bank-reference);
 
      // create a separate thread to shut down the orb, unblocking the main thread.
-     make(<thread>, 
-          function: method () 
+     make(<thread>,
+          function: method ()
                       start-frame(server-frame);
                       CORBA/ORB/shutdown(orb, #t);
             	    end method);
-     
+
      // block the main thread
      CORBA/ORB/run(orb);
 
@@ -73,7 +73,7 @@ define method register-bank
   let name-service = as(CosNaming/<NamingContext>, CORBA/ORB/resolve-initial-references(orb, "NameService"));
   block ()
     CosNaming/NamingContext/bind(name-service, $name, bank-reference);
-  exception(e :: CosNaming/NamingContext/<AlreadyBound>) 
+  exception(e :: CosNaming/NamingContext/<AlreadyBound>)
     CosNaming/NamingContext/rebind(name-service, $name, bank-reference);
   end block;
 end method;
@@ -88,7 +88,7 @@ define method unregister-bank
   let name-service = as(CosNaming/<NamingContext>, CORBA/ORB/resolve-initial-references(orb, "NameService"));
   block ()
     CosNaming/NamingContext/unbind(name-service, $name);
-  exception(e :: CosNaming/NamingContext/<NotFound>) 
+  exception(e :: CosNaming/NamingContext/<NotFound>)
     // ignore
   end block;
 end method;

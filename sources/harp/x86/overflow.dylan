@@ -128,8 +128,8 @@ with-ops-in pentium-instructions (aslxv)
 		 prefer(dduu-def(1), $vector-eax);
 		 prefer(dduu-uze(1), $vector-eax);
 		 prefer(dduu-uze(2), $vector-ecx);
-               end pentium-method; 
-		  
+               end pentium-method;
+
   clash-fn := pentium-method (dduu)
                 concatenate
                   (default-double-overflow-function-clashes(backend, ins),
@@ -199,8 +199,8 @@ with-ops-in pentium-instructions (asl-trap)
 		 prefer(duu-def(1), $vector-eax);
 		 prefer(duu-uze(1), $vector-eax);
 		 prefer(duu-uze(2), $vector-ecx);
-               end pentium-method; 
-		  
+               end pentium-method;
+
   clash-fn := pentium-method (duu)
                 if (instance?(duu-uze(2), <register>))
 		  list(list(duu-uze(2), eax, edx),

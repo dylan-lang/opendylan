@@ -1,5 +1,5 @@
 Module:    OLE-Server
-Synopsis:  Additional methods for in-process version of 
+Synopsis:  Additional methods for in-process version of
 	   persistent storage via the IPersistStorage interface.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -16,7 +16,7 @@ define method initialize ( this :: <inproc-PersistStorage>,
 			  #rest args, #key) => ();
   next-method();
   this.default-IPersistStorage :=
-    pointer-cast(<LPPERSISTSTORAGE>, 
+    pointer-cast(<LPPERSISTSTORAGE>,
 		 query-cache-interface(this.get-obj, $IID-IPersistStorage));
 end method initialize;
 

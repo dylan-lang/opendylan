@@ -19,39 +19,39 @@ define constant $WAIT-OBJECT-0 = 0;
 
 // hand-translated macros:
 
-define function FD-CLR(fd :: <SOCKET>, set :: <LPfd-set>) => (); 
+define function FD-CLR(fd :: <SOCKET>, set :: <LPfd-set>) => ();
   let i :: <integer> = 0;
   block (quit)
     while ( i < set.fd-count-value )
-      if ( fd-array-array(set,i) = fd ) 
+      if ( fd-array-array(set,i) = fd )
 	while( i < (set.fd-count-value - 1) )
-	  fd-array-array(set,i) := fd-array-array(set,i + 1); 
-	  i := i + 1;	  
-	end while; 	  
+	  fd-array-array(set,i) := fd-array-array(set,i + 1);
+	  i := i + 1;
+	end while;
 	let new-count :: <integer> = set.fd-count-value - 1;
 	set.fd-count-value := new-count;
-	quit(); 
-      end if; 
-    end while; 
+	quit();
+      end if;
+    end while;
   end block;
 end FD-CLR;
 
-define function FD-SET(fd :: <SOCKET>, set :: <LPfd-set>) => (); 
+define function FD-SET(fd :: <SOCKET>, set :: <LPfd-set>) => ();
   let i :: <integer> = 0;
   block (quit)
-    while ( i < set.fd-count-value ) 
+    while ( i < set.fd-count-value )
       if ( fd-array-array(set,i) = fd )
-	quit(); 
-      end if; 
-    end while; 
+	quit();
+      end if;
+    end while;
   end block;
-  if ( i = set.fd-count-value )  
-    if ( set.fd-count-value < $FD-SETSIZE )  
-      fd-array-array(set,i) := fd; 
+  if ( i = set.fd-count-value )
+    if ( set.fd-count-value < $FD-SETSIZE )
+      fd-array-array(set,i) := fd;
       let new-count :: <integer> = set.fd-count-value + 1;
       set.fd-count-value := new-count;
-    end if; 
-  end if; 
+    end if;
+  end if;
 end FD-SET;
 
 define inline-only function FD-ZERO (set :: <LPfd-set>) => ();
@@ -59,12 +59,12 @@ define inline-only function FD-ZERO (set :: <LPfd-set>) => ();
 end FD-ZERO;
 
 define inline-only function timerisset(tvp :: <LPTIMEVAL>)
- => set? :: <boolean>; 
+ => set? :: <boolean>;
   (~ zero?(tvp.tv-sec-value)) | (~ zero?(tvp.tv-usec-value))
 end timerisset;
 
 define inline-only function timercmp(tvp :: <LPTIMEVAL>, uvp :: <LPTIMEVAL>,
-				     cmp :: <function>) => value :: <boolean>; 
+				     cmp :: <function>) => value :: <boolean>;
   cmp(tvp.tv-sec-value, uvp.tv-sec-value) |
     (tvp.tv-sec-value = uvp.tv-sec-value &
        cmp(tvp.tv-usec-value, uvp.tv-usec-value))

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-with-ops-in pentium-instructions (push-last-arg)       
+with-ops-in pentium-instructions (push-last-arg)
   c-preserved-destroys-fn := tmp1-fn;
 end with-ops-in;
 
@@ -25,8 +25,8 @@ define pentium-template push-last-arg
 end pentium-template;
 
 
-with-ops-in pentium-instructions (reset-values, set-values, 
-                                  clear-direction-flag)       
+with-ops-in pentium-instructions (reset-values, set-values,
+                                  clear-direction-flag)
   c-preserved-destroys-fn := flags-fn;
 end with-ops-in;
 

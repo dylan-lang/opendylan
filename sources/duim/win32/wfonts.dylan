@@ -172,7 +172,7 @@ define sealed method standardize-text-style
   end
 end method standardize-text-style;
 
-
+
 /// Font metrics
 
 define sealed inline method font-width
@@ -265,7 +265,7 @@ define function windows-font-metrics
          font.%font-width, font.%font-height, font.%font-ascent, font.%font-descent)
 end function windows-font-metrics;
 
-
+
 /// Fonts -> text styles
 
 define method make-text-style-from-font
@@ -394,7 +394,7 @@ define method make-text-style-from-name-and-size
   #f
 end method make-text-style-from-name-and-size;
 
-
+
 /// Text measurement
 
 define sealed method text-size

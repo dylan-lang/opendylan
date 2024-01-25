@@ -32,7 +32,7 @@ define custom-interface <IFoo> ( <IUnknown> )
   property size :: <integer>;
   constant property foo-const :: <single-float>;
   member-function IFoo/Square ( n :: <C-int> ) => (nn :: <C-int>);
-end;  
+end;
 
 
 define COM-interface <my-foo> ( <IFoo> )
@@ -82,7 +82,7 @@ define variable *ci1* :: <interface> = $null-interface;
 define variable *ci2* :: <interface> = $null-interface;
 define variable *ci3* :: <interface> = $null-interface;
 
-define test custom-interface-test 
+define test custom-interface-test
 		    (name: "custom-interface-test",
 		     description: "test COM custom interfaces")
 

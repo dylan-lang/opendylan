@@ -194,8 +194,8 @@ end method;
 
 ///// DO-FRAME-ARGUMENTS
 
-define method do-frame-arguments 
-  (function :: <function>, ap :: <access-path>, frame :: <function-frame>) 
+define method do-frame-arguments
+  (function :: <function>, ap :: <access-path>, frame :: <function-frame>)
      => ()
   // Since we are lazily pulling debug info, we may not yet have
   // examined the lexicals for this frame. Read them now if
@@ -215,8 +215,8 @@ end method;
 
 ///// DO-FRAME-LEXICALS
 
-define method do-frame-lexicals 
-  (function :: <function>, ap :: <access-path>, frame :: <function-frame>) 
+define method do-frame-lexicals
+  (function :: <function>, ap :: <access-path>, frame :: <function-frame>)
      => ()
   // Again, now is the time to pull lexical variable information if
   // we need it.
@@ -233,11 +233,11 @@ end method;
 
 
 ///// LEXICAL-VARIABLE-NAME
-//    This is a virtual slot accessor. The name is stored as a C-string. 
+//    This is a virtual slot accessor. The name is stored as a C-string.
 //    This function converts the name to a dylan <string>.
 
-define method lexical-variable-name 
-  (v :: <lexical-variable>) 
+define method lexical-variable-name
+  (v :: <lexical-variable>)
     => (name :: <string>)
   v.C-name;
 end method;
@@ -245,7 +245,7 @@ end method;
 
 ///// FIND-LEXICAL-VARIABLE
 
-define method find-lexical-variable 
+define method find-lexical-variable
   (ap :: <access-path>, frame :: <function-frame>, name :: <string>)
      => (lx :: false-or(<lexical-variable>))
 
@@ -292,7 +292,7 @@ end method;
 
 ///// READ-FRAME-LEXICALS
 
-define open generic read-frame-lexicals 
+define open generic read-frame-lexicals
   (conn :: <access-connection>, frame :: <function-frame>) => ();
 
 
@@ -303,7 +303,7 @@ define open generic read-frame-lexicals
 //    "knows" the direction of stack growth.
 
 define method older-stack-frame?
-  (ap :: <access-path>, this-one :: <remote-value>, 
+  (ap :: <access-path>, this-one :: <remote-value>,
    than-this-one :: <remote-value>)
      => (answer :: <boolean>)
   older-stack-frame-on-connection?(ap.connection, this-one, than-this-one);
@@ -331,5 +331,5 @@ end method;
 
 define open generic register-interactive-segment-on-connection
     (conn :: <access-connection>,
-     from :: <remote-value>, to :: <remote-value>) 
+     from :: <remote-value>, to :: <remote-value>)
  => ();

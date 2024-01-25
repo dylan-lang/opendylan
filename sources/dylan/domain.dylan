@@ -81,7 +81,7 @@ end method;
 define inline method domain-types (d :: <method>) => (v :: <simple-object-vector>)
   function-specializers(d)
 end method;
-
+
 
 
 define inline-only function library-in? (lib :: <library>, vec :: <simple-object-vector>)
@@ -145,7 +145,7 @@ define constant $runtime-module :: <module>
   = make(<module>, name: "phony module", home: $runtime-library);
 
 kludge-up-init-value(<class>, class-module, $runtime-module);
-
+
 
 //define function define-domain-on-sealed-generic (g :: <generic-function>, d :: <domain>)
 // => (c :: <condition>)
@@ -288,7 +288,7 @@ define function %add-domain-unconditionally
     incremental-gf-domain-info(g) := d
   end if;
 end function;
-
+
 
 
 define method %remove-domain (gf :: <incremental-generic-function>,
@@ -343,7 +343,7 @@ define function %remove-method-domain (gf :: <incremental-generic-function>,
         end method;
   lookup-domain-1(incremental-gf-domain-info(gf), #f)
 end function;
-
+
 
 
 define sealed generic domain-match? (d1, d2)
@@ -405,7 +405,7 @@ define function lookup-domain (d :: <domain>, g :: <incremental-generic-function
         end method;
   lookup-domain-1(incremental-gf-domain-info(g), #f)
 end function;
-
+
 
 
 define class <domain-sealed-generic-function-error> (<sealed-generic-function-error>)
@@ -472,7 +472,7 @@ define method domain-conflict? (g :: <incremental-generic-function>, frob,
     end if
   end if
 end method;
-
+
 
 // Is the domain not applicable to a set of arguments of the given types?
 define sealed generic domain-disjoint?
@@ -546,7 +546,7 @@ define method domain-disjoint? (d1 :: <method>, d2 :: <simple-object-vector>,
   => (well? :: <boolean>)
   domain-disjoint?(d2, d1, scu, dep)
 end method;
-
+
 
 
 define method type-complete? (d :: <standalone-domain>) => (well? :: <boolean>)

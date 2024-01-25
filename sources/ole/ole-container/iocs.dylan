@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define open primary COM-interface <container-ole-client-site>
-	( <IOleClientSite> ) 
+	( <IOleClientSite> )
   constant slot get-site :: <contained-object>, required-init-keyword: site:;
 end <container-ole-client-site>;
 
@@ -34,7 +34,7 @@ define method IOleClientSite/SaveObject(this :: <container-ole-client-site>)
     IPersistStorage/SaveCompleted(persist-storage, null-pointer(<LPSTORAGE>));
     Release(persist-storage);
   end if;
-  sc 
+  sc
 end method IOleClientSite/SaveObject;
 
 // This function is not implemented because we don't support linking.
@@ -51,7 +51,7 @@ end method IOleClientSite/GetMoniker;
 // not implemented (used for linking)
 define method IOleClientSite/GetContainer(this :: <container-ole-client-site> )
 	=> ( status :: <HRESULT>, pContainer :: <LPOLECONTAINER> );
-	
+
   OutputDebugString( "IOleClientSite/GetContainer\r\n");
   values( $E-NOTIMPL, $NULL-interface )
 end method IOleClientSite/GetContainer;
@@ -70,7 +70,7 @@ end method IOleClientSite/ShowObject;
 //
 //      BOOL fShow  - TRUE if Window is opening, FALSE if closing
 define method IOleClientSite/OnShowWindow(this :: <container-ole-client-site>,
-					  show? :: <boolean>) 
+					  show? :: <boolean>)
  => status :: <HRESULT>;
 
   OutputDebugString( "IOleClientSite/OnShowWindow\r\n");
@@ -80,15 +80,15 @@ define method IOleClientSite/OnShowWindow(this :: <container-ole-client-site>,
   InvalidateRect(window, $NULL-RECT, #t);
 
   // if object window is closing, then bring container window to top
-  if ( ~ show? ) 
+  if ( ~ show? )
     BringWindowToTop(window);
     SetFocus(window);
   end if;
-  $S-OK 
+  $S-OK
 end method IOleClientSite/OnShowWindow;
 
 // this operation is not adequately specified to be of any use.
 define method IOleClientSite/RequestNewObjectLayout
     (this :: <container-ole-client-site>) => (status :: <HRESULT>)
-  $E-NOTIMPL 
+  $E-NOTIMPL
 end method IOleClientSite/RequestNewObjectLayout;

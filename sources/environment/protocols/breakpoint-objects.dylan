@@ -862,7 +862,7 @@ define method environment-object-source-location
   environment-object-source-location(project, breakpoint-object(breakpoint))
 end method environment-object-source-location;
 
-
+
 /// Tracing
 
 define function trace-function

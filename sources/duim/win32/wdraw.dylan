@@ -33,7 +33,7 @@ define macro with-fill-selected
          end }
 end macro with-fill-selected;
 
-
+
 /// Figure graphics
 
 define sealed method draw-point
@@ -315,7 +315,7 @@ define sealed method draw-ellipse
   #f
 end method draw-ellipse;
 
-
+
 /// Pixel graphics
 
 define sealed method set-pixel
@@ -345,7 +345,7 @@ define sealed method set-pixels
   #f
 end method set-pixels;
 
-
+
 /// Pixmap graphics
 
 // Win32 bitmaps and icons are handled separately
@@ -385,7 +385,7 @@ define sealed method draw-image
                medium, x, y)
 end method draw-image;
 
-
+
 /// Path graphics
 
 define sealed method start-path
@@ -535,7 +535,7 @@ define sealed method curve-to
   #f
 end method curve-to;
 
-
+
 /// 'clear-box'
 
 /*---*** This doesn't work... let's just use the default method for now,
@@ -557,7 +557,7 @@ define sealed method clear-box
 end method clear-box;
 */
 
-
+
 /// Text drawing
 
 define sealed method draw-text

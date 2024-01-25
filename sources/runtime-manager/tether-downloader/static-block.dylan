@@ -85,7 +85,7 @@ define class <no-room-in-block-error> (<static-block-error>)
     required-init-keyword: request-size:;
 end class;
 
-  
+
 ///// RECYCLE-STATIC-BLOCK
 //    Makes it possible to begin downloading data into a block that is full,
 //    by overwriting what was there previously. No data in a <static-block>

@@ -157,7 +157,7 @@ define method value-sequence
   loop(plist, #());
 end method value-sequence;
 
-
+
 // Modifies PLIST
 define generic do-remove-property!
     (plist :: <sequence>, indicator) => (value, plist :: <sequence>);
@@ -252,7 +252,7 @@ define method do-remove-property!
   end;
 end method do-remove-property!;
 
-
+
 /// #rest argument surgery
 
 define generic remove-keywords

@@ -267,7 +267,7 @@ define method install-implementation-class (iclass :: <implementation-class>,
   // Now do subclasses.
   record-new-class-subclass-usage(iclass);
 end method;
-
+
 
 
 // define method all-subclasses (class :: <class>) => (classes :: <list>)
@@ -330,7 +330,7 @@ define function %register-subclasses-dependent-generic
   do(curry(%register-subclass-dependent-generic, generic), classes)
 end function;
 
-
+
 
 
 define function implementation-class-subtype? (ic1 :: <implementation-class>,
@@ -562,7 +562,7 @@ define function compute-defaulted-initialization-arguments (iclass :: <implement
       vector-size
     end;
 end function compute-defaulted-initialization-arguments;
-
+
 
 
 //// Class Precedence List
@@ -735,7 +735,7 @@ define function augment-superior-rcpls (iclass :: <implementation-class>, u :: <
     end
   end
 end function;
-
+
 
 
 define generic create-slot-descriptor
@@ -810,7 +810,7 @@ define function check-for-illegally-inherited-slots (slotvec :: <simple-object-v
     end for
   end for
 end function;
-
+
 
 define function add-slot-methods (iclass :: <implementation-class>,
                                   u :: <subjunctive-class-universe>,

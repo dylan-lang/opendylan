@@ -94,7 +94,7 @@ define sealed method get-clipboard-data-as
   end
 end method get-clipboard-data-as;
 
-
+
 /// Raw clipboard handling
 
 define sealed method clipboard-format-available?

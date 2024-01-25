@@ -71,7 +71,7 @@ define method make-container-frame
   apply(make, <container-frame>, title: "Container", initargs)
 end method make-container-frame;
 
-
+
 /// General containers
 
 define method make-container
@@ -88,7 +88,7 @@ define method make-container
         initargs)
 end method make-container;
 
-
+
 /// Menu containers
 
 define method make-container

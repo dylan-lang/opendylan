@@ -12,4 +12,4 @@ define suite generic-test-suite ()
   suite deuce-test-suite;
   suite environment-suite;
   suite duim-suite
-end suite generic-test-suite; 
+end suite generic-test-suite;

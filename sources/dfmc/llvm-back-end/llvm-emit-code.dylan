@@ -61,7 +61,7 @@ define macro without-persistent-temporaries
        end }
 end macro;
 
-
+
 /// Code emission
 
 define method emit-code
@@ -91,7 +91,7 @@ define method emit-code
 end method;
 
 define method emit-code-aux
-    (back-end :: <llvm-back-end>, module :: <llvm-module>, 
+    (back-end :: <llvm-back-end>, module :: <llvm-module>,
      o :: <&iep>, fun :: <&function>, init?)
  => ();
   let function-type = llvm-lambda-type(back-end, o);
@@ -127,7 +127,7 @@ define method emit-code-aux
       else
         #[]
       end if;
-  
+
   let calling-convention-index = arguments.size + extra.size;
   let calling-convention-parameters
     = vector(make(<llvm-argument>,

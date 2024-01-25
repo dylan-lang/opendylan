@@ -132,7 +132,7 @@ define method llvm-retract-cached (back-end :: <llvm-back-end>) => ()
   remove-all-keys!(back-end.%primitive-function-table)
 end method;
 
-
+
 /// Value import support
 
 define method llvm-back-end-value-function

@@ -76,7 +76,7 @@ define method generic-function-mandatory-keywords
   let signature = gf.function-signature;
   signature.signature-key? & signature.signature-keys
 end method generic-function-mandatory-keywords;
-
+
 
 define method make (c == <generic-function>, #rest args,
                     #key required, key, key-types, rest?, values, rest-value)
@@ -174,7 +174,7 @@ define method decache-gf (g :: <generic-function>) => ()
     end for
   end if
 end method;
-
+
 
 
 define abstract class <object-incomplete> (<condition>)
@@ -219,7 +219,7 @@ define inline function check-generic-incomplete
     report-generic-incomplete(gf, name, meth)
   end;
 end;
-
+
 
 define function locate-method
     (generic-function :: <generic-function>, the-specializers :: <simple-object-vector>)
@@ -259,7 +259,7 @@ define method congruent? (f1 :: <generic-function>, f2 :: <method>)
  => (b :: <boolean>, reason)
   congruent?(function-signature(f1), function-signature(f2))
 end method;
-
+
 
 
 define variable note-generic-function-incomplete-method :: <function>
@@ -419,7 +419,7 @@ define function add-method-internal-internal  (g :: <generic-function>,
   g.finalize-generic-function;
   old-meth
 end function;
-
+
 
 
 define method add-method
@@ -564,7 +564,7 @@ define function %add-nonsiblinged-method (g :: <generic-function>,
       end with-object-lock;
   bletch-stack(lossage);
 end function %add-nonsiblinged-method;
-
+
 
 
 // For users.
@@ -639,7 +639,7 @@ define function remove-method-internal (g :: <generic-function>, frob, lib, chec
     end
   end if
 end function;
-
+
 
 
 define generic applicable-method? (function :: <function>, #rest sample-arguments);

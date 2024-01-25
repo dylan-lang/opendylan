@@ -20,7 +20,7 @@ define method construct-source-location-map
 
     // We have a function, so build the map of source locations
     // if possible.
-    let sl-table 
+    let sl-table
       = nub-fetch-source-locations(conn.connection-process, sym.remote-symbol-address,
                                    sym.remote-function-end);
     let sl-count
@@ -30,7 +30,7 @@ define method construct-source-location-map
       let sl-vector = make(<vector>, size: sl-count);
       let fname-length
         = nub-source-location-filename-length(conn.connection-process, sl-table);
-      let fname 
+      let fname
         = make(<byte-string>, size: fname-length);
       nub-source-location-filename
         (conn.connection-process, sl-table, fname-length, fname);
@@ -87,10 +87,10 @@ define method resolve-source-location-on-connection
        search-path,
        precise? :: <integer>)
     = nub-resolve-source-location
-         (conn.connection-process, 
-          lib.nub-descriptor, 
-          filename, 
-          line, 
+         (conn.connection-process,
+          lib.nub-descriptor,
+          filename,
+          line,
           col);
   if (valid? == 1)
     values(code-location, precise? == 1)

@@ -54,7 +54,7 @@ define method handle-debug-point-event
     if ((top-frame-pointer = bp.used-frame) |
         ((bp.calling-frame) & (calling-frame-pointer) &
          (bp.calling-frame = calling-frame-pointer)))
-      bp.c-function-result := 
+      bp.c-function-result :=
         remote-call-result(application.debug-target-access-path, thread);
       remote-restore-context(application.debug-target-access-path, thread,
                              bp.stored-context);
@@ -77,7 +77,7 @@ define method invoke-c
      c-function :: <remote-value>, return-callback :: <function>,
      #rest argument-list)
   => (succeeded? :: <boolean>)
-      let top-frame = 
+      let top-frame =
       initialize-stack-trace(application.debug-target-access-path, thread);
   let top-frame-pointer =
     frame-pointer(application.debug-target-access-path, top-frame);
@@ -91,14 +91,14 @@ define method invoke-c
     end if;
   let (return-address, context) =
       call-debugger-function(
-            application, 
-            apply, 
+            application,
+            apply,
             remote-call,
             application.debug-target-access-path,
             thread,
             c-function,
             argument-list);
-  let debug-point = 
+  let debug-point =
     make(<c-interaction-returned>,
          address: return-address,
          callback: return-callback,

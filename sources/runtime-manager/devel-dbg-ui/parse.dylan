@@ -57,7 +57,7 @@ end method;
 
 ///// ACCEPT
 //    Consumes the lookahead token if its code matches the supplied code,
-//    otherwise calls PARSE-ERROR-HANDLER 
+//    otherwise calls PARSE-ERROR-HANDLER
 
 define method accept (token-code :: <integer>) => ()
   if (token-code == *current-parse-sequence*[*current-parse-index*].code)
@@ -215,7 +215,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
       end if;
       accept($tokenTerminator);
     elseif (token-is($tokenList))
-      let connection = 
+      let connection =
         if (token-is($tokenOn))
           let maybe-connection = find-connection-on(current-lexeme());
           accept($tokenDylanSymbol);
@@ -231,7 +231,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
                       connection: connection);
       accept($tokenTerminator);
     elseif (token-is($tokenOpen))
-      let connection = 
+      let connection =
         if (token-is($tokenOn))
           let maybe-connection = find-connection-on(current-lexeme());
           accept($tokenDylanSymbol);
@@ -365,32 +365,32 @@ define method build-debugger-command () => (command :: <debugger-command>)
 	command := parse-profile-top-n-command(<profile-top-n-2-command>);
 
       elseif (token-is($tokenFilter))
-        block (blow) 
+        block (blow)
           command := parse-profile-filter-command(<profile-filter-command>, blow);
         end block;
 
       elseif (token-is($tokenFilter1))
-        block (blow) 
+        block (blow)
           command := parse-profile-filter-command(<profile-filter-1-command>, blow);
         end block;
 
       elseif (token-is($tokenFilter2))
-        block (blow) 
+        block (blow)
           command := parse-profile-filter-command(<profile-filter-2-command>, blow);
         end block;
 
       elseif (token-is($tokenAggregates))
-        block (blow) 
+        block (blow)
           command := parse-profile-aggregates-command(<profile-aggregates-command>, blow);
         end block;
 
       elseif (token-is($tokenAggregates1))
-        block (blow) 
+        block (blow)
           command := parse-profile-aggregates-command(<profile-aggregates-1-command>, blow);
         end block;
 
       elseif (token-is($tokenAggregates2))
-        block (blow) 
+        block (blow)
           command := parse-profile-aggregates-command(<profile-aggregates-2-command>, blow);
         end block;
 
@@ -411,7 +411,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
 
       elseif (token-is($tokenShow))
         if (token-is($tokenAggregates))
-          command := make(<profile-show-aggregates-command>, 
+          command := make(<profile-show-aggregates-command>,
 	                  argument: build-simple-expression());
           accept($tokenTerminator);
         else
@@ -437,7 +437,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
 
       elseif (token-is($tokenInclusive))
 	let argument =
-	  case 
+	  case
 	    token-is($tokenYes) => #t;
 	    token-is($tokenNo)  => #f;
 	    otherwise =>           #"unknown";
@@ -448,7 +448,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
 
       elseif (token-is($tokenExclusive))
 	let argument =
-	  case 
+	  case
 	    token-is($tokenYes) => #t;
 	    token-is($tokenNo)  => #f;
 	    otherwise =>           #"unknown";
@@ -604,7 +604,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
       let instructions = make(<stretchy-vector>, size: 0);
       while (~token-is($tokenTerminator))
         if (token-will-be($tokenString))
-          add!(instructions, 
+          add!(instructions,
                pair(#"string", generate-actual-string(current-token())));
           accept($tokenString);
         elseif (token-will-be($tokenDylanSymbol))
@@ -953,7 +953,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
         modules := build-name-list();
       end if;
       accept($tokenTerminator);
-      command := make(<walk-command>, 
+      command := make(<walk-command>,
                       object: expression,
                       classes: classes,
                       modules: modules,
@@ -1008,7 +1008,7 @@ define method build-debugger-command () => (command :: <debugger-command>)
   command
 end method;
 
-define method parse-profile-top-n-command 
+define method parse-profile-top-n-command
     (command-class :: <class>) => (command)
   let argument
     = if (token-will-be($tokenLiteralInteger))
@@ -1020,7 +1020,7 @@ define method parse-profile-top-n-command
   make(command-class, argument: argument);
 end method;
 
-define method parse-profile-limit-command 
+define method parse-profile-limit-command
     (command-class :: <class>) => (command)
   let argument
     = if (token-will-be($tokenLiteralInteger))
@@ -1032,7 +1032,7 @@ define method parse-profile-limit-command
   make(command-class, argument: argument);
 end method;
 
-define method parse-profile-filter-command 
+define method parse-profile-filter-command
     (command-class :: <class>, blow :: <function>) => (command)
   let profile-set =
     unless (token-will-be($tokenTerminator))
@@ -1042,7 +1042,7 @@ define method parse-profile-filter-command
   make(command-class, argument: profile-set)
 end method;
 
-define method parse-profile-aggregates-command 
+define method parse-profile-aggregates-command
     (command-class :: <class>, blow :: <function>) => (command)
   let lump-names =
     collecting ()
@@ -1132,33 +1132,33 @@ define method build-profile-set (blow :: <function>) => (res :: <profile-set>)
           next-token($tokenDylanSymbol, method () as(<symbol>, current-lexeme()) end)
         end method,
         method next-string ()
-          next-token($tokenString, 
+          next-token($tokenString,
 		     method () as(<symbol>, generate-actual-string(current-token())) end)
         end method;
-  case 
-    token-is($tokenEmpty) => 
+  case
+    token-is($tokenEmpty) =>
       make(<profile-set-empty>);
-    token-is($tokenFull) => 
+    token-is($tokenFull) =>
       make(<profile-set-full>);
-    token-is($tokenSet) => 
+    token-is($tokenSet) =>
       application-lookup-named-set(next-name());
-    token-is($tokenContains) => 
+    token-is($tokenContains) =>
       make(<profile-set-contains>, contains: next-string());
-    token-is($tokenLibrary) => 
+    token-is($tokenLibrary) =>
       make(<profile-set-library>, library: next-name());
-    token-is($tokenDll) => 
+    token-is($tokenDll) =>
       make(<profile-set-dll>, dll: next-name());
-    token-is($tokenModule) => 
+    token-is($tokenModule) =>
       make(<profile-set-module>, module: next-name());
-    token-is($tokenFile) => 
+    token-is($tokenFile) =>
       make(<profile-set-file>, file: next-string());
-    token-is($tokenNot) => 
+    token-is($tokenNot) =>
       make(<profile-set-complement>, complementee: build-profile-set(blow));
-    token-is($tokenUnion) => 
-      make(<profile-set-union>, 
+    token-is($tokenUnion) =>
+      make(<profile-set-union>,
 	   unionees: vector(build-profile-set(blow), build-profile-set(blow)));
-    token-is($tokenIntersection) => 
-      make(<profile-set-intersection>, 
+    token-is($tokenIntersection) =>
+      make(<profile-set-intersection>,
 	   intersectees: vector(build-profile-set(blow), build-profile-set(blow)));
     otherwise =>
       compute-profile-set-functions(*open-application*, build-simple-expression())
@@ -1169,7 +1169,7 @@ define method compute-profile-set-functions-from-targets
     (app :: <application>, targets :: <sequence>) => (res :: <profile-set>)
   local method set-function-from-target
 	    (target) => (res :: <profile-set>)
-	  let (closest, offset) 
+	  let (closest, offset)
 	    = symbol-table-symbol-relative-address
 	        (debug-target-symbol-table(app), target);
 	  if (closest)
@@ -1182,20 +1182,20 @@ define method compute-profile-set-functions-from-targets
   select (size(targets))
     0 =>         make(<profile-set-empty>);
     1 =>         set-function-from-target(targets[0]);
-    otherwise => make(<profile-set-union>, 
+    otherwise => make(<profile-set-union>,
 		      unionees: map(set-function-from-target, targets));
   end select;
 end method;
 
-define method compute-profile-set-functions 
-    (app :: <application>, expression :: <simple-expression>) 
+define method compute-profile-set-functions
+    (app :: <application>, expression :: <simple-expression>)
  => (res :: <profile-set>)
   let targets = compute-function-breakpoint-targets(app, expression);
   compute-profile-set-functions-from-targets(app, targets)
 end method;
 
-define method compute-profile-set-functions 
-    (app :: <application>, name :: <byte-string>) 
+define method compute-profile-set-functions
+    (app :: <application>, name :: <byte-string>)
  => (res :: <profile-set>)
   let symbol = symbol-table-find-symbol(app.debug-target-symbol-table, name);
   if (symbol)
@@ -1232,7 +1232,7 @@ define method build-simple-expression () => (expr :: <simple-expression>)
     accept($tokenListCloser);
     ex := make(<downloaded-list-expression>, elements: expression-set);
   elseif (token-will-be($tokenDylanSymbol))
-    let (name, context) = 
+    let (name, context) =
       generate-name-and-context(current-token(), current-name-context());
     ex := make(<dylan-symbolic-name-expression>,
                symbol: name, dll-context: current-token().token-dll-context,
@@ -1281,14 +1281,14 @@ define method build-simple-expression () => (expr :: <simple-expression>)
     ex := make(<dylan-keyword-literal-expression>, token: current-token());
     accept($tokenDylanKeyword);
   elseif (token-will-be($tokenModuleQualifiedSymbol))
-    let (name, context) = 
+    let (name, context) =
       generate-name-and-context(current-token(), current-name-context());
     ex := make(<dylan-symbolic-name-expression>,
                symbol: name, dll-context: current-token().token-dll-context,
                context: context);
     accept($tokenModuleQualifiedSymbol);
   elseif (token-will-be($tokenLibraryQualifiedSymbol))
-    let (name, context) = 
+    let (name, context) =
       generate-name-and-context(current-token(), current-name-context());
     ex := make(<dylan-symbolic-name-expression>,
                symbol: name, dll-context: current-token().token-dll-context,

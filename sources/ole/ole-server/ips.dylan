@@ -154,7 +154,7 @@ define method IPersistStorage/SaveCompleted(this :: <CPersistStorage>,
 	**    * this is a strange case that is possible. it is inefficient
 	**    for the caller; it would be better to pass lpStgNew==NULL for
 	**    the Save operation.
-	*/ 
+	*/
 
   if ( ~ null-pointer?(new-storage) | this.save-with-same-as-load? )
     if ( this.no-scribble-mode? & ~ null?(container-IOleAdviseHolder(obj)) )
@@ -201,7 +201,7 @@ end method IPersistStorage/Load;
 
 define method IPersistStorage/IsDirty(this :: <CPersistStorage>)
 			=> status :: <HRESULT>;
-	
+
   Output-Debug-String("IPersistStorage/IsDirty\r\n");
 
   // Has the application data changed since being written to storage?
@@ -250,7 +250,7 @@ define method Release-Streams-And-Storage(this :: <CPersistStorage>) => ();
   values()
 end method;
 
-
+
 //********************************************************************
 //	Helper functions for application to use
 //********************************************************************
@@ -318,7 +318,7 @@ define method istream-write-float( stream :: <LPSTREAM>,
 end method;
 
 define method istream-read-float( stream :: <LPSTREAM> )
- => value :: <single-float>;  
+ => value :: <single-float>;
   with-stack-structure( float-ptr :: <C-float*> )
     let ( status, count ) = IStream/Read(stream, float-ptr, $float-size );
     check-istream-status(status, "istream-read-float",
@@ -345,7 +345,7 @@ define method istream-write-string( stream :: <LPSTREAM>,
 end method;
 
 define method istream-read-string( stream :: <LPSTREAM> )
- => value :: <string>;  
+ => value :: <string>;
 
   let string-length :: <integer> = istream-read-integer(stream);
   if ( string-length = 0 )

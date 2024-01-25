@@ -182,7 +182,7 @@ define method pointer-state-changed?
          sheet, x-position, y-position)
 end method pointer-state-changed?;
 
-
+
 /// Pointer grabbing
 
 //---*** What should we do if one thread tries to grab the pointer

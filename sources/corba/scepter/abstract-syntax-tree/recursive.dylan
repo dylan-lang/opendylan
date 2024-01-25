@@ -16,12 +16,12 @@ define method illegal-recursive-type? (struct :: <ast-structure>)
   => (result :: <boolean>)
   do-illegal-recursive-type?(struct);
 end method;
-  
+
 define method illegal-recursive-type? (union :: <ast-union>)
   => (result :: <boolean>)
   do-illegal-recursive-type?(union);
 end method;
-  
+
 // DO-ILLEGAL-RECURSIVE-TYPE?
 
 define method do-illegal-recursive-type? (declarator :: <ast-declarator>)

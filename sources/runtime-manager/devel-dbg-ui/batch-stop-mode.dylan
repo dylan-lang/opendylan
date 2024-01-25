@@ -21,7 +21,7 @@ define method register-stopped-thread
 
   let index = 1;
   let found = #f;
-  application.stopped-thread := 
+  application.stopped-thread :=
     stop-reason.stop-reason-thread;
 
   while ((index <= size (application.application-thread-table)) &
@@ -53,7 +53,7 @@ end method;
 //    If the error was a <dylan-invoke-debugger-stop-reason>, then attempt to
 //    continue via the most recently installed restart handler.
 
-define method attempt-to-recover () 
+define method attempt-to-recover ()
      => (succeeded? :: <boolean>, why? :: <string>)
   let sr = *open-application*.most-recent-interesting-stop-reason;
   if (instance?(sr, <dylan-invoke-debugger-stop-reason>))
@@ -75,7 +75,7 @@ end method;
 ///// BUILD-TOP-OF-STACK
 //    Gets ready for displaying backtraces.
 
-define method build-top-of-stack 
+define method build-top-of-stack
     (application :: <application>, thread :: <remote-thread>)
 
   // If we are stopping "for real", that is, we are entering a
@@ -85,7 +85,7 @@ define method build-top-of-stack
   let frame = first-stack-frame (application, thread);
   let index = 1;
   application.current-stack := make (<stretchy-vector>, size: 0);
-  application.current-stack := 
+  application.current-stack :=
      add! (application.current-stack, frame);
   application.current-frame-index := index;
 

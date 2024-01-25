@@ -216,7 +216,7 @@ define method can-replace-in-frame? (frame :: <frame>) => (can-replace? :: <bool
   #f
 end method can-replace-in-frame?;
 
-
+
 /// Searching commands
 
 define abstract class <frame-find-command> (<frame-focus-command>)
@@ -334,7 +334,7 @@ define method execute-command-for-focus
   frame-replace-all(frame)
 end method execute-command-for-focus;
 
-
+
 /// Searching within a domain
 
 define open abstract class <search-domain> (<object>)

@@ -8,22 +8,22 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define macro dual-interface-definer
-  { 
+  {
     define ?modifiers:* dual-interface ?class-name:name (?superclass:name)
-      ?slots-and-stuff:* 
-    end 
-  } => { 
+      ?slots-and-stuff:*
+    end
+  } => {
     define ?modifiers dispatch-interface ?class-name ## "+dispatch"
 		 (?superclass)
-      ?slots-and-stuff 
+      ?slots-and-stuff
     end;
 
-    define inline-only constant ?class-name ## "+dispatch-vstruct" :: <type> = 
+    define inline-only constant ?class-name ## "+dispatch-vstruct" :: <type> =
       ?superclass ## "-vstruct";
 
     define ?modifiers custom-interface ?class-name
 		 (?class-name ## "+dispatch")
-      ?slots-and-stuff 
+      ?slots-and-stuff
     end;
 
     define dual-type-info "$" ## ?class-name ## "-dual-type" (?superclass)
@@ -61,21 +61,21 @@ define inline sealed sideways method dummy-value-for-type ( type == <BSTR> )
 end;
 
 
-
+
 
 define macro dual-type-info-definer
-  { 
+  {
     define ?modifiers:* dual-type-info ?variable-name:name
 				 (?supertype:expression)
       dispatch-type ?disptype:expression;
-      ?slots-and-stuff:* 
-    end 
-  } => { 
-    define internal-vtable-type-info ?variable-name (?supertype) 
+      ?slots-and-stuff:*
+    end
+  } => {
+    define internal-vtable-type-info ?variable-name (?supertype)
       typeinfo-class { <dual-type-info> };
       class-options { dispatch: ?disptype };
       typeinfo { ?slots-and-stuff };
-      members { ?slots-and-stuff }; 
+      members { ?slots-and-stuff };
     end;
    }
 end macro;
@@ -125,7 +125,7 @@ end <dual-type-info>;
 // description is available through a call to
 // ITypeInfo::GetRefTypeOfImplType with an index of -1, followed by a call
 // to ITypeInfo::GetRefTypeInfo.
- 
+
 define method initialize(this :: <dual-type-info>, #rest args, #key, #all-keys)
  => ();
   next-method();

@@ -36,7 +36,7 @@ define module walker
     walker-default-thunk,
     walker-default-slot-descriptor,
     <walker-defaulted-slot-sequence-type>;
-    
+
   export
     walker-allocate-object,
     walker-allocate-simple-object,

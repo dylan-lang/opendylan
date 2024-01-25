@@ -131,7 +131,7 @@ define macro with-progress
       ?body;
     afterwards
       _completed := #t;
-    cleanup 
+    cleanup
       if (scepter-informative?(?scepter))
         scepter-format-progress-end(?scepter, _completed, ?args);
       end if;

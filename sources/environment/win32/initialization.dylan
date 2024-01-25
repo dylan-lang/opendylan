@@ -176,7 +176,7 @@ define function initialize-bitmaps ()
   end
 end function initialize-bitmaps;
 
-
+
 /// Deuce initialization
 
 define function initialize-deuce ()
@@ -206,7 +206,7 @@ define function initialize-source-control ()
   #f
 end function initialize-source-control;
 
-
+
 /// Icon-for-file-type
 
 //---*** Should we cache this somehow, or does Windows do that for us?

@@ -54,7 +54,7 @@ define method open-emit-output
   outputter
 end method;
 
-define method open-emit-output 
+define method open-emit-output
     (back-end :: <harp-back-end>, name == #f,
      #key model-object-protocol? = #t,
           dynamic-linking-protocol? = #f,
@@ -81,7 +81,7 @@ end method;
 
 define open generic c-name
     (back-end :: <harp-back-end>, name :: <string>) => (name :: <string>);
- 
+
 define sideways method c-name
     (back-end :: <harp-back-end>, name :: <string>) => (name :: <string>)
  concatenate("_", name)
@@ -145,7 +145,7 @@ define constant $dummy-name = outputter-name-unsupplied();
 define constant $runtime-module-binding-type-marker = "T";
 
 // Now that we use model-objects, define an object which directly refers
-// to the runtime; for table-lookup efficiency, don't merely use strings 
+// to the runtime; for table-lookup efficiency, don't merely use strings
 
 define class <runtime-object>(<object>)
   constant slot runtime-object-name :: <string>, init-keyword: name:;
@@ -179,7 +179,7 @@ define method dood-make-runtime-object-proxy
   make(<dood-runtime-object-proxy>, object: object.runtime-object-name)
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <dood-runtime-object>)
  => (proxy :: <dood-runtime-object-proxy>)
   dood-as-proxy(dood, object, dood-make-runtime-object-proxy)
@@ -458,7 +458,7 @@ define dylan-reference $direct-object-classes internal dylan;
 
 ignore($$direct-object-classes);
 
-define sideways method back-end-word-size 
+define sideways method back-end-word-size
     (back-end :: <harp-back-end>) => (number-bytes :: <integer>)
   bytes%(back-end, 1);
 end method back-end-word-size;

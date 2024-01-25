@@ -114,7 +114,7 @@ define method do-application-components
   end if
 end method;
 
-
+
 /// Some convenience functions built on these protocols
 
 define function application-components

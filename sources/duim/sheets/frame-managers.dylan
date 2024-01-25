@@ -41,7 +41,7 @@ define method find-color
   find-color(name, frame-manager-palette(framem), error?: error?)
 end method find-color;
 
-
+
 /// Frame manager creation
 
 define method find-frame-manager
@@ -128,7 +128,7 @@ define method destroy-frame-manager (framem :: <frame-manager>) => ()
   remove!(port-frame-managers(_port), framem)
 end method destroy-frame-manager;
 
-
+
 /// Frame protocol
 
 //--- These are all forward references into 'duim-frames'
@@ -193,7 +193,7 @@ define method frame-manager-do-frames
   do(function, frames)
 end method frame-manager-do-frames;
 
-
+
 /// Pane creation
 
 // The current application frame in this thread
@@ -298,7 +298,7 @@ define method class-for-make-pane
   values(pane-class, #f)
 end method class-for-make-pane;
 
-
+
 /// Some high level "chooser" functions
 
 define constant <notification-style>

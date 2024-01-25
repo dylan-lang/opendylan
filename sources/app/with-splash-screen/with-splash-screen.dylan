@@ -103,7 +103,7 @@ define function paint-window (hWnd :: <HWND>) => ()
 
     // Paint the bitmap (by selecting it into a different DC then copying
     // from that to the window's DC -- don't ask, that's just what you do!)
-    let hdcMem :: <HDC> = CreateCompatibleDC(hdc); 
+    let hdcMem :: <HDC> = CreateCompatibleDC(hdc);
     if (null-pointer?(hdcMem)) exit()
     else push(free-closures, method () DeleteDC(hdcMem) end);
     end;
@@ -136,7 +136,7 @@ define function paint-window (hWnd :: <HWND>) => ()
 			     $ANSI-CHARSET, $OUT-DEFAULT-PRECIS, $CLIP-DEFAULT-PRECIS,
 			     $PROOF-QUALITY, logior($VARIABLE-PITCH, $FF-SWISS), face);
 	      if (null-pointer?(hNewFnt)) exit()
-	      else 
+	      else
 		push(free-closures, method() DeleteObject(hNewFnt) end);
 		SelectObject(hdc, hNewFnt);
 	      end;
@@ -184,7 +184,7 @@ define method main-window-function
      uParam,
      lParam)
  => (value :: <integer>)
-  select (message) 
+  select (message)
     $WM-PAINT =>
       // Without Begin-/EndPaint there's too much redraw, causing cursor flicker.
       with-stack-structure (pPaintStruct :: <LPPAINTSTRUCT>)

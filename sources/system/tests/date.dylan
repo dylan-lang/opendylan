@@ -115,7 +115,7 @@ define test test-<day-of-week> ()
                   <type>, <day-of-week>);
 end test;
 
-
+
 /// Date function test cases
 
 define function encode-full-date (year, month, day, hours, minutes,

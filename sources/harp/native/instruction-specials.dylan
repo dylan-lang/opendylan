@@ -24,18 +24,18 @@ define instruction-function adjust-stack
 end;
 
 
-// LOAD-COUNT-ADJUSTING-STACK is a combination of ADJUST-STACK and 
-// LOAD-STACK-ARG-N. Conceptually, the stack is first adjusted, then 
+// LOAD-COUNT-ADJUSTING-STACK is a combination of ADJUST-STACK and
+// LOAD-STACK-ARG-N. Conceptually, the stack is first adjusted, then
 // the count is updated on the stack, then the count virtual register
-// is loaded. This is merged into a single instruction to simplify the 
+// is loaded. This is merged into a single instruction to simplify the
 // need to calculate stack indices in the prolog.
 
 define instruction-function load-count-adjusting-stack
-    (backend :: <harp-native-back-end>, 
+    (backend :: <harp-native-back-end>,
      count-reg, bytes-to-insert, number-of-count-as-stack-arg,
      #key op)
   count-reg.virtual-register-colour := number-of-count-as-stack-arg;
-  output-instruction(backend, op, #t, count-reg, bytes-to-insert, 
+  output-instruction(backend, op, #t, count-reg, bytes-to-insert,
                      number-of-count-as-stack-arg);
   backend.variables.current-bb.bb-needs-leaf := #t;
   make-fall-thru-bb(backend);
@@ -63,7 +63,7 @@ end;
 
 define instruction-function call
     (backend :: <harp-native-back-end>,
-     dest, nregs :: <integer>, 
+     dest, nregs :: <integer>,
      #key op, mlist = #f, function = #f, arg-count = #f, nlx-tags = #())
   let res = backend.registers.reg-result-out;
   let uses = encode-raw-implicit-uses(backend, nregs, mlist, function, arg-count);
@@ -74,19 +74,19 @@ end;
 
 define instruction-function call-alien
     (backend :: <harp-native-back-end>,
-     dest, nregs :: <integer>, 
+     dest, nregs :: <integer>,
      #key op, mlist = #f, function = #f, arg-count = #f, nlx-tags = #())
   let res = backend.registers.reg-result-out;
   let uses = encode-raw-implicit-uses(backend, nregs, mlist, function, arg-count);
   output-instruction(backend, op, #F, res, dest, uses);
-  add-destination-tags-to-bb(backend, nlx-tags);  
+  add-destination-tags-to-bb(backend, nlx-tags);
   make-fall-thru-bb(backend);
 end;
 
 
 define instruction-function call-indirect
     (backend :: <harp-native-back-end>,
-     dest, offset, nregs :: <integer>, 
+     dest, offset, nregs :: <integer>,
      #key op, mlist = #f, function = #t, arg-count = #t, nlx-tags = #())
   let res = backend.registers.reg-result-out;
   let uses = encode-xep-implicit-uses(backend, nregs, mlist, function, arg-count);
@@ -107,42 +107,42 @@ end;
 // function and arg-count to true. All other defaults are #f.
 // The following keyword parameters are also accepted ...
 //   return-address-shift -- the number of bytes to pop below the ret addr
-//   optionals-marker     -- the location of the count register to update 
+//   optionals-marker     -- the location of the count register to update
 //                           for the ret-addr-shift. This may be given either
-//                           as an arg-spill (in which case, it is updated, 
-//                           and the count is adjusted), or as an integer 
+//                           as an arg-spill (in which case, it is updated,
+//                           and the count is adjusted), or as an integer
 //                           arg-spill index (in which case the optionals are
 //                           dropped), or as #F (if there are no optionals).
 //   pointer-into-stack   -- The location of a register which points into the
-//                           stack at a position which will be affected by 
+//                           stack at a position which will be affected by
 //                           the removal of the optionals. In this case, the
 //                           instruction arranges to update the pointer. The
-//                           location may either be given as an integer 
-//                           arg-spill index or as a register (or #f to show 
+//                           location may either be given as an integer
+//                           arg-spill index or as a register (or #f to show
 //                           that nothing needs to be done).
 
 define instruction-function jmp
     (backend :: <harp-native-back-end>,
-     dest, nregs :: <integer>, 
-     #key op, return-address-shift = 0, optionals-marker, pointer-into-stack,
-          mlist = #f, function = #f, arg-count = #f)
-  let uses = encode-raw-implicit-uses(backend, nregs, mlist, function, arg-count);
-  make-fall-thru-bb(backend);
-  output-instruction(backend, op, #F, #F, dest, uses, 
-                     return-address-shift, optionals-marker, 
-                     pointer-into-stack);
-  make-current-bb(backend);
-end;
-
-define instruction-function jmp-alien
-    (backend :: <harp-native-back-end>, 
      dest, nregs :: <integer>,
      #key op, return-address-shift = 0, optionals-marker, pointer-into-stack,
           mlist = #f, function = #f, arg-count = #f)
   let uses = encode-raw-implicit-uses(backend, nregs, mlist, function, arg-count);
   make-fall-thru-bb(backend);
-  output-instruction(backend, op, #F, #F, dest, uses, 
-                     return-address-shift, optionals-marker, 
+  output-instruction(backend, op, #F, #F, dest, uses,
+                     return-address-shift, optionals-marker,
+                     pointer-into-stack);
+  make-current-bb(backend);
+end;
+
+define instruction-function jmp-alien
+    (backend :: <harp-native-back-end>,
+     dest, nregs :: <integer>,
+     #key op, return-address-shift = 0, optionals-marker, pointer-into-stack,
+          mlist = #f, function = #f, arg-count = #f)
+  let uses = encode-raw-implicit-uses(backend, nregs, mlist, function, arg-count);
+  make-fall-thru-bb(backend);
+  output-instruction(backend, op, #F, #F, dest, uses,
+                     return-address-shift, optionals-marker,
                      pointer-into-stack);
   make-current-bb(backend);
 end;
@@ -155,20 +155,20 @@ define instruction-function jmp-indirect
           mlist = #f, function = #t, arg-count = #t)
   let uses = encode-xep-implicit-uses(backend, nregs, mlist, function, arg-count);
   make-fall-thru-bb(backend);
-  output-instruction(backend, op, #F, #F, dest, offset, uses, 
-                     return-address-shift, optionals-marker, 
-                     pointer-into-stack); 
+  output-instruction(backend, op, #F, #F, dest, offset, uses,
+                     return-address-shift, optionals-marker,
+                     pointer-into-stack);
   make-current-bb(backend);
 end;
 
 
 // We encode the implicit uses depending for the expected defaults for the type
-// of call instruction. A default instruction would be encoded with a number. 
+// of call instruction. A default instruction would be encoded with a number.
 // A non-default encoding is a vector with the number as the first element, and a
 // symbol for each of the implicit calling-convention registers.
 
 define method encode-xep-implicit-uses
-    (backend :: <harp-native-back-end>, nregs :: <integer>, mlist, function, arg-count) 
+    (backend :: <harp-native-back-end>, nregs :: <integer>, mlist, function, arg-count)
     => (result)
   if (function & arg-count & ~ mlist)
     nregs
@@ -179,7 +179,7 @@ end method;
 
 
 define method encode-raw-implicit-uses
-    (backend :: <harp-native-back-end>, nregs :: <integer>, mlist, function, arg-count) 
+    (backend :: <harp-native-back-end>, nregs :: <integer>, mlist, function, arg-count)
     => (result)
   if (function | arg-count | mlist)
     encode-implicit-uses-as-vector(backend, nregs, mlist, function, arg-count);
@@ -190,7 +190,7 @@ end method;
 
 
 define method encode-implicit-uses-as-vector
-    (backend :: <harp-native-back-end>, nregs :: <integer>, mlist, function, arg-count) 
+    (backend :: <harp-native-back-end>, nregs :: <integer>, mlist, function, arg-count)
     => (result :: <simple-object-vector>)
   let specials = make(<stretchy-vector>);
   if (mlist)     add!(specials, #"mlist")     end;
@@ -204,9 +204,9 @@ define macro encoded-mask
   { encoded-mask(?use:expression, ?accessor:name) }
     =>
   {
-   if (member?(?use, ?=vec)) 
+   if (member?(?use, ?=vec))
      ?=regs.?accessor.real-register-mask
-   else 
+   else
      0
    end;
    }
@@ -217,8 +217,8 @@ define method implicit-uses-from-encoding
     => (i :: <integer>)
   let regs = backend.registers;
 
-  encoded-mask(#"mlist", reg-mlist) 
-    + encoded-mask(#"function", reg-function) 
+  encoded-mask(#"mlist", reg-mlist)
+    + encoded-mask(#"function", reg-function)
     + encoded-mask(#"arg-count", reg-arg-count);
 end method;
 
@@ -227,7 +227,7 @@ end method;
 // convention. This includes arg-count.
 
 define method implicit-argument-uses
-    (backend :: <harp-native-back-end>, nregs :: <integer>) 
+    (backend :: <harp-native-back-end>, nregs :: <integer>)
     => (i :: <integer>)
   let regs = backend.registers;
   let arg-count-mask :: <integer> = regs.reg-arg-count.real-register-mask;
@@ -241,7 +241,7 @@ define method implicit-argument-uses
 end;
 
 define method implicit-argument-uses
-    (backend :: <harp-native-back-end>, encoded-uses :: <simple-object-vector>) 
+    (backend :: <harp-native-back-end>, encoded-uses :: <simple-object-vector>)
     => (i :: <integer>)
   let regs = backend.registers;
   let nregs :: <integer> = encoded-uses[0];
@@ -258,7 +258,7 @@ end;
 // convention. This does not include arg-count.
 
 define method implicit-iep-argument-uses
-    (backend :: <harp-native-back-end>, nregs :: <integer>) 
+    (backend :: <harp-native-back-end>, nregs :: <integer>)
     => (i :: <integer>)
   let regs = backend.registers;
   if (nregs < 0)
@@ -269,7 +269,7 @@ define method implicit-iep-argument-uses
 end;
 
 define method implicit-iep-argument-uses
-    (backend :: <harp-native-back-end>, encoded-uses :: <simple-object-vector>) 
+    (backend :: <harp-native-back-end>, encoded-uses :: <simple-object-vector>)
     => (i :: <integer>)
   let regs = backend.registers;
   let nregs :: <integer> = encoded-uses[0];
@@ -286,7 +286,7 @@ end;
 // convention. This does not include arg-count.
 
 define method implicit-c-argument-uses
-    (backend :: <harp-native-back-end>, nregs :: <integer>) 
+    (backend :: <harp-native-back-end>, nregs :: <integer>)
     => (i :: <integer>)
   let regs = backend.registers;
   if (nregs < 0)
@@ -297,7 +297,7 @@ define method implicit-c-argument-uses
 end;
 
 define method implicit-c-argument-uses
-    (backend :: <harp-native-back-end>, encoded-uses :: <simple-object-vector>) 
+    (backend :: <harp-native-back-end>, encoded-uses :: <simple-object-vector>)
     => (i :: <integer>)
   let regs = backend.registers;
   let nregs :: <integer> = encoded-uses[0];
@@ -387,7 +387,7 @@ with-ops-in default-instructions (call-alien)
 end with-ops-in;
 
 
-define instruction-function rts-and-drop 
+define instruction-function rts-and-drop
     (backend :: <harp-native-back-end>, args-to-drop, #key op)
   make-fall-thru-bb(backend);
   output-instruction(backend, op, #f, #f, args-to-drop);
@@ -403,10 +403,10 @@ define instruction-function rts
 end;
 
 
-/// end-cleanup is really an RTS instruction - but leafcase 
+/// end-cleanup is really an RTS instruction - but leafcase
 /// analysis doesn't want to see it as the end of the line. It
-/// therefore takes a tag which should correspond to the return 
-/// point of the rts.  It also takes a #rest of implicit definitions. 
+/// therefore takes a tag which should correspond to the return
+/// point of the rts.  It also takes a #rest of implicit definitions.
 
 
 define instruction-function end-cleanup
@@ -417,7 +417,7 @@ define instruction-function end-cleanup
 end;
 
 
-/// control-flow-link is really a NOP from the point of view of code 
+/// control-flow-link is really a NOP from the point of view of code
 /// generation. It exists to indicate a non-obvious control-flow path to
 /// HARP. This is used at the join between protected code and cleanup code for
 /// an unwind-protect.
@@ -430,9 +430,9 @@ end;
 /// registers being live on entry to the cleanup code of an unwind protect.
 /// If it's known that the destination of the end-cleanup
 /// expects those registers to be defined, and yet there is the
-/// possibility that there might be control flow paths to the end of 
+/// possibility that there might be control flow paths to the end of
 /// the cleanup which don't include the definitions, and yet which
-/// cannot actually be taken in practice (e.g. because of a NLX), 
+/// cannot actually be taken in practice (e.g. because of a NLX),
 /// then the registers may be forcibly defined at the start of the cleanup.
 ///
 /// FORCE-U exists primarily to force HARP to keep a virtual register live
@@ -454,8 +454,8 @@ define instruction-function t-pop
 end;
 
 
-define instruction-function t-push 
-    (backend :: <harp-native-back-end>, dest, sp, #key op) 
+define instruction-function t-push
+    (backend :: <harp-native-back-end>, dest, sp, #key op)
   output-duu(backend, op, sp, dest, sp);
 end;
 
@@ -466,7 +466,7 @@ end;
 
 
 define method load-some-address
-   (backend :: <harp-native-back-end>, 
+   (backend :: <harp-native-back-end>,
     op :: <op>, dest, tag :: <tag>, offset)
   output-instruction(backend, op, tag, dest, offset);
   pushnew!(find-bb(backend, tag), backend.variables.current-bb.bb-other-set);
@@ -476,7 +476,7 @@ define method load-some-address
   conditional-branch-windup(backend, tag);
 end;
 
-define instruction-function pea 
+define instruction-function pea
     (backend :: <harp-native-back-end>, tag :: <tag>, offset, #key op)
   load-some-address(backend, op, #f, tag, offset);
 end;
@@ -523,7 +523,7 @@ end;
 
 
 define method output-load-stack-arg
-    (backend :: <harp-native-back-end>, 
+    (backend :: <harp-native-back-end>,
      op :: <op>, def, uze :: <integer>)
   // first record the number of atack args in use
   let vars = backend.variables;
@@ -563,7 +563,7 @@ with-ops-in default-instructions (preserve-registers-exit, rts-and-drop, rts)
 end with-ops-in;
 
 with-ops-in default-instructions (rts-and-drop, rts)
-  implicit-uses := 
+  implicit-uses :=
   method (backend :: <harp-native-back-end>, ins)
     backend.registers.reg-result.real-register-mask;
   end method;
@@ -593,14 +593,14 @@ end mark-reverse-ops;
 
 define method move-reg
      (backend :: <harp-native-back-end>,
-      toreg :: <sfreg>, 
+      toreg :: <sfreg>,
       fromreg :: <sfreg>) => ()
   call-instruction(fmove, backend, toreg, fromreg);
 end;
 
 define method move-reg
      (backend :: <harp-native-back-end>,
-      toreg :: <dfreg>, 
+      toreg :: <dfreg>,
       fromreg :: <dfreg>) => ()
   call-instruction(dmove, backend, toreg, fromreg);
 end;
@@ -614,7 +614,7 @@ define instruction-function floorx
     (be :: <harp-native-back-end>, quot, rem, dividend, divisor)
   with-harp (be)
     nreg temp1;
-    
+
     let rrem = rem | temp1;
     call-instruction(rem, be, "FloorX instruction");
     call-instruction(truncatex, be, quot, rrem, dividend, divisor);
@@ -628,7 +628,7 @@ define instruction-function floorxx
     (be :: <harp-native-back-end>, quot, rem, low, high, divisor)
   with-harp (be)
     nreg temp1;
-    
+
     let rrem = rem | temp1;
     call-instruction(rem, be, "FloorXX instruction");
     call-instruction(truncatexx, be, quot, rrem, low, high, divisor);
@@ -643,7 +643,7 @@ define method op--floor-adjust
   with-harp (be)
     nreg temp2;
     tag done, adjust;
-    
+
     call-instruction(beq, be, done, rrem, 0);
 
     // If the remainder is not 0, then adjust if dividend
@@ -665,7 +665,7 @@ define instruction-function ceilingx
     (be :: <harp-native-back-end>, quot, rem, dividend, divisor)
   with-harp (be)
     nreg temp1;
-    
+
     let rrem = rem | temp1;
     call-instruction(rem, be, "CeilingX instruction");
     call-instruction(truncatex, be, quot, rrem, dividend, divisor);
@@ -679,7 +679,7 @@ define instruction-function ceilingxx
     (be :: <harp-native-back-end>, quot, rem, low, high, divisor)
   with-harp (be)
     nreg temp1;
-    
+
     let rrem = rem | temp1;
     call-instruction(rem, be, "CeilingXX instruction");
     call-instruction(truncatexx, be, quot, rrem, low, high, divisor);
@@ -694,7 +694,7 @@ define method op--ceiling-adjust
   with-harp (be)
     nreg temp2;
     tag done, adjust;
-    
+
     call-instruction(beq, be, done, rrem, 0);
 
     // If the remainder is not 0, then adjust if dividend
@@ -717,7 +717,7 @@ define instruction-function roundx
     (be :: <harp-native-back-end>, quot, rem, dividend, divisor)
   with-harp (be)
     nreg temp1, temp2;
-    
+
     let rrem = rem | temp1;
     let rquot = quot | temp2;
     call-instruction(rem, be, "RoundX instruction");
@@ -732,7 +732,7 @@ define instruction-function roundxx
     (be :: <harp-native-back-end>, quot, rem, low, high, divisor)
   with-harp (be)
     nreg temp1, temp2;
-    
+
     let rrem = rem | temp1;
     let rquot = quot | temp2;
     call-instruction(rem, be, "RoundXX instruction");
@@ -748,7 +748,7 @@ define method op--round-adjust
   with-harp (be)
     nreg odd, threshold, mthreshold;
     tag done, adjust-up, adjust-down, t1, case1, case2, test-case2;
-    
+
     // threshold := abs(divisor) / 2
     call-instruction(move, be, threshold, divisor);
     call-instruction(bge, be, t1, threshold, 0);

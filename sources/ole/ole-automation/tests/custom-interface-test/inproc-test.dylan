@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *inproc-server* :: <interface> = $null-interface;
 
-define constant $inproc-server-class-id = 
+define constant $inproc-server-class-id =
 	as(<REFIID>, "{0844834F-265D-11D2-9A67-006097C90313}");
 
-define test inproc-server-test 
+define test inproc-server-test
 		    (name: "inproc-server-test",
 		     description: "test dual interface as separate DLL")
 

@@ -118,15 +118,15 @@ define method available-restarts-for-thread
     let remote-restarts = make(<stretchy-vector>, size: 0);
     for (this-handler in handlers)
       let handler-type = dylan-handler-type(application, this-handler);
-      if (remote-subclass?(application, 
+      if (remote-subclass?(application,
                            handler-type,
                            restart-type))
         let is-abort =
           remote-subclass?(application, handler-type, abort-type);
-        let this-args-vector = 
+        let this-args-vector =
           dylan-handler-init-arguments(application, this-handler);
         let this-format-string =
-          get-keyword-value-from-vector(application, 
+          get-keyword-value-from-vector(application,
                                         this-args-vector,
                                         #"format-string");
         let this-format-vector =
@@ -141,7 +141,7 @@ define method available-restarts-for-thread
           make(<remote-restart>, target: application,
                function: this-function,
                type: handler-type,
-               init-args: 
+               init-args:
                  canonicalize-sequence(application, this-args-vector),
                format-args:
                  if (this-format-vector)
@@ -181,7 +181,7 @@ define method signal-restart-on-thread
   let dylan-runtime = application.application-dylan-runtime-library;
   let dylan-library = application.application-dylan-library;
 
-  let dylan-invoker = 
+  let dylan-invoker =
     find-symbol(application.debug-target-access-path,
                 "call_dylan_function",
                 library: dylan-runtime);
@@ -195,7 +195,7 @@ define method signal-restart-on-thread
       = call-debugger-function
           (application,
            remote-call,
-           application.debug-target-access-path, 
+           application.debug-target-access-path,
            thread,
            dylan-invoker.remote-symbol-address,
            restart-invoker,

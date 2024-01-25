@@ -14,22 +14,22 @@ define constant $word-size      = 64;
 define constant $bytes-per-word = 8;
 
 define inline function encode-machine-word-bytes
-    (b1 :: <machine-word>, b2 :: <machine-word>, 
+    (b1 :: <machine-word>, b2 :: <machine-word>,
      b3 :: <machine-word>, b4 :: <machine-word>,
-     b5 :: <machine-word>, b6 :: <machine-word>, 
+     b5 :: <machine-word>, b6 :: <machine-word>,
      b7 :: <machine-word>, b8 :: <machine-word>)
  => (res :: <machine-word>)
  machine-word-logior
   (machine-word-logior
      (machine-word-logior
-	(machine-word-shift-left-with-overflow(b1, 56), 
+	(machine-word-shift-left-with-overflow(b1, 56),
 	 machine-word-shift-left-with-overflow(b2, 48)),
       machine-word-logior
-	(machine-word-shift-left-with-overflow(b3, 40), 
+	(machine-word-shift-left-with-overflow(b3, 40),
 	 machine-word-shift-left-with-overflow(b4, 32))),
    machine-word-logior
      (machine-word-logior
-	(machine-word-shift-left-with-overflow(b5, 24), 
+	(machine-word-shift-left-with-overflow(b5, 24),
 	 machine-word-shift-left-with-overflow(b6, 16)),
       machine-word-logior
 	(machine-word-shift-left-with-overflow(b7, 8),  b8)))
@@ -47,19 +47,19 @@ define inline function dood-read-machine-word
   // let b6 :: <integer> = read-element(dood);
   // let b7 :: <integer> = read-element(dood);
   // let b8 :: <integer> = read-element(dood);
-  let value :: <machine-word> 
+  let value :: <machine-word>
     = encode-machine-word-bytes
-        (as(<machine-word>, b1), as(<machine-word>, b2), 
+        (as(<machine-word>, b1), as(<machine-word>, b2),
 	 as(<machine-word>, b3), as(<machine-word>, b4),
-	 as(<machine-word>, b5), as(<machine-word>, b6), 
+	 as(<machine-word>, b5), as(<machine-word>, b6),
 	 as(<machine-word>, b7), as(<machine-word>, b8));
-  value 
-end function; 
+  value
+end function;
 
-define inline function decode-machine-word-bytes (value :: <machine-word>) 
- => (b1 :: <machine-word>, b2 :: <machine-word>, 
+define inline function decode-machine-word-bytes (value :: <machine-word>)
+ => (b1 :: <machine-word>, b2 :: <machine-word>,
      b3 :: <machine-word>, b4 :: <machine-word>,
-     b5 :: <machine-word>, b6 :: <machine-word>, 
+     b5 :: <machine-word>, b6 :: <machine-word>,
      b7 :: <machine-word>, b8 :: <machine-word>)
   let mask = as(<machine-word>, 255);
   let b1 = machine-word-logand(machine-word-shift-right(value, 56), mask);
@@ -70,16 +70,16 @@ define inline function decode-machine-word-bytes (value :: <machine-word>)
   let b6 = machine-word-logand(machine-word-shift-right(value, 16), mask);
   let b7 = machine-word-logand(machine-word-shift-right(value,  8), mask);
   let b8 = machine-word-logand(value, mask);
-  values(b1, b2, b3, b4, b5, b6, b7, b8); 
+  values(b1, b2, b3, b4, b5, b6, b7, b8);
 end function;
 
 define inline function dood-write-machine-word
     (dood :: <dood>, value :: <machine-word>)
   let (b1, b2, b3, b4, b5, b6, b7, b8) = decode-machine-word-bytes(value);
-  dood-format("WRITING %d @ %d [%d, %d, %d, %d, %d %d %d %d]\n", 
+  dood-format("WRITING %d @ %d [%d, %d, %d, %d, %d %d %d %d]\n",
               value, dood-position(dood), b1, b2, b3, b4, b5, b6, b7, b8);
   write-8-aligned-bytes
-    (dood-stream(dood), 
+    (dood-stream(dood),
      as(<integer>, b1), as(<integer>, b2), as(<integer>, b3), as(<integer>, b4),
      as(<integer>, b5), as(<integer>, b6), as(<integer>, b7), as(<integer>, b8));
   // write-element(dood, as(<integer>, b1));

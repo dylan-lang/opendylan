@@ -215,7 +215,7 @@ define sealed method type-for-multi-buffered-stream
   <byte-multi-buffered-stream>
 end method type-for-multi-buffered-stream;
 
-
+
 /// File stream implementation
 
 define sealed method stream-at-end?
@@ -510,7 +510,7 @@ define sealed method do-next-input-buffer
   if (eof?) #f else new-buffer end
 end method;
 
-
+
 
 //  We get here only when 'stream-output-buffer' is #f.
 define sealed method do-get-output-buffer

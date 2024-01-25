@@ -251,7 +251,7 @@ define sealed method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Definitions editing buffers
 
 define sealed class <definitions-editing-buffer>

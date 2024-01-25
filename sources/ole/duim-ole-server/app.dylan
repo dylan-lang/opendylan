@@ -62,7 +62,7 @@ define method duim/frame-wrapper
   else
     // Might need decorations for out-of-place activation.
     let doc-sheet :: false-or(duim/<sheet>) = find-doc-sheet(layout-sheet);
-    let wrapper = 
+    let wrapper =
       if ( doc-sheet == #f )
 	// Didn't find a single pane that can be embedded directly, so create
 	// a new embeddable wrapper sheet.
@@ -112,9 +112,9 @@ define method find-doc-sheet ( sheet :: duim/<sheet> )
 	  find-doc-sheet(children[0])
 	else
 	  // Can't directly use the top-level sheet because we have to have
-	  // a window of style WS_CHILD that can be re-parented to the 
+	  // a window of style WS_CHILD that can be re-parented to the
 	  // container.  Can't directly use a <layout> sheet because it
-	  // has to have a mirror in order to receive Windows messages.  
+	  // has to have a mirror in order to receive Windows messages.
 	  // So create a new mirrored sheet.
 	  #f
 	end if
@@ -122,7 +122,7 @@ define method find-doc-sheet ( sheet :: duim/<sheet> )
   end select
 end;
 
-// A layout sheet with a mirror that can be used as an embeddable parent for 
+// A layout sheet with a mirror that can be used as an embeddable parent for
 // multiple panes.
 define class <ole-main-sheet> (duim/<mirrored-sheet-mixin>,
 			       duim/<multiple-child-wrapping-pane>,
@@ -139,7 +139,7 @@ define method duim/port-handles-repaint?
 end method duim/port-handles-repaint?;
 
 // Needed to satisfy a (possibly erroneous) call in `repaint-mirror':
-define method duim/sheet-medium (sheet :: <ole-main-sheet>) 
+define method duim/sheet-medium (sheet :: <ole-main-sheet>)
  => (medium :: false-or(duim/<medium>));
   #f
 end method;

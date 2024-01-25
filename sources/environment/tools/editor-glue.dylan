@@ -175,7 +175,7 @@ define method source-full-name
   source-full-name(source-record-location(file-source-record))
 end method source-full-name;
 
-
+
 /// 'make-code-viewer'
 
 define open generic make-code-viewer

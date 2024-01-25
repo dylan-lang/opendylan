@@ -83,7 +83,7 @@ define function stop-reason-dialog-type-table-update
 end function;
 
 
-
+
 /// REGISTER-APPLICATION-CALLBACKS (internal)
 /// We register a set of callbacks with the application server so that
 /// the debugger can be kept informed of application state changes.

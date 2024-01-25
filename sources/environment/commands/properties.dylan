@@ -76,7 +76,7 @@ define function set-named-property
   set-property(context, property, value, save?: save?)
 end function set-named-property;
 
-
+
 /// Properties
 
 define class <properties-property> (<command-property>)
@@ -96,7 +96,7 @@ define method show-property
   print-command-info(stream, properties)
 end method show-property;
 
-
+
 /// Copyright property
 
 define class <copyright-property> (<command-property>)
@@ -114,7 +114,7 @@ define method show-property
   format(stream, release-copyright());
 end method;
 
-
+
 /// Commands
 
 define class <commands-property> (<command-property>)
@@ -134,7 +134,7 @@ define method show-property
   print-command-info(stream, commands)
 end method show-property;
 
-
+
 /// Errors
 
 define class <set-property-error> (<format-string-condition>, <error>)
@@ -147,7 +147,7 @@ define method set-error
              format-arguments: format-arguments))
 end method set-error;
 
-
+
 /// Property commands
 
 define class <show-property-command> (<basic-command>)
@@ -236,7 +236,7 @@ define sealed method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Property commands
 
 define command-group property

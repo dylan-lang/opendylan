@@ -96,7 +96,7 @@ define sealed method name-imported?
 end method name-imported?;
 
 
-
+
 /// Binding name objects
 
 define method browsing-context

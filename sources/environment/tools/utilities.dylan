@@ -103,7 +103,7 @@ define function not-yet-implemented
   environment-error-message(message | "Not yet implemented!", owner: owner)
 end function not-yet-implemented;
 
-
+
 /// File filters
 
 define function environment-choose-file
@@ -285,7 +285,7 @@ define function filters-for-file-types
   map(filter-for-file-type, types)
 end function filters-for-file-types;
 
-
+
 /// Percentages
 ///---*** should be somewhere more standard?
 
@@ -325,7 +325,7 @@ define method percentage-label
               $percentage-suffix)
 end method percentage-label;
 
-
+
 /// Some useful functions
 
 define method frame-undefined-callback
@@ -430,7 +430,7 @@ define method make-clone
   apply(next-method, frame, object: frame.frame-primary-object, initargs)
 end method make-clone;
 
-
+
 /// Environment persistent state
 
 define variable $default-environment-frame-width  = 800;
@@ -601,7 +601,7 @@ define macro window-settings-definer
     }
 end macro window-settings-definer;
 
-
+
 /// Frame cascading
 
 define open class <frame-cascading-window-mixin>
@@ -739,7 +739,7 @@ define macro cascading-window-settings-definer
     }
 end macro cascading-window-settings-definer;
 
-
+
 /// Windows command table
 
 define function apply-to-environment-frames
@@ -999,7 +999,7 @@ define command-table *window-show-command-table* (*global-command-table*)
   include *open-windows-command-table*;
 end command-table *window-show-command-table*;
 
-
+
 /// Coerce objects to a project
 
 define generic coerce-project
@@ -1033,7 +1033,7 @@ define method coerce-project
   coerce-project(as(<file-locator>, object))
 end method coerce-project;
 
-
+
 /// Error handling
 
 define macro with-environment-handlers

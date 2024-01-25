@@ -55,7 +55,7 @@ define method emit-typecode-keyword-args (stream :: <stream>, type :: <dim-membe
       end for;
     end dynamic-bind;
   end if;
-  format(stream, ")");  
+  format(stream, ")");
 end method;
 
 

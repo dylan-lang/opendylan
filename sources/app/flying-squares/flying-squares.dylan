@@ -162,7 +162,7 @@ define constant $gray-specular   = make-v4(0.2, 0.2, 0.2, 0.5);
 // define constant $blue-diffuse    = make-v4(0.0, 0.0, 1.0, 1.0);
 
 define constant *colors*
-  = vector($red-specular, $green-specular, $purple-specular, 
+  = vector($red-specular, $green-specular, $purple-specular,
            $orange-specular, $yellow-specular);
 
 define variable *angle* :: <single-float> = 90.0;
@@ -178,15 +178,15 @@ define variable *squares* :: <stretchy-object-vector> = make(<stretchy-vector>);
 define sealed class <square> (<object>)
   constant slot r  :: <v3>, init-function: method () make-v3(0.0, 0.0, 0.0) end;
   constant slot p  :: <v3>, init-function: method () make-v3(0.0, 0.0, 0.0) end;
-  constant slot r0 :: <simple-object-vector>, 
-    init-function: 
-      method () 
-        make(<simple-object-vector>, size: $number-rows * $number-columns) 
+  constant slot r0 :: <simple-object-vector>,
+    init-function:
+      method ()
+        make(<simple-object-vector>, size: $number-rows * $number-columns)
       end;
   slot c;
 end class;
-   
-define method initialize (s :: <square>, #key i, j, #all-keys) 
+
+define method initialize (s :: <square>, #key i, j, #all-keys)
   s.r.x := (i - $number-columns / 2.0) * $sw + rnd(-$sw / 4.0, $sw / 4.0);
   s.r.y := (j - $number-rows / 2.0) * $sh + rnd(-$sh / 4.0, $sh / 4.0);
   s.r.z := rnd(0.25, 0.50);
@@ -239,7 +239,7 @@ define function initialize-grid () => ()
        j :: <integer> from 0)
     for (si :: <square> in *squares*)
       if (si ~== sj)
-        si.r0[j] := distance*(si.r.x * $sw, si.r.y * $sh, 0.0, 
+        si.r0[j] := distance*(si.r.x * $sw, si.r.y * $sh, 0.0,
                               sj.r.x * $sw, sj.r.y * $sh, 0.0);
       end if;
     end for;
@@ -264,7 +264,7 @@ define function move-squares () => ()
       for (sj :: <square> in *squares*,
            r0ij in si.r0)
         if (sj ~== si)
-          let dj :: <single-float> 
+          let dj :: <single-float>
             = unit-vector-and-distance(rh, si.r, sj.r);
           vadd(dp, vmul-s(rh, -$kl * (dj - r0ij)));
         end if;
@@ -292,11 +292,11 @@ define variable *latitude* :: <double-float>      = 60.0d0;
 define variable *latitude-bump* :: <double-float> =  2.5d0;
 define variable *longitude* :: <double-float>     = 30.0d0;
 define variable *radius* :: <double-float>        = $near-plane + 1.5d0;
-        
+
 define constant $logo-plane     = 1;
 define constant $solid-cylinder = 2;
 
-define class <flying-squares-pane> (<gl-pane>) 
+define class <flying-squares-pane> (<gl-pane>)
 end class;
 
 define function build-logo-plane () => ()
@@ -378,7 +378,7 @@ define function update-flying-squares (pane :: <flying-squares-pane>) => ()
   end
 end function update-flying-squares;
 
-define method handle-initialize-scene 
+define method handle-initialize-scene
     (pane :: <flying-squares-pane>, medium :: <medium>) => ()
   next-method();
   let ambient-properties = make-v4(0.7, 0.7, 0.7, 1.0);
@@ -404,7 +404,7 @@ define method handle-initialize-scene
        function: method ()
                    let frame = sheet-frame(pane);
                    while(#t)
-                     sleep(1.0 / 60.0);                     
+                     sleep(1.0 / 60.0);
                      with-lock (frame.lock)
                        call-in-frame(frame, update-flying-squares, pane);
                        wait-for(frame.update-notification)
@@ -423,7 +423,7 @@ define function polar-view (radius :: <double-float>, twist :: <double-float>,
   glTranslated(0.0d0, 0.0d0, -radius);
   glRotated( -twist, 0.0d0, 0.0d0, 1.0d0);
   glRotated( -latitude, 1.0d0, 0.0d0, 0.0d0);
-  glRotated( longitude, 0.0d0, 0.0d0, 1.0d0);    
+  glRotated( longitude, 0.0d0, 0.0d0, 1.0d0);
 end function polar-view;
 
 // define constant $light0-position = make-v4(0.0, 0.0, -1.0, 1.0);
@@ -443,7 +443,7 @@ define function draw-light () => ()
 */
 end function draw-light;
 
-define method handle-repaint-scene 
+define method handle-repaint-scene
     (pane :: <flying-squares-pane>, medium :: <medium>) => ()
   // Draw scene...
   glClear(logior($GL-COLOR-BUFFER-BIT, $GL-DEPTH-BUFFER-BIT));

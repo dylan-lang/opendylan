@@ -128,7 +128,7 @@ define method do-with-end-of-page-action
   continuation()
 end method do-with-end-of-page-action;
 
-
+
 /// Output record constructors
 
 define variable *output-record-constructors* :: <object-table> = make(<table>);
@@ -159,7 +159,7 @@ define method make-output-record (record-class, #rest initargs, #key)
   end
 end method make-output-record;
 
-
+
 /// Output record creation
 
 define method do-with-output-recording-options
@@ -309,7 +309,7 @@ define method clear-output-history (sheet :: <output-recording-mixin>)
   sheet-highlighted-record(sheet) := #f
 end method clear-output-history;
 
-
+
 /// Top level output histories
 
 define open abstract class <output-history-mixin> (<abstract-sheet>)
@@ -371,7 +371,7 @@ define method note-region-changed
   end
 end method note-region-changed;
 
-
+
 /// Graphics
 
 define function sheet-caret-position (sheet :: <sheet>) => (x, y)
@@ -482,7 +482,7 @@ define method move-caret-beyond-output-record
   end
 end method move-caret-beyond-output-record;
 
-
+
 /// Erasing
 
 define method erase-output-record
@@ -549,7 +549,7 @@ define method erase-output-record
   repaint-sheet(sheet, make-bounding-box(bl, bt, br, bb))
 end method erase-output-record;
 
-
+
 /// Fit for a king...
 
 define open abstract class <recording-pane>

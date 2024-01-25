@@ -17,16 +17,16 @@ define method make-button (window :: <HWND>,
                            ID :: <integer>)
  => handle :: <HWND>;
 
-  CreateWindow("BUTTON",	 // predefined class 
-	       label,	   // button text 
-	       %logior($WS-VISIBLE, $WS-CHILD, $BS-PUSHBUTTON), // styles 
-	       10,	   // starting x position 
-	       y,	   // starting y position 
-	       100,	   // button width 
-	       20,	   // button height 
-	       window,     // parent window 
+  CreateWindow("BUTTON",	 // predefined class
+	       label,	   // button text
+	       %logior($WS-VISIBLE, $WS-CHILD, $BS-PUSHBUTTON), // styles
+	       10,	   // starting x position
+	       y,	   // starting y position
+	       100,	   // button width
+	       20,	   // button height
+	       window,     // parent window
 	       as(<HMENU>, ID), // identifier is coded in place of menu
-	       application-instance-handle(), 
+	       application-instance-handle(),
 	       $NULL-VOID) // pointer not needed
 end method make-button;
 

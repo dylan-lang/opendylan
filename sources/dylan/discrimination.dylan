@@ -16,7 +16,7 @@ define function compute-headed-methods (ds :: <dispatch-state>)
 end function;
 
 
-
+
 
 
 define function prune-methods-by-known-class
@@ -65,7 +65,7 @@ define function consider-arg-discriminated (ds :: <dispatch-state>, argnum :: <i
   let the-methods :: <list> = %proper-list-tail(headed-methods);
   loop(headed-methods, the-methods)
 end function;
-
+
 
 
 define function compute-dispatch-engine (ds :: <dispatch-state>)
@@ -103,7 +103,7 @@ define function compute-dispatch-engine (ds :: <dispatch-state>)
     end select
   end if
 end function;
-
+
 
 
 //// Handle ordinary dispatch miss.
@@ -217,7 +217,7 @@ define function subst-engine-node-2 (new-e, old-e, e) => ()
     otherwise => #f;
   end select
 end function;
-
+
 
 
 //define function find-low-bit-index (m :: <integer>)
@@ -266,7 +266,7 @@ define function select-next-arg-for-discrimination (ds :: <dispatch-state>)
         end method;
   loop()
 end function;
-
+
 
 define function walk-existing-dispatch-engine (ds :: <dispatch-state>, e, recurse :: <function>)
   => (e :: <object>);

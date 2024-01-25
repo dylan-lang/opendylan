@@ -34,7 +34,7 @@ define test test-<xml-element> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// XML functions
 
 define test test-document-location ()

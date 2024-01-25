@@ -33,21 +33,21 @@ Copyright: See below.
 /// rewrite of the Dick Water's pretty printer code.
 ///
 
-
+
 //// User tunable parameters.
 
 define variable *print-miser-width* :: false-or(<integer>) = #f;
 
 define variable *default-line-length* :: <integer> = 80;
 
-
+
 //// Random internal constants.
 
 define constant $initial-buffer-size = 128;
 
 define constant $newline = as(<integer>, '\n');
 
-
+
 //// Tame byte copying utility.
 
 define method copy-maybe-overlapping-bytes
@@ -84,7 +84,7 @@ define method copy-maybe-overlapping-bytes
   end;
 end method;
 
-
+
 //// Types.
 
 // There are three different units for measuring character positions:
@@ -185,7 +185,7 @@ define sealed domain make (singleton(<pretty-stream>));
 define sealed domain initialize (<pretty-stream>);
 */
 
-
+
 //// position/column/index conversion routines
 
 // index-posn -- internal
@@ -220,7 +220,7 @@ define method posn-column
   index-column(posn-index(posn, stream), stream);
 end;
 
-
+
 //// Stream extension routines.
 
 define method write-element
@@ -246,7 +246,7 @@ define method close
   end;
 end;
 
-
+
 //// Stuff to append output.
 
 // append-output -- internal.
@@ -328,7 +328,7 @@ define method append-raw-output
   end;
 end;
 
-
+
 //// Logical blocks.
 
 // <logical-block> -- internal.
@@ -472,7 +472,7 @@ define method really-end-logical-block
   end;
 end;
 
-
+
 //// The pending operation queue.
 
 // <queued-op> -- internal.
@@ -731,7 +731,7 @@ define method enqueue-tab
                colnum: colnum, colinc: colinc));
 end;
 
-
+
 //// Tab support.
 
 // compute-tab-size -- internal.
@@ -862,7 +862,7 @@ define method expand-tabs
   end;
 end;
 
-
+
 //// Stuff to do the actual outputting.
 
 // assure-space-in-buffer -- internal.
@@ -1143,7 +1143,7 @@ define method output-partial-line (stream :: <pretty-stream>) => ()
     := stream.pretty-stream-buffer-offset + count;
 end;
 
-
+
 //// Interface routines.
 
 define macro printing-logical-block

@@ -10,9 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// DO-PROCESSES
 
-define method do-processes 
+define method do-processes
   (function :: <function>, dc :: <remote-debugger-connection-implementation>) => ()
-  local method find-existing (descr :: <NUBPROCESS>) 
+  local method find-existing (descr :: <NUBPROCESS>)
              => (p? :: false-or(<remote-process>))
           block (return)
             for (proc in dc.connection-process-list)
@@ -75,7 +75,7 @@ end method;
 
 ///// CONSTRUCT-THREAD-OBJECT
 
-define method construct-thread-object 
+define method construct-thread-object
    (conn :: <remote-access-connection>, thread :: <NUBTHREAD>,
      #key path, priority)
       => (thread :: <remote-thread>)
@@ -96,7 +96,7 @@ end method;
 
 ///// CONSTRUCT-LIBRARY-OBJECT
 
-define method construct-library-object 
+define method construct-library-object
   (conn :: <remote-access-connection>, lib :: <NUBLIBRARY>)
     => (lib :: <remote-library>)
   let rlib = as-integer(lib);

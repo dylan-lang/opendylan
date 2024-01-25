@@ -26,7 +26,7 @@ define function parse-regular-expression
       end while;
       values(node, pos);
     end,
-  
+
   method parse-regexp1
       (string :: <byte-string>, start :: <integer>)
    => (node :: <regular-expression>, pos :: <integer>);
@@ -41,7 +41,7 @@ define function parse-regular-expression
     end while;
     values(node, pos);
   end,
-  
+
   method parse-regexp2
       (string :: <byte-string>, start :: <integer>)
    => (node :: <regular-expression>, pos :: <integer>);
@@ -154,14 +154,14 @@ define function parse-regular-expression
     $regular-expression-cache[string] := node
   end if;
 end function;
-            
+
 define class <match-accept-regular-expression> (<accept-regular-expression>)
   // no slots
 end class;
-            
+
 define class <match-dfa-state> (<regular-expression-dfa-state>)
   slot match-dfa-state-accepting? :: <boolean> = #f;
-end class;  
+end class;
 
 define sealed method do-regular-expression-dfa-state-position
     (state :: <regular-expression-dfa-state>,

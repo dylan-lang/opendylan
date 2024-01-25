@@ -28,8 +28,8 @@ define class <complex-test> (<object>)
   constant slot test-invoker-args :: <sequence>, init-keyword: args:;
 end class;
 
-define method do-file-test 
-    (be :: <harp-x86-back-end>, 
+define method do-file-test
+    (be :: <harp-x86-back-end>,
      filename :: <string>,
      outputter-options :: <vector>,
      data-function :: <function>,
@@ -51,11 +51,11 @@ define method do-file-test
             values(code-function, args, locator);
           else values(code-test, #[], #f);
           end if;
-      apply(run-test, 
-            code-function, 
-            outputter: outputter, 
+      apply(run-test,
+            code-function,
+            outputter: outputter,
             source-locator: source-locator,
-            back-end: be, 
+            back-end: be,
             keys);
     end for;
     output-footer(be, outputter);
@@ -82,11 +82,11 @@ end method;
 
 
 define macro lambda-test-definer
-  { define lambda-test ?:name (?args:*) 
-      name ?string:expression; 
+  { define lambda-test ?:name (?args:*)
+      name ?string:expression;
       start-line ?start-line:expression;
       end-line ?end-line:expression;
-      ?:body 
+      ?:body
     end }
     => { define method ?name ## "-test" (?args) ?body end;
          define method ?name (#rest args)
@@ -99,8 +99,8 @@ define macro lambda-test-definer
 end macro;
 
 define lambda-test return-external1 (be :: <harp-x86-back-end>)
-  name "ext1_iep"; 
-  start-line 0; 
+  name "ext1_iep";
+  start-line 0;
   end-line 0;
 
   let regs = be.registers;
@@ -109,16 +109,16 @@ define lambda-test return-external1 (be :: <harp-x86-back-end>)
 end;
 
 
-     
+
 define lambda-test return-internal1 (be :: <harp-x86-back-end>)
-  name "int1_iep"; 
-  start-line 0; 
+  name "int1_iep";
+  start-line 0;
   end-line 0;
   let regs = be.registers;
   ins--move(be, regs.reg-result, int1);
   ins--rts-and-drop(be, 0);
 end;
-     
+
 
 /// Source Code Locations:
 /// As a temporary test, source code locations are supplied as a list
@@ -128,8 +128,8 @@ end;
 
 
 define lambda-test return-literal1 (be :: <harp-x86-back-end>)
-  name "lit1_iep"; 
-  start-line 5; 
+  name "lit1_iep";
+  start-line 5;
   end-line 10;
   let regs = be.registers;
   ins--scl(be, scl(1), #[]);
@@ -137,10 +137,10 @@ define lambda-test return-literal1 (be :: <harp-x86-back-end>)
   ins--scl(be, scl(3), #[]);
   ins--rts-and-drop(be, 0);
 end;
-  
+
 
 define lambda-test call-literal1 (be :: <harp-x86-back-end>)
-  name "lit1_caller_iep"; 
+  name "lit1_caller_iep";
   start-line 13;
   end-line 20;
 
@@ -159,10 +159,10 @@ define lambda-test call-literal1 (be :: <harp-x86-back-end>)
   end with-harp;
 end;
 
-   
+
 define lambda-test return-effective-address (be :: <harp-x86-back-end>)
-  name "lea_iep"; 
-  start-line 0; 
+  name "lea_iep";
+  start-line 0;
   end-line 0;
 
   with-harp (be)
@@ -178,9 +178,9 @@ define lambda-test return-effective-address (be :: <harp-x86-back-end>)
     ins--rts-and-drop(be, 0);
   end with-harp;
 end;
-    
+
 define lambda-test return-effective-address2 (be :: <harp-x86-back-end>)
-  name "lea_iep"; 
+  name "lea_iep";
   start-line 0;
   end-line 0;
 
@@ -199,7 +199,7 @@ define lambda-test return-effective-address2 (be :: <harp-x86-back-end>)
     ins--tag(be, tag2);
     ins--rts-and-drop(be, 0);
   end with-harp;
-end; 
+end;
 
 
 define method file-test-1 (#rest all-keys, #key type, print-harp? = #t) => ()
@@ -246,22 +246,22 @@ end method;
 // second generation lambda tests .....
 
 define method set-function-name
-    (be :: <harp-x86-back-end>, name :: <byte-string>) 
+    (be :: <harp-x86-back-end>, name :: <byte-string>)
   be.variables.function-name  := name;
 end method;
 
 
-define method run-test 
-    (test :: <function>, 
+define method run-test
+    (test :: <function>,
      #key outputter = make-interactive-outputter(),
           source-locator = #f,
           static = #f,
           name = "dummy",
           back-end = pb)
   let be :: <harp-back-end> = pb;
-  invoke-harp(back-end, test, name, 
-              outputter: outputter, 
-              source-locator: source-locator, 
+  invoke-harp(back-end, test, name,
+              outputter: outputter,
+              source-locator: source-locator,
               static: static,
               harp-debug: #t);
 end method;
@@ -272,13 +272,13 @@ define method test0 (be :: <harp-x86-back-end>)
   ins--move(be, regs.reg-result, 99);
   ins--rts-and-drop(be, 0);
 end;
-     
+
 
 define method test1 (be :: <harp-x86-back-end>)
   set-function-name(be, "_Tony1");
   ins--jmp(be, ins--constant-ref(be, "Tony0"), 0);
 end;
-     
+
 
 define method test2 (be :: <harp-x86-back-end>)
   set-function-name(be, "_Tony2");
@@ -286,7 +286,7 @@ define method test2 (be :: <harp-x86-back-end>)
   ins--call(be, ins--constant-ref(be, "Funny"), 0);
   ins--jmp(be, ins--constant-ref(be, "Tony0"), 0);
 end;
-     
+
 
 define method test3 (be :: <harp-x86-back-end>)
   set-function-name(be, "_sdi_test");
@@ -300,7 +300,7 @@ define method test3 (be :: <harp-x86-back-end>)
   ins--tag(be, tag);
   ins--jmp(be, ins--constant-ref(be, "Tony0"), 0);
 end;
-     
+
 
 define method test4 (be :: <harp-x86-back-end>)
   let addr-tag = make-tag(be);
@@ -311,7 +311,7 @@ define method test4 (be :: <harp-x86-back-end>)
   ins--tag(be, addr-tag);
   ins--jmp(be, ins--constant-ref(be, "Tony0"), 0);
 end;
-     
+
 
 define method test5 (be :: <harp-x86-back-end>)
   with-harp (be)
@@ -343,7 +343,7 @@ define method test6 (be :: <harp-x86-back-end>)
   ins--dmove(be, regs.reg-float-result, df);
   ins--rts(be);
 end;
-     
+
 define method test7 (be :: <harp-x86-back-end>)
   let regs = be.registers;
   with-harp (be)
@@ -367,8 +367,8 @@ define method test7 (be :: <harp-x86-back-end>)
     ins--rts(be);
   end with-harp;
 end;
-     
-     
+
+
 
 define method test8 (be :: <harp-x86-back-end>)
   set-function-name(be, "_Tony8");
@@ -387,27 +387,27 @@ define method defasm-test0 (be :: <harp-x86-back-end>)
     named reg rr1, rr2, rr3, rr4, rr5, rr6, rr7;
 
     vars.compiling-defasm := #t;
-  
+
     ins--rem(be, "This is a quick remark");
     ins--move(be, rr3, regs.reg-arg0);
     ins--load-stack-arg-n(be, rr1, 0);
     ins--load-stack-arg-n(be, rr2, 1);
-   
+
     ins--ld(be, rr5, rr1, 56);
     ins--move(be, rr6, rr1);
-  
+
     ins--call(be, rr6, 0);
-  
+
     ins--store-stack-arg-n(be, rr2, 1);
     ins--store-stack-arg-n(be, rr6, 0);
     ins--move(be, regs.reg-arg0, rr3);
     ins--move(be, rr7, rr5);
-  
+
     ins--jmp(be, rr7, 1);
     set-function-name(be, "_DEFASM0");
   end with-harp;
 end;
-     
+
 
 /// dummy support for source code locators
 
@@ -429,12 +429,12 @@ define class <dummy-relative-source-locator> (<dummy-source-locator>)
 end class;
 
 
-define method locator-as-absolute-source-position 
-    (locator :: <dummy-absolute-source-locator>) 
+define method locator-as-absolute-source-position
+    (locator :: <dummy-absolute-source-locator>)
     => (source-pos :: <absolute-source-position>)
   make(<absolute-source-position>,
-       source-record: locator.locator-source-record, 
-       start-offset: locator.locator-start-line, 
+       source-record: locator.locator-source-record,
+       start-offset: locator.locator-start-line,
        end-offset: locator.locator-end-line)
 end method;
 
@@ -447,23 +447,23 @@ define method locator-for-test
   else
     let dname = concatenate(name, ".dylan");
     let record = make(<dummy-source-record>, name: dname);
-    make(<dummy-absolute-source-locator>, record: record, 
+    make(<dummy-absolute-source-locator>, record: record,
          start-line: start-line, end-line: end-line);
   end if;
 end method;
 
 
 
-define method scl 
+define method scl
     (line :: <integer>)
     => (scl :: <dummy-relative-source-locator>)
   make(<dummy-relative-source-locator>, start-line: line);
 end method;
 
 
-define method make-relative-source-position 
-    (abs :: <absolute-source-position>, 
-     locator :: <dummy-relative-source-locator>, 
+define method make-relative-source-position
+    (abs :: <absolute-source-position>,
+     locator :: <dummy-relative-source-locator>,
      code-pos :: <integer>)
      => (source-pos :: <relative-source-position>)
   make(<relative-source-position>,

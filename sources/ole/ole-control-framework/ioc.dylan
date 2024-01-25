@@ -1,5 +1,5 @@
 Module:    OLE-Control-Framework
-Synopsis:  Implementation of the "IOleControl" interface, 
+Synopsis:  Implementation of the "IOleControl" interface,
 	   including keyboard mnemonics and ambient properties.
 Author:    David N. Gray
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -63,7 +63,7 @@ define method IOleControl/GetControlInfo ( this :: <COleControl>,
 	      haccel == this.ole-control-mnemonics-haccel )
 	  flags := this.ole-control-mnemonics-flags;
 	else
-	  // We have a problem here in that the "Patron" example from 
+	  // We have a problem here in that the "Patron" example from
 	  // "Inside OLE" has incompatible expectations from MFC.
 	  // (The documentation, of course, is too vague to be able to say
 	  // for sure that either one is wrong.)
@@ -77,7 +77,7 @@ define method IOleControl/GetControlInfo ( this :: <COleControl>,
 	  end if;
 	  let copied-table :: <LPACCEL> =
 	    if ( global-handle )
-	      pointer-cast(<LPACCEL>, 
+	      pointer-cast(<LPACCEL>,
 			   check-win32-result("GlobalLock",
 					      GlobalLock(global-handle)))
 	    else
@@ -122,7 +122,7 @@ define method IOleControl/GetControlInfo ( this :: <COleControl>,
   end if
 end method;
 
-// ``If a control changes the contents of its CONTROLINFO structure, 
+// ``If a control changes the contents of its CONTROLINFO structure,
 //   it must notify its container by calling
 //   IOleControlSite::OnControlInfoChanged.'' (MSDN SDK)
 define method OLE-util-key-change ( obj :: <ole-control-framework> ) => ();
@@ -239,13 +239,13 @@ define method IOleControl/FreezeEvents ( this :: <COleControl>,
   $S-OK
 end method;
 
-
+
 //  -------------------------------
 //	ambient properties
 //  -------------------------------
 
 // This code was originally patterned after Brockschmidt's example in:
-//  \INOLE\CODE\CHAP24\POLYLINE\POLYLINE.CPP 
+//  \INOLE\CODE\CHAP24\POLYLINE\POLYLINE.CPP
 
 
 // The container uses this to notify the control of a change in the
@@ -254,7 +254,7 @@ define method IOleControl/OnAmbientPropertyChange ( this :: <COleControl>,
 						    disp-ID :: <fixnum> )
  => (status :: <HRESULT>)
   debug-out("IOleControl/OnAmbientPropertyChange %=\n", disp-ID);
-  
+
   let obj = this.get-obj;
   if ( disp-ID = $DISPID-UNKNOWN )
     update-all-ambient-properties(obj);
@@ -263,7 +263,7 @@ define method IOleControl/OnAmbientPropertyChange ( this :: <COleControl>,
     update-ambient-property(obj, disp-ID);
   end if;
   // This operation should always report success even when ignored.
-  $S-OK 
+  $S-OK
 end method;
 
 define open COM-interface <OCX-OleObject> ( <COleObject> )
@@ -356,7 +356,7 @@ define method OLE-part-set-ambient-property
     ( obj :: <ole-control-framework>,
       disp-id == $DISPID-AMBIENT-UIDEAD,
       dead? :: <boolean> ) => ();
-    
+
   // This should affect the detection of mouse clicks.
   obj.freeze-UI? := dead?;
 end method;
@@ -409,7 +409,7 @@ define method OLE-util-translate-color(obj :: <interface>, value)
 
   // Note: theoretically, we should be using `OleTranslateColor' here,
   //   but it wants a palette handle which we don't have here, and it
-  //   appears from the documentation that the only thing it provides 
+  //   appears from the documentation that the only thing it provides
   //   that we aren't doing here is validating the index of a
   //   palette-relative color.
   ignore(obj);

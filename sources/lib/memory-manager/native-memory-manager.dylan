@@ -4,7 +4,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method room () 
+define method room ()
   block()
     values(raw-as-integer(primitive-mps-committed()), 0)
   exception (e :: <arithmetic-error>)
@@ -14,7 +14,7 @@ define method room ()
 end method;
 
 define method collect-garbage (#key print-stats?)
-  block () 
+  block ()
     primitive-mps-collect(primitive-boolean-as-raw(print-stats?));
     room()
   afterwards
@@ -22,25 +22,25 @@ define method collect-garbage (#key print-stats?)
   end;
 end method;
 
-define method mark-garbage () 
+define method mark-garbage ()
   collect-garbage()
 end method;
 
-define method block-promotion () 
+define method block-promotion ()
 end method;
 
 define macro with-ramp-allocation
   { with-ramp-allocation(#key ?all?:expression = #f) ?:body end }
     => {
 
-	block () 
+	block ()
 	  if (?all?)
 	    primitive-mps-begin-ramp-alloc-all();
 	  else
 	    primitive-mps-begin-ramp-alloc();
 	  end;
 	  ?body;
-	cleanup 
+	cleanup
 	  if (?all?)
 	    primitive-mps-end-ramp-alloc-all();
 	  else

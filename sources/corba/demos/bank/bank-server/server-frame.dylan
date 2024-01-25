@@ -41,8 +41,8 @@ define frame <server-frame> (<simple-frame>)
                        label: "&Exit",
                        documentation: "Exits the application.",
                        activate-callback: Exit-callback)
-                  )); 
-                                         
+                  ));
+
   menu-bar (frame)
     make(<menu-bar>,
          children: vector(file-menu(frame)));
@@ -60,8 +60,8 @@ define frame <server-frame> (<simple-frame>)
   constant slot log :: <deque>, init-value: make(<deque>, size: $log-size, fill: "");
 
   pane log-pane (frame)
-     make(<list-box>, 
-          selection-mode: #"none", 
+     make(<list-box>,
+          selection-mode: #"none",
           borders: #"output",
           items: frame.log);
 
@@ -100,7 +100,7 @@ define method Refresh-callback(button :: <menu-button>) => ()
 end method;
 
 define method refresh(frame :: <server-frame>, #key force? = #f) => ()
-  if (force? | frame.refresh-check-button.gadget-value) 
+  if (force? | frame.refresh-check-button.gadget-value)
   with-connection(frame.connection)
       let query = make(<sql-statement>,
                        text: "select Name, Balance, Limit from Accounts ");
@@ -113,7 +113,7 @@ end method;
 define method log-message(frame :: <server-frame>, message :: <string>, #key force? = #f) => ()
   if (force? | frame.log-check-button.gadget-value)
     pop(frame.log);
-    push-last(frame.log, message);     
+    push-last(frame.log, message);
     update-gadget(frame.log-pane);
   end if;
 end method;

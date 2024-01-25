@@ -220,7 +220,7 @@ end class;
 define sideways method as (to == <integer>, s :: <string>) => (int-thing)
   let i = 0;
   let x = 0;
-       
+
   local method character-to-integer (c :: <character>)
           if (c = '0')
             0
@@ -254,14 +254,14 @@ define sideways method as (to == <integer>, s :: <string>) => (int-thing)
   x;
 end method;
 
-define constant $decimal-digit-set = 
+define constant $decimal-digit-set =
    #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 define method decimal-digit? (c :: <character>) => (answer :: <boolean>)
   member? (c, $decimal-digit-set);
 end method;
 
-define constant $hex-digit-set = 
+define constant $hex-digit-set =
    #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
      'A', 'B', 'C', 'D', 'E', 'F',
      'a', 'b', 'c', 'd', 'e', 'f'];
@@ -270,14 +270,14 @@ define method hex-digit? (c :: <character>) => (answer :: <boolean>)
   member? (c, $hex-digit-set);
 end method;
 
-define constant $reserved-set = 
+define constant $reserved-set =
    #['"', ',', ':', '(', ')', '#', ' ', '[', ']'];
 
 define method reserved? (c :: <character>) => (answer :: <boolean>)
   member? (c, $reserved-set);
 end method;
 
-define method decimal-string-to-integer 
+define method decimal-string-to-integer
     (lexeme :: <string>) => (i :: <integer>)
   string-to-integer (lexeme)
 end method;
@@ -289,7 +289,7 @@ define method previous-result-string-to-integer (lexeme :: <string>)
 end method;
 
 /*
-define method hex-string-to-integer 
+define method hex-string-to-integer
     (lexeme :: <string>) => (i :: <integer>)
 
   local method hex-character-to-integer (c :: <character>)
@@ -377,7 +377,7 @@ define constant $keyword-lookup-table =
     make(<command-line-keyword>,
          representation: "clear", abbreviation: "cl", code: $tokenClear),
     make(<command-line-keyword>,
-         representation: "breakpoints", abbreviation: "bp", 
+         representation: "breakpoints", abbreviation: "bp",
          code: $tokenBreakpoints),
     make(<command-line-keyword>,
          representation: "trace", abbreviation: "t", code: $tokenTrace),
@@ -401,10 +401,10 @@ define constant $keyword-lookup-table =
     make(<command-line-keyword>,
          representation: "print", abbreviation: "p", code: $tokenPrint),
     make(<command-line-keyword>,
-         representation: "describe", abbreviation: "des", 
+         representation: "describe", abbreviation: "des",
          code: $tokenDescribe),
     make(<command-line-keyword>,
-         representation: "evaluate", abbreviation: "eval", 
+         representation: "evaluate", abbreviation: "eval",
          code: $tokenEvaluate),
     make(<command-line-keyword>,
          representation: "display", abbreviation: "disp", code: $tokenDisplay),
@@ -415,10 +415,10 @@ define constant $keyword-lookup-table =
     make(<command-line-keyword>,
          representation: "threads", abbreviation: "thrs", code: $tokenThreads),
     make(<command-line-keyword>,
-         representation: "libraries", abbreviation: "libs", 
+         representation: "libraries", abbreviation: "libs",
          code: $tokenLibraries),
     make(<command-line-keyword>,
-         representation: "registers", abbreviation: "regs", 
+         representation: "registers", abbreviation: "regs",
          code: $tokenRegisters),
     make(<command-line-keyword>,
          representation: "in", abbreviation: "in", code: $tokenIn),
@@ -471,7 +471,7 @@ define constant $keyword-lookup-table =
     make(<command-line-keyword>,
          representation: "options", abbreviation: "opt", code: $tokenOptions),
     make(<command-line-keyword>,
-         representation: "exceptions", abbreviation: "ex", 
+         representation: "exceptions", abbreviation: "ex",
          code: $tokenExceptions),
     make(<command-line-keyword>,
          representation: "verbose", abbreviation: "v", code: $tokenVerbose),
@@ -630,7 +630,7 @@ define method check-keyword (s :: <string>) => (tok :: <token>)
     end if
   end while;
   if (found)
-    make(<command-line-keyword>, representation: s, 
+    make(<command-line-keyword>, representation: s,
          abbreviation: found.abbreviation, code: found.code)
   else
     make(<token>, representation: s, code: $tokenDylanSymbol)
@@ -671,7 +671,7 @@ define constant $stateGotDllPrefix                        = 23;
 define variable current-character :: <character> = ' ';
 
 define method tokenize (s :: <string>) => (x :: <sequence>)
-  let current-position = 
+  let current-position =
     if ((s.size > 0) & (s[0] == '!')) 1 else 0 end if;
   current-character := ' ';
   let limit = size(s);
@@ -680,7 +680,7 @@ define method tokenize (s :: <string>) => (x :: <sequence>)
   let this-token-string = "";
   let this-dll-prefix = #f;
   let current-state = $stateNewToken;
-  
+
   local method get-next-character ()
           if (current-position < limit)
             current-character := s[current-position];
@@ -696,7 +696,7 @@ define method tokenize (s :: <string>) => (x :: <sequence>)
 
   local method transition (state :: <integer>)
           current-state := state;
-          this-token-string := 
+          this-token-string :=
             concatenate(this-token-string, add!("", current-character));
           get-next-character();
         end method;
@@ -933,7 +933,7 @@ define method tokenize (s :: <string>) => (x :: <sequence>)
           else
             transition($stateGettingModuleQualifiedSymbol)
           end if;
-            
+
         $stateGotTwoQualifiers =>
           if (reserved?(current-character))
             epsilon-transition($stateEndOfToken);

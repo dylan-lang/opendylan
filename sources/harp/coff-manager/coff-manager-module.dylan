@@ -26,19 +26,19 @@ define module coff-representation
   export <byte>, <short>, <word>,
          <coff-unit>,
          <coff-index>,
-         index, index-setter, 
+         index, index-setter,
 
          <coff-string>, <coff-short-string>, <coff-long-string>,
          string-data,
 
          <coff-symbol-record>, <coff-symbol>, <coff-auxiliary-symbol>,
-         section, section-setter, symbol-name, 
+         section, section-setter, symbol-name,
          symbol-value, symbol-value-setter,
          symbol-type, symbol-type-setter,
          storage-class, storage-class-setter,
          aux-symbols, aux-symbols-setter,
 
-         <coff-relocation>, 
+         <coff-relocation>,
          <coff-relative-relocation>, <coff-absolute-relocation>,
          relocation-symbol, relocation-symbol-setter,
          relocation-type, relocation-type-setter,
@@ -47,33 +47,33 @@ define module coff-representation
          <coff-undefined-locator>,
          section-name,   section-name-setter,
          section-data, section-data-units,
-         section-flags, section-flags-setter, 
+         section-flags, section-flags-setter,
          section-alignment,
          virtual-size, virtual-size-setter,
-         rva-offset, rva-offset-setter, 
+         rva-offset, rva-offset-setter,
          line-numbers, line-numbers-setter,
          big-endian?,
-         relocations, relocations-setter, 
+         relocations, relocations-setter,
          coff-section-undefined,
 
          <coff-table>,
          table,
-         coff-element, coff-element-setter, 
+         coff-element, coff-element-setter,
 
-         <coff-symbol-table>, 
+         <coff-symbol-table>,
 
-         <coff-string-table>, 
-         add-coff-string, 
+         <coff-string-table>,
+         add-coff-string,
 
          <coff-section-table>,
 
-         machine, time-stamp, header-size, 
+         machine, time-stamp, header-size,
          characteristics, sections,
          symbols, strings,
          coff-section-data, coff-section-data-setter,
          coff-symbol-data,  coff-symbol-data-setter,
          coff-string-data , coff-string-data-setter,
-         <coff-file>; 
+         <coff-file>;
 end module;
 
 
@@ -82,7 +82,7 @@ define module coff-sizes
   use syntax-case;
   use coff-representation;
 
-  export 
+  export
     file-headers-size,
     section-headers-size,
     sections-size,
@@ -108,7 +108,7 @@ define module coff-writer
   use coff-representation;
   use coff-sizes;
 
-  export 
+  export
     write-coff,
     write-coff-header,
     write-section-table,
@@ -134,10 +134,10 @@ define module coff-builder
     coff-file,
     make-coff-builder,
     make-coff-symbol,
-    define-external-symbol, 
+    define-external-symbol,
     add-symbol-definition,
-    add-data, 
-    add-data-byte, 
+    add-data,
+    add-data-byte,
     add-data-string,
     select-coff-section,
     fixup-coff-builder;

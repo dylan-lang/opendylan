@@ -57,20 +57,20 @@ define method jam-target-build
     method bind(name :: <byte-string>) => (target :: <jam-target>);
       bind-aux(#f, jam-target(jam, name))
     end method,
-    
+
     method bind-aux
         (parent-target :: false-or(<jam-target>), target :: <jam-target>)
      => (target :: <jam-target>);
       if (target.target-build-status = $build-status-init)
         target.target-build-status := $build-status-making;
-      
+
         if (target.target-file?)
           jam-target-bind-aux(jam, target.target-name, target);
           if (target.target-modification-date)
             target-header-scan(jam, target);
           end if;
         end if;
-        
+
         let time-target
           = if (target.target-internal? & parent-target)
               parent-target
@@ -82,7 +82,7 @@ define method jam-target-build
             else
               target
             end;
-        
+
         // recursively bind dependencies
         do(curry(bind-aux, time-target), target.target-depends);
         let seen = make(<object-set>);
@@ -101,12 +101,12 @@ define method jam-target-build
             end unless;
           end for;
         end for;
-        
+
         // bind includes target
         if (target.target-includes-target)
           bind-aux(parent-target, target.target-includes-target);
         end if;
-        
+
         // depend on dependencies' includes
         let includes
           = choose(identity, map(target-includes-target,
@@ -117,7 +117,7 @@ define method jam-target-build
         let last :: <date> = $zero-date;
         let leaf :: <date> = $zero-date;
         let status = $build-status-stable;
-        
+
         for (depend :: <jam-target> in target.target-depends)
           leaf := max(leaf, depend.target-leaf-date);
           if (target.target-leaf-only?)
@@ -532,7 +532,7 @@ define method bind-targets
   end collecting;
 end method;
 
-
+
 
 // Expand a command string using Jam's special rules for actions.
 //
@@ -601,7 +601,7 @@ define method substitute-command
     else
       loop(i + 1, start, wordstart | i);
     end if;
-      
+
   end iterate;
 
   copy-sequence(result, end: result-size)

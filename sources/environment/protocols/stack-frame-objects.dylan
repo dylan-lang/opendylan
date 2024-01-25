@@ -121,7 +121,7 @@ define open generic stack-frame-local-variable-count
     (server :: <server>, stack-frame :: <stack-frame-object>)
  => (locals-count :: <integer>);
 
-
+
 /// Project dispatching methods
 ///
 /// The functions on this page just check whether there's a server

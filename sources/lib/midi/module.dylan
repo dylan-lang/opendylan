@@ -20,17 +20,17 @@ define module midi
   // Raw MIDI spec
 
   export
-    $MIDI-off, 
-    $MIDI-on, 
-    $MIDI-key-pressure, 
-    $MIDI-parameter, 
-    $MIDI-patch, 
-    $MIDI-channel-pressure, 
+    $MIDI-off,
+    $MIDI-on,
+    $MIDI-key-pressure,
+    $MIDI-parameter,
+    $MIDI-patch,
+    $MIDI-channel-pressure,
     $MIDI-pitch-bend,
 
     send-midi-message,
 
-    <midi-pitch>, 
+    <midi-pitch>,
       $midi-min-pitch,
       $midi-middle-c-pitch,
       $midi-max-pitch,
@@ -51,14 +51,14 @@ define module midi
       $midi-balance-central,
       $midi-balance-full-right,
 
-    <midi-instrument>, 
+    <midi-instrument>,
       midi-name, midi-number, do-midi-instruments,
 
     <midi-instrument-family>,
       midi-name, midi-members,
       do-midi-instrument-families,
       do-midi-instrument-family-members,
-    
+
     find-midi-instrument,
 
     <midi-percussion>,
@@ -72,7 +72,7 @@ define module midi
     <midi-device>, <midi-channel>,
       default-midi-device,
       midi-id,
-      open-midi-device, reset-midi-device, close-midi-device, 
+      open-midi-device, reset-midi-device, close-midi-device,
         with-open-midi-device,
       midi-channels,
       select-midi-instrument;

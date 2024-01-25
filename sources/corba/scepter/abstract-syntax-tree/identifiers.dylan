@@ -60,7 +60,7 @@ define constant $empty-identifier :: <ast-identifier> =
   make(<ast-identifier>, label: "");
 
 define method global-name? (identifier :: <ast-identifier>)
-  identifier = $double-colon-identifier | 
+  identifier = $double-colon-identifier |
   identifier = $empty-identifier;
 end method;
-  
+

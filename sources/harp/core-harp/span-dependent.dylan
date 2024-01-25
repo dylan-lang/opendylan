@@ -24,15 +24,15 @@ define method calculate-instruction (sdi :: <new-sdi>)
     end for;
   end block;
 end;
-             
 
 
 
-//// New version for resolve-sdis, doint it without allocation. 
+
+//// New version for resolve-sdis, doint it without allocation.
 //// first pass just calculate the size of each sdi, and sets the diff
-//// if it is not the same as the original size. 
+//// if it is not the same as the original size.
 //// second pass check for each each sdi if any of the sids in its span
-//// have increased in size, increase the sdi span accordingly, 
+//// have increased in size, increase the sdi span accordingly,
 //// check again its size and flags it as not checked.
 //// third pass loop repeatedly loop thrugh the sdis, check any
 //// unchecked sdis, and if they change their size increase the span of
@@ -43,7 +43,7 @@ end;
 //// repeated loop in a chain, but I couldn't be bothered.
 //// Y 21/4/93
 
- 
+
 define method resolve-sdis (backend :: <harp-back-end>)
   // first lets give each sdi an initial span
   let sdis-vec :: <stretchy-vector> = backend.variables.all-the-sdis;
@@ -55,7 +55,7 @@ define method resolve-sdis (backend :: <harp-back-end>)
   loop-sdis (sdi at index below sdis-num in sdis-vec)
     let dest-block = find-bb(backend, sdi.new-sdi-dest-tag);
     if (dest-block)
-      let dest-place = dest-block.bb-fixed-offset + 
+      let dest-place = dest-block.bb-fixed-offset +
                        sdi.new-sdi-dest-offset;
       let this-place = sdi.new-sdi-fixed-offset;
       let span = dest-place - this-place;
@@ -84,16 +84,16 @@ define method resolve-sdis (backend :: <harp-back-end>)
       let dest-block :: <basic-block> = sdi.new-sdi-dest-tag.tag-bb;
       let sdis-before-dest :: <integer> = dest-block.bb-preceding-sdis;
       if (sdis-before-dest < sdis-before-this)
-	loop-sdis (p-sdi at p-index 
-                   from sdis-before-dest below sdis-before-this 
-                   in sdis-vec) 
+	loop-sdis (p-sdi at p-index
+                   from sdis-before-dest below sdis-before-this
+                   in sdis-vec)
           let diff = p-sdi.new-sdi-diff;
           sdi.new-sdi-checked := #f;
           if (diff) dec!(sdi.new-sdi-cached-span, diff) end if;
         end loop-sdis;
       else
-	loop-sdis (p-sdi at p-index 
-                   from sdis-before-this below sdis-before-dest 
+	loop-sdis (p-sdi at p-index
+                   from sdis-before-this below sdis-before-dest
                    in sdis-vec)
           let diff = p-sdi.new-sdi-diff;
           sdi.new-sdi-checked := #f;
@@ -136,7 +136,7 @@ define method resolve-sdis (backend :: <harp-back-end>)
           end loop-sdis;
 
           let n-index = index + 1;
-          loop-sdis (p-sdi at p-index from n-index below sdis-num 
+          loop-sdis (p-sdi at p-index from n-index below sdis-num
                      in sdis-vec)
             let dest-block = p-sdi.new-sdi-dest-tag.tag-bb;
             let sdis-before-dest = dest-block.bb-preceding-sdis;

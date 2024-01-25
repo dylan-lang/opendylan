@@ -20,7 +20,7 @@ define function make-ocx-factory (ocx-local-data :: <pair>,
 
   Output-Debug-String("DllGetClassObject\r\n");
 
-  let class-id :: <REFCLSID> = 
+  let class-id :: <REFCLSID> =
     if ( class-id ) as(<REFCLSID>, class-id) else typeinfo.guid-value end if;
   if ( ~ IsEqualIID?(rclsid, class-id) )
     values ( $CLASS-E-CLASSNOTAVAILABLE, $null-interface ) // wrong class ID
@@ -150,7 +150,7 @@ define function unregister-ocx( #rest options )
   apply(register-or-unregister, #t, options)
 end;
 
-
+
 
 define macro initialize-ole-control
   { initialize-ole-control( ?all-args:* ) }
@@ -198,7 +198,7 @@ define function dll-unloading (ocx-local-data :: <pair>, #rest args) => ()
     // Have DUIM release its resources before it is unloaded so that
     // a subsequent reload will work.  (Fixes Bug 1870.)
     // (Note: the test may need to be updated when we support DUIM containers.
-    //  Or, at least, the container library will also need to increment 
+    //  Or, at least, the container library will also need to increment
     //  the count.  Or maybe we should have DUIM only shut down if there are
     //  no mapped frames on the display.)
     Output-Debug-String("shutdown-win32-duim\r\n");
@@ -221,7 +221,7 @@ define function validate-initialize-ole-control-options
  => ();
   // This function doesn't actually do anything, we just want to get an
   // error if any invalid options are passed.
-  
+
   // Note that the default values used here are just for the sake of type
   // validation; they are not necessarily the same default values that will
   // be actually used.

@@ -183,7 +183,7 @@ define method take-application-single-thread-snapshot
 	  vector(snapshot)
 	end method take-single-thread-snapshot;
   take-application-snapshot
-    (application, 
+    (application,
      snapshots-function: take-single-thread-snapshot)
 end method take-application-single-thread-snapshot;
 
@@ -306,7 +306,7 @@ define method allocation-counter-offset
 	  = if (offset-sym)
 	      let value = read-value(path, offset-sym.remote-symbol-address);
 	      as-signed-integer(value)
-	    else 
+	    else
 	      cerror("Carry on using zero as the counter offset",
 		     "Profiler internal error: Cannot find the essential runtime "
 		       "variable teb_allocation_counter_offset");
@@ -497,7 +497,7 @@ define method control-profiling
   end;
 end method control-profiling;
 
-
+
 /// Class-based allocation
 
 define constant $class-breakpoint-class-offset = 2;
@@ -527,7 +527,7 @@ define method handle-debug-point-event
   let threads = profile-state.profile-threads;
   if (~threads | member?(thread, threads))
     let path = application.debug-target-access-path;
-    let size-address 
+    let size-address
       = calculate-stack-address(path, thread, $class-breakpoint-size-offset);
     let class-address
       = calculate-stack-address(path, thread, $class-breakpoint-class-offset);
@@ -539,7 +539,7 @@ define method handle-debug-point-event
 	  0
 	end;
     take-application-single-thread-snapshot
-      (application, thread, 
+      (application, thread,
        allocation: allocation,
        class:      class)
   end;
@@ -618,8 +618,8 @@ define constant stop-profiling-after-interaction =
 
 // Handling of class breakpoints in multi-threaded applications requires
 // that a breakpoint-pending primitive be called as a spy on an interactive thread
-// immediately; then the set/clear breakpoint primitives will be run as regular 
-// interactions when the application continues; this is to enable synchronization 
+// immediately; then the set/clear breakpoint primitives will be run as regular
+// interactions when the application continues; this is to enable synchronization
 // with regular application threads that may already be in the allocation breakpointing code.
 
 // Set a remote class breakpoint
@@ -628,7 +628,7 @@ define method set-application-class-breakpoint
     (application :: <debug-target>, thread :: <remote-thread>,
      class :: false-or(<remote-value>))
  => (transaction)
-  let object-class? = 
+  let object-class? =
     // If the class is #f or <object>, pass argument '1' to
     // the runtime -- all classes will break to debugger
     if (class)
@@ -657,7 +657,7 @@ define method clear-application-class-breakpoint
      class :: false-or(<remote-value>),
      #key stop-profile?)
  => (transaction)
-  let object-class? = 
+  let object-class? =
     // If the class is #f or <object>, pass argument '1' to
     // the runtime -- all classes will break to debugger
     if (class)

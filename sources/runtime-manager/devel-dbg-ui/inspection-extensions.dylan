@@ -18,7 +18,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /* Use this when the blasted macro works properly
 
-define debugger-print-directives 
+define debugger-print-directives
   for-objects
     of-class "<application>" from-module "devel-dbg-ui" printing-as
       string "{console debugger target ";
@@ -34,12 +34,12 @@ end debugger-print-directives;
 define constant $debugger-print-directives =
   vector(
     make(<debugger-print-directive>,
-         print-class-name: "<application>", 
+         print-class-name: "<application>",
          print-module-name: "devel-dbg-ui",
          print-instructions:
            vector(
              pair(#"string", "{console debugger target "),
-             pair(#"indirect-slot", 
+             pair(#"indirect-slot",
                #["debug-target-access-path", "access-path-application"]),
              pair(#"string", " allocating with "),
              pair(#"slot", "runtime-allocator-name"),
@@ -163,36 +163,36 @@ define method debugger-print-general-dylan-object
 	      result := directive.tail;      // Simplest case!
 
 	    #"slot" =>
-	      let (subval, position) = 
+	      let (subval, position) =
 		find-named-slot-in-object
                   (application, instance, directive.tail);
               if (subval)
                 directive.tail := position;  // Optimize to speed up future
                                              // lookups.
                 result := debugger-print-object
-                            (application, 
+                            (application,
                              subval,
                              length: length,
                              level: level,
                              decorate?: decorate?);
               else
-                result := 
+                result :=
                   format-to-string(" {no such slot %s} ", directive.tail);
               end if;
 
 	    #"indirect-slot" =>
-	      let (subval, noslot) = 
+	      let (subval, noslot) =
 		follow-slot-name-indirections
                   (application, instance, directive.tail);
               if (subval)
                 result := debugger-print-object
-                            (application, 
+                            (application,
                              subval,
                              length: length,
                              level: level,
                              decorate?: decorate?);
               else
-                result := 
+                result :=
                   format-to-string(" {no such slot %s} ", noslot);
               end if;
 
@@ -257,7 +257,7 @@ define method debugger-print-object
             remote-value-as-string(path, instance, 16));
 
       otherwise =>
-	representation := 
+	representation :=
 	  print-dylan-object(application, instance, length: length,
                              level: level, decorate?: decorate?);
     end select;

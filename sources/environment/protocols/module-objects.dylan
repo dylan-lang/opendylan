@@ -32,7 +32,7 @@ define open generic do-module-definitions
      #key imported?, client)
  => ();
 
-
+
 /// Project dispatching methods
 
 define method module-project-proxy
@@ -66,7 +66,7 @@ define method do-module-definitions
                             client: client, imported?: imported?)
 end method do-module-definitions;
 
-
+
 /// Implementation
 
 define method environment-object-type-name
@@ -108,7 +108,7 @@ define method find-module
   end
 end method find-module;
 
-
+
 /// Filename->module translation
 
 define method file-module

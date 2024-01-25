@@ -108,7 +108,7 @@ define method create-account
   let repository-id = portableserver/servant/primary-interface(account, name, account-poa);
   as(class,
      portableserver/poa/create-reference-with-id(account-poa, name, repository-id));
-end method;  
+end method;
 
 define method bank/deleteAccount (bank :: <demo-bank>, reference :: <account>)
  => ()

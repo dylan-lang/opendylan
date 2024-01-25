@@ -24,7 +24,7 @@ define unix-runtime-primitive dylan-stack-overflow-handler
 
   nreg base-addr, page-size, protection;
 
-  local 
+  local
     method protected-op (be)
       op--call-iep(be, dylan-stack-overflow-error);
     end method,

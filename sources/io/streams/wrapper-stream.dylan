@@ -57,7 +57,7 @@ define method initialize
   end
 end method initialize;
 
-
+
 /// The following methods define the core protocols that defer to their
 /// underlying stream.  The following methods on non-wrapper-streams do
 /// _not_ defer to their outer-stream.

@@ -13,7 +13,7 @@ define constant $top-level-border     = 0;
 define constant $top-level-y-spacing  = 3;                // in pixels
 define constant $default-window-title = "DUIM Window";
 
-
+
 /// Top level mirrors
 
 define sealed class <top-level-mirror> (<widget-mirror>)
@@ -65,7 +65,7 @@ define method size-mirror
   set-mirror-size(child, width, height)
 end method size-mirror;
 
-
+
 /// Accelerator handling
 
 define function make-keyboard-gesture
@@ -286,7 +286,7 @@ define method note-accelerators-changed
   end
 end method note-accelerators-changed;
 
-
+
 /// Dialog handling
 
 define method mirror-registered-dialogs
@@ -312,7 +312,7 @@ define method unregister-dialog-mirror
   end
 end method unregister-dialog-mirror;
 
-
+
 /// Top level sheets
 
 define open abstract class <gtk-top-level-sheet-mixin>
@@ -446,7 +446,7 @@ define sealed method destroy-mirror
   next-method();
 end method destroy-mirror;
 
-
+
 /// Top level layout
 
 define class <top-level-layout>
@@ -525,7 +525,7 @@ define sealed method update-frame-wrapper
   end
 end method update-frame-wrapper;
 
-
+
 /// Geometry updating
 
 define sealed method handle-move

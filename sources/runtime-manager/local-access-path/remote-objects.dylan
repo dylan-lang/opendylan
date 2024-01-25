@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sideways method do-processes
   (function :: <function>, dc :: <local-debugger-connection>) => ()
-  local method find-existing (descr :: <NUBPROCESS>) 
+  local method find-existing (descr :: <NUBPROCESS>)
              => (p? :: false-or(<remote-process>))
           block (return)
             for (proc in dc.connection-process-list)
@@ -72,7 +72,7 @@ end method;
 //    across all thread information from the debugger nub and construct
 //    a high-level <remote-thread> object.
 
-define method construct-thread-object 
+define method construct-thread-object
    (conn :: <local-access-connection>, thread :: <NUBTHREAD>,
      #key path, priority)
       => (thread :: <remote-thread>)
@@ -93,7 +93,7 @@ end method;
 
 ///// CONSTRUCT-LIBRARY-OBJECT
 //    Similar to CONSTRUCT-THREAD-OBJECT.
-define method construct-library-object 
+define method construct-library-object
   (conn :: <local-access-connection>, lib :: <NUBLIBRARY>)
     => (lib :: <remote-library>)
   let name-length :: <integer>

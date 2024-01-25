@@ -13,7 +13,7 @@ end class;
 
 install-report(#"tags", "Project TAGS file", <tags-report>);
 
-
+
 /// Report protocols
 
 define constant $newline-code = as(<integer>, '\n');

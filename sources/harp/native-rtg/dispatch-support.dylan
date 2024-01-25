@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// GENERAL-ENGINE-NODE-N, GENERAL-ENGINE-NODE-SPREAD
 
 define method op--general-engine-node-callback
-    (be :: <harp-back-end>, arg-vec :: <register>, 
+    (be :: <harp-back-end>, arg-vec :: <register>,
      engine :: <register>, disphdr :: <register>)
     => ()
   with-harp (be)
@@ -21,11 +21,11 @@ end method;
 
 
 define method op--vector-up-requireds
-    (be :: <harp-back-end>, arg-vec :: <register>, 
+    (be :: <harp-back-end>, arg-vec :: <register>,
      disphdr :: <register>, req-args)
     => ()
   with-harp (be)
-    // The easiest strategy is to manipulate the args in-place on the 
+    // The easiest strategy is to manipulate the args in-place on the
     // stack to make a vector, and then to build a frame afterwards.
     stack stack;
     nreg ret-addr, words;
@@ -59,7 +59,7 @@ end method;
 
 
 define method op--vector-up-requireds-and-optionals
-    (be :: <harp-back-end>, arg-vec :: <register>, 
+    (be :: <harp-back-end>, arg-vec :: <register>,
      disphdr :: <register>, req-args)
     => ()
   with-harp (be)
@@ -75,7 +75,7 @@ end method;
 
 
 define method op--vector-up-requireds-spreading-optionals
-    (be :: <harp-back-end>, arg-vec :: <register>, 
+    (be :: <harp-back-end>, arg-vec :: <register>,
      disphdr :: <register>, req-args)
     => ()
   with-harp (be)
@@ -84,7 +84,7 @@ define method op--vector-up-requireds-spreading-optionals
     stack stack;
 
     if (special-case?(be, req-args))
-      // Strategy: If there are argument registers available, then the rest 
+      // Strategy: If there are argument registers available, then the rest
       // arg is already an appropriate vector
       ins--move(be, arg-vec, argument-register(req-args));
     else
@@ -130,7 +130,7 @@ define method op--stack-alloc-vector-of-requireds-and-optionals-spread
     stack stack;
     greg rest-vec;
     nreg opt-size, tot-size;
-    
+
     // First make room for the optionals
     op--load-argument-n-via-frame(be, rest-vec, req-args);
     op--vector-size-times-4(be, opt-size, rest-vec);
@@ -152,8 +152,8 @@ define method op--fill-vector-with-requireds
   for (i from 0 below req-args)
     with-harp (be)
       stack stack;
-      greg arg; 
-      op--load-argument-n-via-frame(be, arg, i); 
+      greg arg;
+      op--load-argument-n-via-frame(be, arg, i);
       ins--st(be, arg, stack, 8 + (i * 4));
     end with-harp;
   end for;
@@ -172,7 +172,7 @@ define method op--fill-vector-with-requireds
     frame frame;
     tmp 1, src; // use a temporary to ease register pressure.
     nreg dest, count;
-    
+
     ins--add(be, src, frame, 8); // first stack arg is past saved frame & ret addr
     ins--add(be, dest, stack, 8 + (4 * in-regs)); // allow for 8 bytes of vec header
     ins--asr(be, count, req-args, 2);    // raw count of number of requireds
@@ -232,13 +232,13 @@ define method op--return-after-vectoring-requireds
     greg vector-size;
     nreg bytes-to-drop;
 
-    // The stack now has the return address followed by the 
+    // The stack now has the return address followed by the
     // stack-allocated vector;
     // after ret-addr & wrapper
     ins--ld(be, vector-size, stack,
-	    4 + be.return-address-size-in-bytes); 
+	    4 + be.return-address-size-in-bytes);
     // Amount to drop is + vector size - integer tag + vector header
-    ins--add(be, bytes-to-drop, vector-size, 8 - 1); 
+    ins--add(be, bytes-to-drop, vector-size, 8 - 1);
     ins--rts-and-drop(be, bytes-to-drop);
   end with-harp;
 end method;
@@ -259,20 +259,20 @@ end method;
 
 
 
-/// op--required-args-num 
+/// op--required-args-num
 // returns the number of required args taken by a function, for an
 // entry-point. In the dynamic case, the value is returned as a
 // register containing the number of arguments times 4 (the arg-size
 // in bytes).
 
-define method op--required-args-num 
+define method op--required-args-num
     (be :: <harp-back-end>, function :: <register>, required :: <integer>)
     => (num-args :: <integer>)
   required;
 end method;
 
 
-define method op--required-args-num 
+define method op--required-args-num
     (be :: <harp-back-end>, function :: <register>, required == #"dynamic")
     => (num-args :: <register>)
   with-harp (be)
@@ -284,14 +284,14 @@ end method;
 
 
 define method op--single-method-engine-node-required-args-num
-    (be :: <harp-back-end>, disphdr :: <register>, 
+    (be :: <harp-back-end>, disphdr :: <register>,
      engine :: <register>, required :: <integer>)
   required
 end method;
 
 define method op--single-method-engine-node-required-args-num
   // We only use the engine.
-    (be :: <harp-back-end>, disphdr :: <register>, 
+    (be :: <harp-back-end>, disphdr :: <register>,
      engine :: <register>, required == #"dynamic")
   with-harp (be)
     nreg num-args;
@@ -324,7 +324,7 @@ end method;
 
 
 /// op--taggify-arg-num
-// returns the number of args as a tagged integer. 
+// returns the number of args as a tagged integer.
 // The format of the number is as for op--required-args-num - i.e.
 // if the number is passed as a register, then its been multiplied by 4.
 
@@ -370,11 +370,11 @@ end method;
 
 
 define method op--perform-engine-node-callback
-    (be :: <harp-back-end>, 
-     required, 
+    (be :: <harp-back-end>,
+     required,
      disphdr :: <register>,
      engine :: <register>,
-     vectoring-fn :: <function>, 
+     vectoring-fn :: <function>,
      returning-fn :: <function>,
      req-args-fn :: <function>,
      callback-fn  :: <function>,
@@ -424,17 +424,17 @@ define method op--perform-engine-node-callback
 end method;
 
 
-define method op--load-rest-parameter 
-    (be :: <harp-back-end>, dest :: <register>, 
-     engine :: <register>, required :: <integer>) 
+define method op--load-rest-parameter
+    (be :: <harp-back-end>, dest :: <register>,
+     engine :: <register>, required :: <integer>)
     => ()
   op--load-argument-n-leafcase(be, dest, required);
 end method;
 
-  
-define method op--load-rest-parameter 
-    (be :: <harp-back-end>, dest :: <register>, 
-     engine :: <register>, required == #"dynamic") 
+
+define method op--load-rest-parameter
+    (be :: <harp-back-end>, dest :: <register>,
+     engine :: <register>, required == #"dynamic")
     => ()
   with-harp (be)
     nreg num-required;
@@ -442,14 +442,14 @@ define method op--load-rest-parameter
     op--load-argument-n-leafcase(be, dest, num-required);
   end with-harp;
 end method;
-     
+
 
 
 /// Keyword checking
 
 
 define method op--single-method-entry-checking-keys
-    (be :: <harp-back-end>, required, check-keys :: <function>) 
+    (be :: <harp-back-end>, required, check-keys :: <function>)
     => ()
   with-harp (be)
     function function;
@@ -475,7 +475,7 @@ end method;
 
 
 
-define method op--engine-node-key-check 
+define method op--engine-node-key-check
     (be :: <harp-back-end>, required, disphdr :: <register>,
      engine :: <register>, implicit? :: <boolean>)
      => ()
@@ -502,7 +502,7 @@ define method op--engine-node-key-check
     ins--tag(be, odd-keys);
     if (full) ins--move(be, engine, tmp1) end;
     // Use zero to indicate odd keys rather than unwanted key
-    ins--move(be, key-error, 0);  
+    ins--move(be, key-error, 0);
 
     // General case where there's a problem with the keys.
     // This might be odd keys or an unwanted key. The value of
@@ -510,7 +510,7 @@ define method op--engine-node-key-check
     ins--tag(be, bad-key);
 
     local method bad-key-callback
-              (be :: <harp-back-end>, arg-vec :: <register>, 
+              (be :: <harp-back-end>, arg-vec :: <register>,
 	       engine :: <register>, disphdr :: <register>)
 	    with-harp(be)
               greg keys;
@@ -534,14 +534,14 @@ define method op--engine-node-key-check
        op--single-method-engine-node-required-args-num,
        bad-key-callback,
        tmp1?: key-error);
-       
+
     ins--tag(be, keys-ok);
   end with-harp;
 end method;
 
 
 define method op--check-for-invalid-keys
-    (be :: <harp-back-end>, bad-key :: <tag>, 
+    (be :: <harp-back-end>, bad-key :: <tag>,
      disphdr :: <register>, engine :: <register>, curr-key :: <register>,
      rest-vec :: <register>, implicit? :: <boolean>)
 
@@ -555,7 +555,7 @@ define method op--check-for-invalid-keys
     frame frame;
     arg0 new-rest-vec;
     greg key-vec;
-    
+
     local method preserve-regs ()
             ins--push(be, arg0);
             ins--push(be, frame);
@@ -648,7 +648,7 @@ define method op--check-if-key-is-valid
     // Start the inner loop
     ins--tag(be, inner-loop);
     // check for limit of the vec. There was an illegal key if we find it
-    ins--ble(be, bad-key, key-cursor, key-vec);       
+    ins--ble(be, bad-key, key-cursor, key-vec);
 
     // Main body of loop. Look for a match
     ins--ld(be, test-key, key-cursor, cursor-offset);
@@ -682,7 +682,7 @@ end method;
 
 
 define method op--odd-keys-callback
-    (be :: <harp-back-end>, arg-vec :: <register>, 
+    (be :: <harp-back-end>, arg-vec :: <register>,
      engine :: <register>, disphdr :: <register>)
   with-harp (be)
     op--call-iep(be, dylan-odd-number-keyword-args, arg-vec, disphdr, engine);
@@ -691,12 +691,12 @@ end method;
 
 
 define method op--unwanted-key-callback
-    (be :: <harp-back-end>, arg-vec :: <register>, 
-     engine :: <register>, disphdr :: <register>, 
+    (be :: <harp-back-end>, arg-vec :: <register>,
+     engine :: <register>, disphdr :: <register>,
      bad-key :: <register>, key-vec :: <register>,
      implicit? :: <boolean>)
   with-harp (be)
-    op--call-iep(be, dylan-invalid-keyword, 
+    op--call-iep(be, dylan-invalid-keyword,
 		 arg-vec, disphdr, engine, bad-key, key-vec,
 		 if (implicit?) dylan-true else dylan-false end);
   end with-harp;
@@ -709,15 +709,15 @@ end method;
 /// DISCRIMINATE-ON-ARGUMENT
 
 
-define method op--load-discriminator-argument 
-     (be :: <harp-back-end>, argument :: <register>, 
+define method op--load-discriminator-argument
+     (be :: <harp-back-end>, argument :: <register>,
       engine :: <register>, arg-num :: <integer>) => ()
   op--load-argument-n-leafcase(be, argument, arg-num);
 end method;
 
 
-define method op--load-discriminator-argument 
-     (be :: <harp-back-end>, argument :: <register>, 
+define method op--load-discriminator-argument
+     (be :: <harp-back-end>, argument :: <register>,
       engine :: <register>, arg-num == #"dynamic") => ()
   with-harp (be)
     nreg argnum;
@@ -733,7 +733,7 @@ end method;
 // argument information we need.
 define method op--select-single-method-engine-node-entry-point-by-required
     (be :: <harp-back-end>, engine, entry, required, refs)
-  op--single-method-engine-node-number-required(be, required, engine); 
+  op--single-method-engine-node-number-required(be, required, engine);
   op--select-entry-point(be, entry, required, refs);
 end method;
 
@@ -746,7 +746,7 @@ end method;
 define method op--select-entry-point-by-required-from-method
     (be :: <harp-back-end>, engine, entry, required, refs)
   op--engine-data-1(be, required, engine);   // The method
-  op--number-required(be, required, function: required); 
+  op--number-required(be, required, function: required);
   op--select-entry-point(be, entry, required, refs);
 end method;
 */
@@ -756,7 +756,7 @@ define method op--select-discriminator-entry-point-by-optionals
     (be :: <harp-back-end>, engine, entry, required, normal-refs, optional-refs)
   with-harp (be)
     tag opts, done;
-    op--discriminator-number-required(be, required, engine); 
+    op--discriminator-number-required(be, required, engine);
     op--branch-if-discriminator-with-optionals(be, opts, engine);
     op--select-entry-point(be, entry, required, normal-refs);
     ins--bra(be, done);
@@ -774,7 +774,7 @@ end method;
 //    (be :: <harp-back-end>, engine, entry, required, normal-refs, optional-refs)
 //  with-harp (be)
 //    tag opts, done;
-//    op--single-method-engine-node-number-required(be, required, engine); 
+//    op--single-method-engine-node-number-required(be, required, engine);
 //    op--branch-if-single-method-engine-node-with-optionals(be, opts, engine);
 //    op--select-entry-point(be, entry, required, normal-refs);
 //    ins--bra(be, done);
@@ -798,7 +798,7 @@ define method op--jump-to-specific-entry
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
 
     op--dispatch-header-gf(be, gf, disphdr);
-    op--number-required(be, required, function: gf); 
+    op--number-required(be, required, function: gf);
     op--branch-if-function-with-optionals(be, opts, function: gf);
     op--select-entry-point(be, entry, required, normal-refs);
     ins--bra(be, done);
@@ -820,7 +820,7 @@ end method;
 
 
 
-define method op--engine-data-1 
+define method op--engine-data-1
     (be :: <harp-back-end>, dest :: <register>, engine :: <object>)
   ins--ld(be, dest, engine, be.engine-node-data-1-offset);
 end method;
@@ -848,7 +848,7 @@ end method;
 */
 
 
-define method op--engine-callback 
+define method op--engine-callback
     (be :: <harp-back-end>, dest :: <register>, engine :: <object>)
   ins--ld(be, dest, engine, be.engine-node-callback-offset);
 end method;
@@ -873,7 +873,7 @@ define method op--dispatch-header-gf
   (with-harp (be)
      nreg tmp;
    tag done, check-again;
-   
+
    ins--move(be, dest, disphdr);
 
    ins--tag(be, check-again);
@@ -923,7 +923,7 @@ end method;
 // Discriminator specific properties
 
 
-define method op--engine-properties 
+define method op--engine-properties
     (be :: <harp-back-end>, dest :: <register>, engine :: <object>)
   ins--ld(be, dest, engine, be.engine-node-properties-offset);
 end method;
@@ -946,7 +946,7 @@ define method op--engine-field-in-bytes
   let byte-mask = ash(mask, 2);
   op--engine-properties(be, dest, engine);
   unless (byte-shift = 0)
-    ins--asr(be, dest, dest, byte-shift) 
+    ins--asr(be, dest, dest, byte-shift)
   end;
   ins--and(be, dest, dest, byte-mask);
 end method;

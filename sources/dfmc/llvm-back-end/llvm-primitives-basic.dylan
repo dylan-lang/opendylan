@@ -28,7 +28,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   ins--call-intrinsic(be, "llvm.returnaddress", vector(i32(0)))
 end;
 
-
+
 /// Pointers
 
 define side-effect-free stateless indefinite-extent &primitive-descriptor primitive-cast-pointer-as-raw
@@ -41,7 +41,7 @@ define side-effect-free stateless indefinite-extent &primitive-descriptor primit
   ins--inttoptr(be, x, llvm-reference-type(be, dylan-value(#"<raw-pointer>")))
 end;
 
-
+
 /// Comparisons
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-raw-as-boolean
@@ -127,7 +127,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   end ins--iterate
 end;
 
-
+
 /// Accessors
 
 // Compute a byte pointer based on object + word offset + byte offset
@@ -296,7 +296,7 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-r
                       vector(dst-ptr, src-ptr, size, $llvm-false));
 end;
 
-
+
 /// Unicode Characters
 
 // TODO: NEED UNICODE SUPPORT IN COMPILER's RUNTIME
@@ -315,7 +315,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   ins--inttoptr(be, tagged, $llvm-object-pointer-type);
 end;
 
-
+
 /// Byte Characters
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-byte-character-as-raw
@@ -341,7 +341,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   ins--inttoptr(be, tagged, $llvm-object-pointer-type);
 end;
 
-
+
 /// String
 
 // See Hacker's Delight, pp. 91-96
@@ -642,7 +642,7 @@ define side-effect-free stateless indefinite-extent &primitive-descriptor primit
 end;
 */
 
-
+
 /// Instance
 
 define side-effect-free stateless dynamic-extent mapped-parameter &primitive-descriptor primitive-object-class
@@ -752,7 +752,7 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
   value
 end;
 
-
+
 /// Type constraints
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-the
@@ -760,7 +760,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   x
 end;
 
-
+
 /// Type Checks
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-instance?

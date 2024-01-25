@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define abstract class <abstract-runtime-entry-point> (<object>)
 end class;
 
-define abstract class <place-holding-runtime-entry-point> 
+define abstract class <place-holding-runtime-entry-point>
                  (<abstract-runtime-entry-point>)
   constant slot runtime-name :: <string>,
     required-init-keyword: runtime-name:;
@@ -24,7 +24,7 @@ define abstract class <place-holding-runtime-entry-point>
     init-keyword: runtime-component:;
 end class;
 
-define abstract class <interpreted-runtime-entry-point> 
+define abstract class <interpreted-runtime-entry-point>
                          (<place-holding-runtime-entry-point>)
   slot runtime-symbol :: false-or(<remote-symbol>),
     init-keyword: symbol:,
@@ -255,7 +255,7 @@ define class <C-spy-catalogue> (<spy-catalogue>)
      = make(<C-spy-function-descriptor>,
             runtime-name: "call_dylan_function");
 
-  constant slot call-dylan-function-returning-all-values 
+  constant slot call-dylan-function-returning-all-values
                                     :: <C-spy-function-descriptor>
      = make(<C-spy-function-descriptor>,
             runtime-name: "call_dylan_function_returning_all_values");
@@ -320,7 +320,7 @@ define constant $running-dylan-spy-function? = "Prunning_dylan_spy_functionQ";
 define constant $spy-namespace = $dylan-internal;
 
 define class <dylan-spy-catalogue> (<spy-catalogue>)
-  constant slot remote-object-strong-register 
+  constant slot remote-object-strong-register
                             :: <dylan-spy-function-descriptor>
      = make(<dylan-spy-function-descriptor>,
             runtime-name: "spy-register-remote-object",
@@ -370,11 +370,11 @@ define class <dylan-spy-catalogue> (<spy-catalogue>)
             invoked-by: make(<C-spy-function-descriptor>,
                              runtime-name: "spy_call_dylan_function"));
 
-  // Note, spy-create-interactive-thread is handled specially because 
+  // Note, spy-create-interactive-thread is handled specially because
   // the created thread is still running as a spy even after the creating
   // thread has returned control. So the spy runtime variable is set and
   // restored in the debugger manager itself
-  constant slot spy-create-interactive-thread 
+  constant slot spy-create-interactive-thread
                        :: <dylan-spy-function-descriptor>
      = make(<dylan-spy-function-descriptor>,
             runtime-name: "spy-create-application-thread",
@@ -405,7 +405,7 @@ end class;
 //    objects as arguments, and the DM needs to download these into
 //    the address space of the application.
 //    This function is passed the <debug-target>, and also a <remote-thread>
-//    upon which it is guaranteed safe to make a spy call. 
+//    upon which it is guaranteed safe to make a spy call.
 
 define method allocate-temporary-download-block-in
     (application :: <debug-target>, spy-thread :: <remote-thread>) => ()
@@ -414,7 +414,7 @@ define method allocate-temporary-download-block-in
   if (lib)
     let allocator = find-symbol(path, "dylan__malloc__misc", library: lib);
     if (allocator)
-      application.temporary-download-block := 
+      application.temporary-download-block :=
         call-debugger-function
           (application,
            allocate-single-static-block,
@@ -422,7 +422,7 @@ define method allocate-temporary-download-block-in
            allocator.remote-symbol-address,
            byte-granularity: 256,
            thread-for-spy: spy-thread);
-      application.interactive-thread-download-block := 
+      application.interactive-thread-download-block :=
         call-debugger-function
           (application,
            allocate-single-static-block,
@@ -449,8 +449,8 @@ define method load-runtime-component
       download-byte-string-into(path, address-space, name);
     if (downloaded-string)
       let spy-result =
-        run-spy-on-thread(application, 
-                          spy-thread, 
+        run-spy-on-thread(application,
+                          spy-thread,
                           application.C-spy.load-extension-component,
                           downloaded-string);
       as-integer(spy-result) == 1  // Return #t if fully successful.
@@ -574,7 +574,7 @@ end method;
 
 define method call-spy-on-thread
     (spy-function :: <C-spy-function-descriptor>,
-     application :: <debug-target>, thread :: <remote-thread>, 
+     application :: <debug-target>, thread :: <remote-thread>,
      #rest arguments)
   => (result :: <remote-value>)
   let catalogue = application.C-spy;

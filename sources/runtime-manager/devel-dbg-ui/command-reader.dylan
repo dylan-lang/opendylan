@@ -21,7 +21,7 @@ end class;
 ///// INITIALIZE (Dylan)
 //    Initializes the command queue, constructing the notifications.
 
-define sealed method initialize 
+define sealed method initialize
     (x :: <debugger-command-queue>, #key) => ()
   x.accepting-commands := make(<notification>, lock: x.command-lock);
 end method;

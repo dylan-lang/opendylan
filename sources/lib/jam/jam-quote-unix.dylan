@@ -54,13 +54,13 @@ define function quote-argument
             write-element(s, '\\');
             write-element(s, c);
             qc(s, index + 1);
-            
+
           otherwise =>
             write-element(s, c);
             qc(s, index + 1);
         end
       end if
     end method;
-  
+
   nqc(_start)
 end function;

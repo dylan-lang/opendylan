@@ -19,7 +19,7 @@ define open generic composite-object-contents
     (server :: <server>, object :: <composite-object>, #key inherited?)
  => (names :: <sequence>, values :: <sequence>);
 
-
+
 /// Project dispatching methods
 
 define method composite-object-size

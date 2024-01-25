@@ -28,7 +28,7 @@ define method do-source-control-operation
   values(#f, #f, "Don't know how to do any source control operations!")
 end method do-source-control-operation;
 
-
+
 /// Source version control commands
 
 define command vc-claim (frame)

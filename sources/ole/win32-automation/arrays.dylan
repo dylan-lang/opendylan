@@ -55,7 +55,7 @@ define method make( class :: subclass(<ole-array>), #rest rest-args,
 			     element-count: max(ndims,1) )
 	bounds.cElements-value := size-arg;
 	bounds.lLbound-value := 0;
-        unless ( dimensions == %no-value ) 
+        unless ( dimensions == %no-value )
 	  // Note: the bounds array passed to SafeArrayCreate is in the
 	  // reverse order from what ends up in the safe array structure.
 	  for ( i :: <integer> from 0 below ndims )
@@ -137,7 +137,7 @@ define sealed method row-major-index (array :: <ole-array>, #rest subscripts)
     let bound :: <LPSAFEARRAYBOUND> = pointer-value-address(ad, index: j);
     let index :: <integer> = subscripts[i];
     let dimension :: <integer> = bound.cElements-value;
-    if (index >= dimension | index < 0) 
+    if (index >= dimension | index < 0)
       element-range-error(array, subscripts);
     end if;
     sum := (sum * dimension) + index;
@@ -209,7 +209,7 @@ define method element ( v :: <ole-array>, index :: <integer>,
   let ptr :: <C-pointer> = element-pointer(v, index, default);
   if ( ptr == $NULL-VOID )
     default
-  else 
+  else
     let result = pointer-value(ptr);
     SafeArrayUnlock(v);
     result
@@ -323,7 +323,7 @@ define method vartype-of-value ( value :: <object> )
  => (vt :: <variant-vt>)
   $VT-VARIANT
 end;
-  
+
 define method as( class == <ole-vector>, data :: <sequence> )
 		=> v :: <ole-vector>;
   apply(ole-vector, data)
@@ -337,7 +337,7 @@ end;
 // used in "variant.dylan" but defined here so all the array stuff is together.
 define function as-safe-array ( array :: <array> )
  => ( sa :: <ole-array>, vt :: <integer> );
-  
+
   let vt :: <integer> = vt-of-elements(array);
   let dims :: <sequence> = dimensions(array);
   let sa :: <ole-array> = make(<ole-array>, dimensions: dims, vartype: vt);
@@ -359,7 +359,7 @@ define function as-safe-array ( array :: <array> )
     for ( element in array )
       let ptr = make(pointer-class,
 		     address: u%+(data-address, n * element-size));
-      pointer-value(ptr) := 
+      pointer-value(ptr) :=
 	if ( special? )
 	  copy-safearray-element(element)
 	else

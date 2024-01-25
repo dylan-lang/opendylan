@@ -8,7 +8,7 @@ define constant $all-same-reduction-tag = 65535;
 
 //// Utilities:
 
-define /* inline */ function vector-property-value 
+define /* inline */ function vector-property-value
     (v :: <simple-object-vector>, key) => (value)
   /*
   block (return)
@@ -81,7 +81,7 @@ define function maybe-tablify-properties (properties :: <simple-object-vector>)
     for (i :: <integer> from 0 below n by 2)
       max-so-far := max(properties[i], max-so-far);
     end;
-    let tab :: <simple-object-vector> 
+    let tab :: <simple-object-vector>
       = make(<simple-object-vector>, size: max-so-far + 1);
     for (i :: <integer> from 0 below n by 2)
       tab[properties[i]] := properties[i + 1];
@@ -96,11 +96,11 @@ define inline function get-next-state
   vector-property-value(next, symbol)
 end function;
 
-define method make 
-    (class == <parser>, #rest initargs, 
-       #key goto-table :: <simple-object-vector>) 
+define method make
+    (class == <parser>, #rest initargs,
+       #key goto-table :: <simple-object-vector>)
  => (object :: <parser>)
-  apply(next-method, class, 
+  apply(next-method, class,
         goto-table: maybe-tablify-properties(goto-table), initargs);
 end method;
 
@@ -228,7 +228,7 @@ define inline function is-shift (action)
 end function;
 
 define inline function next-state-of-shift (action :: <integer>)
-  -1 - action 
+  -1 - action
 end function;
 
 // Accept:
@@ -274,11 +274,11 @@ define inline function get-stack-values
     = make(<simple-object-vector>, size: nargs);
   let values = ps.value-stack;
   // Top of stack is the last argument.
-  for (i :: <integer> from nargs - 1 to 0 by -1, 
+  for (i :: <integer> from nargs - 1 to 0 by -1,
        ptr :: <integer> from ps.value-stack-ptr - 1 by -1)
     vector-element(args, i) := vector-element(values, ptr);
     // So we don't leave references to unused values on the values stack.
-    vector-element(values, ptr) := #f; 
+    vector-element(values, ptr) := #f;
   finally
     ps.value-stack-ptr := ptr + 1;
     args
@@ -292,7 +292,7 @@ define inline function put-stack-value (ps :: <parser-state>, value)
   value
 end function;
 
-define inline function call-parser-action 
+define inline function call-parser-action
     (p :: <parser>, ps :: <parser-state>, action-number :: <integer>)
   let function = get-action-function(p, action-number);
   let nargs :: <integer> = get-action-nargs(p, action-number);
@@ -301,32 +301,32 @@ define inline function call-parser-action
   let result
     = select (nargs)
 	0 => function();
-	1 => let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;  
+	1 => let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;
              function(a1);
         2 => let a2 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
-             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;  
+             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;
              function(a1, a2);
         3 => let a3 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a2 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
-             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;  
+             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;
              function(a1, a2, a3);
         4 => let a4 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a3 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a2 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
-             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;  
+             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;
              function(a1, a2, a3, a4);
         5 => let a5 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a4 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a3 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a2 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
-             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;  
+             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;
              function(a1, a2, a3, a4, a5);
         6 => let a6 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a5 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a4 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a3 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
              let a2 = vector-element(values, ptr); vector-element(values, ptr) := #f;  let ptr = ptr - 1;
-             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;  
+             let a1 = vector-element(values, ptr); vector-element(values, ptr) := #f;
              function(a1, a2, a3, a4, a5, a6);
         otherwise
           => let result = apply(function, get-stack-values(ps, nargs));
@@ -343,13 +343,13 @@ define inline function shift-state (ps :: <parser-state>, state :: <integer>)
   #f
 end function;
 
-define inline function reduce-state 
+define inline function reduce-state
     (p :: <parser>, ps :: <parser-state>, action :: <integer>)
   let reduce-string-length :: <integer> = get-action-nargs(p, action);
   let reduce-to-symbol = get-action-nt(p, action);
   let ptr = ps.state-stack-ptr - reduce-string-length;
   let state :: <integer> = vector-element(ps.state-stack, ptr - 1);
-  vector-element(ps.state-stack, ptr) 
+  vector-element(ps.state-stack, ptr)
     := get-next-state(p, state, reduce-to-symbol);
   ps.state-stack-ptr := ptr + 1;
   action
@@ -366,7 +366,7 @@ define function run-parser
     let ps :: <parser-state> = $shared-parser-state;
     ps.state-stack-ptr := 0;
     ps.value-stack-ptr := 0;
-    vector-element(ps.state-stack, 0) := 0; 
+    vector-element(ps.state-stack, 0) := 0;
     ps.state-stack-ptr := ps.state-stack-ptr + 1;
     block (parsed)
       let state-result = #f;
@@ -388,7 +388,7 @@ define function run-parser
           ps.first-token := next-token-value;
           first? := #f;
         end;
-	while (state-result 
+	while (state-result
                  := switch-state
                       (p, ps, token-class, token-value, parsed, on-error))
           let state-result :: <integer> = state-result;

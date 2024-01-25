@@ -6,9 +6,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method ip-to-name 
+define method ip-to-name
     (application :: <debug-target>, ip :: <remote-value>)
- => (name :: false-or(<string>), dll :: false-or(<symbol>), 
+ => (name :: false-or(<string>), dll :: false-or(<symbol>),
      filename :: false-or(<string>), linenumber :: false-or(<integer>))
 
   let st = debug-target-symbol-table(application);
@@ -133,7 +133,7 @@ end method;
 // stack and top of stack counts.
 //
 define method print-cpu-time-profile-results
-    (application :: <application>, name :: <string>, 
+    (application :: <application>, name :: <string>,
      options :: <profiler-options>, results :: <profiler-results>,
      #key function-name :: false-or(<string>) = #f)
  => ()
@@ -153,7 +153,7 @@ define method print-cpu-time-profile-results
 end method;
 
 define method print-wall-time-profile-results
-    (application :: <application>, name :: <string>, 
+    (application :: <application>, name :: <string>,
      options :: <profiler-options>, results :: <profiler-results>,
      #key function-name :: false-or(<string>) = #f)
  => ()
@@ -221,7 +221,7 @@ define method initialize (set :: <profile-set>, #key, #all-keys) => ()
     := make(<aggregate-function-descriptor>, set: set);
 end method;
 
-define generic profile-set-member? 
+define generic profile-set-member?
   (function :: <single-function-descriptor>, set :: <profile-set>) => (well? :: <boolean>);
 define generic profile-set-print
   (set :: <profile-set>);
@@ -233,7 +233,7 @@ define method profile-set-print (set :: <profile-set-empty>)
   format-out("EMPTY");
 end method;
 
-define method profile-set-member? 
+define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-empty>)
  => (well? :: <boolean>)
   #f
@@ -246,7 +246,7 @@ define method profile-set-print (set :: <profile-set-full>)
   format-out("FULL");
 end method;
 
-define method profile-set-member? 
+define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-full>)
  => (well? :: <boolean>)
   #t
@@ -260,11 +260,11 @@ define method profile-set-print (set :: <profile-set-function>)
   format-out("FUNCTION %=", profile-set-function(set));
 end method;
 
-define method profile-set-member? 
+define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-function>)
  => (well? :: <boolean>)
   let r = function-descriptor-name(function) = profile-set-function(set);
-  // debugger-message("%= = %= %=", 
+  // debugger-message("%= = %= %=",
   // 	              function-descriptor-name(function), profile-set-function(set), r);
   r
 end method;
@@ -277,13 +277,13 @@ define method profile-set-print (set :: <profile-set-contains>)
   format-out("CONTAINS %=", profile-set-contains(set));
 end method;
 
-define method profile-set-member? 
+define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-contains>)
  => (well? :: <boolean>)
   let name = function-descriptor-raw-name(function);
   if (name)
     let r = subsequence-position(name, profile-set-contains(set));
-    // debugger-message("CONTAINS? %= %= %=", 
+    // debugger-message("CONTAINS? %= %= %=",
     // 	              function-descriptor-raw-name(function), profile-set-contains(set), r);
     r ~== #f
   end if;
@@ -301,7 +301,7 @@ define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-dll>)
  => (well? :: <boolean>)
   let r = function-descriptor-dll(function) == profile-set-dll(set);
-  // debugger-message("DLL %= = %= %=", 
+  // debugger-message("DLL %= = %= %=",
   // 	              function-descriptor-dll(function), profile-set-dll(set), r);
   r
 end method;
@@ -318,7 +318,7 @@ define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-library>)
  => (well? :: <boolean>)
   let r = function-descriptor-library(function) == profile-set-library(set);
-  // debugger-message("LIBRARY %= = %= %=", 
+  // debugger-message("LIBRARY %= = %= %=",
   // 	              function-descriptor-library(function), profile-set-library(set), r);
   r
 end method;
@@ -347,7 +347,7 @@ end method;
 define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-file>) => (well? :: <boolean>)
   let r = function-descriptor-filename(function) = profile-set-file(set);
-  // debugger-message("FILE %= = %= %=", 
+  // debugger-message("FILE %= = %= %=",
   // 	           function-descriptor-filename(function), profile-set-file(set), r);
   r
 end method;
@@ -379,7 +379,7 @@ define method profile-set-print (set :: <profile-set-union>)
   end for;
 end method;
 
-define method profile-set-member? 
+define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-union>)
  => (well? :: <boolean>)
   any?(curry(profile-set-member?, function), profile-set-unionees(set))
@@ -397,7 +397,7 @@ define method profile-set-print (set :: <profile-set-intersection>)
   end for;
 end method;
 
-define method profile-set-member? 
+define method profile-set-member?
     (function :: <single-function-descriptor>, set :: <profile-set-intersection>)
  => (well? :: <boolean>)
   every?(curry(profile-set-member?, function), profile-set-intersectionees(set))
@@ -414,8 +414,8 @@ end method;
 // define class <profile-set-top-percentile> (<profile-set-top-percentile>)
 //   slot profile-set-top-percentile, init-keyword: top-percentile:;
 // end class;
-// 
-// define method profile-set-member? 
+//
+// define method profile-set-member?
 //     (id, set :: <profile-set-top-percentile>) => (well? :: <boolean>)
 //   #t
 // end method;

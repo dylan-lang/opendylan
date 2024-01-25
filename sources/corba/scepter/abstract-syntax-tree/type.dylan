@@ -16,7 +16,7 @@ define method largest-integer (number-of-bits :: <integer>, min-or-max, signed-o
         max: => 2 ^ (number-of-bits - 1) - 1;
         min: => - 2 ^ (number-of-bits - 1);
       end select;
-    unsigned: =>  
+    unsigned: =>
       select (min-or-max)
         max: => 2 ^ number-of-bits - 1;
         min: => 0;

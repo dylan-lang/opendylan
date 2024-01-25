@@ -72,7 +72,7 @@ define sideways method op--wait-for-simple-lock(back-end :: <harp-native-back-en
   ins--move(back-end, result, OK);
 
   ins--tag(back-end, done-tag);
-  
+
 end method op--wait-for-simple-lock;
 
 
@@ -114,7 +114,7 @@ define sideways method op--release-simple-lock(back-end :: <harp-native-back-end
   ins--move(back-end, result, OK);
 
   ins--tag(back-end, done-tag);
-  
+
 end method op--release-simple-lock;
 
 
@@ -200,7 +200,7 @@ define sideways method op--release-recursive-lock(back-end :: <harp-native-back-
   ins--move(back-end, result, OK);
 
   ins--tag(back-end, done-tag);
-  
+
 end method op--release-recursive-lock;
 
 

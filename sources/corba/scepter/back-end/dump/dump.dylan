@@ -54,7 +54,7 @@ define method scepter-back-end-emit (back-end :: <dump-back-end>, root :: <ast-r
   end if;
   make(<scepter-back-end-result>, success?: #t);
 end method;
-  
+
 // DUMP-DEFINITION
 
 define method dump-definition (back-end :: <dump-back-end>, object :: <object>, stream :: <stream>, #key last? :: <boolean> = #f)
@@ -219,7 +219,7 @@ define method dump-name (back-end :: <dump-back-end>, ast-expression :: <ast-exp
     dump-expression(back-end, ast-expression, ast-expression.expression-combinator, stream);
 end method;
 
-define method dump-expression (back-end :: <dump-back-end>, 
+define method dump-expression (back-end :: <dump-back-end>,
 				 ast-expression :: <ast-expression>,
                                expression-combinator :: <binary-expression-combinator>,
                                stream :: <stream>)
@@ -242,7 +242,7 @@ define method dump-expression (back-end :: <dump-back-end>,
   dump-name(back-end, ast-expression.right-subexpression, stream);
 end method;
 
-define method dump-expression (back-end :: <dump-back-end>, 
+define method dump-expression (back-end :: <dump-back-end>,
 				 ast-expression :: <ast-expression>,
                                expression-combinator :: <symbol-combinator>,
                                stream :: <stream>)
@@ -255,7 +255,7 @@ define method dump-expression (back-end :: <dump-back-end>,
   end if;
 end method;
 
-define method dump-expression (back-end :: <dump-back-end>, 
+define method dump-expression (back-end :: <dump-back-end>,
 			       ast-expression :: <ast-expression>,
                                expression-combinator :: <no-combinator>,
                                stream :: <stream>)
@@ -264,14 +264,14 @@ define method dump-expression (back-end :: <dump-back-end>,
   end if;
 end method;
 
-define method dump-expression-value (back-end :: <dump-back-end>, 
+define method dump-expression-value (back-end :: <dump-back-end>,
 				     ast-expression :: <ast-expression>,
                                      expression-type :: <object>,
                                      stream :: <stream>)
   format(stream, "%=", ast-expression.expression-value);
 end method;
 
-define method dump-expression-value (back-end :: <dump-back-end>, 
+define method dump-expression-value (back-end :: <dump-back-end>,
 				     ast-expression :: <ast-expression>,
                                      expression-type :: <boolean-idl-type>,
                                      stream :: <stream>)

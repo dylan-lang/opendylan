@@ -73,10 +73,10 @@ define method resolve-source-location-on-connection
        search-path,
        precise? :: <integer>)
     = Rtmgr/RemoteNub/resolve-source-location
-         (conn.nub, 
-          lib.rnub-descriptor, 
-          filename, 
-          line, 
+         (conn.nub,
+          lib.rnub-descriptor,
+          filename,
+          line,
           col);
   if (valid? == 1)
     values(as-remote-value(code-location), precise? == 1)

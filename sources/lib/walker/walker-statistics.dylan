@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // STATISTICS
 
 define method do-deep-walk
-    (walker :: <walker>, function :: <function>, parent, 
-     object :: <byte-vector>) 
-  walker-register-walked(walker, parent, object, object); 
+    (walker :: <walker>, function :: <function>, parent,
+     object :: <byte-vector>)
+  walker-register-walked(walker, parent, object, object);
   function(object);
 end method;
 

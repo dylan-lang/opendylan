@@ -73,87 +73,87 @@ define constant <remote-location> =
 
 ///// EXPORTED GENERIC FUNCTIONS
 
-define generic do-registers 
-    (f :: <function>, ap :: <access-path>, #key type = #f) 
+define generic do-registers
+    (f :: <function>, ap :: <access-path>, #key type = #f)
       => ();
 
-define generic active-register 
+define generic active-register
     (ap :: <access-path>, thread :: <remote-thread>,
      register :: <unassigned-remote-register>)
        => (reg :: <active-remote-register>);
 
 define generic register-name (r :: <remote-register>) => (val :: <string>);
 
-define generic read-value 
+define generic read-value
     (ap :: <access-path>, address :: <remote-location>,
      #key stack-frame)
        => (val :: <remote-value>);
 
-define generic write-value 
+define generic write-value
     (ap :: <access-path>, address :: <remote-location>,
-     value :: <remote-value>) 
+     value :: <remote-value>)
        => (val :: <remote-value>);
 
-define generic read-8b 
+define generic read-8b
     (ap :: <access-path>, address :: <remote-location>)
        => (val :: <integer>);
 
-define generic write-8b 
+define generic write-8b
     (ap :: <access-path>, address :: <remote-location>,
-     value :: <integer>) 
+     value :: <integer>)
        => (val :: <integer>);
 
-define generic read-16b 
+define generic read-16b
     (ap :: <access-path>, address :: <remote-location>)
        => (val :: <integer>);
 
-define generic write-16b 
+define generic write-16b
     (ap :: <access-path>, address :: <remote-location>,
-     value :: <integer>) 
+     value :: <integer>)
        => (val :: <integer>);
 
-define generic read-32b 
+define generic read-32b
     (ap :: <access-path>, address :: <remote-location>)
        => (val :: <integer>);
 
-define generic write-32b 
+define generic write-32b
     (ap :: <access-path>, address :: <remote-location>,
-     value :: <integer>) 
+     value :: <integer>)
        => (val :: <integer>);
 
-define generic read-64b 
+define generic read-64b
     (ap :: <access-path>, address :: <remote-location>)
        => (val :: <integer>);
 
-define generic write-64b 
+define generic write-64b
     (ap :: <access-path>, address :: <remote-location>,
-     value :: <integer>) 
+     value :: <integer>)
        => (val :: <integer>);
 
-define generic read-single-float 
+define generic read-single-float
     (ap :: <access-path>, address :: <remote-location>)
        => (val :: <single-float>);
 
-define generic write-single-float 
+define generic write-single-float
     (ap :: <access-path>, address :: <remote-location>,
      value :: <single-float>)
        => (val :: <single-float>);
 
-define generic read-double-float 
+define generic read-double-float
     (ap :: <access-path>, address :: <remote-location>)
        => (val :: <double-float>);
 
-define generic write-double-float 
+define generic write-double-float
     (ap :: <access-path>, address :: <remote-location>,
      value :: <double-float>)
        => (val :: <double-float>);
 
-define generic read-byte-string 
+define generic read-byte-string
     (ap :: <access-path>, address :: <remote-value>,
      length :: <integer>)
        => (val :: <byte-string>);
 
-define generic write-byte-string 
+define generic write-byte-string
     (ap :: <access-path>, address :: <remote-value>,
      value :: <byte-string>, #key ending-index)
        => (val :: <byte-string>);
@@ -161,7 +161,7 @@ define generic write-byte-string
 
 ///// DO-REGISTERS
 
-define method do-registers 
+define method do-registers
     (f :: <function>, ap :: <access-path>,
      #key type = #f) => ()
   // Acquire the vector of register descriptors if we need it.
@@ -216,7 +216,7 @@ define method find-register
   found;
 end method;
 
-define method read-access-path-register-set 
+define method read-access-path-register-set
     (ap :: <access-path>) => (registers :: <vector>)
   ap.register-set := register-vector-on-connection (ap.connection);
 end method;
@@ -257,7 +257,7 @@ define method enumeration-code-to-register
   unless (ap.register-tables-built?)
     build-register-tables(ap)
   end unless;
-  let reg = element(ap.register-name-to-descriptor, as-lowercase(code), 
+  let reg = element(ap.register-name-to-descriptor, as-lowercase(code),
                     default: #f);
   if (reg)
     reg
@@ -272,7 +272,7 @@ end method;
 //    The <access-path> class keeps two fast-access tables for registers,
 //    one that can map a register name (string) to a <remote-register>
 //    descriptor, and one that can map a register enumeration code to a
-//    descriptor. 
+//    descriptor.
 //    This function ensures that both tables have been created.
 
 define method build-register-tables (ap :: <access-path>) => ()
@@ -281,7 +281,7 @@ define method build-register-tables (ap :: <access-path>) => ()
     if (ap.register-set = #[])
       read-access-path-register-set(ap)
     end if;
- 
+
     // Create the entry in the table for each known register.
     for (r in ap.register-set)
       if (r)
@@ -299,7 +299,7 @@ end method;
 
 ///// REGISTER-NAME
 
-define method register-name (r :: <remote-register>) 
+define method register-name (r :: <remote-register>)
     => (sym :: <string>)
   r.C-name;
 end method;
@@ -307,7 +307,7 @@ end method;
 
 ///// ACTIVE-REGISTER
 
-define method active-register 
+define method active-register
     (ap :: <access-path>, thread :: <remote-thread>,
      register :: <unassigned-remote-register>)
        => (reg :: <active-remote-register>)
@@ -325,22 +325,22 @@ end method;
 
 ///// READ-VALUE
 
-define open generic read-value-from-register 
+define open generic read-value-from-register
     (conn :: <access-connection>, register :: <active-remote-register>,
      #key)
       => (val :: <remote-value>);
 
-define open generic read-value-from-memory 
+define open generic read-value-from-memory
     (conn :: <access-connection>, location :: <remote-value>)
       => (val :: <remote-value>);
 
-define method read-value 
+define method read-value
     (ap :: <access-path>, address :: <active-remote-register>,
      #key stack-frame = #f)
       => (val :: <remote-value>)
   if (stack-frame)
-    read-value-from-register 
-       (ap.connection, address, 
+    read-value-from-register
+       (ap.connection, address,
         frame-index: stack-frame.nub-vector-frame-index)
   else
     read-value-from-register
@@ -348,7 +348,7 @@ define method read-value
   end if
 end method;
 
-define method read-value 
+define method read-value
     (ap :: <access-path>, address :: <remote-value>, #key stack-frame = #f)
       => (val :: <remote-value>)
   read-value-from-memory (ap.connection, address)
@@ -357,23 +357,23 @@ end method;
 
 ///// WRITE-VALUE
 
-define open generic write-value-to-register 
+define open generic write-value-to-register
     (conn :: <access-connection>,
      register :: <active-remote-register>,
      value :: <remote-value>) => ();
 
-define open generic write-value-to-memory 
+define open generic write-value-to-memory
     (conn :: <access-connection>, address :: <remote-value>,
      value :: <remote-value>) => ();
 
-define method write-value 
+define method write-value
     (ap :: <access-path>, address :: <active-remote-register>,
      value :: <remote-value>) => (val :: <remote-value>)
   write-value-to-register (ap.connection, address, value);
   value;
 end method;
 
-define method write-value 
+define method write-value
     (ap :: <access-path>, address :: <remote-value>,
      value :: <remote-value>) => (val :: <remote-value>)
   write-value-to-memory (ap.connection, address, value);
@@ -383,22 +383,22 @@ end method;
 
 ///// READ-SINGLE-FLOAT
 
-define open generic read-single-float-from-register 
+define open generic read-single-float-from-register
     (conn :: <access-connection>,
      register :: <active-remote-register>)
        => (val :: <single-float>);
 
-define open generic read-single-float-from-memory 
+define open generic read-single-float-from-memory
     (conn :: <access-connection>, location :: <remote-value>)
        => (val :: <single-float>);
 
-define method read-single-float 
+define method read-single-float
     (ap :: <access-path>, address :: <active-remote-register>)
        => (val :: <single-float>)
   read-single-float-from-register (ap.connection, address)
 end method;
 
-define method read-single-float 
+define method read-single-float
     (ap :: <access-path>, address :: <remote-value>)
        => (val :: <single-float>)
   read-single-float-from-memory (ap.connection, address)
@@ -407,27 +407,27 @@ end method;
 
 ///// WRITE-SINGLE-FLOAT
 
-define open generic write-single-float-to-register 
-    (conn :: <access-connection>, 
+define open generic write-single-float-to-register
+    (conn :: <access-connection>,
      register :: <active-remote-register>,
-     value :: <single-float>) 
+     value :: <single-float>)
  => ();
 
-define open generic write-single-float-to-memory 
+define open generic write-single-float-to-memory
     (conn :: <access-connection>, address :: <remote-value>,
-     value :: <single-float>) 
+     value :: <single-float>)
  => ();
 
-define method write-single-float 
+define method write-single-float
     (ap :: <access-path>, address :: <active-remote-register>,
-     value :: <single-float>) 
+     value :: <single-float>)
        => (val :: <single-float>)
   write-single-float-to-register (ap.connection, address, value);
   value;
 end method;
 
-define method write-single-float 
-    (ap :: <access-path>, address :: <remote-value>, value :: <single-float>) 
+define method write-single-float
+    (ap :: <access-path>, address :: <remote-value>, value :: <single-float>)
       => (val :: <single-float>)
   write-single-float-to-memory (ap.connection, address, value);
   value;
@@ -436,22 +436,22 @@ end method;
 
 ///// READ-DOUBLE-FLOAT
 
-define open generic read-double-float-from-register 
+define open generic read-double-float-from-register
     (conn :: <access-connection>,
      register :: <active-remote-register>)
        => (val :: <double-float>);
 
-define open generic read-double-float-from-memory 
+define open generic read-double-float-from-memory
     (conn :: <access-connection>, location :: <remote-value>)
        => (val :: <double-float>);
 
-define method read-double-float 
+define method read-double-float
     (ap :: <access-path>, address :: <active-remote-register>)
        => (val :: <double-float>)
   read-double-float-from-register (ap.connection, address)
 end method;
 
-define method read-double-float 
+define method read-double-float
     (ap :: <access-path>, address :: <remote-value>)
        => (val :: <double-float>)
   read-double-float-from-memory (ap.connection, address)
@@ -460,27 +460,27 @@ end method;
 
 ///// WRITE-DOUBLE-FLOAT
 
-define open generic write-double-float-to-register 
-    (conn :: <access-connection>, 
+define open generic write-double-float-to-register
+    (conn :: <access-connection>,
      register :: <active-remote-register>,
-     value :: <double-float>) 
+     value :: <double-float>)
  => ();
 
-define open generic write-double-float-to-memory 
+define open generic write-double-float-to-memory
     (conn :: <access-connection>, address :: <remote-value>,
-     value :: <double-float>) 
+     value :: <double-float>)
        => ();
 
-define method write-double-float 
+define method write-double-float
     (ap :: <access-path>, address :: <active-remote-register>,
-     value :: <double-float>) 
+     value :: <double-float>)
        => (val :: <double-float>)
   write-double-float-to-register (ap.connection, address, value);
   value;
 end method;
 
-define method write-double-float 
-    (ap :: <access-path>, address :: <remote-value>, value :: <double-float>) 
+define method write-double-float
+    (ap :: <access-path>, address :: <remote-value>, value :: <double-float>)
       => (val :: <double-float>)
   write-double-float-to-memory (ap.connection, address, value);
   value;
@@ -489,12 +489,12 @@ end method;
 
 ///// READ-BYTE-STRING
 
-define open generic read-byte-string-from-memory 
+define open generic read-byte-string-from-memory
    (conn :: <access-connection>, address :: <remote-value>,
     length :: <integer>)
  => (val :: <byte-string>);
 
-define method read-byte-string 
+define method read-byte-string
     (ap :: <access-path>, address :: <remote-value>, length :: <integer>)
       => (val :: <byte-string>)
   read-byte-string-from-memory (ap.connection, address, length)
@@ -507,14 +507,14 @@ define open generic write-byte-string-to-memory
     (conn :: <access-connection>, address :: <remote-value>,
      string-source :: <byte-string>, ending-index :: <integer>) => ();
 
-define method write-byte-string 
+define method write-byte-string
     (ap :: <access-path>, address :: <remote-value>, value :: <byte-string>,
      #key ending-index = #f)
        => (val :: <byte-string>)
   unless (ending-index)
     ending-index := size(value) - 1
   end unless;
-  write-byte-string-to-memory 
+  write-byte-string-to-memory
      (ap.connection, address, value, ending-index);
   value;
 end method;
@@ -532,7 +532,7 @@ define method calculate-stack-address
 end method;
 
 define open generic calculate-stack-address-on-connection
-    (conn :: <access-connection>, thread :: <remote-thread>, 
+    (conn :: <access-connection>, thread :: <remote-thread>,
      offset :: <integer>)
        => (addr :: <remote-value>);
 
@@ -620,7 +620,7 @@ end method;
 //    offset into the page.
 
 define method page-relative-address
-    (ap :: <access-path>, addr :: <remote-value>) 
+    (ap :: <access-path>, addr :: <remote-value>)
        => (id :: <integer>, offset :: <integer>)
   page-relative-address-on-connection(ap.connection, addr);
 end method;
@@ -643,7 +643,7 @@ define method perform-coff-relocation
 end method;
 
 define open generic perform-coff-relocation-on-connection
-    (conn :: <access-connection>, 
+    (conn :: <access-connection>,
      ra :: <remote-value>, da :: <remote-value>,
      #key)
  => (worked? :: <boolean>);

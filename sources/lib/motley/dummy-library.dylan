@@ -17,7 +17,7 @@ define module motley
   use dylan;
   //use tools-interface;
 
-  //export get-registry-type-libraries, <registry-type-library-info>, 
+  //export get-registry-type-libraries, <registry-type-library-info>,
   //	 registry-type-library-name, registry-type-library-path;
   //export get-type-library-short-name;	// DEPRECATED
   //export get-type-library-information;

@@ -36,7 +36,7 @@ define open generic do-client-source-forms
      #key modules, libraries, client)
  => ();
 
-
+
 /// Macro call objects
 
 define abstract class <macro-call-object> (<source-form-object>)
@@ -47,7 +47,7 @@ define open generic do-macro-call-source-forms
      object :: <macro-call-object>)
  => ();
 
-
+
 /// Top level expression objects
 
 define class <top-level-expression-object> (<source-form-object>)
@@ -58,7 +58,7 @@ define method environment-object-type-name
   "Top level expression"
 end method environment-object-type-name;
 
-
+
 /// Macro call objects
 
 define class <simple-macro-call-object>
@@ -70,7 +70,7 @@ define method environment-object-type-name
   "Macro call"
 end method environment-object-type-name;
 
-
+
 /// Project dispatching methods
 
 define method source-form-uses-definitions?
@@ -127,7 +127,7 @@ define method do-macro-call-source-forms
   database & do-macro-call-source-forms(function, database, object)
 end method do-macro-call-source-forms;
 
-
+
 /// Some convenience functions built on these protocols
 
 define function source-form-used-definitions

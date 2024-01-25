@@ -13,25 +13,25 @@ define open class <coff-builder> (<binary-builder>)
     required-init-keyword: big-endian?:;
   slot last-function-definition-aux
      :: false-or(<coff-function-definition-auxiliary-symbol>) = #f;
-    // This is used to make a chain of function definitions, as 
+    // This is used to make a chain of function definitions, as
     // required by coff.
   slot last-begin-function-aux
     :: false-or(<coff-function-lines-auxiliary-symbol>) = #f;
-    // This is used to make a chain of function definitions, as 
+    // This is used to make a chain of function definitions, as
     // required by coff.
 
 end class;
 
 
-define method make-binary-builder 
+define method make-binary-builder
     (coff-builder-class :: subclass(<coff-builder>),
-     #key machine, big-endian?, destination, def-file, source-file) 
+     #key machine, big-endian?, destination, def-file, source-file)
     => (new :: <coff-builder>)
   make(coff-builder-class,
        big-endian?: big-endian?,
        destination: destination,
        def-file: def-file,
-       binary-file: make(<coff-file>, 
+       binary-file: make(<coff-file>,
 			 machine: machine,
 			 big-endian?: big-endian?,
 			 time-stamp: coff-time-stamp()));
@@ -40,11 +40,11 @@ end method;
 
 
 define generic default-symbol-types
-    (symbol :: <coff-symbol>, representation :: <symbol>) 
+    (symbol :: <coff-symbol>, representation :: <symbol>)
     => (storage-class, value, type);
 
 define method default-symbol-types
-    (symbol :: <coff-symbol>, representation :: <symbol>) 
+    (symbol :: <coff-symbol>, representation :: <symbol>)
     => (storage-class, value, type)
   select (representation)
     #"external"        => values($sym-external,        0,  $sym-type-null);
@@ -60,11 +60,11 @@ end method;
 
 
 define generic default-relocation-type
-    (section :: <coff-section>, symbol :: <coff-symbol>, type :: <symbol>) 
+    (section :: <coff-section>, symbol :: <coff-symbol>, type :: <symbol>)
     => (class :: <class>, relocation-type :: <integer>);
 
 define method default-relocation-type
-    (section :: <coff-section>, symbol :: <coff-symbol>, type :: <symbol>) 
+    (section :: <coff-section>, symbol :: <coff-symbol>, type :: <symbol>)
     => (class :: <class>, relocation-type :: <integer>)
   select (type)
     #"relative"     => values(<coff-relative-relocation>, #x14);
@@ -82,8 +82,8 @@ end method;
 
 
 
-// add-source-file-definition generates a .file symbol, followed by a string marking 
-// the source file name. Normally this would be called first. Generation of line 
+// add-source-file-definition generates a .file symbol, followed by a string marking
+// the source file name. Normally this would be called first. Generation of line
 // number information is disabled until this function is called.
 
 
@@ -92,14 +92,14 @@ define method add-source-file-definition
   // This symbol is not entered into the name dictionary - so we bypass
   // all the sharing support.
   let syms = builder.binary-file.symbols;
-  let aux-number 
+  let aux-number
     = floor/(file-name.size + size-of-symbol - 1, size-of-symbol);
   let sym-name = ".file";
   let dummy = "dummy-name";
   let aux-symbols = make(<vector>, size: aux-number);
   let name-string = make-coff-string(builder, sym-name);
   let file-symbol
-    = make(<coff-symbol>, 
+    = make(<coff-symbol>,
            name:          name-string,
            value:         0,
            section:       coff-section-sym-debug,
@@ -120,7 +120,7 @@ define method add-source-file-definition
     aux-symbols[i] := empty-aux;
     binary-element-add!(syms, dummy, empty-aux);
   end for;
-  
+
   // Finally, mark the builder to show that source file debug info is OK
   builder.source-file := file-name;
 end method;
@@ -130,18 +130,18 @@ end method;
 // add-function-line-number-definition
 // This creates a complex function definition symbol, along with corresponding
 // auxiliary symbols describing line number information. It should be used
-// to define the symbol for the function provided that line number information 
+// to define the symbol for the function provided that line number information
 // is available. The alternative, when line number information is not available
 // is to use add-symbol-definition.
-// NB num-lines is the number of specific line number entries for the function. 
-// I.e. it does not include the line number symbol. 
+// NB num-lines is the number of specific line number entries for the function.
+// I.e. it does not include the line number symbol.
 
 define method add-function-line-number-definition
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     code-size :: <integer>, num-lines :: <integer>, 
+     code-size :: <integer>, num-lines :: <integer>,
      start-line :: <integer>, end-line :: <integer>,
-     #key section = builder.current-section, 
+     #key section = builder.current-section,
           representation = #"public-function")
     => (cs :: <coff-symbol>)
 
@@ -165,24 +165,24 @@ define method add-function-line-number-definition
   let bf-aux = make(<coff-function-lines-auxiliary-symbol>,
                     line-number: start-line);
 
-  let ef-aux = make(<coff-function-lines-auxiliary-symbol>, 
+  let ef-aux = make(<coff-function-lines-auxiliary-symbol>,
                     line-number: end-line);
 
-  let bf = make(<coff-symbol>, 
+  let bf = make(<coff-symbol>,
                 name:          make-coff-string(builder, ".bf"),
                 value:         0,
                 section:       section,
                 storage-class: $sym-function,
                 aux-symbols:   vector(bf-aux));
 
-  let lf = make(<coff-symbol>, 
+  let lf = make(<coff-symbol>,
                 name:          make-coff-string(builder, ".lf"),
                 value:         num-lines + 1, // +1 for the symbol
                 section:       section,
                 storage-class: $sym-function,
                 aux-symbols:   vector());
 
-  let ef = make(<coff-symbol>, 
+  let ef = make(<coff-symbol>,
                 name:          make-coff-string(builder, ".ef"),
                 value:         0,
                 section:       section,
@@ -217,8 +217,8 @@ end method;
 
 
 
-// share-or-create-unordered is like share-or-create, except that it uses 
-// coff-element-setter, rather than binary-element-add!. This means that 
+// share-or-create-unordered is like share-or-create, except that it uses
+// coff-element-setter, rather than binary-element-add!. This means that
 // the addition only happens to unordered code.
 
 define inline method share-or-create-unordered
@@ -234,7 +234,7 @@ define inline method share-or-create-unordered
 end method;
 
 
-define method make-coff-string 
+define method make-coff-string
      (builder :: <coff-builder>, string :: <byte-string>,
       #key model-object = unsupplied())
      => (cs :: <coff-string>)
@@ -258,11 +258,11 @@ end method;
 // explicitly notified.
 //
 // The symbols are only inserted into the COFF symbol hashtable at creation
-// time. They are assigned an ordered number at definition time. This is 
+// time. They are assigned an ordered number at definition time. This is
 // necessary because some symbols are expected to be followed by auxiliary
 // symbols, and only the definer can know this.
 
-define method make-coff-symbol 
+define method make-coff-symbol
      (builder :: <coff-builder>,
       name :: <byte-string>,
       model-object,
@@ -302,7 +302,7 @@ end method;
 
 
 define method initialize-coff-symbol
-    (symbol :: <coff-symbol>, 
+    (symbol :: <coff-symbol>,
      #key representation, value, type, storage-class, section, aux-symbols,
      #all-keys) => ()
   if (representation)
@@ -326,24 +326,24 @@ end method;
 define method define-coff-symbol
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     #rest all-keys,  
+     #rest all-keys,
      #key representation, section, value, aux-symbols,
           must-be-fresh? = #f, import?,
-     #all-keys) 
+     #all-keys)
      => (cs :: <coff-symbol>)
-  let coff-symbol = 
+  let coff-symbol =
     make-coff-symbol(builder, name, model-object, import?: import?);
   apply(initialize-coff-symbol, coff-symbol, all-keys);
   // Before adding the symbol to the ordered part of the table,
-  // check for duplicates. It might have been defined twice for 
+  // check for duplicates. It might have been defined twice for
   // genuine different reasons (e.g. public & add)
   let symtab = builder.binary-file.symbols;
   if (coff-symbol.coff-symbol-already-defined?)
     if (must-be-fresh?)
-      error("COFF generation error: illegal multiple definition of %=.", 
+      error("COFF generation error: illegal multiple definition of %=.",
             coff-symbol.symbol-name.string-data);
     end if;
-  else 
+  else
     binary-element-add!(symtab,
 			name,
 			coff-symbol,
@@ -357,10 +357,10 @@ end method;
 define method define-external-symbol
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     #rest all-keys,  
+     #rest all-keys,
      #key representation = #"external", section = coff-section-undefined,
           import?,
-     #all-keys)  
+     #all-keys)
      => (cs :: <coff-symbol>)
   apply(define-coff-symbol, builder, name, model-object,
         section: section, representation: representation,
@@ -372,13 +372,13 @@ end method;
 define method define-public-symbol
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     #rest all-keys,  
+     #rest all-keys,
      #key representation = #"public-data",
-     #all-keys)  
+     #all-keys)
      => (cs :: <coff-symbol>)
   apply(define-coff-symbol, builder,
 	name, model-object,
-	representation: representation, 
+	representation: representation,
         all-keys);
 end method;
 
@@ -390,18 +390,18 @@ define inline method init-flags(builder :: <coff-builder>)
 end method;
 
 
-define method make-binary-section 
-    (builder :: <coff-builder>, name :: <byte-string>, 
+define method make-binary-section
+    (builder :: <coff-builder>, name :: <byte-string>,
      alignment :: <integer>, flags :: <abstract-integer>)
     => (new :: <coff-section>)
-  make(<coff-section>, name: make-coff-string(builder, name), 
+  make(<coff-section>, name: make-coff-string(builder, name),
                        alignment: alignment,
                        flags: flags,
                        big-endian?: builder.big-endian?);
 end method;
 
 
-define constant $directives-flags 
+define constant $directives-flags
   = $lnk-info + $lnk-remove + $align-1bytes;
 
 
@@ -417,7 +417,7 @@ define method add-symbol-definition
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
      #rest all-keys,
-     #key section = builder.current-section, 
+     #key section = builder.current-section,
           public? = #f,
           representation = if (public?) #"public-data" else #f end,
      #all-keys)
@@ -432,7 +432,7 @@ define method add-symbol-definition
 end method;
 
 define method add-line-number-symbol
-    (builder :: <coff-builder>, name :: <byte-string>, 
+    (builder :: <coff-builder>, name :: <byte-string>,
      #key section = builder.current-section)
     => ()
   let symbol = make-coff-symbol(builder, name, unsupplied());
@@ -442,7 +442,7 @@ end method;
 
 
 define method add-line-number
-    (builder :: <coff-builder>, line-number :: <integer>, 
+    (builder :: <coff-builder>, line-number :: <integer>,
      #key section = builder.current-section,
           pos = section.current-position)
     => ()
@@ -453,7 +453,7 @@ end method;
 
 
 define method add-data-vector
-    (builder :: <coff-builder>, vector :: <byte-vector>, 
+    (builder :: <coff-builder>, vector :: <byte-vector>,
      #key section = builder.current-section)
     => ()
   add-vector-to-section(section, vector);
@@ -469,11 +469,11 @@ define method add-data-short
   add-short-to-section(section, data);
 end method;
 
-define method add-data-short 
-    (builder :: <coff-builder>, 
+define method add-data-short
+    (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     #key section = builder.current-section, 
-          type = #"segment", 
+     #key section = builder.current-section,
+          type = #"segment",
           relocation-class = #f, relocation-type = #f,
           offset = 0)
     => ()
@@ -482,18 +482,18 @@ define method add-data-short
   let (d-class, d-reloc-type) = default-relocation-type(section, symbol, type);
   let class =      relocation-class | d-class;
   let reloc-type = relocation-type  | d-reloc-type;
-  let reloc = make(class, relocation-type: reloc-type, 
+  let reloc = make(class, relocation-type: reloc-type,
                           symbol: symbol, index: pos);
   add-reloc-to-section(section, reloc);
   add-short-to-section(section, offset);
 end method;
 
 
-define method add-data 
-    (builder :: <coff-builder>, 
+define method add-data
+    (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     #key section = builder.current-section, 
-          type = #"absolute", 
+     #key section = builder.current-section,
+          type = #"absolute",
           relocation-class = #f, relocation-type = #f,
           position-relative? = #f, // when true, want offset relative to
                                    // current position, using name as base
@@ -504,13 +504,13 @@ define method add-data
   let wanted-offset :: <integer> =
     if (position-relative?)
       offset + pos - symbol.symbol-value;
-    else 
+    else
       offset;
     end if;
   let (d-class, d-reloc-type) = default-relocation-type(section, symbol, type);
   let class =      relocation-class | d-class;
   let reloc-type = relocation-type  | d-reloc-type;
-  let reloc = make(class, relocation-type: reloc-type, 
+  let reloc = make(class, relocation-type: reloc-type,
                           symbol: symbol, index: pos);
   add-reloc-to-section(section, reloc);
   add-word-to-section(section, wanted-offset);
@@ -518,13 +518,13 @@ end method;
 
 
 define method insert-relocation
-    (builder :: <coff-builder>, 
-     name :: <byte-string>, 
+    (builder :: <coff-builder>,
+     name :: <byte-string>,
      model-object,
-     #key section = builder.current-section, 
-          type = #"absolute", 
+     #key section = builder.current-section,
+          type = #"absolute",
           pos = section.current-position,
-          relocation-class = #f, 
+          relocation-class = #f,
           relocation-type = #f,
           import?)
     => ()
@@ -533,18 +533,18 @@ define method insert-relocation
   let (d-class, d-reloc-type) = default-relocation-type(section, symbol, type);
   let class =      relocation-class | d-class;
   let reloc-type = relocation-type  | d-reloc-type;
-  let reloc = make(class, relocation-type: reloc-type, 
+  let reloc = make(class, relocation-type: reloc-type,
                           symbol: symbol, index: pos);
   add-reloc-to-section(section, reloc);
 end method;
 
 define method insert-interactor-relocation
-    (builder :: <coff-builder>, 
+    (builder :: <coff-builder>,
      handle,
-     #key section = builder.current-section, 
+     #key section = builder.current-section,
           pos = section.current-position)
     => ()
-  let reloc = make(<coff-interactor-relocation>, relocation-type: 0, 
+  let reloc = make(<coff-interactor-relocation>, relocation-type: 0,
 		   index: pos, handle: handle);
   add-reloc-to-section(section, reloc);
 end method;
@@ -559,8 +559,8 @@ define sideways method fill-section-data
 end method;
 
 
-define method add-4-bytes-to-section 
-    (section :: <coff-section>, 
+define method add-4-bytes-to-section
+    (section :: <coff-section>,
      b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>) => ()
   let pos = section.current-position;
   let new-size = pos + 4;
@@ -575,7 +575,7 @@ define method add-4-bytes-to-section
 end method;
 
 
-define method add-2-bytes-to-section 
+define method add-2-bytes-to-section
     (section :: <coff-section>, b0 :: <byte>, b1 :: <byte>) => ()
   let pos = section.current-position;
   let new-size = pos + 2;
@@ -586,7 +586,7 @@ define method add-2-bytes-to-section
 end method;
 
 
-define sideways method add-byte-to-section 
+define sideways method add-byte-to-section
     (section :: <coff-section>, byte :: <integer>) => ()
   let pos = section.current-position;
   let new-size = pos + 1;
@@ -595,7 +595,7 @@ define sideways method add-byte-to-section
 end method;
 
 
-define sideways method add-string-to-section 
+define sideways method add-string-to-section
     (section :: <coff-section>, string :: <byte-string>) => ()
   let pos = section.current-position;
   let len = string.size;
@@ -604,7 +604,7 @@ define sideways method add-string-to-section
 end method;
 
 
-define method add-vector-to-section 
+define method add-vector-to-section
     (section :: <coff-section>, vector :: <byte-vector>) => ()
   let pos = section.current-position;
   let len = vector.size;
@@ -613,11 +613,11 @@ define method add-vector-to-section
 end method;
 
 
-define generic split-word-into-bytes 
+define generic split-word-into-bytes
     (word :: <abstract-integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>);
 
-define method split-word-into-bytes 
+define method split-word-into-bytes
     (word :: <integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>)
   if (word.zero?)
@@ -635,7 +635,7 @@ define method split-word-into-bytes
   end if;
 end method;
 
-define method split-word-into-bytes 
+define method split-word-into-bytes
     (word :: <abstract-integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>)
   if (word.zero?)
@@ -654,7 +654,7 @@ define method split-word-into-bytes
 end method;
 
 
-define method split-short-into-bytes 
+define method split-short-into-bytes
     (word :: <integer>, big-endian?)
     => (b0 :: <byte>, b1 :: <byte>)
   if (word.zero?)
@@ -672,7 +672,7 @@ end method;
 
 
 define method join-bytes-into-word
-    (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>, 
+    (b0 :: <byte>, b1 :: <byte>, b2 :: <byte>, b3 :: <byte>,
      big-endian?)
     => (word :: <abstract-integer>)
   if (big-endian?)
@@ -695,34 +695,34 @@ define method join-bytes-into-short
 end method;
 */
 
-define sideways method add-word-to-section 
+define sideways method add-word-to-section
     (section :: <coff-section>, word :: <abstract-integer>) => ()
   let (b0, b1, b2, b3) = split-word-into-bytes(word, section.big-endian?);
   add-4-bytes-to-section(section, b0, b1, b2, b3);
 end method;
 
 
-define sideways method add-short-to-section 
+define sideways method add-short-to-section
     (section :: <coff-section>, word :: <integer>) => ()
   let (b0, b1) = split-short-into-bytes(word, section.big-endian?);
   add-2-bytes-to-section(section, b0, b1);
 end method;
 
 
-define method add-line-number-to-section 
+define method add-line-number-to-section
     (section :: <coff-section>, line :: <coff-line-number>) => ()
   add!(section.line-numbers, line);
 end method;
 
 
-define method add-reloc-to-section 
+define method add-reloc-to-section
     (section :: <coff-section>, reloc :: <coff-relocation>) => ()
   add!(section.relocations, reloc);
 end method;
 
 
 define method word-in-section
-    (section :: <coff-section>, pos :: <integer>) 
+    (section :: <coff-section>, pos :: <integer>)
  => (word :: <abstract-integer>)
   let data = section.section-data;
   let b0 :: <byte> = data[pos];
@@ -734,7 +734,7 @@ end method;
 
 
 define method word-in-section-setter
-    (new-word :: <abstract-integer>, section :: <coff-section>, pos :: <integer>) 
+    (new-word :: <abstract-integer>, section :: <coff-section>, pos :: <integer>)
  => (word :: <abstract-integer>)
   let (b0, b1, b2, b3) = split-word-into-bytes(new-word, section.big-endian?);
   let data = section.section-data;
@@ -766,9 +766,9 @@ end method;
 // A <coff-relocation> with type local-relocation-type has been
 // statically linked by being fixed up here.
 
-define constant local-relocation-type = -1; 
+define constant local-relocation-type = -1;
 
-define method external-relocation? 
+define method external-relocation?
     (reloc :: <coff-relocation>) => (r :: <boolean>)
   reloc.relocation-type ~= local-relocation-type;
 end method;
@@ -789,13 +789,13 @@ define method locally-linked-relocation
   #f;
 end method;
 
-define method locally-linked-relocation 
+define method locally-linked-relocation
     (reloc :: <coff-relative-relocation>, reloc-section :: <coff-section>)
    => (bool :: <boolean>)
   reloc.relocation-symbol.section == reloc-section;
 end method;
 
-define method fixup-one-section 
+define method fixup-one-section
     (builder :: <coff-builder>, section :: <coff-section>) => ()
   // Fix up any relocations of the section which can be linked
   // with only information in this file. This applies to relative
@@ -824,19 +824,19 @@ define method fixup-string-table (builder :: <coff-builder>) => ()
   for (string :: <coff-long-string> in file.strings.table-data)
     string.index := curpos;
     // allow for null termination
-    curpos := curpos + string.string-data.size + 1; 
+    curpos := curpos + string.string-data.size + 1;
   end for;
   for (string :: <coff-long-string> in file.strings.id-table-data)
     string.index := curpos;
     // allow for null termination
-    curpos := curpos + string.string-data.size + 1; 
+    curpos := curpos + string.string-data.size + 1;
   end for;
   // Then create the string table data as a sequence
   // let data-size = curpos - 4;  // the size field does not allow for itself
   let data-size = curpos;  // size field seems to allow for itself after all
   let string-section = make(<byte-vector>, size: curpos);
   let (b0, b1, b2, b3) = split-word-into-bytes(data-size, builder.big-endian?);
-  string-section[0] := b0; string-section[1] := b1; 
+  string-section[0] := b0; string-section[1] := b1;
   string-section[2] := b2; string-section[3] := b3;
   file.strings.ordered-data := string-section;
   for (string :: <coff-long-string> in file.strings.table-data)
@@ -849,8 +849,8 @@ define method fixup-string-table (builder :: <coff-builder>) => ()
   end for;
 end method;
 
-define method splice-string-into-vector! (data :: <byte-vector>, 
-                                          string :: <byte-string>, 
+define method splice-string-into-vector! (data :: <byte-vector>,
+                                          string :: <byte-string>,
                                           inx :: <integer>) => ()
   let len = string.size;
   copy-bytes(data, inx, string, 0, len);
@@ -858,7 +858,7 @@ define method splice-string-into-vector! (data :: <byte-vector>,
 end method;
 
 
-define constant $fixup-flags 
+define constant $fixup-flags
   = generic-+($mem-read, $align-1bytes + $cnt-initialized-data);
 
 define inline method fixup-flags(builder :: <coff-builder>)

@@ -8,4 +8,4 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Just run the main program
 
-main-program(); 
+main-program();

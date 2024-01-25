@@ -153,7 +153,7 @@ define constant engine-node$k-reserved-discriminator-s = 61;
 define constant engine-node$k-reserved-discriminator-t = 62;
 
 define constant engine-node$k-reserved-discriminator-u = 63;
-
+
 
 define inline-only function %proper-list-tail
     (list :: <list>)
@@ -336,7 +336,7 @@ end function;
 //  collect-methods(headed-methods, methods);
 //  headed-methods
 //end function;
-
+
 
 define inline function dbg (str, #rest args) => ();
   // apply(format-out, str, args);
@@ -349,7 +349,7 @@ define constant %make-simple-vector
     = method (n :: <integer>, v) => (vec :: <simple-object-vector>);
         make(<simple-object-vector>, size: n, fill: v)
       end method;
-
+
 
 // define inline-only constant $integer-tag-value = as(<machine-word>, 1);
 // define inline-only constant $integer-tag-width = 2;
@@ -467,7 +467,7 @@ end function;
 define inline function %gf-number-required (g :: <generic-function>) => (nreq :: <integer>)
   signature-number-required(function-signature(g))
 end function;
-
+
 
 //// UNIQUE CLASS KEYS
 
@@ -632,7 +632,7 @@ define function initialize-class-dispatch-keys-vectored (v :: <simple-object-vec
 end function;
 
 
-
+
 
 /* <function>
     debug-name
@@ -816,7 +816,7 @@ define inline function engine-node-function-code (d :: <engine-node>)
              properties$s-entry-type,
              properties(d))
 end function;
-
+
 
 define inline constant <dispatch-starter>
   = type-union(<generic-function>, <cache-header-engine-node>);
@@ -851,7 +851,7 @@ define function %restart-dispatch (from :: <dispatch-starter>, mepized-args :: <
                       from,
                       mepized-args)
 end function;
-
+
 
 begin
   let classes :: <simple-object-vector> = *engine-node-classes*;

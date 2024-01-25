@@ -114,25 +114,25 @@ define method command-handler (app :: <simple-server-app>,
      $IDM-EXIT =>      // exit the application
        SendMessage(hWnd, $WM-SYSCOMMAND, $SC-CLOSE, 0);
 
-     $IDM-RED => 
+     $IDM-RED =>
        part-set-color(app.app-ole-object, red: 128);
        0;
 
-     $IDM-GREEN => 
+     $IDM-GREEN =>
        part-set-color(app.app-ole-object, green: 128);
        0;
 
-     $IDM-BLUE => 
+     $IDM-BLUE =>
        part-set-color(app.app-ole-object, blue: 128);
        0;
 
-     $IDM-ROTATE => 
+     $IDM-ROTATE =>
        part-rotate-color(app.app-ole-object);
        0;
 
-     otherwise => 
+     otherwise =>
        DefWindowProc(hWnd, $WM-COMMAND, wParam, lParam);
-                   
+
    end select;
 end command-handler;
 
@@ -214,7 +214,7 @@ define method doc-changed (app :: <simple-server-app>)
   InvalidateRect(app.app-doc-window, $NULL-RECT, #t); // force window repaint
 end;
 
-
+
 define function register-window-class (hinstance :: <HMODULE>,
                                        proc :: <c-function-pointer>,
                                        class :: <LPTSTR>,

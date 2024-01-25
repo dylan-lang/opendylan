@@ -21,21 +21,21 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 Bind-exit and unwind-protect are represented on the stack as frames which
 contain information about how to invoke the relevant continuation.
-Unwind-protect frames are also chained together, and the current environment 
+Unwind-protect frames are also chained together, and the current environment
 of existing unwind-protects is available in the dynamic-environment slot
 of the Thread Environment Block.
 
-There are primitives to build each type of frame, and also to remove 
+There are primitives to build each type of frame, and also to remove
 unwind-protect frames (bind-exit frames just have to be popped - so that is
 done inline). The primitive which removes unwind-protect frames in the
 fall-through case is also responsible for invoking the cleanup code (which
 is called as a sub-function in the same function frame as its parent).
 
-There are also primitives to do non-local exits (NLX). These are passed 
+There are also primitives to do non-local exits (NLX). These are passed
 the address of the bind-exit frame for the destination, and also the
-multiple values to be returned. As part of the NLX, any intervening 
+multiple values to be returned. As part of the NLX, any intervening
 unwind-protects are invoked and their frames are removed. Multiple-values
-are saved around the unwind-protects in the bind-exit frame of the 
+are saved around the unwind-protects in the bind-exit frame of the
 destination.
 
 
@@ -49,7 +49,7 @@ A bind-exit frame looks as follows:
 	4	space for a stack allocated vector for up to 8 MVs
 	0	pointer to saved multiple-values as a vector
 
-During an NLX, multiple-values will be saved in the frame if an intervening 
+During an NLX, multiple-values will be saved in the frame if an intervening
 unwind-protect is active. The frame itself contains space for 4 values. If
 more values are present, then they will be heap allocated.
 
@@ -59,7 +59,7 @@ The compiler compiles bind-exit as follows:
   let closure = make-bind-exit-closure(frame);
   do-the-bind-exit-body-setting-results-as-for-a-return();
   tag1:
-  
+
 
 
 
@@ -72,7 +72,7 @@ An unwind-protect frame looks as follows:
 	0	previous unwind-protect frame
 
 
-The compiler compiles unwind-protect as follows 
+The compiler compiles unwind-protect as follows
 (but see op--unwind-protect below):
 
   let frame = primitive-build-unwind-protect-exit-frame(tag1);
@@ -119,7 +119,7 @@ define leaf runtime-primitive build-bind-exit-frame
   op--ld-current-unwind-protect-frame(be, current);
   ins--st(be, frame, stack, BE-frame-pointer-offset);
   ins--st(be, current, stack, BE-current-UP-offset);
-  ins--move(be, result, stack); 
+  ins--move(be, result, stack);
   if-return-address()
     ins--jmp(be, ret-addr, 0);
   else
@@ -156,7 +156,7 @@ define leaf runtime-primitive build-unwind-protect-frame
   op--ld-current-unwind-protect-frame(be, current);
   ins--st(be, frame, stack, UP-frame-pointer-offset);
   ins--st(be, current, stack, UP-previous-frame-offset);
-  ins--move(be, result, stack); 
+  ins--move(be, result, stack);
   op--st-current-unwind-protect-frame(be, stack);
   if-return-address()
     ins--jmp(be, ret-addr, 0);
@@ -176,11 +176,11 @@ define leaf runtime-primitive unwind-protect-cleanup
   //    This primitive is called for the fall-through case
   //    of an unwind-protect, to invoke the cleanup code.
   // Implementation:
-  //    The unwind-protect frame is first unchained from the 
+  //    The unwind-protect frame is first unchained from the
   //    global variable, and all current multiple values are
-  //    saved. The cleanup code is then called as a function - 
-  //    but run within the same frame as the caller of the 
-  //    primitive. Finally, the multiple values are restored, 
+  //    saved. The cleanup code is then called as a function -
+  //    but run within the same frame as the caller of the
+  //    primitive. Finally, the multiple values are restored,
   //    the unwind-protect frame is popped, and control is returned
   //    to the caller.
 
@@ -188,20 +188,20 @@ define leaf runtime-primitive unwind-protect-cleanup
   nreg tmp;
   tmp 1, ret-addr;
   nreg up-frame;
-  
+
   // start by unchaining the UP frame
   op--ld-current-unwind-protect-frame(be, up-frame);
   ins--ld(be, tmp, up-frame, UP-previous-frame-offset);
   op--st-current-unwind-protect-frame(be, tmp);
-  
+
   // Save the multiple values and current frame by pushing on the stack
   op--push-multiple-values(be);
   ins--push(be, up-frame);
-  
+
   // Call the cleanup code
   ins--ld(be, tmp, up-frame, UP-code-offset);
   ins--call(be, tmp, 0);
-  
+
   // Restore values, and exit
   ins--pop(be, up-frame);
   op--pop-multiple-values(be);
@@ -230,22 +230,22 @@ define leaf runtime-primitive nlx
   arg0 be-frame;
   nreg final-up-frame, global-up-frame, be-frame-n, values-vec;
   tag need-to-cleanup;
-  
+
   op--ld-current-unwind-protect-frame(be, global-up-frame);
   ins--ld(be, final-up-frame, be-frame, BE-current-UP-offset);
   ins--move(be, be-frame-n, be-frame);
   ins--load-stack-arg-n(be, values-vec, 0);
   ins--bne(be, need-to-cleanup, global-up-frame, final-up-frame);
-  
+
   // Case where there are no intervening unwinds
   // The multiple values must be restored from the vector
   op--restore-multiple-values-from-vector(be, values-vec);
   op--transfer-control-to-bind-exit-frame(be, be-frame-n);
-  
+
   // Case where there are intervening unwinds.
   // Store the multiple values in the BE frame, before calling cleanup
   ins--tag(be, need-to-cleanup);
-  op--store-bind-exit-values-from-vector(be, be-frame-n, 
+  op--store-bind-exit-values-from-vector(be, be-frame-n,
                                          global-up-frame, values-vec);
   op--invoke-nlx-cleanup(be, be-frame-n, global-up-frame);
 end runtime-primitive;
@@ -266,23 +266,23 @@ define leaf runtime-primitive nlx
   arg0 be-frame;
   nreg final-up-frame, global-up-frame, be-frame-n, first-arg;
   tag need-to-cleanup;
-  
+
   op--ld-current-unwind-protect-frame(be, global-up-frame);
   ins--ld(be, final-up-frame, be-frame, BE-current-UP-offset);
   ins--move(be, be-frame-n, be-frame);
   op--load-arguments(be, #f, first-arg);
   ins--bne(be, need-to-cleanup, global-up-frame, final-up-frame);
-  
+
   // Case where there are no intervening unwinds
-  // The multiple values are already set - but the result register 
+  // The multiple values are already set - but the result register
   // has been clobbered by the bind-exit frame itself.
   ins--move(be, result, first-arg);
   op--transfer-control-to-bind-exit-frame(be, be-frame-n);
-  
+
   // Case where there are intervening unwinds.
   // Store the multiple values in the BE frame, before calling cleanup
   ins--tag(be, need-to-cleanup);
-  op--store-bind-exit-values-from-mv-area(be, be-frame-n, 
+  op--store-bind-exit-values-from-mv-area(be, be-frame-n,
                                           global-up-frame, first-arg);
   op--invoke-nlx-cleanup(be, be-frame-n, global-up-frame);
 end runtime-primitive;
@@ -290,18 +290,18 @@ end runtime-primitive;
 
 
 /// OP--INVOKE-NLX-CLEANUP
-/// Calls the cleanup code in up-frame in order to get to the 
+/// Calls the cleanup code in up-frame in order to get to the
 /// ultimate bind-exit destination in be-frame. The bind-exit frame
 /// should have been initialized with all the returning multiple values.
-/// Iterates after calling each cleanup, and finally transfers control 
+/// Iterates after calling each cleanup, and finally transfers control
 /// to the bind-exit.
 ///
 /// NB. We know that there is at least one cleanup to be called - because
 /// the NLX entry point handles the direct case.
 
-define method op--invoke-nlx-cleanup 
-    (be :: <harp-back-end>, 
-     be-frame :: <register>, 
+define method op--invoke-nlx-cleanup
+    (be :: <harp-back-end>,
+     be-frame :: <register>,
      up-frame :: <register>)
 
   with-harp (be)
@@ -311,7 +311,7 @@ define method op--invoke-nlx-cleanup
     result result;
     nreg up-code, final-up-frame;
     tag start-of-loop, uncaught-exit;
-  
+
     // Start of loop. Two registers are live at this time:
     //  be-frame - ultimate bind-exit destination
     //  up-frame - current unwind-protect frame
@@ -320,29 +320,29 @@ define method op--invoke-nlx-cleanup
 
     op--pop-any-SEH-handlers(be, up-frame);
     ins--move(be, stack, up-frame);   // pop the stack back to the UP frame
-  
+
     // start by unlinking this UP from the global chain
     ins--ld(be, tmp, stack, UP-previous-frame-offset);
     ins--ld(be, up-code, stack, UP-code-offset);
     op--st-current-unwind-protect-frame(be, tmp);
-  
+
     // Now set the context and call the UP code
     ins--ld(be, frame, stack, UP-frame-pointer-offset);
     ins--push(be, be-frame);    // Remember the ultimate destination
     ins--call(be, up-code, 0);  // Do the call to the cleanup
     ins--pop(be, be-frame);     // Restore the ultimate destination
-    
+
     // Find the next frame and see if its the final one
     op--ld-current-unwind-protect-frame(be, up-frame);
     ins--ld(be, final-up-frame, be-frame, BE-current-UP-offset);
     ins--bne(be, start-of-loop, final-up-frame, up-frame);
-  
+
     // We've found all intervening unwind-protects - so take the jump
     let values-vec = make-g-register(be);
     ins--ld(be, values-vec, be-frame, BE-values-vector-offset);
     op--restore-multiple-values-from-vector(be, values-vec);
     op--transfer-control-to-bind-exit-frame(be, be-frame);
-  
+
     // Error case where we've exhausted the UP chain:
     ins--tag(be, uncaught-exit);
     ins--jmp(be, primitive-error-ref, 0);  // !@#$ temporary error handler
@@ -372,7 +372,7 @@ end method;
 
 
 /// OP--POP-ANY-SEH-HANDLERS
-/// This is responsible for the minimal amount of interaction between the 
+/// This is responsible for the minimal amount of interaction between the
 /// Dylan NLX implementation, and the Windows SEH mechanism. Just before
 /// popping the stack, we look to see if it will make any of the registered
 /// SEH handlers stale. If so, then they get popped first. In practice,
@@ -383,9 +383,9 @@ define open generic op--pop-any-SEH-handlers
 
 
 define method op--store-bind-exit-values-from-mv-area
-    (be :: <harp-back-end>, 
-     be-frame :: <register>, 
-     up-frame :: <register>, 
+    (be :: <harp-back-end>,
+     be-frame :: <register>,
+     up-frame :: <register>,
      first-value :: <register>)
 
   with-harp (be)
@@ -393,15 +393,15 @@ define method op--store-bind-exit-values-from-mv-area
     tmp 1, mv-area;
     arg-count count;
     tag have-mvs, mvs-done, vector-ok;
-  
+
     ins--add(be, vec, be-frame, BE-values-space-offset);
     ins--bmvset(be, have-mvs);
-  
+
     //          Case where there is a single value
     ins--st(be, first-value, vec, 8);
     op--set-vector-size(be, 1, vec);
     ins--bra(be, mvs-done);
-  
+
     //          Case where there are multiple values
     ins--tag(be, have-mvs);
     op--ld-mv-count(be, count);
@@ -410,7 +410,7 @@ define method op--store-bind-exit-values-from-mv-area
     // Do a heap allocation
     let new-vec = op--safe-allocate-vector(be, count, count, be-frame, up-frame);
     ins--move(be, vec, new-vec);
-  
+
     // Now have a suitable vector
     ins--tag(be, vector-ok);
     let vec-data = make-n-register(be);
@@ -418,7 +418,7 @@ define method op--store-bind-exit-values-from-mv-area
     ins--add(be, vec-data, vec, 8);
     op--ld-mv-area-address(be, mv-area);
     ins--copy-words-down-w(be, vec-data, mv-area, count);
-  
+
     ins--tag(be, mvs-done);
     ins--st(be, vec, be-frame, BE-values-vector-offset);
   end with-harp;
@@ -427,25 +427,25 @@ end method;
 
 /*
 define method op--store-bind-exit-values-from-vector
-    (be :: <harp-back-end>, 
-     be-frame :: <register>, 
-     up-frame :: <register>, 
+    (be :: <harp-back-end>,
+     be-frame :: <register>,
+     up-frame :: <register>,
      values-vec :: <register>)
 
   with-harp (be)
     nreg vec;
     arg-count count;
     tag vector-ok;
-  
+
     op--vector-size(be, count, values-vec);
     ins--add(be, vec, be-frame, BE-values-space-offset);
     ins--ble(be, vector-ok, count, BE-max-values);
     // Case where the BE frame doesn't hold all the values
     // Do a heap allocation
-    let new-vec = op--safe-allocate-vector(be, count, 
+    let new-vec = op--safe-allocate-vector(be, count,
                                            count, be-frame, up-frame, values-vec);
     ins--move(be, vec, new-vec);
-  
+
     // Now have a suitable vector
     ins--tag(be, vector-ok);
     ins--add(be, count, count, 2); // allow for size and header too
@@ -469,18 +469,18 @@ define method op--restore-multiple-values-from-vector
     let vec = op--duplicate(be, vec-arg);
     op--vector-size(be, count, vec);
     ins--bne(be, multiple-values, count, 1);
-  
+
     // single value case
     ins--tag(be, single-value);
     ins--ld(be, result, vec, 8);
     ins--reset-values(be);
     ins--bra(be, done);
-  
+
     // general multiple values case
     ins--tag(be, multiple-values);
     op--st-mv-count(be, count);
     ins--beq(be, no-values, count, 0);
-  
+
     // actual multiple values case
     ins--add(be, vec-data, vec, 8);
     ins--ld(be, result, vec-data, 0);
@@ -488,13 +488,13 @@ define method op--restore-multiple-values-from-vector
     ins--copy-words-down-w(be, mv-area, vec-data, count);
     ins--set-values(be);
     ins--bra(be, done);
-  
+
     // zero values case
     ins--tag(be, no-values);
     ins--move(be, result, dylan-false);
     ins--set-values(be);
     ins--bra(be, done);
-  
+
     ins--tag(be, done);
   end with-harp;
 end method;
@@ -572,7 +572,7 @@ define method op--safe-allocate-vector
     ins--move(be, arg0, size);
     ins--call(be, primitive-allocate-vector-ref, 1);
     ins--move(be, vec, result);
-    for (reg in reverse(preserved-regs)) ins--pop(be, reg) end;  
+    for (reg in reverse(preserved-regs)) ins--pop(be, reg) end;
     vec;
   end with-harp;
 end method;
@@ -583,9 +583,9 @@ end method;
 /// Implements invocations of unwind-protect for use in the runtime itself.
 
 
-define method op--unwind-protect 
-    (be :: <harp-back-end>, 
-     protected-op :: <function>, 
+define method op--unwind-protect
+    (be :: <harp-back-end>,
+     protected-op :: <function>,
      cleanup-op :: <function>)
   with-harp (be)
     arg0 arg0;

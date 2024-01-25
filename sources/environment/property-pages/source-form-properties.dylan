@@ -49,7 +49,7 @@ define method source-record-file-name
   locator-name(record.source-record-location)
 end method source-record-file-name;
 
-
+
 /// Warnings page
 
 define settings <property-pages-settings> (<open-dylan-user-settings>)
@@ -339,7 +339,7 @@ define function update-status-bar-warning-count
   frame-status-message(frame) := message
 end function update-status-bar-warning-count;
 
-
+
 /// Sources page
 
 define sideways method make-frame-property-page-displayer
@@ -350,7 +350,7 @@ define sideways method make-frame-property-page-displayer
   values("Source", make-code-viewer(project: frame.ensure-frame-project))
 end method make-frame-property-page-displayer;
 
-
+
 /// Usage page
 
 define constant $usage-definition-filters

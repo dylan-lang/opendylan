@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $list-separator = ", ";
 
-
+
 /// Environment object property pages
 
 define sideways method frame-property-types
@@ -355,7 +355,7 @@ define method print-environment-object-namespace
   end if
 end method print-environment-object-namespace;
 
-
+
 /// Application object property displays
 
 define method print-application-object-address
@@ -373,7 +373,7 @@ define method print-application-object-address
     | $not-available
 end method print-application-object-address;
 
-
+
 /// environment-object-kind
 
 define method environment-object-kind-label
