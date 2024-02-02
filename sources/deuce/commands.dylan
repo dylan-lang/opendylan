@@ -77,7 +77,7 @@ define function initialize-command-help
   end
 end function initialize-command-help;
 
-
+
 /// Command errors
 
 define sealed class <simple-command-error> (<command-error>)
@@ -171,7 +171,7 @@ define sealed method check-read-only
   do-lines(read-only?, interval)
 end method check-read-only;
 
-
+
 /// Character insertion
 
 define command self-insert (frame)
@@ -276,7 +276,7 @@ define command toggle-overwrite (frame)
   end
 end command toggle-overwrite;
 
-
+
 /// Numeric arguments
 
 define command numeric-argument (frame)
@@ -334,7 +334,7 @@ define command cancel-command (frame)
   frame-last-command-type(frame) := #"cancel"
 end command cancel-command;
 
-
+
 /// Help
 
 define variable $editor-help-cache = vector(#f, #f, #f);
@@ -568,7 +568,7 @@ define method compute-key-binding-documentation
   commands
 end method compute-key-binding-documentation;
 
-
+
 /// Scrolling and redisplay
 
 define command scroll-forward (frame)
@@ -800,7 +800,7 @@ define command show-position (frame)
   frame-last-command-type(frame) := #"display"
 end command show-position;
 
-
+
 /// Simple forward and backward motion
 
 define command forward-character (frame)
@@ -943,7 +943,7 @@ define method forward-or-backward-thing
   end
 end method forward-or-backward-thing;
 
-
+
 /// Simple "up" and "down" motion
 
 define command next-line (frame)
@@ -1113,7 +1113,7 @@ define command end-of-section (frame)
   frame-last-command-type(frame) := #"motion"
 end command end-of-section;
 
-
+
 /// Complex motion
 
 define command down-list (frame)
@@ -1165,7 +1165,7 @@ define command up-expression (frame)
   frame-last-command-type(frame) := #"motion"
 end command up-expression;
 
-
+
 /// Direct navigation
 
 define command goto-character (frame)
@@ -1209,7 +1209,7 @@ define method goto-thing
   frame-last-command-type(frame) := #"motion"
 end method goto-thing;
 
-
+
 /// Deletion
 
 define command delete-character (frame)
@@ -1327,7 +1327,7 @@ define method kill-region
   frame-last-command-type(frame) := #"kill"
 end method kill-region;
 
-
+
 /// Cut and paste
 
 define command cut-region (frame)
@@ -1499,7 +1499,7 @@ define method insert-yanked-element
   frame-last-command-type(frame) := (if (move?) #"yank" else #"yank-no-motion" end);
 end method insert-yanked-element;
 
-
+
 /// Line hacking
 
 define command insert-newline (frame)
@@ -1665,7 +1665,7 @@ define command join-lines (frame)
   frame-last-command-type(frame) := #"delete"
 end command join-lines;
 
-
+
 /// Tranposition commands
 
 define command transpose-characters (frame)
@@ -1775,7 +1775,7 @@ define method do-transpose-regions
   frame-last-command-type(frame) := #"insert"
 end method do-transpose-regions;
 
-
+
 /// Case-changing commands
 
 define command upcase-word (frame)
@@ -1901,7 +1901,7 @@ define command capitalize-word (frame)
   end;
 end command capitalize-word;
 
-
+
 /// Font-changing commands
 
 define command change-region-font (frame)
@@ -2013,7 +2013,7 @@ define method change-font
   frame-last-command-type(frame) := #"insert"
 end method change-font;
 
-
+
 /// Searching and replacing
 
 define command find-string (frame)
@@ -2234,7 +2234,7 @@ define method replace-next-or-previous-string
   end
 end method replace-next-or-previous-string;
 
-
+
 /// Show matching/non-matching lines, sort lines, etc...
 
 define command hack-matching-lines (frame)
@@ -2332,7 +2332,7 @@ define command show-non-matching-lines
   frame-last-command-type(frame) := #"display"
 end command show-non-matching-lines;
 
-
+
 /// Point and mark
 
 define command set-mark (frame)
@@ -2494,7 +2494,7 @@ define command mark-next-expression (frame)
   frame-last-command-type(frame) := #"mark"
 end command mark-next-expression;
 
-
+
 /// Registers
 
 define constant $register-point-table :: <object-table> = make(<table>);
@@ -2579,7 +2579,7 @@ define method get-register-name
   end
 end method get-register-name;
 
-
+
 /// Undo and redo
 
 define command undo-command (frame)
@@ -2654,7 +2654,7 @@ define command redo-all-commands (frame)
   frame-last-command-type(frame) := #"redo"
 end command redo-all-commands;
 
-
+
 /// Indentation
 
 define command indent-line (frame)
@@ -2852,7 +2852,7 @@ define command delete-whitespace (frame)
   frame-last-command-type(frame) := #"delete"
 end command delete-whitespace;
 
-
+
 /// File and buffer commands
 
 define command find-file (frame)
@@ -3409,7 +3409,7 @@ define command new-buffer (frame)
   frame-last-command-type(frame) := #"motion"
 end command new-buffer;
 
-
+
 /// Configuration
 
 define command choose-configuration (frame)
@@ -3430,7 +3430,7 @@ define command choose-configuration (frame)
   end
 end command choose-configuration;
 
-
+
 /// Language (major mode) based commands
 
 define command start-of-definition (frame)
@@ -3811,7 +3811,7 @@ define method build-buffer-project
   frame-last-command-type(frame) := #"compile"
 end method build-buffer-project;
 
-
+
 /// Browsing commands
 
 define command edit-class-subclasses (frame)
@@ -3876,7 +3876,7 @@ define method make-definition-browser
   frame-last-command-type(frame) := #"file"
 end method make-definition-browser;
 
-
+
 /// Debugging redisplay
 
 define command redisplay-toggle-bitblt (frame)

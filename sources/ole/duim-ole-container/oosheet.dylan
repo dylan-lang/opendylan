@@ -111,7 +111,7 @@ define method duim/gadget-documentation (gadget :: <ole-gadget>)
   gadget.%documentation |
   begin
     let obj = gadget.sheet-contained-object;
-    obj & (gadget.duim/gadget-documentation := 
+    obj & (gadget.duim/gadget-documentation :=
 	     get-server-name(obj, $USERCLASSTYPE-SHORT))
   end
 end;

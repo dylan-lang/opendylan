@@ -59,10 +59,10 @@ end method;
 //    command list.
 //    Returns #f if no well-formed command is obtained from anywhere!
 
-define method get-next-debugger-command () 
+define method get-next-debugger-command ()
        => (command :: false-or(<debugger-command>),
            empty? :: <boolean>,
-           string-fragment :: false-or(<string>))   
+           string-fragment :: false-or(<string>))
   if (*current-debugger-options*.pre-command-sequence-index <
                *current-debugger-options*.pre-command-sequence.size)
     let command-string =
@@ -104,10 +104,10 @@ define method get-next-debugger-command ()
           values(#f, #f, #f)
         end if
       else
-        *current-dylan-string* := 
+        *current-dylan-string* :=
             concatenate(*current-dylan-string*, "\n", string-fragment);
         if (string-complete?(*current-dylan-string*))
-          let ex-command = 
+          let ex-command =
             make(<execute-source-command>,
                  source-string: shallow-copy(*current-dylan-string*));
           *current-dylan-string* := "";
@@ -134,7 +134,7 @@ define method process-global-mode () => ()
   *global-quit* := #f;
   let did-something = #t;
   if (*current-debugger-options*.target-process)
-    let auto-command = 
+    let auto-command =
       if (*current-debugger-options*.jit-debug?)
         *current-debugger-options*.stop-at-system-initialization? := #f;
         debugger-message(" *** JIT Auto-start.");
@@ -149,7 +149,7 @@ define method process-global-mode () => ()
         make (<open-application-command>,
               filename:
                 *current-debugger-options*.target-process,
-              arguments: 
+              arguments:
                 *current-debugger-options*.arguments-for-target-process);
       end if;
      block ()

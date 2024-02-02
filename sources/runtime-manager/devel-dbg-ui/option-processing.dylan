@@ -21,7 +21,7 @@ define constant $dylan-lib = "dxdylan";
 
 ///// <THREAD-REPORT-DETAIL>
 
-define constant <thread-report-detail> = 
+define constant <thread-report-detail> =
    one-of(#"ignore", #"summary", #"backtrace", #"verbose");
 
 
@@ -199,7 +199,7 @@ define method process-command-line-options () => ()
         i := i + 1;
         let detail = element(argument-vector, i, default: #f);
         if (detail & sanity-check-detail(detail))
-          *current-debugger-options*.signalling-thread-detail := 
+          *current-debugger-options*.signalling-thread-detail :=
              as(<symbol>, detail)
 	else
           debugger-message("WARNING: Bad or missing argument for the"
@@ -210,7 +210,7 @@ define method process-command-line-options () => ()
         i := i + 1;
         let detail = element(argument-vector, i, default: #f);
         if (detail & sanity-check-detail(detail))
-          *current-debugger-options*.other-threads-detail := 
+          *current-debugger-options*.other-threads-detail :=
              as(<symbol>, detail)
 	else
           debugger-message("WARNING: Bad or missing argument for the"

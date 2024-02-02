@@ -50,7 +50,7 @@ define function sccs-command-implemented?
   class-for-sccs-command(sccs, class) ~= #f
 end function sccs-command-implemented?;
 
-
+
 /// Source control options
 
 define open abstract class <source-control-options> (<object>)
@@ -124,7 +124,7 @@ define method source-control-login-info
   #f
 end method source-control-login-info;
 
-
+
 /// Command patterns
 
 // The idea is that source control back-ends implement a method for

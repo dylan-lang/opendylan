@@ -162,7 +162,7 @@ define method interactor-pane-default-focus
   pane.%interactor-control
 end method interactor-pane-default-focus;
 
-
+
 /// Interactor buffer management
 ///
 /// We share a single buffer for each thread in the application, so that

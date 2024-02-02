@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define macro unix-runtime-primitive-definer
-  { define ?adjectives:* unix-runtime-primitive ?:name 
+  { define ?adjectives:* unix-runtime-primitive ?:name
       ?body:*
     end }
     => {
@@ -23,7 +23,7 @@ end macro;
 
 
 define macro unix-API-runtime-primitive-definer
-  { define ?adjectives:* unix-API-runtime-primitive ?:name 
+  { define ?adjectives:* unix-API-runtime-primitive ?:name
         (?linux-name:expression)
       ?body:*
     end }

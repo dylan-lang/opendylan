@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                             *
 * dde.h -       Dynamic Data Exchange structures and definitions              *
 *                                                                             *
-* 
+*
 *                                                                             *
 \*****************************************************************************/
 define inline-only constant $WM-DDE-FIRST               = #x03E0;

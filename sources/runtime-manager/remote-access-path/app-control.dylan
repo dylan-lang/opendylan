@@ -41,7 +41,7 @@ end method;
 
 ///// STOP
 
-define method stop-application 
+define method stop-application
     (conn :: <remote-access-connection>) => ()
   Rtmgr/RemoteNub/application-stop(conn.nub)
 end method;
@@ -49,14 +49,14 @@ end method;
 
 ///// CONTINUE
 
-define method continue-application 
+define method continue-application
     (conn :: <remote-access-connection>) => ()
   Rtmgr/RemoteNub/application-continue (conn.nub)
 end method;
 
 ///// CONTINUE-UNHANDLED
 
-define method unhandled-continue-application 
+define method unhandled-continue-application
     (conn :: <remote-access-connection>) => ()
   Rtmgr/RemoteNub/application-continue-unhandled (conn.nub)
 end method;
@@ -64,7 +64,7 @@ end method;
 
 ///// SUSPEND-THREAD
 
-define method suspend-application-thread 
+define method suspend-application-thread
     (conn :: <remote-access-connection>, thread :: <remote-thread>)
   Rtmgr/RemoteNub/thread-stop(conn.nub, thread.rnub-descriptor);
 end method;
@@ -72,7 +72,7 @@ end method;
 
 ///// RESUME-THREAD
 
-define method resume-application-thread 
+define method resume-application-thread
     (conn :: <remote-access-connection>, thread :: <remote-thread>)
   Rtmgr/RemoteNub/thread-continue(conn.nub, thread.rnub-descriptor);
 end method;
@@ -106,7 +106,7 @@ end method;
 
 ///// STEP
 
-define method step-application 
+define method step-application
     (conn :: <remote-access-connection>, n :: <integer>) => ()
   Rtmgr/RemoteNub/application-step(conn.nub, n)
 end method;
@@ -114,7 +114,7 @@ end method;
 
 ///// STEP-OVER
 
-define method step-over-application 
+define method step-over-application
     (conn :: <remote-access-connection>, n :: <integer>) => ()
   Rtmgr/RemoteNub/application-step-over(conn.nub, n)
 end method;

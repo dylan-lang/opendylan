@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 // dispatch-case-limit - this constant determines how many special cases
-// there are for selecting arguments. The default version may be used whenever 
+// there are for selecting arguments. The default version may be used whenever
 // selected argument is on the stack - but it will still be slower than
 // a special case version.
 //
@@ -44,7 +44,7 @@ define constant $discriminator-case-limit = 6;
 
 /// External references
 
-define extensions-iep runtime-external dylan-unbound-instance-slot  
+define extensions-iep runtime-external dylan-unbound-instance-slot
   = "unbound-instance-slot";
 
 define extensions-iep runtime-external dylan-unbound-repeated-slot
@@ -56,16 +56,16 @@ define extensions-iep runtime-external dylan-invalid-keyword
 define extensions-iep runtime-external dylan-odd-number-keyword-args
   = "odd-number-of-keyword-args-trap";
 
-define extensions-iep runtime-external dylan-repeated-slot-getter-index-oor  
+define extensions-iep runtime-external dylan-repeated-slot-getter-index-oor
   = "repeated-slot-getter-index-out-of-range-trap";
 
-define extensions-iep runtime-external dylan-repeated-slot-setter-index-oor  
+define extensions-iep runtime-external dylan-repeated-slot-setter-index-oor
   = "repeated-slot-setter-index-out-of-range-trap";
 
-define dispatch-engine-indirect runtime-external dylan-inapplicable-engine-node  
+define dispatch-engine-indirect runtime-external dylan-inapplicable-engine-node
   = "$inapplicable-engine-node";
 
-define dispatch-engine-indirect runtime-external dylan-absent-engine-node  
+define dispatch-engine-indirect runtime-external dylan-absent-engine-node
   = "$absent-engine-node";
 
 
@@ -86,7 +86,7 @@ define leaf runtime-primitive engine-node-apply-with-optionals
   // On exit:
   //    tail call the engine-node with the appropriate arguments
   // Strategy:
-  //    We are called with 3 arguments. Look to see if we 
+  //    We are called with 3 arguments. Look to see if we
   //    want to end up with more or less on the stack or
   //    in registers depending on the active calling convention.
   //    Set up space on the stack for the arguments as required.
@@ -94,11 +94,11 @@ define leaf runtime-primitive engine-node-apply-with-optionals
   //    and into required argument registers.
   //    Set up the mlist and argument registers.
   //    Tail call the ENGINE-NODE
-  //    We have a different version for optionals because 
-  //    optionals require a count 
+  //    We have a different version for optionals because
+  //    optionals require a count
   //
-  op--engine-node-apply-select(be, 
-                               op--simple-mep-apply-internal, 
+  op--engine-node-apply-select(be,
+                               op--simple-mep-apply-internal,
                                op--optionals-mep-apply-vectored-internal);
 end runtime-primitive;
 
@@ -110,12 +110,12 @@ define method op--engine-node-apply-select
 
   with-harp (be)
     function engine;
-  
+
     nreg vector-reg, vec;
     greg disphdr-reg;
     arg-count argnum;
     arg0 arg0;
-  
+
     tag tag-have-optionals;
 
     let max-num-arg-regs = be.registers.arguments-passed-in-registers;
@@ -127,7 +127,7 @@ define method op--engine-node-apply-select
       if (max-num-arg-regs = 1) arg0
       else make-n-register(be) end;
     ins--add(be, vec-data, vec, 8);
-  
+
     // do the hard work
     op--branch-if-dispatch-header-with-optionals(be, tag-have-optionals, disphdr-reg);
     no-opts(be, disphdr-reg, vec-data, argnum);
@@ -172,7 +172,7 @@ end runtime-function;
 
 
 
-define method op--general-engine-node-fixed 
+define method op--general-engine-node-fixed
     (be :: <harp-back-end>, n :: <integer>) => ()
   with-harp (be)
     function engine;
@@ -194,7 +194,7 @@ define method op--general-engine-node-fixed
       let shift = 4 * extra-args-size;   // amount by which to shuffle the stack
       ins--sub(be, stack, stack, shift);   // make room for the extra args
       // start at 0 to include the return address if any
-      for (i :: <integer> from 0 to args-on-stack - 1 + be.return-address-size)  
+      for (i :: <integer> from 0 to args-on-stack - 1 + be.return-address-size)
 	ins--ld(be, tmp1, stack, arg-offset + shift);  // load from old location
 	ins--st(be, tmp1, stack, arg-offset);          // store to new
 	arg-offset := arg-offset + 4;
@@ -205,7 +205,7 @@ define method op--general-engine-node-fixed
       end;
     end;
 
-    // tail-call the callback function 
+    // tail-call the callback function
     ins--ld(be, callback, engine, be.engine-node-callback-offset);
     ins--jmp(be, callback, max-num-arg-regs);
   end with-harp;
@@ -240,9 +240,9 @@ end entry-point;
 define entry-point general-engine-node-n-optionals
       (be :: <harp-back-end>, required, limit: dispatch-case-limit)
   op--general-node-with-optionals
-    (be, 
-     required, 
-     op--vector-up-requireds-and-optionals, 
+    (be,
+     required,
+     op--vector-up-requireds-and-optionals,
      op--return-after-vectoring-requireds-and-optionals);
 end entry-point;
 
@@ -250,30 +250,30 @@ end entry-point;
 define entry-point general-engine-node-spread-optionals
       (be :: <harp-back-end>, required, limit: dispatch-case-limit)
   op--general-node-with-optionals
-    (be, 
-     required, 
-     op--vector-up-requireds-spreading-optionals, 
+    (be,
+     required,
+     op--vector-up-requireds-spreading-optionals,
      op--return-after-vectoring-requireds-spreading-optionals);
 end entry-point;
 
 
 
 define method op--general-node-with-optionals
-    (be :: <harp-back-end>, 
-     required, 
-     vectoring-fn :: <function>, 
+    (be :: <harp-back-end>,
+     required,
+     vectoring-fn :: <function>,
      returning-fn :: <function>)
     => ()
   with-harp (be)
     function function;
     mlist mlist;
     greg gf, engine;
-  
+
     ins--move(be, engine, function);
     ins--move(be, gf, mlist);
 
     op--perform-engine-node-callback
-      (be, required, gf, engine, vectoring-fn, returning-fn, 
+      (be, required, gf, engine, vectoring-fn, returning-fn,
        op--random-engine-node-required-args-num,
        op--general-engine-node-callback);
   end with-harp;
@@ -286,9 +286,9 @@ end method;
 
 define leaf runtime-function boxed-instance-slot-getter-entry
   // On entry: Engine node convention with args (object)
-  //    
+  //
   // On exit:  The value of the slot
-  // 
+  //
   function engine;
   result result;
   greg value, tagged-offset, object;
@@ -320,9 +320,9 @@ end runtime-function;
 
 define leaf runtime-function boxed-instance-slot-setter-entry
   // On entry: Engine node convention with args (newval, object)
-  //    
+  //
   // On exit:  The value of the slot
-  // 
+  //
   function engine;
   result result;
   greg newval, object;
@@ -343,9 +343,9 @@ end runtime-function;
 
 define leaf runtime-function boxed-repeated-instance-slot-getter-entry
   // On entry: Engine node convention with args (object, index)
-  //    
+  //
   // On exit:  The value of the slot
-  // 
+  //
   function engine;
   result result;
   greg size, value, object, index;
@@ -389,9 +389,9 @@ end runtime-function;
 
 define leaf runtime-function boxed-repeated-instance-slot-setter-entry
   // On entry: Engine node convention with args (newval, object, index)
-  //    
+  //
   // On exit:  The value of the slot
-  // 
+  //
   function engine;
   result result;
   greg size, newval, object, index;
@@ -431,9 +431,9 @@ end runtime-function;
 
 define leaf runtime-function byte-slot-getter-entry
   // On entry: Engine node convention with args (object)
-  //    
+  //
   // On exit:  The value of the slot as a tagged integer
-  // 
+  //
   function engine;
   result result;
   greg object;
@@ -454,9 +454,9 @@ end runtime-function;
 
 define leaf runtime-function byte-slot-setter-entry
   // On entry: Engine node convention with args (newval, object)
-  //    
+  //
   // On exit:  The value of the slot
-  // 
+  //
   function engine;
   result result;
   greg newval, object;
@@ -480,9 +480,9 @@ end runtime-function;
 
 define leaf runtime-function raw-byte-repeated-instance-slot-getter-entry
   // On entry: Engine node convention with args (object, index)
-  //    
+  //
   // On exit:  The value of the slot as a tagged integer
-  // 
+  //
   function engine;
   result result;
   greg size, object, index;
@@ -521,9 +521,9 @@ end runtime-function;
 
 define leaf runtime-function raw-byte-repeated-instance-slot-setter-entry
   // On entry: Engine node convention with args (newval, object, index)
-  //    
+  //
   // On exit:  The value of the slot
-  // 
+  //
   function engine;
   result result;
   greg size, newval, object, index;
@@ -563,10 +563,10 @@ end runtime-function;
 
 define leaf runtime-function single-method-entry
   // On entry: Args as for dispatch engine convention
-  //    
+  //
   // On exit:  Tail call the method in the DATA-1 slot of the engine node
   //           with the MList taken from the DATA-2 slot
-  // 
+  //
   local method no-key-checking (#rest r) end;
   op--single-method-entry-checking-keys(be, #"dummy", no-key-checking);
 end runtime-function;
@@ -582,7 +582,7 @@ define entry-point unrestricted-keyed-single-method-entry
 end entry-point;
 
 
-define method op--unrestricted-key-check 
+define method op--unrestricted-key-check
     (be :: <harp-back-end>, required, disphdr :: <register>, engine :: <register>)
      => ()
   with-harp (be)
@@ -601,7 +601,7 @@ define method op--unrestricted-key-check
        op--return-after-vectoring-requireds-and-optionals,
        op--single-method-engine-node-required-args-num,
        op--odd-keys-callback);
-       
+
     ins--tag(be, evennum);
   end with-harp;
 end method;
@@ -618,7 +618,7 @@ define entry-point explicit-keyed-single-method-entry
 end entry-point;
 
 
-define method op--explicit-key-check 
+define method op--explicit-key-check
     (be :: <harp-back-end>, required, disphdr :: <register>,
      engine :: <register>)
      => ()
@@ -636,7 +636,7 @@ define entry-point implicit-keyed-single-method-entry
 end entry-point;
 
 
-define method op--implicit-key-check 
+define method op--implicit-key-check
     (be :: <harp-back-end>, required, disphdr :: <register>, engine :: <register>)
      => ()
   op--engine-node-key-check(be, required, disphdr, engine, #t);
@@ -800,16 +800,16 @@ end entry-point;
 
 /// TEMPORARY !"$%
 ///
-/// A couple of entry points for dynamically switching between specialized 
+/// A couple of entry points for dynamically switching between specialized
 /// entry points
 
 
 define leaf runtime-function general-engine-node-spread-entry
   // On entry: Args as for dispatch engine convention
-  //    
+  //
   // On exit:  Tail call the more specific entry point, given the GF
-  // 
-  op--jump-to-specific-entry(be, 
+  //
+  op--jump-to-specific-entry(be,
                              general-engine-node-n-refs,
                              general-engine-node-spread-optionals-refs);
 end runtime-function;
@@ -817,10 +817,10 @@ end runtime-function;
 
 define leaf runtime-function general-engine-node-n-entry
   // On entry: Args as for dispatch engine convention
-  //    
+  //
   // On exit:  Tail call the more specific entry point, given the GF
-  // 
-  op--jump-to-specific-entry(be, 
+  //
+  op--jump-to-specific-entry(be,
                              general-engine-node-n-refs,
                              general-engine-node-n-optionals-refs);
 end runtime-function;
@@ -834,11 +834,11 @@ end runtime-function;
 
 define leaf runtime-function cache-header-entry
   // On entry: Args as for dispatch engine convention
-  //    
-  // On exit:  Tail call the entry point slot of the "next" slot, 
+  //
+  // On exit:  Tail call the entry point slot of the "next" slot,
   //               setting function to next slot contents, and
   //               setting mlist to the cache-header-engine-node itself.
-  // 
+  //
   // Jump to the resulting engine node
   function engine;
   mlist disphdr;
@@ -853,9 +853,9 @@ end runtime-function;
 
 define leaf runtime-function profiling-cache-header-entry
   // On entry: Args as for dispatch engine convention
-  //    
+  //
   // On exit:  Tail call the entry point slot of the "next" slot, setting function to next
-  // 
+  //
   // Jump to the resulting engine node
   function engine;
   mlist disphdr;
@@ -941,7 +941,7 @@ end runtime-primitive;
 
 // Implement this via a switch table.
 
-define runtime-switch-table initialize-engine-node-table 
+define runtime-switch-table initialize-engine-node-table
   size 32;
 
   prolog

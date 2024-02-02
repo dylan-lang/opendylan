@@ -18,19 +18,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define method code-gen-from-block 
+define method code-gen-from-block
     (backend :: <harp-back-end>, top-blck :: <basic-block>, print-harp) => ()
   let regs = backend.registers;
   let vars = backend.variables;
   let state = vars.vreg-state;
 
-  // !@#$ For future reference - may need this for register 
+  // !@#$ For future reference - may need this for register
   // preserving around NLXs. TBD!
   let alloc-reals = if (backend.bind-exit-frame?)
-                      let preserved 
+                      let preserved
                         = if (vars.compiling-call-in)
-                            regs.c-preserved-register-vector 
-                          else regs.preserved-register-vector 
+                            regs.c-preserved-register-vector
+                          else regs.preserved-register-vector
                           end if;
                       preserved.r-union-of-real-regs;
                     else empty-rset
@@ -44,7 +44,7 @@ define method code-gen-from-block
   if (~ print-harp) compress-vreg-usage(backend, vars.pgm-vect) end;
 
   // allocation -> vars
-  colour-graph(backend, int-graph(backend, vars.pgm-vect, top-blck)); 
+  colour-graph(backend, int-graph(backend, vars.pgm-vect, top-blck));
   state.raw-size := adjusted-raw-size(backend);
 
   if (vars.optimize-leaf-case)
@@ -73,7 +73,7 @@ define method code-gen-from-block
   if (print-harp)
     print-linearised-harp(backend, print-harp, blk-vector, blk-num);
   end if;
-      
+
   splat-colours(backend, blk-vector, blk-num);
 
   code-select-program(backend, blk-vector, blk-num);
@@ -95,7 +95,7 @@ end;
 /// efficient to get this chore over and done with in one go rather than
 /// cluttering up the template and auxiliary functions with it. CIM 23/12/88
 
-define method splat-colours 
+define method splat-colours
     (backend :: <harp-back-end>, pgm :: <simple-basic-block-vector>,
      blk-num :: <integer>)
   let sv-ins :: <instructions-vector> = backend.variables.sv-instructions;
@@ -136,7 +136,7 @@ end;
 
 // new version, markt, 21/jul/90
 // this uses a list of (cons bb next-other-list) instead of explicit recursion
-// and hence does not blow up the stack.  It does more allocation, and it would be 
+// and hence does not blow up the stack.  It does more allocation, and it would be
 // nice to get rid of the calls to append!
 // at least, there is an assaumption that other will usually be null
 // and so the append can be bypassed as unnecessary (in both calls -
@@ -146,7 +146,7 @@ define method  really-build-pgm-vector
      => (v :: <stretchy-basic-block-vector>)
   let next = top-block.bb-next-set;
   let other = top-block.bb-other-set;
-  let the-rest :: <list> =  
+  let the-rest :: <list> =
     if (~ (other == #())) concatenate(next, other) else next end;
   let current = pair(top-block, the-rest);
   let route-list :: <list> =  #();
@@ -165,7 +165,7 @@ define method  really-build-pgm-vector
 	push!(current, route-list);
         let next = new.bb-next-set;
         let other = new.bb-other-set;
-        let new-tail :: <list> = 
+        let new-tail :: <list> =
           if (~ (other == #())) concatenate(next, other) else next end;
 	current := pair(new, new-tail);
       end unless;

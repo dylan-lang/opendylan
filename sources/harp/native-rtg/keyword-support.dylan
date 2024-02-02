@@ -26,7 +26,7 @@ define variable *perform-key-checking* = #f;
 //   tmp1:      contains the #rest vector
 //   arg-count: contains the address of the hole for the last keyword param
 //   function:  contains function object as normal
-// On exit  
+// On exit
 //   The function IEP is tail-called
 //   MList, Function, Arg0 are preserved.
 
@@ -64,7 +64,7 @@ end entry-point;
 
 
 
-// PRIMITIVE-PROCESS-KEYS-CHECKING-ARGS-FOR-XEP is similar to 
+// PRIMITIVE-PROCESS-KEYS-CHECKING-ARGS-FOR-XEP is similar to
 // PRIMITIVE-PROCESS-KEYS-FOR-XEP
 // It additionally checks required arguments against the specializer types
 
@@ -82,7 +82,7 @@ define entry-point primitive-process-keys-checking-args-for-xep
     else 0 end;
   op--safe-process-keys(be, keys-in-registers,
 			check-keys?: *perform-key-checking*);
-  // Build a stack frame around the call 
+  // Build a stack frame around the call
   ins--preserve-registers-entry(be);
   op--number-required-times-4(be, req-num);
   op--specializer-checks-via-loop(be, err-tag, req-num);
@@ -93,13 +93,13 @@ end entry-point;
 
 
 
-define method op--safe-process-keys 
+define method op--safe-process-keys
     (be :: <harp-back-end>, keys-in-registers :: <integer>,
      #key check-keys? = #f)
   with-harp (be)
     // We need all the spare registers we can get for this bit
     // so for the Pentium, we push all live registers including frame.
-  
+
     greg the-keys;
     tmp 1, rest-vec;
     arg-count last-key;
@@ -108,12 +108,12 @@ define method op--safe-process-keys
     function function;
     mlist mlist;
     stack stack;
-  
+
     if (argument-on-stack?(rest-vec))
       ins--pop(be, rest-vec);
     end;
 
-    // We also need to push the key vector itself - because later code 
+    // We also need to push the key vector itself - because later code
     // may only keep derived pointers in the register set & we can't let it move
     op--method-keywords(be, the-keys);
 
@@ -148,18 +148,18 @@ end method;
 
 
 define method op--process-keys-aux
-    (be :: <harp-back-end>, rest-vec :: <register>, 
+    (be :: <harp-back-end>, rest-vec :: <register>,
      last-param :: <register>, copy-of-the-keys :: <register>,
      keys-in-registers :: <integer>,
-     #key preserve-fn = method (be) end, 
-          restore-fn = method (be) end, 
+     #key preserve-fn = method (be) end,
+          restore-fn = method (be) end,
           check-keys? = #f)
 
-  // Strategy: 
+  // Strategy:
   // First fill in the parameters with their default values.
   // Next scan down the supplied optional arguments, last to first,
   // looking for keywords. For each such keyword, check for it in the
-  // vector of accepted keys, storing it into the corresponding 
+  // vector of accepted keys, storing it into the corresponding
   // keyword parameter if found. If it wasn't found, then possibly error.
 
   with-harp (be)
@@ -181,7 +181,7 @@ define method op--process-keys-aux
     ins--and(be, all-keys, properties, ash(all-keys-p-mask, 2));
     ins--push(be, all-keys);     // Save the all-keys on the stack
     local method restore-fn-1 (be)
-            ins--add(be, stack, stack, 4); // drop all-keys 
+            ins--add(be, stack, stack, 4); // drop all-keys
             restore-fn(be);  // invoke the caller's restore fn
           end method;
 
@@ -217,13 +217,13 @@ define method op--process-keys-aux
     ins--push(be, first-opt); // lots of register pressure
     let all-keys-offset = 4; // stack offset of all-keys word
     local method new-restore-fn (be)
-            ins--add(be, stack, stack, 8); // drop first-opt & all-keys 
+            ins--add(be, stack, stack, 8); // drop first-opt & all-keys
             restore-fn(be);  // invoke the caller's restore fn
           end method;
 
     // Now scan down the supplied optionals
     ins--bra(be, loop-test);               // start by going to the end test
-    
+
     // Start the main loop
     ins--tag(be, start-loop);
     op--process-one-keyval-argument
@@ -242,12 +242,12 @@ end method;
 
 
 define method op--process-one-keyval-argument
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      curr-opt :: <register>,
      first-param :: <register>,
      first-key :: <register>,
      end-of-keys :: <register>,
-     all-keys-offset :: <integer>, 
+     all-keys-offset :: <integer>,
      restore-fn :: <function>,
      check-keys? :: <boolean>,
      keys-in-registers :: <integer>)
@@ -276,7 +276,7 @@ define method op--process-one-keyval-argument
     // If we get here, then the key wasn't expected
     if (check-keys?)
       ins--ld(be, all-keys, stack, all-keys-offset);
-      ins--bne(be, done, all-keys, 0); 
+      ins--bne(be, done, all-keys, 0);
       op--report-unknown-key(be, restore-fn, supplied-key);
     end if;
     ins--bra(be, done);
@@ -308,14 +308,14 @@ define method keyval-argument-case-generator
     let case-1 = max(max-num-arg-regs - num-cases, 0);
     let cases? = num-cases > 0;
     let tags :: <simple-object-vector> = make-tags(be, num-cases);
-  
+
     // test for the special cases (key in an argument register)
     for (tag :: <tag> in tags,
 	 i :: <integer> from 0)
       // key-offset is in bytes
       ins--beq(be, tag, key-offset, 4 * i);
     end for;
-    
+
     // fall through
     cases? & ins--bra(be, key-on-stack);
 
@@ -336,7 +336,7 @@ define method keyval-argument-case-generator
     else
       ins--st(be, supplied-value, first-param, key-offset);
     end;
-    
+
   end with-harp;
 end method;
 
@@ -425,7 +425,7 @@ end method;
 // generates a tail jump to the keyword processing entry point.
 
 define method op--tail-call-process-keys
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      rest-vec :: <register>, last-key :: <register>, required,
      #key set-mlist = #f, set-function = #f)
   let max-num-arg-regs = be.registers.arguments-passed-in-registers;
@@ -451,8 +451,8 @@ end method;
 // args against specializers will be used
 
 define method op--tail-call-process-keys-for-xep
-    (be :: <harp-back-end>, 
-     rest-vec :: <register>, last-key :: <register>, required, 
+    (be :: <harp-back-end>,
+     rest-vec :: <register>, last-key :: <register>, required,
      #key set-mlist = #f, set-function = #f)
   let max-num-arg-regs = be.registers.arguments-passed-in-registers;
   let keys-in-regs =
@@ -478,7 +478,7 @@ end method;
 
 define method op--tail-call-xep-key-processor
     (be :: <harp-back-end>, key-processor :: <constant-reference>,
-     rest-vec :: <register>, last-key :: <register>, 
+     rest-vec :: <register>, last-key :: <register>,
      set-mlist, set-function)
   with-harp (be)
     arg-count argc;
@@ -502,7 +502,7 @@ define method op--tail-call-xep-key-processor
     if (set-function)
       ins--move(be, function, set-function);
     end if;
-    ins--jmp(be, key-processor, max-num-arg-regs, 
+    ins--jmp(be, key-processor, max-num-arg-regs,
              mlist: #t, arg-count: #t);
   end with-harp;
 end method;
@@ -518,10 +518,10 @@ end method;
 
 
 define method op--process-keys-internal
-    (be :: <harp-back-end>, rest-vec :: <register>, 
+    (be :: <harp-back-end>, rest-vec :: <register>,
      last-key :: <register>, copy-of-the-keys :: <register>, #key
-     preserve-fn = method (be) end, 
-     restore-fn = method (be) end, 
+     preserve-fn = method (be) end,
+     restore-fn = method (be) end,
      check-keys? = #f)
 
   // !@#$
@@ -530,11 +530,11 @@ define method op--process-keys-internal
 
   // Strategy: Scan down the function keywords vector from last
   // to first. For each key, we scan along the optionals to
-  // see if a value was supplied. If so, we stick it in the 
-  // reserved space on the stack. If not, we get the default instead. 
+  // see if a value was supplied. If so, we stick it in the
+  // reserved space on the stack. If not, we get the default instead.
   //
   // We keep a count of how many more times to go around the outer loop.
-  // To make it easier to index using the count, we multiply by 4, so 
+  // To make it easier to index using the count, we multiply by 4, so
   // that we get the count in bytes.
 
   with-harp (be)
@@ -546,16 +546,16 @@ define method op--process-keys-internal
     nreg opt-limit;            // the last opt
     let first-opt = rest-vec;  // the first opt
     let n-last-key = op--duplicate(be, last-key);
-  
+
     preserve-fn(be);
     ins--push(be, frame);
 
-    // Set up outer loop to look at each keyword parameter in turn 
+    // Set up outer loop to look at each keyword parameter in turn
     // (backwards)
-  
+
     // set up the count (raw number of keys times 4)
     op--keywords-size-times-4(be, key-count);
-  
+
     // set up the current key
     op--method-keywords(be, curr-key);    // the key vector itself
     ins--asl(be, tmp, key-count, 1);      // key vector size in bytes
@@ -566,13 +566,13 @@ define method op--process-keys-internal
     op--vector-size-times-4(be, opt-limit, rest-vec);
     ins--add(be, first-opt, rest-vec, 8);  // the first optional
     ins--add(be, opt-limit, opt-limit, first-opt); // just past live data
-  
+
     // Now start the loop
     let outer-loop-test = make-tag(be);
     let start-outer-loop = make-tag(be);
-  
+
     ins--bra(be, outer-loop-test);         // start by going to the end test
-  
+
     ins--tag(be, start-outer-loop);
     // do the body
     op--process-one-keyword(be, curr-key, curr-dest, first-opt, opt-limit);
@@ -591,7 +591,7 @@ end method;
 
 
 define method op--process-one-keyword
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      curr-key :: <register>,
      curr-dest :: <register>,
      first-opt :: <register>,
@@ -601,7 +601,7 @@ define method op--process-one-keyword
   let search-key = make-n-register(be);   // key we are looking for
   let the-value = search-key;             // register to hold the result
 
-  // initialize the loop to scan the supplied optionals from the 
+  // initialize the loop to scan the supplied optionals from the
   // first to the limit
   ins--move(be, curr-opt, first-opt);
   ins--ld(be, search-key, curr-key, 0);
@@ -638,6 +638,6 @@ define method op--process-one-keyword
   ins--st(be, the-value, curr-dest, 0);   // Put the key value into place
 end method;
 
-/// end of old code /////////////////////////////////////////// 
+/// end of old code ///////////////////////////////////////////
 
 */

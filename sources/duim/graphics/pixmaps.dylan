@@ -50,7 +50,7 @@ define method destroy-pixmap (pixmap :: <pixmap>) => ()
   #f
 end method destroy-pixmap;
 
-
+
 /// Pixmap mediums
 
 define open abstract class <pixmap-medium> (<medium>) end;
@@ -70,7 +70,7 @@ define sealed inline method make
   make-pixmap-medium(port, sheet, width: width, height: height)
 end method make;
 
-
+
 /// COPY-AREA
 
 define method copy-area
@@ -119,7 +119,7 @@ define sealed method copy-to-pixmap
   pixmap
 end method copy-to-pixmap;
 
-
+
 /// Pixmap sheets
 
 define sealed class <pixmap-sheet>
@@ -154,7 +154,7 @@ define method update-mirror-transform
   #f
 end method update-mirror-transform;
 
-
+
 /// Interface to pixmaps
 
 // Options can be WIDTH: and HEIGHT:
@@ -205,7 +205,7 @@ define method do-with-output-to-pixmap
   end
 end method do-with-output-to-pixmap;
 
-
+
 /// Double buffering
 
 define macro with-double-buffering
@@ -259,7 +259,7 @@ define method do-with-double-buffering
   end
 end method do-with-double-buffering;
 
-
+
 /// DRAW-PIXMAP
 
 define method draw-pixmap

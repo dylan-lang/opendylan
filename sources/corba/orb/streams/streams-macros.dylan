@@ -19,7 +19,7 @@ define thread variable *typecode-output-alignments* :: <deque> = make(<deque>);
 
 define macro with-typecode-output-alignment
   { with-typecode-output-alignment (?stream:expression) ?body:body end }
-    => 
+    =>
     { block ()
         push(*typecode-output-alignments*, marshalling-stream-output-index(?stream));
         ?body;
@@ -31,7 +31,7 @@ end macro;
 
 define macro with-typecode-input-alignment
   { with-typecode-input-alignment (?stream:expression) ?body:body end }
-    => 
+    =>
     { block ()
         push(*typecode-input-alignments*, marshalling-stream-input-index(?stream));
         ?body;
@@ -81,7 +81,7 @@ end macro;
 define macro with-little-endianness
   { with-little-endianness (?stream:expression, ?little-endian:expression) ?body:body end }
     =>
-    { 
+    {
     let stream = ?stream;
     let old-little-endian? :: <boolean> = marshalling-stream-little-endian?(stream);
     block ()

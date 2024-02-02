@@ -32,7 +32,7 @@ define constant $build-status-names
 define constant <build-progress>
   = one-of(#"init", #"onstack", #"active", #"running", #"done");
 
-
+
 
 // <jam-target> - internal class
 //
@@ -41,7 +41,7 @@ define constant <build-progress>
 define class <jam-target> (<object>)
   constant slot target-name :: <string>,
     required-init-keyword: name:;
-  
+
   // bound target location
   slot target-bound-locator :: false-or(<physical-locator>),
     init-value: #f, init-keyword: bound-locator:;
@@ -72,7 +72,7 @@ define class <jam-target> (<object>)
   slot target-includes-target :: false-or(<jam-target>), init-value: #f;
   constant slot target-internal? :: <boolean>,
     init-value: #f, init-keyword: internal?:;
-  
+
   // build action invocations
   constant slot target-action-invocations :: <stretchy-vector>
     = make(<stretchy-vector>);
@@ -98,19 +98,19 @@ define method jam-target-copy
   else
     let new-target = make(<jam-target>, name: target.target-name);
     new-jam.%jam-targets[target.target-name] := new-target;
-    
+
     for (value keyed-by variable-name in target.target-variables)
       new-target.target-variables[variable-name] := value;
     end for;
-    
+
     map-into(new-target.target-depends, curry(jam-target-copy, jam, new-jam),
              target.target-depends);
-    
+
     if (target.target-includes-target)
       new-target.target-includes-target
         := jam-target-copy(jam, new-jam, target.target-includes-target);
     end if;
-    
+
     for (invocation in target.target-action-invocations)
       add!(new-target.target-action-invocations,
            make(<jam-action-invocation>,
@@ -180,10 +180,10 @@ define method do-with-jam-target
       target.target-variables[var] := jam-variable(jam, var);
       jam-variable(jam, var) := outer-value;
     end for;
-  end block;  
+  end block;
 end method;
 
-
+
 // Builtins for dependency graph building
 
 define function jam-builtin-depends
@@ -286,7 +286,7 @@ define function jam-builtin-temporary
   #[]
 end function;
 
-
+
 // Binding targets
 
 define method jam-target-bind
@@ -311,7 +311,7 @@ define method jam-target-bind-aux
       let search
         = element(target.target-variables, "SEARCH", default: #f)
         | jam-variable(jam, "SEARCH");
-      
+
       if (~empty?(locate))
         let merged
           = merge-locators(locator, as(<directory-locator>, first(locate)));
@@ -353,7 +353,7 @@ define method file-modification-date
   end block
 end method;
 
-
+
 /// Action definitions and invocations
 
 define class <jam-action> (<object>)

@@ -36,13 +36,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   except they're defined in environment-tools, which we don't want to
 //   have to "use" here.
 
-
+
 /// ----------------------------------------------------------------------
 /// MISCELLANEOUS DEFINITIONS
 
 define constant <target-type> :: <type> = one-of(#"exe", #"dll");
 
-
+
 /// ----------------------------------------------------------------------
 /// PROJECT-WIZARD IMAGE HANDLING
 
@@ -68,7 +68,7 @@ define function initialize-wizard-images ()
   end;
 end function;
 
-
+
 /// ----------------------------------------------------------------------
 /// PROJECT-WIZARD PERSISTENT OPTIONS
 
@@ -103,7 +103,7 @@ define function project-wizard-default-location
   end
 end function project-wizard-default-location;
 
-
+
 /// ----------------------------------------------------------------------
 /// PROJECT-WIZARD STRINGS
 
@@ -1923,7 +1923,7 @@ end method;
 
 // None of the fields for the header-page are required.
 
-
+
 /// ----------------------------------------------------------------------
 /// INTER-PAGE DEPENDENCIES
 
@@ -2031,7 +2031,7 @@ define function update-wizard-from-type (frame :: <project-wizard-frame>) => ()
 end function update-wizard-from-type;
 
 
-
+
 /// ----------------------------------------------------------------------
 /// WRITING OUT THE PROJECT
 
@@ -2117,7 +2117,7 @@ define function handle-write-project-failed-error
   #f
 end function;
 
-
+
 /// ----------------------------------------------------------------------
 /// PERSISTENT STATE
 
@@ -2149,7 +2149,7 @@ define function update-project-wizard-defaults
   settings.show-version   := show-version?;
 end function update-project-wizard-defaults;
 
-
+
 /// ----------------------------------------------------------------------
 /// MAIN ENTRY POINT
 

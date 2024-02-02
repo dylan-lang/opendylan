@@ -31,7 +31,7 @@ define method set-property
   working-directory() := locator
 end method set-property;
 
-
+
 /// Change directory command
 
 define class <change-directory-command> (<basic-command>)
@@ -56,7 +56,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// OS command
 
 define class <operating-system-command> (<basic-command>)
@@ -89,7 +89,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Operating system commands
 
 define command-group system

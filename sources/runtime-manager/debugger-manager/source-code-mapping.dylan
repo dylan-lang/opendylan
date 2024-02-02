@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 ///// RESOLVE-SOURCE-CODE-POSITION
-//    A more general function to map a position in a source file to a 
+//    A more general function to map a position in a source file to a
 //    remote instruction address, possibly with the help of information
 //    from the compiler.
 
@@ -38,13 +38,13 @@ define method resolve-source-code-position
 	    end if;
           let (addr, exact) =
             resolve-source-location
-              (path, 
-               sr.source-record-name | "unnamed-source-record.dylan", 
-               line: line-number, 
+              (path,
+               sr.source-record-name | "unnamed-source-record.dylan",
+               line: line-number,
                column: column-number,
                library: lib);
           if (addr)
-            let (sym, byte-offset) = 
+            let (sym, byte-offset) =
                symbol-table-symbol-relative-address(table, addr);
             if (sym)
               relative-symbol := sym;
@@ -66,17 +66,17 @@ define method resolve-source-code-position
     let lib = compilation-context-component(application, compilation-context);
     let (lambda, byte-offset) =
       source-position-compiled-lambda
-        (compilation-context, 
-         sr, 
+        (compilation-context,
+         sr,
          line-number,
          interactive-only?: interactive-only?);
     if (lambda & byte-offset)
-      let sym-name = 
+      let sym-name =
         compiled-lambda-symbolic-name(compilation-context, lambda);
       let sym = symbol-table-find-symbol(table, sym-name, library: lib);
       if (sym)
         relative-symbol := sym;
-        address := 
+        address :=
           byte-indexed-remote-value(sym.remote-symbol-address, byte-offset);
         offset := byte-offset;
       end if;
@@ -100,16 +100,16 @@ define method source-location-remote-address
            entry-point-only? = #f, compilation-context = #f)
   => (address :: false-or(<remote-value>))
   let source-record = source-location.source-location-source-record;
-  let (filename, line-number) = 
-    source-line-location(source-record, 
+  let (filename, line-number) =
+    source-line-location(source-record,
                          source-location.source-location-start-line);
   unless (filename)
     filename := "no-one-has-a-file-with-this-name.dylan"
   end unless;
   let (address, symbol, offset) =
-    resolve-source-code-position(application, 
-                                 compilation-context, 
-                                 source-record, 
+    resolve-source-code-position(application,
+                                 compilation-context,
+                                 source-record,
                                  line-number,
                                  interactive-only?: interactive-only?);
   if (entry-point-only?)
@@ -139,7 +139,7 @@ define method remote-address-source-location
   // a symbol corresponding to this address.
 
   let interactive-table = application.debug-target-symbol-table;
-  let (sym, offset) = 
+  let (sym, offset) =
     symbol-table-symbol-relative-address(interactive-table, address);
 
   if (sym)

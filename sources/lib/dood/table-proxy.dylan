@@ -11,7 +11,7 @@ define method read-object-using-class-at
  => (res :: <table>)
   let size = read-object(dood);
   let tbl  = make(class, size: size);
-  dood-register-read-object(dood, tbl, address); 
+  dood-register-read-object(dood, tbl, address);
   for (i :: <integer> from 0 below size)
     let value = read-object(dood);
     let key   = read-object(dood);
@@ -28,19 +28,19 @@ define inline function walk-table-slots
        i :: <integer> from 0)
     if (instance?(object, <dood-lazy-table>))
       local method mark-lazy-slot-using
-		(dood :: <dood>, x, address :: <address>, 
-		 slotd :: <dood-slot-descriptor>, offset :: <integer>, 
+		(dood :: <dood>, x, address :: <address>,
+		 slotd :: <dood-slot-descriptor>, offset :: <integer>,
 		 force? :: <boolean>)
 	      make-address-proxy(dood, address, offset);
 	    end method,
   	    method force-lazy-slot (table :: <dood-lazy-table>, x :: <dood-address-proxy>)
 	      // FULLY RESOLVED AT THIS POINT BECAUSE OF REPEATED-SIZE
 	      // THUS THIS WILL NEVER BE CALLED
-	      dood-force-address-proxy(x) 
+	      dood-force-address-proxy(x)
 	    end method;
       let offset = i * 2 + 1;
       walk-lazy-slot
-	(dood, info, object, value, offset, 
+	(dood, info, object, value, offset,
 	 force-lazy-slot, mark-lazy-slot-using);
     else
       walk-slot(dood, info, object, value);
@@ -49,12 +49,12 @@ define inline function walk-table-slots
   end for;
 end function;
 
-define method walk-slots 
+define method walk-slots
     (dood :: <dood>, info :: <walk-info>, object :: <table>)
   walk-table-slots(dood, info, object, object-class(object));
 end method;
 
-define method dood-repeated-size 
+define method dood-repeated-size
     (dood :: <dood>, object :: <table>) => (res :: <integer>)
   size(object) * 2
 end method;
@@ -73,16 +73,16 @@ end method;
 ///
 
 define dood-class <dood-lazy-table>
-    (<dood-mapped-and-owned-object>, 
+    (<dood-mapped-and-owned-object>,
      <mutable-explicit-key-collection>, <stretchy-collection>)
-  weak slot dood-lazy-table-resolved? = #t, 
+  weak slot dood-lazy-table-resolved? = #t,
     reinit-expression: #f;
   weak slot dood-lazy-table-source :: false-or(<dood-lazy-table>) = #f,
     init-keyword: source:;
-  constant slot dood-lazy-table-data :: <table> = make(<table>), 
+  constant slot dood-lazy-table-data :: <table> = make(<table>),
     init-keyword: data:;
 end dood-class;
-    
+
 define method key-test (table :: <dood-lazy-table>)
   => test :: <function>;
   \=
@@ -125,7 +125,7 @@ define sealed inline method element-setter
   dood-lazy-table-data(table)[key] := new-value;
 end method element-setter;
 
-define sealed method remove-key! 
+define sealed method remove-key!
     (table :: <dood-lazy-table>, key) => (present? :: <boolean>)
   dood-lazy-table-ensure-copied(table);
   remove-key!(dood-lazy-table-data(table), key)
@@ -140,11 +140,11 @@ define sealed inline method size (table :: <dood-lazy-table>) => (res :: <intege
   size(dood-lazy-table-data(table))
 end method;
 
-define method dood-force-table-value (table :: <dood-lazy-table>, key) 
+define method dood-force-table-value (table :: <dood-lazy-table>, key)
   table[key] // TOUCH IT
 end method;
 
-define inline function default-forward-iteration-protocol 
+define inline function default-forward-iteration-protocol
   (table :: <dood-lazy-table>)
     => (initial-state, limit,
         next-state :: <function>, finished-state? :: <function>,
@@ -152,31 +152,31 @@ define inline function default-forward-iteration-protocol
         current-element :: <function>, current-element-setter :: <function>,
         copy-state :: <function>)
   let (initial-state, limit, next-state, finished-state?,
-       current-key, current-element, current-element-setter, copy-state) 
+       current-key, current-element, current-element-setter, copy-state)
     = forward-iteration-protocol(dood-lazy-table-data(table));
   values(initial-state,
 	 limit,
-	 method (table :: <dood-lazy-table>, state) 
-	   next-state(dood-lazy-table-data(table), state) 
+	 method (table :: <dood-lazy-table>, state)
+	   next-state(dood-lazy-table-data(table), state)
 	 end method,
-	 method (table :: <dood-lazy-table>, state, limit) 
-	   finished-state?(dood-lazy-table-data(table), state, limit) 
+	 method (table :: <dood-lazy-table>, state, limit)
+	   finished-state?(dood-lazy-table-data(table), state, limit)
 	 end method,
-	 method (table :: <dood-lazy-table>, state) 
-	   current-key(dood-lazy-table-data(table), state) 
+	 method (table :: <dood-lazy-table>, state)
+	   current-key(dood-lazy-table-data(table), state)
 	 end method,
-	 method (table :: <dood-lazy-table>, state) 
-	   current-element(dood-lazy-table-data(table), state) 
+	 method (table :: <dood-lazy-table>, state)
+	   current-element(dood-lazy-table-data(table), state)
 	 end method,
-	 method (new-value, table :: <dood-lazy-table>, state) 
-	   current-element-setter(new-value, dood-lazy-table-data(table), state) 
+	 method (new-value, table :: <dood-lazy-table>, state)
+	   current-element-setter(new-value, dood-lazy-table-data(table), state)
 	 end method,
-	 method (table :: <dood-lazy-table>, state) 
+	 method (table :: <dood-lazy-table>, state)
 	   copy-state(dood-lazy-table-data(table), state)
 	 end method)
 end function default-forward-iteration-protocol;
 
-define sealed inline method forward-iteration-protocol 
+define sealed inline method forward-iteration-protocol
   (table :: <dood-lazy-table>)
     => (initial-state, limit,
         next-state :: <function>, finished-state? :: <function>,
@@ -201,7 +201,7 @@ define sealed method dood-lazy-table-resolve (table :: <dood-lazy-table>)
   end for;
 end method;
 
-define sealed inline method dood-lazy-forward-iteration-protocol 
+define sealed inline method dood-lazy-forward-iteration-protocol
   (table :: <table>)
     => (initial-state, limit,
         next-state :: <function>, finished-state? :: <function>,
@@ -211,7 +211,7 @@ define sealed inline method dood-lazy-forward-iteration-protocol
   forward-iteration-protocol(table)
 end method;
 
-define sealed inline method dood-lazy-forward-iteration-protocol 
+define sealed inline method dood-lazy-forward-iteration-protocol
   (table :: <dood-lazy-table>)
     => (initial-state, limit,
         next-state :: <function>, finished-state? :: <function>,
@@ -227,7 +227,7 @@ define method read-object-using-class-at
   let size = read-object(dood);
   let data = make(<object-table>, size: size);
   let tbl  = make(class, data: data);
-  dood-register-read-object(dood, tbl, address); 
+  dood-register-read-object(dood, tbl, address);
   for (i :: <integer> from 0 below size)
     let offset = i * 2 + 1;
     let value  = make-address-proxy(dood, address, offset);
@@ -245,17 +245,17 @@ define method walk-slots
     (dood, info, dood-lazy-table-data(object), object-class(object))
 end method;
 
-define method dood-repeated-size 
+define method dood-repeated-size
     (dood :: <dood>, object :: <dood-lazy-table>) => (res :: <integer>)
-  // TODO: NEED THIS TO BE CONDITIONAL ON WALK-INFO 
+  // TODO: NEED THIS TO BE CONDITIONAL ON WALK-INFO
   //       SO THAT WE CAN GET ACCURATE STATISTICS
   dood-lazy-table-ensure-copied(object);
   dood-lazy-table-ensure-resolved(object);
   dood-repeated-size(dood, dood-lazy-table-data(object))
 end method;
 
-define method dood-repeated-slot? 
-    (dood :: <dood>, class :: subclass(<dood-lazy-table>)) 
+define method dood-repeated-slot?
+    (dood :: <dood>, class :: subclass(<dood-lazy-table>))
  => (well? :: <boolean>)
   #t
 end method;
@@ -265,10 +265,10 @@ define method dood-compute-instance-size
  => (address :: <address>)
   1
 end method;
-
-/// 
+
+///
 /// LAZY-SYMBOL-TABLE
-/// 
+///
 
 define dood-class <dood-lazy-key-table> (<dood-lazy-table>)
   weak slot dood-lazy-table-address :: <address> = 0;
@@ -276,14 +276,14 @@ define dood-class <dood-lazy-key-table> (<dood-lazy-table>)
   weak slot dood-lazy-table-loaded-keys :: <simple-object-vector> = #[];
   weak slot dood-lazy-table-dood-state :: false-or(<dood-state>) = #f;
 end dood-class;
-    
+
 define method read-object-using-class-at
-    (dood :: <dood>, class :: subclass(<dood-lazy-key-table>), 
+    (dood :: <dood>, class :: subclass(<dood-lazy-key-table>),
      address :: <address>)
  => (res :: <dood-lazy-key-table>)
   let size :: <integer>            = read-object(dood);
   let tbl :: <dood-lazy-key-table> = make(class);
-  dood-register-read-object(dood, tbl, address); 
+  dood-register-read-object(dood, tbl, address);
   dood-lazy-table-address(tbl)     := address + 1 + 1;
   dood-lazy-table-size(tbl)        := size;
   dood-lazy-table-loaded-keys(tbl) := make(<simple-object-vector>, size: size);
@@ -308,16 +308,16 @@ define sealed inline method dood-lazy-table-ensure-copied
     dood-lazy-table-source(tbl)      := #f;
   end when;
 end method;
-
+
 ///
 /// FIRST-LAZY-TABLE
 ///
 
 define dood-class <dood-first-lazy-table> (<dood-lazy-key-table>)
 end dood-class;
-    
+
 define sealed inline method element
-    (table :: <dood-first-lazy-table>, key, #rest all-keys, #key default) 
+    (table :: <dood-first-lazy-table>, key, #rest all-keys, #key default)
  => (value)
   dood-lazy-table-ensure-copied(table);
   dood-lazy-table-ensure-resolved(table);
@@ -325,7 +325,7 @@ define sealed inline method element
 end method element;
 
 define sealed inline method element-setter
-    (new-value, table :: <dood-first-lazy-table>, key :: <symbol>) 
+    (new-value, table :: <dood-first-lazy-table>, key :: <symbol>)
  => (new-value)
   dood-lazy-table-ensure-copied(table);
   dood-lazy-table-ensure-resolved(table);
@@ -366,7 +366,7 @@ define sealed inline method dood-lazy-table-ensure-copied
     dood-lazy-table-source(tbl)  := #f;
   end when;
 end method;
-
+
 ///
 /// LAZY-SYMBOL-TABLE
 ///
@@ -448,7 +448,7 @@ define inline method dood-lazy-table-register-key-loaded
   //   add!(dood-lazy-table-loaded-keys(table), key)
 end method;
 
-define inline method binary-search 
+define inline method binary-search
     (keys, key, #key
      number-keys :: <function> = size,
      lookup :: <function> = element,
@@ -499,7 +499,7 @@ define inline method dood-lazy-table-load-key-at
         let key = dood-lazy-table-load-at(table, index);
         dood-lazy-table-register-key-loaded-at(key, table, index);
 	key
-      end 
+      end
 end method;
 
 define inline method dood-lazy-table-load-value-at
@@ -510,15 +510,15 @@ end method;
 define inline method dood-lazy-table-binary-search
     (table :: <dood-lazy-symbol-table>, key) => (result)
   binary-search
-    (table, key, 
-     number-keys: dood-lazy-table-size, 
+    (table, key,
+     number-keys: dood-lazy-table-size,
      lookup: dood-lazy-table-load-key-at,
      equal?: symbol-equal?, less-than?: symbol-less-than?)
 end method;
 
 define sealed method element
-    (table :: <dood-lazy-symbol-table>, key :: <symbol>, 
-     #key default = unsupplied()) 
+    (table :: <dood-lazy-symbol-table>, key :: <symbol>,
+     #key default = unsupplied())
  => (value)
   dood-lazy-table-ensure-copied(table);
   let value = element(dood-lazy-table-data(table), key, default: $unfound);
@@ -550,7 +550,7 @@ define sealed method element
 end method element;
 
 define sealed inline method element-setter
-    (new-value, table :: <dood-lazy-symbol-table>, key :: <symbol>) 
+    (new-value, table :: <dood-lazy-symbol-table>, key :: <symbol>)
  => (new-value)
   dood-lazy-table-ensure-copied(table);
   dood-lazy-table-register-key-loaded(table, key);
@@ -569,7 +569,7 @@ define sealed method dood-lazy-table-resolve
     with-dood-state (dood, state)
       for (key in keys, i from 0)
 	if (key) // loaded?
-	  when (found?(element(table, key, default: $unfound))) 
+	  when (found?(element(table, key, default: $unfound)))
 	    keys[i] := #f; // value loaded already
 	  end when;
 	else
@@ -587,7 +587,7 @@ define sealed method dood-lazy-table-resolve
   dood-lazy-table-dood-state(table)  := #f;
   dood-lazy-table-loaded-keys(table) := #[];
 end method;
-
+
 ///
 /// SET
 ///
@@ -597,7 +597,7 @@ define method read-object-using-class-at
  => (res :: <set>)
   let size = read-object(dood);
   let set  = make(class, size: size);
-  dood-register-read-object(dood, set, address); 
+  dood-register-read-object(dood, set, address);
   for (i :: <integer> from 0 below size)
     let key = read-object(dood);
     add!(set, key);
@@ -614,12 +614,12 @@ define inline function walk-set-slots
   end for;
 end function;
 
-define method walk-slots 
+define method walk-slots
     (dood :: <dood>, info :: <walk-info>, object :: <set>)
   walk-set-slots(dood, info, object, object-class(object));
 end method;
 
-define method dood-repeated-size 
+define method dood-repeated-size
     (dood :: <dood>, object :: <set>) => (res :: <integer>)
   size(object)
 end method;

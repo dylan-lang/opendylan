@@ -114,7 +114,7 @@ define method copy-policy
        use-isearch?:                   use-isearch?(policy))
 end method copy-policy;
 
-
+
 /// Command table policy
 
 // Called to install a new command table after the policy has been updated
@@ -135,7 +135,7 @@ define method install-command-set
   end
 end method install-command-set;
 
-
+
 /// Standard policies
 
 define constant $emacs-editor-policy

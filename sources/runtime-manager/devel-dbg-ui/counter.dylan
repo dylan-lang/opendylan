@@ -64,7 +64,7 @@ define method function-descriptor-locator-name (function :: <single-function-des
 end method;
 
 define method compute-function-descriptor-aggregates
-    (function :: <single-function-descriptor>, 
+    (function :: <single-function-descriptor>,
      filter :: <profile-set>, aggregates :: <collection>)
  => (res :: <simple-object-vector>)
   if (profile-set-member?(function, filter))
@@ -87,7 +87,7 @@ define method compute-function-descriptor-aggregates
 end method;
 
 define method initialize
-    (descriptor :: <single-function-descriptor>, 
+    (descriptor :: <single-function-descriptor>,
      #key debug-target, filter, aggregates, #all-keys) => ()
   next-method();
   local method false-or-as-symbol (name :: false-or(<string>))
@@ -173,7 +173,7 @@ define class <second-function-counters> (<function-counters>)
   slot function-counters-top-subtotal :: <integer> = 0;
 end class;
 
-define macro incf 
+define macro incf
   { incf(?lhs:expression) }
     => { ?lhs := ?lhs + 1 }
   { incf(?lhs:expression, ?value:expression) }

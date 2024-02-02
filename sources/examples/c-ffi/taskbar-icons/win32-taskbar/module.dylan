@@ -19,7 +19,7 @@ define module win32-taskbar
 
   export
     <NOTIFYICONDATA>, <PNOTIFYICONDATA>,
-    // IMPORTED: cbSize-value, cbSize-value-setter, 
+    // IMPORTED: cbSize-value, cbSize-value-setter,
     // IMPORTED: hWnd-value, hWnd-value-setter,
     uID-value, uID-value-setter,
     uFlags-value, uFlags-value-setter,

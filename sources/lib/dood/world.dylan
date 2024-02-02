@@ -19,7 +19,7 @@ define function bit-from-power-of-two
   iterate search (bit :: <integer> = 0, x :: <integer> = size)
     if (logbit?(0, x))
       bit
-    else 
+    else
       search(bit + 1, ash(x, -1))
     end if
   end iterate
@@ -29,9 +29,9 @@ define variable *dood-number-of-buffers*
   = $dood-default-number-of-buffers;
 define variable *dood-buffer-size*
   = $dood-default-buffer-size;
-define variable *dood-address-buffer-mask* 
+define variable *dood-address-buffer-mask*
   = mask-from-power-of-two(*dood-buffer-size*);
-define variable *dood-address-buffer-bit-offset* 
+define variable *dood-address-buffer-bit-offset*
   = bit-from-power-of-two(*dood-buffer-size*);
 
 define inline method dood-number-of-buffers ()
@@ -56,7 +56,7 @@ define constant $default-audit-locator
 
 define method open-log-stream () => (res :: false-or(<file-stream>))
   when ($auditing?)
-    make(<file-stream>, 
+    make(<file-stream>,
 	 locator:           $default-audit-locator,
 	 element-type:      <byte-character>,
 	 direction:         #"output",
@@ -65,10 +65,10 @@ define method open-log-stream () => (res :: false-or(<file-stream>))
   end when;
 end method;
 
-// define inline method audit 
+// define inline method audit
 //     (dood :: <dood>, format-string :: <byte-string>, #rest arguments)
 //   when ($auditing?)
-//     apply(format, dood-world-log-stream(dood-world(dood)), 
+//     apply(format, dood-world-log-stream(dood-world(dood)),
 // 	  format-string, dood-index(dood), arguments)
 //   end when;
 // end method;
@@ -78,7 +78,7 @@ define class <dood-world> (<object>)
 //  slot dood-world-objects :: <dood-table> = make-weak-key-table();
   constant slot dood-world-classes :: <object-table> = make(<object-table>);
   slot dood-world-buffer-pool :: <buffer-vector>
-    = make(<buffer-vector>, 
+    = make(<buffer-vector>,
 	   number-of-buffers: dood-number-of-buffers(),
 	   buffer-size:       dood-buffer-size());
   slot dood-world-dood-next-index :: <integer> = 0;
@@ -116,15 +116,15 @@ define method dood-world-reset (world :: <dood-world>) => ()
 //  dood-world-objects(world) := make-weak-key-table();
   dood-world-doods(world) := make(<object-table>);
   dood-world-buffer-pool(world)
-    := make(<buffer-vector>, 
-	    number-of-buffers: $dood-default-number-of-buffers, 
+    := make(<buffer-vector>,
+	    number-of-buffers: $dood-default-number-of-buffers,
 	    buffer-size:       $dood-default-buffer-size);
   dood-world-log-stream(world) := open-log-stream();
 end method;
 
 //// DOODS
 
-define method dood-world-find-dood 
+define method dood-world-find-dood
     (world :: <dood-world>, name :: <symbol>) => (dood :: false-or(<dood>))
   element(dood-world-doods(world), name, default: #f)
 end method;
@@ -135,20 +135,20 @@ define method dood-index (dood :: <dood>) => (res :: <integer>)
     | begin
 	let index = dood-world-dood-next-index(world);
 	dood-world-dood-indices(world)[dood] := index;
-	format(dood-world-log-stream(world), "%dO%s\n", 
+	format(dood-world-log-stream(world), "%dO%s\n",
 	       index, as(<string>, dood-locator(dood)));
 	dood-world-dood-next-index(world) := index + 1;
 	index
       end
 end method;
 
-define method dood-world-register-dood 
+define method dood-world-register-dood
     (world :: <dood-world>, dood :: <dood>) => ()
   dood-world-doods(world)[dood-name(dood)] := dood;
   $auditing? & dood-index(dood);
 end method;
 
-define method dood-world-unregister-dood 
+define method dood-world-unregister-dood
     (world :: <dood-world>, dood :: <dood>) => ()
   remove-key!(dood-world-doods(world), dood-name(dood));
   if (empty?(dood-world-doods(world)))

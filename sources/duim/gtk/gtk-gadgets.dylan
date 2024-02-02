@@ -12,7 +12,7 @@ define constant $default-label = "";
 define constant $button-box-x-spacing = 3;
 define constant $button-box-y-spacing = 3;
 
-
+
 /// GTK gadgets
 
 define class <gadget-mirror> (<widget-mirror>)
@@ -209,7 +209,7 @@ define sealed method activate-gtk-gadget
   next-method()
 end method activate-gtk-gadget;
 
-
+
 /// Exit, cancel, default button, etc.
 
 /*---*** Do we need any of this?
@@ -298,7 +298,7 @@ end method cancel-gadget;
 
 //---*** What do we do about setting the color and font of a gadget?
 
-
+
 /// Labels
 
 define sealed class <gtk-label>
@@ -350,7 +350,7 @@ define sealed method update-mirror-label
   end
 end method update-mirror-label;
 
-
+
 /// Separators
 define sealed class <gtk-separator>
     (<gtk-gadget-mixin>,
@@ -397,7 +397,7 @@ define sealed method make-gtk-mirror
   end
 end method make-gtk-mirror;
 
-
+
 /// Buttons
 
 define class <gtk-button-mixin> (<gtk-gadget-mixin>, <button>)
@@ -426,7 +426,7 @@ define sealed method button-box-spacing
   end
 end method button-box-spacing;
 
-
+
 /// Push buttons
 
 define sealed class <gtk-push-button>
@@ -483,7 +483,7 @@ define sealed method gadget-default?-setter
   default?
 end method gadget-default?-setter;
 
-
+
 /// Radio buttons
 
 define sealed class <gtk-radio-button>
@@ -567,7 +567,7 @@ define sealed method note-gadget-value-changed
   mirror & update-mirror-attributes(gadget, mirror)
 end method note-gadget-value-changed;
 
-
+
 /// Check buttons
 
 define sealed class <gtk-check-button>
@@ -640,7 +640,7 @@ define sealed method note-gadget-value-changed
   mirror & update-mirror-attributes(gadget, mirror)
 end method note-gadget-value-changed;
 
-
+
 /// Text gadgets
 
 define method gtk-copy-text (text :: <c-string>) => (str :: <string>)
@@ -797,7 +797,7 @@ define sealed method text-caret-position-setter
   end;
 end method text-caret-position-setter;
 
-
+
 /// Text and password fields
 
 /// Text fields
@@ -905,7 +905,7 @@ define sealed method class-for-make-pane
   values(<gtk-password-field>, #f)
 end method class-for-make-pane;
 
-
+
 /// Text editors
 
 define sealed class <gtk-text-editor>
@@ -975,7 +975,7 @@ define method gadget-text-setter
   text;
 end;
 
-
+
 /// Scroll bars
 
 define sealed class <gtk-scroll-bar>
@@ -1853,7 +1853,7 @@ define method handle-row-expanded
   #t;
 end;
 
-
+
 /// Option boxes
 
 define sealed class <gtk-option-box>
@@ -1896,7 +1896,7 @@ define sealed method note-gadget-value-changed
   update-gadget-selection(gadget)
 end method note-gadget-value-changed;
 
-
+
 /// Combo boxes
 
 define sealed class <gtk-combo-box>
@@ -1975,7 +1975,7 @@ define sealed method note-gadget-items-changed
   end
 end method note-gadget-items-changed;
 
-
+
 /// Viewports
 
 define sealed class <gtk-viewport>
@@ -2006,7 +2006,7 @@ define method make-gtk-mirror
   end
 end method;
 
-
+
 /// Borders
 
 /*---*** Use the fake border for now...
@@ -2089,7 +2089,7 @@ define sealed method draw-border
 end method draw-border;
 */
 
-
+
 /// Sliders
 
 define sealed class <gtk-slider>
@@ -2162,7 +2162,7 @@ define sealed method note-gadget-value-range-changed
   ignoring("note-gadget-value-range-changed on <slider>")
 end method note-gadget-value-range-changed;
 
-
+
 /// Tool bars
 
 //---*** Someday we should do these for real!
@@ -2212,10 +2212,10 @@ define method note-sheet-unmapped (gadget :: <gtk-tool-bar>) => ()
   end
 end method note-sheet-unmapped;
 
-
+
 /// Status bars
 
-
+
 /*---*** No status bar for now...
 define sealed class <gtk-status-bar>
     (<gtk-gadget-mixin>,

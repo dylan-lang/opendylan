@@ -120,4 +120,4 @@ define function DLL-get-factory (ocx-local-data :: <pair>,
     QueryInterface(factory, riid)
   end if
 end DLL-get-factory;
- 
+

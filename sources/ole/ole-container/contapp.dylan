@@ -25,11 +25,11 @@ define open primary COM-interface <container-app> ( <object-with-dll-lock>,
   slot app-ole-in-place-frame :: <container-ole-in-place-frame>;
 
   slot container-storage :: <LPSTORAGE> = $null-interface;
-	
+
   slot container-documents :: <list> = #(); // document objects
-	
+
   slot context-help-mode :: <boolean> = #f;
-	
+
   slot help-menu-mode :: <boolean> = #f;
 
   slot container-main-menu :: <HMENU> = $NULL-HMENU;
@@ -38,10 +38,10 @@ define open primary COM-interface <container-app> ( <object-with-dll-lock>,
   slot in-place-active-object :: <LPOLEINPLACEACTIVEOBJECT> = $null-interface;
   slot active-object-name :: <byte-string> = "";
   slot active-object-window :: <HWND> = $NULL-HWND; // HWND of UIActive Object
-	
+
   // Color palette used by container
   slot app-standard-palette :: <HPALETTE> = null-handle(<HPALETTE>);
-	
+
 end <container-app>;
 
 define method initialize ( app :: <container-app>, #rest ignore,
@@ -63,7 +63,7 @@ define method terminate (app :: <container-app>) => ();
   OutputDebugString( "terminate(<container-app>)\r\n");
   container-destroy-documents(app);
   // Release the Storage
-  unless ( null?(app.container-storage) ) 
+  unless ( null?(app.container-storage) )
     Release(app.container-storage);
     app.container-storage := $null-interface;
   end unless;
@@ -90,7 +90,7 @@ end;
 define open generic container-add-frame-ui(app :: <object>);
 
 define method container-add-frame-ui(app :: <container-app>) => ();
-	
+
   IOleInPlaceFrame/SetMenu(app.app-ole-in-place-frame,
 			   $NULL-HMENU, null-pointer(<HOLEMENU>), $NULL-HWND);
   container-release-border-space(app);
@@ -114,7 +114,7 @@ end method container-release-border-space;
 
 
 // A container should use this instead of TranslateAccelerator in its
-// event loop in order to properly handle accelerator keys belonging to 
+// event loop in order to properly handle accelerator keys belonging to
 // either the container or to an active embedded object.
 // Returns #t if an accelerator was handled, or #f if the caller
 // should call TranslateMessage and DispatchMessage.
@@ -128,7 +128,7 @@ define method container-handle-accelerators(app :: <container-app>,
     #f
   else
     let activeobj = app.in-place-active-object;
-    if ( (~ null?(activeobj) ) & 
+    if ( (~ null?(activeobj) ) &
        // if we have an in-place active object, give it first chance
        // at handling the event.
        (IOleInPlaceActiveObject/TranslateAccelerator(activeobj, msg)
@@ -183,7 +183,7 @@ define method IOleWindow/ContextSensitiveHelp(app :: <container-app>,
 
   let result :: <HRESULT> = $S-OK;
   if ( app.context-help-mode ~= enter-mode? )
-	        
+
     app.context-help-mode := enter-mode?;
 
     // this code "trickles" the context sensitive help via shift+f1
@@ -207,7 +207,7 @@ define method container-context-help ( app :: <container-app> )
  => (do-help? :: <boolean>);
   if ( app.help-menu-mode | app.context-help-mode )
     if ( app.context-help-mode )
-	                
+
       // clear context sensitive help flag
       app.context-help-mode := #f;
 
@@ -216,7 +216,7 @@ define method container-context-help ( app :: <container-app> )
       // CSH state.  See the technotes for details.
       let activeobj = app.in-place-active-object;
       unless ( null?(activeobj) )
-	let ( status, interface ) = 
+	let ( status, interface ) =
 	  QueryInterface(activeobj, $IID-IOleInPlaceObject);
 	unless ( FAILED?(status) )
 	  let in-place-object :: <LPOLEINPLACEOBJECT> =
@@ -241,7 +241,7 @@ define method container-context-help ( app :: <container-app> )
     #f
   end if;
 end method container-context-help;
-
+
 
 /* OLE2NOTE: forward the WM_QUERYNEWPALETTE message (via
 **    SendMessage) to UIActive in-place object if there is one.
@@ -286,7 +286,7 @@ define method container-palette-changed ( app :: <container-app>,
  => ( handled? :: <boolean> );
 
   let hWndPalChg :: <HWND> = c-type-cast(<HWND>, wParam);
-	  
+
   if ( app-window ~= hWndPalChg )
     select-palette(app-window, app.app-standard-palette,
 		   #t // fBackground
@@ -301,7 +301,7 @@ define method container-palette-changed ( app :: <container-app>,
   //    whether they use color palettes themselves--their objects
   //    may use color palettes.
   //    (see ContainerDoc_ForwardPaletteChangedMsg for more info)
-  // 
+  //
   let handled? :: <boolean> = #f;
   for ( site in app.container-documents )
     if( ~ null?(site.document-ui-active-window) )

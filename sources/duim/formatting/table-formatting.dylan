@@ -123,7 +123,7 @@ define method match-output-records
   & record.%min-height == min-height
 end method match-output-records;
 
-
+
 /// Walking table structure
 
 define method do-table-rows-or-columns
@@ -198,7 +198,7 @@ define method do-table-elements-1
   error("Expected a record of type %=, but this is not a table component", type)
 end method do-table-elements-1;
 
-
+
 /// Table formatting engine
 
 //---*** Reconcile with 'compose-space' and 'allocate-space'
@@ -388,7 +388,7 @@ define method layout-multiple-columns
   end
 end method layout-multiple-columns;
 
-
+
 /// The table formatter
 
 define method do-formatting-table

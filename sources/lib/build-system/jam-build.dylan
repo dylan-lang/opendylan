@@ -56,7 +56,7 @@ define method jam-read-mkf
   end for;
 end method;
 
-
+
 
 define thread variable *mangler* = make(<mangler>);
 
@@ -73,7 +73,7 @@ define method jam-mangle
   end select;
 end method;
 
-
+
 
 define variable *cached-build-script* :: false-or(<file-locator>) = #f;
 define variable *cached-jam-state* :: false-or(<jam-state>) = #f;

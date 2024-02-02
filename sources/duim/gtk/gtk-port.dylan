@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $caret-width :: <integer> = 2;
 
-
+
 /// GTK ports
 
 define sealed class <gtk-port> (<basic-port>)
@@ -66,7 +66,7 @@ define function shutdown-gtk-duim ()
   do(destroy-port, ports)
 end function shutdown-gtk-duim;
 
-
+
 /// Beeping, etc
 
 define sealed method beep
@@ -74,7 +74,7 @@ define sealed method beep
   gdk-beep()
 end method beep;
 
-
+
 /// Pointer position hacking
 
 define sealed method do-pointer-position
@@ -207,7 +207,7 @@ define sealed method realize-cursor
     end
 end method realize-cursor;
 
-
+
 /// Focus and carets
 
 define sealed class <gtk-caret> (<basic-caret>)
@@ -257,7 +257,7 @@ define sealed method do-hide-caret
   end
 end method do-hide-caret;
 
-
+
 /// Input focus handling
 
 define sealed method note-focus-in
@@ -280,7 +280,7 @@ define sealed method note-focus-out
   ignoring("note-focus-out");
 end method note-focus-out;
 
-
+
 /// Port defaults
 
 define method port-default-foreground

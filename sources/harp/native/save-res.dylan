@@ -43,17 +43,17 @@ end macro;
 define macro load-stack-arg-n-template-definer
   { define ?back-end:name load-stack-arg-n-template }
     =>
-  { define ?back-end ## "-template" load-stack-arg-n 
-    
+  { define ?back-end ## "-template" load-stack-arg-n
+
       pattern (?=be, stack? :: any, d, n :: <integer>)
         unless (d.arg-spill?)
           let ld-op = op-element(?=be.instructions, ld);
           operate-on-stack-arg(?=be, ld-op, d, n, stack?);
         end unless;
-    
+
       pattern (?=be, stack? :: any, d :: any, n)
         #f;
-    
+
     end ?back-end ## "-template" }
 end macro;
 
@@ -61,7 +61,7 @@ define macro load-frame-offset-template-definer
   { define ?back-end:name load-frame-offset-template }
     =>
   { define ?back-end ## "-template" load-frame-offset
-    
+
       pattern (?=be, stack? :: any, d, n :: <integer>)
         if (n < 0)
           harp-out(?=be)
@@ -72,7 +72,7 @@ define macro load-frame-offset-template-definer
             ld(?=be, d, ?=reg--frame, 4 * (2 + n));
           end;
         end;
-    
+
     end ?back-end ## "-template" }
 end macro;
 
@@ -80,7 +80,7 @@ define macro store-frame-offset-template-definer
   { define ?back-end:name store-frame-offset-template }
     =>
   { define ?back-end ## "-template" store-frame-offset
-    
+
       pattern (?=be, s, n :: <integer>)
         if (n < 0)
           harp-out(?=be)
@@ -91,7 +91,7 @@ define macro store-frame-offset-template-definer
             st(?=be, s, ?=reg--frame, 4 * (2 + n));
           end;
         end;
-    
+
     end ?back-end ## "-template" }
 end macro;
 
@@ -111,7 +111,7 @@ define macro store-stack-arg-n-template-definer
 end macro;
 
 
-define method operate-on-stack-arg 
+define method operate-on-stack-arg
     (be :: <harp-native-back-end>, op :: <op>, dest, n :: <integer>, stack?) => ()
   let wstack = be.variables.with-stack;
   unless (stack? == wstack | be.variables.compiling-defasm)
@@ -125,14 +125,14 @@ define method operate-on-stack-arg
 end method;
 
 
-// REMOVE-OPTIONALS takes an arg-spill index which gives the 
+// REMOVE-OPTIONALS takes an arg-spill index which gives the
 // location of the count of bytes on the stack. All the optional
 // arguments from the count backwards are popped from the stack.
 // The second arguments is either #f, or a pointer into the stack
 // which must be updated because of the remove optionals. This pointer
 // may be specified either as a register or as a stack index.
 
-define constant remove-optionals-runtime = 
+define constant remove-optionals-runtime =
     runtime-reference("primitive_remove_optionals");
 
 
@@ -140,13 +140,13 @@ define macro remove-optionals-template-definer
   { define ?back-end:name remove-optionals-template (?tmp1:name, ?tmp2:name, ?tmp3:name) }
     =>
   { define ?back-end ## "-template" remove-optionals
-    
+
       // Stack pointer specified as an arg-spill index
       pattern (?=be, offset :: <integer>, pointer-index :: <integer>)
         let adjust-size = ?tmp1;
         let pointer-reg = ?tmp2;
         find-size-for-stack-pointer-adjust(?=be, adjust-size, offset);
-        harp-out (?=be) 
+        harp-out (?=be)
           // First find the original pointer
           load-stack-arg-n(?=be, #f, pointer-reg, pointer-index);
           // Add in the adjustment
@@ -155,17 +155,17 @@ define macro remove-optionals-template-definer
           store-stack-arg-n(?=be, pointer-reg, pointer-index);
           remove-optionals(?=be, offset, #f);
         end;
-    
+
       // Stack pointer specified as a register
       pattern (?=be, offset :: <integer>, stack-pointer)
         let adjust-size = ?tmp1;
         find-size-for-stack-pointer-adjust(?=be, adjust-size, offset);
-        harp-out (?=be) 
+        harp-out (?=be)
           // now add this to stack pointer
           add(?=be, stack-pointer, stack-pointer, adjust-size);
           remove-optionals(?=be, offset, #f);
         end;
-    
+
       pattern (?=be, offset :: <integer>, stack-pointer :: any)
         check-for-valid-stack-adjust(?=be, offset);
         harp-out (?=be)
@@ -203,13 +203,13 @@ end method;
 // by which to move the return address to pop the stack.
 // The first argument represents the count register. This may either be #f
 // (to indicate that nothing needs to be done to the count) or a virtual
-// register (the register is the count as an arg-spill which is updated 
-// to reflect the reduced arguments on the stack) or an integer (to 
+// register (the register is the count as an arg-spill which is updated
+// to reflect the reduced arguments on the stack) or an integer (to
 // indicate that the count and optionals should be removed from the stack.
 // in this case the integer is the arg-spill index of the count register).
 // The last argument is a register which points into the stack at a location
 // which will be effected by the removal of the optionals. This register will
-// be updated to point to the same place after the shuffle on the stack. The 
+// be updated to point to the same place after the shuffle on the stack. The
 // register may be specified either as an arg-spill index or a real register.
 
 
@@ -267,7 +267,7 @@ define macro move-return-address-template-definer
 end macro;
 
 
-// ADJUST-STACK is the opposite of MOVE-RETURN-ADDRESS. It  takes an 
+// ADJUST-STACK is the opposite of MOVE-RETURN-ADDRESS. It  takes an
 // offset, which is the amount in bytes to push onto the stack before
 // the return address.
 
@@ -294,13 +294,13 @@ define macro adjust-stack-template-definer
 end macro;
 
 
-// LOAD-COUNT-ADJUSTING-STACK is a combination of ADJUST-STACK and 
-// LOAD-STACK-ARG-N. Conceptually, the stack is first adjusted, then 
+// LOAD-COUNT-ADJUSTING-STACK is a combination of ADJUST-STACK and
+// LOAD-STACK-ARG-N. Conceptually, the stack is first adjusted, then
 // the count is updated on the stack, the and the count virtual register
-// is loaded. This is merged into a single instruction to simplify the 
+// is loaded. This is merged into a single instruction to simplify the
 // need to calculate stack indices in the prolog.
 //
-// Note that the arg-spill location of the count register (and all other 
+// Note that the arg-spill location of the count register (and all other
 // arg-spills) are defined to be valid _after_ this instruction, not before.
 
 
@@ -311,7 +311,7 @@ define macro with-load-count-adjusting-stack-ops
            // ensure that the count register is arg-spilled.
            clash-fn := ?back-end ## "-method" (duu)
                          list(pair(duu-def(1), ?back-end ## "-allocatable-registers-list"));
-                       end ?back-end ## "-method"; 		  
+                       end ?back-end ## "-method";
          end }
 end macro;
 
@@ -320,7 +320,7 @@ define macro load-count-adjusting-stack-template-definer
   { define ?back-end:name load-count-adjusting-stack-template }
     =>
   { define ?back-end ## "-template" load-count-adjusting-stack
-      pattern (?=be, stack? :: any, count-reg :: <ispill> by colour, 
+      pattern (?=be, stack? :: any, count-reg :: <ispill> by colour,
                offset :: <integer>, n :: <integer>)
         unless (offset == 0)
           harp-out (?=be)
@@ -346,7 +346,7 @@ define macro load-count-adjusting-stack-template-definer
 end macro;
 
 
-define method check-for-valid-stack-adjust 
+define method check-for-valid-stack-adjust
     (be :: <harp-native-back-end>, offset :: <integer>)
   if ((offset ~== 0) & ((offset < 0) | be.variables.with-stack))
     harp-error("Invalid attempt to adjust stack by %= when stack state ~s.",

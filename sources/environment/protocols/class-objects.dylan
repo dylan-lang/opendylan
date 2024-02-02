@@ -55,7 +55,7 @@ define open generic do-init-keywords
      #key client, inherited? :: <boolean>)
  => ();
 
-
+
 /// Project dispatching methods
 
 define method application-object-class
@@ -138,7 +138,7 @@ define method do-init-keywords
     & do-init-keywords(function, server, class, client: client, inherited?: inherited?)
 end method do-init-keywords;
 
-
+
 /// Some convenience functions built on these protocols
 
 define function class-direct-subclasses
@@ -166,7 +166,7 @@ define function class-slots
   collect-environment-objects(do-all-slots, server, class)
 end function class-slots;
 
-
+
 /// Object printing
 
 define method environment-object-type

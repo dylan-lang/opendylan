@@ -38,7 +38,7 @@ define frame <bank-frame> (<simple-frame>)
                        label: "Exit",
                        documentation: "Exits the application.",
                        activate-callback: exit-callback)
-                  )); 
+                  ));
    pane account-menu (frame)
      make(<menu>,
           label: "&Account",
@@ -51,8 +51,8 @@ define frame <bank-frame> (<simple-frame>)
                         label: "Debit Account...",
                         documentation: "Debits the selected account given an amount.",
                         activate-callback: debit-callback)));
-                                         
-    
+
+
    pane accounts-pane (frame)
      make(<table-control>, headings: list("Name", "Balance", "Limit"),
            generators: list(account-name, account-balance, account-limit),
@@ -84,7 +84,7 @@ define method credit-callback (gadget :: <gadget>) => ()
   let account = gadget-value(accounts-pane(bank-frame));
   if (account)
     let amount = prompt-for-amount(owner: bank-frame, title: "Credit ...");
-    when (amount) 
+    when (amount)
       credit-account(account, amount);
       update-gadget(accounts-pane(bank-frame));
     end;
@@ -98,11 +98,11 @@ define method debit-callback (gadget :: <gadget>) => ()
   let account = gadget-value(accounts-pane(bank-frame));
   if (account)
     let amount = prompt-for-amount(owner: bank-frame, title: "Debit ...");
-    when (amount) 
+    when (amount)
       block ()
 	debit-account(account, amount);
       exception (c :: <transaction-refused>)
-	notify-user(concatenate("Debit refused for the following reason: ", 
+	notify-user(concatenate("Debit refused for the following reason: ",
 				c.transaction-refused-reason),
 		    owner: bank-frame);
       end;
@@ -141,7 +141,7 @@ define method open-checking-account-callback (gadget :: <gadget>) => ()
 	 let account = open-checking-account(bank, name, limit);
 	 push-last(bank-accounts(bank-frame), account);
        exception (c :: <duplicate-account>)
-	 notify-user(concatenate("Cannot create another account for ", name, "!"), 
+	 notify-user(concatenate("Cannot create another account for ", name, "!"),
 		     owner: bank-frame);
        end;
        update-gadget(accounts-pane(bank-frame));
@@ -158,13 +158,13 @@ define method retrieve-account-callback (gadget :: <gadget>) => ()
 	       account-name(account) = name
 	     end,
 	     bank-frame.bank-accounts))
-      notify-user("Account already retrieved!", owner: bank-frame);       
+      notify-user("Account already retrieved!", owner: bank-frame);
     else
       block ()
 	let account = retrieve-account(bank, name);
 	push-last(bank-accounts(bank-frame), account);
       exception (c :: <non-existent-account>)
-	notify-user(concatenate("No existing account for ", name, "!"), 
+	notify-user(concatenate("No existing account for ", name, "!"),
 		    owner: bank-frame);
       end;
       update-gadget(accounts-pane(bank-frame));
@@ -193,11 +193,11 @@ end method close-account-callback;
 
 // utility functions
 
-define method prompt-for-name 
+define method prompt-for-name
    (#key title = "", owner)
  => (name :: false-or(<string>))
   let text-field = make(<text-field>, activate-callback: exit-dialog);
-  let dialog = make(<dialog-frame>, 
+  let dialog = make(<dialog-frame>,
                     title: title,
                     owner: owner,
                     layout: vertically ()
@@ -211,10 +211,10 @@ define method prompt-for-name
   end
 end method prompt-for-name;
 
-define method prompt-for-amount 
+define method prompt-for-amount
    (#key title = "", owner) => (amount :: false-or(<integer>))
   let text-field = make(<text-field>, activate-callback: exit-dialog);
-  let dialog = make(<dialog-frame>, 
+  let dialog = make(<dialog-frame>,
 		    title: title,
 		    owner: owner,
                     layout: vertically ()
@@ -224,7 +224,7 @@ define method prompt-for-amount
                             end,
                     input-focus: text-field);
   iterate prompt ()
-    if (start-dialog(dialog)) 
+    if (start-dialog(dialog))
       let text = gadget-value(text-field);
       let (amount, int-end) = string-to-integer(text, default: -1);
       if (amount >= 0 & int-end = text.size)

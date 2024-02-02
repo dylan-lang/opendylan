@@ -17,9 +17,9 @@ define open generic op--output-debug-string
 
 define runtime-primitive break
   // On entry:
-  //    
+  //
   // On exit: Don't exit. Break to debugger.
-  // 
+  //
   ins--halt(be);
   ins--rts-and-drop(be, 0);
 end runtime-primitive;
@@ -27,15 +27,15 @@ end runtime-primitive;
 
 define runtime-primitive error
   // On entry: No args
-  //    
+  //
   // On exit:  No exit. The code calls Dylan's ERROR
-  // 
+  //
   op--call-xep(be, dylan-error-function, primitive-error-string);
   ins--rts-and-drop(be, 0);
 end runtime-primitive;
 
 
-// Under-debugger is a variable which indicates whether there is an interest in 
+// Under-debugger is a variable which indicates whether there is an interest in
 // communicating with the debugger. By default it's set to 0. The Dylan debugger
 // will set it to something else if it is involved in communication with the app.
 //
@@ -44,20 +44,20 @@ define c-full-indirect runtime-variable under-debugger = "%running-under-dylan-d
 
 
 define runtime-primitive debug-message
-  // On entry: 
+  // On entry:
   //    (format-string, number-of-args, vector-of-args)
   //    NB: this takes an addition parameter from the Dylan
   //    primitive call. It turns out that this is unnecessary,
   //    so this value simply exists for historical and compatibility
   //    reasons. It's ignored by the implementation.
-  //    
+  //
   // If the debugger has asked to be informed of debug messages,
-  // then this primitive will break to the debugger with the 
+  // then this primitive will break to the debugger with the
   // stack containing the format string, followed by
   // the number of format args followed by the format args
   //
   // On exit:  No meaningful value
-  // 
+  //
   result result;
   stack stack;
   nreg argnum, data, size-in-words, size-in-bytes;
@@ -86,15 +86,15 @@ end runtime-primitive;
 
 
 define runtime-primitive invoke-debugger
-  // On entry: 
+  // On entry:
   //    (format-string, vector-of-args)
   //    This has a similar interface and implementation to debug-message
-  //   
+  //
   // If the dylan debugger is not parenting the application at the
   // time this primitive is called, then the primitive will call
   // OutputDebugString with the format-string template. This is so that
   // any foreign debugger that might be available will at least be
-  // able to relay some information about the error. 
+  // able to relay some information about the error.
   // Following this, the primitive pushes the format arguments onto
   // the stack, followed by a counter of those arguments, and finally
   // by the format-string itself. The dylan debugger will expect them
@@ -104,7 +104,7 @@ define runtime-primitive invoke-debugger
   // hard-coded breakpoint.
   //
   // On exit:  No meaningful value
-  // 
+  //
   result result;
   stack stack;
   nreg data, size-in-words, size-in-bytes, raw-string;
@@ -131,7 +131,7 @@ define runtime-primitive invoke-debugger
 end runtime-primitive;
 
 
-define c-runtime-primitive class-allocation-break 
+define c-runtime-primitive class-allocation-break
   c-result result;
   nreg string, class, count, size;
   tag shared-dbg, done;
@@ -146,7 +146,7 @@ define c-runtime-primitive class-allocation-break
   ins--push(be, size);
   ins--push(be, class);
   ins--halt(be);               // break to the debugger
-  ins--pop(be, result); 
+  ins--pop(be, result);
 
   ins--tag(be, done);
   ins--rts(be);

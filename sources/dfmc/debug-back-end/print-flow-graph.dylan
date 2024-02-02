@@ -106,7 +106,7 @@ define method temporary-properties (o :: <multiple-value-temporary>)
   concatenate(next-method(), "*")
 end method;
 
-
+
 //// COMPUTATIONS
 
 define method print-computations

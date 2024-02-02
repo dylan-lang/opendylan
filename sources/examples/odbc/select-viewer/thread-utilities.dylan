@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// This thread synchronization model lifted wholesale from the environment
-    
+
 define variable *thread-count* :: <integer> = 0;
 
 define constant $thread-lock :: <lock> = make(<lock>);
@@ -22,7 +22,7 @@ define method make-application-thread (#rest args, #key function) => ()
   end
 end method make-application-thread;
 
-define method application-thread-function 
+define method application-thread-function
     (function :: <function>) => (new-function :: <function>)
   method ()
     block ()

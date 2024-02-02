@@ -38,7 +38,7 @@ define macro with-harp-init-emitter
     => { begin
 	invoke-harp(?back-end,
 		    method(back-end :: <harp-back-end>)
-			
+
 			dynamic-bind (*emitting-init-code?* = #t,
 				      *emitting-data?*      = #f)
 
@@ -57,7 +57,7 @@ end macro with-harp-init-emitter;
 
 define macro with-harp-variables
   { with-harp-variables (?back-end:expression, ?keys:*) ?:body end }
-    => { 
+    => {
 	  let old-variables = ?back-end.cg-variables;
 
 	  block()
@@ -74,7 +74,7 @@ define macro with-harp-outputter
   { with-harp-outputter (?back-end:expression, ?stream:expression, ?ld:expression, ?keys:*)
       ?body:body
     end }
-    => { 
+    => {
 	  let locator = build-area-output-locator(?ld, ?keys);
 
 	  ?stream := open-emit-output(?back-end, locator, ?keys);
@@ -89,7 +89,7 @@ define macro with-harp-outputter
 	      end if;
             end block;
           end dynamic-bind;
-	  
+
        }
 end macro with-harp-outputter;
 
@@ -170,7 +170,7 @@ end macro named-entry-point-definer;
 define method make-entry-point
   (entry-point :: <string>,
    #key module, library) => (entry-point)
-  let raw-name = 
+  let raw-name =
     if (module & library)
       format-to-string("%s%s",
 		       harp-dylan-mangle(entry-point, module, library),
@@ -243,7 +243,7 @@ define macro harp-operation-definer
   { define harp-operation ?:name(?argument-class:name, ?result-class:name) ?operation:name
   }
     =>
-  { 
+  {
     define method "op--" ## ?name ## "%" (register :: ?argument-class) => (?name :: ?result-class)
       ?operation
     end;
@@ -315,7 +315,7 @@ end macro;
 define macro preserving-cleanup-state
   { preserving-cleanup-state (?back-end:name) ?:body end }
     =>
-  { 
+  {
    // Preserve stack-pointer in unwind-protect cleanup to allow
    // for stack allocation in cleanup body
    let stack-pointer = make-n-register(?back-end);

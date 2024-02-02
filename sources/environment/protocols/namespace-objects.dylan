@@ -35,7 +35,7 @@ define open generic find-name
      #key imported? = #t)
  => (name :: false-or(<name-object>));
 
-
+
 /// Project dispatching methods
 
 define method name-namespace
@@ -87,7 +87,7 @@ define method environment-object-name
   end
 end method environment-object-name;
 
-
+
 /// Implementation
 
 define function namespace-names
@@ -111,7 +111,7 @@ define method environment-object-name
   #f
 end method environment-object-name;
 
-
+
 /// find-name
 
 define method find-name

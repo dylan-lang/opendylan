@@ -86,7 +86,7 @@ define sealed method draw-pixmap
   #f
 end method draw-pixmap;
 
-
+
 /// Win32 pixmap mediums
 
 define sealed class <win32-pixmap-medium>
@@ -111,7 +111,7 @@ define sealed method make-pixmap-medium
   end
 end method make-pixmap-medium;
 
-
+
 /// Win32 pixmap sheets (and mirrors)
 
 define sealed method map-mirror
@@ -136,7 +136,7 @@ define sealed method lower-mirror
   #f
 end method lower-mirror;
 
-
+
 /// BitBlt
 
 define constant $function-map :: <simple-object-vector>
@@ -284,7 +284,7 @@ define sealed method do-copy-area
          $function-map[function])
 end method do-copy-area;
 
-
+
 /// Win32 images
 
 define open abstract primary class <win32-image> (<image>)

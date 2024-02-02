@@ -70,7 +70,7 @@ define method receive-request (poa :: <poa>)
         let handler <serious-condition> = handle-application-error;
 	invoke-request(poa, request);
 	send-request-reply(poa, request);
-      exception (condition :: portableserver/<forwardrequest>)  
+      exception (condition :: portableserver/<forwardrequest>)
 	send-forwarding-reply(poa, request, Portableserver/ForwardRequest/forward-reference(condition));
       exception (condition :: corba/<exception>)
 	send-exception-reply(poa, request, condition);

@@ -241,7 +241,7 @@ define method finish-method-model-forms (form :: <generic-definition>,
              end
            end)
 end method;
-
+
 define constant $major-minor-checks-only-environment-variable-name
   = "OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY";
 
@@ -283,7 +283,7 @@ define method finish-library-models (ld :: <library-description>) => ()
     end with-dependent-context;
   end when;
 end method;
-
+
 
 // define variable *register-subclass-dependent-generics-at-runtime?* = #t;
 // define constant *register-subclass-dependent-generics?*            = #f;
@@ -360,7 +360,7 @@ end method;
 define method finish-class-model-forms (form :: <class-definition>, model-handler :: <function>)
   map-definition-variable-models(form, model-handler)
 end method;
-
+
 
 define method finish-gf-model-forms (form :: <top-level-form>, model-handler :: <function>)
  => ()
@@ -416,7 +416,7 @@ define method finish-gf-model-forms (form :: <slot-definition>, model-handler ::
   if (getter-def) finish-gf-model-forms(getter-def, model-handler) end;
   if (setter-def) finish-gf-model-forms(setter-def, model-handler) end;
 end method;
-
+
 
 
 define function map-definition-variable-models (form :: <variable-defining-form>,

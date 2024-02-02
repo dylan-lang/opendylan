@@ -208,7 +208,7 @@ end method;
 define method string-as-marshalling-buffer (string :: <string>)
   let buffer = make(<marshalling-buffer>);
   for (i from 0 below size(string) by 2)
-    buffer := add!(buffer, 
+    buffer := add!(buffer,
 		   ash(hex-character-as-integer(string[i]), 4) +
 		     hex-character-as-integer(string[1 + i]));
   end for;

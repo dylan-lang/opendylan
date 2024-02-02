@@ -1039,7 +1039,7 @@ define method ^domain-type-setter
     (value :: <&type>, object :: <&standalone-domain>, index :: <integer>)
   element(^domain-type-values(object), index) := value
 end method;
-
+
 ////
 //// ENGINE-NODES
 ////
@@ -1224,7 +1224,7 @@ define constant discriminator$v-restp = 22;
 define constant discriminator$m-restp = ash(1, discriminator$v-restp);
 
 // define constant discriminator$v-data-start = 23;
-
+
 
 define constant $engine-node-callback-names :: <simple-object-vector> =
   #[#"%gf-dispatch-absent",                // 0, absent, general-engine-node-n
@@ -1399,7 +1399,7 @@ define leaf packed-slots ^engine-node-ep-properties (<&function-linked-engine-no
 end packed-slots;
 
 ignore(^engine-node-ep-optionals?);
-
+
 
 define abstract &class <dispatch-engine-invocable> (<object>)
 end &class;
@@ -1969,7 +1969,7 @@ end &class;
 
 define concrete-engine-node-initialization <value-object-linear-singleton-discriminator> (e, #key)
 end concrete-engine-node-initialization;
-
+
 
 ////
 //// DOOD PROXIES

@@ -18,7 +18,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Catch all method.
 
 define method debugger-print-stack-frame
-  (frame :: <application-stack-frame>, index :: <integer>, #key full? = #f) 
+  (frame :: <application-stack-frame>, index :: <integer>, #key full? = #f)
     => ()
   format-out ("#%d [Couldn't interpret this stack frame.]\n", index);
 end method;
@@ -27,7 +27,7 @@ end method;
 // Unwind protect frame. Just record the fact that it's there!
 
 define method debugger-print-stack-frame
-  (frame :: <unwind-protect-frame>, index :: <integer>, #key full? = #f) 
+  (frame :: <unwind-protect-frame>, index :: <integer>, #key full? = #f)
     => ()
   format-out ("#%d [Dylan Cleanup Frame]\n", index);
 end method;
@@ -53,7 +53,7 @@ define method debugger-print-stack-frame
   local method format-one-variable
                  (name :: <string>, value :: <remote-value>, #key dylan? = #t)
                    => (printed :: <string>)
-          let hex-rep = 
+          let hex-rep =
             format-to-string("0x%s",
               remote-value-as-string(path, value, 16));
           let printed-rep =
@@ -84,7 +84,7 @@ define method debugger-print-stack-frame
                      "!",
                      frame-function.remote-symbol-name)
 		 else
-                   concatenate("INTERACTIVE!", 
+                   concatenate("INTERACTIVE!",
                                frame-function.remote-symbol-name);
 		 end if
                else
@@ -125,12 +125,12 @@ define method debugger-print-stack-frame
                    end if;
                  let (function-name-part, function-module-part,
                       function-library-part, function-is-method?,
-                      function-is-iep?, method-module-part, 
+                      function-is-iep?, method-module-part,
                       method-number-part) =
                    demangle-dylan-name(frame-function.remote-symbol-name);
                  let printable-name = function-name-part;
                  unless (function-module-part = "")
-                   printable-name := 
+                   printable-name :=
                      concatenate(printable-name, ":", function-module-part);
                  end unless;
                  unless (function-library-part = "")
@@ -179,8 +179,8 @@ end method;
 define method string-representation-of-source-locator
     (source-location :: <line-source-location>) => (rep :: <string>)
   let source-record = source-location.source-location-source-record;
-  let (filename, line-number) = 
-    source-line-location(source-record, 
+  let (filename, line-number) =
+    source-line-location(source-record,
                          source-location.source-location-start-line);
   unless (filename)
     filename := "???.dylan"
@@ -496,7 +496,7 @@ end method;
 
 define method select-previous-interesting-stack-frame
     (application :: <application>) => ()
-  if (application.current-user-frame-index <  
+  if (application.current-user-frame-index <
          (size(application.current-user-frame-map)))
     application.current-user-frame-index :=
        application.current-user-frame-index + 1;

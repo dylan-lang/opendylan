@@ -60,7 +60,7 @@ define method set-property
   context.context-server.server-profile-commands? := profile-commands?
 end method set-property;
 
-
+
 /// Registry commands
 
 define command-group internal into environment

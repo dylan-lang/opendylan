@@ -16,7 +16,7 @@ define constant $default-pop-port :: <integer> = 110;
 /// Conditions
 
 define class <pop-error> (<error>)
-  constant slot pop-error-response :: <string>, 
+  constant slot pop-error-response :: <string>,
     required-init-keyword: response:;
 end class;
 
@@ -34,7 +34,7 @@ define function check-pop-response
   end;
 end function;
 
-
+
 /// Session-level interface.
 
 // Interface macro.
@@ -53,7 +53,7 @@ define macro with-pop-stream
 end macro;
 
 // Interface function.
-define method open-pop-stream 
+define method open-pop-stream
     (host, #key port = $default-pop-port) => (stream :: <stream>)
   let stream = make(<tcp-socket>, host: host, port: port);
   check-pop-response(stream);
@@ -68,8 +68,8 @@ end method;
 
 // Interface function.
 define method pop-login
-    (stream :: <stream>, 
-       login :: <byte-string>, password :: false-or(<byte-string>)) 
+    (stream :: <stream>,
+       login :: <byte-string>, password :: false-or(<byte-string>))
  => ()
   format-pop-line(stream, "USER %s", login);
   check-pop-response(stream);
@@ -111,7 +111,7 @@ define method read-pop-header
     (stream :: <stream>, id :: <integer>) => (entries :: <sequence>)
   format-pop-line(stream, "TOP %d 0", id);
   check-pop-response(stream);
-  let header 
+  let header
     = with-output-to-string (header)
         let line = #f;
         while ((line := read-line(stream)) ~= ".")
@@ -126,7 +126,7 @@ define method read-pop-body
     (stream :: <stream>, id :: <integer>) => (entries :: <sequence>)
   format-pop-line(stream, "RETR %d", id);
   check-pop-response(stream);
-  let body 
+  let body
     = with-output-to-string (body)
         let line = #f;
         // Skip the header
@@ -145,7 +145,7 @@ define method read-pop-message
     (stream :: <stream>, id :: <integer>) => (entries :: <sequence>)
   format-pop-line(stream, "RETR %d", id);
   check-pop-response(stream);
-  let body 
+  let body
     = with-output-to-string (body)
         let line = #f;
         while ((line := read-line(stream)) ~= ".")
@@ -155,7 +155,7 @@ define method read-pop-message
   body
 end method;
 
-define method format-pop-line 
+define method format-pop-line
     (stream :: <stream>, template :: <string>, #rest args) => ()
   when (*debug-pop*)
     apply(format-out, template, args);

@@ -15,7 +15,7 @@ end library harp-cg-back-end;
 
 define module harp-cg-back-end
   use common-dylan;
-  use dfmc-back-end-protocol, 
+  use dfmc-back-end-protocol,
     import: {<back-end>, <local-variable>, <lambda-compiled-data>},
     export: all;
   use table-extensions, import: {<string-table>};
@@ -26,7 +26,7 @@ define module harp-cg-back-end
     current-lambda, current-lambda-setter,
     current-scl, current-scl-setter,
     current-parameters, current-parameters-setter,
-    stack-shift, stack-shift-setter, 
+    stack-shift, stack-shift-setter,
     args-to-be-dropped, args-to-be-dropped-setter,
     count-vreg, count-vreg-setter,
     next-methods-vreg, next-methods-vreg-setter,

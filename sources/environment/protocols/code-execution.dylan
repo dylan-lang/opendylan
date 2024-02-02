@@ -103,7 +103,7 @@ define open generic project-remove-execution-info
     (project :: <project-object>, info :: <execution-info>)
  => ();
 
-
+
 ///// INTERACTIVITY (Methods added by Paul Howard, June 1997)
 //    Work is farmed out to the application server.
 

@@ -129,7 +129,7 @@ define class <jam-case> (<object>)
     required-init-keyword: statements:;
 end class;
 
-
+
 
 define abstract class <jam-expression> (<object>)
   // no slots

@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /////// Define the basic HARP instruction set
 
-/// The core instruction set has no stack operations, and is common to 
+/// The core instruction set has no stack operations, and is common to
 /// all back ends, including the VM.
 
 
@@ -27,7 +27,7 @@ end;
 
 define instruction-set <core-instruction-set>
      (<abstract-instruction-set>, <harp-back-end>)
-  create default-core-instructions, 
+  create default-core-instructions,
       inheriting: default-abstract-instruction-set;
 
   du   op move, eliminatable: #t, is-move: #t;
@@ -35,7 +35,7 @@ define instruction-set <core-instruction-set>
   tuu  op beq, bge, bgt, ble, blt, bne;
        op bra, spread: spread-t;
        op rem, spread: spread-t, is-rem: #t;
-       op load-stack-arg-n, 
+       op load-stack-arg-n,
           spread: spread-tdu, eliminatable: #t, stack-dependent: #t;
   // SCL takes a locator object, and a #rest of named registers
        op scl, is-scl: #t, keep-virtual: #t, spread: spread-scl;
@@ -62,7 +62,7 @@ mark-reverse-ops (default-core-instructions)
 end mark-reverse-ops;
 
 
-define instruction-function load-stack-arg-n 
+define instruction-function load-stack-arg-n
     (backend, def, uze :: <integer>, #key op)
   // first record the number of atack args in use
   let vars = backend.variables;
@@ -74,7 +74,7 @@ define instruction-function load-stack-arg-n
   output-instruction(backend, op, #t, def, uze);
 end;
 
-define instruction-function rem (backend, x, #key op) 
+define instruction-function rem (backend, x, #key op)
   output-instruction(backend, op, x);
 end;
 
@@ -100,7 +100,7 @@ end;
 
 define method move-reg
      (backend :: <harp-back-end>,
-      toreg :: <integer-virtual-register>, 
+      toreg :: <integer-virtual-register>,
       fromreg :: <integer-virtual-register>) => ()
   call-instruction(move, backend, toreg, fromreg);
 end;
@@ -111,16 +111,16 @@ end;
 /// For the SCL instruction, the actual parameters are seen by HARP's
 /// liveness analysis, so they are also strong. The use(1) parameter is
 /// actually a pair. The head is the locator parameter; the tail is a vector
-/// of the named registers which HARP calculated  were actually live at that 
+/// of the named registers which HARP calculated  were actually live at that
 /// point. This is initialized to the empty vector.
 
 
 define instruction-function scl (backend, locator, live-vars :: <simple-object-vector>, #key op)
-  output-instruction(backend, op, #f, #f, pair(locator, #[]), 
+  output-instruction(backend, op, #f, #f, pair(locator, #[]),
                      live-vars);
 end;
 
 define instruction-function strong-scl (backend, locator, live-vars :: <simple-object-vector>, #key op)
-  output-instruction(backend, op, #f, #f, locator, 
+  output-instruction(backend, op, #f, #f, locator,
                      live-vars);
 end;

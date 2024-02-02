@@ -16,7 +16,7 @@ define module win32-resources
 
   create <window-resource>,
 	 window-class,
-	 window-position, 
+	 window-position,
 	 window-size;
 
   create <top-window-resource>,

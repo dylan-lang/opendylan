@@ -17,7 +17,7 @@ define method cycle (val, #rest vals) => (cycle :: <list>)
   l
 end method;
 
-define method scale-to-naturals 
+define method scale-to-naturals
     (scale :: <sequence>) => (naturals :: <sequence>)
   let naturals = make(<simple-object-vector>, size: 7, fill: #());
   for (i from 0 below 7)

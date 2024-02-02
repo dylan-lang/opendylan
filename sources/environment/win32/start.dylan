@@ -40,7 +40,7 @@ define method process-arguments
   filename
 end method process-arguments;
 
-
+
 /// Now actually start the environment
 
 define method environment-startup-error

@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///// Mangling functions
 
 
-define sideways method c-mangle 
+define sideways method c-mangle
     (be :: <harp-native-unix-back-end>, name :: <byte-string>)
      => (mangled :: <byte-string>)
   name

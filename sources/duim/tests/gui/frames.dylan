@@ -58,7 +58,7 @@ end frame <test-simple-frame>;
 define frame <test-dialog-frame> (<abstract-test-frame>, <dialog-frame>)
 end frame <test-dialog-frame>;
 
-
+
 /// Frame tests
 
 define frame <frame-test-frame> (<simple-frame>)
@@ -240,7 +240,7 @@ define method frame-test-update-frame (frame :: <frame-test-frame>) => ()
   end;
 end method frame-test-update-frame;
 
-
+
 /// Multiple layout frame
 
 define frame <multiple-layout-frame> (<simple-frame>)
@@ -329,7 +329,7 @@ define frame <multiple-layout-frame> (<simple-frame>)
   keyword height: = 400;
 end frame <multiple-layout-frame>;
 
-
+
 /// Install the tests
 
 install-test(<frame-test-frame>, "Frames");

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define frame <status-buttons-frame> (<simple-frame>)
   pane ok-button (frame)
-    make(<push-button>, 
+    make(<push-button>,
          label: "OK",
          max-width: $fill,
          max-height: $fill,
@@ -17,7 +17,7 @@ define frame <status-buttons-frame> (<simple-frame>)
              display-status-ok(tip: "Status: OK");
            end);
   pane warning-button (frame)
-    make(<push-button>, 
+    make(<push-button>,
          label: "Warning",
          max-width: $fill,
          max-height: $fill,
@@ -26,7 +26,7 @@ define frame <status-buttons-frame> (<simple-frame>)
              display-status-warning(tip: "Status: Warning");
            end);
   pane error-button (frame)
-    make(<push-button>, 
+    make(<push-button>,
          label: "Error",
          max-width: $fill,
          max-height: $fill,

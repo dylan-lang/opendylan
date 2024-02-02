@@ -181,7 +181,7 @@ define method query-pixel-for-color
   make-rgb-color(_16-bits->float(r), _16-bits->float(g), _16-bits->float(b))
 end method query-pixel-for-color;
 
-
+
 /// Color utilities
 define constant $16-bits :: <integer> = ash(1, 16) - 1;
 

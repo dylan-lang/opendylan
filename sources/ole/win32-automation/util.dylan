@@ -64,7 +64,7 @@ end;
 define constant <ole-type> =
   type-union(<type>, <array-type-description>, <LPTYPEDESC>);
 
-
+
 define method empty? ( parms :: <LPDISPPARAMS> ) => empty :: <boolean>;
   zero?(parms.cArgs-value)
 end;
@@ -85,7 +85,7 @@ define method element (parms :: <LPDISPPARAMS>, index :: <integer>,
     element-range-error(parms, index);
   end if;
 end;
-
+
 //  ====  representation of data members of interface  ====
 
 // Accessors for slots of anonymous union

@@ -38,16 +38,16 @@ end class <LOGPAL>;
 
 /* // not yet supported ???
 define method CreateStandardPalette() => value :: <HPALETTE>;
-   
+
   let hpal :: <HPALETTE> = null-pointer(<HPALETTE>);
   let hdc :: <HDC> = GetDC($NULL-HWND);
   if ( ( ~ null-handle?(hdc) )
 	& ~ zero?(logand( GetDeviceCaps(hdc, $RASTERCAPS), $RC-PALETTE)) )
-      
+
     let cpeSysPal :: <integer> = GetDeviceCaps( hdc, $SIZEPALETTE);
     let cpeReserved :: <integer> = GetDeviceCaps( hdc, $NUMRESERVED);
     if ( cpeSysPal > cpeReserved )
-	 
+
       let logpal :: <LOGPAL> = make(<LOGPAL>);
       let cpeReserved2 :: <integer> = truncate/(cpeReserved,2);
 
@@ -128,10 +128,10 @@ define method initialize ( this :: <CSimpleApp>, #key, #all-keys) => ();
   this.m-fCSHMode := #f;
   this.m-fMenuMode := #f;
   this.m-fAppActive := #f;
-  
+
   // used for inplace
   SetRectEmpty(this.nullRect := make(<LPRECT>));
-	
+
   this.m-hStdPal := null-handle(<HPALETTE>);
   values()
 end method initialize;
@@ -337,7 +337,7 @@ end method AddRef;
 
 /*
 define method Release(this :: <CSimpleApp>) => value :: <integer>;
-	
+
   OutputDebugString( "In CSimpleApp::Release\r\n");
 
   SafeRelease(this)
@@ -378,7 +378,7 @@ define method fInitApplication(this :: <CSimpleApp>, hInstance :: <HINSTANCE>)
 	=> ok :: <boolean>;
 
   block(return)
-	
+
    with-stack-structure ( wc :: <PWNDCLASS> )
 
     // Fill in window class structure with parameters that describe the
@@ -460,11 +460,11 @@ end method fInitApplication;
 define method fInitInstance(this :: <CSimpleApp>, hInstance :: <HINSTANCE>,
 			    nCmdShow :: <integer>) => ok :: <boolean>;
   block(return)
-	
+
 /*	-- obsolete
     let dwVer :: <integer> = OleBuildVersion();
     // check to see if we are compatible with this version of the libraries
-    if ( HIWORD( dwVer) ~= rmm | ( LOWORD( dwVer) <  rup) ) 
+    if ( HIWORD( dwVer) ~= rmm | ( LOWORD( dwVer) <  rup) )
       #ifdef -DEBUG
 	OutputDebugString( "WARNING: Incompatible OLE library version\r\n");
       #else
@@ -564,14 +564,14 @@ define method lCommandHandler(this :: <CSimpleApp>, hWnd :: <HWND>,
 	=> value :: <integer>;
 
   block(return)
-	
+
     // let stabilize :: <CStabilize> = make(<CStabilize>, this);
 
     // context sensitive help...
     if ( this.m-fMenuMode | this.m-fCSHMode )
-	        
+
       if ( this.m-fCSHMode )
-	                
+
 	// clear context sensitive help flag
 	this.m-fCSHMode := #f;
 
@@ -580,7 +580,7 @@ define method lCommandHandler(this :: <CSimpleApp>, hWnd :: <HWND>,
 	// csh state.  See the technotes for details.
 	let activeobj = this.m-lpDoc.m-lpActiveObject;
 	unless ( null?(activeobj) )
-	  let ( status, interface ) = 
+	  let ( status, interface ) =
 	    QueryInterface(activeobj, $IID-IOleInPlaceObject);
 	  let lpInPlaceObject :: <LPOLEINPLACEOBJECT> =
 	    pointer-cast(<LPOLEINPLACEOBJECT>, interface);
@@ -615,34 +615,34 @@ define method lCommandHandler(this :: <CSimpleApp>, hWnd :: <HWND>,
 			  site.m-OleClientSite,
 			  0, this.m-lpDoc.m-hDocWnd, pRect);
       end with-stack-structure;
-	        
+
     else
-	        
-      select (LOWORD(wParam) ) 
+
+      select (LOWORD(wParam) )
 	// bring up the About box
-	$IDM-ABOUT => 
+	$IDM-ABOUT =>
 	  DialogBox(this.m-hInst,          // current instance
 		    TEXT("AboutBox"),      // resource to use
 		    this.m-hAppWnd,        // parent handle
 		    About);                // About() instance address
-	    
+
 
 	// bring up the InsertObject Dialog
-	$IDM-INSERTOBJECT => 
+	$IDM-INSERTOBJECT =>
 	  InsertObject(this.m-lpDoc);
 
 	// exit the application
-	$IDM-EXIT => 
+	$IDM-EXIT =>
 	  SendMessage(hWnd, $WM-SYSCOMMAND, $SC-CLOSE, 0);
 
-	$IDM-NEW => 
+	$IDM-NEW =>
 	  CloseDoc(this.m-lpDoc);
 	  this.m-lpDoc := #f;
 	  lCreateDoc(this, hWnd, 0, 0, 0);
 
-	otherwise => 
+	otherwise =>
 	  return(DefWindowProc(hWnd, message, wParam, lParam));
-	                
+
       end select;   // end of switch
     end if;  // end of else
     return(0);
@@ -734,7 +734,7 @@ define method lCreateDoc(this :: <CSimpleApp>, hWnd :: <HWND>,
 	=> value :: <integer>;
 
   // let stabilize :: <CStabilize> = make(<CStabilize>, this);
-	
+
   with-stack-structure ( pRect :: <PRECT>)
     GetClientRect(hWnd, pRect);
     this.m-lpDoc := CSimpleDoc-Create(this, pRect, hWnd);
@@ -771,7 +771,7 @@ end method lCreateDoc;
 //********************************************************************
 
 define method AddFrameLevelUI(this :: <CSimpleApp>) => ();
-	
+
   // let stabilize :: <CStabilize> = make(<CStabilize>, this);
   IOleInPlaceFrame/SetMenu(this.m-OleInPlaceFrame,
 			   $NULL-HMENU, null-pointer(<HOLEMENU>), $NULL-HWND);
@@ -847,7 +847,7 @@ end method AddFrameLevelTools;
 
 define method HandleAccelerators(this :: <CSimpleApp>, lpMsg :: <LPMSG>)
 	=> value :: <boolean>;
-	
+
   // let stabilize :: <CStabilize> = make(<CStabilize>, this);
 
   let activeobj = this.m-lpDoc.m-lpActiveObject;
@@ -908,7 +908,7 @@ define method PaintApp(this :: <CSimpleApp>, hDC /* :: <HDC> */) => ();
 
   // if we supported multiple documents, we would enumerate
   // through each of the open documents and call paint.
-  
+
   unless ( null?(this.m-lpDoc) )
     PaintDoc(this.m-lpDoc, hDC);
   end unless;
@@ -956,7 +956,7 @@ define method IOleWindow/ContextSensitiveHelp(this :: <CSimpleApp>,
 	// let stabilize :: <CStabilize> = make(<CStabilize>, this);
   let result :: <HRESULT> = $S-OK;
   if ( this.m-fCSHMode ~= fEnterMode )
-	        
+
     this.m-fCSHMode := fEnterMode;
 
     // this code "trickles" the context sensitive help via shift+f1
@@ -1002,7 +1002,7 @@ define method QueryNewPalette(this :: <CSimpleApp>) => value :: <integer>;
   if ( (~ null?(this.m-hwndUIActiveObj) )
 	& ( ~ zero?(SendMessage(this.m-hwndUIActiveObj,
 				$WM-QUERYNEWPALETTE, 0, 0)) ) )
-    /* Object selected its palette as foreground palette */ 
+    /* Object selected its palette as foreground palette */
     1
   else
     wSelectPalette(this.m-hAppWnd, this.m-hStdPal, #f /* fBackground */ )

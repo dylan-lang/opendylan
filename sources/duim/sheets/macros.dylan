@@ -33,7 +33,7 @@ define macro with-temporary-medium
          end }
 end macro with-temporary-medium;
 
-
+
 /// Drawing state macros
 
 define macro with-drawing-options
@@ -80,7 +80,7 @@ define macro with-atomic-redisplay
          end }
 end macro with-atomic-redisplay;
 
-
+
 /// Medium transform hacking
 
 define macro with-transform
@@ -139,7 +139,7 @@ define macro with-clipping-region
          end }
 end macro with-clipping-region;
 
-
+
 /// Frame managers
 
 define macro with-frame-manager

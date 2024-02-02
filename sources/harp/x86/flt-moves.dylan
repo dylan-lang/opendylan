@@ -69,7 +69,7 @@ define local-pentium-template (can-fld, can-dld)
     emit(be, flt-esc + i + 1);
     emit-reg-indexed(be, base, offset, mc-fld);
     unless (d.st-ref) i.fld-pop-ins(be, d) end;
-     
+
   pattern (be, i, d, base :: <real-register> by colour, offset :: <ispill> by colour)
     harp-out (be) move(be, reg--tmp1, offset) end;
     i.fld-reapply-fn(be, d, base, reg--tmp1);
@@ -77,9 +77,9 @@ define local-pentium-template (can-fld, can-dld)
   pattern (be, i, d, base :: <ic/spill-ref> by colour, offset :: <ac/const-ref> by colour)
     harp-out (be) move(be, reg--tmp1, base) end;
     i.fld-reapply-fn(be, d, reg--tmp1, offset);
-     
+
   pattern (be, i, d, base :: <ic/spill-ref> by colour, offset :: <ispill> by colour)
-    harp-out (be) 
+    harp-out (be)
       move(be, reg--tmp1, base);
       move(be, reg--tmp2, offset);
     end harp-out;
@@ -210,12 +210,12 @@ define local-pentium-template (can-fst, can-dst)
     unless (s.st-ref) i.fst-push-ins(be, s) end;
     emit(be, flt-esc + i + 1);
     emit-reg-offset(be, base, offset, mc-fstp);
-     
+
   pattern (be, i, s, base :: <real-register> by colour, offset :: <real-register> by colour)
     unless (s.st-ref) i.fst-push-ins(be, s) end;
     emit(be, flt-esc + i + 1);
     emit-reg-indexed(be, base, offset, mc-fstp);
-     
+
   pattern (be, i, s, base :: <real-register> by colour, offset :: <ispill> by colour)
     harp-out (be) move(be, reg--tmp1, offset) end;
     i.fst-reapply-fn(be, s, base, reg--tmp1);
@@ -223,14 +223,14 @@ define local-pentium-template (can-fst, can-dst)
   pattern (be, i, s, base :: <ispill> by colour, offset :: <ac/const-ref> by colour)
     harp-out (be) move(be, reg--tmp1, base) end;
     i.fst-reapply-fn(be, s, reg--tmp1, offset);
-     
+
   pattern (be, i, s, base :: <ispill> by colour, offset :: <ispill> by colour)
-    harp-out (be) 
+    harp-out (be)
       move(be, reg--tmp1, base);
       move(be, reg--tmp2, offset);
     end harp-out;
     i.fst-reapply-fn(be, s, reg--tmp1, reg--tmp2);
-     
+
   pattern (be, i, s, base :: <i-address-constant-reference>, offset :: <integer>)
     let new = coerce-constant-with-offset(be, base, offset);
     unless (s.st-ref) i.fst-push-ins(be, s) end;
@@ -453,14 +453,14 @@ with-ops-in pentium-instructions (dmove) info := #t end;
 /// It's important that every stack push has a corresponding pop.
 /// Normally this would happen as a matter of course for a FP operation
 /// - but if a value is returned in ST, then we had better make sure
-/// that the corresponding move of the value out of the register by the 
+/// that the corresponding move of the value out of the register by the
 /// caller doesn't get eliminated. Hence, for the Pentium, fmove and dmove
 /// are not eliminatable instructions - and if the destination register is
 /// unallocated, then we just pop the FP stack. A corresponding rule is that
 /// the harp-cg layer must ensure that ST is moved somewhere (with fmove or
 /// dmove) after any call to a function which returns a result in ST.
 
-with-ops-in pentium-instructions (fmove, dmove) 
+with-ops-in pentium-instructions (fmove, dmove)
   eliminatable := #f;
 end with-ops-in;
 

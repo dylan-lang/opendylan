@@ -15,7 +15,7 @@ define open generic user-object-slot-values
     (server :: <server>, object :: <user-object>)
  => (functions :: <sequence>, values :: <sequence>);
 
-
+
 /// Internal objects
 //
 // A special subclass of <user-object> whose contents is only of
@@ -24,7 +24,7 @@ define open generic user-object-slot-values
 define class <internal-object> (<user-object>)
 end class <internal-object>;
 
-
+
 /// Project dispatching methods
 
 define method user-object-slot-values
@@ -43,7 +43,7 @@ define method environment-object-type-name
   "Instance"
 end method environment-object-type-name;
 
-
+
 /// Support for defining subclasses of <user-object>
 
 define constant $user-object-classes = make(<deque>);

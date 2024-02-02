@@ -61,7 +61,7 @@ define function write-command-group-documentation
   end
 end function write-command-group-documentation;
 
-
+
 /// Report properties
 
 define class <reports-property> (<environment-property>)
@@ -84,7 +84,7 @@ define method show-property
               sort?:     #t)
 end method show-property;
 
-
+
 /// Export
 
 define class <export-command> (<project-command>)
@@ -147,7 +147,7 @@ define sealed method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Project commands
 
 define command-group reports

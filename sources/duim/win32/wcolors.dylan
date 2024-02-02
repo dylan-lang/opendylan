@@ -35,7 +35,7 @@ define sealed method install-default-palette
   //---*** Do this (see clim/win32/port.lisp)
 end method install-default-palette;
 
-
+
 /// Win32 color management
 
 define constant $max-int-color   :: <integer> = #xFF;

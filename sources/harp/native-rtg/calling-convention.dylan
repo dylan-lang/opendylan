@@ -140,7 +140,7 @@ end macro;
 
 
 // Generic calling convention mappings from Dylan to C and C to Dylan.
-// Map source registers to target registers, source stack to target stack, 
+// Map source registers to target registers, source stack to target stack,
 // consistent with source, target calling conventions.
 
 ignore(op--map-calling-convention);

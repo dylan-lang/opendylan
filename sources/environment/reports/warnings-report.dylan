@@ -16,7 +16,7 @@ end class <warnings-report>;
 
 install-report(#"warnings", "Compiler warnings report", <warnings-report>);
 
-
+
 /// Report protocols
 
 define method write-report-as

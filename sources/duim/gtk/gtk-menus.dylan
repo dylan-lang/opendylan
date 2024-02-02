@@ -307,7 +307,7 @@ define sealed method allocate-unique-mnemonic
   end
 end method allocate-unique-mnemonic;
 
-
+
 /// Menu bars
 
 define sealed class <gtk-menu-bar>
@@ -365,7 +365,7 @@ define sealed method refresh-menu-bar
   end
 end method refresh-menu-bar;
 
-
+
 /// Menu buttons
 
 define abstract class <gtk-menu-button-mixin>
@@ -422,7 +422,7 @@ define sealed method note-gadget-label-changed
   ignoring("note-gadget-label-changed for menu button")
 end method note-gadget-label-changed;
 
-
+
 /// Menu handling
 
 define sealed class <gtk-menu>
@@ -524,7 +524,7 @@ define sealed method ensure-menus-mirrored
 end method ensure-menus-mirrored;
 */
 
-
+
 /// Menu handling
 
 define sealed method make-gtk-menu-contents
@@ -663,7 +663,7 @@ define sealed method note-gadget-disabled
   ignoring("note-gadget-disabled for <menu>")
 end method note-gadget-disabled;
 
-
+
 /// The concrete menu button classes
 
 define sealed class <gtk-push-menu-button>
@@ -717,7 +717,7 @@ define sealed method class-for-make-pane
   values(<gtk-check-menu-button>, #f)
 end method class-for-make-pane;
 
-
+
 /// Choose from menu
 
 define sealed method do-choose-from-menu

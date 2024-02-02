@@ -17,7 +17,7 @@ define constant $about-box-copyright-font
          family: #"sans-serif",
          size:   #"small");
 
-
+
 /// License agreement
 
 define constant $license-text-width = 72;
@@ -45,7 +45,7 @@ define function license-agreement-text
   end;
 end function license-agreement-text;
 
-
+
 /// About Box
 
 define function about-box-info-text
@@ -132,7 +132,7 @@ define method frame-help-source
   #"open-dylan"
 end method frame-help-source;
 
-
+
 /// HELP-CREDITS
 
 /*---*** andrewa: this isn't currently used
@@ -180,7 +180,7 @@ define method help-credits (frame :: <about-box>)
 end method help-credits;
 */
 
-
+
 /// Web site command tables
 
 define constant $download-doc-page = release-web-address();
@@ -191,7 +191,7 @@ define function frame-open-dylan-web-page
   frame-open-object(frame, location)
 end function frame-open-dylan-web-page;
 
-
+
 /// Help command table
 
 define settings <documentation-settings> (<open-dylan-local-settings>)
@@ -265,7 +265,7 @@ define sideways method show-documentation
   frame-help-on-keyword(frame, name)
 end method show-documentation;
 
-
+
 // define constant $tutorial-title = "Tutorial"; // ---*** not used yet
 
 //---*** The release-info backend isn't available during initialization... :-(

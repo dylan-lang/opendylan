@@ -47,17 +47,17 @@ define method walker-merge-statistics
   if (merged-count = 0 & merged-size = 0)
     #f
   else
-    make(<class-stats>, 
-	 count: 
+    make(<class-stats>,
+	 count:
 	   merged-count,
-	 size: 
+	 size:
 	   merged-size,
-	 parent-stats: 
+	 parent-stats:
 	   walker-merge-statistics(stat-parent-stats(x), stat-parent-stats(y), merge))
   end if
 end method;
 
-define method walker-merge-statistics 
+define method walker-merge-statistics
     (x :: <table>, y :: <table>, merge :: <function>) => (z :: <table>)
   let z = make(<table>);
   for (stat keyed-by class in x)
@@ -66,40 +66,40 @@ define method walker-merge-statistics
     when (merged-stats)
       element(z, class) := merged-stats;
     end when;
-  end for; 
+  end for;
   for (stat keyed-by class in y)
     unless (element(x, class, default: #f))
       element(z, class) := stat;
     end unless;
-  end for; 
+  end for;
   z
 end method;
 
 define variable *neg-one-statistics* :: <table> = $empty-table;
 define variable *neg-two-statistics* :: <table> = $empty-table;
 
-define function diff-statistics 
+define function diff-statistics
     (old-stats :: <table>, new-stats :: <table>)
   walker-merge-statistics(new-stats, old-stats, \-);
 end function;
 
-define function walker-diff-last-two-statistics 
+define function walker-diff-last-two-statistics
     (debug-name :: <function>, required-instance-size :: <function>)
   walker-display-statistics
-    (0, #t, debug-name, required-instance-size, 
+    (0, #t, debug-name, required-instance-size,
      diff-statistics(*neg-two-statistics*, *neg-one-statistics*));
 end function;
 
 define function do-walker-instance-statistics
-    (display? :: <boolean>, 
-     real-object :: <function>, instance-class :: <function>, 
+    (display? :: <boolean>,
+     real-object :: <function>, instance-class :: <function>,
      debug-name :: <function>,
      instance-size :: <function>, required-instance-size :: <function>,
      parents-of :: <table>,
      categorize :: false-or(<function>),
      #key filter-set = #[], aggregate-set = #[])
   local method listify-parents (parents)
-	  if (instance?(parents, <sequence>)) 
+	  if (instance?(parents, <sequence>))
 	    parents
 	  else
 	    list(parents)
@@ -107,16 +107,16 @@ define function do-walker-instance-statistics
         end method,
         method default-categorize
 	    (object, parents, parents-of) => (class, parent-classes)
-	  values(instance-class(object), 
+	  values(instance-class(object),
 		 map(instance-class, listify-parents(parents)))
 	end method;
   let categorize :: <function>
     = categorize | default-categorize;
   let stats :: <object-table> = make(<table>);
   local method do-record-stat (class, parent-classes, size :: <integer>)
-	  let class-stats 
-	    = element(stats, class, default: #f) 
-	        | (stats[class] 
+	  let class-stats
+	    = element(stats, class, default: #f)
+	        | (stats[class]
 		     := make(<class-stats>, parent-stats: make(<table>)));
 	  class-stats.stat-count := class-stats.stat-count + 1;
 	  class-stats.stat-size  := class-stats.stat-size + size;
@@ -126,11 +126,11 @@ define function do-walker-instance-statistics
 	    = listify-parents(parent-classes);
 	  for (parent-class in parent-classes)
             let parent-class-stats
-              = element(parent-stats, parent-class, default: #f) 
+              = element(parent-stats, parent-class, default: #f)
 	          | (parent-stats[parent-class] := make(<class-stats>));
-     	    parent-class-stats.stat-size 
+     	    parent-class-stats.stat-size
               := parent-class-stats.stat-size + size;
-     	    parent-class-stats.stat-count 
+     	    parent-class-stats.stat-count
               := parent-class-stats.stat-count + 1;
 	  end for;
 	end method,
@@ -147,7 +147,7 @@ define function do-walker-instance-statistics
     = if (display?)
 	walker-display-statistics
 	  (0, #t, debug-name, required-instance-size, stats);
-      else 
+      else
 	values(0, 0)
       end if;
   *neg-two-statistics* := *neg-one-statistics*;
@@ -156,20 +156,20 @@ define function do-walker-instance-statistics
 end function;
 
 define function walker-instance-statistics
-    (display? :: <boolean>, 
-     real-object :: <function>, instance-class :: <function>, 
+    (display? :: <boolean>,
+     real-object :: <function>, instance-class :: <function>,
      debug-name :: <function>,
      instance-size :: <function>, required-instance-size :: <function>,
      parents-of :: <table>,
      #key filter-set = #[], aggregate-set = #[])
-   local method categorize* 
+   local method categorize*
 	     (object, parents, parents-of :: <table>, parents?)
 	  => (classes, parent-classes)
 	   if (member?(object, filter-set, test: instance?))
 	     let parents = parents | element(parents-of, object, default: #f);
 	     categorize*(parents, #f, parents-of, parents?);
 	   else
-	     local method lookup-aggregate-class 
+	     local method lookup-aggregate-class
 		       (object, set :: <simple-object-vector>) => (res)
 		     block (return)
 		       for (class in set)
@@ -180,7 +180,7 @@ define function walker-instance-statistics
 		       instance-class(object)
 		     end block
 		   end method;
-	     let aggregate-class 
+	     let aggregate-class
 	       = lookup-aggregate-class(object, aggregate-set);
 	     let parent-classes
 	       = if (parents?)
@@ -192,7 +192,7 @@ define function walker-instance-statistics
 	     values(aggregate-class, parent-classes)
 	   end if;
 	 end method,
-         method categorize 
+         method categorize
 	     (object, parents, parents-of :: <table>) => (classes, parent-classes)
 	   categorize*(object, parents, parents-of, #t)
 	 end method;
@@ -205,7 +205,7 @@ define function walker-instance-statistics
     format-out("%= MISSING PARENTS OUT OF %=\n", number-misses, size(parents-of));
   end for;
   do-walker-instance-statistics
-    (display?, 
+    (display?,
      real-object, instance-class, debug-name,
      instance-size, required-instance-size,
      parents-of, categorize)
@@ -213,14 +213,14 @@ end function;
 
 define function walker-display-statistics
     (indentation :: <integer>, summary? :: <boolean>,
-     debug-name :: <function>, required-instance-size :: <function>, 
+     debug-name :: <function>, required-instance-size :: <function>,
      stats :: <table>)
   let classes
     = sort(key-sequence(stats),
-           test: method (c1, c2) 
-                   stats[c1].stat-size > stats[c2].stat-size 
+           test: method (c1, c2)
+                   stats[c1].stat-size > stats[c2].stat-size
                  end);
-  let total-size 
+  let total-size
     = reduce(method (sum, stats) sum + stats.stat-size end, 0, stats);
   let total-count
     = reduce(method (sum, stats) sum + stats.stat-count end, 0, stats);
@@ -253,7 +253,7 @@ define function walker-display-statistics
 	      = floor/(round/(cum-size * 10000.0, total-size), 100.0);
 	    let isize = required-instance-size(class);
 	    format-out(" - %6d [%6d] (%2d) words (%2d.%d%%) -- %2d.%d%% so far\n",
-		       csize, ccount, isize, 
+		       csize, ccount, isize,
 		       pct, truncate(rem), cpct, truncate(crem));
 	  end method;
     for (class in interesting-classes)
@@ -264,7 +264,7 @@ define function walker-display-statistics
       let parent-stats = stats[class].stat-parent-stats;
       if (parent-stats)
 	walker-display-statistics
-	  (indentation + 2, #f, debug-name, 
+	  (indentation + 2, #f, debug-name,
 	   required-instance-size, parent-stats);
       end if;
     end for;

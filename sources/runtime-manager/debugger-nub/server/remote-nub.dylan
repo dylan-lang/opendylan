@@ -77,7 +77,7 @@ define method Rtmgr/RemoteNub/CloseNub
     (concatenate(DebuggerNubEvent, rnub.nub-process-id));
 
   // create a separate thread to shut down the nub
-  make(<thread>, 
+  make(<thread>,
        function:
 	 method ()
 	   // Wait for the Debugger Server to prompt

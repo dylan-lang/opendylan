@@ -103,7 +103,7 @@ define method handle-repaint
   draw-gadget-label(sheet, medium, 0, 0)
 end method handle-repaint;
 
-
+
 /// Buttons
 
 define open abstract class <button>
@@ -215,7 +215,7 @@ define sealed method gadget-selection-mode
   #"multiple"
 end method gadget-selection-mode;
 
-
+
 /// Sliders
 
 // Sliders generate a value-changing callback as the slider is being moved,
@@ -261,7 +261,7 @@ define sealed inline method slider-show-value?
   logand(gadget-flags(slider), %show_value) = %show_value
 end method slider-show-value?;
 
-
+
 /// Progress controls
 
 define open abstract class <progress-bar>
@@ -282,7 +282,7 @@ define method initialize (pane :: <progress-bar>, #key value-range)
   end
 end method initialize;
 
-
+
 /// Separator panes
 
 define open abstract class <separator>
@@ -353,7 +353,7 @@ define method draw-separator
   end
 end method draw-separator;
 
-
+
 /// Pages
 
 define open abstract class <page> (<gadget>)

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define open primary COM-interface <container-ole-in-place-site>
-	( <IOleInPlaceSite> ) 
+	( <IOleInPlaceSite> )
   constant slot get-site :: <contained-object>, required-init-keyword: site:;
 end <container-ole-in-place-site>;
 
@@ -27,7 +27,7 @@ end method IOleWindow/GetWindow;
 //      BOOL fEnterMode - TRUE for entering Context Sensitive help mode
 define method IOleWindow/ContextSensitiveHelp
     (this :: <container-ole-in-place-site>,
-     enter-mode? :: <boolean>) 
+     enter-mode? :: <boolean>)
  => status :: <HRESULT>;
 
   OutputDebugString("IOleWindow/ContextSensitiveHelp\r\n");
@@ -35,7 +35,7 @@ define method IOleWindow/ContextSensitiveHelp
   if ( app.context-help-mode ~= enter-mode? )
     app.context-help-mode := enter-mode?;
   end if;
- $S-OK 
+ $S-OK
 end method IOleWindow/ContextSensitiveHelp;
 
 // Object calls to find out if the container can In-Place activate
@@ -45,7 +45,7 @@ define method IOleInPlaceSite/CanInPlaceActivate
   OutputDebugString("IOleInPlaceSite/CanInPlaceActivate\r\n");
 
   // return S_OK to indicate we can in-place activate
-  $S-OK 
+  $S-OK
 
 end method IOleInPlaceSite/CanInPlaceActivate;
 
@@ -64,7 +64,7 @@ define method IOleInPlaceSite/OnInPlaceActivate
     site.document-in-place-ole-object :=
       dylan-interface(pointer-cast(<LPOLEINPLACEOBJECT>, interface));
     // return S_OK to indicate we can in-place activate.
-    $S-OK 
+    $S-OK
   end if
 end method IOleInPlaceSite/OnInPlaceActivate;
 
@@ -86,13 +86,13 @@ define method IOleInPlaceSite/OnUIActivate
   let site :: <contained-object> = this.get-site;
   let doc = site;
   doc.document-in-place-active? := #t;
-  
+
   let ( status, handle ) =
     IOleWindow/GetWindow(site.document-in-place-ole-object);
   site.document-ui-active-window := handle;
 
   // return S_OK to continue in-place activation
-  $S-OK 
+  $S-OK
 end method IOleInPlaceSite/OnUIActivate;
 
 // Called by the object to get information for InPlace Negotiation.
@@ -115,7 +115,7 @@ end method IOleInPlaceSite/OnUIActivate;
 define method IOleInPlaceSite/GetWindowContext
     (this :: <container-ole-in-place-site>,
 	lprcPosRect :: <LPRECT>, lprcClipRect :: <LPRECT>,
-	lpFrameInfo :: <LPOLEINPLACEFRAMEINFO>) 
+	lpFrameInfo :: <LPOLEINPLACEFRAMEINFO>)
  => ( status :: <HRESULT>,
       lpFrame :: <LPOLEINPLACEFRAME>, lpDoc :: <LPOLEINPLACEUIWINDOW> );
 
@@ -160,20 +160,20 @@ end method IOleInPlaceSite/GetWindowContext;
 
 // not implemented
 define method IOleInPlaceSite/Scroll(this :: <container-ole-in-place-site>,
-				     scrollExtent :: <SIZE>) 
+				     scrollExtent :: <SIZE>)
 	=> status :: <HRESULT>;
-	
+
   OutputDebugString("IOleInPlaceSite/Scroll\r\n");
   $E-FAIL  // or should this be $E-NOTIMPL ? (neither is documented for this)
 end method IOleInPlaceSite/Scroll;
 
 // Called by the object when its UI goes away
 define method IOleInPlaceSite/OnUIDeactivate
-    (this :: <container-ole-in-place-site>, undoable? :: <boolean>) 
+    (this :: <container-ole-in-place-site>, undoable? :: <boolean>)
  => (status :: <HRESULT>)
 
   // undoable? arg is not used???
-  
+
   OutputDebugString("IOleInPlaceSite/OnUIDeactivate\r\n");
 
   let doc = this.get-site;
@@ -197,7 +197,7 @@ define method IOleInPlaceSite/OnInPlaceDeactivate
   OutputDebugString("IOleInPlaceSite/OnInPlaceDeactivate\r\n");
 
   let site = this.get-site;
-  unless ( null?(site.document-in-place-ole-object) ) 
+  unless ( null?(site.document-in-place-ole-object) )
     Release(site.document-in-place-ole-object);
     site.document-in-place-ole-object := null-pointer(<LPOLEINPLACEOBJECT>);
   end unless;
@@ -227,7 +227,7 @@ end method IOleInPlaceSite/DeactivateAndUndo;
 //
 //      LPCRECT lprcPosRect -   The new object rect
 define method IOleInPlaceSite/OnPosRectChange
-    (this :: <container-ole-in-place-site>, lprcPosRect :: <LPCRECT>) 
+    (this :: <container-ole-in-place-site>, lprcPosRect :: <LPCRECT>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("IOleInPlaceSite/OnPosRectChange\r\n");
@@ -242,7 +242,7 @@ define method IOleInPlaceSite/OnPosRectChange
   // need eror check???
   with-stack-structure( rect :: <LPRECT> )
     GetClientRect(site.document-container-window, rect);
-  
+
     // tell the object its new size
     IOleInPlaceObject/SetObjectRects(site.document-in-place-ole-object,
 				     lprcPosRect, // position rectangle

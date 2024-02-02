@@ -157,7 +157,7 @@ define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descri
      template :: <raw-pointer>)
  => (pointer :: <raw-pointer>);
 
-
+
 /// Allocation operations
 
 define method slot-storage-bytes
@@ -228,7 +228,7 @@ define method op--allocate-traced
 end method;
 */
 
-
+
 /// Allocation primitives
 
 /*
@@ -590,7 +590,7 @@ define side-effecting stateful &c-primitive-descriptor primitive-begin-heap-allo
 define side-effecting stateful &c-primitive-descriptor primitive-end-heap-alloc-stats
   (string-buffer :: <raw-byte-string>) => (number-read :: <raw-integer>);
 
-
+
 /// Auxiliary allocation operations
 
 define method op--allocate-vector

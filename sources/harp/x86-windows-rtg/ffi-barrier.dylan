@@ -17,7 +17,7 @@ define win-fun runtime-external win-GetModuleHandle        = "GetModuleHandleA",
 
 
 
-define sideways method op--create-TEB-tlv-index 
+define sideways method op--create-TEB-tlv-index
     (be :: <harp-x86-windows-back-end>) => ()
   with-harp (be)
     tag done;
@@ -74,13 +74,13 @@ end method;
 
 define sideways method op--shut-down-dll-library
     (be :: <harp-x86-windows-back-end>) => ()
-  op--call-iep(be, primitive-deregister-traced-roots-ref, 
+  op--call-iep(be, primitive-deregister-traced-roots-ref,
 	       %ambig-root, %static-root, %exact-root);
 end method;
 
 define sideways method op--shut-down-exe-library
     (be :: <harp-x86-windows-back-end>) => ()
-  op--call-iep(be, primitive-deregister-traced-roots-ref, 
+  op--call-iep(be, primitive-deregister-traced-roots-ref,
 	       %ambig-root, %static-root, %exact-root);
 end method;
 
@@ -107,7 +107,7 @@ define shared init win32-API-runtime-primitive dylan-dll-entry ("DylanDllEntry",
   let t-attach = 2;
   let t-detach = 3;
   let p-detach = 0;
-  
+
   op--c-load-arguments(be, hinstDll, fdwReason, lpReserved);
 
   /*
@@ -117,10 +117,10 @@ define shared init win32-API-runtime-primitive dylan-dll-entry ("DylanDllEntry",
   end when-base;
   */
 
-  ins--beq(be, tag-p-attach, p-attach, fdwReason);  
-  ins--beq(be, tag-t-attach, t-attach, fdwReason);  
-  ins--beq(be, tag-t-detach, t-detach, fdwReason);  
-  ins--beq(be, tag-p-detach, p-detach, fdwReason);  
+  ins--beq(be, tag-p-attach, p-attach, fdwReason);
+  ins--beq(be, tag-t-attach, t-attach, fdwReason);
+  ins--beq(be, tag-t-detach, t-detach, fdwReason);
+  ins--beq(be, tag-p-detach, p-detach, fdwReason);
 
   ins--tag(be, done);
 
@@ -184,7 +184,7 @@ define sideways method op--init-dylan-data (be :: <harp-x86-windows-back-end>) =
     op--call-iep(be, primitive-reference(fixup-imported-dylan-data),
 		 fixup-start, fixup-end);
 
-    op--call-iep(be, primitive-register-traced-roots-ref, 
+    op--call-iep(be, primitive-register-traced-roots-ref,
 		 data-start, data-end, %ambig-root,
 		 objs-start, objs-end, %static-root,
 		 vars-start, vars-end, %exact-root);
@@ -199,7 +199,7 @@ end method;
 ///   NB: definitive statement is in binary-builder/builder.dylan,
 ///   but these two files must be in-step
 ///
-/// 
+///
 /// $fixup-start-symbol
 ///     obj file-1:     address of start of data for file-1       4 bytes
 ///           N1:       number of locations to update             * encoded
@@ -237,7 +237,7 @@ end method;
 ///   if position is supplied, then it gives the address relative to start of data
 ///   if long-offset is supplied then it gives the address relative to the last
 ///     address in multiples of 4 bytes
-///   otherwise, offset gives the address relative to the last address in 
+///   otherwise, offset gives the address relative to the last address in
 ///     multiples of 4 bytes
 
 
@@ -246,7 +246,7 @@ define used-by-client init runtime-primitive fixup-imported-dylan-data
   //    fixup-start, fixup-end
   // On exit:
   //    no result - imported references in static data will have been fixed up
-  
+
   result result;
   nreg fixup-start, fixup-end;
   tag done;
@@ -263,11 +263,11 @@ end runtime-primitive;
 
 // Dynamic derived import fixups require a sequence of indirections
 // to use when fixing up objects at enumerated positions at runtime
-// 
+//
 // The binary format for these differs slightly from .dyfix sections;
 // currently, each import and its accompanying indirections mask and
 // position are listed separately each time, room for improvement here.
-// 
+//
 // Nosa Feb 24, 1999
 
 
@@ -276,7 +276,7 @@ define used-by-client init runtime-primitive fixup-unimported-dylan-data
   //    fixup-start, fixup-end
   // On exit:
   //    no result - imported references in static data will have been fixed up
-  
+
   result result;
   nreg fixup-start, fixup-end;
   tag done;
@@ -377,7 +377,7 @@ end method;
 
 
 define method op--process-fixups-for-object
-    (be :: <harp-x86-windows-back-end>, 
+    (be :: <harp-x86-windows-back-end>,
      base :: <register>, obj :: <register>,
      cursor :: <register>, num :: <register>) => ()
   with-harp (be)
@@ -390,7 +390,7 @@ define method op--process-fixups-for-object
     // cursor is the address of the next offset
 
     ins--move(be, position, base);    // this is the last address for the ** encoding
-    
+
     // Start by testing for the end
     ins--bra(be, offset-loop-test);
 
@@ -398,7 +398,7 @@ define method op--process-fixups-for-object
     ins--ldh(be, offset, cursor, 0);            // offset := long-offset
     ins--add(be, cursor, cursor, 2);            // Move cursor past long-offset
     ins--bne(be, found-offset, offset, #xffff); // branch if the "long-offset" encoding was used
-    ins--ld(be, offset, cursor, 0);             // offset := position 
+    ins--ld(be, offset, cursor, 0);             // offset := position
     ins--add(be, cursor, cursor, 4);            // Move cursor past position
     ins--add(be, position, base, offset);       // allow for the base
     ins--bra(be, found-position);

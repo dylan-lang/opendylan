@@ -55,7 +55,7 @@ define module warnings-test-suite
 
   export non-definer-definition-definerz;
 
-  export inconsistent-non-definer-rules, 
+  export inconsistent-non-definer-rules,
          inconsistent-definer-rules-definer;
 
   export unconstrained-name-macro,

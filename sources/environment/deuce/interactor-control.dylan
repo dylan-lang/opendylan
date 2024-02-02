@@ -681,7 +681,7 @@ define method interactor-do-show-contents
   end
 end method interactor-do-show-contents;
 
-
+
 /// Clipboard handling
 
 define method paste-object?
@@ -735,7 +735,7 @@ define method paste-object
   end
 end method paste-object;
 
-
+
 /// Breakpoints
 
 define method set-interactor-breakpoint

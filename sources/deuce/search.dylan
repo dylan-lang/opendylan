@@ -162,7 +162,7 @@ define method search
   end
 end method search;
 
-
+
 /// Faster Boyer-Moore searching functions
 
 // Note the default test function is _not_ case-sensitive!
@@ -338,7 +338,7 @@ define sealed method fill-reoccurrence-table!
   reoccurrence-table
 end method fill-reoccurrence-table!;
 
-
+
 /// Slow searching functions
 
 // Note the default test function is _not_ case-sensitive!

@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method update-thread-stack-size-on-connection
     (connection :: <local-access-connection>, thread :: <remote-thread>) => ()
-  thread.stack-size := 
+  thread.stack-size :=
     nub-initialize-stack-vectors(connection.connection-process, thread.nub-descriptor);
   thread.stack-size-valid? := #t;
 end method;
@@ -70,7 +70,7 @@ define method update-thread-stack-trace-on-connection
   stack-frame-vector[last-frame].link-previous := #f;
   unless (last-frame == 0)
     stack-frame-vector[0].link-previous := stack-frame-vector[1];
-    stack-frame-vector[last-frame].link-next 
+    stack-frame-vector[last-frame].link-next
        := stack-frame-vector[last-frame - 1];
   end unless;
   for (i from 1 below last-frame)
@@ -94,7 +94,7 @@ end method;
 
 ///// READ-FRAME-LEXICALS
 
-define method read-frame-lexicals 
+define method read-frame-lexicals
   (conn :: <local-access-connection>, frame :: <function-frame>) => ()
   unless (frame.partial-lexicals-read?)
     partial-read-frame-lexicals(conn, frame);
@@ -108,8 +108,8 @@ define method read-frame-lexicals
   for (i from 0 below frame.lexicals-count)
      // Find out all information about this lexical variable
      // from the debugger nub.
-     let name-length :: <integer> 
-       = nub-get-lexical-variable-name-length 
+     let name-length :: <integer>
+       = nub-get-lexical-variable-name-length
            (conn.connection-process, lookups, i + 1);
 
      let variable-name = make (<byte-string>, size: name-length);
@@ -126,15 +126,15 @@ define method read-frame-lexicals
        = nub-lexical-variable-address
            (conn.connection-process, frame.stack-frame-pointer, lookups, i + 1);
 
-     nub-get-lexical-variable-name 
+     nub-get-lexical-variable-name
        (conn.connection-process, lookups, i + 1, name-length, variable-name);
 
      if (registers? == 1)
        // TODO: Make a register
-       let unassigned-register = 
+       let unassigned-register =
          find-register(frame.frame-thread.thread-access-path,
                        low-register-index);
-       variable-location := 
+       variable-location :=
          active-register(frame.frame-thread.thread-access-path,
                          frame.frame-thread,
                          unassigned-register);
@@ -198,7 +198,7 @@ end method;
 
 define method register-interactive-segment-on-connection
     (conn :: <local-access-connection>,
-     from :: <remote-value>, to :: <remote-value>) 
+     from :: <remote-value>, to :: <remote-value>)
        => ()
   nub-register-interactive-code-segment(conn.connection-process, from, to)
 end method;

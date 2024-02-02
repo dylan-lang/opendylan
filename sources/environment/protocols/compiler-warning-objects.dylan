@@ -48,7 +48,7 @@ define open generic warning-owner
     (server :: <server>, warning :: <warning-object>)
  => (owner :: false-or(<environment-object>));
 
-
+
 /// Project dispatching methods
 
 define method do-compiler-warnings
@@ -129,7 +129,7 @@ define method environment-object-name
   #f
 end method environment-object-name;
 
-
+
 /// Some convenience functions built on these protocols
 
 define method environment-object-source
@@ -153,7 +153,7 @@ define function project-warnings
     (do-compiler-warnings, project, project, client: client)
 end function project-warnings;
 
-
+
 /// Printing support
 
 define method environment-object-type-name

@@ -164,7 +164,7 @@ define method pane-sheet-with-selection
   #f
 end method pane-sheet-with-selection;
 
-
+
 /// Displayer operations
 
 define constant <operation-state>
@@ -193,7 +193,7 @@ define macro with-displayer-operation
       end }
 end macro with-displayer-operation;
 
-
+
 /// Items caching
 
 define abstract class <items-cache> (<object>)
@@ -257,7 +257,7 @@ define method clear-items-cache
   remove-all-keys!(cache.cache-children-table)
 end method clear-items-cache;
 
-
+
 /// Some standard collection displayers
 
 define class <collection-gadget-displayer-state> (<displayer-state>)
@@ -805,7 +805,7 @@ define method note-displayer-items-updated
   frame-status-message(frame) := message
 end method note-displayer-items-updated;
 
-
+
 /// Filtering displayers
 
 define pane <filtering-collection-gadget-displayer-mixin>
@@ -1027,7 +1027,7 @@ define method displayer-object-items-count
   values(size(children), size(all-children))
 end method displayer-object-items-count;
 
-
+
 /// List control displayer
 
 define pane <list-control-displayer>
@@ -1059,7 +1059,7 @@ define pane <filtering-list-control-displayer>
      <list-control-displayer>)
 end pane <filtering-list-control-displayer>;
 
-
+
 /// Table control displayer
 
 define pane <table-control-displayer>
@@ -1139,7 +1139,7 @@ define method ensure-displayer-item-labels-cached
   items
 end method ensure-displayer-item-labels-cached;
 
-
+
 /// Tree control displayer
 
 define pane <tree-control-displayer> (<collection-gadget-displayer-mixin>)

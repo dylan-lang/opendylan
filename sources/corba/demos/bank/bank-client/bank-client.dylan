@@ -41,7 +41,7 @@ define frame <bank-frame> (<simple-frame>)
                        label: "Exit",
                        documentation: "Exits the application.",
                        activate-callback: exit-callback)
-                  )); 
+                  ));
    pane account-menu (frame)
      make(<menu>,
           label: "&Account",
@@ -54,8 +54,8 @@ define frame <bank-frame> (<simple-frame>)
                         label: "Debit Account...",
                         documentation: "Debits the selected account given an amount.",
                         activate-callback: debit-callback)));
-                                         
-    
+
+
    pane accounts-pane (frame)
      make(<table-control>, headings: list("Name", "Balance", "Limit"),
            generators: list(account-name,
@@ -104,7 +104,7 @@ define method credit-callback (gadget :: <gadget>) => ()
   let bank-frame = gadget.sheet-frame;
   let account = gadget-value(accounts-pane(bank-frame));
   let amount = prompt-for-amount(owner: bank-frame, title: "Credit ...");
-  if (amount) 
+  if (amount)
       BankingDemo/account/credit(account, abs(amount));
       update-gadget(accounts-pane(bank-frame));
   end if;
@@ -114,16 +114,16 @@ define method debit-callback (gadget :: <gadget>) => ()
   let bank-frame = gadget.sheet-frame;
   let account = gadget-value(accounts-pane(bank-frame));
   let amount = prompt-for-amount(owner: bank-frame, title: "Debit ...");
-  if (amount) 
+  if (amount)
      block ()
-        BankingDemo/account/debit(account, amount); 
+        BankingDemo/account/debit(account, amount);
         update-gadget(accounts-pane(bank-frame));
      exception(refusal :: BankingDemo/account/<refusal>)
-        notify-user(concatenate("Debit refused for the following reason: ", 
-                                 refusal.BankingDemo/account/refusal/reason), 
+        notify-user(concatenate("Debit refused for the following reason: ",
+                                 refusal.BankingDemo/account/refusal/reason),
                     owner: bank-frame);
      end block;
-  end if; 
+  end if;
 end method debit-callback;
 
 define method openAccount-callback (gadget :: <gadget>) => ()
@@ -136,7 +136,7 @@ define method openAccount-callback (gadget :: <gadget>) => ()
         push-last(bank-accounts(bank-frame), account);
         update-gadget(accounts-pane(bank-frame));
      exception(duplicateAccount :: BankingDemo/bank/<duplicateAccount>)
-        notify-user(concatenate("Cannot create another account for ", name, "!"), 
+        notify-user(concatenate("Cannot create another account for ", name, "!"),
                     owner: bank-frame);
      end block;
   end if;
@@ -154,7 +154,7 @@ define method openCheckingAccount-callback (gadget :: <gadget>) => ()
           push-last(bank-accounts(bank-frame), checkingAccount);
           update-gadget(accounts-pane(bank-frame));
 	exception(duplicateAccount :: BankingDemo/bank/<duplicateAccount>)
-	  notify-user(concatenate("Cannot create another account for ", name, "!"), 
+	  notify-user(concatenate("Cannot create another account for ", name, "!"),
 		      owner: bank-frame);
 	end block;
      end if;
@@ -166,20 +166,20 @@ define method retrieveAccount-callback (gadget :: <gadget>) => ()
   let bank = bank-frame.bank;
   let name = prompt-for-name(owner: bank-frame, title: "Retrieve Account ...");
   if (name)
-   begin 
+   begin
     if (any? (method (account :: bankingdemo/<account>)
                  account.bankingdemo/account/name = name;
               end method,
               bank-frame.bank-accounts))
-         notify-user("Account already retrieved!", 
-                     owner: bank-frame);       
+         notify-user("Account already retrieved!",
+                     owner: bank-frame);
    else
      block ()
        let account = BankingDemo/bank/retrieveAccount(bank, name);
        push-last(bank-accounts(bank-frame), account);
        update-gadget(accounts-pane(bank-frame));
      exception(nonExistentAccount :: BankingDemo/bank/<nonExistentAccount>)
-         notify-user(concatenate("No existing account for ", name, "!"), 
+         notify-user(concatenate("No existing account for ", name, "!"),
                      owner: bank-frame);
      end block;
     end if;
@@ -204,12 +204,12 @@ end method closeAccount-callback;
 
 // utility functions
 
-define method prompt-for-name 
+define method prompt-for-name
    (#key title = "", owner)
  => (name :: false-or(<string>))
-  let text-field = make(<text-field>, 
+  let text-field = make(<text-field>,
                        activate-callback: exit-dialog);
-  let dialog = make(<dialog-frame>, 
+  let dialog = make(<dialog-frame>,
                     title: title,
                     owner: owner,
                     layout: vertically ()
@@ -221,20 +221,20 @@ define method prompt-for-name
   end
 end method prompt-for-name;
 
-define method prompt-for-amount 
+define method prompt-for-amount
    (#key title = "", owner)
  => (amount :: false-or(CORBA/<long>))
   let text-field = make(<text-field>, activate-callback: exit-dialog);
-  let dialog = make(<dialog-frame>, 
+  let dialog = make(<dialog-frame>,
                     title: title,
                     owner: owner,
                     layout: vertically ()
                               labelling ("Amount:") text-field end;
                             end,
                     input-focus: text-field);
-  if (start-dialog(dialog)) 
+  if (start-dialog(dialog))
        string-to-integer(gadget-value(text-field))
-     | (notify-user("Invalid amount (operation cancelled)!",  owner: owner) & #f);       
+     | (notify-user("Invalid amount (operation cancelled)!",  owner: owner) & #f);
   end if;
 end method prompt-for-amount;
 

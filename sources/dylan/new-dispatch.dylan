@@ -132,7 +132,7 @@ define function bootstrap-allocate-repeated-discriminator
   let d :: <discriminator> = system-allocate-repeated-object-instance(c, #f, size, default);
   bootstrap-shared-allocate-discriminator(entry-type, argnum, root-bits, d);
 end function;
-
+
 
 
 define open generic bletch (x :: <condition>) => ();
@@ -156,7 +156,7 @@ define function bletch-stack (l :: <list>)
     bletch(head(l));
   end if
 end function;
-
+
 
 /* *******************************************************
    Object locking
@@ -421,7 +421,7 @@ define macro with-multiple-object-lock
 end macro;
 
 
-
+
 
 /* *******************************
    Simple, terminal discriminators

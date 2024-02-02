@@ -46,7 +46,7 @@ define method bash-one
   nexti;
 end method;
 
-define method bash-it 
+define method bash-it
     (start :: <integer>, num :: <integer>, thread :: <string>) => ()
   let vec = make(<vector>, size: $vector-size);
   let i :: <integer> = start;

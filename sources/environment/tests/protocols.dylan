@@ -121,7 +121,7 @@ define suite ids-suite ()
   test name-parsing-test;
 end suite ids-suite;
 
-
+
 /// Environment protocols suite
 
 define suite environment-protocols-suite ()

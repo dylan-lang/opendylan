@@ -50,7 +50,7 @@ define method print-trace-exit (f :: <string>, t :: <string>)
   format-out ("<- %s[%s]\n", f, t);
 end method;
 
-define method print-source-break-hit 
+define method print-source-break-hit
     (filename :: <string>, line :: <integer>, threadname :: <string>) => ()
   format-out(">>>> BREAK: Line %d of source file %s [%s]\n",
              line, filename, threadname);
@@ -99,9 +99,9 @@ end class;
 //    Our debugger allows commands essentially of the form "break X",
 //    which means break at address X (which can be a literal or
 //    symbolic address), but all breakpoints are basically assumed to
-//    be on entry into a function. 
+//    be on entry into a function.
 
-define abstract class <function-entry-breakpoint> 
+define abstract class <function-entry-breakpoint>
                          (<console-debugger-breakpoint>)
 
        constant slot function-symbol :: false-or (<string>),
@@ -213,7 +213,7 @@ end method;
 
 ///// BREAKPOINT-CALLBACK
 //    Registered on all breakpoints set with the "break" function. Note
-//    that there is no specialized handle-debug-point-event method - 
+//    that there is no specialized handle-debug-point-event method -
 //    the default behaviour will just call the callback.
 
 define method breakpoint-callback
@@ -231,14 +231,14 @@ define method breakpoint-callback
     if (bp.debugger-breakpoint-always-ignore?)
       #f
     elseif (bp.debugger-breakpoint-ignore?)
-      if (bp.debugger-breakpoint-ignore-count == 
+      if (bp.debugger-breakpoint-ignore-count ==
             bp.debugger-breakpoint-ignore-level)
         bp.debugger-breakpoint-ignore? := #f;
         bp.debugger-breakpoint-ignore-count := 0;
         bp.debugger-breakpoint-ignore-level := 0;
         #t;
       else
-        bp.debugger-breakpoint-ignore-count := 
+        bp.debugger-breakpoint-ignore-count :=
           bp.debugger-breakpoint-ignore-count + 1;
         #f;
       end if;
@@ -273,9 +273,9 @@ define method breakpoint-callback
         bp.debugger-breakpoint-ignore-level := 0;
         #t;
       else
-        bp.debugger-breakpoint-ignore-count := 
+        bp.debugger-breakpoint-ignore-count :=
           bp.debugger-breakpoint-ignore-count + 1;
-        #f; 
+        #f;
       end if
     else
       #t
@@ -509,7 +509,7 @@ define method entry-tracepoint-callback
     end for;
     if (keys)
       for (arg in keys)
-        str := concatenate(str, pred, 
+        str := concatenate(str, pred,
                            debugger-print-object
                              (app, head(arg), decorate?: #f),
                            ": ",
@@ -756,7 +756,7 @@ define method source-breakpoint-callback
         bp.debugger-breakpoint-ignore-level := 0;
         #t;
       else
-        bp.debugger-breakpoint-ignore-count := 
+        bp.debugger-breakpoint-ignore-count :=
           bp.debugger-breakpoint-ignore-count + 1;
         #f;
       end if;
@@ -821,7 +821,7 @@ define method handle-interactor-return
   else
     for (remote-val in return-vals)
       let hist-index = add-history-value(remote-val);
-      let hex-object = 
+      let hex-object =
         remote-value-as-string
            (application.debug-target-access-path, remote-val, 16);
       format-out("    0x%s  $%d : %s\n",

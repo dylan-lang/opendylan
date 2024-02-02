@@ -7,11 +7,11 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Use an imitation of Collage to pick up some miscellaneous pieces of the
-// interface that don't need special treatment. 
+// interface that don't need special treatment.
 
 define interface auto-misc
  #include: { "wtypes.h", "oleauto.h", "oaidl.h" };
- import: { 
+ import: {
 	// structures used in member function arguments:
 	DISPPARAMS, EXCEPINFO, BINDPTR, TYPEATTR, TLIBATTR,
 	TYPEDESC, ELEMDESC, ARRAYDESC, CUSTDATA, CUSTDATAITEM,
@@ -20,7 +20,7 @@ define interface auto-misc
 	LPCUSTDATA, LPCUSTDATAITEM,
 
 	// structures used in misc. functions:
-	SAFEARRAY, SAFEARRAYBOUND, 
+	SAFEARRAY, SAFEARRAYBOUND,
 
 	// types needed:
 	BSTR, SYSKIND, HREFTYPE, TYPEKIND, FUNCDESC, VARDESC,
@@ -41,7 +41,7 @@ define interface auto-misc
 	DISPATCH_METHOD, DISPATCH_PROPERTY*, IDLFLAG_*, DISPID_*,
 	VARIANT_TRUE, VARIANT_FALSE, VARIANT_NOVALUEPROP,
         FADF_*, MEMBERID_NIL, IMPLTYPEFLAG_*,
- 
+
 	// assorted non-member functions
 	SysAllocString, SysReAllocString, SysAllocStringLen,
 	SysReAllocStringLen, SysFreeString, SysStringLen, SysStringByteLen,
@@ -54,7 +54,7 @@ define interface auto-misc
 	SafeArrayPutElement, SafeArrayCopy, SafeArrayPtrOfIndex,
 	VariantInit, VariantClear, VariantCopy, VariantCopyInd,
 	VariantChangeType, VariantChangeTypeEx,
-	DosDateTimeToVariantTime, VariantTimeToDosDateTime, 
+	DosDateTimeToVariantTime, VariantTimeToDosDateTime,
 
    /*	// low-level functions that probably aren't needed directly.
 	VarUI1FromI2, VarUI1FromI4,
@@ -81,7 +81,7 @@ define interface auto-misc
 
 	LHashValOfNameSysA,
 	LHashValOfNameSys, LoadTypeLib, LoadRegTypeLib,
-	QueryPathOfRegTypeLib, RegisterTypeLib, 
+	QueryPathOfRegTypeLib, RegisterTypeLib,
 	CreateTypeLib, DispGetParam, DispGetIDsOfNames, DispInvoke,
 	CreateStdDispatch, RegisterActiveObject,
 	RevokeActiveObject, GetActiveObject, SetErrorInfo, GetErrorInfo,
@@ -152,4 +152,4 @@ define interface auto-misc
 	// The following types are only used in the functions above.
 	UDATE, LPUDATE, NUMPARSE, LPNUMPARSE
     }; end interface;
- 
+

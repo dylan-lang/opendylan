@@ -28,7 +28,7 @@ define class <command-call-error> (<simple-error>, <command-call-condition>)
 end class;
 
 
-
+
 /// -=- CALLING INTO THE ENVIRONMENT VIA LOOKUP -=-
 
 /// -=- Table of commands -=-
@@ -145,7 +145,7 @@ define function lookup-and-coerced-apply
 end function;
 
 
-
+
 /* ---*** Not used yet
 
 // -=- RETURNING CALLS -=-

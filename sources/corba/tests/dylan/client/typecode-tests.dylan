@@ -68,7 +68,7 @@ define test typecode-member-count-tests ()
   check-condition("typecode member count badkind",
 		  CORBA/TypeCode/<BadKind>,
 		  CORBA/TypeCode/member-count(corba/$short-typecode));
-end test;  
+end test;
 
 define test typecode-member-name-tests ()
   check-equal("typecode member name",
@@ -80,7 +80,7 @@ define test typecode-member-name-tests ()
   check-condition("typecode member name badkind",
 		  CORBA/TypeCode/<BadKind>,
 		  CORBA/TypeCode/member-name(corba/$short-typecode, 0));
-end test;  
+end test;
 
 define test typecode-member-type-tests ()
   check-equal("typecode member type",
@@ -92,7 +92,7 @@ define test typecode-member-type-tests ()
   check-condition("typecode member type badkind",
 		  CORBA/TypeCode/<BadKind>,
 		  CORBA/TypeCode/member-type(corba/$short-typecode, 0));
-end test;  
+end test;
 
 define test typecode-member-label-tests ()
   check-equal("typecode member label",
@@ -104,7 +104,7 @@ define test typecode-member-label-tests ()
   check-condition("typecode member label badkind",
 		  CORBA/Typecode/<BadKind>,
 		  CORBA/Typecode/member-label(corba/$short-typecode, 0));
-end test;  
+end test;
 
 define test typecode-discriminator-type-tests ()
   check-equal("typecode discriminator type",
@@ -113,7 +113,7 @@ define test typecode-discriminator-type-tests ()
   check-condition("typecode discriminator type badkind",
 		  CORBA/Typecode/<BadKind>,
 		  CORBA/Typecode/discriminator-type(corba/$short-typecode));
-end test;  
+end test;
 
 define test typecode-default-index-tests ()
   check-equal("typecode default index",
@@ -122,7 +122,7 @@ define test typecode-default-index-tests ()
   check-condition("typecode default index badkind",
 		  CORBA/Typecode/<BadKind>,
 		  CORBA/Typecode/default-index(corba/$short-typecode));
-end test;  
+end test;
 
 define test typecode-length-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
@@ -132,7 +132,7 @@ define test typecode-length-tests ()
   check-condition("typecode length badkind",
 		  CORBA/Typecode/<BadKind>,
 		  CORBA/Typecode/length(corba/$short-typecode));
-end test;  
+end test;
 
 define test typecode-content-type-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
@@ -142,7 +142,7 @@ define test typecode-content-type-tests ()
   check-condition("typecode content type badkind",
 		  CORBA/Typecode/<BadKind>,
 		  CORBA/Typecode/content-type(corba/$short-typecode));
-end test;  
+end test;
 
 define suite typecode-tests ()
   test typecode-kind-tests;

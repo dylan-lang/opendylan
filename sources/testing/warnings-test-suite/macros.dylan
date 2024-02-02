@@ -58,7 +58,7 @@ define macro duplicate-names-macro
 end macro;
 
 define macro element-as-sequence-macro
-  { element-as-sequence-macro(?stuff:*) } => { ??stuff ... } 
+  { element-as-sequence-macro(?stuff:*) } => { ??stuff ... }
 end macro;
 
 define macro sequence-as-element-macro

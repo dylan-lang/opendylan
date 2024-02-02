@@ -42,7 +42,7 @@ ignore(too-few-arguments,
        duplicate-arguments,
        duplicate-keywords);
 
-
+
 /// Keywords
 
 define function test-keywords
@@ -63,7 +63,7 @@ end function incorrect-keyword-types;
 ignore(incorrect-keywords,
        incorrect-keyword-types);
 
-
+
 /// Generic functions
 
 define generic no-method-generic (x) => (y);

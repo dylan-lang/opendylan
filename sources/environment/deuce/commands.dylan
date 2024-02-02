@@ -67,7 +67,7 @@ commands:
          ... }
 end macro delegate-to-deuce;
 
-
+
 /// From the "File" menu ...
 
 // ... I/O commands
@@ -271,7 +271,7 @@ define method query-replace-string (gadget :: <environment-deuce-gadget>) => ()
   frame-edit-search-options(sheet-frame(gadget))
 end method query-replace-string;
 
-
+
 /// From the "View" menu ...
 
 // ... refresh and options
@@ -291,7 +291,7 @@ delegate-to-deuce
   frame-edit-options => choose-configuration;
 end;
 
-
+
 /// From the "Project" and "Application" menus ...
 
 /*---*** andrewa: let's try not delegating these at all...
@@ -361,7 +361,7 @@ delegate-to-deuce
 end;
 */
 
-
+
 /// From the "Object" menu ...
 
 delegate-to-deuce
@@ -376,7 +376,7 @@ delegate-to-deuce
 end;
 
 
-
+
 /// From the "Tools" menu ...
 
 // ... tool cloning
@@ -390,13 +390,13 @@ define method make-clone
         initargs);
 end method make-clone;
 
-
+
 /// From the "History" menu ...
 
-
+
 /// From the "Help" menu ...
 
-
+
 /// Glue between Deuce and the Source Control Manager
 
 define sealed method do-source-control-operation
@@ -544,7 +544,7 @@ define method get-source-control-arguments
   end
 end method get-source-control-arguments;
 
-
+
 /// Editor command tables
 
 

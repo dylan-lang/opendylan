@@ -100,7 +100,7 @@ define method init-instance(app :: <sample-container-app>,
   UpdateWindow(app.container-frame-window);
 
 end method init-instance;
-
+
 
 // ====  window message handler functions  ====
 
@@ -114,12 +114,12 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
   block(return)
 
     select ( message )
-	        
+
       $WM-COMMAND =>            // message: command from application menu
 	return(window-command-handler(*sample-app*, hWnd, message,
 				      wParam, lParam));
 
-      $WM-CREATE => 
+      $WM-CREATE =>
 	return(create-document(*sample-app*, hWnd));
 
       $WM-DESTROY =>                   // message: window being destroyed
@@ -129,7 +129,7 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
 	// container-destroy-documents(*sample-app*);
 	PostQuitMessage(0);
 
-      $WM-INITMENUPOPUP => 
+      $WM-INITMENUPOPUP =>
 	// is this the edit menu?
 	if ( LOWORD(lParam) = 1 )
 	  // Adds the object's verbs to the edit menu, if not done already.
@@ -139,29 +139,29 @@ define method main-wnd-proc(hWnd :: <HWND>, message :: <integer>,
 	end if;
 
       // this code is needed for 256 color objects to work properly.
-      $WM-QUERYNEWPALETTE => 
+      $WM-QUERYNEWPALETTE =>
 	unless ( *sample-app*.app-activated? )
 	  return(0);
 	end unless;
 	return(container-query-new-palette(*sample-app*));
 
-      $WM-PALETTECHANGED => 
+      $WM-PALETTECHANGED =>
 	if ( container-palette-changed(*sample-app*, hWnd, wParam, lParam) )
 	  return(0);
 	end if;
-	  
+
       $WM-ACTIVATEAPP =>
 	let active? :: <boolean> = ~ zero?(wParam);
 	*sample-app*.app-activated? := active?;
 	container-activate-application(*sample-app*, active?);
 
-      $WM-SIZE => 
+      $WM-SIZE =>
 	return(window-size-handler(*sample-app*, hWnd, message,
 				   wParam, lParam));
 
       otherwise =>                           // Passes it on if unproccessed
 	return(DefWindowProc(hWnd, message, wParam, lParam));
-	        
+
     end select;
     return(0);
   end block;
@@ -174,19 +174,19 @@ define method about-proc(hDlg :: <HWND>, message :: <integer>,
 			 wParam, lParam)
  => value :: <boolean>;
 
-  select ( message ) 
-    $WM-INITDIALOG =>			/* message: initialize dialog box */ 
+  select ( message )
+    $WM-INITDIALOG =>			/* message: initialize dialog box */
       #t;
 
-    $WM-COMMAND =>			   /* message: received a command */ 
+    $WM-COMMAND =>			   /* message: received a command */
       let button :: <integer> = LOWORD(wParam);
       if ( button = $IDOK	   /* "OK" box selected?	  */
-	    |	 button = $IDCANCEL) /* System menu close command? */ 
-	EndDialog(hDlg, 1);	      /* Exits the dialog box	     */ 
+	    |	 button = $IDCANCEL) /* System menu close command? */
+	EndDialog(hDlg, 1);	      /* Exits the dialog box	     */
 	#t
       end if;
     otherwise =>
-      #f		     /* Didn't process a message    */ 
+      #f		     /* Didn't process a message    */
   end select
 end method about-proc;
 
@@ -198,8 +198,8 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
  => value :: <integer>;
 
   block(return)
-    select ( message ) 
-      $WM-PAINT => 
+    select ( message )
+      $WM-PAINT =>
 	begin
 	  let ps :: <LPPAINTSTRUCT> = make(<LPPAINTSTRUCT>);
 	  let hDC :: <HDC> = BeginPaint(hWnd, ps);
@@ -212,8 +212,8 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
 	  destroy(ps);
 	end;
 
-      $WM-LBUTTONDBLCLK => 
-	begin 
+      $WM-LBUTTONDBLCLK =>
+	begin
 	  let pt :: <LPPOINT> = make(<LPPOINT>);
 	  let ( x, y ) = LPARAM-TO-XY(lParam);
 	  pt.x-value := x;
@@ -238,7 +238,7 @@ define method Doc-Wnd-Proc(hWnd :: <HWND>, message :: <integer>,
 
       // no code is added to WM_LBUTTONDOWN for context sensitive help,
       // because this app does not do context sensitive help.
-      $WM-LBUTTONDOWN => 
+      $WM-LBUTTONDOWN =>
 
 	let doc = *sample-app*.app-document;
 	let contained = doc & doc.contained-object;
@@ -262,7 +262,7 @@ end method Doc-Wnd-Proc;
 
 define callback DocWndProc :: <WNDPROC> = Doc-Wnd-Proc;
 
-
+
 
 // ====  functions called to handle specific window messages  ====
 
@@ -285,7 +285,7 @@ define method window-command-handler(app :: <sample-container-app>,
 	=> value :: <integer>;
 
   block(return)
-	
+
     // context sensitive help...
     if ( container-context-help(app) )
       // if we provided help, we would do it here...
@@ -299,31 +299,31 @@ define method window-command-handler(app :: <sample-container-app>,
       container-do-verb(app.contained-object,
 			low-param - $IDM-VERB0, null-pointer(<LPMSG>));
     else
-      select (low-param) 
+      select (low-param)
 	// bring up the About box
-	$IDM-ABOUT => 
+	$IDM-ABOUT =>
 	  DialogBox(app.app-instance-handle,          // current instance
 		    TEXT("AboutBox"),      // resource to use
 		    app.container-frame-window,        // parent handle
 		    About);                // About() instance address
-	    
+
 
 	// bring up the InsertObject Dialog
-	$IDM-INSERTOBJECT => 
+	$IDM-INSERTOBJECT =>
 	  insert-object(app, app.app-document);
 
 	// exit the application
-	$IDM-EXIT => 
+	$IDM-EXIT =>
 	  SendMessage(hWnd, $WM-SYSCOMMAND, $SC-CLOSE, 0);
 
-	$IDM-NEW => 
+	$IDM-NEW =>
 	  close-document(app.app-document, #f);
 	  app.app-document := #f;
 	  create-document(app, hWnd);
 
-	otherwise => 
+	otherwise =>
 	  return(DefWindowProc(hWnd, message, wParam, lParam));
-	                
+
       end select;   // end of switch
     end if;  // end of else
     return(0);
@@ -349,7 +349,7 @@ define method window-size-handler(app :: <sample-container-app>,
 	=> (value :: <integer>);
 
   let doc = app.app-document;
-  if ( doc ) 
+  if ( doc )
     with-stack-structure ( rectangle :: <PRECT> )
       GetClientRect(app.container-frame-window, rectangle);
       let contained = doc.contained-object;
@@ -396,7 +396,7 @@ define method paint-application(app :: <sample-container-app>,
 
   // if we supported multiple documents, we would enumerate
   // through each of the open documents and call paint.
-  
+
   let contained = app.contained-object;
   if ( contained )
     paint-contained-document(contained, hDC);

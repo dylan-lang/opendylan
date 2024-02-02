@@ -12,8 +12,8 @@ with-ops-in pentium-instructions (bmvset, bmvunset, bz-bytes, bnz-bytes)
 end with-ops-in;
 
 
-with-ops-in pentium-instructions 
-    (bz-bytes, bnz-bytes, beq-byte, bne-byte, 
+with-ops-in pentium-instructions
+    (bz-bytes, bnz-bytes, beq-byte, bne-byte,
      bge-byte, bgt-byte, ble-byte, blt-byte)
   prefer-fn := pentium-method (uu)
 		 prefer(uu-uze(1), byte-addressable-regs);
@@ -57,16 +57,16 @@ define constant bcc-x = #x73;    // carry clear
 define constant blo-x = #x72;
 define constant bcs-x = #x72;    // carry set
 define constant bls-x = #x76;
-// define constant bp-x =  #x7a;    // parity flag test for doing 
+// define constant bp-x =  #x7a;    // parity flag test for doing
 //                                  // float unordered comparisons
 // define constant bpo-x = #x7b;
 
 
 /// General SDI emitter
 
-define method emit-general-sdi 
-    (be :: <harp-x86-back-end>, tag :: <tag>, 
-     method-vector :: <simple-object-vector>, 
+define method emit-general-sdi
+    (be :: <harp-x86-back-end>, tag :: <tag>,
+     method-vector :: <simple-object-vector>,
      cached-size :: <integer>,
      #key dest-offset = 0, code = #f)
 
@@ -81,7 +81,7 @@ end method;
 
 /// sdis for conditional branches
 
-define method emit-branch-sdi 
+define method emit-branch-sdi
     (be :: <harp-x86-back-end>, opcode :: <integer>, tag :: <tag>)
   emit-general-sdi(be, tag, vector(branch-8, branch-32), 2, code: opcode);
 end method;
@@ -89,7 +89,7 @@ end method;
 
 /// Check the length here !!
 
-define method branch-8 
+define method branch-8
     (self :: <new-sdi>, span :: <integer>, codep :: <boolean>)
   if ((-126 <= span) & (span <= 129))
     if (codep)
@@ -97,7 +97,7 @@ define method branch-8
     else
       2;
     end if;
-  else 
+  else
     #f;
   end if;
 end method;
@@ -130,7 +130,7 @@ define method jmp-8 (self :: <new-sdi>, span :: <integer>, codep :: <boolean>)
     else
       2;
     end if;
-  else 
+  else
     #f;
   end if;
 end method;
@@ -159,7 +159,7 @@ with-ops-in pentium-instructions (bls) info := bls-x end;
 
 
 define method logical-positive (x :: <abstract-integer>) => (res :: <abstract-integer>)
-  if (x > 0) 
+  if (x > 0)
     x
   else  // Limited integer precision means we can't do this yet !"$%
     harp-error("Can't perform unsigned comparison on negative number");
@@ -178,9 +178,9 @@ end method;
 // Modified handle-constant-comparison for PC to avoid raw values
 // (TonyM 15/10/91)
 
-define method handle-constant-comparison 
-    (be :: <harp-x86-back-end>, 
-     info :: <integer>, 
+define method handle-constant-comparison
+    (be :: <harp-x86-back-end>,
+     info :: <integer>,
      dest :: <tag>,
      left :: <abstract-integer>, right :: <abstract-integer>)
 
@@ -313,7 +313,7 @@ end local-pentium-template;
 
 /// BMVSET and BMVUNSET
 /// These branch when the multiple value count is set / unset
-/// respectively. 
+/// respectively.
 
 with-ops-in pentium-instructions (bmvset)   info := beq-x end;
 with-ops-in pentium-instructions (bmvunset) info := bne-x end;
@@ -334,7 +334,7 @@ end pentium-template;
 
 
 /// INS::OFFSET-TO-TAG
-/// This simply emits 4 bytes of the relative distance to the tag. 
+/// This simply emits 4 bytes of the relative distance to the tag.
 
 define pentium-template (offset-to-tag)
   pattern (be, tag)
@@ -348,7 +348,7 @@ end method;
 
 
 
-define method offset-32 
+define method offset-32
      (self :: <new-sdi>, span :: <abstract-integer>, codep :: <boolean>)
   if (codep)
     four-bytes(generic--(span, 4));
@@ -359,7 +359,7 @@ end method;
 
 
 
-/// bne-byte-mem and beq-byte-mem are what LW calls 
+/// bne-byte-mem and beq-byte-mem are what LW calls
 /// bne-mem and beq-mem [confusingly added 11/10/90 (tony)]
 /// they make some predicates faster and more compact
 /// N.B. they are currently BYTE comparisons in memory, with an
@@ -375,10 +375,10 @@ with-ops-in pentium-instructions (beq-byte-mem, bne-byte-mem, bne-mem, beq-mem)
         end pentium-method;
 end with-ops-in;
 
-define method cmp-byte-mem 
-    (be :: <harp-x86-back-end>, 
-     info :: <integer>, dest :: <tag>, 
-     ad-reg :: <real-register>, 
+define method cmp-byte-mem
+    (be :: <harp-x86-back-end>,
+     info :: <integer>, dest :: <tag>,
+     ad-reg :: <real-register>,
      disp :: <integer>, cmp :: <integer>)
   emit(be, #x80);
   emit-reg-offset(be, ad-reg, disp, cmp2);
@@ -414,10 +414,10 @@ end pentium-template;
 with-ops-in pentium-instructions (beq-mem) info := beq-x end;
 with-ops-in pentium-instructions (bne-mem) info := bne-x end;
 
-define method cmp-mem 
-    (be :: <harp-x86-back-end>, 
-     info :: <integer>, dest :: <tag>, 
-     ad-reg :: <real-register>, 
+define method cmp-mem
+    (be :: <harp-x86-back-end>,
+     info :: <integer>, dest :: <tag>,
+     ad-reg :: <real-register>,
      disp :: <integer>, cmp)
   emit(be, #x81);
   emit-reg-offset(be, ad-reg, disp, cmp2);
@@ -472,7 +472,7 @@ define method byte-equals-test (i :: <op>)
   end if;
 end method;
 
-define pentium-template (bne-byte, beq-byte, bge-byte, bgt-byte, 
+define pentium-template (bne-byte, beq-byte, bge-byte, bgt-byte,
                          ble-byte, blt-byte)
   options (self);
 
@@ -537,7 +537,7 @@ define pentium-template (bne-byte, beq-byte, bge-byte, bgt-byte,
 end pentium-template;
 
 
-define method full-test 
+define method full-test
       (be :: <harp-x86-back-end>, info :: <integer>) => (op :: <op>)
   let instrs = be.instructions;
   select (info)
@@ -550,7 +550,7 @@ end method;
 /// BZ-BYTES and BNZ-BYTES
 /// Branch depending on whether 2 bytes are both zero.
 /// This is useful for checking if 2 numbers are fixnums very
-/// efficiently. 
+/// efficiently.
 
 
 with-ops-in pentium-instructions (bz-bytes)  info := beq-x end;
@@ -631,7 +631,7 @@ end;
 // (TonyM 15/10/91)
 
 define method catching-constant-bit
-    (be :: <harp-x86-back-end>, 
+    (be :: <harp-x86-back-end>,
      info :: <integer>, where :: <tag>,
      what :: <integer>, with :: <integer>, is :: <integer>)
   let take-the-branch? = logand(what, with) ~= is;
@@ -666,7 +666,7 @@ define pentium-template (bit, nbit)
 
 
   // byte TEST on one of the four magic registers or a spill
-  pattern (be, i :: <integer> by op-info, d, p by byte-addressable, 
+  pattern (be, i :: <integer> by op-info, d, p by byte-addressable,
            r :: <integer> of eight-bit-const-ref, s :: <integer> of zero-number?)
     emit(be, #xf6);
     emit-m-c-spill-dest(be, p, 0);
@@ -789,7 +789,7 @@ end pentium-template;
 
 /// RTS-AND-DROP takes one argument - the number of arguments to
 /// remove from the stack after the return address. This must be
-/// a constant number which is the number of bytes of arguments to drop. 
+/// a constant number which is the number of bytes of arguments to drop.
 
 
 define constant $rts-and-drop-disallows = vector(ebx, ecx);
@@ -819,7 +819,7 @@ define pentium-template rts-and-drop
     // Choose a temporary which is not a preserved register
     let tmp = if (be.variables.compiling-call-in)
                 edx
-              else reg--tmp1 
+              else reg--tmp1
               end if;
     harp-out (be)
       pop(be, tmp);  // pop the return address
@@ -830,7 +830,7 @@ define pentium-template rts-and-drop
 
   // Dynamically sized case with the size on the stack.
   pattern (be, u :: <ispill> by colour)
-    harp-out (be) 
+    harp-out (be)
       move(be, ecx, u);
       rts-and-drop(be, ecx);
     end harp-out;
@@ -857,7 +857,7 @@ end pentium-template;
 /// NB This could be completely reworked for Dylan to use labelled relative
 /// constants. See LEA.
 
-define method emit-pea-sdi 
+define method emit-pea-sdi
     (be :: <harp-x86-back-end>, tag :: <tag>, offset :: <integer>)
   emit-general-sdi(be, tag, vector(pea-8, pea-32), 5, dest-offset: offset);
 end method;
@@ -873,7 +873,7 @@ define method pea-8
     else
       4;
     end if;
-  else 
+  else
     #f;
   end if;
 end method;
@@ -895,7 +895,7 @@ define pentium-template pea
     emit(be, #xe8, 0, 0, 0, 0);			// call $+0
     emit-pea-sdi(be, tag, offset);
 end pentium-template;
-   
+
 
 
 /// LEA and the related LOAD-NLX-ADDRESS
@@ -928,13 +928,13 @@ define pentium load-nlx-address-template;
 
 define method emit-effective-address-sdi
      (be :: <harp-x86-back-end>, tag :: <tag>, offset :: <integer>)
-  emit-general-sdi(be, tag, vector(effective-address-32), 4, 
+  emit-general-sdi(be, tag, vector(effective-address-32), 4,
                    dest-offset: offset);
 end method;
 
 
 
-define method effective-address-32 
+define method effective-address-32
      (self :: <new-sdi>, span :: <integer>, codep :: <boolean>)
   if (codep)
     list(make(<relative-address-constant>, offset: span, size: 4));

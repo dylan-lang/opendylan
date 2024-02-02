@@ -132,7 +132,7 @@ define method frame-target-to-edit
   frame-target-edit-object(frame, target)
 end method frame-target-to-edit;
 
-
+
 /// Command target sequence
 
 define sealed class <command-target-sequence> (<object>)
@@ -175,7 +175,7 @@ define method frame-target-edit-object
   map(curry(frame-target-edit-object, frame), target.target-sequence)
 end method frame-target-edit-object;
 
-
+
 /// Default frame target
 
 define open generic frame-target-pane
@@ -210,7 +210,7 @@ define method frame-sheet-target
   object & make-command-target(sheet, object)
 end method frame-sheet-target;
 
-
+
 /// Target support
 
 define function frame-describe-target
@@ -460,7 +460,7 @@ define function frame-resume-target
   end
 end function frame-resume-target;
 
-
+
 /// Commands
 
 define constant $describe-target-doc
@@ -567,7 +567,7 @@ define command-table *popup-menu-documentation-command-table*
   command $document-target-command;
 end command-table *popup-menu-documentation-command-table*;
 
-
+
 /// Editing commands
 
 define constant $open-target-command
@@ -647,7 +647,7 @@ define command-table *popup-menu-properties-command-table*
 */
 end command-table *popup-menu-properties-command-table*;
 
-
+
 /// Breakpoint commands
 
 define command-table *all-breakpoints-command-table* (*global-command-table*)
@@ -696,7 +696,7 @@ define command-table *breakpoint-location-command-table* (*global-command-table*
   include *single-breakpoint-command-table*;
 end command-table *breakpoint-location-command-table*;
 
-
+
 /// Popup menu command tables
 
 define command-table *popup-menu-command-table* (*global-command-table*)
@@ -803,7 +803,7 @@ define command-table *file-popup-menu-command-table*
   include *popup-menu-properties-command-table*;
 end command-table *file-popup-menu-command-table*;
 
-
+
 /// Command table selection
 
 define open generic command-table-for-target
@@ -936,7 +936,7 @@ define method command-table-for-target
   *dylan-file-popup-menu-command-table*
 end method command-table-for-target;
 
-
+
 /// Default command handling
 
 define constant <command-or-function> = type-union(<function>, <command>);
@@ -1004,7 +1004,7 @@ define method default-command-for-target
   frame-debug-target
 end method default-command-for-target;
 
-
+
 /// Primary object command table
 
 define open generic frame-describe-primary-object

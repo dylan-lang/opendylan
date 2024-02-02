@@ -77,7 +77,7 @@ define method choice-pane-choices-setter
   choices
 end method choice-pane-choices-setter;
 
-
+
 // The <choice-pane> class
 
 define variable $check-mark-icon   = #f;

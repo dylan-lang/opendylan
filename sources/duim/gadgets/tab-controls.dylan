@@ -120,7 +120,7 @@ define method tab-control-named-child
   end
 end method tab-control-named-child;
 
-
+
 /// Gadget value handling
 
 define method tab-control-default-value-key

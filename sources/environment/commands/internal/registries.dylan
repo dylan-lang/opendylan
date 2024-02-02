@@ -107,7 +107,7 @@ define method show-property
   end
 end method show-property;
 
-
+
 /// Utilities
 
 define constant $personal-directories
@@ -160,7 +160,7 @@ define method maybe-set-roots
   end;
 end method maybe-set-roots;
 
-
+
 /// Registry commands
 
 define command-group registry into environment

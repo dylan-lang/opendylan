@@ -27,17 +27,17 @@ define constant pointer-types-used = make(<deque>);
 
 //////// PROTOCOL
 
-define constant $target-types = 
+define constant $target-types =
 	#(#"dispatch-clients", #"dispatch-servers",
 	  #"vtable-interfaces", #"dual-interfaces");
 // define constant <target-types> = apply(one-of, $target-types);
-define constant <target-types> = 
+define constant <target-types> =
 	one-of(#"dispatch-clients", #"dispatch-servers",
 	       #"vtable-interfaces", #"dual-interfaces");
 
 // Parameters required for translation:
 define class <motley-parameters> (<object>)
-  constant slot target-type :: <target-types>, 
+  constant slot target-type :: <target-types>,
   	required-init-keyword: target-type:;
   constant slot server-suffix :: <string> = "",
   	init-keyword: server-suffix:;
@@ -217,9 +217,9 @@ end macro get-documentation;
 
 
 define macro with-string-stream
-  { 
-    with-string-stream (?:name) ?:body end 
-  } => { 
+  {
+    with-string-stream (?:name) ?:body end
+  } => {
     let ?name = make(<string-stream>, direction: #"output");
     block ()
       ?body;
@@ -270,8 +270,8 @@ end function c-name-to-dylan-name;
 
 define function c-name-to-dylan-name (c-name :: <string>)
 				  => (dylan-name :: <string>)
-  // Since C names are a subset of Dylan names, our translation 
-  // policy is simply to replace _ with -, except for leading 
+  // Since C names are a subset of Dylan names, our translation
+  // policy is simply to replace _ with -, except for leading
   // underscores which are left alone. This is because leading hyphens
   // are parsed as unary - in Dylan.
   let dylan-name :: <string> = copy-sequence(c-name);
@@ -329,7 +329,7 @@ define method initialize (this :: <type-library>, #key file = #f,
 	      $TKIND-ALIAS => list(<typedef-info>);
 	      $TKIND-COCLASS => list(<coclass-info>);
 	      $TKIND-INTERFACE => list(<vtable-interface-info>);
-	      $TKIND-DISPATCH => list(<dispatch-interface-info>, 
+	      $TKIND-DISPATCH => list(<dispatch-interface-info>,
 				      <vtable-interface-info>);
 	      $TKIND-RECORD => list(<struct-info>);
 	      $TKIND-UNION => list(<union-info>);
@@ -469,7 +469,7 @@ define method initialize (this :: <coclass-info>,
 	let reftype =
 		check-ole(ITypeInfo/GetRefTypeOfImplType(typeinfo, index));
 	let flags = check-ole(ITypeInfo/GetImplTypeFlags(typeinfo, index));
-	let interface-typeinfo = 
+	let interface-typeinfo =
 		make(<pointer-type-info>, enclosed-type:
 		     make(<user-type-info>,
 			  user-type: reftype, typeinfo: typeinfo));
@@ -511,7 +511,7 @@ define method initialize (this :: <vtable-interface-info>,
   if (typekind == $TKIND-DISPATCH)
     let (err, vtable-HREF) = ITypeInfo/GetRefTypeOfImplType(typeinfo, -1);
     if (err == $S-OK)
-      let vtable-interface = 
+      let vtable-interface =
 	      check-ole(ITypeInfo/GetRefTypeInfo(typeinfo, vtable-HREF));
       initialize(this, typeinfo: vtable-interface);
     else
@@ -533,10 +533,10 @@ define method initialize (this :: <interface-info>,
 
   block ()
     // Process other interface info:
-    let (num-funcs :: <integer>, num-props :: <integer>, 
+    let (num-funcs :: <integer>, num-props :: <integer>,
 	 num-superclasses :: <integer>) =
       begin
-	let (ptattr :: <LPTYPEATTR>) = 
+	let (ptattr :: <LPTYPEATTR>) =
 		check-ole(ITypeInfo/GetTypeAttr(typeinfo));
 	this.hidden? := 0 ~= logand(ptattr.wTypeFlags-value,
 				   $TYPEFLAG-FHIDDEN + $TYPEFLAG-FRESTRICTED);
@@ -609,7 +609,7 @@ define method initialize (this :: <interface-info>,
 end method initialize;
 
 
-define method initialize 
+define method initialize
 	(this :: <function-info>, #key interface-info :: <interface-info>,
 	 typeinfo :: <interface>, index :: <integer>,
 	 kind :: one-of(#"member-function", #"member-variable"),
@@ -622,7 +622,7 @@ define method initialize
     // IUnknown:
     "QueryInterface", "AddRef", "Release",
     // IDispatch:
-    "Invoke", "GetIDsOfNames", "GetTypeInfo", "GetTypeInfoCount" => 
+    "Invoke", "GetIDsOfNames", "GetTypeInfo", "GetTypeInfoCount" =>
 	error(make(<ignore-translation-error>));
     otherwise => #f;
   end select;
@@ -708,7 +708,7 @@ define method initialize-member-function
 	push-last(this.results,
 		  make(<argument-info>,
 		       name: "status",
-		       type: make(<variant-type-info>, 
+		       type: make(<variant-type-info>,
 				  variant-type: $VT-HRESULT),
 		       mode: #"out"));
       end if;
@@ -723,7 +723,7 @@ define method initialize-member-function
 
       for (argument-index from 0 below num-args)
 	let elemdesc :: <LPELEMDESC> = pointer-value-address(
-		fd.lprgelemdescParam-value, 
+		fd.lprgelemdescParam-value,
 		index: argument-index);
 	let paramflags = elemdesc.u-value.paramdesc-value.wParamFlags-value;
 	let in :: <boolean> = 0 ~= logand(paramflags, $PARAMFLAG-FIN);
@@ -748,7 +748,7 @@ define method initialize-member-function
 	    motley-error("%= parameter %s :: %= is not a pointer",
 			 arg.argument-mode, arg.argument-name,
 			 with-string-stream (ss)
-			   write-interface(ss, arg.argument-type, 
+			   write-interface(ss, arg.argument-type,
 				   make(<motley-parameters>,
 					target-type: #"dispatch-clients"));
 			 end with-string-stream);
@@ -774,7 +774,7 @@ define method initialize-member-function
 	      motley-error("Cannot translate getter %s: output argument is "
 			   "not a pointer", this.c-name);
 	    end if;
-	    result-arg.argument-type := 
+	    result-arg.argument-type :=
 		    result-arg.argument-type.enclosed-type;
 	  end if;
 	  push(this.results, result-arg);
@@ -791,7 +791,7 @@ define method initialize-member-function
       #"member-function" =>
 	if (vtable? & this.results.size = 1)
 	  let new-results = make(<deque>);
-	  while (~this.arguments.empty? & 
+	  while (~this.arguments.empty? &
 		 this.arguments.last.argument-mode = #"out")
 	    let last-arg = pop-last(this.arguments);
 	    last-arg.argument-type := last-arg.argument-type.enclosed-type;
@@ -821,7 +821,7 @@ end method make;
 
 define method initialize (this :: <variant-type-info>,
 			  #key variant-type: vt = #f,
-			  typedesc :: false-or(<LPTYPEDESC>) = #f, 
+			  typedesc :: false-or(<LPTYPEDESC>) = #f,
 			  #all-keys) => ()
   next-method();
   this.variant-type := vt | (typedesc & typedesc.vt-value);
@@ -861,9 +861,9 @@ end method initialize;
 
 define method initialize (this :: <pointer-type-info>,
 			  #key typedesc :: false-or(<LPTYPEDESC>) = #f,
-			  typeinfo :: false-or(<interface>) = #f, 
+			  typeinfo :: false-or(<interface>) = #f,
 			  result? :: <boolean> = #f,
-			  enclosed-type: enc :: false-or(<type-info>) = #f) 
+			  enclosed-type: enc :: false-or(<type-info>) = #f)
 		      => ()
   next-method();
   this.enclosed-type := enc | (typedesc &
@@ -875,9 +875,9 @@ define method initialize (this :: <pointer-type-info>,
 	   this.enclosed-type.type-kind = $TKIND-INTERFACE))
     let (dylan-types, c-type) = type-base-names(this.enclosed-type);
     unless (c-type)
-      motley-error("invalid type: pointer to %s", 
+      motley-error("invalid type: pointer to %s",
 	      with-string-stream (ss)
-		write-interface(ss, this.enclosed-type, 
+		write-interface(ss, this.enclosed-type,
 		  make(<motley-parameters>, target-type: #"dispatch-clients"));
 	      end with-string-stream);
     end unless;
@@ -895,8 +895,8 @@ define function write-comma-seperated-list
   end for;
 end function write-comma-seperated-list;
 
-define method write-module 
-	(s :: <stream>, this :: <type-library>, module :: <string>, p :: <mp>) 
+define method write-module
+	(s :: <stream>, this :: <type-library>, module :: <string>, p :: <mp>)
      => ()
   local method write-exclude () => ()
     if (~ pointer-types-used.empty?)
@@ -926,52 +926,52 @@ define method write-module
 end method write-module;
 
 
-define generic translate? 
-	(this, p :: <mp>) 
+define generic translate?
+	(this, p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message);
 
-define method translate? 
-	(this, p :: <mp>) 
+define method translate?
+	(this, p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message)
   values(#t, #f, #f)
 end method translate?;
 
-define method translate? 
-	(this :: type-union(<interface-info>, <coclass-info>), p :: <mp>) 
+define method translate?
+	(this :: type-union(<interface-info>, <coclass-info>), p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message)
-  values(~p.to-translate | element(p.to-translate, this.c-name, default: #f), 
+  values(~p.to-translate | element(p.to-translate, this.c-name, default: #f),
 	 #f, #f)
 end method translate?;
 
 define method translate?
-	(this :: <dispatch-interface-info>, p :: <mp>) 
+	(this :: <dispatch-interface-info>, p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message)
   values((~p.to-translate | element(p.to-translate, this.c-name, default: #f)) &
-	 (p.target-type == #"dispatch-clients" | 
+	 (p.target-type == #"dispatch-clients" |
 	  p.target-type == #"dispatch-servers" |
-	  (p.target-type == #"dual-interfaces" & this.dual?)), 
+	  (p.target-type == #"dual-interfaces" & this.dual?)),
 	 #f, #f)
 end method translate?;
 
 define method translate?
-	(this :: <vtable-interface-info>, p :: <mp>) 
+	(this :: <vtable-interface-info>, p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message)
   values((~p.to-translate | element(p.to-translate, this.c-name, default: #f)) &
-	 (p.target-type == #"vtable-interfaces"), 
+	 (p.target-type == #"vtable-interfaces"),
 	 #f, #f)
 end method translate?;
 
-define method translate? 
-	(this :: <struct-info>, p :: <mp>) 
+define method translate?
+	(this :: <struct-info>, p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message)
   values(#t, #f, #f)
 end method translate?;
 
-define method translate? 
-	(this :: <function-info>, p :: <mp>) 
+define method translate?
+	(this :: <function-info>, p :: <mp>)
      => (r :: <boolean>, unsupported? :: <boolean>, unsupported-message)
   let tt = p.target-type;
-  if (tt ~== #"dispatch-clients" & 
+  if (tt ~== #"dispatch-clients" &
       this.function-type == #"member-variable")
     if (~this.arguments.empty?)
       values(#f, #t, format-to-string(
@@ -988,10 +988,10 @@ define method translate?
 end method translate?;
 
 
-define generic get-bindings (this, bindings :: <deque>, p :: <mp>) 
+define generic get-bindings (this, bindings :: <deque>, p :: <mp>)
 			 => ();
 
-define method get-bindings (this :: <object>, bindings :: <deque>, p :: <mp>) 
+define method get-bindings (this :: <object>, bindings :: <deque>, p :: <mp>)
 			=> ()
   // NOP
 end method get-bindings;
@@ -1033,7 +1033,7 @@ define method get-bindings (this :: <coclass-info>, bindings :: <deque>,
   end if;
 end method get-bindings;
 
-define method get-bindings (this :: <dispatch-interface-info>, 
+define method get-bindings (this :: <dispatch-interface-info>,
 			    bindings :: <deque>, p :: <mp>) => ()
   if (#t | ~ this.hidden?)
     if (p.target-type = #"dual-interfaces")
@@ -1044,23 +1044,23 @@ define method get-bindings (this :: <dispatch-interface-info>,
   end if;
 end method get-bindings;
 
-define method get-bindings (this :: <vtable-interface-info>, 
+define method get-bindings (this :: <vtable-interface-info>,
 			    bindings :: <deque>, p :: <mp>) => ()
   if (#t | ~ this.hidden?)
     get-vtable-bindings(this, bindings, p);
   end if;
 end method get-bindings;
 
-define function get-vtable-bindings (this :: <interface-info>, 
+define function get-vtable-bindings (this :: <interface-info>,
 				     bindings :: <deque>, p :: <mp>) => ()
-  push-last(bindings, format-to-string("<%s%s>", 
+  push-last(bindings, format-to-string("<%s%s>",
 				       c-name-to-dylan-name(this.c-name),
 				       p.server-suffix));
-  push-last(bindings, format-to-string("$iid-<%s%s>", 
+  push-last(bindings, format-to-string("$iid-<%s%s>",
 				       c-name-to-dylan-name(this.c-name),
 				       p.server-suffix));
   if (p.client-suffix)
-    push-last(bindings, format-to-string("<%s%s>", 
+    push-last(bindings, format-to-string("<%s%s>",
 					 c-name-to-dylan-name(this.c-name),
 					 p.client-suffix));
   end if;
@@ -1114,7 +1114,7 @@ define method write-interface
 end method write-interface;
 
 
-define method write-interface (s :: <stream>, this :: <error>, p :: <mp>, #key) 
+define method write-interface (s :: <stream>, this :: <error>, p :: <mp>, #key)
 			   => ()
   format(s, "/* Translation error: %s */\n", condition-to-string(this));
 end method write-interface;
@@ -1129,7 +1129,7 @@ define method write-interface
     format(s, " * Description: %s\n", this.doc-string);
   end if;
   format(s, " */\n");
-  format(s, "define constant %s = <ffi-integer-or-machine-word>;\n", 
+  format(s, "define constant %s = <ffi-integer-or-machine-word>;\n",
 	 this.dylan-name);
   for (member in this.members)
     format(s, "define constant %s = ",
@@ -1174,8 +1174,8 @@ define method write-interface
   format(s, "define constant $%s-class-id = as(<REFCLSID>, \"%s\");\n\n",
   	 this.dylan-name, this.guid);
 
-  if (p.target-type = #"dispatch-clients" | 
-      p.target-type = #"vtable-interfaces" | 
+  if (p.target-type = #"dispatch-clients" |
+      p.target-type = #"vtable-interfaces" |
       p.target-type = #"dual-interfaces")
     format(s, "define function make-%s () => (default-interface :: ",
 	   this.dylan-name);
@@ -1186,7 +1186,7 @@ define method write-interface
     end for;
     format(s, ")\n");
     for (error in this.translation-errors)
-      format(s, "  /* Translation error: %s. */\n", 
+      format(s, "  /* Translation error: %s. */\n",
 	     condition-to-string(error));
     end for;
     write(s, "  let default-interface = ");
@@ -1207,12 +1207,12 @@ define method write-interface
 	write-interface(s, this.default-interface, p);
 	format(s, ", create-COM-instance($%s-class-id, "
 	       "interface-id: $iid-<%s%s>));\n", this.dylan-name,
-	       this.default-interface.enclosed-type.dylan-name, 
+	       this.default-interface.enclosed-type.dylan-name,
 	       p.server-suffix);
 	for (iface in this.interfaces, index from 2)
 	  format(s, "  let (status :: <HRESULT>, interface-%d) = "
 		 "QueryInterface(default-interface, $iid-<%s%s>);\n",
-		 index, iface.enclosed-type.dylan-name, 
+		 index, iface.enclosed-type.dylan-name,
 		 p.server-suffix);
 	  format(s, "  check-ole-status(status, \"QueryInterface\", "
 		 "default-interface, \"$iid-<%s%s>\");\n",
@@ -1232,20 +1232,20 @@ define method write-interface
     end if;
   end if;
 
-  if (p.target-type = #"dispatch-servers" | 
-      p.target-type = #"vtable-interfaces" | 
+  if (p.target-type = #"dispatch-servers" |
+      p.target-type = #"vtable-interfaces" |
       p.target-type = #"dual-interfaces")
     format(s, "/* You could define your coclass something like this:\n");
     format(s, "define coclass $%s-type-info\n", this.dylan-name);
     format(s, "  name %=;\n", this.c-name);
     format(s, "  uuid $%s-class-id;\n", this.dylan-name);
     for (error in this.translation-errors)
-      format(s, "  /* Translation error: %s. */\n", 
+      format(s, "  /* Translation error: %s. */\n",
 	     condition-to-string(error));
     end for;
     format(s, "  default interface ");
     if (custom-interface-type?(p.target-type))
-      format(s, "<%s%s>", this.default-interface.enclosed-type.dylan-name, 
+      format(s, "<%s%s>", this.default-interface.enclosed-type.dylan-name,
 	     p.server-suffix);
     else
       write-interface(s, this.default-interface, p);
@@ -1254,7 +1254,7 @@ define method write-interface
     for (iface in this.interfaces)
       format(s, "  interface ");
       if (custom-interface-type?(p.target-type))
-	format(s, "<%s%s>", iface.enclosed-type.dylan-name, 
+	format(s, "<%s%s>", iface.enclosed-type.dylan-name,
 	       p.server-suffix);
       else
 	write-interface(s, iface, p);
@@ -1267,7 +1267,7 @@ end method write-interface;
 
 
 define method write-interface
-	(s :: <stream>, this :: <dispatch-interface-info>, p :: <mp>, #key) 
+	(s :: <stream>, this :: <dispatch-interface-info>, p :: <mp>, #key)
      => ()
   select (p.target-type)
     #"dispatch-clients", #"dispatch-servers", #"dual-interfaces" => next-method();
@@ -1313,23 +1313,23 @@ define method write-interface
 			   #"dual-interfaces" => "dual-interface";
 			   #"vtable-interfaces" => "vtable-interface";
 			 end select;
-    let interface-name = 
+    let interface-name =
       if (custom-interface-type?(tt))
 	concatenate("<", c-name-to-dylan-name(this.c-name),
 		    p.server-suffix, ">")
       else
 	this.dylan-name
       end if;
-    format(s, "define %s%s %s", 
+    format(s, "define %s%s %s",
 	   if (tt ~= #"dispatch-clients") "open " else "" end if,
 	   interface-type, interface-name);
     select (tt)
-      #"dispatch-servers", #"dual-interfaces" => 
+      #"dispatch-servers", #"dual-interfaces" =>
 	  format(s, " (<simple-dispatch>)\n");
-      #"vtable-interfaces" => 
+      #"vtable-interfaces" =>
 	  if (this.superclass)
-	    format(s, " (<%s%s>)\n", 
-		   this.superclass.dylan-name, 
+	    format(s, " (<%s%s>)\n",
+		   this.superclass.dylan-name,
 		   select (this.superclass.dylan-name by \=)
 		     "IUnknown", "IDispatch" => "";
 		     otherwise => p.server-suffix;
@@ -1344,11 +1344,11 @@ define method write-interface
       format(s, "  /* Translation error: %s. */\n", condition-to-string(error));
     end for;
     if (custom-interface-type?(tt) & p.client-suffix)
-      format(s, "  client-class <%s%s>", 
+      format(s, "  client-class <%s%s>",
 	     c-name-to-dylan-name(this.c-name), p.client-suffix);
       select (this.superclass.dylan-name by \=)
         "IUnknown", "IDispatch" => #f;
-        otherwise => format(s, " (<%s%s>)", this.superclass.dylan-name, 
+        otherwise => format(s, " (<%s%s>)", this.superclass.dylan-name,
 			    p.client-suffix);
       end select;
       format(s, ";\n");
@@ -1400,7 +1400,7 @@ define method write-interface
 	     type-name, function-info.dylan-name);
     else
       format(s, "  slot %s :: ", function-info.dylan-name);
-      write-interface(s, function-info.results.first.argument-type, p, 
+      write-interface(s, function-info.results.first.argument-type, p,
 		      c-type?: #t);
       format(s, ";\n");
     end if;
@@ -1415,20 +1415,20 @@ define constant $standard-variable-name = "property";
 
 
 define method write-interface
-	(s :: <stream>, this :: <function-info>, p :: <mp>, 
+	(s :: <stream>, this :: <function-info>, p :: <mp>,
 	 #key generic? :: <boolean> = #f, owner :: <interface-info>,
 	 c-types? :: <boolean> = #f) => ()
   let tt = p.target-type;
-  let type-writer = 
-	  rcurry(write-interface, p, c-type?: c-types?, 
+  let type-writer =
+	  rcurry(write-interface, p, c-type?: c-types?,
 		 use-refs?: ~generic? & tt ~= #"vtable-interfaces");
-  let result-type-writer = 
-	  rcurry(write-interface, p, c-type?: c-types?, result?: #t, 
+  let result-type-writer =
+	  rcurry(write-interface, p, c-type?: c-types?, result?: #t,
 		 use-refs?: ~generic? & tt ~= #"vtable-interfaces");
   if (~generic? & this.doc-string)
     format(s, "  /* %s */\n", this.doc-string);
   end if;
-  let (to-translate?, unsupported-property?, unsupported-message) = 
+  let (to-translate?, unsupported-property?, unsupported-message) =
     translate?(this, p);
   if (unsupported-property? & ~generic?)
     format(s, "  /* Warning: %s. */\n", unsupported-message);
@@ -1479,7 +1479,7 @@ define method write-interface
     end if;
     let member-type = this.function-type;
     if (this.function-type == #"member-function")
-      let first-arg-type = ~this.results.empty? & 
+      let first-arg-type = ~this.results.empty? &
 	                     this.results.first.argument-type;
       if (tt = #"vtable-interfaces" &
 	    ~(first-arg-type &
@@ -1496,7 +1496,7 @@ define method write-interface
       elseif (~ this.has-getter & this.has-setter)
 	write(s, "write-only ");
       end if;
-      if (tt = #"dispatch-servers" | tt = #"dual-interfaces" | 
+      if (tt = #"dispatch-servers" | tt = #"dual-interfaces" |
 	  tt = #"vtable-interfaces")
 	write(s, "virtual ");
       end if;
@@ -1511,17 +1511,17 @@ define method write-interface
     select (member-type)
       #"member-function" =>
 	  write(s, "=> (");
-	  write-comma-seperated-list(s, copy-sequence(this.results, start: 1), 
+	  write-comma-seperated-list(s, copy-sequence(this.results, start: 1),
 				     writer: result-type-writer);
 	  write(s, ")");
       #"vtable-member" =>
 	  write(s, "=> (");
-	  write-comma-seperated-list(s, this.results, 
+	  write-comma-seperated-list(s, this.results,
 				     writer: result-type-writer);
 	  write(s, ")");
       #"member-variable" =>
 	  write(s, ":: ");
-	  write-interface(s, this.results.first.argument-type, p, 
+	  write-interface(s, this.results.first.argument-type, p,
 			  c-type?: c-types?);
     end select;
     if (this.c-name ~= this.dylan-name)
@@ -1545,7 +1545,7 @@ end method write-interface;
 
 
 define method write-interface
-	(s :: <stream>, this :: <argument-info>, p :: <mp>, 
+	(s :: <stream>, this :: <argument-info>, p :: <mp>,
 	 #key c-type? :: <boolean> = #f, use-refs? :: <boolean> = #f,
 	 result? :: <boolean> = #f) => ()
   if (this.argument-optional)
@@ -1553,8 +1553,8 @@ define method write-interface
   end if;
   format(s, "arg-%s :: ", this.argument-name);
   let mode = this.argument-mode;
-  let mode-name = select (mode) #"in-out" => "inout"; 
-  				#"out" => "out"; 
+  let mode-name = select (mode) #"in-out" => "inout";
+  				#"out" => "out";
 				otherwise => #f;
 		  end select;
   if (result?)
@@ -1571,10 +1571,10 @@ end method write-interface;
 
 
 define method write-interface
-	(s :: <stream>, this :: <type-info>, p :: <mp>, 
+	(s :: <stream>, this :: <type-info>, p :: <mp>,
 	 #key c-type? :: <boolean> = #f) => ()
   let (dylan-types, c-type, comment) = type-base-names(this, p: p);
-  if (c-type?) 
+  if (c-type?)
     format(s, "<%s>", c-type);
   elseif (size(dylan-types) = 1)
     format(s, "<%s>", first(dylan-types));
@@ -1596,7 +1596,7 @@ define method write-pointer-definitions (s :: <stream>) => ()
     for (pp in pointer-types-used)
       let pointer-name :: <string> = pp.head;
       let base-name :: <string> = pp.tail;
-      format(s, "define C-pointer-type <%s> => <%s>; ", 
+      format(s, "define C-pointer-type <%s> => <%s>; ",
 	     pointer-name, base-name);
       format(s, "ignorable(<%s>);\n", pointer-name);
     end for;
@@ -1606,7 +1606,7 @@ end method write-pointer-definitions;
 
 define constant integer-types :: <list> = #("integer", "machine-word");
 
-define method type-base-names (this :: <variant-type-info>, 
+define method type-base-names (this :: <variant-type-info>,
 			       #key p :: false-or(<mp>) = #f,
 			       writing-interface :: <boolean> = #f)
 			   => (dylan-types :: false-or(<list>),
@@ -1683,10 +1683,10 @@ define method type-base-names (this :: <pointer-type-info>,
   if (instance?(this.enclosed-type, <user-type-info>) &
       (this.enclosed-type.type-kind = $TKIND-DISPATCH |
        this.enclosed-type.type-kind = $TKIND-INTERFACE))
-    if (p & (p.target-type = #"vtable-interfaces" | 
+    if (p & (p.target-type = #"vtable-interfaces" |
 	     p.target-type = #"dual-interfaces"))
       if (p.client-suffix)
-	let n = concatenate(this.enclosed-type.dylan-name, 
+	let n = concatenate(this.enclosed-type.dylan-name,
 			    p.client-suffix);
 	values(list(n), n, #f)
       else
@@ -1696,14 +1696,14 @@ define method type-base-names (this :: <pointer-type-info>,
       type-base-names(this.enclosed-type, p: p)
     end if
   else
-    let (dylan-types, c-type, comment) = 
+    let (dylan-types, c-type, comment) =
 	    type-base-names(this.enclosed-type, p: p);
     let pointer-type = concatenate(c-type, "*");
     let pointer-pair = pair(pointer-type, c-type);
     if (~ member?(pointer-pair, pointer-types-used, test: \=))
       push-last(pointer-types-used, pointer-pair);
     end if;
-    values(list(pointer-type), pointer-type, 
+    values(list(pointer-type), pointer-type,
 	   comment & concatenate(comment, "*"))
   end if
 end method type-base-names;

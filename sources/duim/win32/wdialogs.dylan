@@ -14,7 +14,7 @@ define constant $dialog-border-base-units :: <integer> =  3;
 
 define constant $exit-button-min-width    :: <integer> = 75;
 
-
+
 /// DUIM dialogs
 
 define sealed class <dialog-mirror> (<top-level-mirror>)
@@ -205,7 +205,7 @@ define sealed method compute-dialog-position
   end
 end method compute-dialog-position;
 
-
+
 /// Piggy-back on the default dialogs from gadget-panes for now
 
 define sealed method frame-wrapper
@@ -271,7 +271,7 @@ define sealed method default-dialog-extra-size
   window-frame-extra-size(dialog)
 end method default-dialog-extra-size;
 
-
+
 /// Dialog flow control
 
 // Generate an ordinary exit event
@@ -306,7 +306,7 @@ define sealed method do-cancel-dialog
                         destroy-frame?: destroy?))
 end method do-cancel-dialog;
 
-
+
 /// Utilities for the built-in dialogs
 
 define sealed method dialog-owner-handle
@@ -319,7 +319,7 @@ define sealed method dialog-owner-handle
   $NULL-HWND
 end method dialog-owner-handle;
 
-
+
 /// Notify user
 
 define sealed method do-notify-user
@@ -379,7 +379,7 @@ define sealed method do-notify-user
   end;
 end method do-notify-user;
 
-
+
 /// Choose file
 
 define constant $max-file-name-length :: <integer> = 1000;
@@ -654,7 +654,7 @@ define table $file-type-table :: <object-table>
       #"resource"    => "res",
       #"library"     => "lib" };
 
-
+
 /// Choose directory
 
 define variable $Shell-IMalloc :: false-or(<C-Interface>) = #f;
@@ -732,7 +732,7 @@ end method browse-for-folder-function;
 
 define callback browse-for-folder :: <LPBFFCALLBACK> = browse-for-folder-function;
 
-
+
 /// Printer chooser
 
 define variable *printer-device-mode*  :: <LPDEVMODE>  = make(<LPDEVMODE>);
@@ -777,7 +777,7 @@ define sealed method do-choose-printer
   end
 end method do-choose-printer;
 
-
+
 /// Color chooser
 
 define variable *custom-colors* :: <LPCOLORREF>
@@ -810,7 +810,7 @@ define sealed method do-choose-color
   end
 end method do-choose-color;
 
-
+
 /// Text style chooser
 
 // hughg, 1999/08/02: References to "($LF-FACESIZE - 1)" in this function
@@ -899,7 +899,7 @@ define sealed method do-choose-text-style
   end
 end method do-choose-text-style;
 
-
+
 ///---*** Some not yet implemented dialogs
 /*
 /// Find and replace dialogs

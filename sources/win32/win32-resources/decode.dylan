@@ -19,7 +19,7 @@ define sealed method decode-resource
   end
 end method decode-resource;
 
-
+
 /// Encoding
 
 define sealed method encode-resource
@@ -42,7 +42,7 @@ define sealed method encode-resource
   as(<raw-resource-id>, as(<C-string>, resource-id))
 end method encode-resource;
 
-
+
 /// Describing
 
 define generic print-resource-id

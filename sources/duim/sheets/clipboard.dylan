@@ -52,7 +52,7 @@ define macro with-clipboard
          end }
 end macro with-clipboard;
 
-
+
 /// Default clipboard support
 
 define function clipboard-format-error
@@ -78,7 +78,7 @@ define method get-clipboard-data-as
   clipboard-format-error(type)
 end method get-clipboard-data-as;
 
-
+
 /// Clipboard support for strings
 
 // Note: backends do most of the work here
@@ -88,7 +88,7 @@ define method add-clipboard-data
   add-clipboard-data-as(<string>, clipboard, string)
 end method add-clipboard-data;
 
-
+
 /// Clipboard support for Dylan objects
 
 define variable *dylan-clipboard-owner* :: false-or(<sheet>) = #f;

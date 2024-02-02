@@ -24,10 +24,10 @@ define constant $standard-dylan-component-initializer
 
 //    The second return value will be #t if some debug points were
 //    processed, and one or more of them registered interest at the
-//    current context. 
+//    current context.
 
 //    Example:
-//    The low-level <invoke-debugger-stop-reason> may translate to 
+//    The low-level <invoke-debugger-stop-reason> may translate to
 //    <dylan-invoke-debugger-stop-reason> (corresponding to an unhandled
 //    dylan condition), or a <dylan-debug-message-stop-reason>.
 
@@ -57,7 +57,7 @@ define method interpret-stop-reason
        let code-location =
          frame-instruction-address(path, top-stack-frame);
        if (address-corresponds-to-primitive?
-            (application, code-location, 
+            (application, code-location,
              application.debug-message-primitive))
          // This is a hard-coded breakpoint within primitive-debug-message.
          // We know that the control string for the message is at top of
@@ -75,7 +75,7 @@ define method interpret-stop-reason
            let control-string :: <remote-value>
              = read-value(path, control-string-address);
            let counter-value :: <remote-value>
-             = read-value(path, format-arg-count-address);  
+             = read-value(path, format-arg-count-address);
            let actual-counter = as-integer(counter-value);
 
            // Now build a vector of the right size to hold the format
@@ -166,7 +166,7 @@ define method interpret-stop-reason
          block ()
 	   let class-address
 	     = calculate-stack-address(path, thread, 0);
-	   let size-address 
+	   let size-address
 	     = calculate-stack-address(path, thread, 1);
 	   let size = as-integer(read-value(path, size-address));
            let class = read-value(path, class-address);
@@ -199,7 +199,7 @@ define method interpret-stop-reason
        maybe-modified-stop-reason := stop-reason;
        application.up-and-running? := #t;
        create-thread-descriptor(application, stop-reason.stop-reason-thread);
-       application.application-primary-thread := 
+       application.application-primary-thread :=
            stop-reason.stop-reason-thread;
        let lib = stop-reason.stop-reason-executable-component;
        application.application-executable := lib;
@@ -302,9 +302,9 @@ define method interpret-stop-reason
        if (lib == application.application-dylan-runtime-library)
          deregister-dylan-runtime-library(application);
        end if;
-       let tracker = 
-         element(application.library-initialization-trackers, 
-                 lib, 
+       let tracker =
+         element(application.library-initialization-trackers,
+                 lib,
                  default: #f);
        if (tracker)
          tracker.tracker-initialization-state := #"unloaded"

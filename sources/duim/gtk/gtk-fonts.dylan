@@ -50,7 +50,7 @@ define method condition-to-string
                    condition.%font-name, condition.%start, condition.%end, condition.%token)
 end method condition-to-string;
 
-
+
 /// Font mapping
 
 define constant $gtk-font-families :: <list>
@@ -134,7 +134,7 @@ define sealed method standardize-text-style
         _port, text-style, $gtk-logical-sizes, keys)
 end method standardize-text-style;
 
-
+
 /// Font metrics
 
 define sealed inline method font-width
@@ -223,7 +223,7 @@ define sealed method gtk-font-metrics
   end;
 end method gtk-font-metrics;
 
-
+
 /// Text measurement
 
 define sealed method text-size

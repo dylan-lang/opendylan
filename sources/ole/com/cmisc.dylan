@@ -1,6 +1,6 @@
 Module:    COM
 Synopsis:  FFI declarations for some miscellaneous pieces of the
-	   COM interface that do not need special treatment. 
+	   COM interface that do not need special treatment.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -1088,7 +1088,7 @@ define C-function GetRunningObjectTable
 end;
 
 
- 
+
 /*
 Note: the following functions are not included because they are not
       supported in Windows 95:
@@ -1119,4 +1119,4 @@ Note: the following functions are not included because they are not
  StgGetIFillLockBytesOnFile
  StgGetIFillLockBytesOnILockBytes
  StgOpenAsyncDocfileOnIFillLockBytes
-*/ 
+*/

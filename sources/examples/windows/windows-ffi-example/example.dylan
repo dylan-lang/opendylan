@@ -25,7 +25,7 @@ define method Main-program() => (exit-status :: <integer>);
   let nCmdShow :: <integer> = application-show-window();
 
   if ( Init-Application(hInstance)  // Initialize shared things
-	// Perform initializations that apply to a specific instance 
+	// Perform initializations that apply to a specific instance
 	& Init-Instance(hInstance, nCmdShow) )
     // initialized OK
 
@@ -84,7 +84,7 @@ define method Init-Instance(
 
   // Save the instance handle in static variable, which will be used in
   // many subsequence calls from this application to Windows.
-  
+
   *hInst* := hInstance; // Store instance handle in our global variable
 
   // Create a main window for this application instance.
@@ -102,7 +102,7 @@ define method Init-Instance(
 		   );
 
   // If window could not be created, return "failure"
-  if ( null-handle?(hWnd) ) 
+  if ( null-handle?(hWnd) )
     #f
   else
     // Make the window visible; update its client area; and return "success"
@@ -122,25 +122,25 @@ define method main-window-function(
                 lParam)			// additional information
 	=> (value :: <integer>);
   block(return)
-	
-    select ( message ) 
+
+    select ( message )
 
       $WM-COMMAND =>   // message: command from application menu
 
 	let wmId :: <integer> = LOWORD(uParam);
 	/* let wmEvent :: <integer> = HIWORD(uParam); */
 
-	select ( wmId ) 
-	  $IDM-ABOUT => 
+	select ( wmId )
+	  $IDM-ABOUT =>
 	    DialogBox(*hInst*,           // current instance
 		      MAKEINTRESOURCE($IDD-ABOUTBOX), // dlg resource to use
 		      hWnd,                  // parent handle
 		      About-Proc); // About() instance address
 
-	  $IDM-EXIT => 
+	  $IDM-EXIT =>
 	    DestroyWindow(hWnd);
 
-	  $IDM-HELPCONTENTS => 
+	  $IDM-HELPCONTENTS =>
 	    if ( ~ WinHelp(hWnd, TEXT("EXAMPLE.HLP"), $HELP-KEY,
 			   pointer-address(TEXT("CONTENTS"))) )
 	      MessageBox(GetFocus(),
@@ -149,7 +149,7 @@ define method main-window-function(
 			 logior($MB-SYSTEMMODAL, logior($MB-OK, $MB-ICONHAND)));
 	    end if;
 
-	  $IDM-HELPSEARCH => 
+	  $IDM-HELPSEARCH =>
 	    if ( ~ WinHelp(hWnd, TEXT("EXAMPLE.HLP"), $HELP-PARTIALKEY,
 			   pointer-address(TEXT(""))) )
 	      MessageBox(GetFocus(),
@@ -157,8 +157,8 @@ define method main-window-function(
 			 $szAppName,
 			 logior($MB-SYSTEMMODAL, logior($MB-OK, $MB-ICONHAND)));
 	    end if;
-	    
-	  $IDM-HELPHELP => 
+
+	  $IDM-HELPHELP =>
 	    if ( ~ WinHelp(hWnd, $NULL-string, $HELP-HELPONHELP, 0) )
 	      MessageBox(GetFocus(),
 			 TEXT("Unable to activate help"),
@@ -170,33 +170,33 @@ define method main-window-function(
 	  // all of these are currently disabled:
 	  /*
 	    $IDM-NEW, $IDM-OPEN, $IDM-SAVE, $IDM-SAVEAS, $IDM-UNDO, $IDM-CUT,
-	    $IDM-COPY, $IDM-PASTE, $IDM-LINK, $IDM-LINKS => 
+	    $IDM-COPY, $IDM-PASTE, $IDM-LINK, $IDM-LINKS =>
 	  */
-  
-	  otherwise => 
+
+	  otherwise =>
 	    return(DefWindowProc(hWnd, message, uParam, lParam));
-                        
+
 	end select;
 
-      $WM-CREATE => 
+      $WM-CREATE =>
 
-	/* Create the brush objects */ 
+	/* Create the brush objects */
 
 	*hGreenBrush* := CreateSolidBrush(RGB(0, 255, 0));
 
-	/* Create the "---" pen */ 
+	/* Create the "---" pen */
 
-	*hDashPen* := CreatePen($PS-DASH,	       /* style */ 
-				1,		      /* width */ 
-				RGB(0, 0, 0));	      /* color */ 
+	*hDashPen* := CreatePen($PS-DASH,	       /* style */
+				1,		      /* width */
+				RGB(0, 0, 0));	      /* color */
 
-      $WM-PAINT => 
-	begin 
+      $WM-PAINT =>
+	begin
 	  let szText :: <string> = "";
 
 	  with-stack-structure ( ps :: <PPAINTSTRUCT> )
-	  
-	    // Set up a display context to begin painting 
+
+	    // Set up a display context to begin painting
 	    let hDC :: <HDC> = BeginPaint(hWnd, ps);
 
 	    // Display some text
@@ -206,7 +206,7 @@ define method main-window-function(
 	    let hOldBrush = SelectObject(hDC, *hGreenBrush*);
 	    Rectangle(hDC, 20, 20, 70, 70);
 
-	    // Restore the old brush  
+	    // Restore the old brush
 	    SelectObject(hDC, hOldBrush);
 
 	    // Select a "---" pen, save the old value
@@ -218,10 +218,10 @@ define method main-window-function(
 	    // Draw a line
 	    LineTo(hDC, 250, 100);
 
-	    // Restore the old pen  
+	    // Restore the old pen
 	    SelectObject(hDC, hOldPen);
 
-	    // Tell Windows you are done painting  
+	    // Tell Windows you are done painting
 	    EndPaint(hWnd, ps);
 	  end with-stack-structure;
 	end;
@@ -237,7 +237,7 @@ define method main-window-function(
 
       otherwise =>           // Passes it on if unproccessed
 	return(DefWindowProc(hWnd, message, uParam, lParam));
-      
+
     end select;
     return(0);
   end block;
@@ -247,7 +247,7 @@ end method main-window-function;
 define method About(hDlg :: <HWND>, message :: <integer>, wParam, lParam)
 	=> (value :: <boolean>);
 
-   select ( message ) 
+   select ( message )
      $WM-INITDIALOG => #t; 	// initialize dialog box
 
      $WM-COMMAND => 		// input received
@@ -257,7 +257,7 @@ define method About(hDlg :: <HWND>, message :: <integer>, wParam, lParam)
 	 #t
        else #f
        end if;
- 
+
      otherwise => #f;
    end select
 end method About;

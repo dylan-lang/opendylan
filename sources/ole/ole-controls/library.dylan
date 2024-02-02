@@ -1,4 +1,4 @@
-module:    dylan-user	
+module:    dylan-user
 Synopsis:  Windows OLE Controls API (OLECTL.H and OLEPRO32.DLL)
 Author:    David N. Gray
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -81,7 +81,7 @@ define module OLE-Controls
   use OLE-Automation,
     import: { $VT-BOOL, $VT-DISPATCH, $VT-I2, $VT-I4,
 	      <BSTR>, <LPBSTR>, <DISPID>,
-	      <DISPPARAMS>, <LPDISPPARAMS>, <EXCEPINFO>, <LPEXCEPINFO>, 
+	      <DISPPARAMS>, <LPDISPPARAMS>, <EXCEPINFO>, <LPEXCEPINFO>,
 	      <IDispatch>, <LPDISPATCH>, <LPLPDISPATCH>,
 	      <LPTYPEINFO>, <LPVARIANT>, <VARIANT>, <VARIANT-BOOL>,
 	      <VARTYPE>, <CY>,

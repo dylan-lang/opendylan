@@ -47,7 +47,7 @@ define method frame-manager-help-system-setter
   *default-help-system* := system
 end method frame-manager-help-system-setter;
 
-
+
 /// Help systems errors
 
 define class <help-system-error> (<simple-error>)
@@ -67,7 +67,7 @@ define class <no-help-system> (<help-system-error>)
   keyword format-string: = "There is no help system defined.";
 end class <no-help-system>;
 
-
+
 /// Help
 
 define constant <help-pane-type>
@@ -121,7 +121,7 @@ define protocol <<help-protocol>> ()
  => (keyword :: false-or(<string>));
 end protocol <<help-protocol>>;
 
-
+
 /// Help Sources
 
 // Reify entity for refering to a help source file and its mapping
@@ -171,7 +171,7 @@ define method as
   $help-sources[name]
 end method as;
 
-
+
 /// Help Commands
 
 // <help-command> and its subclasses model the standard kinds of help that
@@ -333,7 +333,7 @@ define method initialize-help
        | frame-help-keyword(frame, command);
 end method initialize-help;
 
-
+
 /// Glue to Commands
 
 define method do-execute-command
@@ -349,7 +349,7 @@ define method do-execute-command
   #f
 end method do-execute-command;
 
-
+
 /// Glue to Frames
 
 define method frame-help-source-locator

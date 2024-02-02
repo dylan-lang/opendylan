@@ -290,7 +290,7 @@ define sealed method set-union!
         pad1: set1.member-vector-pad,  pad2: set2.member-vector-pad);
   set1.member-vector := vector;
   set1.member-vector-pad := pad;
-  set1;  
+  set1;
 end method;
 
 
@@ -509,7 +509,7 @@ define inline function bs-fip-next-state
     block(return)
       for (i :: <integer> from state.bit-offset + 1 below $machine-word-size,
 	   word :: <raw-machine-word>
-	     = primitive-machine-word-unsigned-shift-right(state.current-word, 
+	     = primitive-machine-word-unsigned-shift-right(state.current-word,
 							   integer-as-raw(1))
 	       then primitive-machine-word-unsigned-shift-right(word, integer-as-raw(1)))
         state.current-element := state.current-element + 1;

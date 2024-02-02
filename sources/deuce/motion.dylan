@@ -82,7 +82,7 @@ define sealed method decrement-bp!
   end
 end method decrement-bp!;
 
-
+
 /// Higher level motion utilities
 
 // Move the BP forward or backward in the buffer until the predicate
@@ -480,7 +480,7 @@ define sealed method move-over-lines
   end
 end method move-over-lines;
 
-
+
 /// "Skipping" over things
 
 define inline function forward-over
@@ -580,7 +580,7 @@ define sealed method backward-until
   nbp | (fixup? & bp)
 end method backward-until;
 
-
+
 /// Some other useful region-oriented stuff
 
 define method definition-interval
@@ -623,7 +623,7 @@ define method select-atom-under-bp
   end
 end method select-atom-under-bp;
 
-
+
 /// Indices to BP's and vice-versa
 
 define method char-index->bp

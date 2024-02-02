@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                             *
 * Version 1.0								      *
 *                                                                             *
-* 
+*
 *                                                                             *
 \*****************************************************************************/
 define inline-only constant $CDERR-DIALOGFAILURE        = #xFFFF;

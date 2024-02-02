@@ -85,7 +85,7 @@ define method start-grid-server ()
   // and default receiver threads running)
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
 
-  // actually make a grid object 
+  // actually make a grid object
   let grid = make(<grid-implementation>);
 
   // implicitly activate them as well as getting reference

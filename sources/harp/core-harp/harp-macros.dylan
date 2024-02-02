@@ -65,7 +65,7 @@ define macro for-instructions-in-basic-block
   { for-instructions-in-basic-block (?ins:name in ?block:expression)
       ?:body
     end }
-    => 
+    =>
     { begin
         let $bb$ = ?block;
         let $start$ = $bb$.bb-start;
@@ -83,7 +83,7 @@ define macro for-instructions-in-basic-block-backwards
   { for-instructions-in-basic-block-backwards (?ins:name in ?block:expression)
       ?:body
     end }
-    => 
+    =>
     { begin
         let $bb$ = ?block;
         let $start$ = $bb$.bb-start;
@@ -108,21 +108,21 @@ define macro set-use
   { set-use(?new-val:expression) }
     =>
   {
-   element-no-bounds-check(?=use-vector, ?=use-index) := ?new-val 
+   element-no-bounds-check(?=use-vector, ?=use-index) := ?new-val
    }
 end macro;
 
 
 
 /// Iterate over the defs of an instruction. The value of the def can be
-/// altered by going (set-def new-value) in the body. 
+/// altered by going (set-def new-value) in the body.
 
 
 define macro for-instruction-defs
   { for-instruction-defs (?def:name in ?sv-ins:expression at ?instruction:expression)
       ?:body
     end }
-    => 
+    =>
     { begin
 	let def-index :: <integer> = ?instruction + instruction-defs-index;
 	let def-vector :: <instructions-vector> = ?sv-ins;
@@ -158,7 +158,7 @@ define macro for-instruction-uses
   { for-instruction-uses (?use:name in ?sv-ins:expression at ?instruction:expression)
       ?:body
     end }
-    => 
+    =>
     { begin
 	let use-index :: <integer> = ?instruction + instruction-uses-index;
 	let use-vector :: <instructions-vector> = ?sv-ins;
@@ -173,7 +173,7 @@ define macro for-instruction-uses
 	      if (instance?(?use, <simple-object-vector>))
 		let use-vector :: <simple-object-vector> = ?use;
 		process-uses(0, use-vector, use-vector.size - 1)
-	      else 
+	      else
 		?body;
 		process-uses(?=use-index + 1, ?=use-vector, count - 1)
 	      end if;
@@ -245,7 +245,7 @@ end macro;
 
 
 
-// Historically USE was a Dylan reserved word. As a (now entrenched) dirty hack, 
+// Historically USE was a Dylan reserved word. As a (now entrenched) dirty hack,
 // we use UZE instead
 
 // Use instruction-specific low-level accessor macros to guarantee
@@ -258,7 +258,7 @@ define macro with-xyz-macro-definer
 	     =>
 	     {
 	      ins-operand-element(\?=$sv-instructions$, \?=$sv-instruction$, ?defs, \?n,
-				  instruction-defs-index, 
+				  instruction-defs-index,
 				  instruction-defs-slots)
 	     }
          end macro;
@@ -268,7 +268,7 @@ define macro with-xyz-macro-definer
 	     =>
 	     {
 	      ins-operand-element(\?=$sv-instructions$, \?=$sv-instruction$, ?defs, \?n,
-				  instruction-defs-index, 
+				  instruction-defs-index,
 				  instruction-defs-slots,
 				  \?val)
 	     }
@@ -279,7 +279,7 @@ define macro with-xyz-macro-definer
 	     =>
 	     {
 	      ins-operand-element(\?=$sv-instructions$, \?=$sv-instruction$, ?uses, \?n,
-				  instruction-uses-index, 
+				  instruction-uses-index,
 				  instruction-uses-slots)
 	     }
          end macro;
@@ -289,21 +289,21 @@ define macro with-xyz-macro-definer
 	     =>
 	     {
 	      ins-operand-element(\?=$sv-instructions$, \?=$sv-instruction$, ?uses, \?n,
-				  instruction-uses-index, 
+				  instruction-uses-index,
 				  instruction-uses-slots,
 				  \?val)
 	     }
          end macro;
 
-         define macro "with-" ## ?name 
+         define macro "with-" ## ?name
            { "with-" ## ?name (\?sv:expression at \?ins:expression)
-                \?body:body 
+                \?body:body
               end }
            => { begin
 		  let \?=$sv-instructions$ :: <instructions-vector> = \?sv;
 		  let \?=$sv-instruction$ :: <integer> = \?ins;
                   \?body
-                end 
+                end
               }
          end macro }
 end macro;
@@ -421,7 +421,7 @@ ops:
 
   { ?op1:name <-> ?op2:name; ... }
     => { with-ops-in inst-set (?op1) reverse-op := "harp-" ## ?op2 end;
-         with-ops-in inst-set (?op2) reverse-op := "harp-" ## ?op1 end; 
+         with-ops-in inst-set (?op2) reverse-op := "harp-" ## ?op1 end;
          ...
         }
 end macro;
@@ -461,19 +461,19 @@ define macro spread-function-definer
   { define spread-function ?:name (?args:*) ?:body end }
     => { define ?name spread-function ?name (?args) ?body end }
 
-  { define ?type:name spread-function ?:name 
+  { define ?type:name spread-function ?:name
         (?backend:name :: ?be-class,
          ?op:name :: ?op-class,
          ?fn:name :: ?fn-class,
          ?ins:name :: ?ins-class,
-         ?sv-ins:*) 
-      ?:body 
+         ?sv-ins:*)
+      ?:body
     end }
-    => { define function "spread-" ## ?name 
-             (?backend :: ?be-class, ?op :: ?op-class, ?fn :: ?fn-class, 
-              ?sv-ins :: <instructions-vector>, ?ins :: ?ins-class) 
+    => { define function "spread-" ## ?name
+             (?backend :: ?be-class, ?op :: ?op-class, ?fn :: ?fn-class,
+              ?sv-ins :: <instructions-vector>, ?ins :: ?ins-class)
            "with-" ## ?type (?sv-ins at ?ins)
-             ?body 
+             ?body
            end
          end }
 
@@ -504,9 +504,9 @@ end macro;
 
 
 /* Example usage of define spread-function :
-   
-The macro behaves like define method, accepting the required 3 arguments. 
-If a binding is required for sv-ins, then then it can be considered that the 
+
+The macro behaves like define method, accepting the required 3 arguments.
+If a binding is required for sv-ins, then then it can be considered that the
 value was given as a keyword argument with key sv-ins.
 
 Examples:
@@ -515,11 +515,11 @@ define spread-function du (backend, fn, ins)
   fn(backend, def(1), uze(1));
 end;
 
-define spread-function tu (backend, fn, ins, #key sv-ins) 
+define spread-function tu (backend, fn, ins, #key sv-ins)
   fn(backend, ins-tag(sv-ins, ins), uze(1));
 end;
 
-define tu spread-function contrived tu (backend, fn, ins, #key sv-ins: sv) 
+define tu spread-function contrived tu (backend, fn, ins, #key sv-ins: sv)
   fn(backend, ins-tag(sv, ins), uze(1));
 end;
 
@@ -535,16 +535,16 @@ end;
 
 define macro register-function-definer
 
-  { define ?type:name register-function ?:name 
+  { define ?type:name register-function ?:name
         (?backend:name :: ?be-class, ?ins:name :: ?ins-class,
-         ?sv-ins:*) 
-      ?:body 
+         ?sv-ins:*)
+      ?:body
     end }
-    => { define function ?name 
-             (?backend :: ?be-class, ?ins :: ?ins-class) 
+    => { define function ?name
+             (?backend :: ?be-class, ?ins :: ?ins-class)
            let ?sv-ins :: <instructions-vector> = ?backend . variables . sv-instructions;
            "with-" ## ?type (?sv-ins at ?ins)
-             ?body 
+             ?body
            end
          end }
 
@@ -579,7 +579,7 @@ end macro;
 // define-instruction-function defines the compiler-visible function
 // used to generate code for each OP.
 //
-// define instruction-function allows a named binding for the op 
+// define instruction-function allows a named binding for the op
 // to be passed via #key. The op: key must come first.
 
 
@@ -598,11 +598,11 @@ define macro define-instruction-function-aux
   { define-instruction-function-aux ?:name ?ins:name
         (?backend:name :: ?be-class:expression, ?processed-args:*) (?op-binding)
         => (?results:*)
-      ?:body 
+      ?:body
     end }
-    => { define method "ins--" ## ?name 
+    => { define method "ins--" ## ?name
              (?backend :: ?be-class ?processed-args) => (?results)
-           maybe-bind-variable ?op-binding 
+           maybe-bind-variable ?op-binding
                 (?backend . instructions . "harp-" ## ?ins)
              ?body;
            end;
@@ -627,7 +627,7 @@ processed-args:
 // Unpick {arg1, arg2, #key op, foo} into { , arg1, arg2, #key foo }
 // or     {arg1, arg2, #key op, foo} into { , arg1, arg2 }
   { } => {  }
-  { \#rest ?rest:variable, ... } => { , #rest ?rest, ... } 
+  { \#rest ?rest:variable, ... } => { , #rest ?rest, ... }
   { \#key ?op-or-key-args:* } => { ?op-or-key-args }
   { ?arg:name :: ?type:expression, ... } => { , ?arg :: ?type ... }
 
@@ -652,17 +652,17 @@ end macro;
 define macro instruction-function-definer
 
   { define ?ins:name instruction-function ?:name (?args:*)
-      ?:body 
+      ?:body
     end }
     => { define-instruction-function-aux ?name ?ins (?args) (?args) => ()
-           ?body 
+           ?body
          end }
 
   { define ?ins:name instruction-function ?:name (?args:*) => (?results:*)
-      ?:body 
+      ?:body
     end }
     => { define-instruction-function-aux ?name ?ins (?args) (?args) => (?results)
-           ?body 
+           ?body
          end }
 
   { define instruction-function ?:name ?rest:* end }
@@ -673,7 +673,7 @@ end macro;
 
 
 
-// harp-out may be used by backend templates to make use of 
+// harp-out may be used by backend templates to make use of
 // other templates
 
 define macro harp-out
@@ -690,7 +690,7 @@ instructions:
   { ?op:name(?be:expression, ?args:*) ; ... }
     => { begin
            let $op$ = $instructions$ . "harp-" ## ?op;
-           $op$ . op-code-gen-fn (?be, $op$, ?args) 
+           $op$ . op-code-gen-fn (?be, $op$, ?args)
          end ; ... }
 
 end macro;
@@ -707,7 +707,7 @@ harp-out (backend)
 end harp-out;
 
 NB individual backends may decide to specialize a macro to avoid passing
-the backend set each time. 
+the backend set each time.
 
 */
 
@@ -753,14 +753,14 @@ end macro;
 // ENSURE-MREG moves the register into a temporary if it is not a real
 // register already. The next available temporary from a supplied
 // variable containing a list or temporaries is used. If none are
-// available, #f is returned. 
+// available, #f is returned.
 
 
 define macro ensure-mreg
   { ensure-mreg (?backend:expression, ?reg:expression, ?temps:name) }
     => { m-ref(?reg) | if (?temps . empty?)
                          #f
-                       else 
+                       else
                          let tmp = ?temps.head;
                          ?temps := ?temps.tail;
                          harp-out (?backend) move(?backend, tmp, ?reg) end;
@@ -775,8 +775,8 @@ end macro;
 
 define macro loop-sdis
 
-  { loop-sdis (?sdi:name  at ?index:name 
-               from ?from:expression below ?below:expression 
+  { loop-sdis (?sdi:name  at ?index:name
+               from ?from:expression below ?below:expression
                in ?vec:expression)
       ?:body
     end }
@@ -785,7 +785,7 @@ define macro loop-sdis
            ?body
          end }
 
-  { loop-sdis (?sdi:name at ?index:name 
+  { loop-sdis (?sdi:name at ?index:name
                below ?below:expression
                in ?vec:expression)
       ?:body

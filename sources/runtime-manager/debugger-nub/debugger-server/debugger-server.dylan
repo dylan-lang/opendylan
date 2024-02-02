@@ -97,7 +97,7 @@ define method Rtmgr/NubServer/CreateNub
 
   let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
-  let remote-nub = 
+  let remote-nub =
     as(Rtmgr/<RemoteNub>,
        corba/orb/file-to-object(orb, nub-ior-file));
 

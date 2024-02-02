@@ -134,7 +134,7 @@ define sealed method initialize
   wrappers-in-internal-module["<class-slot-descriptor>"]
     := pair(#"not-located", $class-slot-descriptor-type);
   wrappers-in-internal-module
-    ["<each-subclass-slot-descriptor>"] 
+    ["<each-subclass-slot-descriptor>"]
       := pair(#"not-located", $each-subclass-slot-descriptor-type);
   wrappers-in-internal-module["<simple-closure-method>"]
     := pair(#"not-located", $simple-method-type);
@@ -340,7 +340,7 @@ define method initialize-static-objects
                            indirect?: #f, library: component) |
         resolve-dylan-name(application, object-name, context,
                            indirect?: #t, library: component);
-      subtable[object-name] := value | 
+      subtable[object-name] := value |
                                if (predetermined == #"not-located")
                                  illegal-value
                                else
@@ -348,13 +348,13 @@ define method initialize-static-objects
                                end if;
     end for
   end for;
-  sod.canonical-true-object := 
+  sod.canonical-true-object :=
     lookup-static-object(application, "%true", "internal");
-  sod.canonical-false-object := 
+  sod.canonical-false-object :=
     lookup-static-object(application, "%false", "internal");
-  sod.canonical-empty-list-object := 
+  sod.canonical-empty-list-object :=
     lookup-static-object(application, "%empty-list", "internal");
-  sod.canonical-unbound-object := 
+  sod.canonical-unbound-object :=
     lookup-static-object(application, "%unbound", "internal");
 end method;
 
@@ -371,8 +371,8 @@ define method initialize-static-wrappers
   let dylan-library = application.application-dylan-library;
   let illegal-address = as-remote-value(0);
 
-  local method add-page-relative-wrapper-entry 
-           (page :: <integer>, offset :: <integer>, 
+  local method add-page-relative-wrapper-entry
+           (page :: <integer>, offset :: <integer>,
             type :: <object-type-description>) => ()
           let offset-table = element(page-table, page, default: #f);
           unless (offset-table)
@@ -393,7 +393,7 @@ define method initialize-static-wrappers
       let wrapper-address =
         if (sym) sym.remote-symbol-address else illegal-address end if;
       head(address-type-pair) := wrapper-address;
-      let (wrapper-page, wrapper-offset) = 
+      let (wrapper-page, wrapper-offset) =
         page-relative-address(path, wrapper-address);
       add-page-relative-wrapper-entry(wrapper-page,
                                       wrapper-offset,
@@ -414,11 +414,11 @@ define method initialize-static-keywords
   let sod = application.static-object-directory;
   let illegal-value = as-remote-value(0);
   sod.directory-keywords-by-id[#"format-string"] :=
-    run-spy-on-thread(application, spy-thread, 
+    run-spy-on-thread(application, spy-thread,
                       application.dylan-spy.spy-format-string-keyword) |
     illegal-value;
   sod.directory-keywords-by-id[#"format-arguments"] :=
-    run-spy-on-thread(application, spy-thread, 
+    run-spy-on-thread(application, spy-thread,
                       application.dylan-spy.spy-format-arguments-keyword) |
     illegal-value;
   sod.directory-keywords-initialized? := #t;
@@ -434,7 +434,7 @@ define method lookup-runtime-symbol
     | (sod.directory-runtime-symbols := make(<string-table>));
 
   element(runtime-symbols, name, default: #f)
-    | (element(runtime-symbols, name) := 
+    | (element(runtime-symbols, name) :=
 	 find-symbol(path, name,
 		     library: application.application-dylan-runtime-library));
 end method;

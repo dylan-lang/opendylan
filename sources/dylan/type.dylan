@@ -147,7 +147,7 @@ define function reduce-incomplete-classes-sov
         end method;
   loop(n - 1, ans)
 end function;
-
+
 
 
 // This is *not* extensible;  it is a g.f. simply to make the override-function work.

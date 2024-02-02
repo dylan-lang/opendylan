@@ -28,14 +28,14 @@ define constant $empty-c-string = make(<C-string>, size: 0);
 //--- Kludge to prevent recursion during various operations
 define thread variable *port-did-it?* :: <boolean> = #f;
 
-
+
 ///---*** Hacked version of size-of to avoid inlining
 
 define function safe-size-of (value) => (size :: <integer>)
   size-of(value)
 end function safe-size-of;
 
-
+
 /// Error handling
 
 // Many Windows functions return #f, 0 or a NULL pointer in case of failure;
@@ -113,7 +113,7 @@ define function windows-debug-message
   OutputDebugString(concatenate(message, "\n"))
 end function windows-debug-message;
 
-
+
 /// Win32 metrics
 
 define class <win32-metrics> (<object>)
@@ -135,7 +135,7 @@ define method make-win32-metrics () => (metrics :: <win32-metrics>)
        mouse-buttons: GetSystemMetrics($SM-CMOUSEBUTTONS))
 end method make-win32-metrics;
 
-
+
 /// Window size functions (should be in win32-user?)
 
 // Note that the return values are in _screen_ coordinates
@@ -202,7 +202,7 @@ define sealed method map-dialog-rectangle
 end method map-dialog-rectangle;
 */
 
-
+
 /// "Atomic" redisplay
 
 //---*** Maybe move this to win32-user?
@@ -219,7 +219,7 @@ define macro with-delayed-drawing
       end }
 end macro with-delayed-drawing;
 
-
+
 /// String conversion utilities
 
 // The rules for handling newlines:

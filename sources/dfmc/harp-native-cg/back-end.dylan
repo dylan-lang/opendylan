@@ -74,7 +74,7 @@ define sideways method emit-import-adjustment?
 end method emit-import-adjustment?;
 
 
-// ELF Outputters use this emitter to emit type and size of data, so the 
+// ELF Outputters use this emitter to emit type and size of data, so the
 // Linker can create appropriate dynamic relocation records for them
 
 define sideways method emit-data-footer

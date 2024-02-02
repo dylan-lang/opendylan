@@ -123,7 +123,7 @@ define sealed method do-remove-value!
   //---*** Do this by deleting the file named by the key
 end method do-remove-value!;
 
-
+
 /// Creating keys
 
 define sealed method settings-key-name
@@ -205,7 +205,7 @@ define sealed method settings-key-name
   "Software"
 end method settings-key-name;
 
-
+
 /// Registering keys
 
 define sealed method initialize-settings

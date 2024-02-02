@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Called to deactivate the object
 
-define method IOleInPlaceObject/InPlaceDeactivate(this :: <COleInPlaceObject>) 
+define method IOleInPlaceObject/InPlaceDeactivate(this :: <COleInPlaceObject>)
  => status :: <HRESULT>;
-  
+
   Output-Debug-String("IOleInPlaceObject/InPlaceDeactivate\r\n");
 
   let obj :: <basic-ole-server> = this.get-obj;
@@ -57,7 +57,7 @@ define method IOleInPlaceObject/UIDeactivate(this :: <COleInPlaceObject>)
       with-stack-structure ( clip-rect :: <LPRECT> )
 	// get window position from the container
         let site = obj.container-IOleInPlaceSite;
-	let ( status, frame, doc ) = 
+	let ( status, frame, doc ) =
 	  IOleInPlaceSite/GetWindowContext(site, position-rect, clip-rect,
 					   obj.in-place-frame-info);
         check-ole-status(status, "GetWindowContext", site);
@@ -85,7 +85,7 @@ end method IOleInPlaceObject/SetObjectRects;
 
 // Returns the window handle of the in-place object
 
-define method IOleWindow/GetWindow(this :: <COleInPlaceObject>) 
+define method IOleWindow/GetWindow(this :: <COleInPlaceObject>)
  => ( status :: <HRESULT>, hwnd :: <HWND> );
 
   Output-Debug-String("IOleWindow/GetWindow\r\n");
@@ -96,7 +96,7 @@ end method IOleWindow/GetWindow;
 // Used in performing Context Sensitive Help
 
 define method IOleWindow/ContextSensitiveHelp(this :: <COleInPlaceObject>,
-					      entering? :: <boolean>) 
+					      entering? :: <boolean>)
 	=> status :: <HRESULT>;
 
   Output-Debug-String("IOleWindow/ContextSensitiveHelp");
@@ -108,7 +108,7 @@ end method IOleWindow/ContextSensitiveHelp;
 
 // Called when the container wants to undo the last edit made in the object.
 
-define method IOleInPlaceObject/ReactivateAndUndo(this :: <COleInPlaceObject>) 
+define method IOleInPlaceObject/ReactivateAndUndo(this :: <COleInPlaceObject>)
 	=> status :: <HRESULT>;
 
   Output-Debug-String("IOleInPlaceObject/ReactivateAndUndo\r\n");

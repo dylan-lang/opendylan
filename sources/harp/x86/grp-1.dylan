@@ -32,7 +32,7 @@ with-ops-in pentium-instructions (and2-byte-mem) info := and2 end;
 with-ops-in pentium-instructions (or2-byte-mem)  info := or2  end;
 
 
-// Encode the locked versions of add2-mem and sub2-mem by setting a 
+// Encode the locked versions of add2-mem and sub2-mem by setting a
 // high bit
 
 
@@ -107,13 +107,13 @@ end;
 
 define local-pentium-template (adc2, add2, and2, cmp2, or2, sbb2, sub2, xor2)
   options (self);
-  
+
   // Do all eight bit constant refs
-  pattern (be, i, d :: <ic/m/spill-ref> by colour, s :: <integer> of eight-bit-const-ref) 
+  pattern (be, i, d :: <ic/m/spill-ref> by colour, s :: <integer> of eight-bit-const-ref)
    emit(be, #x83);
    emit-m-c-spill-dest(be, d, i);
    emit-one-byte(be, s);
-      
+
   // And now when the destination is EAX, source 32 bit constant
   pattern (be, i, d by eax-ref, s :: <ac/const-ref> by colour)
     emit(be, 5 + i);
@@ -129,12 +129,12 @@ define local-pentium-template (adc2, add2, and2, cmp2, or2, sbb2, sub2, xor2)
   pattern (be, i, d :: <real-register> by colour, s :: <ic/m/spill-ref> by colour)
     emit(be, 3 + i);
     emit-m-c-spill-dest(be, s, ex-reg(d));
-      
+
   // register into anything
   pattern (be, i, d :: <ic/m/spill-ref> by colour, s :: <real-register> by colour)
     emit(be, 1 + i);
     emit-m-c-spill-dest(be, d, ex-reg(s));
-  
+
  // address constant - address constant crops up occasionally
   pattern (be, i by cmp2-ref, d :: <ac/const-ref> by colour, s :: <ac/const-ref> by colour)
     harp-out (be)
@@ -150,7 +150,7 @@ ignore(harp-sbb2, harp-adc2);
 define local-pentium-template (fast-add)
   // The 2 operands are not spills, and that the destination is a
   // machine register. The LEA instruction can do this - but it does
-  // not set the flags. 
+  // not set the flags.
 
   // rrc at word - assume canonicalisation, of course
   pattern (be, d :: <real-register> by colour, r :: <real-register> by colour, s :: <integer>)
@@ -166,13 +166,13 @@ define local-pentium-template (fast-add)
     harp-out (be)
       move(be, d, r + s);
     end harp-out;
-  
+
   pattern (be, d :: <ispill> by colour, r, s)
     call-local(fast-add, be, reg--tmp1, r, s);
     harp-out (be)
       move(be, d, reg--tmp1);
     end harp-out;
-  
+
 end local-pentium-template;
 
 
@@ -189,7 +189,7 @@ define pentium-template (and2-mem, or2-mem, add2-mem, sub2-mem, eor2-mem,
   options (self);
 
   // Handle the case where 2 of the args are constants
-  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w :: <m/spill-ref> by colour) 
+  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w :: <m/spill-ref> by colour)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let wn = ensure-mreg(be, w, tmps);
@@ -199,7 +199,7 @@ define pentium-template (and2-mem, or2-mem, add2-mem, sub2-mem, eor2-mem,
     emit-reg-offset(be, rn, offset, ex-reg(wn));
 
   // Handle the case where 2 of the args are constants as is operand 2
-  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w :: <integer>) 
+  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w :: <integer>)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let w8bit = eight-bit-const-ref(w);
@@ -214,7 +214,7 @@ define pentium-template (and2-mem, or2-mem, add2-mem, sub2-mem, eor2-mem,
     end if;
 
   // Handle the reverse case where 2 of the args are constants
-  pattern (be, i, s :: <integer>, r, o :: <integer>, w) 
+  pattern (be, i, s :: <integer>, r, o :: <integer>, w)
     harp-reapply(be, i, r, s, o, w);
 
   // Operation between memory operand and a constant
@@ -255,44 +255,44 @@ end pentium-template;
 
 
 
-/// XADD-MEM-LOCKED is similar to ADD2-MEM-LOCKED, except that it returns 
+/// XADD-MEM-LOCKED is similar to ADD2-MEM-LOCKED, except that it returns
 /// the result of the addition, and doesn't accept the double index
 
 
 define pentium-template (xadd-mem-locked)
 
-  pattern (be, d :: <real-register> by colour, r :: <real-register> by colour, s :: <ac/const-ref> by colour, w) 
+  pattern (be, d :: <real-register> by colour, r :: <real-register> by colour, s :: <ac/const-ref> by colour, w)
     harp-out (be) move(be, d, w) end;
     emit(be, lock); emit(be, #x0f); emit(be, #xc1);
     emit-reg-offset(be, r, s, ex-reg(d));
     harp-out (be) add(be, d, d, w) end;
 
-  pattern (be, d :: <real-register> by colour, r :: <real-register> by colour, s :: <real-register> by colour, w) 
+  pattern (be, d :: <real-register> by colour, r :: <real-register> by colour, s :: <real-register> by colour, w)
     harp-out (be) move(be, d, w) end;
     emit(be, lock); emit(be, #x0f); emit(be, #xc1);
     emit-reg-indexed(be, r, s, ex-reg(d));
     harp-out (be) add(be, d, d, w) end;
 
-  pattern (be, d :: <ic/spill-ref> by colour, r :: <real-register> by colour, s :: <ac/const-ref> by colour, w) 
-    harp-out (be) 
+  pattern (be, d :: <ic/spill-ref> by colour, r :: <real-register> by colour, s :: <ac/const-ref> by colour, w)
+    harp-out (be)
       xadd-mem-locked(be, reg--tmp1, r, s, w);
       move(be, d, reg--tmp1);
     end harp-out;
 
-  pattern (be, d, r :: <ic/spill-ref> by colour, s :: <ic/spill-ref> by colour, w) 
+  pattern (be, d, r :: <ic/spill-ref> by colour, s :: <ic/spill-ref> by colour, w)
     harp-out (be)
       move(be, reg--tmp2, r);
       add(be, reg--tmp2, reg--tmp2, s);
       xadd-mem-locked(be, d, reg--tmp2, 0, w);
     end harp-out;
 
-  pattern (be, d, r, s :: <ic/spill-ref> by colour, w) 
+  pattern (be, d, r, s :: <ic/spill-ref> by colour, w)
     harp-out (be)
       move(be, reg--tmp2, s);
       xadd-mem-locked(be, d, r, reg--tmp2, w);
     end harp-out;
 
-  pattern (be, d, r, s, w) 
+  pattern (be, d, r, s, w)
     harp-out (be)
       move(be, reg--tmp2, r);
       xadd-mem-locked(be, d, reg--tmp2, s, w);
@@ -308,7 +308,7 @@ define pentium-template (and2-byte-mem, or2-byte-mem)
   options (self);
 
   // Handle the case where 2 of the args are constants
-  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w by byte-addressable) 
+  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w by byte-addressable)
     let tmps = list(reg--tmp2, reg--tmp1); // make sure wn is a byte reg
     let wn = ensure-mreg(be, w, tmps);     // make sure wn is a byte reg
     let rn = ensure-mreg(be, r, tmps);
@@ -317,7 +317,7 @@ define pentium-template (and2-byte-mem, or2-byte-mem)
     emit-reg-offset(be, rn, offset, ex-reg(wn));
 
   // Handle the case where 2 of the args are constants as is operand 2
-  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w :: <integer> of eight-bit-const-ref) 
+  pattern (be, i :: <integer> by op-info, r, s :: <integer>, o :: <integer>, w :: <integer> of eight-bit-const-ref)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let offset = s + o;
@@ -326,7 +326,7 @@ define pentium-template (and2-byte-mem, or2-byte-mem)
     emit-one-byte(be, w);
 
   // Handle the reverse case where 2 of the args are constants
-  pattern (be, i, s :: <integer>, r, o :: <integer>, w) 
+  pattern (be, i, s :: <integer>, r, o :: <integer>, w)
     harp-reapply(be, i, r, s, o, w);
 
   // Operation between memory operand and a constant

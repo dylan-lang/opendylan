@@ -43,7 +43,7 @@ define sealed method deuce/choose-from-dialog
   values(success? & value, success?, width, height)
 end method deuce/choose-from-dialog;
 
-
+
 /// DUIM back-end for various dialogs
 
 define sealed method information-dialog
@@ -560,7 +560,7 @@ define sealed method goto-position-dialog
   end
 end method goto-position-dialog;
 
-
+
 /// Search and Replace dialogs
 
 // This can be tweaked by the user...
@@ -868,7 +868,7 @@ define sealed method string-replace-dialog
   end
 end method string-replace-dialog;
 
-
+
 /// Configuration dialog
 
 define pane <input-policy-page> ()

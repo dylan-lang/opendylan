@@ -100,7 +100,7 @@ define method note-source-control-system-selected
   #f
 end method note-source-control-system-selected;
 
-
+
 /// Error classes
 
 define open abstract class <source-control-condition> (<condition>)

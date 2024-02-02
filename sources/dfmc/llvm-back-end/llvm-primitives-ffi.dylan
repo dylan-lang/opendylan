@@ -58,7 +58,7 @@ define macro raw-accessor-primitive-definer
               value
             end if;
           end;
-         define side-effecting stateless dynamic-extent &primitive-descriptor 
+         define side-effecting stateless dynamic-extent &primitive-descriptor
              "primitive-" ## ?name ## "-at-setter"
              (new :: ?raw-value-type,
               pointer :: <raw-pointer>,
@@ -105,7 +105,7 @@ define macro raw-field-primitive-definer
           => (value :: ?raw-value-type);
            //---*** Fill this in...
          end;
-         define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor 
+         define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor
              "primitive-" ## ?name ## "-field-setter"
              (new :: ?raw-value-type,
               pointer :: <raw-pointer>,

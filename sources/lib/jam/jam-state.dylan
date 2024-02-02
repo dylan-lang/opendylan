@@ -118,7 +118,7 @@ define method jam-clean-temporary-files
     delete-file(pop(jam.%jam-temporary-files));
   end while;
 end method;
-  
+
 // initialize
 //
 // Install the built-in rule function definitions

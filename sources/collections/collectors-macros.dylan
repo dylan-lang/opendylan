@@ -16,7 +16,7 @@ define macro collecting
            ?body;
            collected(?=_collector)
          end }
-  { collecting (as ?type:expression = ?init:expression ?source-options:*) 
+  { collecting (as ?type:expression = ?init:expression ?source-options:*)
       ?:body
     end }
     => { collecting (?=_collector :: ?type = ?init ?source-options)

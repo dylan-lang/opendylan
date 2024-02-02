@@ -13,8 +13,8 @@ define constant $default-timeout = 200;
 
 ///// STOP-APPLICATION
 
-define method stop-application 
-     (application :: <debug-target>, 
+define method stop-application
+     (application :: <debug-target>,
       #key stop-reason = make(<debugger-stop-application-stop-reason>)) => ()
   application.application-stopped? := #t;
   application.debugger-generated-stop-reason := stop-reason;
@@ -110,12 +110,12 @@ end method;
 // First, default callbacks to cover for unsupplied callback functions.
 
 define method default-stop-reason-callback
-              (application :: <debug-target>, sr :: <stop-reason>) 
+              (application :: <debug-target>, sr :: <stop-reason>)
                => (interested? :: <boolean>)
        #t;
 end method;
 
-define method default-poll-for-stop-callback 
+define method default-poll-for-stop-callback
               (application :: <debug-target>) => ()
 end method;
 
@@ -124,7 +124,7 @@ define method default-ready-to-continue-callback
 end method;
 
 
-define method manage-running-application 
+define method manage-running-application
   (application :: <debug-target>,
    #key stop-reason-callback = default-stop-reason-callback,
         poll-for-stop-callback = default-poll-for-stop-callback,
@@ -222,7 +222,7 @@ define method manage-running-application
     // supplying the 'profile-interval:' keyword if the profiler
     // controller specifies it.
     let profiling-interval = application.application-profiling-interval;
-    let stop-reason = 
+    let stop-reason =
       if (profiling-interval)
         wait-for-stop-reason(application.debug-target-access-path,
 			     profile-interval: profiling-interval);
@@ -234,7 +234,7 @@ define method manage-running-application
     // Interpret the stop-reason, perform housekeeping and debug-point
     // processing.
     let (dm-stop-reason, interesting-debug-points?, original-stop-reason)
-      = if (stop-reason) 
+      = if (stop-reason)
           interpret-stop-reason(application, stop-reason);
         else
           if (application.application-killed?)
@@ -244,7 +244,7 @@ define method manage-running-application
         end if;
 
     // If a stop reason still remains to be processed, then call the
-    // client's callback. 
+    // client's callback.
     // Otherwise, if some debug points are registering interest at this
     // point, enter the required debugger transaction.
     // In all other cases, just continue.
@@ -256,7 +256,7 @@ define method manage-running-application
         maybe-continue(dm-stop-reason);
       else
         definitely-continue(dm-stop-reason);
-      end if;  
+      end if;
     elseif (interesting-debug-points? |
             instance?(original-stop-reason, <source-step-stop-reason>))
       let client-interested? =

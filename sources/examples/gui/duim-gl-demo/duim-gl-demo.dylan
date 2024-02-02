@@ -18,14 +18,14 @@ define constant $globe = 1;
 define constant $cone = 2;
 define constant $cylinder = 3;
 
-define class <demo-gl-pane> (<gl-pane>) 
+define class <demo-gl-pane> (<gl-pane>)
   slot pane-latitude = 6.0d0;
   slot pane-longitude = 3.0d0;
   slot pane-last-x = #f;
   slot pane-last-y = #f;
 end class;
 
-define method handle-initialize-scene 
+define method handle-initialize-scene
     (pane :: <demo-gl-pane>, medium :: <medium>) => ()
   next-method();
   glClearIndex(as(<single-float>, $black-index));
@@ -42,30 +42,30 @@ define method handle-initialize-scene
 
   glNewList($globe, $GL-COMPILE);
     let quadObj = gluNewQuadric();
-    gluQuadricDrawStyle(quadObj, $GLU-LINE); 
-    gluSphere(quadObj, 1.5d0, 16, 16); 
-  glEndList(); 
-  glNewList($CONE, $GL-COMPILE); 
-    let quadObj = gluNewQuadric(); 
-    gluQuadricDrawStyle (quadObj, $GLU-FILL); 
-    gluQuadricNormals (quadObj, $GLU-SMOOTH); 
-    gluCylinder(quadObj, 0.3d0, 0.0d0, 0.6d0, 15, 10); 
-  glEndList(); 
- 
-  glNewList($CYLINDER, $GL-COMPILE); 
-    glPushMatrix (); 
-    glRotatef (90.0e0, 1.0e0, 0.0e0, 0.0e0); 
-    glTranslatef (0.0e0, 0.0e0, -1.0e0); 
-    let quadObj = gluNewQuadric (); 
-    gluQuadricDrawStyle (quadObj, $GLU-FILL); 
-    gluQuadricNormals (quadObj, $GLU-SMOOTH); 
-    gluCylinder (quadObj, 0.3d0, 0.3d0, 0.6d0, 12, 2); 
-    glPopMatrix (); 
-  glEndList(); 
+    gluQuadricDrawStyle(quadObj, $GLU-LINE);
+    gluSphere(quadObj, 1.5d0, 16, 16);
+  glEndList();
+  glNewList($CONE, $GL-COMPILE);
+    let quadObj = gluNewQuadric();
+    gluQuadricDrawStyle (quadObj, $GLU-FILL);
+    gluQuadricNormals (quadObj, $GLU-SMOOTH);
+    gluCylinder(quadObj, 0.3d0, 0.0d0, 0.6d0, 15, 10);
+  glEndList();
+
+  glNewList($CYLINDER, $GL-COMPILE);
+    glPushMatrix ();
+    glRotatef (90.0e0, 1.0e0, 0.0e0, 0.0e0);
+    glTranslatef (0.0e0, 0.0e0, -1.0e0);
+    let quadObj = gluNewQuadric ();
+    gluQuadricDrawStyle (quadObj, $GLU-FILL);
+    gluQuadricNormals (quadObj, $GLU-SMOOTH);
+    gluCylinder (quadObj, 0.3d0, 0.3d0, 0.6d0, 12, 2);
+    glPopMatrix ();
+  glEndList();
 
 end method;
 
-define method handle-repaint-scene 
+define method handle-repaint-scene
     (pane :: <demo-gl-pane>, medium :: <medium>) => ()
   // Draw scene...
   let near-plane = 3.0d0;
@@ -115,14 +115,14 @@ define method handle-event (pane :: <demo-gl-pane>, event :: <pointer-drag-event
   repaint-sheet(pane, $everywhere);
 end method;
 
-define method handle-event 
+define method handle-event
     (pane :: <demo-gl-pane>, event :: <button-release-event>) => ()
   next-method();
   pane-last-x(pane) := #f;
   pane-last-y(pane) := #f;
 end method;
 
-define method handle-event 
+define method handle-event
     (pane :: <demo-gl-pane>, event :: <pointer-exit-event>) => ()
   next-method();
   pane-last-x(pane) := #f;

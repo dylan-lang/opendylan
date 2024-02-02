@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sideways method emit-library-records
     (back-end :: <llvm-back-end>, ld :: <library-description>,
-     #rest flags, 
+     #rest flags,
      #key assembler-output? = unsupplied(), cr, debug-info?,
      #all-keys)
  => ();
@@ -27,7 +27,7 @@ define sideways method emit-library-record
     (back-end :: <llvm-back-end>,
      cr :: <compilation-record>,
      ld :: <library-description>,
-     #rest flags, 
+     #rest flags,
      #key assembler-output? = unsupplied(),
           force-link?, debug-info?,
      #all-keys)
@@ -44,7 +44,7 @@ define sideways method emit-library-record
       // Retrieve the LLVM module instantiated during the code emission phase
       let m :: <llvm-module> = cr.compilation-record-back-end-data;
       back-end.llvm-builder-module := m;
-      
+
       link-all(back-end, m, cr);
 
       // Add constructor definitions to the module
@@ -68,7 +68,7 @@ define method link-all
      m :: <llvm-module>,
      cr :: <compilation-record>)
  => ()
-  with-simple-abort-retry-restart 
+  with-simple-abort-retry-restart
       ("Abort the emission phase", "Restart the emission phase")
     let heap = cr.compilation-record-model-heap;
 
@@ -93,7 +93,7 @@ define method link-all
       end for;
 
       // Init code
-      let top-level-id = 
+      let top-level-id =
         cr-init-name(back-end,
                      compilation-record-library(cr),
                      compilation-record-name(cr));
@@ -109,7 +109,7 @@ end method;
 define variable *fake-transaction-id-counter* = 0;
 define sideways method link-and-download
     (back-end :: <llvm-back-end>, il :: <interactive-layer>, runtime-context,
-     #rest flags, 
+     #rest flags,
      #key assembler-output? = unsupplied(),
           debug-info? = #f,
      #all-keys)
@@ -147,7 +147,7 @@ define method emit-indirection-definitions
   end for;
 end method;
 
-
+
 /// Fixups
 
 define constant $system-init-fixups-tag = "fixups";
@@ -245,7 +245,7 @@ define method emit-fixup
   #f
 end method;
 
-
+
 /// Per-compilation-unit initialization functions
 
 define constant $system-init-code-tag = "for_system";
@@ -347,7 +347,7 @@ define method emit-init-code-definition
               section: llvm-section-name(back-end, #"init-code"),
               calling-convention: $llvm-calling-convention-c);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-    
+
     for (code in heap.heap-root-init-code)
       // Emit the generated init function
       emit-definition(back-end, m, code.^iep);
@@ -368,7 +368,7 @@ define method emit-init-code-definition
   end block;
 end method;
 
-
+
 /// Externs referenced from <computation> expansions (and not explicitly in DFM)
 
 define constant $object-extern-names

@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 //// <vreg-state>
-//// This represents the state of virtual registers - and is 
-//// private to each lambda being compiled. The analogous mechanism 
+//// This represents the state of virtual registers - and is
+//// private to each lambda being compiled. The analogous mechanism
 //// in LispWorks is to use special variables. Wherever LW uses
 //// with-saved-vreg-state we must create a new <vreg-state> object
 //// in Dylan.
@@ -41,7 +41,7 @@ define primary open class <vreg-state> (<object>)
   slot df-spill-central;
 end;
 
-define method initialize 
+define method initialize
     (vreg-state :: <vreg-state>, #key) => (new :: <vreg-state>)
   let dont-reuse :: <boolean> = ~ allow-vreg-reuse;
   next-method();
@@ -52,4 +52,4 @@ define method initialize
   end;
   vreg-state;
 end;
-  
+

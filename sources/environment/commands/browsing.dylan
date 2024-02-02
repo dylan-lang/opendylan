@@ -46,7 +46,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Module and library argument parsing
 
 define method parameter-type-name
@@ -100,7 +100,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Browsing properties
 
 define class <library-property> (<project-property>)
@@ -211,7 +211,7 @@ define method show-property
   end
 end method show-property;
 
-
+
 /// Macroexpand command
 
 define class <macroexpand-code-command> (<project-command>)
@@ -244,7 +244,7 @@ define method do-execute-command
      expansion-stream: stream)
 end method do-execute-command;
 
-
+
 /// Browsing commands
 
 define command-group browsing

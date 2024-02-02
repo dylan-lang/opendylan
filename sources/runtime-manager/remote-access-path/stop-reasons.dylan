@@ -9,13 +9,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// WAIT-FOR-STOP-REASON-WITH-TIMEOUT
 
-define method wait-for-stop-reason-with-timeout 
+define method wait-for-stop-reason-with-timeout
     (conn :: <remote-access-connection>, timeout :: <integer>,
      #key profile-at = #f)
   => (code :: <integer>)
   let code :: <integer> =
-    if (profile-at) 
-      Rtmgr/RemoteNub/profile-wait-for-stop-reason-with-timeout 
+    if (profile-at)
+      Rtmgr/RemoteNub/profile-wait-for-stop-reason-with-timeout
         (conn.nub, timeout, profile-at);
     else
       Rtmgr/RemoteNub/wait-for-stop-reason-with-timeout
@@ -28,12 +28,12 @@ end method;
 ///// WAIT-FOR-STOP-REASON-NO-TIMEOUT
 //    Called if no timeout keyword is supplied.
 
-define method wait-for-stop-reason-no-timeout 
+define method wait-for-stop-reason-no-timeout
     (conn :: <remote-access-connection>,
      #key profile-at = #f) => (code :: <integer>)
   let code :: <integer> =
     if (profile-at)
-      Rtmgr/RemoteNub/profile-wait-for-stop-reason-no-timeout 
+      Rtmgr/RemoteNub/profile-wait-for-stop-reason-no-timeout
         (conn.nub, profile-at);
     else
       Rtmgr/RemoteNub/wait-for-stop-reason-no-timeout(conn.nub);
@@ -102,7 +102,7 @@ end method;
 
 ///// GET-DEBUG-EVENT-THREAD
 
-define method get-debug-event-thread 
+define method get-debug-event-thread
     (conn :: <remote-access-connection>)=> (thr :: <NUBTHREAD>)
   as-remote-pointer(Rtmgr/RemoteNub/stop-reason-thread(conn.nub));
 end method;
@@ -110,7 +110,7 @@ end method;
 
 ///// GET-DEBUG-EVENT-PROCESS
 
-define method get-debug-event-process 
+define method get-debug-event-process
     (conn :: <remote-access-connection>) => (proc :: <remote-process>)
   let nub-process :: <RNUBHANDLE> = Rtmgr/RemoteNub/stop-reason-process (conn.nub);
   let process = make (<remote-process>,
@@ -138,7 +138,7 @@ end method;
 
 ///// GET-EXCEPTION-VIOLATION-ADDRESS
 
-define method get-exception-violation-address 
+define method get-exception-violation-address
   (conn :: <remote-access-connection>)
     => (ptr :: <remote-value>)
   as-remote-value(Rtmgr/RemoteNub/stop-reason-violation-address (conn.nub));

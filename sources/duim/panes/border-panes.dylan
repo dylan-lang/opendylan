@@ -71,7 +71,7 @@ define method draw-border
   end
 end method draw-border;
 
-
+
 /// Border panes
 
 define sealed class <border-pane>
@@ -102,7 +102,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<border-pane>));
 define sealed domain initialize (<border-pane>);
 
-
+
 /// Spacing panes
 
 define sealed class <spacing-pane>
@@ -132,7 +132,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<spacing-pane>));
 define sealed domain initialize (<spacing-pane>);
 
-
+
 /// Group box panes, aka labelled border panes
 
 define sealed class <group-box-pane>

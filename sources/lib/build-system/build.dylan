@@ -43,7 +43,7 @@ define function calculate-default-build-script ()
                  system-build-scripts-path())
 end;
 
-
+
 
 define method change-directory (directory :: <directory-locator>)
   if (~file-exists?(directory))
@@ -67,7 +67,7 @@ define macro with-build-directory
        }
 end macro;
 
-
+
 
 // Top level internal function that can be invoked by Dylan Clients
 // Arguments:

@@ -300,7 +300,7 @@ define method memory-arg-to-string(arg :: <memory-arg>, seg :: <segment-override
 	otherwise concatenate(seg.segment-register.segment-register-name, ":", addr);
       end select;
     end;
-  concatenate(memory-arg-size-to-string(arg.memory-arg-size), " ", addr);      
+  concatenate(memory-arg-size-to-string(arg.memory-arg-size), " ", addr);
 end method memory-arg-to-string;
 
 define method get-offset-as-integer(offset :: <byte-offset>) => (int :: <integer>, external :: <external>)

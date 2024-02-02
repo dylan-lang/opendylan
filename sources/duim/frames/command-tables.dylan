@@ -70,7 +70,7 @@ define method command-table-inherit-from-setter
   inherit-from
 end method command-table-inherit-from-setter;
 
-
+
 /// Making command tables
 
 // define command-table *compiler* (*file*, *edit*)
@@ -318,7 +318,7 @@ define variable *user-command-table* :: <standard-command-table>
            name: #"user-command-table",
            inherit-from: vector(*global-command-table*));
 
-
+
 /// Inheritance
 
 //--- This should be more careful to hit each command table only once
@@ -355,7 +355,7 @@ define method command-accessible?
   end
 end method command-accessible?;
 
-
+
 /// Adding and removing commands
 
 define method add-command
@@ -487,7 +487,7 @@ define method do-command-table-commands
      do-inherited?: do-inherited?)
 end method do-command-table-commands;
 
-
+
 /// Command table menus
 
 // The radio box and check box types are a bit odd:
@@ -671,7 +671,7 @@ define function label-equal? (s1, s2) => (true? :: <boolean>)
     end
 end function label-equal?;
 
-
+
 /// Command menu bars and tool bars
 
 define method make-command-menu-bar
@@ -1041,7 +1041,7 @@ define method do-command-menu-gadgets
      menu-bar?: menu-bar?, tool-bar?: tool-bar?, owned-menus?: owned-menus?)
 end method do-command-menu-gadgets;
 
-
+
 /// Keystroke accelerators
 
 define method do-command-table-accelerators
@@ -1079,7 +1079,7 @@ define method command-table-accelerators
     end
 end method command-table-accelerators;
 
-
+
 /// Stubs for command line names
 
 define open generic add-command-line-name
@@ -1207,7 +1207,7 @@ define method command-table-completion-alist
 end command-table-completion-alist;
 */
 
-
+
 /// Stubs for presentation translators
 
 define open generic add-presentation-translator
@@ -1304,7 +1304,7 @@ define method clear-presentation-translator-caches () => ()
 end method clear-presentation-translator-caches;
 */
 
-
+
 /// Simple command-defining macrology
 
 /*

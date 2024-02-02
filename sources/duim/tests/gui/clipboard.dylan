@@ -128,6 +128,6 @@ define method frame-paste
   end
 end method frame-paste;
 
-
+
 /// Install the test
 install-test(<clipboard-test-frame>, "Clipboard");

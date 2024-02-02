@@ -23,7 +23,7 @@ define method value-referenced-metadata
   vector(value.llvm-metadata-value-metadata)
 end method;
 
-
+
 /// Metadata
 
 define abstract class <llvm-metadata> (<object>)
@@ -126,7 +126,7 @@ define method metadata-referenced-values
   vector(metadata.llvm-metadata-value)
 end method;
 
-
+
 /// Placeholder metadata values
 
 define class <llvm-symbolic-metadata> (<llvm-metadata>)
@@ -145,7 +145,7 @@ define method llvm-metadata-forward
   end if
 end method;
 
-
+
 /// Named metadata
 
 define class <llvm-named-metadata> (<object>)
@@ -155,7 +155,7 @@ define class <llvm-named-metadata> (<object>)
     required-init-keyword: operands:;
 end class;
 
-
+
 /// Metadata attachments to instructions
 
 define constant $llvm-metadata-kind-dbg = 0;

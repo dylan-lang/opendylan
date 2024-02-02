@@ -24,7 +24,7 @@ define method \= (object1 :: <object-reference>, object2 :: <object-reference>)
   let ior2 = object-reference-ior(object2);
   (ior1 = ior2)
   | (get-iiop-profile(ior1) = get-iiop-profile(ior2))
-end method;  
+end method;
 
 define method initialize (object :: <object-reference>, #key ior-file, ior-string, #all-keys)
   next-method();
@@ -72,7 +72,7 @@ define method corba/object/release (object :: <object-reference>)
   values()
 end method;
 
-define method corba/object/non-existent (object :: <object-reference>) 
+define method corba/object/non-existent (object :: <object-reference>)
  => (non-existent? :: <boolean>)
   object-reference-non-existent?(object)
     | block ()
@@ -160,7 +160,7 @@ end method;
 define constant $corba-object-name = "corba-object";
 define constant $corba-object-interface-repository-id = concatenate("LOCAL:", $corba-object-name, ":1.0");
 
-define constant $object-reference-typecode = 
+define constant $object-reference-typecode =
   make(<object-reference-typecode>,
        repository-id: $corba-object-interface-repository-id,
        name: $corba-object-name);
@@ -210,7 +210,7 @@ define method print-object (object :: <object-reference>, stream :: <stream>)
 	  end for;
 	end if;
       end if;
-    end; 
+    end;
   end;
 end method;
 */

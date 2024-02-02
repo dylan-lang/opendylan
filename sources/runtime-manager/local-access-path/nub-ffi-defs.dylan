@@ -856,7 +856,7 @@ define debugger-nub-interface nub-stop-reason-thread-exit-code
 end debugger-nub-interface;
 
 
-define debugger-nub-interface nub-stop-reason-library 
+define debugger-nub-interface nub-stop-reason-library
        parameter nub              :: <NUB>;
        result library             :: <NUBLIBRARY>;
        c-name: "nub_stop_reason_library";

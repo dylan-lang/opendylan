@@ -161,7 +161,7 @@ define debugger-nub-interface nub-get-library-undecorated-name
        parameter buf              :: <C-string>;
        c-name: "nub_get_library_undecorated_name";
 end debugger-nub-interface;
-                                           
+
 define debugger-nub-interface nub-get-register-name-length
        parameter nub              :: <NUB>;
        parameter register         :: <NUB-INDEX>;
@@ -830,7 +830,7 @@ define debugger-nub-interface nub-stop-reason-thread-exit-code
 end debugger-nub-interface;
 
 
-define debugger-nub-interface nub-stop-reason-library 
+define debugger-nub-interface nub-stop-reason-library
        parameter nub              :: <NUB>;
        result library             :: <NUBLIBRARY>;
        c-name: "nub_stop_reason_library";

@@ -15,4 +15,4 @@ define suite libraries-test-suite ()
   suite system-test-suite;
   suite io-test-suite;
   suite testworks-test-suite;
-end suite libraries-test-suite; 
+end suite libraries-test-suite;

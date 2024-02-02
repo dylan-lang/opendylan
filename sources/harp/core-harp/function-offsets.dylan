@@ -15,7 +15,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Indexes into function objects
 
 
-define open generic function-xep-offset 
+define open generic function-xep-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method function-xep-offset
@@ -24,7 +24,7 @@ define method function-xep-offset
 end method;
 
 
-define open generic function-signature-offset 
+define open generic function-signature-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method function-signature-offset
@@ -33,7 +33,7 @@ define method function-signature-offset
 end method;
 
 
-define open generic function-mep-offset 
+define open generic function-mep-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method function-mep-offset
@@ -53,7 +53,7 @@ end method;
 
 // Keyword functions
 
-define open generic function-iep-offset 
+define open generic function-iep-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method function-iep-offset
@@ -62,7 +62,7 @@ define method function-iep-offset
 end method;
 
 
-define open generic function-keywords-offset 
+define open generic function-keywords-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method function-keywords-offset
@@ -82,7 +82,7 @@ end method;
 
 // Closures
 
-define open generic closure-environment-offset 
+define open generic closure-environment-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method closure-environment-offset
@@ -102,7 +102,7 @@ end method;
 
 // Keyword closures
 
-define open generic keyword-closure-environment-offset 
+define open generic keyword-closure-environment-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method keyword-closure-environment-offset
@@ -120,7 +120,7 @@ define method keyword-closure-size
 end method;
 
 
-define open generic generic-function-engine-offset 
+define open generic generic-function-engine-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method generic-function-engine-offset
@@ -134,7 +134,7 @@ end method;
 // Indexes into engine node objects
 
 
-define open generic engine-node-properties-offset 
+define open generic engine-node-properties-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method engine-node-properties-offset
@@ -143,7 +143,7 @@ define method engine-node-properties-offset
 end method;
 
 
-define open generic engine-node-callback-offset 
+define open generic engine-node-callback-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method engine-node-callback-offset
@@ -152,7 +152,7 @@ define method engine-node-callback-offset
 end method;
 
 
-define open generic engine-node-entry-point-offset 
+define open generic engine-node-entry-point-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method engine-node-entry-point-offset
@@ -170,7 +170,7 @@ define method engine-node-data-offset
 end method;
 
 
-define open generic engine-node-data-1-offset 
+define open generic engine-node-data-1-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method engine-node-data-1-offset
@@ -179,7 +179,7 @@ define method engine-node-data-1-offset
 end method;
 
 
-define open generic engine-node-data-2-offset 
+define open generic engine-node-data-2-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method engine-node-data-2-offset
@@ -188,7 +188,7 @@ define method engine-node-data-2-offset
 end method;
 
 
-define open generic engine-node-data-3-offset 
+define open generic engine-node-data-3-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method engine-node-data-3-offset
@@ -223,7 +223,7 @@ define method profiling-cache-header-engine-node-count-2-offset
   engine-node-data-offset(be) + 12
 end method;
 
-    
+
 // Indexes into wrapper objects
 
 
@@ -291,7 +291,7 @@ define constant discriminator$v-data-start = 23;
 // Indexes into signature objects
 
 
-define open generic signature-properties-offset 
+define open generic signature-properties-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method signature-properties-offset
@@ -299,7 +299,7 @@ define method signature-properties-offset
   4
 end method;
 
-define open generic signature-required-offset 
+define open generic signature-required-offset
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method signature-required-offset
@@ -326,7 +326,7 @@ end method;
 
 // Information about stack frames
 
-define open generic size-of-unwind-protect-frame 
+define open generic size-of-unwind-protect-frame
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method size-of-unwind-protect-frame
@@ -335,7 +335,7 @@ define method size-of-unwind-protect-frame
 end method;
 
 
-define open generic size-of-bind-exit-frame 
+define open generic size-of-bind-exit-frame
       (be :: <harp-back-end>) => (i :: <integer>);
 
 define method size-of-bind-exit-frame

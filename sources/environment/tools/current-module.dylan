@@ -90,7 +90,7 @@ define method frame-choose-current-module
   frame-current-module(frame)
 end method frame-choose-current-module;
 
-
+
 /// Module Gadget
 
 define open abstract class <frame-module-gadget-mixin> (<frame>)

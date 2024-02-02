@@ -65,7 +65,7 @@ define method value-referenced-metadata
   #[]
 end method;
 
-
+
 /// Placeholder values
 
 define abstract class <llvm-placeholder-value> (<llvm-value>)

@@ -11,9 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Defines all symbols in all coff files.
 
 define method define-all-symbols (trans :: <interactive-transaction>) => ()
-  let application = 
+  let application =
     trans.transaction-downloader-target.interactive-application;
-  let public-table = 
+  let public-table =
     application.debug-target-symbol-table;
   defining-symbols(public-table)
     for (coff-file in trans.transaction-coff-file-sequence)
@@ -33,7 +33,7 @@ end method;
 //    as a byte offset from the base address.
 
 define method define-coff-file-symbols
-    (trans :: <interactive-transaction>, 
+    (trans :: <interactive-transaction>,
      public-table :: <interactive-symbol-table>,
      coff-file :: <coff-file>) => ()
   let static-file = trans.transaction-object-files[coff-file];
@@ -51,7 +51,7 @@ define method get-section-base-address
     (trans :: <interactive-transaction>, section :: <coff-symbol-locator>)
        => (base :: false-or(<remote-value>))
   // We are trying to find the address of a symbol defined outside of this
-  // coff file (since it is not defined directly in a <coff-section>). 
+  // coff file (since it is not defined directly in a <coff-section>).
   #f
 end method;
 
@@ -66,7 +66,7 @@ end method;
 //    Enters a single symbol into the interactive table.
 
 define method define-this-symbol
-    (trans :: <interactive-transaction>, 
+    (trans :: <interactive-transaction>,
      static-file :: <remote-object-file>,
      public-table :: <interactive-symbol-table>,
      symbol :: <coff-symbol-record>) => ()
@@ -76,10 +76,10 @@ define method define-this-symbol
 end method;
 
 define method define-this-symbol
-    (trans :: <interactive-transaction>, 
+    (trans :: <interactive-transaction>,
      static-file :: <remote-object-file>,
      public-table :: <interactive-symbol-table>,
-     symbol :: <coff-symbol>) 
+     symbol :: <coff-symbol>)
        => ()
 
   let lib = trans.transaction-library;
@@ -120,7 +120,7 @@ define method define-this-symbol
     let path = dt.debug-target-access-path;
     let newname = strip-import(name);
     let imp-from-somewhere = symbol-table-find-symbol(public-table, name);
-    let actual-sym = 
+    let actual-sym =
       imp-from-somewhere | symbol-table-find-symbol(public-table, newname);
     let actual-val =
       if (imp-from-somewhere)
@@ -133,7 +133,7 @@ define method define-this-symbol
 //                 newname);
         as-remote-value(0)
       end if;
-    let imp-addr = 
+    let imp-addr =
       if (blk)
         download-remote-value-into
            (path, blk, actual-val)
@@ -155,7 +155,7 @@ define method define-this-symbol
   // If this symbol is defined in a section in this coff file, then get the
   // base address at which the section's raw data was downloaded.
 
-  let section-base-address = 
+  let section-base-address =
     get-section-base-address(trans, symbol.section);
 
   // section-base-address could be #f if this symbol is being referenced

@@ -32,12 +32,12 @@ define method emit-all (back-end :: <llvm-back-end>,
       // Items to emit from this compilation record
       let heap = cr.compilation-record-model-heap;
       let literals = heap.heap-defined-object-sequence;
-      
+
       // Output DFM files
       if (dfm-output?)
         emit-all-dfm(back-end, cr, flags);
       end if;
-      
+
       // Emit code
       for (literal in literals)
         emit-code(back-end, m, literal);

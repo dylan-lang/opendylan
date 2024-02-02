@@ -57,7 +57,7 @@ define method initialize (stream :: <IDL-lexer>, #key)
     #"double" => pair($DOUBLE-token,"double");
     #"enum" => pair($ENUM-token,"enum");
     #"exception" => pair($EXCEPTION-token,"exception");
-    #"false" => pair($FALSE-token,"false"); 
+    #"false" => pair($FALSE-token,"false");
     #"float" => pair($FLOAT-token,"float");
     #"idempotent" => pair($IDEMPOTENT-token,"idempotent");
     #"in" => pair($IN-token,"in");
@@ -89,9 +89,9 @@ define method read-element (stream :: <IDL-lexer>, #key on-end-of-stream)
  => (elmt)
   ignore(on-end-of-stream);
   let scepter = get-scepter();
-  let next-token = 
+  let next-token =
     if (stream.fake-tokens.empty?)
-      remap-reserved-words(stream, 
+      remap-reserved-words(stream,
         if (scepter.scepter-failure-mode & stream.token-count == scepter.scepter-failure-token)
           broken-read-element(stream);
         else

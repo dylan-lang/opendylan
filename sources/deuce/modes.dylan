@@ -264,7 +264,7 @@ define method buffer-command-menu-items
                 vector("Save Buffer",   save-file)))
 end method buffer-command-menu-items;
 
-
+
 /// Minor modes
 
 define open abstract primary class <minor-mode> (<mode>)
@@ -303,7 +303,7 @@ define method exit-mode
   remove!(buffer-minor-modes(buffer), mode)
 end method exit-mode;
 
-
+
 /// Overwrite mode
 
 define sealed class <overwrite-mode> (<minor-mode>)

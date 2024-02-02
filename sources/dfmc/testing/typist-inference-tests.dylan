@@ -175,7 +175,7 @@ end;
 define function bottom-te () => (bte :: <type-estimate-bottom>)
   make(<type-estimate-bottom>)
 end;
-
+
 ///
 /// Here follow the actual tests
 ///

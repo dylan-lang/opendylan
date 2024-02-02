@@ -1,4 +1,4 @@
-module:    dylan-user	
+module:    dylan-user
 Synopsis:  Win32 API for Windows HTML Help corresponding to
 	   "HTMLHELP.H"
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -46,7 +46,7 @@ define sealed method initialize
   end
 end method initialize;
 
-
+
 /// Tree control layout
 
 // A streamlined version of column-layouts, with drawing capabilities
@@ -112,7 +112,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-
+
 /// Roots and items
 
 // Build the items for the first time when the sheet is fully attached
@@ -186,7 +186,7 @@ define sealed method note-tree-control-roots-changed
   end
 end method note-tree-control-roots-changed;
 
-
+
 /// Generic implementation of tree node panes
 
 define sealed class <tree-node-pane>

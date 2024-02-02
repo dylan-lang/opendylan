@@ -25,7 +25,7 @@ define open generic corba/orb/object-to-file
 define open generic corba/orb/file-to-object
     (orb :: corba/<orb>, file :: corba/<string>)
  => (object :: corba/<object>);
-       
+
 define open generic corba/orb/create-list
     (orb :: corba/<orb>, count :: corba/<long>)
  => (new-list :: corba/<NVList>);
@@ -71,12 +71,12 @@ define method class-typecode (class == corba/orb/<invalidname>)
     => (typecode :: <typecode>)
   corba/orb/$invalid-name-typecode
 end method;
-         
+
 define method object-typecode (object :: corba/orb/<invalidname>)
     => (typecode :: <typecode>)
   corba/orb/$invalid-name-typecode
 end method;
-         
+
 
 define open generic corba/orb/list-initial-services (orb :: corba/<orb>)
  => (list :: corba/orb/<objectidlist>);

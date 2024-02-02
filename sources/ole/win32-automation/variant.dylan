@@ -17,7 +17,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //	make(<LPVARIANT>, value: object)
 // or
 //	as(<LPVARIANT>, object)
-// to construct a VARIANT that represents the value of the given 
+// to construct a VARIANT that represents the value of the given
 // Dylan object.
 //
 // Direct access to the structure fields should not be necessary.
@@ -45,7 +45,7 @@ define C-mapped-subtype <VARIANT-BOOL> ( <C-signed-short> )
   pointer-type <VARIANT-BOOL*>;
 end;
 
-
+
 
 define constant $SQL-NULL = #"NULL"; // to represent $VT-NULL value
 
@@ -249,7 +249,7 @@ define sealed method indexed-variant( var :: <LPVARIANT>, index :: <integer>)
 				=> var :: <LPVARIANT>;
   // Given pointer to array, return pointer to indexed element.
   if ( zero?(index) )
-    var 
+    var
   else
     pointer-value-address(var, index: index)
   end if
@@ -353,7 +353,7 @@ end;
 
 define sealed method pointer-value-setter( string :: <string>,
 		varptr :: <LPVARIANT>, #key index = 0 ) => string :: <string>;
-  // Need to always copy the value because it will be 
+  // Need to always copy the value because it will be
   // automatically deleted by VariantClear.
   set-variant-pointer(varptr, index, $VT-BSTR, copy-as-BSTR(string));
   string
@@ -363,7 +363,7 @@ end;
 // to work around Bug 1081.	-- DNG 8/22/97		???
 define sealed method pointer-value-setter( string :: <BSTR>,
 		varptr :: <LPVARIANT>, #key index = 0 ) => string :: <BSTR>;
-  // Need to always copy the value because it will be 
+  // Need to always copy the value because it will be
   // automatically deleted by VariantClear.
   set-variant-pointer(varptr, index, $VT-BSTR, copy-as-BSTR(string));
   string
@@ -470,7 +470,7 @@ define sealed method initialize ( var :: <LPVARIANT>,
     // Note: properly, if `element-count:' is specified as greater than 1,
     //   then this should be applied to each element.  But that is currently
     //   only done in `make-dispparams' and it is easier to do the
-    //   initialization there. 
+    //   initialization there.
     VariantInit(var);
   end unless;
   unless ( value == %no-value )
@@ -503,7 +503,7 @@ define sealed method null? ( var :: <LPVARIANT> ) => null :: <boolean>;
   null-pointer?(var) | ( var.vt-value = $VT-NULL )
 end method null?;
 
-
+
 
 define abstract class <ole-arg-spec> (<object>)
   sealed slot arg-spec-vt :: <U16>, init-keyword: vt:;
@@ -705,7 +705,7 @@ define function vt-for-variant ( vt :: <integer> ) => (vt :: <U16>);
       $VT-UI2 => $VT-I2;
       $VT-UI4, $VT-INT, $VT-UINT => $VT-I4;
       $VT-HRESULT => $VT-ERROR;
-      otherwise => 
+      otherwise =>
 	begin
 	  cerror($continue-message, "Invalid VARTYPE for VARIANTARG: %=", vt);
 	  vt
@@ -757,30 +757,30 @@ end method set-typedesc;
 define method out-ref (type :: <ole-type>) => (r :: <ole-by-ref-arg-spec>)
   make(<ole-by-ref-arg-spec>, type: type, direction: #"out")
 end;
- 
+
 define method out-ref (vt :: <integer>) => (r :: <ole-by-ref-arg-spec>)
   make(<ole-by-ref-arg-spec>, vt: vt, direction: #"out")
 end;
- 
+
 define function inout-ref (value, #rest args) => (r :: <ole-by-ref-arg-spec>)
  apply(make, <ole-by-ref-arg-spec>, value: value, direction: #"in-out", args)
-end; 
+end;
 
-define method pass-as (vt :: <integer>, value :: <object>) 
+define method pass-as (vt :: <integer>, value :: <object>)
  => (arg-spec :: <ole-value-arg-spec>);
   make(<ole-value-arg-spec>, vt: vt, value: value)
 end method;
 
-define method pass-as (type :: <ole-type>, value :: <object>) 
+define method pass-as (type :: <ole-type>, value :: <object>)
  => (arg-spec :: <ole-value-arg-spec>);
   make(<ole-value-arg-spec>, type: type, value: value)
 end method;
 
-
+
 
 // <LPPROPVARIANT> is defined in the COM library for use with the
 // IPropertyStorage interface, but it is equivalent to an <LPVARIANT>,
-// at least as far as our implementation goes. 
+// at least as far as our implementation goes.
 define inline-only sealed sideways method u-value (var :: <LPPROPVARIANT>)
  => (union-pointer)
   let ptr :: <LPVARIANT> = pointer-cast(<LPVARIANT>, var);
@@ -818,7 +818,7 @@ define sealed inline-only method idldesc-value ( ed :: <LPELEMDESC> )
   pointer-cast(<LPIDLDESC>, ed.u-value)
 end;
 
-
+
 //  ---  TYPEDESC  ---
 
 // Are the following three methods really needed???

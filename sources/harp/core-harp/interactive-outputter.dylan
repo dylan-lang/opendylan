@@ -39,7 +39,7 @@ define method make-harp-outputter-by-type
 end method;
 
 define method close-harp-outputter
-    (backend :: <harp-back-end>, 
+    (backend :: <harp-back-end>,
      outputter :: <harp-interactive-print-outputter>,
      #key, #all-keys) => ()
 end method;
@@ -47,7 +47,7 @@ end method;
 // All other methods in the protocol are inherited from <harp-print-outputter>
 
 
-/// The interactive assembler outputter ... 
+/// The interactive assembler outputter ...
 
 define method make-binary-interactive-assembler-outputter ()
     => (output-stream :: <harp-binary-unstreamed-assembler-outputter>)
@@ -72,16 +72,16 @@ define method make-harp-outputter-by-type
 end method;
 
 
-// All methods in the protocol are inherited from 
+// All methods in the protocol are inherited from
 // <harp-assembler-outputter>
 
-/// The multiplexed interactive outputter ... 
+/// The multiplexed interactive outputter ...
 
-define constant $int-mux-types$ = list($int-harp-type$, $int-asm-type$); 
+define constant $int-mux-types$ = list($int-harp-type$, $int-asm-type$);
 
 define method make-interactive-outputter ()
     => (output-stream :: <harp-multiple-outputter>)
-  make(<harp-multiple-outputter>, 
+  make(<harp-multiple-outputter>,
        outputters: vector(make-binary-interactive-assembler-outputter(),
                           make-interactive-print-outputter()));
 end method;

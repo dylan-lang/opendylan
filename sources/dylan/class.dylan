@@ -54,7 +54,7 @@ define open generic initialize
 
 define generic subclass?
     (class-1 :: <class>, class-2 :: <class>) => (result :: <boolean>);
-
+
 
 //// Subjunctive Class Attributes
 
@@ -177,7 +177,7 @@ end function;
 define function all-iclass-superclasses (x :: <implementation-class>, u :: <subjunctive-class-universe>)
   map(scu-converter(u), all-superclasses(x))
 end function;
-
+
 
 
 /////

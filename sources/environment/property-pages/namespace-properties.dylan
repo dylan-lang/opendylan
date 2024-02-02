@@ -45,7 +45,7 @@ define sideways method frame-default-property-type
 end method frame-default-property-type;
 */
 
-
+
 /// Name wrappers
 
 define sealed class <name-wrapper> (<object-wrapper>)
@@ -62,7 +62,7 @@ end class <name-wrapper>;
 define sealed domain make (singleton(<name-wrapper>));
 define sealed domain initialize (<name-wrapper>);
 
-
+
 /// Names page
 
 define constant $name-filters

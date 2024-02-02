@@ -44,7 +44,7 @@ define settings <open-dylan-user-settings>
   key-name "1.0";
 end settings <open-dylan-user-settings>;
 
-
+
 /// Library and service pack settings
 
 define constant $local-settings = make(<open-dylan-local-settings>);

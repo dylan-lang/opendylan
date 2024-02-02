@@ -38,10 +38,10 @@ define open class <binary-table> (<object>)
     init-keyword: table-data:;
 end class;
 
-define open generic binary-table-member? 
+define open generic binary-table-member?
     (table :: <binary-table>, key, #key model-object) => (boolean);
 
-define method binary-table-member? 
+define method binary-table-member?
       (binary-table :: <binary-table>, key, #key model-object)
    => (boolean :: <object>)
   element(binary-table.table-data, key, default: #f);

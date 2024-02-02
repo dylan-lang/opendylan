@@ -20,7 +20,7 @@ define library harp-x86
   use harp-coff;
   use gnu-as-outputter;
   use source-records;
-  export 
+  export
     harp-x86,
     harp-x86-test;
 end library;

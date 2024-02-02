@@ -16,9 +16,9 @@ define method save-frame-to-storage
   let pane :: <drawing-pane> = frame.surface;
   let segments = pane.scribble-segments;
   istream-write-integer(stream, $validation-code);
-  istream-write-integer(stream, size(segments));  
+  istream-write-integer(stream, size(segments));
   for (segment :: <vector> in segments)
-    istream-write-integer(stream, size(segment));  
+    istream-write-integer(stream, size(segment));
     for (coordinate :: <integer> in segment)
       istream-write-int16(stream, coordinate);
     end

@@ -16,12 +16,12 @@ define function grok-dialog
     = pointer-address(LoadResource(handle, resource-handle(resource)));
   let template :: <LPCDLGTEMPLATEA>
     = make(<LPCDLGTEMPLATEA>, address: resource-address);
-  let dialog = make(<dialog-resource>, 
+  let dialog = make(<dialog-resource>,
 		    resource-description: resource,
 		    template: template);
   let template-size :: <integer> = 0;
   unless (null-pointer?(template))
-    debug-message("Dialog %s", 
+    debug-message("Dialog %s",
 		  print-resource-id-to-string(resource-id(resource), "Dialog"));
     debug-message("    x= %d y= %d, width= %d height= %d",
 		  template.x-value, template.y-value,
@@ -131,7 +131,7 @@ define method grok-item-template
 end method grok-item-template;
 
 define method grok-resource-id
-    (p :: <LPWORD>) 
+    (p :: <LPWORD>)
  => (id :: type-union(<unsigned-int>, <string>), resource-id-size :: <integer>)
   let word-pointer = as(<WORD*>, p);
   let word-value   = pointer-value(word-pointer);

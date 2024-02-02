@@ -57,7 +57,7 @@ define test test-<top-level-sheet> ()
 end test;
 
 
-
+
 /// layout tests
 
 // some default values
@@ -456,7 +456,7 @@ define method expected-space-allocation
   end
 end method expected-space-allocation;
 
-
+
 /// top-level-sheet tests
 define method test-top-level-sheet-layout
     (name, child, #rest args, #key) => ()
@@ -472,7 +472,7 @@ define test top-level-sheet-layouts-test ()
   test-top-level-sheet-layout("non-fixed", make-test-pane(<test-list-box>));
 end test top-level-sheet-layouts-test;
 
-
+
 /// Fixed layout tests
 
 define method test-fixed-layout
@@ -523,7 +523,7 @@ define test test-<fixed-layout> ()
 end test;
 
 
-
+
 /// Pinboard layout tests
 
 define method test-pinboard-layout
@@ -573,7 +573,7 @@ define test test-<pinboard-layout> ()
   test-multiple-child-layout-manipulation(<pinboard-layout>);
 end test;
 
-
+
 /// Stack layout tests
 
 define method test-stack-layout
@@ -632,7 +632,7 @@ define test test-<stack-layout>
   test-multiple-child-layout-manipulation(<stack-layout>);
 end test;
 
-
+
 /// Table layout tests
 
 // we make this subclass so that we don't lose the contents field
@@ -1036,7 +1036,7 @@ define test test-<table-layout> ()
   test-multiple-child-layout-manipulation(<table-layout>, columns: 2);
 end test;
 
-
+
 /// Grid layout tests
 
 // we make this subclass so that we don't lose the contents field
@@ -1138,7 +1138,7 @@ define test test-<grid-layout> ()
 */
 end test;
 
-
+
 /// Box pane tests
 
 define method box-compute-major-size
@@ -1413,7 +1413,7 @@ define test test-<row-layout> ()
   test-layout-child-resizing(<row-layout>);
 end test;
 
-
+
 /// Button box layout tests
 
 define method test-button-box
@@ -1490,7 +1490,7 @@ define test layout-manipulation-test ()
   test-single-child-layout-manipulation(<test-viewport>);
 end test layout-manipulation-test;
 
-
+
 /// Layout resizing
 
 define method test-layout-child-resizing
@@ -1518,7 +1518,7 @@ define test layout-resizing-test
   test-layout-child-resizing(<viewport>);
 end test layout-resizing-test;
 
-
+
 /// Define the layout test suite
 
 define suite duim-layouts-suite ()

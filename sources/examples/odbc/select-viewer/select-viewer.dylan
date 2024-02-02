@@ -19,7 +19,7 @@ define generic open-database
  => (db :: <object>);
 
 define generic query-database
-    (db :: <object>, query :: <byte-string>) 
+    (db :: <object>, query :: <byte-string>)
  => (headings :: <sequence>, results :: <sequence>);
 
 define generic close-database (db :: <object>) => ();
@@ -35,7 +35,7 @@ define frame <select-viewer> (<simple-frame>)
          children:
            vector(make(<menu-button>,
                        label: "New Select Viewer",
-                       activate-callback: 
+                       activate-callback:
                          method (#rest args)
                            spawn-select-viewer();
                          end),
@@ -49,7 +49,7 @@ define frame <select-viewer> (<simple-frame>)
     make(<menu-bar>,
          children: vector(file-menu(frame)));
   pane sql-pane (frame)
-    make(<combo-box>, 
+    make(<combo-box>,
          items:             #(),
          activate-callback: sql-entry-callback);
   pane results-pane (frame)
@@ -58,7 +58,7 @@ define frame <select-viewer> (<simple-frame>)
     vertically (spacing: 2)
       make(<separator>);
       horizontally (spacing: 2, y-alignment: #"center")
-        make(<label>, label: "Select"); 
+        make(<label>, label: "Select");
         sql-pane(frame);
       end;
       make(<separator>);
@@ -66,7 +66,7 @@ define frame <select-viewer> (<simple-frame>)
     end;
   status-bar (frame)
     make(<status-bar>);
-  keyword title:  
+  keyword title:
     = format-to-string("Select Viewer on %s", $default-select-viewer-database);
   keyword width:  = $default-select-viewer-width;
   keyword height: = $default-select-viewer-height;
@@ -96,7 +96,7 @@ end method;
 
 define method display-query-results
     (frame :: <select-viewer>, pane :: <table-control>, query :: <byte-string>,
-       headings :: <sequence>, results :: <sequence>) 
+       headings :: <sequence>, results :: <sequence>)
  => ()
   // Remove the existing columns.
   for (i from columns-displayed(frame) - 1 to 0 by -1)
@@ -113,25 +113,25 @@ define method display-query-results
     end;
     // Install the items.
     // This little gyration works around what I think is a DUIM bug.
-    gadget-items(pane) := #[]; 
+    gadget-items(pane) := #[];
     gadget-items(pane) := results;
-    gadget-label(frame-status-bar(frame)) 
-      := format-to-string("%d records returned for query: \"%s\"", 
+    gadget-label(frame-status-bar(frame))
+      := format-to-string("%d records returned for query: \"%s\"",
                           size(results), query);
   end;
 end method;
 
-define method compute-query-columns 
+define method compute-query-columns
     (headings :: <sequence>) => (columns :: <sequence>)
-  map(method (heading, i) 
-        make(<table-column>, 
-             heading: heading, 
+  map(method (heading, i)
+        make(<table-column>,
+             heading: heading,
              generator: rcurry(element, i));
       end,
       headings, range(from: 0))
 end method;
 
-define method history-add 
+define method history-add
     (seq :: <sequence>, entry :: <string>) => (new-seq :: <sequence>)
   // Ugly!
   let seq = remove(seq, entry, test: \=);

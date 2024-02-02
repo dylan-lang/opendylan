@@ -322,7 +322,7 @@ define method bp-within-interval?
   end
 end method bp-within-interval?;
 
-
+
 /// Nodes
 
 define protocol <<node>> (<<interval>>)
@@ -404,7 +404,7 @@ define method count-lines
   error("There is no 'count-lines' method for the node %=", node)
 end method count-lines;
 
-
+
 /// Section nodes
 
 // A section node is a node that contains a single section.  For example,
@@ -493,7 +493,7 @@ define method count-lines
               skip-test: skip-test, cache-result?: cache-result?)
 end method count-lines;
 
-
+
 /// Definition nodes
 
 // A definition node is a special kind of section node that has some

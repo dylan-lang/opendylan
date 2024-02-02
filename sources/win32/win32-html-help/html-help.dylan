@@ -14,7 +14,7 @@ define C-pointer-type <LPHH-INFOTYPE> => <HH-INFOTYPE>;
 *                                                                           *
 * HtmlHelp.h                                                                *
 *                                                                           *
-* 
+*
 *                                                                           *
 ****************************************************************************/
 define constant $HH-DISPLAY-TOPIC                   = #x0000;

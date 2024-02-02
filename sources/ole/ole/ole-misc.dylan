@@ -1,6 +1,6 @@
 Module:    OLE
 Synopsis:  FFI declarations for some some miscellaneous pieces of the
-	   OLE interface that do not need special treatment. 
+	   OLE interface that do not need special treatment.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -10,10 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define interface OLE-misc
  #include: { "ole2.h", "oleidl.h" };
- import: { 
+ import: {
 	// structures used in member function arguments:
 	LPCBORDERWIDTHS, DVTARGETDEVICE, LOGPALETTE,
-	OleMenuGroupWidths, OLEMENUGROUPWIDTHS, OLEVERB, 
+	OleMenuGroupWidths, OLEMENUGROUPWIDTHS, OLEVERB,
 
 	// structures whose pointers are used in function arguments:
 	OIFI, OLEINPLACEFRAMEINFO, OLEINPLACEFRAMEINFO,
@@ -23,11 +23,11 @@ define interface OLE-misc
 	LPSTGMEDIUM, LPMSG,
 
 	// assorted non-member functions (probably not all of these are
-	//   really needed; at some time this list should be reviewed 
+	//   really needed; at some time this list should be reviewed
 	//   for relevance.)
 	ReadClassStg,
 	WriteClassStg, ReadClassStm, WriteClassStm, WriteFmtUserTypeStg,
-	ReadFmtUserTypeStg, 
+	ReadFmtUserTypeStg,
 	OleQueryLinkFromData, OleQueryCreateFromData, OleCreate,
 	OleCreateFromData, OleCreateLinkFromData, OleCreateStaticFromData,
 	OleCreateLink, OleCreateLinkToFile, OleCreateFromFile, OleLoad,
@@ -70,7 +70,7 @@ define interface OLE-misc
 	// Other functions documented as obsolete:
 	//	OleBuildVersion
 
-	// These two are defined in "ole.dylan" in order to 
+	// These two are defined in "ole.dylan" in order to
 	//   correct the argument type:
 	//	OleInitialize, OleUninitialize
 
@@ -79,4 +79,4 @@ define interface OLE-misc
 	//	CreateDataAdviseHolder
     };
 end interface;
- 
+

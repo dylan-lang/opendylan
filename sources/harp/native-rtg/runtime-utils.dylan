@@ -87,11 +87,11 @@ end method;
 
 
 // TAG-AS-INTEGER
-// Returns either an integer or a register which is the value 
+// Returns either an integer or a register which is the value
 // tagged as an integer
 
-define method tag-as-integer 
-    (be :: <harp-back-end>, value :: <register>) 
+define method tag-as-integer
+    (be :: <harp-back-end>, value :: <register>)
  => (reg :: <register>)
   let dest = make-n-register(be);
   op--taggify(be, dest, value);
@@ -99,7 +99,7 @@ define method tag-as-integer
 end method;
 
 
-define method tag-as-integer 
+define method tag-as-integer
     (be :: <harp-back-end>, value :: <integer>)
  => (val :: <integer>)
   (value * 4) + 1;
@@ -107,12 +107,12 @@ end method;
 
 
 // TAG-AS-CHARACTER
-// Returns either an integer or a register which is the value 
+// Returns either an integer or a register which is the value
 // tagged as an character
 
 /*
-define method tag-as-character 
-    (be :: <harp-back-end>, value :: <register>) 
+define method tag-as-character
+    (be :: <harp-back-end>, value :: <register>)
  => (reg :: <register>)
   let dest = make-n-register(be);
   op--taggify-as-character(be, dest, value);
@@ -120,7 +120,7 @@ define method tag-as-character
 end method;
 
 
-define method tag-as-character 
+define method tag-as-character
     (be :: <harp-back-end>, value :: <integer>)
  => (val :: <integer>)
   (value * 4) + 2;
@@ -183,7 +183,7 @@ end method;
 
 
 
-// OP--VECTOR-SIZE-AS-TAGGED-INT loads a register with the tagged size of 
+// OP--VECTOR-SIZE-AS-TAGGED-INT loads a register with the tagged size of
 // the vector object
 
 define method op--vector-size-as-tagged-int
@@ -253,7 +253,7 @@ define method op--half-vector-size
 end method;
 
 
-// OP--SET-VECTOR-CLASS sets the class slot of a vector object to 
+// OP--SET-VECTOR-CLASS sets the class slot of a vector object to
 // <simple-object-vector>
 
 ignore(op--set-vector-class);
@@ -274,7 +274,7 @@ define method op--method-keywords
 end method;
 
 
-// OP--KEYWORDS-SIZE loads a register with the raw size of the 
+// OP--KEYWORDS-SIZE loads a register with the raw size of the
 // number of keywords used by the current function object
 
 define method op--keywords-size
@@ -285,8 +285,8 @@ define method op--keywords-size
 end method;
 
 
-// OP--KEYWORDS-SIZE-TIMES-4 loads a register with the raw size 
-// times 4 of the number of keywords used by the current function 
+// OP--KEYWORDS-SIZE-TIMES-4 loads a register with the raw size
+// times 4 of the number of keywords used by the current function
 // object
 
 /*
@@ -315,7 +315,7 @@ define constant tagged-key-p-mask    = #x040000;
 ignore(all-keys-p-mask);
 define constant all-keys-p-mask      = #x020000;
 define constant rest-p-mask          = #x040000;
-define constant optionals-p-mask     = 
+define constant optionals-p-mask     =
    logior(key-p-mask, rest-p-mask);
 // define constant rest-value-p-mask    = #x080000;
 // define constant next-p-mask          = #x100000;
@@ -357,7 +357,7 @@ end method;
 
 ignore(op--number-required);
 
-define method op--number-required 
+define method op--number-required
     (be :: <harp-back-end>, dest :: <register>,
      #key function = be.registers.reg-function)
   op--function-properties-raw(be, dest, function: function);
@@ -432,10 +432,10 @@ end method;
 // Returns either an integer or a register which is the value times 4
 
 define method op--multiply-by-4
-    (be :: <harp-back-end>, value :: <register>, #key may-be-temp?) 
+    (be :: <harp-back-end>, value :: <register>, #key may-be-temp?)
      => (reg :: <register>)
-  let dest = if (may-be-temp?) 
-               be.registers.reg-tmp1; 
+  let dest = if (may-be-temp?)
+               be.registers.reg-tmp1;
              else make-n-register(be);
              end;
   ins--asl(be, dest, value, 2);
@@ -523,14 +523,14 @@ define method op--duplicate
 end method;
 
 
-// OP--SUB64 
+// OP--SUB64
 // Performs a full 64bit subtraction
 
 ignore(op--sub64);
 
-define method op--sub64 
+define method op--sub64
     (be :: <harp-back-end>,
-     res-lo :: <register>, 
+     res-lo :: <register>,
      res-hi :: <register>,
      from-lo, from-hi,
      by-lo, by-hi)

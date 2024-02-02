@@ -20,7 +20,7 @@ define method signed-frame-pointer-offset
 end method;
 
 
-define method signed-frame-pointer-offset 
+define method signed-frame-pointer-offset
     (backend :: <harp-native-back-end>, x :: <nspill>) => (i :: <integer>)
   let state = backend.variables.vreg-state;
   -4 * (1 // one for the spill location itself
@@ -29,24 +29,24 @@ define method signed-frame-pointer-offset
        );
 end method;
 
-define method signed-frame-pointer-offset 
+define method signed-frame-pointer-offset
     (backend :: <harp-native-back-end>, x :: <sfspill>) => (i :: <integer>)
   let state = backend.variables.vreg-state;
   -4 * (1 // one for the spill location itself
         + x.spill-offset
         + state.number-preserved
-        + state.next-ng-spill 
+        + state.next-ng-spill
        );
 end method;
 
-define method signed-frame-pointer-offset 
+define method signed-frame-pointer-offset
     (backend :: <harp-native-back-end>, x :: <dfspill>) => (i :: <integer>)
   let state = backend.variables.vreg-state;
   -4 * (2 // for the spill location itself
         + (2 * x.spill-offset)
         + state.number-preserved
-        + state.next-ng-spill 
-        + state.next-sf-spill 
+        + state.next-ng-spill
+        + state.next-sf-spill
        );
 end method;
 
@@ -69,7 +69,7 @@ define method spill-frame-pointer-offset
 end method;
 
 define method arg-offset
-    (backend :: <harp-native-back-end>, operand :: <spill>, 
+    (backend :: <harp-native-back-end>, operand :: <spill>,
      #key with-frame = backend.variables.with-stack)
     => (i :: <integer>)
    4 * (if (with-frame) 2 else return-address-size(backend) end
@@ -79,7 +79,7 @@ end method;
 
 
 define method arg-offset-from-arg-number
-    (backend :: <harp-native-back-end>, operand :: <integer>, 
+    (backend :: <harp-native-back-end>, operand :: <integer>,
      #key with-frame = backend.variables.with-stack)
     => (i :: <integer>)
    4 * (if (with-frame) 2 else return-address-size(backend) end
@@ -90,14 +90,14 @@ end method;
 
 define macro if-return-address
   { if-return-address () ?:body end }
-    => { 
+    => {
 	 if (?=be.return-address-on-stack?)
            ?body;
 	 end;
        }
 
     { if-return-address () ?body-1:body else ?body-2:body end }
-    => { 
+    => {
 	 if (?=be.return-address-on-stack?)
            ?body-1
 	 else
@@ -127,9 +127,9 @@ define method return-address-size-in-bytes
 end method;
 
 
-define method runtime-reference 
+define method runtime-reference
     (name :: <byte-string>) => (c :: <constant-reference>)
-  make(<constant-reference>, 
+  make(<constant-reference>,
        refers-to: name,
        address-mode: #"address",
        const-offset: 0);

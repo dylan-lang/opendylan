@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  This is a Dylan library to act as an interface to the Microsoft
 	   ``Component Object Model'' (32-bit API) which is the
 	   foundation for OLE.
@@ -578,7 +578,7 @@ define module COM
   export IStream/Write-integer, IStream/Read-integer;
 
   // from "factory.dylan":
-  export <class-factory>, revoke-registration, 
+  export <class-factory>, revoke-registration,
     <factory-args-mixin>, \with-class-factory;
   export create-COM-instance, \with-COM-interface;
 

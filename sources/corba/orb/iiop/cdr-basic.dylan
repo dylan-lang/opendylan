@@ -14,9 +14,9 @@ define method unmarshall-object (typecode :: <void-typecode>, stream :: <marshal
 end method;
 
 /// SHORT
-    
+
 define method marshall-object (typecode :: <short-typecode>, object :: corba/<short>, stream :: <marshalling-stream>)
-  write-bytes(stream, object, 2);  
+  write-bytes(stream, object, 2);
 end method;
 
 define method unmarshall-object (typecode :: <short-typecode>, stream :: <marshalling-stream>)

@@ -48,7 +48,7 @@ define sideways method make-test-instance
   make(<device-font>, port: find-test-port(), font: #"test-font")
 end method make-test-instance;
 
-
+
 /// DUIM-Sheets classes
 
 define constant $dummy-sheet  = make-test-pane(<simple-pane>);
@@ -196,7 +196,7 @@ define test test-<undefined-text-style-mapping> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Frame classes
 
 define sideways method make-test-instance
@@ -209,7 +209,7 @@ define sideways method make-test-instance
   make(<command-table>, name: #"test instance")
 end method make-test-instance;
 
-
+
 /// Extended Geometry classes
 
 define sideways method make-test-instance
@@ -254,7 +254,7 @@ define sideways method make-test-instance
        max-point: make-point(100, 100))
 end method make-test-instance;
 
-
+
 /// Gadget pane classes
 
 /*---*** Removed duim-gadget-panes tests

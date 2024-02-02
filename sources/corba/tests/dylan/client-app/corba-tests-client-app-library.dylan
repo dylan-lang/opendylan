@@ -11,7 +11,7 @@ define library corba-tests-client-app
   use corba-tests-client;
   use corba-tests-server;    // For server co-location testing
   use testworks;
-end library; 
+end library;
 
 define module corba-tests-client-app
   use dylan;

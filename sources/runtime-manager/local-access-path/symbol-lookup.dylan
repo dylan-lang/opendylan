@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// NEAREST-SYMBOLS-FROM-NUB
 
-define method nearest-symbols-from-nub 
-    (conn :: <local-access-connection>, address :: <remote-value>) 
+define method nearest-symbols-from-nub
+    (conn :: <local-access-connection>, address :: <remote-value>)
       => (any-luck? :: <boolean>,
           where-is-it? :: <NUBLIBRARY>,
           gimme-handle :: <NUBHANDLE>)
@@ -30,7 +30,7 @@ end method;
 
 ///// COLLECT-NEAREST-SYMBOLS
 
-define method collect-nearest-symbols 
+define method collect-nearest-symbols
     (conn :: <local-access-connection>, lib :: <remote-library>,
      lookups :: <NUBHANDLE>)
        => (closest :: <remote-symbol>,
@@ -46,13 +46,13 @@ define method collect-nearest-symbols
   // <remote-symbol> object to represent it.
 
   // Symbol #1 is the closest
-       
+
   let name-length1
     = nub-lookup-symbol-name-length(conn.connection-process, lookups, 1);
-  let name1 
+  let name1
     = make(<byte-string>,
-           size: name-length1); 
-  let addr1 
+           size: name-length1);
+  let addr1
     = nub-lookup-symbol-address (conn.connection-process, lookups, 1);
   let is-func1
     = nub-symbol-is-function (conn.connection-process, lookups, 1);
@@ -60,7 +60,7 @@ define method collect-nearest-symbols
   nub-lookup-symbol-name(conn.connection-process, lookups, 1, name-length1, name1);
   let lang1 = classify-symbolic-name(conn, name1);
   if (is-func1 == 1)
-    let debug-start 
+    let debug-start
       = nub-lookup-function-debug-start(conn.connection-process, lookups, 1);
     let debug-end
       = nub-lookup-function-debug-end(conn.connection-process, lookups, 1);
@@ -86,7 +86,7 @@ define method collect-nearest-symbols
     = nub-lookup-symbol-name-length(conn.connection-process, lookups, 2);
   let name2
     = make(<byte-string>,
-           size: name-length2); 
+           size: name-length2);
   let addr2
     = nub-lookup-symbol-address (conn.connection-process, lookups, 2);
   let is-func2
@@ -95,7 +95,7 @@ define method collect-nearest-symbols
   nub-lookup-symbol-name(conn.connection-process, lookups, 2, name-length2, name2);
   let lang2 = classify-symbolic-name(conn, name2);
   if (is-func2 == 1)
-    let debug-start 
+    let debug-start
       = nub-lookup-function-debug-start(conn.connection-process, lookups, 2);
     let debug-end
       = nub-lookup-function-debug-end(conn.connection-process, lookups, 2);
@@ -119,10 +119,10 @@ define method collect-nearest-symbols
 
   let name-length3
     = nub-lookup-symbol-name-length(conn.connection-process, lookups, 3);
-  let name3 
+  let name3
     = make(<byte-string>,
-           size: name-length3); 
-  let addr3 
+           size: name-length3);
+  let addr3
     = nub-lookup-symbol-address (conn.connection-process, lookups, 3);
   let is-func3
     = nub-symbol-is-function (conn.connection-process, lookups, 3);
@@ -130,7 +130,7 @@ define method collect-nearest-symbols
   nub-lookup-symbol-name(conn.connection-process, lookups, 3, name-length3, name3);
   let lang3 = classify-symbolic-name(conn, name3);
   if (is-func3 == 1)
-    let debug-start 
+    let debug-start
       = nub-lookup-function-debug-start(conn.connection-process, lookups, 3);
     let debug-end
       = nub-lookup-function-debug-end(conn.connection-process, lookups, 3);
@@ -158,10 +158,10 @@ end method;
 
 ///// FIND-SYMBOL-IN-LIBRARY
 
-define method find-symbol-in-library 
+define method find-symbol-in-library
     (conn :: <local-access-connection>,
      lib :: <remote-library>,
-     name :: <string>) 
+     name :: <string>)
        => (maybe-sym :: false-or(<remote-symbol>))
 
   let (found, address, type, is-func, debug-start, debug-end, lang, lasta)
@@ -175,7 +175,7 @@ define method find-symbol-in-library
             library: lib, debug-start: debug-start,
             debug-end: debug-end, absolute-end: lasta);
     else
-      make (<remote-symbol>, name: name, address: address,  
+      make (<remote-symbol>, name: name, address: address,
             language: classify-symbolic-name(conn, name), library: lib);
     end if;
   else
@@ -189,7 +189,7 @@ end method;
 //    a pair of <remote-symbol> and integer byte offset.
 
 define method symbol-relative-address-on-connection
-  (conn :: <local-access-connection>, 
+  (conn :: <local-access-connection>,
    path :: <access-path>, address :: <remote-value>)
      => (sym-if-found :: false-or(<remote-symbol>),
          offset       :: <ffi-integer>)
@@ -206,7 +206,7 @@ define method symbol-relative-address-on-connection
        debug-start :: <remote-value>,
        debug-end :: <remote-value>,
        language :: <ffi-integer>,
-       last-address :: <remote-value>) = 
+       last-address :: <remote-value>) =
           nub-closest-symbol(conn.connection-process, address);
 
   if (foundit == 1)

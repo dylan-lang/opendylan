@@ -19,8 +19,8 @@ define function timed-fft-test ()
         count := c;
         mulcount := m;
       end;
-  format-out("fft(%d) in %d.%s seconds with %d multiplies\n", 
-	     count, elapsed-seconds, 
+  format-out("fft(%d) in %d.%s seconds with %d multiplies\n",
+	     count, elapsed-seconds,
 	     integer-to-string(elapsed-microseconds, size: 6),
 	     mulcount)
 end function timed-fft-test;
@@ -75,12 +75,12 @@ define function fft-test () => (count :: <integer>, mulcount :: <integer>)
 	  tr := ar-ip * ur - ai-ip * ui;
 	  ti := ar-ip * ur + ai-ip * ui;
 	  mulcount := mulcount + 4;
-	  
+
 	  let ar-i :: <single-float> = ar[i];
 	  let ai-i :: <single-float> = ai[i];
 	  ar[ip] := ar-i - tr;
 	  ai[ip] := ai-i - ti;
-	  
+
 	  let ar-i :: <single-float> = ar[i];
 	  let ai-i :: <single-float> = ai[i];
 	  ar[i] := ar-i + tr;

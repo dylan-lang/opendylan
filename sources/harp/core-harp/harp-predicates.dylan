@@ -16,12 +16,12 @@ define method const-ref (x :: <object>) => (false :: <boolean>)
 end method;
 
 
-define method canonicalised-const-ref 
+define method canonicalised-const-ref
     (x :: <integer>) => (x :: <integer>)
   canonicalise-int(x);
 end method;
 
-define method canonicalised-const-ref 
+define method canonicalised-const-ref
     (x :: <object>) => (false :: <boolean>)
   #f;
 end method;
@@ -91,7 +91,7 @@ define method any-constant-ref
   ref;
 end method;
 
-define method any-constant-ref 
+define method any-constant-ref
     (ref :: <object>) => (f :: <boolean>)
   #f;
 end method;
@@ -101,7 +101,7 @@ define method i-constant-ref
   ref;
 end method;
 
-define method i-constant-ref 
+define method i-constant-ref
     (ref :: <object>) => (f :: <boolean>)
   #f;
 end method;
@@ -113,7 +113,7 @@ define method f-constant-ref
   ref;
 end method;
 
-define method f-constant-ref 
+define method f-constant-ref
     (ref :: <object>) => (f :: <boolean>)
   #f;
 end method;
@@ -123,7 +123,7 @@ define method sf-constant-ref
   ref;
 end method;
 
-define method sf-constant-ref 
+define method sf-constant-ref
     (ref :: <object>) => (f :: <boolean>)
   #f;
 end method;
@@ -133,12 +133,12 @@ define method df-constant-ref
   ref;
 end method;
 
-define method df-constant-ref 
+define method df-constant-ref
     (ref :: <object>) => (f :: <boolean>)
   #f;
 end method;
 
-define method any-indirect-constant-ref 
+define method any-indirect-constant-ref
     (ref :: <indirect-constant-reference>) => (res)
   ref;
 end method;
@@ -148,7 +148,7 @@ define method any-indirect-constant-ref
   #f;
 end method;
 
-define method i-indirect-constant-ref 
+define method i-indirect-constant-ref
     (ref :: <i-indirect-constant-reference>) => (res)
   ref;
 end method;
@@ -165,7 +165,7 @@ define method f-indirect-constant-ref
   ref.sf-indirect-constant-ref | ref.df-indirect-constant-ref;
 end method;
 
-define method sf-indirect-constant-ref 
+define method sf-indirect-constant-ref
     (ref :: <sf-indirect-constant-reference>) => (res)
   ref;
 end method;
@@ -175,7 +175,7 @@ define method sf-indirect-constant-ref
   #f;
 end method;
 
-define method df-indirect-constant-ref 
+define method df-indirect-constant-ref
     (ref :: <df-indirect-constant-reference>) => (res)
   ref;
 end method;

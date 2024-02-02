@@ -53,7 +53,7 @@ define inline function bit-set-mask
 				     logand(num, $int-size-mask$));
 end function;
 
-define inline method set-bit-in-set 
+define inline method set-bit-in-set
     (bit-set :: <vector-32bit>, num :: <integer>) => (num :: <integer>)
   let offset :: <integer> = bit-set-offset(num);
   let the-bit :: <machine-word> = bit-set-mask(num);
@@ -75,7 +75,7 @@ define inline method stretchy-bit-set(bit-set :: <vector-32bit>, new-size :: <in
   new-bit-set
 end method;
 
-define method set-bit-in-set! 
+define method set-bit-in-set!
     (bit-set :: <vector-32bit>, num :: <integer>) => (bit-set :: <vector-32bit>)
   let offset :: <integer> = bit-set-offset(num);
   let bit-set-size :: <integer> = bit-set.size;
@@ -92,7 +92,7 @@ define method set-bit-in-set!
   bit-set;
 end;
 
-define inline method unset-bit-in-set 
+define inline method unset-bit-in-set
     (bit-set :: <vector-32bit>, num :: <integer>) => (num :: <integer>)
   let offset :: <integer> = bit-set-offset(num);
   let the-bit :: <machine-word> = bit-set-mask(num);
@@ -222,7 +222,7 @@ end;
 
 /* Define bit-set-update for tracking live names-set changes
 
-   Detect whether a bit-set, set2, has changed; set1 is its 
+   Detect whether a bit-set, set2, has changed; set1 is its
    previous snapshot; update the snapshot at the same time
    for next time
 
@@ -333,7 +333,7 @@ define method bit-set-as-vector(set :: <vector-32bit>) => (vector :: <simple-obj
   for (i :: <integer> from 0 below size-set)
     without-bounds-checks
       let word :: <machine-word> = set[i];
-      
+
       if (machine-word-equal?(machine-word-shift-right(word, 29),
 			      coerce-integer-to-machine-word(0)))
 	vector[i] := coerce-machine-word-to-integer(word);
@@ -444,7 +444,7 @@ end;
 define inline method grow-bit-subset?
     (set :: <bit-subset>, i :: <integer>, fill :: <machine-word>)
  => ()
-  
+
   let set-start :: <integer> = set.bit-set-start;
   let set-end :: <integer> = set.bit-set-end;
   let set-size :: <integer> = set.bit-set.size;
@@ -467,7 +467,7 @@ define inline method grow-bit-subset?
   unless (new-set-size = set-size)
     let old-set :: <vector-32bit> = set.bit-set;
     let new-set :: <vector-32bit> =
-      make(<vector-32bit>, size: new-set-size, fill: fill);  
+      make(<vector-32bit>, size: new-set-size, fill: fill);
     let new-set-start :: <integer> = set.bit-set-start;
     for (i :: <integer> from set-start to set-end)
       without-bounds-checks

@@ -63,7 +63,7 @@ define constant corba/$UNKNOWN-typecode =
 			    getter: corba/UNKNOWN/completed,
 			    setter: corba/UNKNOWN/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<UNKNOWN>)
  => (typecode :: <typecode>)
@@ -101,7 +101,7 @@ define constant corba/$BAD-PARAM-typecode =
 			    getter: corba/BAD-PARAM/completed,
 			    setter: corba/BAD-PARAM/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<BAD-PARAM>)
  => (typecode :: <typecode>)
@@ -177,7 +177,7 @@ define constant corba/$IMP-LIMIT-typecode =
 			    getter: corba/IMP-LIMIT/completed,
 			    setter: corba/IMP-LIMIT/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<IMP-LIMIT>)
  => (typecode :: <typecode>)
@@ -215,7 +215,7 @@ define constant corba/$COMM-FAILURE-typecode =
 			    getter: corba/COMM-FAILURE/completed,
 			    setter: corba/COMM-FAILURE/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<COMM-FAILURE>)
  => (typecode :: <typecode>)
@@ -253,7 +253,7 @@ define constant corba/$INV-OBJREF-typecode =
 			    getter: corba/INV-OBJREF/completed,
 			    setter: corba/INV-OBJREF/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INV-OBJREF>)
  => (typecode :: <typecode>)
@@ -291,7 +291,7 @@ define constant corba/$NO-PERMISSION-typecode =
 			    getter: corba/NO-PERMISSION/completed,
 			    setter: corba/NO-PERMISSION/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<NO-PERMISSION>)
  => (typecode :: <typecode>)
@@ -329,7 +329,7 @@ define constant corba/$INTERNAL-typecode =
 			    getter: corba/INTERNAL/completed,
 			    setter: corba/INTERNAL/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INTERNAL>)
  => (typecode :: <typecode>)
@@ -367,7 +367,7 @@ define constant corba/$MARSHAL-typecode =
 			    getter: corba/MARSHAL/completed,
 			    setter: corba/MARSHAL/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<MARSHAL>)
  => (typecode :: <typecode>)
@@ -405,7 +405,7 @@ define constant corba/$INITIALIZE-typecode =
 			    getter: corba/INITIALIZE/completed,
 			    setter: corba/INITIALIZE/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INITIALIZE>)
  => (typecode :: <typecode>)
@@ -443,7 +443,7 @@ define constant corba/$NO-IMPLEMENT-typecode =
 			    getter: corba/NO-IMPLEMENT/completed,
 			    setter: corba/NO-IMPLEMENT/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<NO-IMPLEMENT>)
  => (typecode :: <typecode>)
@@ -481,7 +481,7 @@ define constant corba/$BAD-TYPECODE-typecode =
 			    getter: corba/BAD-TYPECODE/completed,
 			    setter: corba/BAD-TYPECODE/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<BAD-TYPECODE>)
  => (typecode :: <typecode>)
@@ -519,7 +519,7 @@ define constant corba/$BAD-OPERATION-typecode =
 			    getter: corba/BAD-OPERATION/completed,
 			    setter: corba/BAD-OPERATION/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<BAD-OPERATION>)
  => (typecode :: <typecode>)
@@ -557,7 +557,7 @@ define constant corba/$NO-RESOURCES-typecode =
 			    getter: corba/NO-RESOURCES/completed,
 			    setter: corba/NO-RESOURCES/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<NO-RESOURCES>)
  => (typecode :: <typecode>)
@@ -595,7 +595,7 @@ define constant corba/$NO-RESPONSE-typecode =
 			    getter: corba/NO-RESPONSE/completed,
 			    setter: corba/NO-RESPONSE/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<NO-RESPONSE>)
  => (typecode :: <typecode>)
@@ -633,7 +633,7 @@ define constant corba/$PERSIST-STORE-typecode =
 			    getter: corba/PERSIST-STORE/completed,
 			    setter: corba/PERSIST-STORE/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<PERSIST-STORE>)
  => (typecode :: <typecode>)
@@ -671,7 +671,7 @@ define constant corba/$BAD-INV-ORDER-typecode =
 			    getter: corba/BAD-INV-ORDER/completed,
 			    setter: corba/BAD-INV-ORDER/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<BAD-INV-ORDER>)
  => (typecode :: <typecode>)
@@ -709,7 +709,7 @@ define constant corba/$TRANSIENT-typecode =
 			    getter: corba/TRANSIENT/completed,
 			    setter: corba/TRANSIENT/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<TRANSIENT>)
  => (typecode :: <typecode>)
@@ -747,7 +747,7 @@ define constant corba/$FREE-MEM-typecode =
 			    getter: corba/FREE-MEM/completed,
 			    setter: corba/FREE-MEM/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<FREE-MEM>)
  => (typecode :: <typecode>)
@@ -785,7 +785,7 @@ define constant corba/$INV-IDENT-typecode =
 			    getter: corba/INV-IDENT/completed,
 			    setter: corba/INV-IDENT/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INV-IDENT>)
  => (typecode :: <typecode>)
@@ -823,7 +823,7 @@ define constant corba/$INV-FLAG-typecode =
 			    getter: corba/INV-FLAG/completed,
 			    setter: corba/INV-FLAG/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INV-FLAG>)
  => (typecode :: <typecode>)
@@ -861,7 +861,7 @@ define constant corba/$INTF-REPOS-typecode =
 			    getter: corba/INTF-REPOS/completed,
 			    setter: corba/INTF-REPOS/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INTF-REPOS>)
  => (typecode :: <typecode>)
@@ -899,7 +899,7 @@ define constant corba/$BAD-CONTEXT-typecode =
 			    getter: corba/BAD-CONTEXT/completed,
 			    setter: corba/BAD-CONTEXT/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<BAD-CONTEXT>)
  => (typecode :: <typecode>)
@@ -937,7 +937,7 @@ define constant corba/$OBJ-ADAPTER-typecode =
 			    getter: corba/OBJ-ADAPTER/completed,
 			    setter: corba/OBJ-ADAPTER/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<OBJ-ADAPTER>)
  => (typecode :: <typecode>)
@@ -975,7 +975,7 @@ define constant corba/$DATA-CONVERSION-typecode =
 			    getter: corba/DATA-CONVERSION/completed,
 			    setter: corba/DATA-CONVERSION/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<DATA-CONVERSION>)
  => (typecode :: <typecode>)
@@ -1013,7 +1013,7 @@ define constant corba/$OBJECT-NOT-EXIST-typecode =
 			    getter: corba/OBJECT-NOT-EXIST/completed,
 			    setter: corba/OBJECT-NOT-EXIST/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<OBJECT-NOT-EXIST>)
  => (typecode :: <typecode>)
@@ -1051,7 +1051,7 @@ define constant corba/$TRANSACTION-REQUIRED-typecode =
 			    getter: corba/TRANSACTION-REQUIRED/completed,
 			    setter: corba/TRANSACTION-REQUIRED/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<TRANSACTION-REQUIRED>)
  => (typecode :: <typecode>)
@@ -1089,7 +1089,7 @@ define constant corba/$TRANSACTION-ROLLEDBACK-typecode =
 			    getter: corba/TRANSACTION-ROLLEDBACK/completed,
 			    setter: corba/TRANSACTION-ROLLEDBACK/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<TRANSACTION-ROLLEDBACK>)
  => (typecode :: <typecode>)
@@ -1127,7 +1127,7 @@ define constant corba/$INVALID-TRANSACTION-typecode =
 			    getter: corba/INVALID-TRANSACTION/completed,
 			    setter: corba/INVALID-TRANSACTION/completed-setter,
 			    init-keyword: completed:)
-			 ));		       
+			 ));
 
 define sealed method object-typecode (object :: corba/<INVALID-TRANSACTION>)
  => (typecode :: <typecode>)
@@ -1175,4 +1175,4 @@ define method system-exceptions ()
 	   );
 end method;
 
-	 
+

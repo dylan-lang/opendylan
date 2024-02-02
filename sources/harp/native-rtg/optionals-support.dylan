@@ -1,5 +1,5 @@
 module:    harp-native-rtg
-Synopsis:  Support for entry points with optionals 
+Synopsis:  Support for entry points with optionals
 Author:    Tony Mann
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // OP--VECTOR-UP-REST-ARGS
 // Shuffles the stack and builds the #rest vector, making
-// space for the keys in the process. 
+// space for the keys in the process.
 // On exit
 //  Value 1
 //   A register is returned containing the location of the first
@@ -22,12 +22,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   A register is returned containing a pointer to the rest vector
 
 define method op--vector-up-rest-args-special
-    (be :: <harp-back-end>, required :: <integer>, keys-size) 
+    (be :: <harp-back-end>, required :: <integer>, keys-size)
     => (first-opt :: <register>, rest-vec :: <register>)
   // Less than (max-num-arg-regs) required args is a special case
-  // because the rest args pointer goes into an arg register; 
+  // because the rest args pointer goes into an arg register;
   // we may or may not have to push the register args onto the stack.
-  // Make space for the count, the vector header & the size and any keyword 
+  // Make space for the count, the vector header & the size and any keyword
   // parameters. The rest arg goes into an arg register.
 
   let gap = 3;  // space for the 3 words above.
@@ -41,7 +41,7 @@ define method op--vector-up-rest-args-special
 
     // Get hold of the return address
     if-return-address() ins--pop(be, ret-addr) end;
-  
+
     // Sort out the pathological case where optional args are in registers
     op--copy-registers-with-update
       (be, stack, #f, stack, argc, required, down?: #t, base-count: required);
@@ -55,12 +55,12 @@ define method op--vector-up-rest-args-special
 
     // Put back the return address
     if-return-address() ins--push(be, ret-addr) end;
-  
+
     // Now initialize the vector
-    let rest-vec = 
-      op--initialize-vector-header(be, opts, argc, save-argc, 
+    let rest-vec =
+      op--initialize-vector-header(be, opts, argc, save-argc,
                                    gap, required, keys-size);
-  
+
     // return the location of the first optional
     values(opts, rest-vec);
   end with-harp;
@@ -68,7 +68,7 @@ end method;
 
 
 
-define method op--vector-up-rest-args 
+define method op--vector-up-rest-args
     (be :: <harp-back-end>, required, keys-size)
     => (first-opt :: <register>, rest-vec :: <register>)
   if (special-case?(be, required))
@@ -84,15 +84,15 @@ define method op--vector-up-rest-args
       nreg opts, save-argc;
 
       let top-size = op--shuffle-size-for-requireds(be, required);
-      
+
       // Shuffle stack to make space for the headers etc.
       op--shuffle-stack(be, opts, save-argc, top-size, gap, keys-size);
-      
+
       // Now initialize the vector
       let rest-vec =
-	op--initialize-vector-header(be, opts, save-argc, argc, 
+	op--initialize-vector-header(be, opts, save-argc, argc,
 				     gap, required, keys-size);
-      
+
       // return the location of the first optional
       values(opts, rest-vec);
     end with-harp;
@@ -108,7 +108,7 @@ end method;
 /// the number of required arguments.
 
 define method op--shuffle-size-for-requireds
-    (be :: <harp-back-end>, requireds :: <integer>) 
+    (be :: <harp-back-end>, requireds :: <integer>)
     => (r :: <integer>);
   let args-in-regs = required-arguments-in-registers(be, requireds);
   // allow for the return address
@@ -119,7 +119,7 @@ end method;
 
 
 define method op--shuffle-size-for-requireds
-    (be :: <harp-back-end>, requireds == #"dynamic") 
+    (be :: <harp-back-end>, requireds == #"dynamic")
     => (r :: <register>);
   let copy-count = make-n-register(be);
   let args-in-regs = required-arguments-in-registers(be, requireds);
@@ -136,7 +136,7 @@ end method;
 
 
 
-// OP--INITIALIZE-VECTOR-HEADER 
+// OP--INITIALIZE-VECTOR-HEADER
 // Makes a valid stack allocated vector header.
 // On entry:
 //   DATA is the address of the start of the vector data
@@ -146,8 +146,8 @@ end method;
 //   Return the rest vector
 
 define method op--initialize-vector-header
-    (be :: <harp-back-end>, 
-     data :: <register>, 
+    (be :: <harp-back-end>,
+     data :: <register>,
      argc-1 :: <register>, argc-2 :: <register>,
      gap :: <integer>,
      required, keys-size) => (rest-val :: <register>)
@@ -190,7 +190,7 @@ end method;
 
 
 define method op--put-rest-variable-on-stack
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      data :: <register>,
      gap-space :: <register>)
      => (rest-val :: <register>)
@@ -205,7 +205,7 @@ define method op--put-rest-variable-on-stack
 end method;
 
 define method op--put-rest-variable-on-stack
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      data :: <register>,
      gap-space :: <integer>)
      => (rest-val :: <register>)
@@ -217,7 +217,7 @@ end method;
 
 
 define method op--calc-count-of-bytes-to-drop
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      dest :: <register>, argc-times-4 :: <register>,
      required, gap-bytes :: <integer>)
   let args-in-regs = required-arguments-in-registers(be, required);
@@ -227,7 +227,7 @@ end method;
 
 
 define method op--calc-count-of-bytes-to-drop
-    (be :: <harp-back-end>, 
+    (be :: <harp-back-end>,
      dest :: <register>, argc-times-4 :: <register>,
      required, gap-bytes :: <register>)
   let args-in-regs = required-arguments-in-registers(be, required);
@@ -243,36 +243,36 @@ end method;
 // ENSURE-SAFE-KEY-SPACE
 // To relieve register pressure for some back-ends.
 
-define open generic ensure-safe-key-space 
+define open generic ensure-safe-key-space
     (be :: <harp-back-end>, key-space);
 
-define method ensure-safe-key-space 
+define method ensure-safe-key-space
     (be :: <harp-back-end>, key-space)
   key-space;
 end method;
 
 
 
-// OP-TAGGED-SIZE-OF-OPTIONALS 
-// Loads dest with the size of the optionals vector as a tagged integer. 
-// It should be ((4 * opt-num) + 1), but argc-times-4 is already 
+// OP-TAGGED-SIZE-OF-OPTIONALS
+// Loads dest with the size of the optionals vector as a tagged integer.
+// It should be ((4 * opt-num) + 1), but argc-times-4 is already
 // ((4 * opt-num) + (4 * required)), we can actually use
 // (argc-times-4 + 1 - (4 * required))
 
-define method op--tagged-size-of-optionals 
-    (be :: <harp-back-end>, 
+define method op--tagged-size-of-optionals
+    (be :: <harp-back-end>,
      dest :: <register>,
-     argc-times-4 :: <register>, 
+     argc-times-4 :: <register>,
      required :: <integer>)
   let opt-fix = 1 - (4 * required);
   ins--add(be, dest, argc-times-4, opt-fix); // optional argc as tagged int
 end method;
 
 
-define method op--tagged-size-of-optionals 
-    (be :: <harp-back-end>, 
+define method op--tagged-size-of-optionals
+    (be :: <harp-back-end>,
      dest :: <register>,
-     argc-times-4 :: <register>, 
+     argc-times-4 :: <register>,
      required == #"dynamic")
   let req-times-4 = be.registers.reg-tmp1;
   op--number-required-times-4(be, req-times-4);
@@ -283,11 +283,11 @@ end method;
 
 
 // OP--SHUFFLE-STACK
-// This shuffles TOP-SIZE objects at top of stack (including the return 
+// This shuffles TOP-SIZE objects at top of stack (including the return
 // address) to leave space for keys and the #rest vector header.
 // On entry:
 //   OPTS        Dest register (for storing location of optionals)
-//   SAVE-ARGC   If a register is given, then the arg-count is preserved 
+//   SAVE-ARGC   If a register is given, then the arg-count is preserved
 //               in this register across the shuffle.
 //   TOP-SIZE    is the total number of words to move
 //   OPT-SPACE   is the size in words needed for the #rest header
@@ -298,19 +298,19 @@ end method;
 
 
 define open generic op--shuffle-stack
-    (be :: <harp-back-end>, 
-     opts :: <register>, 
+    (be :: <harp-back-end>,
+     opts :: <register>,
      save-argc,
-     top-size, 
-     opt-space :: <integer>, 
+     top-size,
+     opt-space :: <integer>,
      key-space);
 
 define method op--shuffle-stack
-    (be :: <harp-back-end>, 
-     opts :: <register>, 
+    (be :: <harp-back-end>,
+     opts :: <register>,
      save-argc,
-     top-size :: <integer>, 
-     opt-space :: <integer>, 
+     top-size :: <integer>,
+     opt-space :: <integer>,
      key-space)
 
   with-harp (be)
@@ -321,14 +321,14 @@ define method op--shuffle-stack
     nreg from;
 
     let tot-space = needed-space-in-bytes(be, opt-space, key-space);
-  
+
     ins--sub(be, stack, stack, tot-space);    // make room for the new space
     ins--add(be, from, stack, tot-space);     // start copying from old SP
     let to = stack;                           // start copying to new SP
     if (save-argc)
       ins--move(be, save-argc, argc);         // save the arg count
     end if;
-  
+
     // Do the copying in-line.
     for (i from 0 below top-size - 1 by 2)
       let byte-index = i * 4;
@@ -343,19 +343,19 @@ define method op--shuffle-stack
           ins--st(be, tmp1, to, byte-index);
         end if;
     end for;
-  
+
     ins--add(be, opts, from, 4 * top-size);
   end with-harp;
 end method;
 
 
 define method op--shuffle-stack
-    (be :: <harp-back-end>, 
-     opts :: <register>, 
+    (be :: <harp-back-end>,
+     opts :: <register>,
      save-argc,
      top-size,
-     opt-space :: <integer>, 
-     key-space) 
+     opt-space :: <integer>,
+     key-space)
 
   with-harp (be)
     arg-count argc;
@@ -365,7 +365,7 @@ define method op--shuffle-stack
     arg-count copy-count;
 
     let tot-space = needed-space-in-bytes(be, opt-space, key-space);
-  
+
     ins--move(be, from, stack);               // start copying from ret addr
     ins--sub(be, stack, stack, tot-space);    // make room for the new space
     if (save-argc)
@@ -379,16 +379,16 @@ end method;
 
 
 
-define method needed-space-in-bytes 
-    (be :: <harp-back-end>, 
-     opt-space :: <integer>, key-space :: <integer>) 
+define method needed-space-in-bytes
+    (be :: <harp-back-end>,
+     opt-space :: <integer>, key-space :: <integer>)
     => (r :: <integer>);
   (opt-space + key-space) * 4;
 end method;
 
-define method needed-space-in-bytes 
-    (be :: <harp-back-end>, 
-     opt-space :: <integer>, key-space :: <register>) 
+define method needed-space-in-bytes
+    (be :: <harp-back-end>,
+     opt-space :: <integer>, key-space :: <register>)
     => (r :: <register>);
   let res = make-n-register(be);
   if (opt-space == 0)

@@ -31,21 +31,21 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define entry-point c-xep (be :: <harp-x86-back-end>, required)
   let check-args-on-entry = (required ~= #"dynamic");
-  op--general-xep-support (be, required, #f, op--c-xep-internal, 
+  op--general-xep-support (be, required, #f, op--c-xep-internal,
                            check-specializers: #f,
                            check-args?: check-args-on-entry);
 end entry-point;
 
 
 
-define method op--c-xep-internal 
+define method op--c-xep-internal
     (be :: <harp-x86-back-end>, required == 0)
   // Special case. If there are no arguments, the C and Dylan
   // conventions are compatible. Hence we can just tail call the IEP
 end method;
 
 
-define method op--c-xep-internal 
+define method op--c-xep-internal
     (be :: <harp-x86-back-end>, required :: <integer>)
   // Where we know the number of arguments:
   // 1. pop the return address into a C preserved register
@@ -65,7 +65,7 @@ define method op--c-xep-internal
   ins--jmp(be, ret-addr, 1);
 end method;
 
-define method op--c-xep-internal 
+define method op--c-xep-internal
     (be :: <harp-x86-back-end>, required)
   // Where we don't know the number of arguments:
   // Test first to see if se got 0. If so, do tail call.
@@ -80,7 +80,7 @@ define method op--c-xep-internal
   let save-argc = regs.c-preserved-register-vector[1];
   let non-zero-args = make-tag(be);
   let tail-jump-to-iep = make-tag(be);
-  
+
   op--arg-count-check(be, non-zero-args, argc, 0, #f);
   ins--bra(be, tail-jump-to-iep);
 

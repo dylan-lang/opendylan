@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                       *
 *   winbase.h -- This module defines the 32-Bit Windows Base APIs       *
 *                                                                       *
-*   
+*
 *                                                                       *
 ************************************************************************/
 define inline-only constant $INVALID-HANDLE-VALUE       =

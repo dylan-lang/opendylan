@@ -1,10 +1,10 @@
 module: airport
 Author:    Neal Feinberg, Sonya E. Keene, Robert O. Mathews, P. Tucker Withington
 Synopsis:  The classes and a few basic methods used to implement the airport example.
-Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington, 
-	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc. 
-	Reproduced by permission of Addison-Wesley Longman 
-	Publishing Company, Inc.  All rights reserved. No further 
+Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
+	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc.
+	Reproduced by permission of Addison-Wesley Longman
+	Publishing Company, Inc.  All rights reserved. No further
 	copying, downloading or transmitting of this material
 	is allowed without the prior written permission of the
 	publisher.
@@ -27,9 +27,9 @@ end class <physical-object>;
 define method say (physical-object :: <physical-object>) => ()
   format-out("object at ");
   say(physical-object.current-position);
-end method say; 
+end method say;
 
-// VEHICLE STORAGE 
+// VEHICLE STORAGE
 
 // The default size for a vehicle container.
 define constant $default-capacity
@@ -66,26 +66,26 @@ define abstract class <single-storage> (<vehicle-storage>)
   slot vehicle-currently-occupying :: false-or(<aircraft>) = #f;
 end class <single-storage>;
 
-// Vehicle storage that can hold multiple aircraft, with distinct queues for 
+// Vehicle storage that can hold multiple aircraft, with distinct queues for
 // each direction.
 define abstract class <multiple-storage> (<vehicle-storage>)
   constant slot vehicles-by-direction :: <object-table> = make(<object-table>);
   constant slot maxima-by-direction :: <object-table> = make(<object-table>);
   keyword directions:;
   keyword maxima:;
-end class <multiple-storage>; 
+end class <multiple-storage>;
 
-// In a real airport there would be many paths an aircraft could take. For 
-// our simple airport example, we define only the #"inbound" and 
-// #"outbound" paths. The directions parameter is a sequence of these 
-// aircraft path names. Multiple storage containers can limit the number 
+// In a real airport there would be many paths an aircraft could take. For
+// our simple airport example, we define only the #"inbound" and
+// #"outbound" paths. The directions parameter is a sequence of these
+// aircraft path names. Multiple storage containers can limit the number
 // of aircraft they can hold for each path. This is the maxima parameter.
 // The initialize method creates a queue to hold aircraft for each direction,
 // and stores the queue in a table indexed by direction. The method also
 // stores the maximum number of aircaft for that direction in a different
 // table.
-define method initialize 
-    (object :: <multiple-storage>, #key directions :: <sequence>, 
+define method initialize
+    (object :: <multiple-storage>, #key directions :: <sequence>,
      maxima :: <sequence>)
   next-method ();
   for (direction in directions,
@@ -93,21 +93,21 @@ define method initialize
     object.vehicles-by-direction[direction] := make(<deque>);
     object.maxima-by-direction[direction] := maximum;
   end for;
-end method initialize; 
+end method initialize;
 
-// From the basic vehicle containers above, we can build specific containers 
+// From the basic vehicle containers above, we can build specific containers
 // for each aircraft transition location.
 define class <gate> (<single-storage>)
   inherited slot name-prefix, init-value: "Gate";
-end class <gate>; 
+end class <gate>;
 
 // Given a zero based terminal number, and a one based gate number, create
 // an return a string with a gate letter and a terminal number in it.
-define method generate-gate-id 
+define method generate-gate-id
     (term :: <non-negative-integer>, gate :: <positive-integer>)
  => (gate-id :: <string>)
   format-to-string("%c%d", $letters[term], gate);
-end method generate-gate-id; 
+end method generate-gate-id;
 
 // Gates-per-terminal is a vector. Each element of the vector is the
 // number of gates to create for the terminal at that index.
@@ -126,7 +126,7 @@ define method generate-gates
     end for;
   end for;
   result;
-end method generate-gates; 
+end method generate-gates;
 
 // This class represents the part of the airspace over a particular airport.
 define class <sky> (<multiple-storage>)
@@ -134,11 +134,11 @@ define class <sky> (<multiple-storage>)
   constant slot airport-below :: <airport>, required-init-keyword: airport:;
   inherited slot name-prefix, init-value: "Sky";
   required keyword inbound-aircraft:;
-end class <sky>; 
+end class <sky>;
 
 // When a sky instance is created, a sequence of inbound aircraft is
 // provided.
-// This method initializes the direction slot of the aircraft to #"inbound", 
+// This method initializes the direction slot of the aircraft to #"inbound",
 // and places them in the inbound queue of the sky instance.
 define method initialize (sky :: <sky>, #key inbound-aircraft :: <sequence>)
   next-method(sky, directions: #[#"inbound", #"outbound"],
@@ -151,19 +151,19 @@ define method initialize (sky :: <sky>, #key inbound-aircraft :: <sequence>)
   end for;
   // Connect the airport to the sky.
   sky.airport-below.sky-above := sky;
-end method initialize; 
+end method initialize;
 
 // This class represents the strip of land where aircraft land and take off.
 define class <runway> (<single-storage>)
   inherited slot name-prefix, init-value: "Runway";
-end class <runway>; 
+end class <runway>;
 
 // Taxiways connect runways and gates.
 define class <taxiway> (<multiple-storage>)
   inherited slot name-prefix, init-value: "Taxiway";
-end class <taxiway>; 
+end class <taxiway>;
 
-// VEHICLES 
+// VEHICLES
 
 // The class which represents all self-propelled devices.
 define abstract class <vehicle> (<physical-object>)
@@ -174,39 +174,39 @@ define abstract class <vehicle> (<physical-object>)
   // Allow individual differences in the size of particular aircraft, while
   // providing a suitable default for each class of aircraft.
   constant each-subclass slot standard-size :: <size>;
-end class <vehicle>; 
+end class <vehicle>;
 
 define method initialize (vehicle :: <vehicle>, #key)
   next-method();
   unless (slot-initialized?(vehicle, physical-size))
     vehicle.physical-size := vehicle.standard-size;
   end unless;
-end method initialize; 
+end method initialize;
 
 define method say (object :: <vehicle>) => ()
   format-out("Vehicle %s", object.vehicle-id);
-end method say; 
+end method say;
 
 // This class represents companies which fly commercial aircraft.
 define class <airline> (<object>)
   slot name :: <string>, required-init-keyword: name:;
   slot code :: <string>, required-init-keyword: code:;
-end class <airline>; 
+end class <airline>;
 
 define method say (object :: <airline>) => ()
   format-out("Airline %s", object.name);
-end method say; 
+end method say;
 
 // This class represents a regularly scheduled trip for a commercial airline.
 define class <flight> (<object>)
   constant slot airline :: <airline>, required-init-keyword: airline:;
   slot number :: <non-negative-integer>,
     required-init-keyword: number:;
-end class <flight>; 
+end class <flight>;
 
 define method say (object :: <flight>) => ()
   format-out("Flight %s %d", object.airline.code, object.number);
-end method say; 
+end method say;
 
 // This class represents vehicles which normally fly for a portion of
 // their trip.
@@ -217,15 +217,15 @@ define abstract class <aircraft> (<vehicle>)
   // The next step this aircraft might be able to make.
   slot next-transition :: <aircraft-transition>,
     required-init-keyword: transition:, setter: #f;
-end class <aircraft>; 
+end class <aircraft>;
 
 define method initialize (vehicle :: <aircraft>, #key)
   next-method();
   // There is a one-to-one correspondance between aircraft instances and
-  // transition instances. An aircraft can only make one transition 
-  // at a time. Connect the aircraft to its transition. 
+  // transition instances. An aircraft can only make one transition
+  // at a time. Connect the aircraft to its transition.
   vehicle.next-transition.transition-aircraft := vehicle;
-end method initialize; 
+end method initialize;
 
 // The next step an aircraft might be able to make.
 define class <aircraft-transition> (<object>)
@@ -234,10 +234,10 @@ define class <aircraft-transition> (<object>)
   slot to-container :: <vehicle-storage>, init-keyword: to:;
   // The earliest possible time the transition could take place.
   slot earliest-arrival :: <time-of-day>, init-keyword: arrival:;
-  // Has this transition already been entered in the sorted sequence? 
+  // Has this transition already been entered in the sorted sequence?
   // This flag saves searching the sorted sequence.
   slot pending? :: <boolean> = #f, init-keyword: pending?:;
-end class <aircraft-transition>; 
+end class <aircraft-transition>;
 
 // Describes one step of an aircraft's movements.
 define method say (transition :: <aircraft-transition>) => ()
@@ -246,13 +246,13 @@ define method say (transition :: <aircraft-transition>) => ()
   say(transition.transition-aircraft);
   format-out(" at ");
   say(transition.to-container);
-end method say; 
+end method say;
 
 // Commercial aircraft are aircrqaft which may have a flight
 // assigned to them.
 define abstract class <commercial-aircraft> (<aircraft>)
   slot aircraft-flight :: false-or(<flight>) = #f, init-keyword: flight:;
-end class <commercial-aircraft>; 
+end class <commercial-aircraft>;
 
 define method say (object :: <commercial-aircraft>) => ()
   let flight = object.aircraft-flight;
@@ -261,14 +261,14 @@ define method say (object :: <commercial-aircraft>) => ()
   else
     format-out("Unscheduled Aircraft %s", object.vehicle-id);
   end if;
-end method say; 
+end method say;
 
 // The class which represents all commericial Boeing 707 aircraft.
 define class <B707> (<commercial-aircraft>)
   inherited slot cruising-speed, init-value: 368;
   inherited slot standard-size,
     init-value: make(<size>, length: 153, width: 146, height: 42);
-end class <B707>; 
+end class <B707>;
 
 define method say (aircraft :: <B707>) => ()
   if (aircraft.aircraft-flight)
@@ -276,9 +276,9 @@ define method say (aircraft :: <B707>) => ()
   else
     format-out("Unscheduled B707 %s", aircraft.vehicle-id);
   end if;
-end method say; 
+end method say;
 
-// AIRPORTS 
+// AIRPORTS
 
 // The class which represents all places where people and aircraft meet.
 define class <airport> (<physical-object>)
@@ -288,8 +288,8 @@ define class <airport> (<physical-object>)
   slot code :: <string>, init-keyword: code:;
   // The airspace above the airport
   slot sky-above :: <sky>;
-end class <airport>; 
+end class <airport>;
 
 define method say (airport :: <airport>) => ()
   format-out("Airport %S", airport.code);
-end method say; 
+end method say;

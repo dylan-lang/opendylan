@@ -184,7 +184,7 @@ define sideways method make-structure-typecode
 			   name:  CORBA/StructMember/name(member),
 			   typecode: CORBA/StructMember/type(member))
 		    end method,
-		    members))		     
+		    members))
 end method;
 
 define sideways method CORBA/ORB/create-interface-tc
@@ -280,7 +280,7 @@ end macro;
 
 define macro with-dii-aux
   { with-dii-aux (?fn:name) ?body:body end }
-  => 
+  =>
   { begin
       local method ?fn (object :: corba/<object>, #rest args)
 	      call-dii(?"fn", object, args)
@@ -483,7 +483,7 @@ define method extract-operation-results (result :: corba/<any>, nvlist :: corba/
 	      corba/any/value(corba/namedvalue/argument(nv))
 	    end method,
 	    nvlist))
-end method;  
+end method;
 
 define method operation-result (operationdef :: corba/<operationdef>, #key setter?)
  => (typecode :: corba/<typecode>)

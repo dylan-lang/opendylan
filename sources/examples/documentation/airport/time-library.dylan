@@ -1,10 +1,10 @@
-Module: dylan-user 
+Module: dylan-user
 Author:    Neal Feinberg, Sonya E. Keene, Robert O. Mathews, P. Tucker Withington
 Synopsis:  The library and module definitions of the time component.
-Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington, 
-	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc. 
-	Reproduced by permission of Addison-Wesley Longman 
-	Publishing Company, Inc.  All rights reserved. No further 
+Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
+	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc.
+	Reproduced by permission of Addison-Wesley Longman
+	Publishing Company, Inc.  All rights reserved. No further
 	copying, downloading or transmitting of this material
 	is allowed without the prior written permission of the
 	publisher.
@@ -17,7 +17,7 @@ define library time
   use sixty-unit;
   use say;
   use dylan;
-end library time; 
+end library time;
 
 // Interface module
 define module time
@@ -28,7 +28,7 @@ define module time
   // Shared protocol
   use say, export: all;
   use sixty-unit, import: { encode-total-seconds }, export: all;
-end module time; 
+end module time;
 
 // Implementation module
 define module time-implementation
@@ -38,4 +38,4 @@ define module time-implementation
   use sixty-unit;
   use say-implementor;
   use dylan;
-end module time-implementation; 
+end module time-implementation;

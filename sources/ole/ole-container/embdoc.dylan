@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define open primary COM-interface <contained-object> ( <IUnknown> ) 
+define open primary COM-interface <contained-object> ( <IUnknown> )
 
   // Information supplied by the container application:
 
@@ -36,9 +36,9 @@ define open primary COM-interface <contained-object> ( <IUnknown> )
   sealed slot document-olemisc :: <unsigned-fixnum> = 0;
 
   // Interfaces implemented by the container:
- 
+
   slot document-sub-storage :: <LPSTORAGE> = null-pointer(<LPSTORAGE>);
-  slot document-advise-sink :: <container-advise-sink>;	
+  slot document-advise-sink :: <container-advise-sink>;
   slot document-in-place-site :: <container-ole-in-place-site>;
   slot document-client-site :: <container-ole-client-site>;
 
@@ -58,7 +58,7 @@ define open primary COM-interface <contained-object> ( <IUnknown> )
   slot document-modified-menu :: <HMENU> = $NULL-HMENU; // modified Edit menu
   slot document-menu-position :: <fixnum> = -1; // position of added item
   slot document-cascade-menu :: <HMENU> = $NULL-HMENU; //sub-menu for verbs
-	
+
 end <contained-object>;
 
 // This slot is just used as a debugging aid; the value is actually
@@ -115,7 +115,7 @@ define method create-doc-object(App :: <container-app>, doc-window :: <HWND>,
   // and `format-etc'.	???
 
   let Doc :: <contained-object> =
-    apply(make, doc-class, App: App, doc-window: doc-window, 
+    apply(make, doc-class, App: App, doc-window: doc-window,
 	 aspect: aspect-value, options);
 
   // Add one ref count on our document.  Later in close-doc-object
@@ -141,7 +141,7 @@ define method close-doc-object(this :: <contained-object>,
 
   // Use `save?: #t' to save the document to storage before closing, such as
   //  when exiting the application.
-  // Use `save?: #f' to delete the document's storage, such as when 
+  // Use `save?: #f' to delete the document's storage, such as when
   //  deleting an object from the compound document.
 
   OutputDebugString("close-doc-object\r\n");
@@ -163,7 +163,7 @@ define method close-doc-object(this :: <contained-object>,
   if ( ( ~ save? ) & empty?(app.container-documents) )
     // when last contained document deleted, delete the storage also.
     let storage = app.container-storage;
-    unless ( null?(storage) ) 
+    unless ( null?(storage) )
       IStorage/Revert(storage);
       Release(storage);
       app.container-storage := $null-interface;
@@ -232,7 +232,7 @@ define method container-size-changed (this :: <contained-object>,
   if ( this.document-in-place-active? )
     let app = this.document-application;
     IOleInPlaceActiveObject/ResizeBorder(app.in-place-active-object, rectangle,
-					 app.app-ole-in-place-frame, #t); 
+					 app.app-ole-in-place-frame, #t);
   else
     MoveWindow(this.document-container-window,
 	       rectangle.left-value, rectangle.top-value,
@@ -272,7 +272,7 @@ define method container-add-verbs(this :: <contained-object>,
   end if
 end method container-add-verbs;
 
-define method container-add-verbs(this == #f, 
+define method container-add-verbs(this == #f,
                                   old-menu, command, #key, #all-keys)
                         => ( modified? :: <boolean>, cascade-menu :: <HMENU> );
  values( #f, $NULL-HMENU )
@@ -302,7 +302,7 @@ define method container-remove-verbs (this == #f) => ()
   values()
 end;
 
-
+
 // for application to call:
 define method container-do-verb(doc :: <contained-object>,
 				verb :: <integer>,

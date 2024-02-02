@@ -34,14 +34,14 @@ define method emit-ffi-pre-prolog
   ins--rem(back-end, "call-in FFI entry pre-prolog");
   ins--lea0(back-end, function, real-entry-tag);
   ins--move(back-end, arg-count, arg-size-on-stack-in-words(back-end, fun));
-  ins--jmp(back-end, callin-handler.runtime-reference, 1, 
+  ins--jmp(back-end, callin-handler.runtime-reference, 1,
            arg-count: #t);
 
   ins--tag(back-end, real-entry-tag);
 end method emit-ffi-pre-prolog;
 
 
-define method arg-size-on-stack-in-words 
+define method arg-size-on-stack-in-words
     (back-end :: <harp-back-end>, function :: <&c-callable-function>) => (words :: <integer>)
   let signature = function.^function-signature;
   let total = 0;
@@ -91,7 +91,7 @@ define method move-arguments-to-virtuals
  local method parameter-type(parameter-index)
 	 if (signature)
 	   signature[parameter-index]
-	 end if;	 
+	 end if;
        end method;
 
  let arguments-passed-in-registers :: <integer> =
@@ -144,7 +144,7 @@ define method move-arguments-to-home
  end unless;
 end method move-arguments-to-home;
 */
-      
+
 define method initialize-temporaries
     (back-end :: <harp-back-end>, lambda :: <&iep>) => ()
 
@@ -354,8 +354,8 @@ end method arguments-passed-in-registers%;
 
 define constant *value-cell-value-offset* = 4;
 
-define method make-closure-indirection 
-    (back-end :: <harp-back-end>, name :: <byte-string>, 
+define method make-closure-indirection
+    (back-end :: <harp-back-end>, name :: <byte-string>,
      offset :: <integer>, value-cell? :: <boolean>)
  => (indirection)
   if (value-cell?)
@@ -367,7 +367,7 @@ define method make-closure-indirection
   end if;
 end method;
 
-define method closure-indirections 
+define method closure-indirections
     (back-end :: <harp-back-end>, o :: <&iep>)
  => (indirections :: <simple-object-vector>)
   let env = o.environment;

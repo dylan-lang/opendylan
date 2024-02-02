@@ -12,8 +12,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Describes the states in which a dylan library can be.
 
 define constant <initialization-state> =
-   one-of(#"uninitialized", 
-          #"statically-initialized", 
+   one-of(#"uninitialized",
+          #"statically-initialized",
           #"dynamically-initialized",
           #"unloaded",
           #"foreign");
@@ -32,13 +32,13 @@ define constant <library-initialization-phase> = one-of(#"start", #"end");
 
 define open generic handle-library-initialization-phase
     (application :: <debug-target>, thread :: <remote-thread>,
-     remote-library :: <remote-library>, 
+     remote-library :: <remote-library>,
      phase :: <library-initialization-phase>, top-level? :: <boolean>)
  => (interested? :: <boolean>);
 
 define method handle-library-initialization-phase
     (application :: <debug-target>, thread :: <remote-thread>,
-     remote-library :: <remote-library>, 
+     remote-library :: <remote-library>,
      phase :: <library-initialization-phase>, top-level? :: <boolean>)
  => (interested? :: <boolean>)
   #f
@@ -63,13 +63,13 @@ define abstract class <library-initialization-tracker> (<object>)
     required-init-keyword: top-level?:;
 end class;
 
-define class <foreign-library-initialization-tracker> 
+define class <foreign-library-initialization-tracker>
     (<library-initialization-tracker>)
   inherited slot tracker-initialization-state,
     init-value: #"foreign";
 end class;
 
-define class <dylan-library-initialization-tracker> 
+define class <dylan-library-initialization-tracker>
     (<library-initialization-tracker>)
   inherited slot tracker-initialization-state,
     init-value: #"uninitialized";
@@ -103,8 +103,8 @@ end method;
 //    signalled, the library is known to be statically initialized.
 
 define class <starting-dynamic-initialization> (<entry-tracepoint>)
-  constant 
-    slot 
+  constant
+    slot
       entry-initialization-tracker :: <dylan-library-initialization-tracker>,
       required-init-keyword: tracker:;
 end class;
@@ -116,7 +116,7 @@ end class;
 
 define class <done-dynamic-initialization> (<return-tracepoint>)
   constant
-    slot 
+    slot
       exit-initialization-tracker :: <dylan-library-initialization-tracker>,
       required-init-keyword: tracker:;
 end class;
@@ -130,7 +130,7 @@ define sealed method make-return-tracepoint
     (application :: <debug-target>, entry :: <starting-dynamic-initialization>,
      thread :: <remote-thread>, #rest keys, #key, #all-keys)
  => (ret :: <done-dynamic-initialization>)
-  apply(make, <done-dynamic-initialization>, 
+  apply(make, <done-dynamic-initialization>,
         tracker: entry.entry-initialization-tracker,
         keys)
 end method;
@@ -172,7 +172,7 @@ define method dynamic-initializer-done-callback
   => (interested? :: <boolean>)
   deregister-debug-point(application, done);
   deregister-debug-point(application, done.corresponding-entry-tracepoint);
-  done.exit-initialization-tracker.tracker-initialization-state := 
+  done.exit-initialization-tracker.tracker-initialization-state :=
      #"dynamically-initialized";
   handle-library-initialization-phase
     (application, thread,
@@ -262,7 +262,7 @@ define method construct-component-name-table
   // Ensure that we managed to resolve this name, and that the value
   // we have obtained is indeed a Dylan table object. If not,
   // we can't construct the mapping.
-  if (object-table & 
+  if (object-table &
       (classify-dylan-object(application, object-table) == $table-type))
 
     let (symbolic-keys, base-addr-machine-words)
@@ -375,7 +375,7 @@ end method;
 //    Always coerces the names to uppercase.
 
 define method dylan-and-runtime-library-names
-    (application :: <debug-target>) 
+    (application :: <debug-target>)
   => (dylan-library-name :: <string>, runtime-library-name :: <string>)
   let context = application.debug-target-compilation-context;
   let dyl = (context & context.compilation-context-dylan-component-name)

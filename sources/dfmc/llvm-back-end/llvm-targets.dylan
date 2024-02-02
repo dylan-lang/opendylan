@@ -13,7 +13,7 @@ define method llvm-back-end-calling-convention-fast
   $llvm-calling-convention-fast
 end method;
 
-
+
 /// OS platform subclasses
 
 define abstract class <llvm-unix-back-end> (<llvm-back-end>)
@@ -25,7 +25,7 @@ end class;
 define abstract class <llvm-windows-back-end> (<llvm-back-end>)
 end class;
 
-
+
 /// Processor subclasses
 
 // x86
@@ -186,7 +186,7 @@ define method llvm-back-end-calling-convention-fast
   $llvm-calling-convention-c
 end method;
 
-
+
 /// Concrete LLVM back-end subclasses
 
 // x86-windows
@@ -307,7 +307,7 @@ define method llvm-back-end-target-triple
   "riscv64-unknown-linux-gnu"
 end method;
 
-
+
 /// LLVM Thread-local storage platform support
 
 define method llvm-thread-local-support?

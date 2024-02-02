@@ -37,14 +37,14 @@ define method IExternalConnection/ReleaseConnection
   Output-Debug-String("IExternalConnection/ReleaseConnection\r\n");
 
   if ( logand(extconn,$EXTCONN-STRONG) ~= 0 )
-		
+
     let count :: <fixnum> =
       (this.strong-connection-count := this.strong-connection-count - 1);
 
     if ( zero?(count) & last-release-closes? )
       IOleObject/Close(this.get-obj.server-IOleObject, $OLECLOSE-SAVEIFDIRTY);
     end if;
-    count 
+    count
   else
     0
   end if

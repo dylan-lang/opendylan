@@ -20,14 +20,14 @@ define constant $ACCEL-FSHIFT       :: <integer> = #x04;
 define constant $ACCEL-FCONTROL     :: <integer> = #x08;
 define constant $ACCEL-FALT         :: <integer> = #x10;
 
-
+
 /// Frame protocols
 
 define protocol <<win32-frame-protocol>> ()
   function note-win32-frame-destroyed (frame :: <abstract-frame>) => ();
 end protocol <<win32-frame-protocol>>;
 
-
+
 /// Top level mirrors
 
 define sealed class <top-level-mirror> (<window-mirror>)
@@ -63,7 +63,7 @@ define sealed method top-level-mirror
     | (error? & error("Failed to find top-level mirror for %=", sheet))
 end method top-level-mirror;
 
-
+
 /// Dialog handling
 
 define method mirror-registered-dialogs
@@ -89,7 +89,7 @@ define method unregister-dialog-mirror
   end
 end method unregister-dialog-mirror;
 
-
+
 /// Top level sheets
 
 define abstract class <win32-top-level-sheet-mixin>
@@ -430,7 +430,7 @@ define method note-win32-frame-destroyed
   end
 end method note-win32-frame-destroyed;
 
-
+
 /// Top level layout
 
 define class <top-level-layout> (<layout-pane>)
@@ -565,7 +565,7 @@ define method client->frame-edges
   end
 end method client->frame-edges;
 
-
+
 /// Frame wrapper
 
 define method frame-wrapper
@@ -696,7 +696,7 @@ define method update-frame-layout
   update-frame-wrapper(framem, frame)
 end method update-frame-layout;
 
-
+
 /// Focus handling
 
 // We have yet to find any way in Windows to be informed as children take
@@ -756,7 +756,7 @@ end method handle-timer;
 
 define callback Timer-Proc :: <TIMERPROC> = handle-timer;
 
-
+
 /// Geometry updating
 
 define sealed method handle-move
@@ -804,7 +804,7 @@ define sealed method handle-resize
   #t
 end method handle-resize;
 
-
+
 /// Accelerator handling
 
 define function make-keyboard-gesture
@@ -1025,7 +1025,7 @@ define method note-accelerators-changed
   end
 end method note-accelerators-changed;
 
-
+
 /// Tooltip handling
 
 define sealed method make-frame-tooltip
@@ -1099,7 +1099,7 @@ define sealed method unregister-tooltip-for-sheet
   end
 end method unregister-tooltip-for-sheet;
 
-
+
 /// Keyboard interrupt (i.e., hot key) handling
 
 define sealed method register-keyboard-interrupt-handler

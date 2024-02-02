@@ -62,6 +62,6 @@ define c-fun runtime-external mps-release          = "primitive_mps_release";
 
 /// Literals - define these last because they may depend on externals (e.g. wrappers)
 
-define runtime-literal primitive-error-string 
+define runtime-literal primitive-error-string
   = "primitive-error-string", data: "Primitive error.";
 

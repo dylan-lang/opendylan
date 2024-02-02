@@ -60,7 +60,7 @@ define function reset-project-thread-message-logs
   remove-all-keys!(logs);
 end function reset-project-thread-message-logs;
 
-
+
 /// Message printing
 
 /// NB If we get an application-wide message, broadcast it to all

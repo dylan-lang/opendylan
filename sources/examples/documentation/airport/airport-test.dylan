@@ -1,37 +1,37 @@
-module: airport-test 
+module: airport-test
 Author:    Neal Feinberg, Sonya E. Keene, Robert O. Mathews, P. Tucker Withington
 Synopsis:  The implementation of the test program for the airport example.
-Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington, 
-	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc. 
-	Reproduced by permission of Addison-Wesley Longman 
-	Publishing Company, Inc.  All rights reserved. No further 
+Copyright: N Feinberg/S E Keene/R Mathews/P Tucker Withington,
+	DYLAN PROGRAMMING, Copyright (c) 1997-2000 Functional Objects, Inc.
+	Reproduced by permission of Addison-Wesley Longman
+	Publishing Company, Inc.  All rights reserved. No further
 	copying, downloading or transmitting of this material
 	is allowed without the prior written permission of the
 	publisher.
 
 // To keep the example relatively simple, we will use variables to hold
 // test data for the flights and aircraft.
-// Ordinarily this information would be read from a file or database. 
+// Ordinarily this information would be read from a file or database.
 
-define variable *flight-numbers* = #[62, 7, 29, 12, 18, 44]; 
+define variable *flight-numbers* = #[62, 7, 29, 12, 18, 44];
 
-define variable *aircraft-distances* 
-  = #[3.0, 10.0, 175.0, 450.0, 475.0, 477.0];       // Miles 
+define variable *aircraft-distances*
+  = #[3.0, 10.0, 175.0, 450.0, 475.0, 477.0];       // Miles
 
-define variable *aircraft-headings* 
-  = #[82, 191, 49, 112, 27, 269];       // Degrees 
+define variable *aircraft-headings*
+  = #[82, 191, 49, 112, 27, 269];       // Degrees
 
 define variable *aircraft-altitudes*
-  = #[7000, 15000, 22000, 22500, 22000, 21000];    // Feet 
+  = #[7000, 15000, 22000, 22500, 22000, 21000];    // Feet
 
 define variable *aircraft-ids*
-  = #["72914", "82290", "18317", "26630", "43651", "40819"]; 
+  = #["72914", "82290", "18317", "26630", "43651", "40819"];
 
 define constant $default-runway-size
-  = make(<size>, length: 10000, width: 200, height: 100);    // Feet 
+  = make(<size>, length: 10000, width: 200, height: 100);    // Feet
 
 define constant $default-taxiway-size
-  = make(<size>, length: 900, width: 200, height: 100);    // Feet 
+  = make(<size>, length: 900, width: 200, height: 100);    // Feet
 
 // Assumes there is only one runway, and one taxiway. The taxiway-count
 // variable will determine how many aircraft can wait in line for each
@@ -44,7 +44,7 @@ define method build-simple-airport
      taxiway-count :: <positive-integer> = 5,
      position-report-time :: <time-of-day>
        = make(<time-of-day>, total-seconds: encode-total-seconds(6, 0, 0)))
- => (airport :: <airport>) 
+ => (airport :: <airport>)
 
   let gates = generate-gates(gates-per-terminal, capacity);
   let taxiway
@@ -55,21 +55,21 @@ define method build-simple-airport
                     physical-size: runway-size);
   let keystone-air = make(<airline>, name: "keystone Air", code: "KN");
   let flights
-    = map(method (fn) 
+    = map(method (fn)
           make(<flight>, airline: keystone-air, number: fn) end,
-          *flight-numbers*); 
+          *flight-numbers*);
 
   let aircraft
     = map(method (aircraft-flight, aircraft-distance, aircraft-heading,
                   aircraft-altitude, aircraft-id)
-            make(<b707>, 
+            make(<b707>,
                  flight: aircraft-flight,
                  current-position:
                    make(<relative-position>,
                         distance: aircraft-distance,
-                        angle: 
+                        angle:
                           make(<relative-angle>,
-                               total-seconds: 
+                               total-seconds:
                                  encode-total-seconds
                                    (aircraft-heading, 0, 0))),
                  altitude: aircraft-altitude,
@@ -78,7 +78,7 @@ define method build-simple-airport
                                   arrival: position-report-time));
           end,
           flights, *aircraft-distances*, *aircraft-headings*,
-          *aircraft-altitudes*, *aircraft-ids*); 
+          *aircraft-altitudes*, *aircraft-ids*);
 
   let airport
     = make(<airport>,
@@ -93,7 +93,7 @@ define method build-simple-airport
                   longitude:
                     make(<longitude>,
                          total-seconds: encode-total-seconds(77, 40, 24),
-                         direction: #"West"))); 
+                         direction: #"West")));
 
 
   let sky = make(<sky>, inbound-aircraft: aircraft, airport: airport,
@@ -108,11 +108,11 @@ define method build-simple-airport
   taxiway.connected-to := concatenate(runway-vector, gates);
   sky.connected-to := runway-vector;
   airport;
-end method build-simple-airport; 
+end method build-simple-airport;
 
 define method test-airport () => (last-transition :: <time-of-day>)
   process-aircraft(build-simple-airport());
-end method test-airport; 
+end method test-airport;
 
 test-airport();
 
@@ -137,7 +137,7 @@ test-airport();
 // 7:16: Flight KN 29 at Sky over BLA
 // 7:16: Flight KN 12 at Runway 11R-29L
 // 7:18: Flight KN 12 at Taxiway Echo
-// 7:18: Flight KN 18 at Runway 11R-29L 
+// 7:18: Flight KN 18 at Runway 11R-29L
 // 7:19: Flight KN 12 at Gate A1
 // 7:20: Flight KN 18 at Taxiway Echo
 // 7:20: Flight KN 44 at Runway 11R-29L
@@ -153,4 +153,4 @@ test-airport();
 // 8:27: Flight KN 44 at Taxiway Echo
 // 8:28: Flight KN 44 at Runway 11R-29L
 // 8:32: Flight KN 44 at Sky over BLA
-// {class <TIME-OF-DAY>} 
+// {class <TIME-OF-DAY>}

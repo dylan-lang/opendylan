@@ -84,7 +84,7 @@ define method OLE-util-container-name ( obj :: <basic-ole-server> )
     values( oo.container-application-name, oo.container-document-name )
   end if
 end method;
-
+
 
 // Called by the container application to invoke a verb.
 
@@ -101,17 +101,17 @@ define method IOleObject/DoVerb(this :: <COleObject>,
 
  block()
   let status :: <HRESULT> = $S-OK;
-	
+
   Output-Debug-String("IOleObject/DoVerb OLEIVERB-");
 
   let obj = this.get-obj;
   select ( verb )
-		
-    $OLEIVERB-SHOW, $OLEIVERB-PRIMARY => 
+
+    $OLEIVERB-SHOW, $OLEIVERB-PRIMARY =>
       Output-Debug-String("SHOW\r\n");
 
       if ( this.open-as-separate-window )
-	SetFocus(this.open-as-separate-window); 
+	SetFocus(this.open-as-separate-window);
       elseif ( do-in-place-activate(obj, verb) = #f )
 	let app-window = open-edit(this, active-site);
 	if ( null?(app-window) )
@@ -122,7 +122,7 @@ define method IOleObject/DoVerb(this :: <COleObject>,
       end if;
 
     $OLEIVERB-UIACTIVATE,
-    $OLEIVERB-INPLACEACTIVATE => 
+    $OLEIVERB-INPLACEACTIVATE =>
       // See "Inside OLE", 2nd ed., page 1019 for the difference between these.
       Output-Debug-String(if ( verb = $OLEIVERB-INPLACEACTIVATE )
 			    "INPLACEACTIVATE\r\n"
@@ -138,7 +138,7 @@ define method IOleObject/DoVerb(this :: <COleObject>,
 	status := $E-FAIL;
       end unless;
 
-    $OLEIVERB-DISCARDUNDOSTATE => 
+    $OLEIVERB-DISCARDUNDOSTATE =>
       Output-Debug-String("DISCARDUNDOSTATE\r\n");
       // don't have to worry about this situation as we don't
       // support an undo state.
@@ -146,7 +146,7 @@ define method IOleObject/DoVerb(this :: <COleObject>,
 	status := $OLE-E-NOT-INPLACEACTIVE;
       end unless;
 
-    $OLEIVERB-HIDE => 
+    $OLEIVERB-HIDE =>
       Output-Debug-String("HIDE\r\n");
       // if in-place active, do an "in-place" hide, otherwise
       // just hide the app window.
@@ -158,13 +158,13 @@ define method IOleObject/DoVerb(this :: <COleObject>,
 	OLE-part-hide(obj);
       end if;
 
-    $OLEIVERB-OPEN, $VERB-OPEN => 
+    $OLEIVERB-OPEN, $VERB-OPEN =>
       Output-Debug-String("OPEN\r\n");
       // if inplace active, deactivate
       if ( obj.in-place-active? )
 	IOleInPlaceObject/InPlaceDeactivate(obj.server-IOleInPlaceObject);
       end if;
-       
+
       // open into another window.
       let app-window = open-edit(this, active-site);
       if ( null?(app-window) )
@@ -191,7 +191,7 @@ end method IOleObject/DoVerb;
 // Used by IOleObject/DoVerb above to open the object into a separate window.
 
 define method open-edit(this :: <COleObject>, active-site :: <LPOLECLIENTSITE>)
- => window :: <HWND>; 
+ => window :: <HWND>;
 
   let obj = this.get-obj;
   // Don't know why it uses this instead of the argument which is not used.
@@ -239,7 +239,7 @@ define method OLE-util-part-hidden (obj :: <basic-ole-server>) => ()
   end;
 end;
 
-
+
 // Returns the extent of the object.
 
 define method IOleObject/GetExtent(this :: <COleObject>,
@@ -300,11 +300,11 @@ end method IOleObject/Close;
 define method IOleObject/Unadvise(this :: <COleObject>,
 				  connection :: <unsigned-fixnum>)
  => status :: <HRESULT>;
-	
+
   Output-Debug-String("IOleObject/Unadvise\r\n");
 
   // pass on to OleAdviseHolder.
-  /* return */ 
+  /* return */
   IOleAdviseHolder/Unadvise(this.get-obj.container-IOleAdviseHolder,
 			    connection)
 end method IOleObject/Unadvise;
@@ -313,7 +313,7 @@ end method IOleObject/Unadvise;
 // This version obtains the information from the registry for this server.
 // (Not using $OLE-S-USEREG because that won't work in a .DLL.)
 // The data needs to be in the registry instead of here because the default
-// verbs are only needed when the server is not active, in which case this 
+// verbs are only needed when the server is not active, in which case this
 // method isn't used anyway.
 define method IOleObject/EnumVerbs(this :: <COleObject>)
 	=> ( status :: <HRESULT>, enumerator :: <LPENUMOLEVERB> );
@@ -362,7 +362,7 @@ define method IOleObject/SetMoniker(this :: <COleObject>,
     let ( status :: <HRESULT>, ROT :: <LPRUNNINGOBJECTTABLE> ) =
       GetRunningObjectTable(0);
     if ( status = $NOERROR )
-		
+
       if ( obj.ROT-registration ~= 0 )
 	IRunningObjectTable/Revoke(ROT, obj.ROT-registration);
       end if;
@@ -494,7 +494,7 @@ end method IOleObject/SetExtent;
 
 define method IOleObject/EnumAdvise(this :: <COleObject>)
 	=> ( status :: <HRESULT>,  enumerator :: <Interface>);
-	
+
   Output-Debug-String("IOleObject/EnumAdvise\r\n");
 
   // pass on to the OLE Advise holder.

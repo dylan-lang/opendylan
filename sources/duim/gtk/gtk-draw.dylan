@@ -55,7 +55,7 @@ define sealed method draw-points
   #f
 end method draw-points;
 
-
+
 /// Pixel graphics
 
 //---*** Do an efficient version of this
@@ -78,7 +78,7 @@ define sealed method set-pixels
   #f
 end method set-pixels;
 
-
+
 define sealed method draw-line
     (medium :: <gtk-medium>, x1, y1, x2, y2) => (record)
   with-gdk-lock
@@ -383,7 +383,7 @@ define sealed method draw-image
   #f
 end method draw-image;
 
-
+
 /// Path graphics
 
 define sealed method start-path
@@ -453,7 +453,7 @@ define sealed method curve-to
   ignoring("GTK does not support path-based graphics")
 end method curve-to;
 
-
+
 /// 'draw-pixmap', etc
 
 define sealed method draw-pixmap

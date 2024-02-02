@@ -147,7 +147,7 @@ end method initialize;
 //   & eqv(new-descriptor.slot-setter, old-descriptor.slot-setter, #f)
 //   // @@@@ getter ???
 // end method slots-compatible?;
-
+
 
 /*
   xep:             xep
@@ -257,7 +257,7 @@ end function;
 //       end method,
 //       slot-descriptors)
 // end function;
-
+
 
 
 define method add-getter-method

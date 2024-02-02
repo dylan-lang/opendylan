@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $menu-bar-border-width  :: <integer> =  8;
 define constant $menu-bar-label-spacing :: <integer> = 14;
 
-
+
 /// Win32 menus
 
 define sealed class <menu-mirror> (<win32-mirror>)
@@ -54,7 +54,7 @@ end class <popup-menu-mirror>;
 define sealed domain make (singleton(<popup-menu-mirror>));
 define sealed domain initialize (<popup-menu-mirror>);
 
-
+
 /// Mnemonic handling
 
 define table $mnemonic-table :: <object-table>
@@ -260,7 +260,7 @@ define sealed method allocate-unique-mnemonic
   end
 end method allocate-unique-mnemonic;
 
-
+
 /// Menu bars
 
 //---*** What is the multiple-child-composite-pane for?
@@ -371,7 +371,7 @@ define sealed method refresh-menu-bar (menu-bar :: <win32-menu-bar>) => ()
   end
 end method refresh-menu-bar;
 
-
+
 /// Menu buttons
 
 // Menu buttons are unmirrored, but have to update themselves on their
@@ -426,7 +426,7 @@ define sealed method note-gadget-label-changed
   end
 end method note-gadget-label-changed;
 
-
+
 /// Menu handling
 
 define sealed class <win32-menu>
@@ -633,7 +633,7 @@ define sealed method ensure-menus-mirrored
   end
 end method ensure-menus-mirrored;
 
-
+
 /// Menu handling
 
 define sealed method make-win32-menu-contents
@@ -929,7 +929,7 @@ define sealed method note-gadget-disabled
   end
 end method note-gadget-disabled;
 
-
+
 /// The concrete menu button classes
 define sealed class <win32-push-menu-button>
     (<win32-menu-button-mixin>,
@@ -995,7 +995,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<win32-check-menu-button>));
 define sealed domain initialize (<win32-check-menu-button>);
 
-
+
 /// Choose from menu
 
 define sealed method do-choose-from-menu

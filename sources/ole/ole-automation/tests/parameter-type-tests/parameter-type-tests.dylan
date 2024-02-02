@@ -21,7 +21,7 @@ define interface-test vtable-interface IVtableParmTest (<IUnknown>)
   // parameter float :: (<C-float>) = (3.141592, 2.7182818);
   // parameter double :: (<C-double>) = (3.141592d0, 2.7182818d0);
 
-  parameter bstr :: (<BSTR>, <LPBSTR>) = 
+  parameter bstr :: (<BSTR>, <LPBSTR>) =
   	  (as(<BSTR>, "paradise"), as(<BSTR>, "where you are right now"));
   //BUG 4237: parameter hresult :: (<C-HRESULT>) = ($S-FALSE, $CLASS-E-NOAGGREGATION);
   // parameter variant-bool :: (<variant-bool>) = (#f, #t);
@@ -33,13 +33,13 @@ define interface-test vtable-interface IVtableParmTest (<IUnknown>)
   // This doesn't work, and should be bug-reported:
   //parameter unsigned-long :: (<C-unsigned-long>) = (123456789, 345678901);
   //parameter int :: (<C-int>) = (123456789, -123456789);
-  
+
   // These crashes big-time, and should be bug-reported:
-  // parameter lpstr :: (<lpstr>, <lplpstr>) = 
+  // parameter lpstr :: (<lpstr>, <lplpstr>) =
   //	(as(<lpstr>, "bright"), as(<lpstr>, "red"));
-  // parameter lpwstr :: (<lpwstr>, <lplpwstr>) = 
+  // parameter lpwstr :: (<lpwstr>, <lplpwstr>) =
   // 	(as(<lpwstr>, "phone"), as(<lpwstr>, "booth"));
-  
+
 
   member-function itest-interface (i :: <C-IVtableParmTestParm>) => ();
   test (this) (
@@ -81,8 +81,8 @@ define interface-test vtable-interface IVtableParmTest (<IUnknown>)
   */
 end;
 
-define method itest-interface (this :: <S-IVtableParmTest>, 
-				i :: <C-IVtableParmTestParm>) 
+define method itest-interface (this :: <S-IVtableParmTest>,
+				i :: <C-IVtableParmTestParm>)
 			    => (r :: <HRESULT>)
   coe(
     with-stack-structure (out-ptr :: <C-int*>)
@@ -92,12 +92,12 @@ define method itest-interface (this :: <S-IVtableParmTest>,
   )
 end;
 
-define method otest-interface (this :: <S-IVtableParmTest>, 
-				i :: <C-IVtableParmTestParm*>) 
+define method otest-interface (this :: <S-IVtableParmTest>,
+				i :: <C-IVtableParmTestParm*>)
 			    => (r :: <HRESULT>)
   coe(
     let iface = make(<S-IVtableParmTestParm>);
-    i.pointer-value := make(<C-IVtableParmTestParm>, 
+    i.pointer-value := make(<C-IVtableParmTestParm>,
 			    address: iface.pointer-address);
   )
 end;

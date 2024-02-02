@@ -176,7 +176,7 @@ define method remove-section!
   container-sections(container) := remove!(container-sections(container), section)
 end method remove-section!;
 
-
+
 /// Flat file source containers
 
 define sealed class <flat-file-source-container> (<basic-source-container>)
@@ -277,7 +277,7 @@ define method read-section-contents-from-stream
   section-end-line(section)   := last-line
 end method read-section-contents-from-stream;
 
-
+
 /// Database source containers
 
 define sealed class <database-file-source-container> (<basic-source-container>)

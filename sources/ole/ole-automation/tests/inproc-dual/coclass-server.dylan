@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $class-id = 
+define constant $class-id =
 	as(<REFIID>, "{0844834F-265D-11D2-9A67-006097C90313}");
 
 define COM-interface <inproc-coclass-object> ( <simple-component-object> )

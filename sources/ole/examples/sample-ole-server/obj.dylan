@@ -125,7 +125,7 @@ end initialize;
 
 define method terminate (this :: <CSimpSvrObj>) => ();
 
-	
+
   OutputDebugString("In CSimpSvrObj's Destructor \r\n");
   next-method();
 
@@ -184,12 +184,12 @@ define method Draw(this :: <CSimpSvrObj>, hDC :: <HDC>, fMeta :: <boolean>)
   let y-size :: <integer> = this.m-pSize.y-value;
 
   if ( ~ fMeta )
-    
+
     SetMapMode(hDC, $MM-ANISOTROPIC);
-    SetWindowOrgEx(hDC,  truncate/(this.m-xOffset, scale), 
+    SetWindowOrgEx(hDC,  truncate/(this.m-xOffset, scale),
 		   truncate/(this.m-yOffset, scale), $NULL-POINT);
     SetWindowExtEx(hDC, x-size, y-size, $NULL-POINT);
-    SetViewportExtEx(hDC,  truncate(x-size * scale), 
+    SetViewportExtEx(hDC,  truncate(x-size * scale),
 		     truncate(y-size * scale), $NULL-POINT);
   end if;
 
@@ -290,7 +290,7 @@ define method GetMetaFilePict(this :: <CSimpSvrObj>, kind :: <integer> )
   lpMFP.yExt-value := pt-y;
 
   // Create the metafile
-  let hDC :: <HDC> = 
+  let hDC :: <HDC> =
     if ( kind = $TYMED-ENHMF )
       CreateEnhMetaFile($NULL-HDC, $NULL-string,
 			$NULL-RECT, $NULL-string)
@@ -304,7 +304,7 @@ define method GetMetaFilePict(this :: <CSimpSvrObj>, kind :: <integer> )
 
   Draw(this, hDC, #t);
 
-  lpMFP.hMF-value := 
+  lpMFP.hMF-value :=
     if ( kind = $TYMED-ENHMF )
       CloseEnhMetaFile(hDC)
     else
@@ -314,7 +314,7 @@ define method GetMetaFilePict(this :: <CSimpSvrObj>, kind :: <integer> )
   // unlock the metafilepict
   GlobalUnlock(hMFP);
 
- /* return */  hMFP 
+ /* return */  hMFP
 end method GetMetaFilePict;
 
 
@@ -359,7 +359,7 @@ define method SaveToStorage(this :: <CSimpSvrObj>, lpStg :: <Interface>,
   let lpTempSize  :: <LPSTREAM> = $NULL-istream;
 
   if ( ~fSameAsLoad )
-    let ( color, size ) = CreateTempStreams(this.m-PersistStorage, lpStg); 
+    let ( color, size ) = CreateTempStreams(this.m-PersistStorage, lpStg);
     lpTempColor := color;
     lpTempSize := size;
   else
@@ -504,12 +504,12 @@ define method DoInPlaceActivate(this :: <CSimpSvrObj>, lVerb)
   let retval :: <boolean> = #f;
 
   block(error-return)
-	
+
     OutputDebugString("In CSimpSvrObj::DoInPlaceActivate\r\n");
 
     // if not currently in place active
     if ( ~this.m-fInPlaceActive )
-		
+
       // get the inplace site
       let ( status, interface ) =
 	QueryInterface(this.m-lpOleClientSite, $IID-IOleInPlaceSite);
@@ -522,7 +522,7 @@ define method DoInPlaceActivate(this :: <CSimpSvrObj>, lVerb)
       // activate then goto error.
       if ( null?(this.m-lpIPSite) |
 	   (IOleInPlaceSite/CanInPlaceActivate(this.m-lpIPSite) ~= $NOERROR) )
-			
+
 	unless ( null?(this.m-lpIPSite) )
 	  Release(this.m-lpIPSite);
 	end unless;
@@ -537,7 +537,7 @@ define method DoInPlaceActivate(this :: <CSimpSvrObj>, lVerb)
 
     // if not currently inplace visible
     if ( ~this.m-fInPlaceVisible )
-		
+
       this.m-fInPlaceVisible := #t;
 
       // get the window handle of the site
@@ -549,7 +549,7 @@ define method DoInPlaceActivate(this :: <CSimpSvrObj>, lVerb)
       let pClipRect :: <LPRECT> = make(<LPRECT>);
 
       // get window context from the container
-      let ( status, frame, doc ) = 
+      let ( status, frame, doc ) =
 	IOleInPlaceSite/GetWindowContext(this.m-lpIPSite, pPosRect,
 							 pClipRect,
 							 this.m-pFrameInfo);
@@ -597,7 +597,7 @@ define method DoInPlaceActivate(this :: <CSimpSvrObj>, lVerb)
 
     // if not UIActive
     if ( ~this.m-fUIActive )
-		
+
       this.m-fUIActive := #t;
 
       // tell the inplace site that we are activating
@@ -624,7 +624,7 @@ define method DoInPlaceActivate(this :: <CSimpSvrObj>, lVerb)
 
     retval := #t;
   end block;
-  /* return */ retval 
+  /* return */ retval
 end method DoInPlaceActivate;
 
 //**********************************************************************
@@ -660,7 +660,7 @@ end method DoInPlaceActivate;
 
 
 define method AssembleMenus(this :: <CSimpSvrObj>) => ();
-	
+
   OutputDebugString("In CSimpSvrObj::AssembleMenus\r\n");
   with-stack-structure ( menugroupwidths :: <LPOLEMENUGROUPWIDTHS> )
 
@@ -670,21 +670,21 @@ define method AssembleMenus(this :: <CSimpSvrObj>) => ();
   // have the container insert its menus
   if ( IOleInPlaceFrame/InsertMenus(this.m-lpFrame, this.m-hmenuShared,
 				    menugroupwidths ) = $NOERROR )
-		
+
     let widths = menugroupwidths.width-value;
     let nFirstGroup :: <integer> = pointer-value(widths, index: 0);
 
     // insert the server menus
     InsertMenu( this.m-hmenuShared, nFirstGroup,
-	       logior($MF-BYPOSITION,$MF-POPUP), 
+	       logior($MF-BYPOSITION,$MF-POPUP),
 	       pointer-address( GetColorMenu(GetApp(this.m-lpDoc))),
 	       "&Color");
     pointer-value(widths, index: 1) := 1;
     pointer-value(widths, index: 3) := 0;
     pointer-value(widths, index: 5) := 0;
-		
+
   else
-		
+
     // Destroy the menu resource
     DestroyMenu(this.m-hmenuShared);
     this.m-hmenuShared := null-pointer(<HOLEMENU>);
@@ -794,7 +794,7 @@ end method AddFrameLevelUI;
 define method DoInPlaceHide(this :: <CSimpSvrObj>) => ();
 
  block(return)
-	
+
    OutputDebugString("In CSimpSvrObj::DoInPlaceHide\r\n");
 
    // if we aren't inplace visible, then this routine is a NOP,
@@ -861,12 +861,12 @@ end method DoInPlaceHide;
 
 
 define method DisassembleMenus(this :: <CSimpSvrObj>) => ();
-	
+
   // destroy the menu descriptor
   OleDestroyMenuDescriptor(this.m-hOleMenu);
 
   if ( ~ null?(this.m-hmenuShared) )
-		
+
     // remove the menus that we added
     RemoveMenu( this.m-hmenuShared, 1, $MF-BYPOSITION);
 
@@ -924,7 +924,7 @@ define method SendOnDataChange(this :: <CSimpSvrObj>) => ();
         lpRot :: <LPRUNNINGOBJECTTABLE> ) = GetRunningObjectTable(0);
 
   if ( (~ null?(lpRot)) & (this.m-dwRegister ~= 0) )
-		
+
     with-stack-structure( pFT :: <PFILETIME> )
 
       CoFileTimeNow(pFT);
@@ -972,7 +972,7 @@ define method DeactivateUI(this :: <CSimpSvrObj>) => ();
   // if not UI active, or no pointer to IOleInPlaceFrame, then
   // return NOERROR
   if ( this.m-fUIActive | ~ null?(this.m-lpFrame) )
-		
+
     this.m-fUIActive := #f;
 
     // remove hatching

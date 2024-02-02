@@ -32,7 +32,7 @@ define macro with-compiler-locked
          end }
 end macro with-compiler-locked;
 
-
+
 /// Combined build dialog and compiler progress notification
 
 define constant <build-operation>
@@ -238,7 +238,7 @@ end frame <compiler-progress-window>;
 define window-settings
   build-window :: <compiler-progress-window> = "Build Window";
 
-
+
 /// Creation
 
 //---*** The project window should be the dialog's owner
@@ -342,7 +342,7 @@ define method set-compiler-progress-state
 end method set-compiler-progress-state;
 */
 
-
+
 /// Event handling
 
 define method handle-event
@@ -376,7 +376,7 @@ define method handle-event
   next-method()
 end method handle-event;
 
-
+
 /// Progress values
 
 define method compiler-progress-heading-label
@@ -434,7 +434,7 @@ ignorable(compiler-progress-heading-label,
           compiler-progress-numerator,
           compiler-progress-numerator-setter);
 
-
+
 /// Starting and stopping builds
 
 // This must be called in the progress window's own thread
@@ -514,7 +514,7 @@ define method stop-build-in-progress-window
   window.%progress-stopped? := #f;
 end method stop-build-in-progress-window;
 
-
+
 /// Progress window utilities
 
 define macro with-compiler-progress

@@ -37,7 +37,7 @@ define method read-coff-file (stream :: <stream>) =>  (data :: <coff-file>)
   let number-of-symbols      =  read-word (stream, coff-file);
   coff-file.header-size     :=  read-short(stream, coff-file);
   coff-file.characteristics :=  read-short(stream, coff-file);
-  let string-table-offset = 
+  let string-table-offset =
      symbol-table-offset + (number-of-symbols * size-of-symbol);
   read-coff-strings(stream, coff-file, string-table-offset);
   read-coff-sections(stream, coff-file, number-of-sections);
@@ -53,7 +53,7 @@ define method read-coff-strings
     (stream :: <stream>, coff-file :: <coff-file>, offset :: <integer>) => ()
 
   stream.stream-position := offset;     // get to the right place in the file
-  let length = read-word(stream, coff-file); 
+  let length = read-word(stream, coff-file);
   let start = 4;   // skip the 4 bytes of length info
   let whole-string = make(<string>, size: length);
 
@@ -107,7 +107,7 @@ define method read-a-coff-section
 end method;
 
 
-define method make-a-coff-section 
+define method make-a-coff-section
     (#rest keys, #key flags, #all-keys) => (s :: <coff-section>)
   let alignment = alignment-from-flags(flags);
   apply(make, <coff-section>, alignment: alignment, keys);
@@ -143,7 +143,7 @@ end method;
 
 
 define method read-coff-symbols
-    (stream :: <stream>, coff-file :: <coff-file>, 
+    (stream :: <stream>, coff-file :: <coff-file>,
      offset :: <integer>, number :: <integer>) => ()
   stream.stream-position := offset;
   let to-be-read = number;
@@ -154,7 +154,7 @@ end method;
 
 
 define method read-coff-symbol
-      (stream :: <stream>, coff-file :: <coff-file>) 
+      (stream :: <stream>, coff-file :: <coff-file>)
    => (num-read :: <integer>)
   let (symbol, aux-num, section) = read-a-normal-symbol(stream, coff-file);
   if (aux-num > 0)
@@ -180,13 +180,13 @@ end method;
 
 
 define method read-a-normal-symbol
-      (stream :: <stream>, coff-file :: <coff-file>) 
+      (stream :: <stream>, coff-file :: <coff-file>)
    => (symbol :: <coff-symbol>, aux-num :: <integer>, section :: <coff-symbol-locator>)
   let name =    read-symbol-name(stream, coff-file);
   let value =   read-word(stream, coff-file);
   let section = read-symbol-section(stream, coff-file);
-  let symbol = 
-    make(<coff-symbol>, 
+  let symbol =
+    make(<coff-symbol>,
          name:          name,
          value:         value,
          section:       section,
@@ -200,7 +200,7 @@ end method;
 
 
 define method read-section-auxiliary-symbol
-      (stream :: <stream>, coff-file :: <coff-file>, symbol :: <coff-symbol>) 
+      (stream :: <stream>, coff-file :: <coff-file>, symbol :: <coff-symbol>)
    => ()
   read-word(stream, coff-file);  // size of section data (redundant)
   read-word(stream, coff-file);  // num of relocs and lines (redundant)
@@ -208,7 +208,7 @@ define method read-section-auxiliary-symbol
   let number    = read-short(stream, coff-file);
   let selection = read-byte(stream);
   let section = coff-element(coff-file.sections, symbol.symbol-name.string-data);
-  let aux = make(<coff-section-auxiliary-symbol>, 
+  let aux = make(<coff-section-auxiliary-symbol>,
                  section: section,
                  check-sum: check-sum,
                  number: number,
@@ -220,11 +220,11 @@ end method;
 
 
 define method read-function-definition-auxiliary-symbol
-      (stream :: <stream>, coff-file :: <coff-file>, 
-       symbol :: <coff-symbol>, section :: <coff-section>) 
+      (stream :: <stream>, coff-file :: <coff-file>,
+       symbol :: <coff-symbol>, section :: <coff-section>)
    => ()
-  let aux = 
-    make(<coff-function-definition-auxiliary-symbol>, 
+  let aux =
+    make(<coff-function-definition-auxiliary-symbol>,
          tag: symbol, // dummy value for efficiency - it's a required parameter
          tag-index:           read-word(stream, coff-file),
          total-size:          read-word(stream, coff-file),
@@ -236,7 +236,7 @@ end method;
 
 
 define method read-function-lines-auxiliary-symbol
-      (stream :: <stream>, coff-file :: <coff-file>, symbol :: <coff-symbol>) 
+      (stream :: <stream>, coff-file :: <coff-file>, symbol :: <coff-symbol>)
    => ()
   read-word(stream, coff-file);  // unused data
   let line = read-short(stream, coff-file);
@@ -244,8 +244,8 @@ define method read-function-lines-auxiliary-symbol
   read-short(stream, coff-file); // unused data
   let next = read-word(stream, coff-file);
   read-short(stream, coff-file); // unused data
-  let aux = 
-    make(<coff-function-lines-auxiliary-symbol>, 
+  let aux =
+    make(<coff-function-lines-auxiliary-symbol>,
          line-number:         line,
          next-function-index: next);
   add-auxiliary-symbol(coff-file, symbol, aux);
@@ -253,8 +253,8 @@ end method;
 
 
 define method read-string-auxiliary-symbols
-      (stream :: <stream>, coff-file :: <coff-file>, 
-       symbol :: <coff-symbol>, aux-num :: <integer>) 
+      (stream :: <stream>, coff-file :: <coff-file>,
+       symbol :: <coff-symbol>, aux-num :: <integer>)
    => ()
   let aux-size = aux-num * size-of-symbol;
   let data = make(<byte-string>, size: aux-size);
@@ -269,8 +269,8 @@ end method;
 
 
 define method read-plain-auxiliary-symbols
-      (stream :: <stream>, coff-file :: <coff-file>, 
-       symbol :: <coff-symbol>, aux-num :: <integer>) 
+      (stream :: <stream>, coff-file :: <coff-file>,
+       symbol :: <coff-symbol>, aux-num :: <integer>)
    => ()
   for (i from 0 below aux-num)
     let data-field = make(<vector>, size: size-of-symbol);
@@ -282,8 +282,8 @@ end method;
 
 
 define method add-auxiliary-symbol
-    (coff-file :: <coff-file>, symbol :: <coff-symbol>, 
-     aux :: <coff-auxiliary-symbol>) 
+    (coff-file :: <coff-file>, symbol :: <coff-symbol>,
+     aux :: <coff-auxiliary-symbol>)
  => ()
   binary-element-add!(coff-file.symbols, "dummy-name", aux);
   add!(symbol.aux-symbols, aux);
@@ -310,7 +310,7 @@ end method;
 
 
 define method read-symbol-section
-      (stream :: <stream>, coff-file :: <coff-file>) 
+      (stream :: <stream>, coff-file :: <coff-file>)
    => (s :: <coff-symbol-locator>)
   let section-number = read-signed-short(stream, coff-file);
   select (section-number)
@@ -339,19 +339,19 @@ end method;
 /// This is done after the line numbers are read in.
 
 define method fixup-coff-auxiliary-symbol
-    (coff-file :: <coff-file>, 
+    (coff-file :: <coff-file>,
      section,
      symbol :: <coff-auxiliary-symbol>) => ()
   // By default, there is no need to fixup
 end method;
 
 define method fixup-coff-auxiliary-symbol
-    (coff-file :: <coff-file>, 
+    (coff-file :: <coff-file>,
      section :: <coff-section>,
-     symbol :: <coff-function-definition-auxiliary-symbol>) 
+     symbol :: <coff-function-definition-auxiliary-symbol>)
     => ()
   // Fixup the next-function reference, from the next-function-index
-  symbol.auxiliary-next-function 
+  symbol.auxiliary-next-function
     := symbol-at-index(coff-file, symbol.auxiliary-next-function-index);
   // Fixup the tag reference, from the tag-index
   symbol.auxiliary-tag
@@ -362,12 +362,12 @@ define method fixup-coff-auxiliary-symbol
 end method;
 
 define method fixup-coff-auxiliary-symbol
-    (coff-file :: <coff-file>, 
+    (coff-file :: <coff-file>,
      section :: <coff-section>,
-     symbol :: <coff-function-lines-auxiliary-symbol>) 
+     symbol :: <coff-function-lines-auxiliary-symbol>)
     => ()
   // Fixup the next-function reference, from the next-function-index
-  symbol.auxiliary-next-function 
+  symbol.auxiliary-next-function
     := symbol-at-index(coff-file, symbol.auxiliary-next-function-index);
 end method;
 
@@ -418,8 +418,8 @@ end method;
 
 
 define method read-line-numbers-for-section
-    (stream :: <stream>, 
-     coff-file :: <coff-file>, 
+    (stream :: <stream>,
+     coff-file :: <coff-file>,
      section :: <coff-section>) => ()
   let lines = section.line-numbers;
   let symbols = coff-file.symbols.ordered-data;
@@ -428,14 +428,14 @@ define method read-line-numbers-for-section
   for (count from 0 below section.linenumbers-number)
     let index-or-rva    = read-word(stream, coff-file);
     let number          = read-short(stream, coff-file);
-    add!(lines, 
+    add!(lines,
          if (number = 0)
-           make(<coff-line-number-symbol>, 
+           make(<coff-line-number-symbol>,
                 symbol: symbols[index-or-rva],
                 offset: file-pos);
          else
-           make(<coff-line-number-relative>, 
-                rva: index-or-rva, 
+           make(<coff-line-number-relative>,
+                rva: index-or-rva,
                 line-number: number,
                 offset: file-pos);
          end if);
@@ -445,7 +445,7 @@ end method;
 
 
 define method line-at-offset
-    (section :: <coff-section>, file-offset :: <integer>) 
+    (section :: <coff-section>, file-offset :: <integer>)
     => (line :: <coff-line-number>)
   block (return)
     for (line in section.line-numbers)
@@ -459,8 +459,8 @@ end method;
 
 
 define method read-relocations-for-section
-    (stream :: <stream>, 
-     coff-file :: <coff-file>, 
+    (stream :: <stream>,
+     coff-file :: <coff-file>,
      section :: <coff-section>) => ()
   let relocs = section.relocations;
   let symbols = coff-file.symbols.ordered-data;
@@ -470,12 +470,12 @@ define method read-relocations-for-section
     let sym-index  = read-word(stream, coff-file);
     let type       = read-short(stream, coff-file);
     let symbol     = symbols[sym-index];
-    let class = if (type == #x14) 
-                  <coff-relative-relocation> 
+    let class = if (type == #x14)
+                  <coff-relative-relocation>
                 else <coff-absolute-relocation>
                 end;
-    add!(relocs, make(class, 
-                      index: offset, symbol: symbol, 
+    add!(relocs, make(class,
+                      index: offset, symbol: symbol,
                       relocation-type: type));
   end for;
 end method;
@@ -483,9 +483,9 @@ end method;
 
 
 define method coff-string-at-index
-       (coff-file :: <coff-file>, offset :: <integer>) 
+       (coff-file :: <coff-file>, offset :: <integer>)
     => (str :: <coff-long-string>)
-  // start by finding the string from the ordered data, 
+  // start by finding the string from the ordered data,
   // and then use this to key into the table
   let strings = coff-file.strings;
   let data = strings.ordered-data;
@@ -500,11 +500,11 @@ end method;
 
 
 define method coff-string-from-name-field
-       (name-field :: <byte-string>) 
+       (name-field :: <byte-string>)
     => (str :: <coff-short-string>)
   let nul = as(<character>, 0);
   let null-pos = find-key(name-field, curry(\==, nul));
-  let name-string = if (null-pos) 
+  let name-string = if (null-pos)
                       copy-sequence(name-field, end: null-pos);
                     else name-field;
                     end;
@@ -517,14 +517,14 @@ end method;
 define method make-coff-file
    (machine :: <coff-short>) => (coff-file :: <coff-file>)
   block ()
-    error("Not a COFF file from a known machine: machine code is #X%x\n", 
+    error("Not a COFF file from a known machine: machine code is #X%x\n",
           machine);
-  exception (<simple-restart>, 
-             init-arguments: vector(format-string: 
+  exception (<simple-restart>,
+             init-arguments: vector(format-string:
                                     "Process as big-endian."))
     make(<coff-file>, machine: machine, big-endian?: #t);
-  exception (<simple-restart>, 
-             init-arguments: vector(format-string: 
+  exception (<simple-restart>,
+             init-arguments: vector(format-string:
                                     "Process as little-endian."))
     make(<coff-file>, machine: machine, big-endian?: #f);
   end block;
@@ -583,7 +583,7 @@ define method read-signed-word
 end method;
 
 
-define method read-word 
+define method read-word
     (stream :: <stream>, coff-file :: <coff-file>) => (word :: <coff-word>)
   let w0 = read-byte(stream);
   let w1 = read-byte(stream);

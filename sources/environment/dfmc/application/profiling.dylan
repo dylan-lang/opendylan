@@ -12,7 +12,7 @@ define constant $default-sampling-rate = 50;
 define constant $snapshot-values
   = #[#"cpu", #"wall", #"page-faults", #"allocation", #"class"];
 
-
+
 /// Profiler state
 
 define class <dfmc-application-profile-state> (<object>)
@@ -45,7 +45,7 @@ define method state-class-profiling?
   sampling-style == #"allocation"
 end method state-class-profiling?;
 
-
+
 /// Application profiles
 
 define class <dfmc-application-profile> (<application-profile>)
@@ -181,7 +181,7 @@ define method clear-application-class-breakpoint
      thread, state: #"running")
 end method clear-application-class-breakpoint;
 
-
+
 /// Application snapshots
 
 define class <dfmc-application-snapshot> (<application-snapshot>)
@@ -192,7 +192,7 @@ end class <dfmc-application-snapshot>;
 define sealed domain make (subclass(<dfmc-application-snapshot>));
 define sealed domain initialize (<dfmc-application-snapshot>);
 
-
+
 /// Thread snapshots
 
 define class <dfmc-thread-snapshot> (<thread-snapshot>)
@@ -278,7 +278,7 @@ define sealed method process-thread-snapshot-frame-snapshots
   remove!(map-as(<simple-object-vector>, compute-ip-frame-snapshot, ips), #f)
 end method process-thread-snapshot-frame-snapshots;
 
-
+
 /// Profile processing
 
 define sealed method process-profiling-results

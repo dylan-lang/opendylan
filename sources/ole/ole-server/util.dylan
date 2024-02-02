@@ -49,14 +49,14 @@ define method debug-out( format :: <string>, #rest format-args ) => ();
   values()
 end;
 
-
+
 
 define method use-error-status ( err :: <ole-error> ) => status :: <HRESULT>;
   debug-out("Caught %s\n", err);
   ole-error-status(err)
 end method;
 
-// Evaluate the body and return $S-OK.  
+// Evaluate the body and return $S-OK.
 // But if an OLE error is signalled, return the status code from the error.
 define macro returning-error-status
  { returning-error-status ?:body end }

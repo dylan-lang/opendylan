@@ -45,7 +45,7 @@ end class;
 //    The superclass of any stack frame that is specific to the dylan
 //    implementation that the DM knows about.
 
-define abstract class <implementation-stack-frame> 
+define abstract class <implementation-stack-frame>
      (<application-stack-frame>, <dylan-stack-frame-mixin>)
 end class;
 
@@ -168,7 +168,7 @@ define method merge-new-call-frame-vector
   // between each <call-frame> in the new (merged) vector, and each
   // <function-frame> in the access-path's vector.
 
-  let new-call-frame-vector 
+  let new-call-frame-vector
     = make(<vector>, size: size(new-access-path-vector));
 
   // Vectors are ordered newest to oldest!
@@ -186,7 +186,7 @@ define method merge-new-call-frame-vector
   while (ap-frame-i >= 0)
     let this-ap-frame = new-access-path-vector[ap-frame-i];
     if (can-recycle?)
-      let (dm-frame-to-use, new?) = 
+      let (dm-frame-to-use, new?) =
         make-or-recycle-call-frame(existing-vector[dm-frame-i],
                                    this-ap-frame);
       new-call-frame-vector[ap-frame-i] := dm-frame-to-use;
@@ -243,9 +243,9 @@ define method update-thread-stack-trace
     (application :: <debug-target>, thread :: <remote-thread>) => ()
   let dm-thread = find-thread(application, thread);
   unless (dm-thread.thread-stack-trace-valid?)
-    let dynamic-env = 
+    let dynamic-env =
        build-dynamic-environment
-         (application, 
+         (application,
           thread,
           thread-dynamic-environment(application, thread));
     let ap-calls =
@@ -299,8 +299,8 @@ define method sort-thread-stack-trace
     else
       // The final vector of frames must be as large as the combined
       // size of the call frame and unwind frame vectors.
-      sorted-frames := 
-        make(<vector>, 
+      sorted-frames :=
+        make(<vector>,
              size: size(dm-thread.dynamic-environment-vector) +
                    size(dm-thread.call-frame-vector));
 

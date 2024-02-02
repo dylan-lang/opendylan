@@ -160,7 +160,7 @@ define function box-pane-allocate-space
   end
 end function box-pane-allocate-space;
 
-
+
 /// Row panes, formerly known as hboxes
 
 define open abstract class <row-layout>
@@ -261,7 +261,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<row-layout-pane>));
 define sealed domain initialize (<row-layout-pane>);
 
-
+
 /// Column panes, formerly known as vboxes
 
 define open abstract class <column-layout>

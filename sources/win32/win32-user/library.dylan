@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Synopsis:  Win32 API for window functions implemented in "USER32.DLL".
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -49,7 +49,7 @@ define module Win32-user
   // Accessor for "WinMain" parameters:
   //   Make them accessible from both Win32-kernel and Win32-user
   use Win32-kernel,
-    import: { application-instance-handle, application-command-line, 
+    import: { application-instance-handle, application-command-line,
 	      application-show-window },
     export: { application-instance-handle, application-command-line,
 	      application-show-window };

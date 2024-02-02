@@ -65,7 +65,7 @@ define protocol <<figure-graphics-protocol>> ()
     (drawable :: <drawable>, color :: <rgb-color>, coord-seq :: <coordinate-sequence>) => (record);
 end protocol <<figure-graphics-protocol>>;
 
-
+
 /// DRAW-POINT
 
 define method draw-point
@@ -86,7 +86,7 @@ define function draw-point*
   draw-point(drawable, point-x(point), point-y(point))
 end function draw-point*;
 
-
+
 /// DRAW-POINTS
 
 define method draw-points
@@ -107,7 +107,7 @@ define function draw-points*
   draw-points(drawable, spread-point-sequence(points))
 end function draw-points*;
 
-
+
 /// DRAW-LINE and friends
 
 define method draw-line
@@ -208,7 +208,7 @@ define function draw-arrow*
         point-x(point2), point-y(point2), keys)
 end function draw-arrow*;
 
-
+
 /// DRAW-LINES
 
 define method draw-lines
@@ -229,7 +229,7 @@ define function draw-lines*
   draw-lines(drawable, spread-point-sequence(points))
 end function draw-lines*;
 
-
+
 /// DRAW-RECTANGLE
 
 define method draw-rectangle
@@ -261,7 +261,7 @@ define function draw-rectangle*
         point-x(point2), point-y(point2), keys)
 end function draw-rectangle*;
 
-
+
 /// DRAW-RECTANGLES
 
 define method draw-rectangles
@@ -291,7 +291,7 @@ define function draw-rectangles*
   apply(draw-rectangles, drawable, spread-point-sequence(points), keys)
 end function draw-rectangles*;
 
-
+
 /// DRAW-ROUNDED-RECTANGLE
 
 define method draw-rounded-rectangle
@@ -323,7 +323,7 @@ define function draw-rounded-rectangle*
         point-x(point2), point-y(point2), keys)
 end function draw-rounded-rectangle*;
 
-
+
 /// DRAW-POLYGON and friends
 
 define method draw-polygon
@@ -427,7 +427,7 @@ define function draw-triangle*
   end
 end function draw-triangle*;
 
-
+
 /// DRAW-ELLIPSE and friends
 
 define method draw-ellipse
@@ -539,7 +539,7 @@ define function draw-oval*
         x-radius, y-radius, keys)
 end function draw-oval*;
 
-
+
 /// DRAW-IMAGE
 
 define method draw-image
@@ -571,7 +571,7 @@ define method draw-image
   end
 end method draw-image;
 
-
+
 /// The rest of CLEAR-BOX
 
 // Some mediums can do better than this...
@@ -584,7 +584,7 @@ define sideways method clear-box
   end
 end method clear-box;
 
-
+
 /// DRAW-TEXT
 
 define method draw-text
@@ -623,7 +623,7 @@ define function draw-text*
   end
 end function draw-text*;
 
-
+
 /// DRAW-BEZIER-CURVE
 
 define method draw-bezier-curve
@@ -730,7 +730,7 @@ define method render-bezier-curve
   end
 end method render-bezier-curve;
 
-
+
 /// SET-PIXEL
 
 define method set-pixel
@@ -751,7 +751,7 @@ define function set-pixel*
   set-pixel(drawable, color, point-x(point), point-y(point))
 end function set-pixel*;
 
-
+
 /// SET-PIXELS
 
 define method set-pixels

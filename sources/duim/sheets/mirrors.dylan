@@ -101,7 +101,7 @@ define protocol <<mirror-protocol>> ()
     (port :: <abstract-port>, sheet :: <abstract-sheet>, mirror) => ();
 end protocol <<mirror-protocol>>;
 
-
+
 /// Mirrored sheets
 
 // A sealed protocol...
@@ -160,7 +160,7 @@ define method sheet-mirror-accepts-children?-setter
   accepts-children?
 end method sheet-mirror-accepts-children?-setter;
 
-
+
 /// Native transformation, only meaningful on mirrored sheets
 
 define method sheet-native-transform
@@ -301,7 +301,7 @@ define method sheet-native-edges
   transform-box(sheet-native-transform(sheet), left, top, right, bottom)
 end method sheet-native-edges;
 
-
+
 /// Mirror region stuff
 
 //--- Note: this doesn't behave like other 'sheet-XXX-edges' functions;
@@ -339,7 +339,7 @@ define method mirror-origin
   #"north-west"
 end method mirror-origin;
 
-
+
 /// Finding and making mirrors
 
 define method sheet-mirror
@@ -380,7 +380,7 @@ define method make-mirror
   mirror
 end method make-mirror;
 
-
+
 /// Mirror notifications
 
 define method note-sheet-mapped (sheet :: <mirrored-sheet-mixin>) => ()
@@ -422,7 +422,7 @@ define method repaint-within-parent
   #f
 end method repaint-within-parent;
 
-
+
 /// Mirror geometry notifications
 
 define method note-region-changed
@@ -527,7 +527,7 @@ define method note-mirror-geometry-changed
   end
 end method note-mirror-geometry-changed;
 
-
+
 /// Mirror-based repainting
 
 // Unmirrored sheets need to have DUIM call 'handle-repaint' on them

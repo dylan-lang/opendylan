@@ -1,5 +1,5 @@
 Module:    Dylan-User
-Synopsis:  Utility library for creating OLE container applications 
+Synopsis:  Utility library for creating OLE container applications
 	   using the Win32 API for the user interface.
 Author:    David N. Gray
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -36,14 +36,14 @@ define module OLE-Container
 	     $DVASPECT-DOCPRINT,
 	     $OLERENDER-NONE, $OLERENDER-DRAW, $OLERENDER-FORMAT,
 	     $OLERENDER-ASIS,
-	     
+
 	     <LPFORMATETC>, cfFormat-value, cfFormat-value-setter,
 	     ptd-value, ptd-value-setter,
 	     dwAspect-value, dwAspect-value-setter, lindex-value,
 	     lindex-value-setter, tymed-value, tymed-value-setter,
-	     
+
 	     $USERCLASSTYPE-FULL, $USERCLASSTYPE-SHORT,
-	     $USERCLASSTYPE-APPNAME  
+	     $USERCLASSTYPE-APPNAME
 	       };
   use OLE-Dialogs, // using OleUIInsertObject and OleUIAddVerbMenu
     export: { $IOF-SHOWHELP, $IOF-SELECTCREATENEW, $IOF-SELECTCREATEFROMFILE,
@@ -65,7 +65,7 @@ define module OLE-Container
   export <container-app>;
 
   // functions for the application to call:
-  export container-do-verb, container-add-verbs, 
+  export container-do-verb, container-add-verbs,
     container-remove-verbs, container-UI-deactivate;
   export container-palette-changed, container-activate-application;
   export container-size-changed;

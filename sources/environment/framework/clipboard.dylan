@@ -21,7 +21,7 @@ define open generic copy-object? (client, object) => (copy? :: <boolean>);
 define open generic paste-object? (client, object) => (paste? :: <boolean>);
 define open generic delete-object? (client, object) => (delete? :: <boolean>);
 
-
+
 /// Clipboard commands
 
 define class <frame-cut-command> (<frame-selection-command>)
@@ -36,7 +36,7 @@ end class <frame-paste-command>;
 define class <frame-delete-command> (<frame-selection-command>)
 end class <frame-delete-command>;
 
-
+
 /// Default implementations
 
 define method cut-object?
@@ -122,7 +122,7 @@ define method delete-object
   #f
 end method delete-object;
 
-
+
 /// Implementation for text gadgets
 
 define method cut-object?
@@ -273,7 +273,7 @@ define function clipboard-function-disabled-message
               owner: sheet-frame(gadget))
 end function clipboard-function-disabled-message;
 
-
+
 /// Clipboard command table
 
 define variable $cut-bitmap   :: <label-type> = "X";

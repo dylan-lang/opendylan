@@ -30,17 +30,17 @@ define method keyboard-instrument-setter
   select-midi-instrument
     (keyboard-midi-device(keyboard), keyboard-midi-channel(keyboard),
        instrument);
-  name                    
+  name
 end method;
 
-define method keyboard-instruments 
+define method keyboard-instruments
     (keyboard :: <keyboard>) => (instruments :: <list>)
   let instruments = #();
   do-midi-instruments(method (instrument) instruments := pair(midi-name(instrument), instruments) end);
   reverse!(instruments);
 end method;
 
-define method keyboard-play-note 
+define method keyboard-play-note
     (keyboard :: <keyboard>, note :: <integer>) => ()
   midi-on
     (keyboard-midi-device(keyboard), keyboard-midi-channel(keyboard),
@@ -48,7 +48,7 @@ define method keyboard-play-note
        keyboard-volume(keyboard));
 end method;
 
-define method keyboard-release-note 
+define method keyboard-release-note
     (keyboard :: <keyboard>, note :: <integer>) => ()
   midi-off
     (keyboard-midi-device(keyboard), keyboard-midi-channel(keyboard),
@@ -58,11 +58,11 @@ end method;
 define method keyboard-volume-update
     (keyboard :: <keyboard>, vol :: <integer>) => ()
   send-midi-message
-    (keyboard-midi-device(keyboard), $MIDI-parameter, 
+    (keyboard-midi-device(keyboard), $MIDI-parameter,
        keyboard-midi-channel(keyboard), 7 /* $midi-volume-parameter */, vol);
 end method;
 
-define method keyboard-bend-note 
+define method keyboard-bend-note
     (keyboard :: <keyboard>, bend :: <integer>) => ()
   midi-pitch-bend
     (keyboard-midi-device(keyboard), keyboard-midi-channel(keyboard),
@@ -72,7 +72,7 @@ end method;
 define method keyboard-balance
     (keyboard :: <keyboard>, balance :: <integer>) => ()
   send-midi-message
-    (keyboard-midi-device(keyboard), $MIDI-parameter, 
+    (keyboard-midi-device(keyboard), $MIDI-parameter,
        keyboard-midi-channel(keyboard), $midi-balance-parameter, balance);
 end method;
 
@@ -126,7 +126,7 @@ define frame <keyboard-frame> (<simple-frame>)
          children:
            vector(make(<menu-button>,
                        label: "New Keyboard",
-                       activate-callback: 
+                       activate-callback:
                          method (#rest args)
                            spawn-keyboard-frame();
                          end)));
@@ -135,36 +135,36 @@ define frame <keyboard-frame> (<simple-frame>)
     make(<option-box>,
          documentation: "Instrument",
          items: keyboard-instruments(frame-model(frame)),
-         scroll-bars: #"vertical", 
+         scroll-bars: #"vertical",
          accepts-focus?: #f,
          value-changed-callback:
            method (pane :: <option-box>)
-             keyboard-instrument(frame-model(sheet-frame(pane))) 
+             keyboard-instrument(frame-model(sheet-frame(pane)))
                := gadget-value(pane);
              frame-input-focus(frame) := keyboard-pane(frame);
            end);
 
   pane keyboard-pane (frame)
     frame-input-focus(frame)
-      := make(<keyboard-pane>, 
-              activate-callback: 
+      := make(<keyboard-pane>,
+              activate-callback:
                 method (sheet :: <keyboard-pane>, note :: <integer>) => ()
                   keyboard-play-note(frame-model(sheet-frame(sheet)), note);
                 end,
-              deactivate-callback: 
+              deactivate-callback:
               method (sheet :: <keyboard-pane>, note :: <integer>) => ()
                 keyboard-release-note(frame-model(sheet-frame(sheet)), note);
               end,
               key-map-callback:
-                method (sheet :: <keyboard-pane>, key :: <symbol>) 
+                method (sheet :: <keyboard-pane>, key :: <symbol>)
                  => (note :: false-or(<integer>))
                   qwerty-key-map(key)
                 end);
 
   pane volume-pane (frame)
-    make(<slider>, 
+    make(<slider>,
          documentation: "Volume",
-         orientation: #"vertical", 
+         orientation: #"vertical",
          value-range: range(from: 127, to: 0, by: -1),
          value: 127,
          accepts-focus?: #f,
@@ -175,9 +175,9 @@ define frame <keyboard-frame> (<simple-frame>)
            end);
 
   pane pitch-bend-pane (frame)
-    make(<slider>, 
+    make(<slider>,
          documentation: "Pitch bend",
-         orientation: #"vertical", 
+         orientation: #"vertical",
          value-range: range(from: #x3FFF, to: 1, by: -1),
          value: #x2000,
          accepts-focus?: #f,
@@ -188,10 +188,10 @@ define frame <keyboard-frame> (<simple-frame>)
            end);
 
   pane balance-pane (frame)
-    make(<slider>, 
+    make(<slider>,
          documentation: "Balance",
-         orientation: #"horizontal", 
-         value-range: 
+         orientation: #"horizontal",
+         value-range:
            range(from: $midi-balance-full-left, to: $midi-balance-full-right),
          value: $midi-balance-central,
          accepts-focus?: #f,
@@ -222,7 +222,7 @@ define frame <keyboard-frame> (<simple-frame>)
   menu-bar (frame)
     make(<menu-bar>,
          children: vector(file-menu(frame)));
-  
+
   layout (frame)
     main-layout(frame);
 
@@ -242,7 +242,7 @@ define method keyboard-frame (#key channel = #f)
   *next-free-channel* := *next-free-channel* + 1;
   // with-open-midi-device (dev)
     let state = make(<keyboard>, midi-device: dev, midi-channel: channel);
-    let frame = make(<keyboard-frame>, 
+    let frame = make(<keyboard-frame>,
                      title: format-to-string("MIDI channel %s", channel-no),
                      model: state,
                      width: 540, height: 190);

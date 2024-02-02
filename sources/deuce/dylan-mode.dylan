@@ -161,7 +161,7 @@ define method source-file-type
   #"dylan"
 end method source-file-type;
 
-
+
 /// Dylan sections
 
 define sealed class <dylan-section> (<definition-section>)
@@ -322,7 +322,7 @@ define sealed method line-size
   end
 end method line-size;
 
-
+
 /// Presentations
 
 define method do-cursor-at-position
@@ -529,7 +529,7 @@ define method dylan-definition-line-menu
                    label-key: first, value-key: second)
 end method dylan-definition-line-menu;
 
-
+
 /// Dylan sectionizer
 
 /*
@@ -1209,7 +1209,7 @@ define method find-non-blank-line
   end
 end method find-non-blank-line;
 
-
+
 /// Dylan parsing
 
 define sealed method do-relevant-function-interval
@@ -1274,7 +1274,7 @@ define sealed method do-move-up-or-down-expressions
   move-up-or-down-lists(bp, n, fixup?: fixup?, interval: interval)
 end method do-move-up-or-down-expressions;
 
-
+
 /// Dylan signatures
 
 define sealed method compute-file-signatures
@@ -1511,7 +1511,7 @@ define sealed method parse-dylan-signature
   end
 end method parse-dylan-signature;
 
-
+
 /// Dylan comments and indentation
 
 define method do-insert-comment
@@ -1881,7 +1881,7 @@ define command dylan-insert-block-end (frame)
   frame-last-command-type(frame) := #"insert"
 end command dylan-insert-block-end;
 
-
+
 /// Breakpoints
 
 define method line-breakpoint?
@@ -1907,7 +1907,7 @@ define method line-breakpoint?-setter
   state
 end method line-breakpoint?-setter;
 
-
+
 /// Dylan shells
 
 define open class <dylan-shell-mode> (<shell-mode>)

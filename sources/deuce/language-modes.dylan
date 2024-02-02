@@ -113,7 +113,7 @@ end protocol <<language-major-mode>>;
 define open abstract class <language-mode> (<major-mode>)
 end class <language-mode>;
 
-
+
 /// Purely syntactic language-mode operations
 
 // The default method doesn't need to do anything, because the act of
@@ -211,7 +211,7 @@ define method do-comment-region
   #f
 end method do-comment-region;
 
-
+
 /// Stubs for operations that require querying an environment
 
 define method do-edit-definition
@@ -422,7 +422,7 @@ define method line-breakpoint-icon
           end
 end method line-breakpoint-icon;
 
-
+
 /// Line display with breakpoint icons
 
 //--- Need a more modular way to do this

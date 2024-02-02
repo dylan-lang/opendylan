@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $y-spacing = 6;
 define constant $x-spacing = 20;
 
-
+
 /// Profiler summary
 
 define frame <profiler-summary> (<simple-frame>)

@@ -186,7 +186,7 @@ end;
 
 define inline function MAKELPARAM(l, h); MAKELONG(l, h) end;
 
-
+
 
 define inline-only constant $ACTCTX-FLAG-RESOURCE-NAME-VALID = #x00000008;
 define inline-only constant $ACTCTX-FLAG-HMODULE-VALID       = #x00000080;

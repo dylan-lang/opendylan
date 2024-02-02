@@ -45,7 +45,7 @@ define method CSimpleDoc-Create(lpApp :: <CSimpleApp>, lpRect :: <LPRECT>,
 	=> value :: <CSimpleDoc>;
 
   block(return)
-	
+
     let lpTemp :: <CSimpleDoc> = make(<CSimpleDoc>, lpApp: lpApp, hWnd: hWnd);
 
     // create storage for the doc.
@@ -225,14 +225,14 @@ define method terminate (this :: <CSimpleDoc>) => ();
   // Release all pointers we hold to the OLE object. also release
   // the ref count added in CSimpleSite::Create. this will make
   // the Site's ref count go to 0, and the Site will be deleted.
-  unless ( null?(this.m-lpSite) ) 
+  unless ( null?(this.m-lpSite) )
     UnloadOleObject(this.m-lpSite);
     Release(this.m-lpSite);
     this.m-lpSite := #f;
   end unless;
 
   // Release the Storage
-  unless ( null?(this.m-lpStorage) ) 
+  unless ( null?(this.m-lpStorage) )
     Release(this.m-lpStorage);
     this.m-lpStorage := $null-interface;
   end unless;
@@ -240,14 +240,14 @@ define method terminate (this :: <CSimpleDoc>) => ();
   // if the edit menu was modified, remove the menu item and
   // destroy the popup if it exists
   if ( this.m-fModifiedMenu )
-	        
+
     let nCount :: <integer> = GetMenuItemCount(this.m-lpApp.m-hEditMenu);
     RemoveMenu(this.m-lpApp.m-hEditMenu, nCount -  1, $MF-BYPOSITION);
     unless ( null-handle?(this.m-lpApp.m-hCascadeMenu) )
       DestroyMenu(this.m-lpApp.m-hCascadeMenu);
     end unless;
   end if;
-  
+
   DestroyWindow(this.m-hDocWnd);
   values()
 end method terminate;
@@ -364,7 +364,7 @@ define method InsertObject(this :: <CSimpleDoc>) => ();
   io.lpszFile-value := szFile;
   io.cchFile-value := $MAX-PATH;
   clear-memory!(szFile, $MAX-PATH);
-  
+
   // call OUTLUI to do all the hard work
   let iret :: <integer> = OleUIInsertObject(io);
 
@@ -377,13 +377,13 @@ define method InsertObject(this :: <CSimpleDoc>) => ();
     DisableInsertObject(this);
   else
     unless ( iret = $OLEUI-CANCEL )
-      MessageBox($NULL-HWND,  
+      MessageBox($NULL-HWND,
 		 format-to-string("OleUIInsertObject error %d\n(%s)"
 				    "\n\nOleCreate* scode = %=",
 				  iret,  insert_error_name(iret),
-				  io.sc-value), 
-		 "Insertion failure", /* window title */ 
-		 /* icon and button: */ 
+				  io.sc-value),
+		 "Insertion failure", /* window title */
+		 /* icon and button: */
 		 (logior( $MB-ICONEXCLAMATION, $MB-OK)));
     end unless;
     Release(site);
@@ -396,8 +396,8 @@ define method InsertObject(this :: <CSimpleDoc>) => ();
  values()
 end method InsertObject;
 
-define method insert_error_name(err :: <integer>) => name :: <string>; 
-  select ( err ) 
+define method insert_error_name(err :: <integer>) => name :: <string>;
+  select ( err )
     $OLEUI-IOERR-LPSZFILEINVALID =>       "OLEUI_IOERR_LPSZFILEINVALID";
     $OLEUI-IOERR-LPSZLABELINVALID =>      "OLEUI_IOERR_LPSZLABELINVALID";
     $OLEUI-IOERR-HICONINVALID =>          "OLEUI_IOERR_HICONINVALID";
@@ -450,12 +450,12 @@ define method lResizeDoc(this :: <CSimpleDoc>, lpRect :: <LPRECT>)
   // just move the document window.
   if ( this.m-fInPlaceActive )
     IOleInPlaceActiveObject/ResizeBorder(this.m-lpActiveObject, lpRect,
-					 this.m-lpApp.m-OleInPlaceFrame, #t); 
+					 this.m-lpApp.m-OleInPlaceFrame, #t);
   else
     MoveWindow(this.m-hDocWnd, lpRect.left-value, lpRect.top-value,
 	       lpRect.right-value, lpRect.bottom-value, #t);
   end if;
-  
+
   0
 end method lResizeDoc;
 
@@ -496,7 +496,7 @@ define method lAddVerbs(this :: <CSimpleDoc>) => value :: <integer>;
   // to be done again.
   if ( ~ null?(this.m-lpSite)
 	& ~ this.m-fInPlaceActive & ~ this.m-fModifiedMenu )
-	        
+
     let nCount :: <integer> = GetMenuItemCount( this.m-lpApp.m-hEditMenu);
 
     let ( ok :: <boolean>, menu :: <HMENU> ) =

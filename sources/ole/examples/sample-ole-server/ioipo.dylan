@@ -36,11 +36,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define method IOleInPlaceObject/InPlaceDeactivate(this :: <COleInPlaceObject>) 
+define method IOleInPlaceObject/InPlaceDeactivate(this :: <COleInPlaceObject>)
 	=> status :: <HRESULT>;
 
   block(return)
-	
+
     OutputDebugString("In COleInPlaceObject::InPlaceDeactivate\r\n");
 
     // if not inplace active, return NOERROR
@@ -59,7 +59,7 @@ define method IOleInPlaceObject/InPlaceDeactivate(this :: <COleInPlaceObject>)
 
     // tell the container that we are deactivating.
     unless ( null?(lpObj.m-lpIPSite) )
-		 
+
       IOleInPlaceSite/OnInPlaceDeactivate(lpObj.m-lpIPSite);
       Release(lpObj.m-lpIPSite);
       lpObj.m-lpIPSite := $NULL-interface;
@@ -191,7 +191,7 @@ define method IOleInPlaceObject/SetObjectRects(this :: <COleInPlaceObject>,
 	     resRect.bottom-value - resRect.top-value, #t);
 
   destroy(resRect);
-  $S-OK 
+  $S-OK
 end method IOleInPlaceObject/SetObjectRects;
 
 //**********************************************************************
@@ -223,7 +223,7 @@ end method IOleInPlaceObject/SetObjectRects;
 //********************************************************************
 
 
-define method IOleWindow/GetWindow(this :: <COleInPlaceObject>) 
+define method IOleWindow/GetWindow(this :: <COleInPlaceObject>)
  => ( status :: <HRESULT>, hwnd :: <HWND> );
 
   OutputDebugString("In COleInPlaceObject::GetWindow\r\n");
@@ -267,7 +267,7 @@ end method IOleWindow/GetWindow;
 
 
 define method IOleWindow/ContextSensitiveHelp(this :: <COleInPlaceObject>,
-				   fEnterMode :: <boolean>) 
+				   fEnterMode :: <boolean>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In COleInPlaceObject::ContextSensitiveHelp\r\n");
@@ -304,7 +304,7 @@ end method IOleWindow/ContextSensitiveHelp;
 //********************************************************************
 
 
-define method IOleInPlaceObject/ReactivateAndUndo(this :: <COleInPlaceObject>) 
+define method IOleInPlaceObject/ReactivateAndUndo(this :: <COleInPlaceObject>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In COleInPlaceObject::ReactivateAndUndo\r\n");

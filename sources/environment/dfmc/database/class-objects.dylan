@@ -328,7 +328,7 @@ define sealed method application-object-class
   find-environment-object(server, $<generic-function>-id)
 end method application-object-class;
 
-
+
 /// Macro calls
 
 //--- A class expands into its getters and setters

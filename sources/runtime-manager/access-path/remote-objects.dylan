@@ -156,16 +156,16 @@ end method;
 
 ///// GENERIC FUNCTIONS
 
-define open generic do-processes 
+define open generic do-processes
   (function :: <function>, dc :: <debugger-connection>) => ();
 
 define generic do-threads (function :: <function>, ap :: <access-path>) => ();
 
-define generic do-libraries 
+define generic do-libraries
   (function :: <function>, ap :: <access-path>) => ();
 
-define generic thread-priority 
-  (t :: <remote-thread>, #key normalize? = #t) 
+define generic thread-priority
+  (t :: <remote-thread>, #key normalize? = #t)
     => (p :: <number>);
 
 
@@ -182,8 +182,8 @@ define open generic get-process-page-fault-count-on-connection
 
 ///// THREAD-PRIORITY
 
-define method thread-priority 
-  (t :: <remote-thread>, #key normalize? = #t) 
+define method thread-priority
+  (t :: <remote-thread>, #key normalize? = #t)
      => (p :: <number>)
   t.os-thread-priority;
 end method;
@@ -222,7 +222,7 @@ define open generic get-thread-cpu-time-on-connection
 
 ///// DO-LIBRARIES
 
-define method do-libraries 
+define method do-libraries
     (function :: <function>, ap :: <access-path>) => ()
   for (this-library in ap.libraries)
     function (this-library);
@@ -235,7 +235,7 @@ end method;
 //    across all thread information from the debugger nub and construct
 //    a high-level <remote-thread> object.
 
-define open generic construct-thread-object 
+define open generic construct-thread-object
    (conn :: <access-connection>, thread :: <NUBTHREAD>,
     #key)
  => (thread :: <remote-thread>);
@@ -250,7 +250,7 @@ define open generic construct-thread-object
 //    given descriptor. If it is found, it is returned. Otherwise, a new
 //    thread is added to the list and returned.
 
-define method find-or-make-thread 
+define method find-or-make-thread
   (ap :: <access-path>, thread :: <NUBTHREAD>,
    #key priority)
      => (thread :: <remote-thread>)
@@ -276,7 +276,7 @@ end method;
 ///// CONSTRUCT-LIBRARY-OBJECT
 //    Similar to CONSTRUCT-THREAD-OBJECT.
 
-define open generic construct-library-object 
+define open generic construct-library-object
   (conn :: <access-connection>, lib :: <NUBLIBRARY>)
     => (lib :: <remote-library>);
 
@@ -284,7 +284,7 @@ define open generic construct-library-object
 ///// FIND-OR-MAKE-LIBRARY
 //    Similar to FIND-OR-MAKE-THREAD
 
-define method find-or-make-library 
+define method find-or-make-library
   (ap :: <access-path>, lib :: <NUBLIBRARY>)
      => (lib :: <remote-library>)
   let i = 0;

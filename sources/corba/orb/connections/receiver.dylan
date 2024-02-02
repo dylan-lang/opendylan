@@ -140,7 +140,7 @@ define method process-reply (type == 6, // #"messageerror"
 			     marshalling-stream :: <marshalling-stream>,
 			     connection :: <connection>,
 			     giop-header :: giop/<messageheader-1-0>)
-  
+
   // ---*** what to do here? Lisp ORB tries changing protocol from 1.1 for 1.0
   debug-out(#"connection", "Received message error.");
 end method;

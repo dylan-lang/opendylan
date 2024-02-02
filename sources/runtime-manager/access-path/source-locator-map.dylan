@@ -94,7 +94,7 @@ end method;
 ///// FUNCTION-RECORDED-SOURCE-LOCATIONS
 //    A convenience function.
 //    If the given symbol denotes a function, and the runtime debug tables
-//    contain one or more source location positions belonging to that 
+//    contain one or more source location positions belonging to that
 //    function, this will return:
 //      - The name of the source file, exactly how it is represented in the
 //        debug info. This contains a completely undefined amount of
@@ -167,7 +167,7 @@ define method nearest-source-locations
   let address-behind = #f;
   let i = 0;
   for (line-offset-pair in slm.line-offset-pairs)
-    let this-address = 
+    let this-address =
        byte-indexed-remote-value
            (slm.associated-function.remote-symbol-address,
             if (instance?(tail(line-offset-pair), <integer>))

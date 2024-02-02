@@ -71,7 +71,7 @@ define method new-choose-from-dialog
   end
 end method new-choose-from-dialog;
 
-
+
 /// Multiple values dialog
 
 define frame <multiple-values-dialog> (<dialog-frame>)
@@ -140,7 +140,7 @@ define method choose-multiple-values
   end
 end method choose-multiple-values;
 
-
+
 /// Simple wizard example
 
 define frame <simple-wizard-example> (<wizard-frame>)
@@ -191,7 +191,7 @@ define method choose-from-wizard
   end
 end method choose-from-wizard;
 
-
+
 /// Simple Dialogs frame
 
 define method show-result (frame :: <simple-frame>, value) => ()

@@ -97,7 +97,7 @@ define method handle-semantic-button-event
   #f
 end method handle-semantic-button-event;
 
-
+
 /// Concrete implementation of active labels
 
 define sealed class <active-label-pane>

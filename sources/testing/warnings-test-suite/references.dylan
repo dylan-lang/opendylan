@@ -71,7 +71,7 @@ ignore(function-with-unreferenced-argument,
        unreferenced-value,
        <unreferenced-slot-class>);
 
-
+
 /// Undefined references
 
 define class <class-with-undefined-superclass> (<undefined-superclass>)

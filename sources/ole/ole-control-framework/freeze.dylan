@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // from the Polyline example before freeze support was removed.
 // Unfinished and not yet used.
 
-define COM-interface <CViewObject> ( <IViewObject2> ) 
+define COM-interface <CViewObject> ( <IViewObject2> )
   slot get-obj :: <ole-server-framework>,
 		required-init-keyword: server-framework: ;
   slot frozen-aspects :: <fixnum> = 0;
@@ -33,11 +33,11 @@ define method IViewObject/Draw (this :: <CViewObject>,
  => (status :: <HRESULT>)
 
   Output-Debug-String("IViewObject/Draw\r\n");
-    
+
   // Delegate iconic and printed representations.
   if ( ~ logtest(logior($DVASPECT-CONTENT, $DVASPECT-THUMBNAIL),
 		 aspect) )
-    
+
     /* return */
     IViewObject/Draw(this.default-IViewObject, aspect, piece-index,
 		     aspect-info, device-info, hICDev, hDC, pRectBounds,
@@ -46,17 +46,17 @@ define method IViewObject/Draw (this :: <CViewObject>,
     let pl :: <POLYLINEDATA>;
     let obj = this.get-obj;
     let ppl :: <PPOLYLINEDATA> = %addr obj.m-pl;
-  
+
     /*
      * If we're asked to draw a frozen aspect, use the data from
      * a copy we made in IViewObject::Freeze.  Otherwise use the
      * current data.
-     */ 
+     */
     if ( logtest(aspect, this.frozen-aspects) )
-	
+
       // Point to the data to actually use.
       if ( $DVASPECT-CONTENT = aspect )
-	ppl := %addr obj.m-plContent; 
+	ppl := %addr obj.m-plContent;
       else
 	ppl := %addr obj.m-plThumbnail;
       end if;
@@ -69,7 +69,7 @@ define method IViewObject/Draw (this :: <CViewObject>,
     /*
      * If we're going to a printer, check if it's color capable.
      * if not, then use black on white for this figure.
-     */ 
+     */
     unless ( null-pointer?(hICDev) )
       if ( GetDeviceCaps(hICDev, $NUMCOLORS) <= 2 )
 	pl.rgbBackground := RGB(255, 255, 255);
@@ -92,7 +92,7 @@ define method IViewObject/Freeze (this :: <CViewObject>,
 				  aspect-info :: <LPVOID>)
  => (status :: <HRESULT> :: freeze-key :: <fixnum>)
 
-  Output-Debug-String("IViewObject/Freeze\r\n");    
+  Output-Debug-String("IViewObject/Freeze\r\n");
 
   // Delegate anything for ICON or DOCPRINT aspects
   if ( ~ logtest(logior($DVASPECT-CONTENT, $DVASPECT-THUMBNAIL), aspect) )
@@ -107,7 +107,7 @@ define method IViewObject/Freeze (this :: <CViewObject>,
      * For whatever aspects become frozen, make a copy of the data.
      * Later when drawing, if such a frozen aspect is requested,
      * we'll draw from this data rather than from our current data.
-     */ 
+     */
     let obj = this.get-obj;
     if ( logtest($DVASPECT-CONTENT, aspect) )
       memcpy(%addr obj.m-plContent, %addr obj.m-pl, CBPOLYLINEDATA);
@@ -143,7 +143,7 @@ define method IViewObject/Unfreeze (this :: <CViewObject>,
 				    freeze-key :: <fixnum>)
  => (status :: <HRESULT>)
 
-  Output-Debug-String("IViewObject/Unfreeze\r\n");    
+  Output-Debug-String("IViewObject/Unfreeze\r\n");
   let aspect :: <unsigned-fixnum> = freeze-key - $FREEZE-KEY-OFFSET;
 
   // Delegate anything for ICON or DOCPRINT aspects
@@ -161,7 +161,7 @@ define method IViewObject/Unfreeze (this :: <CViewObject>,
      * have to do anything thing here like requesting data again.
      * Because we removed aspect from frozen-aspects, Draw
      * will again use the current data.
-     */ 
+     */
 
   $S-OK
 end method IViewObject/Unfreeze;

@@ -213,19 +213,19 @@ define method IOleObject/DoVerb(this :: <COleObject>,
 	=> status :: <HRESULT>;
 
  block(return)
-	
+
    OutputDebugString("In COleObject::DoVerb\r\n");
 
    select ( iVerb )
-		
-     $OLEIVERB-SHOW, $OLEIVERB-PRIMARY => 
+
+     $OLEIVERB-SHOW, $OLEIVERB-PRIMARY =>
        if ( this.m-fOpen )
-	 SetFocus(GethAppWnd(this.m-lpObj.m-lpDoc)); 
+	 SetFocus(GethAppWnd(this.m-lpObj.m-lpDoc));
        elseif ( DoInPlaceActivate(this.m-lpObj, iVerb) = #f )
 	 OpenEdit(this, pActiveSite);
        end if;
-       
-     $OLEIVERB-UIACTIVATE => 
+
+     $OLEIVERB-UIACTIVATE =>
        if ( this.m-fOpen )
 	 return( $E-FAIL );
        end if;
@@ -235,26 +235,26 @@ define method IOleObject/DoVerb(this :: <COleObject>,
 	 return( $E-FAIL );
        end unless;
 
-     $OLEIVERB-DISCARDUNDOSTATE => 
+     $OLEIVERB-DISCARDUNDOSTATE =>
        // don't have to worry about this situation as we don't
        // support an undo state.
        unless ( this.m-lpObj.m-fInPlaceActive )
 	 return( $OLE-E-NOT-INPLACEACTIVE );
        end unless;
 
-     $OLEIVERB-HIDE => 
+     $OLEIVERB-HIDE =>
        // if inplace active, do an "inplace" hide, otherwise
        // just hide the app window.
        if ( this.m-lpObj.m-fInPlaceActive )
-				
+
 	 DeactivateUI(this.m-lpObj);
 	 DoInPlaceHide(this.m-lpObj);
-				
+
        else
 	 HideAppWnd(GetApp(this.m-lpObj.m-lpDoc));
        end if;
 
-     $OLEIVERB-OPEN, $VERB-OPEN => 
+     $OLEIVERB-OPEN, $VERB-OPEN =>
        // if inplace active, deactivate
        if ( this.m-lpObj.m-fInPlaceActive )
 	 IOleInPlaceObject/InPlaceDeactivate(this.m-lpObj.m-OleInPlaceObject);
@@ -263,11 +263,11 @@ define method IOleObject/DoVerb(this :: <COleObject>,
        // open into another window.
        OpenEdit(this, pActiveSite);
 
-     otherwise => 
+     otherwise =>
        if ( iVerb < 0 )
 	 return( $E-FAIL );
        end if;
-		
+
    end select;
 
    return( $S-OK );
@@ -315,7 +315,7 @@ define method IOleObject/GetExtent(this :: <COleObject>,
 
   // Only DVASPECT_CONTENT is supported....
   if ( dwDrawAspect = $DVASPECT-CONTENT )
-		
+
     sc := $S-OK;
 
     // return the correct size in HIMETRIC...
@@ -438,11 +438,11 @@ end method IOleObject/Close;
 define method IOleObject/Unadvise(this :: <COleObject>,
 				  dwConnection :: <integer>)
  => status :: <HRESULT>;
-	
+
   OutputDebugString("In COleObject::Unadvise\r\n");
 
   // pass on to OleAdviseHolder.
-  /* return */ 
+  /* return */
   IOleAdviseHolder/Unadvise(this.m-lpObj.m-lpOleAdviseHolder, dwConnection);
 end method IOleObject/Unadvise;
 
@@ -556,7 +556,7 @@ define method IOleObject/SetMoniker(this :: <COleObject>,
 			 pmk :: <LPMONIKER>) => status :: <HRESULT>;
 
   block(return)
-	
+
     OutputDebugString("In COleObject::SetMoniker\r\n");
 
     if ( null?(GetOleClientSite(this.m-lpObj)) )
@@ -578,7 +578,7 @@ define method IOleObject/SetMoniker(this :: <COleObject>,
     let ( status :: <HRESULT>, lpRot :: <LPRUNNINGOBJECTTABLE> ) =
       GetRunningObjectTable(0);
     if ( status = $NOERROR )
-		
+
       if ( this.m-lpObj.m-dwRegister ~= 0 )
 	IRunningObjectTable/Revoke(lpRot, this.m-lpObj.m-dwRegister);
       end if;
@@ -712,7 +712,7 @@ end method IOleObject/InitFromData;
 
 
 define method IOleObject/GetClipboardData(this :: <COleObject>, dwReserved)
-					  
+
 	=> (status :: <HRESULT>, pDataObject :: <Interface>)
 
   OutputDebugString("In COleObject::GetClipboardData\r\n");
@@ -899,7 +899,7 @@ end method IOleObject/SetExtent;
 
 define method IOleObject/EnumAdvise(this :: <COleObject>)
 	=> ( status :: <HRESULT>,  penumAdvise :: <Interface>);
-	
+
   OutputDebugString("In COleObject::EnumAdvise\r\n");
 
   // pass on to the OLE Advise holder.

@@ -142,7 +142,7 @@ define sealed method generate-frame-title
   end
 end method generate-frame-title;
 
-
+
 /// Window settings
 
 define cascading-window-settings
@@ -172,7 +172,7 @@ define method restore-window-settings
               $debugger-settings.interactor-pane-ratio);
 end method restore-window-settings;
 
-
+
 /// Debugger virtual slots
 
 // Returns whichever of the interactor panes is currently mapped.
@@ -187,7 +187,7 @@ define function debugger-interactor-pane
   end
 end function;
 
-
+
 /// Debugger thread handling
 
 define method application-default-thread
@@ -264,7 +264,7 @@ define method frame-note-application-threads-changed
   end
 end method frame-note-application-threads-changed;
 
-
+
 /// Debugger layout handling
 
 /// This is basically a "write-only" slot.  Writing it resets the
@@ -352,7 +352,7 @@ define function debugger-auto-zoom
   end select;
 end function debugger-auto-zoom;
 
-
+
 /// Debugger reuse
 
 define function do-project-debuggers
@@ -404,7 +404,7 @@ define sealed sideways method find-debugger-from-environment
   end if;
 end method find-debugger-from-environment;
 
-
+
 /// Debugger startup
 
 define method choose-debugger-for-thread
@@ -536,7 +536,7 @@ define function enable-debugger
   end
 end function enable-debugger;
 
-
+
 /// Debugger refreshing
 
 define method refresh-frame (debugger :: <debugger>) => ()
@@ -622,7 +622,7 @@ define function debugger-unchanged-during-interaction?
   end;
 end function;
 
-
+
 /// Debugger shutdown
 
 define function disable-debugger

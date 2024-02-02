@@ -1,5 +1,5 @@
-module:    dylan-user	
-Synopsis:  This is a Dylan library to act as an interface to the 
+module:    dylan-user
+Synopsis:  This is a Dylan library to act as an interface to the
 	   OLE common dialogs library (OLEDLG.H and OLEDLG.DLL).
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -33,7 +33,7 @@ define module Ole-Dialogs
   use COM-internal; // need: <C-HRESULT>
   use Win32-dialog,
     // slot accessors used in both libraries:
-    export: { lpfnHook-value, lpfnHook-value-setter, 
+    export: { lpfnHook-value, lpfnHook-value-setter,
 	     lCustData-value, lCustData-value-setter,
 	     hWndOwner-value, hWndOwner-value-setter,
 	     lpOFN-value, lpOFN-value-setter };

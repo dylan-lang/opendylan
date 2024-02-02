@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// MOVE WORD ECX field-width
 /// ASL2 WORD z ECX
 /// DEC  WORD z                    Provide the decrement ins specially here
-/// AND2 WORD dest z 
+/// AND2 WORD dest z
 
 ///
 /// Overall we need 2 registers (z, offset), of which offset must
@@ -27,7 +27,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 with-ops-in pentium-instructions (ldbits, extract-bits)
-  clash-fn 
+  clash-fn
   :=  pentium-method (duuu)
         list(list(duuu-def(1), duuu-uze(2)),
 	     list(duuu-def(1), duuu-uze(3)));
@@ -35,7 +35,7 @@ with-ops-in pentium-instructions (ldbits, extract-bits)
 
   destroys-fn := ecx-fn;
 
-  c-preserved-destroys-fn 
+  c-preserved-destroys-fn
     :=  pentium-method (duuu)
           destroys-tmp1-if(const-ref(duuu-uze(3)));
         end pentium-method;
@@ -59,7 +59,7 @@ define pentium-template extract-bits
     unless (d == w) harp-out (be) move(be, d, w) end end;
     do-the-shift(be, lsr2, d, o); // shift it down by offset (in ECX) ???? Y.
     call-local(and2, be, d, lognot(ash(-1, f)));
-  
+
   pattern (be, d, w, o, f)
     unless (d == w) harp-out (be) move(be, d, w) end end;
     do-the-shift(be, lsr2, d, o); // shift it down by offset (in ECX) ???? Y.
@@ -123,11 +123,11 @@ define method pentium-rotate
 end method;
 
 
-define method rol2m (be :: <harp-x86-back-end>, place, amount) 
+define method rol2m (be :: <harp-x86-back-end>, place, amount)
   pentium-rotate(be, #b000000, place, amount);
 end;
 
-define method ror2m (be :: <harp-x86-back-end>, place, amount) 
+define method ror2m (be :: <harp-x86-back-end>, place, amount)
   pentium-rotate(be, #b001000, place, amount);
 end;
 
@@ -139,7 +139,7 @@ end;
 with-ops-in pentium-instructions (stbits, set-bits)
   disallow-fn := constant-fn(vector(ecx, reg--tmp3));
   destroys-fn := constant-fn(vector(ecx, esi, reg--tmp3));
-  c-preserved-destroys-fn := all-c-preserved-fn; 
+  c-preserved-destroys-fn := all-c-preserved-fn;
 end;
 
 
@@ -204,7 +204,7 @@ define pentium-template set-bits
   pattern (be, d :: <real-register> by colour, w, o :: <integer>, f, s)
     unless (d == w) harp-out (be) move(be, d, w) end end;
     ror2m(be, d, o);
-    harp-out (be) 
+    harp-out (be)
       move(be, reg--tmp1, s);
       move(be, ecx, f);			// setup ecx
     end;
@@ -217,7 +217,7 @@ define pentium-template set-bits
 
   pattern (be, d :: <real-register> by colour, w, o, f, s)
     unless (d == w) harp-out (be) move(be, d, w) end end;
-    harp-out (be) 
+    harp-out (be)
       move(be, reg--tmp1, s);
       move(be, ecx, o);			// setup ecx
     end;
@@ -252,8 +252,8 @@ define pentium-template (bits-mem, bitc-mem)
   options (self);
 
   // Handle the case where 2 of the args are constants
-  pattern (be, i :: <integer> by op-info, r, s :: <integer>, 
-           o :: <integer>, bit :: <m/spill-ref> by colour) 
+  pattern (be, i :: <integer> by op-info, r, s :: <integer>,
+           o :: <integer>, bit :: <m/spill-ref> by colour)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let bn = ensure-mreg(be, bit, tmps);
@@ -262,8 +262,8 @@ define pentium-template (bits-mem, bitc-mem)
     emit-reg-offset(be, rn, offset, bn.ex-reg);
 
   // Handle the case where 2 of the args are constants as is operand 2
-  pattern (be, i :: <integer> by op-info, r, s :: <integer>, 
-           o :: <integer>, bit :: <integer> of eight-bit-const-ref) 
+  pattern (be, i :: <integer> by op-info, r, s :: <integer>,
+           o :: <integer>, bit :: <integer> of eight-bit-const-ref)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let offset = s + o;
@@ -273,11 +273,11 @@ define pentium-template (bits-mem, bitc-mem)
     emit-one-byte(be, bit);
 
   // Handle the reverse case where 2 of the args are constants
-  pattern (be, i, s :: <integer>, r, o :: <integer>, bit) 
+  pattern (be, i, s :: <integer>, r, o :: <integer>, bit)
     harp-reapply(be, i, r, s, o, bit);
 
   // Operation between memory operand and a constant
-  pattern (be, i :: <integer> by op-info, r, s, o :: <integer>, bit :: <integer> of eight-bit-const-ref) 
+  pattern (be, i :: <integer> by op-info, r, s, o :: <integer>, bit :: <integer> of eight-bit-const-ref)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let sn = ensure-mreg(be, s, tmps);
@@ -288,12 +288,12 @@ define pentium-template (bits-mem, bitc-mem)
 
   // If there are 3 spills, add s and r first into tmp2 and
   // then go round the template again, knowing that bit goes into tmp1.
-  pattern (be, i, r :: <ispill> by colour, s :: <ispill> by colour, o :: <integer>, bit :: <ispill> by colour) 
+  pattern (be, i, r :: <ispill> by colour, s :: <ispill> by colour, o :: <integer>, bit :: <ispill> by colour)
     harp-out (be) add(be, reg--tmp2, r, s) end;
     harp-reapply(be, i, reg--tmp2, 0, o, bit);
 
   // We can handle up 2 spills with tmp1 and tmp2
-  pattern (be, i :: <integer> by op-info, r, s, o :: <integer>, bit) 
+  pattern (be, i :: <integer> by op-info, r, s, o :: <integer>, bit)
     let tmps = temps-list;
     let rn = ensure-mreg(be, r, tmps);
     let sn = ensure-mreg(be, s, tmps);
@@ -302,12 +302,12 @@ define pentium-template (bits-mem, bitc-mem)
     emit-double-indexed(be, rn, sn, o, bn.ex-reg);
 
   // If O is not a constant, then rearrange if poss
-  pattern (be, i, r, s :: <integer>, o, bit) 
+  pattern (be, i, r, s :: <integer>, o, bit)
     harp-reapply(be, i, r, o, s, bit);
 
   // As a last resort, perform all address calculation in tmp2
   // then go round the template again, knowing that bit goes into tmp1.
-  pattern (be, i, r, s, o, bit) 
+  pattern (be, i, r, s, o, bit)
     harp-out (be) add(be, reg--tmp2, r, s) end;
     harp-out (be) add(be, reg--tmp2, reg--tmp2, o) end;
     harp-reapply(be, i, reg--tmp2, 0, 0, bit);
@@ -338,24 +338,24 @@ with-ops-in pentium-instructions (unset-bit) info := c-unset-bit end;
 
 define pentium-template (set-bit, unset-bit)
   options (self);
-  
+
   // Do all eight bit constant refs
-  pattern (be, i :: <integer> by op-info, d, s, bit :: <integer> of eight-bit-const-ref) 
+  pattern (be, i :: <integer> by op-info, d, s, bit :: <integer> of eight-bit-const-ref)
    let mask = ash(1, bit);
    select (i)
      c-set-bit   => harp-out (be) or(be, d, s, mask) end;
      c-unset-bit => harp-out (be) and(be, d, s, lognot(mask)) end;
    end select;
-        
+
   // bit in register
   pattern (be, i :: <integer> by op-info, d :: <ic/m/spill-ref> by colour, s, bit :: <real-register> by colour)
     harp-out (be) move(be, d, s) end;
     emit(be, #x0f, #x83 + ash(i, 3));
     emit-m-c-spill-dest(be, d, ex-reg(bit));
-  
+
   // bit anywhere else
   pattern (be, i, d, s, bit :: <ic/m/spill-ref> by colour)
     harp-out (be) move(be, reg--tmp1, bit) end;
     harp-reapply(be, i, d, s, reg--tmp1);
-    
+
 end pentium-template;

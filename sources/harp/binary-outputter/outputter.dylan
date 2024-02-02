@@ -39,7 +39,7 @@ define method assemble-harp-outputter
     (outputter :: <binary-builder>, filename) => ()
 end method;
 
-define method output-data-item  
+define method output-data-item
     (be :: <harp-back-end>,
      builder :: <harp-binary-builder>,
      item :: <abstract-integer>,
@@ -48,7 +48,7 @@ define method output-data-item
   add-data(builder, item, model-object);
 end method;
 
-define method output-data-item  
+define method output-data-item
     (be :: <harp-back-end>, builder :: <harp-binary-builder>, item :: <byte-string>,
      #key import?,
           model-object = unsupplied(),
@@ -60,9 +60,9 @@ define method output-data-item
   end if;
 end method;
 
-define method output-data-item  
-    (be :: <harp-back-end>, 
-     builder :: <harp-binary-builder>, 
+define method output-data-item
+    (be :: <harp-back-end>,
+     builder :: <harp-binary-builder>,
      item :: <constant-reference>,
      #key import?, offset,
      #all-keys) => ()
@@ -76,13 +76,13 @@ define method output-data-item
   end if;
 end method;
 
-define method output-data-byte 
+define method output-data-byte
     (be :: <harp-back-end>, builder :: <harp-binary-builder>, item :: <integer>)
  => ()
   add-data-byte(builder, item);
 end method;
 
-define method output-data-byte 
+define method output-data-byte
     (be :: <harp-back-end>, builder :: <harp-binary-builder>, item :: <string>)
  => ()
   add-data-string(builder, item);
@@ -96,7 +96,7 @@ define method do-export
     (export?, builder :: <harp-binary-builder>, name :: <byte-string>) => ()
   // If the value of export? is the symbol #"code-stub", then
   // the export will include a code stub in the client library.
-  // Otherwise it will not, and the client must indirect through the 
+  // Otherwise it will not, and the client must indirect through the
   // import table directly
   if (export?)
     let code-stub? = export? == #"code-stub";
@@ -112,14 +112,14 @@ define method output-export
 end method;
 
 define method output-export
-    (be :: <harp-back-end>, 
-     builder :: <harp-binary-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-binary-builder>,
      name :: <constant-reference>) => ()
   output-export(be, builder, name.cr-refers-to);
 end method;
 
 define method output-variable
-    (be :: <harp-back-end>, builder :: <harp-binary-builder>, 
+    (be :: <harp-back-end>, builder :: <harp-binary-builder>,
      name :: <byte-string>, initial-value,
      #key repeat, section, import-value?, public?, export? = public?.and-force-dll-exports?,
           model-object = unsupplied()) => ()
@@ -136,14 +136,14 @@ define method output-variable
 end method;
 
 define method output-variable
-    (be :: <harp-back-end>, builder :: <harp-binary-builder>, 
+    (be :: <harp-back-end>, builder :: <harp-binary-builder>,
      name :: <constant-reference>, initial-value,
      #rest all-keys,
      #key repeat, section, import-value?, public?, export?,
      #all-keys) => ()
   let (name, model-object) = canonical-code-object(builder, name);
 
-  apply(output-variable, be, builder, 
+  apply(output-variable, be, builder,
         name, initial-value, model-object: model-object,
         all-keys);
 end method;

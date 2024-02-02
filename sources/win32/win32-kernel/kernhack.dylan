@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 // Handle this function as a special case to return two values
-// instead of returning a structure. 
+// instead of returning a structure.
 
 define C-function %GetLargestConsoleWindowSize
   parameter hConsoleOutput :: <HANDLE>;
@@ -23,7 +23,7 @@ define method GetLargestConsoleWindowSize( hConsoleOutput :: <HANDLE> )
 end;
 
 
-// This one is handled specially because va_list is not yet supported, 
+// This one is handled specially because va_list is not yet supported,
 // but for our current purposes we can just pass a NULL pointer.
 define C-function FormatMessage
   parameter dwFlags	 :: <DWORD>;
@@ -51,7 +51,7 @@ define inline constant <LPLARGE-INTEGER> = <PLARGE-INTEGER>;
 define constant <DWORDLONG> = <LARGE-INTEGER>; // 64-bit integer
 define constant <PVOID64> = <C-void*>;
 
-
+
 /// Error handling utilities
 
 define function win32-error-message
@@ -117,7 +117,7 @@ define function ensure-no-win32-error (name :: <string>) => ()
   end
 end function ensure-no-win32-error;
 
-
+
 /// Accessors for "WinMain" parameters:
 ///   [NOTE: The concept of WinMain is strictly a Microsoft C run-time invention
 ///    which has been cast in concrete by its inclusion in the Win32 API]
@@ -137,7 +137,7 @@ define inline-only function ensure-application-command-line () => ()
     local method whitespace? (c :: <character>) => (whitespace? :: <boolean>)
 	    c = ' ' | c = '\t' | c = '\n'
 	  end method whitespace?;
-    local method skip-whitespace 
+    local method skip-whitespace
 	      (string :: <C-string>, _start :: <integer>, _end :: <integer>)
 	   => (_new-start :: <integer>)
 	    while (_start < _end & whitespace?(string[_start]))

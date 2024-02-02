@@ -22,7 +22,7 @@ end method;
 
 define test standard-object-operations ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
-  let PseudoObjectsTest = as(<PseudoObjectsTest>, corba/orb/file-to-object(orb, $PseudoObjectsTest-ior-file));  
+  let PseudoObjectsTest = as(<PseudoObjectsTest>, corba/orb/file-to-object(orb, $PseudoObjectsTest-ior-file));
   let object = PseudoObjectsTest/TestObjectA-factory(PseudoObjectsTest, 1);
   let nil-object = #f;
   check("NIL TestObjectX returned from server", method () nil-object := PseudoObjectsTest/TestObjectX-nil-factory(PseudoObjectsTest) end method);

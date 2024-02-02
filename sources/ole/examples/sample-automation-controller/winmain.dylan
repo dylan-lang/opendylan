@@ -73,7 +73,7 @@ define method window-function (hwnd :: <HWND>,
 
   select (message)
 
-    $WM-COMMAND => 
+    $WM-COMMAND =>
       if (HIWORD(wParam) = $BN-CLICKED)
 	process-button(hWnd, *server*, LOWORD(wParam));
 	0
@@ -81,11 +81,11 @@ define method window-function (hwnd :: <HWND>,
 	DefWindowProc(hWnd, message, wParam, lParam)
       end if;
 
-    $WM-CLOSE => 
+    $WM-CLOSE =>
       DestroyWindow(hWnd);
       0;
 
-    $WM-DESTROY => 
+    $WM-DESTROY =>
       PostQuitMessage(0);
       0;
 

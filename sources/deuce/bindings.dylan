@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Each entry in the table is a command set
 define variable *command-sets* :: <object-table> = make(<table>);
 
-
+
 /// Emacs bindings
 
 define constant $emacs-command-set :: <standard-command-set>
@@ -272,7 +272,7 @@ end function initialize-emacs-command-set;
 
 initialize-emacs-command-set();
 
-
+
 /// Windows bindings
 
 define constant $windows-command-set :: <standard-command-set>
@@ -383,7 +383,7 @@ end function initialize-windows-command-set;
 
 initialize-windows-command-set();
 
-
+
 /// The standard command set
 
 // The standard command set, to be filled in from one of concrete sets

@@ -36,7 +36,7 @@ define generic create-multi-file-report-as
      format :: <report-format>)
  => (root-filename :: false-or(<file-locator>));
 
-
+
 /// Some useful report subclasses
 
 define abstract class <project-report> (<report>)
@@ -44,7 +44,7 @@ define abstract class <project-report> (<report>)
     required-init-keyword: project:;
 end class <project-report>;
 
-
+
 /// Implementation
 
 define class <report-error> (<simple-error>)
@@ -77,7 +77,7 @@ define function create-report-to-string
   end
 end function create-report-to-string;
 
-
+
 /// Installation
 
 define constant $reports = make(<table>);

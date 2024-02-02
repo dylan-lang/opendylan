@@ -1,5 +1,5 @@
 Module:    Dylan-User
-Synopsis:  Utility library for creating OLE container applications 
+Synopsis:  Utility library for creating OLE container applications
 	   using DUIM for the user interface.
 Author:    David N. Gray
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

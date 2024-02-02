@@ -10,8 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module remote-access-path
   use common-dylan;
   use dylan-extensions,
-     import: {<machine-word>, 
-              <double-integer>, 
+     import: {<machine-word>,
+              <double-integer>,
               $minimum-unsigned-machine-word, integer-as-raw};
   use dylan-primitives;
   use machine-word-lowlevel;

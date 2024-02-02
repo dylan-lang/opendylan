@@ -141,7 +141,7 @@ define pentium-template move-arg-count-byte
 
 end pentium-template;
 
-       
+
 
 
 /// Now for load - this may use the reg--tmp1 internally, but there's no
@@ -155,7 +155,7 @@ define constant ld-word = #x8b;
 define constant ld-byte-signed = #xbe;
 define constant ld-half-signed = #xbf;
 
-define method emit-ld-operation 
+define method emit-ld-operation
     (be :: <harp-x86-back-end>, type :: <integer>)
   unless (type == ld-word)
     emit(be, #x0f);
@@ -189,9 +189,9 @@ define pentium-template ldb-signed
 end pentium-template;
 
 
-define method coerce-constant-with-offset 
-    (be :: <harp-x86-back-end>, 
-     addr-const :: <constant-reference>, 
+define method coerce-constant-with-offset
+    (be :: <harp-x86-back-end>,
+     addr-const :: <constant-reference>,
      offset :: <integer>) => (c :: <constant-reference>)
   if (offset = 0)
     addr-const;
@@ -201,9 +201,9 @@ define method coerce-constant-with-offset
   end if;
 end method;
 
-define method coerce-constant-with-offset 
-    (be :: <harp-x86-back-end>, 
-     offset1 :: <integer>, 
+define method coerce-constant-with-offset
+    (be :: <harp-x86-back-end>,
+     offset1 :: <integer>,
      offset2 :: <integer>) => (o :: <integer>)
   offset1 + offset2;
 end method;
@@ -221,12 +221,12 @@ define method ld-op (index-op :: <integer>)
 end method;
 
 
-define local-pentium-template (ld-word, ld-half, ld-byte, 
+define local-pentium-template (ld-word, ld-half, ld-byte,
 			       ld-half-signed, ld-byte-signed)
   options (self);
 
   // sxx is a load to the temporary register followed by a move to spill
-  pattern (be, i by ld-op, d :: <ic/spill-ref> by colour, r, s) 
+  pattern (be, i by ld-op, d :: <ic/spill-ref> by colour, r, s)
     i(be, reg--tmp1, r, s);
     harp-out (be) move(be, d, reg--tmp1) end;
 
@@ -307,7 +307,7 @@ end method;
 /// constant. This allows array indexing to make full use of the 386
 /// addressing modes.
 
-define pentium-template (ld-index, ldb-index, ldh-index, 
+define pentium-template (ld-index, ldb-index, ldh-index,
                          ldb-index-signed, ldh-index-signed)
   options (self);
 
@@ -349,7 +349,7 @@ end pentium-template;
 with-ops-in pentium-instructions (ld-index-scaled)  info := ld-index  end;
 with-ops-in pentium-instructions (ldh-index-scaled) info := ldh-index end;
 
-with-ops-in pentium-instructions (ldh-index-scaled-signed) 
+with-ops-in pentium-instructions (ldh-index-scaled-signed)
   info := ldh-index-signed
 end;
 
@@ -398,7 +398,7 @@ end pentium-template;
 /// First, some general support for segment registers:-
 
 
-define method segment-prefix 
+define method segment-prefix
     (segment :: <pentium-segment-register>) => (prefix :: <integer>)
   select (segment)
     es => #x26;
@@ -429,7 +429,7 @@ define method op--load-thread-local
   end harp-out;
 end method;
 
-define method op--tlb-base-register 
+define method op--tlb-base-register
     (be :: <harp-x86-windows-back-end>, dest :: <real-register>) => ()
   op--load-thread-local(be, dest, #x14);
 end method;
@@ -438,12 +438,12 @@ end method;
 /// Linux TEB support:
 /// We use Linux' TLV support here.
 
-define method op--tlb-base-register 
+define method op--tlb-base-register
     (be :: <harp-x86-unix-back-end>, dest :: <real-register>) => ()
   op--load-thread-local(be, dest, /* dummy */ 0);
 end method;
 
-define constant $teb = 
+define constant $teb =
     thread-local-runtime-reference("teb");
 
 define method op--store-thread-local
@@ -586,15 +586,15 @@ end pentium-template;
 /// prefix $66.
 
 // This code differs from the CL version because of the losss of first
-// class variable objects. Instead we give constant values to each of 
-// the names for later identity testing. We choose as constant values, 
+// class variable objects. Instead we give constant values to each of
+// the names for later identity testing. We choose as constant values,
 // something which will be directly emitted in at least oine circumstance.
 
 define constant st-byte = #xc6;
 define constant st-half = #x89;
 define constant st-word = #xc7;
 
-define method emit-st-operation 
+define method emit-st-operation
     (be :: <harp-x86-back-end>, type :: <integer>, src)
   if (ac/const-ref(src))
     if (type == st-half)
@@ -622,7 +622,7 @@ end method;
 
 
 
-define method emit-possible-immediate-arg 
+define method emit-possible-immediate-arg
     (be :: <harp-back-end>, x, l :: <integer>)
   if (ac/const-ref(x))
     if (instance?(x, <abstract-integer>))
@@ -638,7 +638,7 @@ define method emit-possible-immediate-arg
     end if;
   end if;
 end method;
-	
+
 define pentium-template st
   pattern (be, d, r, s)
     canon(be, local-fn(st-word), d, r, s);
@@ -689,7 +689,7 @@ define local-pentium-template (st-word, st-half, st-byte)
     emit-st-operation(be, i, d);
     emit-reg-offset(be, r, s, d.ex-whatsit);
     emit-possible-immediate-arg(be, d, i);
-   
+
   /// rrr
   pattern (be, i, d, r :: <real-register> by colour, s :: <real-register> by colour)
     emit-st-operation(be, i, d);
@@ -763,7 +763,7 @@ end method;
 
 /// ST-INDEX is like ST but takes an extra argument which must be a
 /// constant. This allows array indexing to make full use of the 386
-/// addressing modes. 
+/// addressing modes.
 
 
 define pentium-template (st-index, stb-index, sth-index)
@@ -824,8 +824,8 @@ end method;
 
 
 /// ST-INDEX-SCALED is like ST-INDEX but the first of the offset parameters
-/// is scaled by the size of the data item for the store. This allows array 
-/// indexing to make full use of the 386 addressing modes. 
+/// is scaled by the size of the data item for the store. This allows array
+/// indexing to make full use of the 386 addressing modes.
 
 
 define pentium-template (st-index-scaled, sth-index-scaled)
@@ -872,7 +872,7 @@ end pentium-template;
 define pentium-template (conditional-move)
 
   /// For this instruction, constant references are treated as direct
-  /// (address) constant references even if they are actually 
+  /// (address) constant references even if they are actually
   /// indirect. This is designed to make life easier for harp-cg
   /// to avoid having to allocate a new direct constant.
 
@@ -893,13 +893,13 @@ define pentium-template (conditional-move)
     emit-branch-sdi(be, bne-x, tag);
 
   pattern (be, tag, var :: <ispill> by colour, new-val :: <real-register> by colour, comp)
-    harp-out (be) 
+    harp-out (be)
       move(be, reg--tmp2, var);
       conditional-move(be, tag, reg--tmp2, new-val, comp);
     end;
 
   pattern (be, tag, var, new-val, comp)
-    harp-out (be) 
+    harp-out (be)
       move(be, reg--tmp1, new-val);
       conditional-move(be, tag, var, reg--tmp1, comp);
     end;
@@ -913,14 +913,14 @@ define constant $vector-cond-move-destroys = vector(eax, reg--tmp1, reg--tmp2);
 with-ops-in pentium-instructions (conditional-move)
 
   c-preserved-destroys-fn :=  pentium-method (uuu)
-                                destroys-tmp1-if(ic/spill-ref(uuu-uze(2))) 
+                                destroys-tmp1-if(ic/spill-ref(uuu-uze(2)))
                               end pentium-method;
 
   destroys-fn := constant-fn($vector-cond-move-destroys);
 
   prefer-fn := pentium-method (uuu)
 		 prefer(uuu-uze(3), $vector-eax);
-               end pentium-method; 
+               end pentium-method;
 
   clash-fn := pentium-method (uuu)
                 list(list(uuu-uze(1), eax),

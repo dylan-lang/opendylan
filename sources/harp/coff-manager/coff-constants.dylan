@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-// TEMPORARY: big-literal is a function for making potentially oversized 
+// TEMPORARY: big-literal is a function for making potentially oversized
 // integers, at a time when the Dylan reader is unable to do this for itself.
 
-define function big-literal 
+define function big-literal
     (hi :: <integer>, lo :: <integer>) => (res :: <abstract-integer>)
   generic-+(generic-ash(hi, 16), lo);
 end function;
@@ -71,15 +71,15 @@ define constant $mem-read               = big-literal(#x4000, #x0000);
 define constant $mem-write              = big-literal(#x8000, #x0000);
 
 
-define constant $code-flags 
-  = generic-+($mem-execute, 
+define constant $code-flags
+  = generic-+($mem-execute,
               generic-+($mem-read, $align-4bytes + $cnt-code));
 
-define constant $data-flags 
-  = generic-+($mem-read, 
+define constant $data-flags
+  = generic-+($mem-read,
               generic-+($mem-write, $align-4bytes + $cnt-initialized-data));
 
-define constant $debug-flags 
+define constant $debug-flags
   = generic-+($mem-read, $mem-discardable + $cnt-initialized-data);
 
 

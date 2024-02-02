@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $default-profiling-interval = 50;
 
 define constant <profiler-style>
-  = one-of(#"cpu-time", #"allocation", #"class-allocation", 
+  = one-of(#"cpu-time", #"allocation", #"class-allocation",
 	   #"wall-clock-time", #"page-faults");
 
 
@@ -27,7 +27,7 @@ define class <profiler-options> (<object>)
   constant slot asking-for-threads? :: <boolean> = #f,
     init-keyword: asking-for-threads?:;
 
-  constant slot profiler-threads :: <stretchy-vector> 
+  constant slot profiler-threads :: <stretchy-vector>
     = make(<stretchy-vector>),
     init-keyword: threads:;
 end class;
@@ -58,13 +58,13 @@ define function start-profiling-with-options
 	as-thread-sequence(application, threads);
       end if;
   if (thread-set)
-    start-profiling(application, 
+    start-profiling(application,
 		    interval: interval,
 		    threads: thread-set,
 		    stack-depth: depth,
 		    class-profiling?: class-profiling?)
   else
-    start-profiling(application, 
+    start-profiling(application,
 		    interval: interval,
 		    stack-depth: depth,
 		    class-profiling?: class-profiling?)

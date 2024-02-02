@@ -24,7 +24,7 @@ define inline-only constant <C-BYTE*> = <C-unsigned-char*>;
 define inline-only constant <LPINT> = <C-int*>;
 
 
-define inline-only function import-wchar 
+define inline-only function import-wchar
     (value :: <integer>) => (char :: <character>)
   as(<character>, value)
 end;
@@ -57,7 +57,7 @@ define method LOWORD ( n :: <integer> ) => value :: <integer>;
 end LOWORD;
 
 define method HIWORD ( n :: <integer> ) => value :: <integer>;
-    logand( ash(n,-16), #xFFFF)  
+    logand( ash(n,-16), #xFFFF)
 end HIWORD;
 
 define method LOWORD ( n :: <machine-word> ) => value :: <integer>;

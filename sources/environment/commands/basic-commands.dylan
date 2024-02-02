@@ -16,7 +16,7 @@ define command-line exit => <exit-command>
      documentation: "Exits the command loop.")
 end command-line exit;
 
-
+
 /// Version command
 define class <version-command> (<basic-command>)
   constant slot %short :: false-or(<string>) = #f,
@@ -42,7 +42,7 @@ define sealed method do-execute-command
   message(context, ver)
 end method do-execute-command;
 
-
+
 /// Help command
 
 define class <help-command> (<basic-command>)
@@ -273,7 +273,7 @@ define function print-table
   end
 end function print-table;
 
-
+
 /// State describing
 
 define constant $command-states :: <stretchy-object-vector> = make(<stretchy-object-vector>);
@@ -317,7 +317,7 @@ define sealed method do-execute-command
   describe-state(context, value)
 end method do-execute-command;
 
-
+
 /// Basic commands
 
 define command-group basic

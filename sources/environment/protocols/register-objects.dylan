@@ -145,7 +145,7 @@ define method lookup-register-by-name
   server & lookup-register-by-name(server, name)
 end method;
 
-
+
 /// Some convenience functions built on these protocols
 
 define function application-registers

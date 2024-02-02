@@ -17,7 +17,7 @@ define test test-<pixmap-medium> ()
 end test;
 
 
-
+
 /// Graphic modelling
 
 define method record-operation
@@ -621,7 +621,7 @@ define test triangle-drawing-test ()
   test-triangle-drawing("Draw Filled Triangle", filled?: #t);
 end test triangle-drawing-test;
 
-
+
 /// Define the graphics test suite
 
 define suite duim-graphics-suite ()

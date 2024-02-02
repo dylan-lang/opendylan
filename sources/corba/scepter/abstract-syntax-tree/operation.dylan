@@ -75,4 +75,4 @@ define method check-before-add (operation :: <ast-operation>, argument :: <ast-a
     error(make(<idl-oneway-operation-conflict>, declarators: vector(operation, argument)));
   end if;
 end method;
-      
+

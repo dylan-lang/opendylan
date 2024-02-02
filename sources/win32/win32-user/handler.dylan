@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // For an OLE Control application, this variable will be set to the handle
 // of the top-level DLL so that we don't show the pathname of the
-// container application. 
+// container application.
 define variable *error-module-handle* :: <HMODULE> = $NULL-HINSTANCE;
 
 /// WIN32-LAST-HANDLER
@@ -28,7 +28,7 @@ define method win32-last-handler (condition :: <serious-condition>, next-handler
   // Use the executable file name as the window title
   let buf-size = $MAX-PATH;
   let szFullPath :: <LPTSTR> = make(<LPTSTR>, size: buf-size);
-  let module-handle :: <HMODULE> = 
+  let module-handle :: <HMODULE> =
     if ( null-handle?(*error-module-handle*) )
       application-instance-handle()
     else
@@ -38,7 +38,7 @@ define method win32-last-handler (condition :: <serious-condition>, next-handler
     GetModuleFileName(module-handle, szFullPath, buf-size);
 
   let button :: <integer> =
-    MessageBox($NULL-HWND, 
+    MessageBox($NULL-HWND,
 	       message, /* message text */
 	       if(path-length > 0) szFullPath else "Dylan" end if, /* title */
 	       logior($MB-YESNOCANCEL,	 // buttons

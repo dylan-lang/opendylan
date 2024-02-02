@@ -333,7 +333,7 @@ define method handle-event
   next-method();
 end method handle-event;
 
-
+
 /// Command enabling
 
 define method frame-showing-sources?
@@ -365,7 +365,7 @@ define method note-frame-selection-updated
   command-enabled?(frame-move-source-file-next, frame)   := source-can-move?;
 end method note-frame-selection-updated;
 
-
+
 /// Finding project browsers
 
 /// NB Replace complex old method by new simple method that uses protocol
@@ -445,7 +445,7 @@ define method refresh-frame-view
      clean?: #t, new-thread?: new-thread?, refresh-all?: refresh-all?)
 end method refresh-frame-view;
 
-
+
 /// Frame refreshing
 
 define constant $database-related-pages
@@ -517,7 +517,7 @@ define method frame-note-breakpoint-state-changed
   refresh-frame-view(frame, pages: #[#"breakpoints"])
 end method frame-note-breakpoint-state-changed;
 
-
+
 /// Sources handling
 
 //---*** This should really live in environment-property-pages
@@ -566,7 +566,7 @@ define method find-project-browser-wrapper
   end
 end method find-project-browser-wrapper;
 
-
+
 /// Clipboard support
 
 define method cut-object?
@@ -616,7 +616,7 @@ define method delete-object
   locator & frame-remove-sources(frame, vector(locator))
 end method delete-object;
 
-
+
 /// Save commands
 
 define method frame-save-project-database (frame :: <project-browser>) => ()
@@ -680,7 +680,7 @@ define method frame-edit-options (frame :: <project-browser>) => ()
   not-yet-implemented(owner: frame);
 end method frame-edit-options;
 
-
+
 /// Build commands
 
 define method frame-clean-project
@@ -716,7 +716,7 @@ define method frame-clean-project
   end
 end method frame-clean-project;
 
-
+
 /// Project sources commands
 
 define constant $insert-file-filters
@@ -1006,7 +1006,7 @@ define method frame-move-source-file-next (frame :: <project-browser>) => ()
   end when;
 end method frame-move-source-file-next;
 
-
+
 /// Project browser command tables
 
 define command-table *project-browser-file-open-command-table* (*global-command-table*)

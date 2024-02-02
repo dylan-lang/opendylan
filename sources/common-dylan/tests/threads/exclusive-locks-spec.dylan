@@ -14,21 +14,21 @@ define test test-owned? ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Recursive locks
 
 define test test-<recursive-lock> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Simple locks
 
 define test test-<simple-lock> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Multiple reader / single writer locks
 
 define test test-<read-write-lock> ()

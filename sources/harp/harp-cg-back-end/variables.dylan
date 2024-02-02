@@ -62,4 +62,4 @@ define method initialize(vars :: <harp-cg-variables>, #rest r, #key prototype ::
 
   vars;
 end method initialize;
-  
+

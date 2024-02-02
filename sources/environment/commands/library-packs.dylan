@@ -34,7 +34,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Library pack properties
 
 // Library packs
@@ -101,7 +101,7 @@ define method show-property
   end
 end method show-property;
 
-
+
 /// Library pack states
 
 register-state-type(#"library-pack");
@@ -186,7 +186,7 @@ define method describe-state
   end
 end method describe-state;
 
-
+
 /// Project commands
 
 define command-group library-packs

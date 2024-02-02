@@ -88,7 +88,7 @@ define macro with-output-to-output-record
          end }
 end macro with-output-to-output-record;
 
-
+
 /// Graphics
 
 define macro with-local-coordinates

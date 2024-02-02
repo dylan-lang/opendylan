@@ -64,7 +64,7 @@ define method make-menu
   let sub-menu :: <HMENU> = CreateMenu();
   if (~null-pointer?(sub-menu))
     make-menu-items(sub-menu, items);
-    AppendMenu(menu, 
+    AppendMenu(menu,
 	       $MF-POPUP + $MF-STRING,
 	       pointer-address(sub-menu),
 	       title)

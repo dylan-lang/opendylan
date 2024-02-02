@@ -100,6 +100,6 @@ define method print-s-expression (stream :: <stream>, expression :: <collection>
       format(stream, " ");
     end;
   end;
-  format(stream, ")");  
+  format(stream, ")");
 end;
 

@@ -176,12 +176,12 @@ end method;
 
 // Generic objects
 
-define method emit-definition 
+define method emit-definition
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o) => ()
   let name = emit-name(back-end, module, o);
   let object = emit-object(back-end, module, o);
   let linkage
-    = if (o.model-definition 
+    = if (o.model-definition
             | instance?(o, <&mm-wrapper>)
             | instance?(o, <&singular-terminal-engine-node>))
         #"external"
@@ -198,7 +198,7 @@ define method emit-definition
            section: emit-definition-section(back-end, o));
   llvm-builder-define-global(back-end, name, global);
 end method;
-  
+
 define sideways method emit-object
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o)
  => (object :: <llvm-constant-value>)
@@ -238,7 +238,7 @@ end method;
 
 // Emit the items in a repeated slot as an array constant
 define method emit-object-slot
-    (back-end :: <llvm-back-end>, module :: <llvm-module>, 
+    (back-end :: <llvm-back-end>, module :: <llvm-module>,
      slotd :: <&repeated-slot-descriptor>, type :: <llvm-type>, o)
  => ();
   let repeated-size-value = ^slot-value(o, ^size-slot-descriptor(slotd));
@@ -292,7 +292,7 @@ end method;
 // references to garbage-collected objects, and therefore they can be
 // stored in the untraced data section.
 define method emit-definition-section
-    (back-end :: <llvm-back-end>, 
+    (back-end :: <llvm-back-end>,
      o :: type-union(<uninterned-symbol>, <string>,
                      <&machine-word>, <&single-float>, <&double-float>,
                      <&mm-wrapper>, <&signature>))

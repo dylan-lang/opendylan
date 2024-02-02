@@ -97,7 +97,7 @@ define method start-examples
   #f
 end method start-examples;
 
-
+
 /// Simple drawing tests
 
 //---*** This is all based on duim/tests/gui/graphics.dylan
@@ -368,7 +368,7 @@ end method repaint-panes;
 
 install-example(<graphics-test-frame>, "Graphics");
 
-
+
 /// Simple drawing tests with scrolling
 
 define frame <scrolling-graphics-test-frame> (<simple-frame>)
@@ -438,7 +438,7 @@ end method repaint-panes;
 
 install-example(<scrolling-graphics-test-frame>, "Scrolling graphics");
 
-
+
 /// Simple scribble application
 
 //---*** This is all based on duim/examples/scribble/scribble.dylan
@@ -544,7 +544,7 @@ end method popup-scribble-menu;
 
 install-example(<scribble-frame>, "Scribble");
 
-
+
 /// 'with-room-for-graphics' test
 
 define class <wrfg-pane> (<recording-pane>)
@@ -594,7 +594,7 @@ end frame <wrfg-frame>;
 
 install-example(<wrfg-frame>, "Room...");
 
-
+
 /// Initialization
 
 start-examples();

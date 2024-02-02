@@ -104,7 +104,7 @@ define method update-tab-control-pages
        end;
 end method update-tab-control-pages;
 
-
+
 /// Install the test
 
 install-test(<tab-control-frame>, "Tab controls");

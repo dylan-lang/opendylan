@@ -227,6 +227,6 @@ define method frame-draw-bitmaps
 end method frame-draw-bitmaps;
 
 
-
+
 /// Install the test
 install-test(<bitmap-test-frame>, "Bitmaps and Icons");

@@ -494,6 +494,6 @@ define suite ir-test-suite ()
   test contained-test;
   test repository-test;
   test interface-test;
-  test irobject-test; 
+  test irobject-test;
   test create-typecode-test;
 end suite;

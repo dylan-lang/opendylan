@@ -96,7 +96,7 @@ define method encode-object (object-key :: <object-key>, string :: <string>)
   end for;
   object-key-encoding(object-key) := key;
 end method;
-                             
+
 define method encode-object (object-key :: <object-key>, seq :: <sequence>)
   encode-object(object-key, size(seq));
   let key = object-key-encoding(object-key);
@@ -161,7 +161,7 @@ end class;
 
 element($object-key-classes, 2) := <object-key-2>;
 
-define method do-encode-object-key (object-key :: <object-key-2>) 
+define method do-encode-object-key (object-key :: <object-key-2>)
   next-method();
   encode-object(object-key, object-key-poa-id(object-key))
 end method;

@@ -81,7 +81,7 @@ define protocol <<wizard-protocol>> (<<dialog-protocol>>)
     (dialog :: <wizard-frame>) => (prev-page :: false-or(<sheet>));
 end protocol <<wizard-protocol>>;
 
-
+
 /// Dialogs
 
 define open abstract primary class <dialog-frame> (<simple-frame>)
@@ -140,7 +140,7 @@ define method initialize
   end
 end method initialize;
 
-
+
 /// Starting dialogs
 
 define method start-dialog
@@ -249,7 +249,7 @@ define method handle-event
                 destroy?: event-destroy-frame?(event))
 end method handle-event;
 
-
+
 /// Simple chooser
 
 define sealed class <simple-chooser-dialog> (<dialog-frame>)
@@ -304,7 +304,7 @@ define sideways method do-choose-from-dialog
   end
 end method do-choose-from-dialog;
 
-
+
 /// Multi-page dialog
 
 define open abstract primary class <multi-page-dialog-frame> (<dialog-frame>)
@@ -387,7 +387,7 @@ define method dialog-page-complete?-setter
   complete?
 end method dialog-page-complete?-setter;
 
-
+
 /// Page changed callback
 
 define sealed class <page-changed-dialog-event> (<frame-event>)
@@ -413,7 +413,7 @@ define function distribute-page-changed-callback
                    make(<page-changed-dialog-event>, frame: dialog))
 end function distribute-page-changed-callback;
 
-
+
 /// Property frames
 
 define open primary class <property-frame>
@@ -443,7 +443,7 @@ define method note-property-frame-current-page-changed
   execute-page-changed-callback(dialog)
 end method note-property-frame-current-page-changed;
 
-
+
 /// Property pages
 
 define open abstract class <property-page> (<basic-page>)
@@ -462,7 +462,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<property-page-pane>));
 define sealed domain initialize (<property-page-pane>);
 
-
+
 /// Wizard frames
 
 define open primary class <wizard-frame>
@@ -606,7 +606,7 @@ define method move-to-previous-page
   distribute-page-changed-callback(dialog)
 end method move-to-previous-page;
 
-
+
 /// Wizard pages
 
 define open abstract class <wizard-page> (<basic-page>)

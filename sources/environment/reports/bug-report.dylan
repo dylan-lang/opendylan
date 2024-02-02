@@ -93,7 +93,7 @@ define method write-report-as
   end
 end method write-report-as;
 
-
+
 /// write-bug-report-section
 
 define generic write-bug-report-section
@@ -384,7 +384,7 @@ define function write-bug-report-object-index
   index & format(stream, " [%d]", index)
 end function write-bug-report-object-index;
 
-
+
 /// write-html-bug-report-section
 
 define generic write-html-bug-report-section
@@ -684,7 +684,7 @@ define function write-html-environment-object-reference
   index & write-html(stream, " [", index, "]", #"/a")
 end function write-html-environment-object-reference;
 
-
+
 /// Utilities
 
 //---*** How do we get this from environment-debugger?

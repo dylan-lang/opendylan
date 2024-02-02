@@ -1,18 +1,18 @@
 Module:    reversi
 Author:    Jonathon Lee
-Synopsis:  Reversi game externsions 
+Synopsis:  Reversi game externsions
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// this file contains the first incremental change to the reversi example. 
-// It adds the functionality that allows the user to change the shape of the 
+// this file contains the first incremental change to the reversi example.
+// It adds the functionality that allows the user to change the shape of the
 // players pieces.
 
 *changed?* := #t;
 
-define method draw-piece 
+define method draw-piece
     (sheet :: <reversi-square>, medium :: <medium>, shape :: <symbol>)
  => ()
   when (square-piece(sheet))
@@ -28,19 +28,19 @@ define method draw-piece
     with-drawing-options (medium, brush: color)
       select (shape)
 	#"square" =>
-	  draw-rectangle(medium, 
-			 half-width - x-radius, 
-			 half-height - y-radius, 
-			 half-width + x-radius, 
-			 half-height + y-radius, 
+	  draw-rectangle(medium,
+			 half-width - x-radius,
+			 half-height - y-radius,
+			 half-width + x-radius,
+			 half-height + y-radius,
 			 filled?: #t);
 	#"triangle" =>
-	  draw-polygon(medium, 
+	  draw-polygon(medium,
 		       list(half-width - x-radius,
 			    half-height + y-radius,
 			    half-width + x-radius,
 			    half-height + y-radius,
-			    half-width, 
+			    half-width,
 			    half-height - y-radius),
 		       filled: #t);
 	otherwise => debug-message("Illegal Shape");

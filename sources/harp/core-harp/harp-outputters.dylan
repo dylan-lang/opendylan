@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method output-error 
+define method output-error
     (backend :: <harp-back-end>, op :: <op>, #rest args)
   error("output-instruction for %= with %= called in backend.",
         op, args);

@@ -54,7 +54,7 @@ define frame <surgery-frame> (<simple-frame>)
   command-table (frame) *surgery-command-table*;
 end frame <surgery-frame>;
 
-
+
 /// Adding and removing proceed items
 
 define method add-proceed-items
@@ -98,5 +98,5 @@ define method remove-proceed-items
   end
 end method remove-proceed-items;
 
-
+
 install-test(<surgery-frame>, "Dynamic Command Tables");

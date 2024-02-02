@@ -17,7 +17,7 @@ define method main-program () => (exit-status :: <signed-int>)
   let nCmdShow :: <signed-int> = application-show-window();
 
   if ( init-application(hInstance)  // Initialize shared things
-	// Perform initializations that apply to a specific instance 
+	// Perform initializations that apply to a specific instance
 	& init-instance(hInstance, nCmdShow) )
     // initialized OK
 
@@ -31,12 +31,12 @@ define method main-program () => (exit-status :: <signed-int>)
 		      $NULL-HWND,  // handle of window receiving the message
 		      0,      // lowest message to examine
 		      0))     // highest message to examine
-      
+
       if ( TranslateAccelerator(pMsg.hwnd-value, hAccelTable, pMsg) = 0 )
 	TranslateMessage(pMsg); // Translates virtual key codes
 	DispatchMessage(pMsg);  // Dispatches message to window
       end if;
-        
+
     end while;
     pMsg.wParam-value
   else
@@ -98,12 +98,12 @@ define method main-window-function
      lParam :: <signed-int>)   // additional information
  => (value :: <integer>)
   block(return)
-    select (message) 
+    select (message)
       $WM-COMMAND =>   // message: command from application menu
 	let wmId :: <signed-int> = LOWORD(uParam);
 	/* let wmEvent :: <signed-int> = HIWORD(uParam); */
 
-	select ( wmId ) 
+	select ( wmId )
 	  $OPEN-MENU-ITEM =>
 	    display-open-dialog(window);
 	  $SAVE-AS-MENU-ITEM =>
@@ -112,7 +112,7 @@ define method main-window-function
 	    display-page-setup-dialog(window);
 	  $PRINT-MENU-ITEM =>
 	    display-print-dialog(window);
-	  $EXIT-MENU-ITEM => 
+	  $EXIT-MENU-ITEM =>
 	    DestroyWindow(window);
 
 	  $CHOOSE-COLOR-MENU-ITEM =>
@@ -125,7 +125,7 @@ define method main-window-function
 	  $REPLACE-MENU-ITEM =>
 	    display-replace-dialog(window);
 
-	  $HELP-CONTENTS-MENU-ITEM => 
+	  $HELP-CONTENTS-MENU-ITEM =>
 	    if (~WinHelp
 		  (window, TEXT("EXAMPLE.HLP"), $HELP-KEY,
 		   pointer-address(TEXT("CONTENTS"))))
@@ -135,7 +135,7 @@ define method main-window-function
 			 logior($MB-SYSTEMMODAL, logior($MB-OK, $MB-ICONHAND)));
 	    end if;
 
-	  $IDM-HELPSEARCH => 
+	  $IDM-HELPSEARCH =>
 	    if (~WinHelp(window, TEXT("EXAMPLE.HLP"), $HELP-PARTIALKEY,
 			 pointer-address(TEXT(""))))
 	      MessageBox(GetFocus(),
@@ -143,8 +143,8 @@ define method main-window-function
 			 $szAppName,
 			 logior($MB-SYSTEMMODAL, logior($MB-OK, $MB-ICONHAND)));
 	    end if;
-	    
-	  $IDM-HELPHELP => 
+
+	  $IDM-HELPHELP =>
 	    if ( ~ WinHelp(window, $NULL-string, $HELP-HELPONHELP, 0) )
 	      MessageBox(GetFocus(),
 			 TEXT("Unable to activate help"),
@@ -152,9 +152,9 @@ define method main-window-function
 			 logior($MB-SYSTEMMODAL, logior($MB-OK, $MB-ICONHAND)));
 	    end if;
 
-	  otherwise => 
+	  otherwise =>
 	    return(DefWindowProc(window, message, uParam, lParam));
-                        
+
 	end select;
 
       $WM-DESTROY =>   // message: window being destroyed
@@ -162,7 +162,7 @@ define method main-window-function
 
       otherwise =>           // Passes it on if unproccessed
 	return(DefWindowProc(window, message, uParam, lParam));
-      
+
     end select;
     return(0);
   end block;

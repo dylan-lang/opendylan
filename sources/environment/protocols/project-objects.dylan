@@ -221,7 +221,7 @@ define open generic project-bind-variable
      #key module)
  => (success? :: <boolean>);
 
-
+
 /// Project property protocols
 
 define constant <compilation-mode> = one-of(#"loose", #"tight");
@@ -290,7 +290,7 @@ define open generic project-minor-version-setter
     (version :: <integer>, project :: <project-object>)
  => (version :: <integer>);
 
-
+
 /// File extensions
 
 define function environment-locator-type
@@ -321,7 +321,7 @@ define open generic dylan-file-extension
 define open generic executable-file-extension
     () => (extension :: <string>);
 
-
+
 /// Current project handling
 
 define variable *current-project* :: false-or(<project-object>) = #f;
@@ -337,7 +337,7 @@ define function current-project-setter
   *current-project* := project
 end function current-project-setter;
 
-
+
 /// project building
 
 define open generic open-project-compiler-database
@@ -370,7 +370,7 @@ define open generic link-project
           build-script, target, force?, unify?, release?, messages)
  => ();
 
-
+
 /// Source records
 
 //---*** Maybe subsumed by do-project-file-libraries
@@ -415,7 +415,7 @@ define open generic source-record-top-level-forms
     (server :: <server>, sr :: <source-record>, #key project)
  => (source-forms :: <sequence>);
 
-
+
 /// Some project implementation
 
 define function project-name
@@ -469,7 +469,7 @@ define method environment-object-type-name
   "Project"
 end method environment-object-type-name;
 
-
+
 /// Project query database handling
 
 define method record-client-query
@@ -497,7 +497,7 @@ define method note-object-properties-changed
   end
 end method note-object-properties-changed;
 
-
+
 /// Id caching
 //
 // Note that only unique ids are cached
@@ -545,7 +545,7 @@ define method cache-environment-object-with-id
   element(table, id) := object
 end method cache-environment-object-with-id;
 
-
+
 /// Lookup environment object
 
 define sealed generic lookup-environment-object
@@ -659,7 +659,7 @@ define method lookup-environment-object
   end
 end method lookup-environment-object;
 
-
+
 /// Numeric id handling
 
 define sealed method generate-unique-id
@@ -670,7 +670,7 @@ define sealed method generate-unique-id
   number
 end method generate-unique-id;
 
-
+
 /// Project object interning
 
 define sealed generic make-environment-object
@@ -800,7 +800,7 @@ define method make-environment-object
   object
 end method make-environment-object;
 
-
+
 /// Server handling
 
 define sealed generic choose-server
@@ -921,7 +921,7 @@ define method environment-object-home-server?
     | (application & environment-object-home-server?(application, object))
 end method environment-object-home-server?;
 
-
+
 /// Environment object existence
 
 define method environment-object-exists?
@@ -982,7 +982,7 @@ define method invalid-object?
     & ~compiler-object-proxy(object)
 end method invalid-object?;
 
-
+
 /// Closed server errors
 
 define function unknown-server-path-error
@@ -1020,7 +1020,7 @@ define function invalid-object-error
              object: object))
 end function invalid-object-error;
 
-
+
 /// Environment objects
 
 define method get-environment-object-primitive-name
@@ -1037,7 +1037,7 @@ define method environment-object-source
   server & environment-object-source(server, object)
 end method environment-object-source;
 
-
+
 /// Application objects
 
 define method invalidate-application-proxy
@@ -1049,7 +1049,7 @@ define method invalidate-application-proxy
   application-object-proxy(object) := #f
 end method invalidate-application-proxy;
 
-
+
 /// Compiler objects
 
 define method invalidate-compiler-proxy
@@ -1061,7 +1061,7 @@ define method invalidate-compiler-proxy
   compiler-object-proxy(object) := #f
 end method invalidate-compiler-proxy;
 
-
+
 /// Source record stuff
 
 define method source-record-top-level-forms
@@ -1140,7 +1140,7 @@ define method project-canonical-filename
   end
 end method project-canonical-filename;
 
-
+
 /// Library handling
 
 define method do-project-used-libraries
@@ -1168,7 +1168,7 @@ define method do-project-file-libraries
   database & do-project-file-libraries(function, database, file)
 end method do-project-file-libraries;
 
-
+
 /// Active project
 
 define variable *active-project* :: false-or(<project-object>) = #f;
@@ -1198,7 +1198,7 @@ define method note-user-project-opened
   broadcast($project-channel, message);
 end method note-user-project-opened;
 
-
+
 /// Finding environment objects by name
 
 define method %find-environment-object
@@ -1239,7 +1239,7 @@ define method find-environment-object
  apply(%find-environment-object, project, id, keys);
 end method find-environment-object;
 
-
+
 /// Project start function
 
 define function project-start-function
@@ -1256,7 +1256,7 @@ define function project-start-function
   end
 end function project-start-function;
 
-
+
 /// Debugging
 
 define method find-machine
@@ -1297,7 +1297,7 @@ define method project-debug-machine-setter
   machine
 end method project-debug-machine-setter;
 
-
+
 /// Playground project
 ///
 /// This shouldn't be necessary, but the project manager lets us down

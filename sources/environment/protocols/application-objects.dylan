@@ -24,7 +24,7 @@ define open generic invalidate-application-proxy
     (server :: <server>, object :: <application-object>)
  => ();
 
-
+
 /// Unbound names
 
 define class <unbound-object> (<application-object>)

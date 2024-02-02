@@ -17,7 +17,7 @@ define constant $STATUS-ERROR   = 3;
 
 // TODO: Define a Dylan implementation of DisplayStatus.
 
-define method DisplayStatus 
+define method DisplayStatus
     (status :: <integer>, tip :: <C-string>) => (code :: <integer>)
   select (status)
     $STATUS-NONE    => stop-status-display();

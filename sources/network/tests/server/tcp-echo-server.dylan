@@ -27,8 +27,8 @@ define method serve-echo (reply-socket)
   block ()
     let input = read-line(reply-socket, on-end-of-stream: #"eoi");
     format-out("Responding to client at %s port: %d\n",
-               reply-socket.remote-host.host-name, 
-               reply-socket.remote-port);      
+               reply-socket.remote-host.host-name,
+               reply-socket.remote-port);
     until (input == #"eoi")
       format-out("Echoing: %s\n", input);
       write-line(reply-socket, input);
@@ -36,12 +36,12 @@ define method serve-echo (reply-socket)
     end until;
     close(reply-socket);
     format-out("Connection to %s port: %d closed\n",
-               reply-socket.remote-host.host-name, 
-               reply-socket.remote-port);      
+               reply-socket.remote-host.host-name,
+               reply-socket.remote-port);
   exception (condition :: <recoverable-socket-condition>)
     close(reply-socket, abort?: #t);
     format-out("Connection to %s port: %d aborted\n",
-               reply-socket.remote-host.host-name, 
+               reply-socket.remote-host.host-name,
                reply-socket.remote-port);
   end block;
 end method;

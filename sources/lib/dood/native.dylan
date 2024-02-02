@@ -19,8 +19,8 @@ define inline-only function machine-word-as-hash-index (x :: <machine-word>)
   interpret-machine-word-as-integer(force-integer-tag(x))
 end function;
 
-define function dood-pointer-id-hash 
-    (object :: <object>, hash-state :: <hash-state>) 
+define function dood-pointer-id-hash
+    (object :: <object>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   primitive-mps-ld-add(hash-state, object);
   values(machine-word-as-hash-index(address-of(object)), hash-state)
@@ -30,7 +30,7 @@ define function dood-pointer-id? (x, y) => (res :: <boolean>)
   primitive-id?(x, y)
 end function;
 
-define sealed method table-protocol 
+define sealed method table-protocol
     (table :: <pointer-id-table>) => (test :: <function>, hash :: <function>)
   values(dood-pointer-id?, dood-pointer-id-hash)
 end method;
@@ -129,14 +129,14 @@ end function;
 // define constant $indirect-kind       = 0;
 // define constant $integer-kind        = 1;
 // define constant $byte-character-kind = 2;
-// 
+//
 // define inline function object-kind (object) => (res :: <integer>)
 //   raw-as-integer
 //    (primitive-machine-word-logand
 //      (primitive-cast-pointer-as-raw(object), integer-as-raw(3)))
 // end function;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <integer>) => (disk-object)
   make(<big-small-integer>, value: as(<machine-word>, object))
 end method;

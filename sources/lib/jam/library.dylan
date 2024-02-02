@@ -46,7 +46,7 @@ end;
 
 define module regular-expression
   use common-dylan;
-  
+
   export <regular-expression>,
          copy-regular-expression,
          <epsilon-regular-expression>,

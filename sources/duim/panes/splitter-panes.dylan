@@ -122,7 +122,7 @@ define method splitter-pane-layout-ratios
   end
 end method splitter-pane-layout-ratios;
 
-
+
 /// The separator between resizable panes...
 
 define sealed class <splitter-separator-pane>

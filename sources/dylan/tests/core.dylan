@@ -86,7 +86,7 @@ define test test-vector ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Function tests
 define test test-<function> ()
   //---*** Fill this in...
@@ -137,7 +137,7 @@ define test test-always ()
 end test;
 
 
-
+
 /// Condition tests
 
 define test test-<condition> ()
@@ -183,7 +183,7 @@ define suite dylan-conditions-test-suite ()
   test test-<warning>;
 end;
 
-
+
 
 /// Equality and comparison functions
 define test test-~ () end;

@@ -136,7 +136,7 @@ define sideways method invoke-operation (object :: portableserver/<servant>,
 	     minor: 48,
 	     completed: #"completed-no"));
 end method;
-  
+
 define sideways method invoke-operation (object :: portableserver/<servant>,
 				server-request :: corba/<serverrequest>,
 				operation == #"_is_a")

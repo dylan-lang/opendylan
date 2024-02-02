@@ -38,7 +38,7 @@ define method invalidate-profiler-page
 end method invalidate-profiler-page;
 
 /*---*** Not ready!
-
+
 /// Time line pane
 
 define pane <time-line-pane> ()
@@ -109,7 +109,7 @@ define function make-page-faults-equation
   make-time-line-equation(pane, application-snapshot-page-faults)
 end function make-page-faults-equation;
 
-
+
 /// Equation charting
 
 define class <equation> (<object>)

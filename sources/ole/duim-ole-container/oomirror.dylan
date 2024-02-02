@@ -24,11 +24,11 @@ end method duim/do-make-mirror;
 
 // temporary work-around because do-make-mirror is sealed
 define method duim/make-mirror
-    (_port :: duim/<port>, sheet :: <ole-gadget>) 
+    (_port :: duim/<port>, sheet :: <ole-gadget>)
  => (mirror :: <ole-embedded-mirror>)
   let mirror
     = duim/sheet-direct-mirror(sheet)
-      | (duim/sheet-direct-mirror(sheet) := 
+      | (duim/sheet-direct-mirror(sheet) :=
 	     make(<ole-embedded-mirror>, sheet: sheet));
   mirror
 end method duim/make-mirror;
@@ -45,7 +45,7 @@ define method initialize (mirror :: <ole-embedded-mirror>,
     let options :: <sequence> = sheet.sheet-insert-options;
     let (x :: <integer>, y :: <integer>) = duim/sheet-position(sheet);
     obj :=
-      if ( sheet.sheet-ole-file-name ) 
+      if ( sheet.sheet-ole-file-name )
 	apply(insert-object-from-file, app, parent-handle,
 	      sheet.sheet-ole-file-name, x: x, y: y, options);
       else
@@ -63,7 +63,7 @@ define method initialize (mirror :: <ole-embedded-mirror>,
 end method initialize;
 
 
-define sealed method duim/destroy-mirror 
+define sealed method duim/destroy-mirror
     (_port :: duim/<win32-port>, sheet :: duim/<sheet>,
      mirror :: <ole-embedded-mirror>) => ()
   duim/sheet-direct-mirror(sheet) := #f; // do this first to avoid recursion
@@ -72,7 +72,7 @@ define sealed method duim/destroy-mirror
   close-doc-object(obj);
 end method duim/destroy-mirror;
 
-
+
 /// Mirror manipulation
 
 // For non-top-level sheets, we just show the window
@@ -98,7 +98,7 @@ define sealed method duim/unmap-mirror
 */
 end method duim/unmap-mirror;
 
-define sealed method duim/raise-mirror 
+define sealed method duim/raise-mirror
     (_port :: duim/<win32-port>, sheet :: duim/<sheet>,
      mirror :: <ole-embedded-mirror>, #key activate? = #t) => ()
   ignore(activate?);
@@ -127,7 +127,7 @@ define sealed method duim/lower-mirror
   end if;
 end method duim/lower-mirror;
 
-define sealed method duim/mirror-visible? 
+define sealed method duim/mirror-visible?
     (_port :: duim/<win32-port>, sheet :: duim/<sheet>,
      mirror :: <ole-embedded-mirror>)
  => (visible? :: <boolean>)
@@ -144,7 +144,7 @@ define sealed method duim/mirror-visible?
   end if
 end method duim/mirror-visible?;
 
-
+
 /// Window mirrors
 
 define sealed method duim/mirror-edges
@@ -162,7 +162,7 @@ define sealed method duim/set-mirror-edges
      right :: <integer>, bottom :: <integer>) => ()
   duim/duim-debug-message("Setting mirror edges for %= to %d x %d at %d,%d",
 			  sheet, right - left, bottom - top, left, top);
-  mirror.%region := 
+  mirror.%region :=
     duim/set-box-edges(mirror.%region, left, top, right, bottom); // ???
   let obj = mirror.contained-object;
   if ( obj.alive? )

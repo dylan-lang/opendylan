@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Although the 386 does posses a 'push all' instruction, there's no way to
 /// prevent it saving/restoring ALL registers. This is not very useful.
 /// However, with only 5 of the things, why worry - we don't save eax, esp, ebp
-   
+
 
 // The Dylan calling convention has no preserved registers on the Pentium,
 // but the C convention does - so we have to allow for them for call-ins.
@@ -59,7 +59,7 @@ define pentium-template preserve-registers-exit
       emit(be, leave);
     else
       let preserved = state.allocated-preserved;
-      harp-out (be) add(be, reg--stack, reg--frame, num-preserved * -4) 
+      harp-out (be) add(be, reg--stack, reg--frame, num-preserved * -4)
       end harp-out;
       for (reg in reverse(list-from-prset(be, preserved)))
         harp-out (be) pop(be, reg) end;
@@ -84,22 +84,22 @@ define pentium store-frame-offset-template;
 
 with-ops-in pentium-instructions  (load-stack-arg-byte-signed)
   info := op-element(pentium-instructions, ldb-signed);
-end;  
+end;
 
 with-ops-in pentium-instructions  (load-stack-arg-half-signed)
   info := op-element(pentium-instructions, ldh-signed);
-end;  
+end;
 
 with-ops-in pentium-instructions  (load-stack-arg-byte-unsigned)
   info := op-element(pentium-instructions, ldb);
-end;  
+end;
 
 with-ops-in pentium-instructions  (load-stack-arg-half-unsigned)
   info := op-element(pentium-instructions, ldh);
-end;  
+end;
 
 
-define pentium-template (load-stack-arg-byte-signed, load-stack-arg-byte-unsigned, 
+define pentium-template (load-stack-arg-byte-signed, load-stack-arg-byte-unsigned,
                          load-stack-arg-half-signed, load-stack-arg-half-unsigned)
 
   options (self);
@@ -143,7 +143,7 @@ end pentium-template;
 define pentium store-stack-arg-n-template;
 
 
-with-ops-in pentium-instructions (remove-optionals, move-return-address, 
+with-ops-in pentium-instructions (remove-optionals, move-return-address,
                                   adjust-stack, load-count-adjusting-stack)
   c-preserved-destroys-fn := all-c-preserved-fn;
 end with-ops-in;
@@ -157,7 +157,7 @@ end;
 
 
 
-define constant pentium-allocatable-registers-list 
+define constant pentium-allocatable-registers-list
   = as(<list>, pentium-allocatable-registers);
 
 with-move-return-address-ops pentium end;

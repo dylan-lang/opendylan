@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <poa-manager-state> = one-of(#"inactive", #"active", #"holding", #"discarding");
 
-define class <poa-manager> (PortableServer/<PoaManager>) 
+define class <poa-manager> (PortableServer/<PoaManager>)
   slot poa-manager-state :: <poa-manager-state> = #"holding";
   constant slot poa-manager-state-notification :: <notification>
     = make(<notification>, name: "Waiting for POA Manager state change", lock: make(<lock>));
@@ -342,7 +342,7 @@ define method portableserver/poa/destroy (poa :: <poa>,
   do-destroy-poa(poa, etherealize-objects?, wait-for-completion?);
   invalidate-collocations();
 end method;
-                                          
+
 define method find-poa-lock (poa :: <poa>)
   poa-lock(poa)
 end method;
@@ -634,21 +634,21 @@ define method portableserver/poamanager/deactivate
  => ()
   // ---*** implement wait-for-completion and etherealize-objects for portableserver/poamanager/deactivate
   note-poa-manager-state-changed(poa-manager, #"inactive");
-end method;  
+end method;
 
 define method portableserver/poamanager/hold-requests
     (poa-manager :: <poa-manager>, wait-for-completion :: <boolean>)
  => ()
   // ---*** implement wait-for-completion for portableserver/poamanager/hold-requests
   note-poa-manager-state-changed(poa-manager, #"holding");
-end method;  
+end method;
 
 define method portableserver/poamanager/discard-requests
     (poa-manager :: <poa-manager>, wait-for-completion :: <boolean>)
  => ()
   // ---*** implement wait-for-completion for portableserver/poamanager/discard-requests
   note-poa-manager-state-changed(poa-manager, #"discarding");
-end method;  
+end method;
 
 define method note-adaptor-shutdown (poa :: <poa>, wait-for-completion? :: <boolean>)
  => ()

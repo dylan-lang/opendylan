@@ -62,7 +62,7 @@ define protocol <<font-protocol>> (<<text-style-protocol>>)
      origin-x :: <real>, origin-y :: <real>, bb-x :: <real>, bb-y :: <real>);
 end protocol <<font-protocol>>;
 
-
+
 /// Text style mapping
 
 // Return a key into the mapping tables that ignores the text style size
@@ -299,7 +299,7 @@ define method standardize-text-style-error
   $undefined-text-style
 end method standardize-text-style-error;
 
-
+
 /// Font metrics and text measurement
 
 // For now, only standard character set characters are understood...

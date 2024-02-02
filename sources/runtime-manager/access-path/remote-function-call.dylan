@@ -9,12 +9,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// EXPORTED GENERIC FUNCTIONS
 
-define generic remote-call 
-    (ap :: <access-path>, thread :: <remote-thread>, 
+define generic remote-call
+    (ap :: <access-path>, thread :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
   => (return-address :: <remote-value>, context :: <object>);
 
-define generic remote-call-result 
+define generic remote-call-result
     (ap :: <access-path>, thread :: <remote-thread>)
   => (result :: <remote-value>);
 
@@ -31,7 +31,7 @@ define generic remote-call-spy
 
 ///// REMOTE-CALL
 
-define method remote-call 
+define method remote-call
     (ap :: <access-path>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (ret-addr :: <remote-value>, cookie :: <object>)
@@ -41,7 +41,7 @@ define method remote-call
   if (thread-was-suspended?)
     dylan-resume-thread(ap, thr);
   end if;
-  apply (remote-call-on-connection, ap.connection, thr, function, 
+  apply (remote-call-on-connection, ap.connection, thr, function,
          thread-was-suspended?, arguments);
 end method;
 
@@ -50,7 +50,7 @@ end method;
 
 define open generic remote-call-on-connection
     (conn :: <access-connection>, thr :: <remote-thread>,
-     function :: <remote-value>, 
+     function :: <remote-value>,
      thread-was-suspended? :: <boolean>,
      #rest arguments)
        => (ra :: <remote-value>, cookie :: <object>);
@@ -58,7 +58,7 @@ define open generic remote-call-on-connection
 
 ///// REMOTE-CALL-RESULT
 
-define method remote-call-result 
+define method remote-call-result
     (ap :: <access-path>, thr :: <remote-thread>)
       => (result :: <remote-value>)
   debugger-message("remote-call-result %=", thr);
@@ -91,7 +91,7 @@ end method;
 ///// REMOTE-RESTORE-CONTEXT-ON-CONNECTION
 
 define open generic remote-restore-context-on-connection
-    (conn :: <access-connection>, thr :: <remote-thread>, 
+    (conn :: <access-connection>, thr :: <remote-thread>,
      ctx :: <THREAD-CONTEXT>)
  => ();
 

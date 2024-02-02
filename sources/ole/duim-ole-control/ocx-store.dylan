@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// Eventually this whole file may need to be moved to the `DUIM-OLE-Server' 
+// Eventually this whole file may need to be moved to the `DUIM-OLE-Server'
 // library as part of supporting in-process servers.  In the meantime,
 // the `sideways' adjective was added to the following methods to suppress
 // warnings about ``method ... visible to sibling libraries''.

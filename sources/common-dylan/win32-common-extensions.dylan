@@ -98,7 +98,7 @@ define function default-random-seed () => (seed :: <integer>)
            ash(as(<integer>, *filetime-buffer*[7]), 8))
 end function default-random-seed;
 
-
+
 /// Application information
 
 define variable *application-name* :: false-or(<byte-string>) = #f;

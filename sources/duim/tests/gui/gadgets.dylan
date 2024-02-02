@@ -51,7 +51,7 @@ define constant $multiple-selection-gadgets-to-test
 define constant $test-gadget-items         = #("One", "Two", "Three");
 define constant $test-gadget-default-value = $test-gadget-items[1];
 
-
+
 /// Gadget Test Frame
 
 define variable *gadget-test-foreground* = #f;
@@ -448,7 +448,7 @@ define method frame-gadgets-selection-mode
   #"single"
 end method frame-gadgets-selection-mode;
 
-
+
 /// Simple gadgets test
 
 define class <simple-gadget-test-frame> (<gadget-test-frame>)
@@ -459,7 +459,7 @@ define method gadget-classes-to-test
   $simple-gadgets-to-test
 end method gadget-classes-to-test;
 
-
+
 /// New gadgets test
 
 define class <new-gadget-test-frame> (<gadget-test-frame>)
@@ -470,7 +470,7 @@ define method gadget-classes-to-test
   $new-gadgets-to-test
 end method gadget-classes-to-test;
 
-
+
 /// Vertical gadgets test
 
 define class <vertical-gadget-test-frame> (<gadget-test-frame>)
@@ -486,7 +486,7 @@ define method frame-gadgets-orientation
   #"vertical"
 end method frame-gadgets-orientation;
 
-
+
 /// Multiple selection gadgets test
 
 define class <multiple-selection-gadget-test-frame> (<gadget-test-frame>)
@@ -502,7 +502,7 @@ define method frame-gadgets-selection-mode
   #"multiple"
 end method frame-gadgets-selection-mode;
 
-
+
 /// Advanced gadgets test
 
 define class <advanced-gadget-test-frame> (<gadget-test-frame>)
@@ -559,7 +559,7 @@ define method make-test-gadgets
   end
 end method make-test-gadgets;
 
-
+
 /// Gadgets frame
 
 define variable $gadget-test-frame-tests

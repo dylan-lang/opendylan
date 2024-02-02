@@ -27,7 +27,7 @@ define module OLE-Server
   use simple-format;
   use OLE,
     export: { make-GUID, <REFGUID>, <REFCLSID>,
-	     // Export names that may be needed by application methods on 
+	     // Export names that may be needed by application methods on
 	     // save-frame-to-storage and load-frame-from-storage.
 	     <Interface>, <LPSTREAM>, <storage-istream>,
 	     <HRESULT>, IStream/Read-integer,
@@ -41,14 +41,14 @@ define module OLE-Server
 	     $CLSCTX-INPROC-SERVER, $CLSCTX-INPROC-HANDLER,
 	     $CLSCTX-LOCAL-SERVER,
 	     // other utilities:
-	     <lib-init-mixin>, 
+	     <lib-init-mixin>,
 	     <ole-error>, ole-error, check-ole-status, ole-error-status,
-	     ole-error-context, ole-error-instance, ole-error-args, 
+	     ole-error-context, ole-error-instance, ole-error-args,
 	     OLE-util-in-process-startup?,
 	     OLE-util-started-by-OLE?, OLE-util-register-only?,
 	     OLE-util-unregister?, OLE-util-file-arg,
 	     // documented error codes from OLE-util-set-status-text:
-	     $S-TRUNCATED, $E-FAIL, $OLE-E-NOT-INPLACEACTIVE, 
+	     $S-TRUNCATED, $E-FAIL, $OLE-E-NOT-INPLACEACTIVE,
 	     // have to export this so methods can be added:
 	     terminate,
 	     // other miscellaneous things that might be useful without
@@ -77,7 +77,7 @@ define module OLE-Server
   export <basic-ole-server>;
   export <ole-server-framework>, <CDataObject>, <COleInPlaceActiveObject>,
     <COleInPlaceObject>, <COleObject>, <CPersistStorage>,
-    <CExternalConnection>; 
+    <CExternalConnection>;
   export Release-Streams-And-Storage; // to add method in ole-control-framework
   export <ole-in-process-server>, query-cache-interface;
 
@@ -93,7 +93,7 @@ define module OLE-Server
     OLE-util-HIMETRIC-size;
   export OLE-util-send-view-change, OLE-util-defer-view-change,
     OLE-util-flush-view-change;
- 
+
   export in-place-frame-info, container-IOleInPlaceFrame,
     server-IOleObject, server-IOleObject-setter,
     container-parent-window, get-hatch-window, obj-class-ID;
@@ -111,7 +111,7 @@ define module OLE-Server
   export IStream/Write-int16, IStream/Read-int16,
     istream-read-integer, istream-read-int16,
     istream-write-integer, istream-write-int16, istream-rewrite,
-    istream-write-float, istream-read-float, 
+    istream-write-float, istream-read-float,
     istream-write-string, istream-read-string;
 
   // Generic functions to be implemented by the application-specific code:
@@ -120,7 +120,7 @@ define module OLE-Server
     OLE-part-init-new, OLE-part-draw,
     OLE-part-doc-window, OLE-part-draw-metafile, OLE-part-show-window,
     OLE-part-requested-size, OLE-part-change-size,
-    OLE-part-get-data, OLE-part-set-data, OLE-part-hide, 
+    OLE-part-get-data, OLE-part-set-data, OLE-part-hide,
     OLE-part-in-place-activated, OLE-part-in-place-deactivated,
     OLE-part-UI-activated, OLE-part-UI-deactivated,
     OLE-part-insert-menus, OLE-part-release-menu, OLE-part-accelerators,
@@ -128,7 +128,7 @@ define module OLE-Server
     OLE-part-Open-Streams, OLE-part-Release-Streams, OLE-part-Save-To-Storage,
     OLE-part-set-focus, OLE-part-title, OLE-part-command-window,
     OLE-part-enable-dialog;
-  
+
   // overridden for OLE Controls:
   export hatch-when-UI-active?, after-initialize;
  end;

@@ -205,7 +205,7 @@ define inline function line-invisible-in-window?
   ~line-visible-in-window?(line, window)
 end function line-invisible-in-window?;
 
-
+
 /// Default notification methods
 
 define method window-note-mode-entered
@@ -288,7 +288,7 @@ define method window-note-policy-changed
   end;
 end method window-note-policy-changed;
 
-
+
 /// Window back end protocol
 
 define constant <goto-target-type> = one-of(#"line", #"character");
@@ -470,7 +470,7 @@ define macro with-busy-cursor
          end }
 end macro with-busy-cursor;
 
-
+
 /// Colors
 
 // Colors are represented as integers, and so can be compared with \=
@@ -582,7 +582,7 @@ define constant $values-arrow         :: <integer> = 10;
 define constant $warning              :: <integer> = 11;
 define constant $serious-warning      :: <integer> = 12;
 
-
+
 /// Current buffer, point, mark
 
 define constant $point-pdl-size :: <integer> = 16;
@@ -622,7 +622,7 @@ define sealed method pop-point-pdl!
   end
 end method pop-point-pdl!;
 
-
+
 /// Window buffer selection
 
 define sealed class <buffer-selection> (<object>)

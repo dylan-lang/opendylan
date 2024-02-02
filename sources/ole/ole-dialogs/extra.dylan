@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $IDD-SERVERNOTREG	= $IDD-SERVERNOTREGA;
 define constant $IDD-LINKTYPECHANGED	= $IDD-LINKTYPECHANGEDA;
 
-// Temporary hack until these can be imported from the 
+// Temporary hack until these can be imported from the
 // Win32-Controls library (file prsht):			???
 define constant <PROPSHEETHEADERA> = <C-void>;
 define constant <PROPSHEETHEADERW> = <C-void>;

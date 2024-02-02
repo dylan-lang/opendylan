@@ -202,7 +202,7 @@ define method type-referenced-types
   vector(type.llvm-vector-type-element-type);
 end method;
 
-
+
 /// Placeholder types
 
 define abstract class <llvm-placeholder-type> (<llvm-type>)
@@ -296,7 +296,7 @@ define method type-forward
   end if
 end method;
 
-
+
 /// Well-known types
 
 define constant $llvm-label-type :: <llvm-type>

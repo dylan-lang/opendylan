@@ -61,11 +61,11 @@ define function load-task-list
         unless (name) return() end;
         let priority = read-line(stream, on-end-of-stream: #f);
 //        format-out("Priority %=\n", priority);
-        unless (priority) 
-          error("Unexpectedly missing priority!") 
+        unless (priority)
+          error("Unexpectedly missing priority!")
         end;
 //        format-out("Read: %= %=\n", name, priority);
-        let task = make(<task>, name: name, 
+        let task = make(<task>, name: name,
                         priority: as(<symbol>, priority));
         add!(tasks, task)
       end

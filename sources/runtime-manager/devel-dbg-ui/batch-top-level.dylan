@@ -64,7 +64,7 @@ end method;
 define method process-global-mode () => ()
   *global-quit* := #f;
   if (*current-debugger-options*.target-process)
-    let auto-command = 
+    let auto-command =
       if (*current-debugger-options*.jit-debug?)
         *current-debugger-options*.stop-at-system-initialization? := #f;
         debugger-message(" *** JIT Auto-start.");
@@ -77,9 +77,9 @@ define method process-global-mode () => ()
              JIT-bit: *current-debugger-options*.arguments-for-target-process);
       else
         make (<open-application-command>,
-              filename: 
+              filename:
                 *current-debugger-options*.target-process,
-              arguments: 
+              arguments:
                 *current-debugger-options*.arguments-for-target-process);
       end if;
      block ()
@@ -96,7 +96,7 @@ define method process-global-mode () => ()
   if (*program-failed?*)
     debugger-message("Debugger is returning exit-code -1.");
     exit-application(-1)
-  end if; 
+  end if;
 
 end method;
 

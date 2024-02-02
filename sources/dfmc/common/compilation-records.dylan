@@ -138,7 +138,7 @@ define method print-object (o :: <compilation-record>, s :: <stream>) => ()
   format(s, "{<compilation-record> %=}", compilation-record-name(o));
 end method;
 
-
+
 // Not really implemented yet.
 
 define method immutable-model (object) => model;

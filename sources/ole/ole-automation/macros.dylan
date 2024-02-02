@@ -6,11 +6,11 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define /* exported */ open generic type-information 
+define /* exported */ open generic type-information
     (interface :: type-union(<Interface>, <class>))
  => (result :: false-or(<Dylan-Type-Info>));
 
-// Default method returns false so that type-information can be safely called 
+// Default method returns false so that type-information can be safely called
 // anywhere.
 define method type-information (interface :: <class>)
  => (result :: singleton(#f))
@@ -37,7 +37,7 @@ end macro use-default;
 define /* exported */ macro dispatch-interface-definer
   { define ?modifiers:* dispatch-interface ?class-name:name (?superclasses:*)
       ?slots-and-stuff:* end }
-    => { define ?modifiers dispatch-interface-class ?class-name (?superclasses) 
+    => { define ?modifiers dispatch-interface-class ?class-name (?superclasses)
 	     ?slots-and-stuff
          end;
 
@@ -65,7 +65,7 @@ end;
 define macro dispatch-interface-class-definer
   { define ?modifiers:* dispatch-interface-class ?class-name:name (?superclasses:*)
       ?slots-and-stuff:* end }
-    => { define ?modifiers COM-interface ?class-name (?superclasses) 
+    => { define ?modifiers COM-interface ?class-name (?superclasses)
 	     ?slots-and-stuff
          end; }
 slots-and-stuff:
@@ -107,7 +107,7 @@ property-as-slot:
     { ?property-spec:*, ?property-keywords }
     => { slot ?property-spec, ?property-keywords }
 property-keywords:
-  { } 
+  { }
     => { }
   { name: ?value:expression, ... }
     => { ... }
@@ -115,30 +115,30 @@ property-keywords:
     => { ... }
   { type: ?value:expression, ... }
     => { ... }
-  { documentation: ?val:expression, ... } 
+  { documentation: ?val:expression, ... }
     => { ... }
-  { help-context: ?val:expression, ... } 
+  { help-context: ?val:expression, ... }
     => { ... }
-  { property-setter: ?val:expression, ... } 
+  { property-setter: ?val:expression, ... }
     => { ... }
-  { ?slot-keyword:*, ... } 
+  { ?slot-keyword:*, ... }
     => { ?slot-keyword, ... }
 slot-keyword:
-  { setter: ?val:expression } 
+  { setter: ?val:expression }
     => { setter: ?val }
-  { init-keyword: ?val:expression } 
+  { init-keyword: ?val:expression }
     => { init-keyword: ?val }
-  { required-init-keyword: ?val:expression } 
+  { required-init-keyword: ?val:expression }
     => { required-init-keyword: ?val }
   { init-value: ?value:expression }
     => { init-value: ?value }
-  { init-function: ?value:expression } 
+  { init-function: ?value:expression }
     => { init-function: ?value }
-/*  { ?key:token ?val:expression } 
+/*  { ?key:token ?val:expression }
     => { ?key ?val } */
 end macro dispatch-interface-class-definer;
 
-
+
 
 
 define /* exported */ macro dispatch-type-info-definer
@@ -148,10 +148,10 @@ define /* exported */ macro dispatch-type-info-definer
       ?slots-and-stuff:*
     end }
     => {
-         define internal-dispatch-type-info ?constant-name (?supertype) 
+         define internal-dispatch-type-info ?constant-name (?supertype)
 	     options { ?slots-and-stuff; name ?interface-name; };
 	     properties { ?slots-and-stuff };
-             methods { ?slots-and-stuff }; 
+             methods { ?slots-and-stuff };
          end; }
 interface-name:
     { "<" ## ?name-without-brackets:name ## ">" } => { ?name-without-brackets }
@@ -159,7 +159,7 @@ interface-name:
 end macro dispatch-type-info-definer;
 
 define macro internal-dispatch-type-info-definer
-  { define  internal-dispatch-type-info ?constant-name:name 
+  { define  internal-dispatch-type-info ?constant-name:name
 		( ?supertype:expression )
       options { ?options };
       properties { ?properties };
@@ -173,8 +173,8 @@ define macro internal-dispatch-type-info-definer
 		   ?methods );
        }
 options:
-    { } 
-      => { } 
+    { }
+      => { }
     { ; ... } => { ... }
     { property ?stuff-to-ignore:* ; ... }
       => { ... }
@@ -182,13 +182,13 @@ options:
       => { ... }
     { constant property ?stuff-to-ignore:* ; ... }
       => { ... }
-    { function-descriptor ?stuff-to-ignore:* ; ... } 
+    { function-descriptor ?stuff-to-ignore:* ; ... }
       => { ... }
-    { function ?stuff-to-ignore:* ; ... } 
+    { function ?stuff-to-ignore:* ; ... }
       => { ... }
-    { member-function ?stuff-to-ignore:* ; ... } 
+    { member-function ?stuff-to-ignore:* ; ... }
       => { ... }
-    { name ?disp-class-name:* ; ... } // This option will shadow the one in 
+    { name ?disp-class-name:* ; ... } // This option will shadow the one in
       => { name: stringify(?disp-class-name) , ... } // the template above.
     { uuid ?uuid-stuff:expression ; ... }
       => { uuid: ?uuid-stuff , ... }
@@ -202,9 +202,9 @@ options:
       => { major-version: ?major-version-stuff , ... }
     { minor-version ?minor-version-stuff:expression ; ... }
       => { minor-version: ?minor-version-stuff , ... }
-    { locale ?locale-stuff:expression ; ... } 
+    { locale ?locale-stuff:expression ; ... }
       => { locale: ?locale-stuff , ... }
-    { ?modifiers:* slot ?slot-definition:* ; ... } 
+    { ?modifiers:* slot ?slot-definition:* ; ... }
       => { ... }
     { client-class ?ignore:* ; ... } // ignore option for custom interface
       => { ... }
@@ -212,11 +212,11 @@ properties:
     { ?inner-properties } => { properties: vector(?inner-properties) }
 inner-properties:
     { } => { }
-    { property ?variable-property-desc:* ; ... } 
+    { property ?variable-property-desc:* ; ... }
       => { ?variable-property-desc, ... }
-    { virtual property ?variable-property-desc:* ; ... } 
+    { virtual property ?variable-property-desc:* ; ... }
       => { ?variable-property-desc, ... }
-    { constant property ?constant-property-desc:* ; ... } 
+    { constant property ?constant-property-desc:* ; ... }
       => { ?constant-property-desc , ... }
     { ?anything-else:name ?stuff-to-ignore:* ; ... }
       => { ... }
@@ -268,11 +268,11 @@ methods:
     { ?inner-methods } => { methods: vector(?inner-methods) }
 inner-methods:
     { } => { }
-    { function-descriptor ?function-stuff ; ... } 
+    { function-descriptor ?function-stuff ; ... }
       => { ?function-stuff , ... }
-    { function ?function-stuff ; ... } 
+    { function ?function-stuff ; ... }
       => { ?function-stuff , ... }
-    { member-function ?function-stuff ; ... } 
+    { member-function ?function-stuff ; ... }
       => { ?function-stuff , ... }
     { ?anything-else:name ?stuff-to-ignore:* ; ... }
       => { ... }
@@ -294,9 +294,9 @@ function-stuff:
     { ?function-name:name ( ?argument-list:* ), ?function-options:* }
       => { make(<function-description>, ?function-options ,
 		name: ?"function-name" , function: ?function-name ,
-		argument-names: 
+		argument-names:
 		  dispatch-extract-argument-names  ?argument-list end,
-	        argument-types: 
+	        argument-types:
 	          dispatch-extract-argument-types  ?argument-list end)
 	  }
     { ?function-name:name ( ?argument-list:* ) => ( ?result:* ),
@@ -304,9 +304,9 @@ function-stuff:
       => { make(<function-description>, ?function-options ,
 		name: ?"function-name" , function: ?function-name ,
 		result-type: ?result  ,
-		argument-names: 
+		argument-names:
 		  dispatch-extract-argument-names  ?argument-list end,
-	        argument-types: 
+	        argument-types:
 	          dispatch-extract-argument-types  ?argument-list end )
           }
 function-options:
@@ -356,7 +356,7 @@ define function maybe-inherit (#rest superclasses)
        superclasses);
 end maybe-inherit;
 
-
+
 define /* exported */ macro coclass-definer
   { define ?modifiers:* coclass ?coclass-name:name ?clauses:* end }
     => { define ?modifiers coclass-helper ?coclass-name
@@ -364,20 +364,20 @@ define /* exported */ macro coclass-definer
 end macro coclass-definer;
 
 define macro coclass-helper-definer
-  { define ?modifiers:* coclass-helper ?coclass-name:name 
+  { define ?modifiers:* coclass-helper ?coclass-name:name
            the-clauses { ?clauses:* }, the-interfaces { ?interfaces:* } end }
-    => { define ?modifiers constant ?coclass-name :: <coclass-type-info> 
+    => { define ?modifiers constant ?coclass-name :: <coclass-type-info>
            = make(<coclass-type-info>, ?clauses, ?interfaces ); }
 clauses:
-    { } 
-      => { } 
+    { }
+      => { }
     { interface ?stuff-to-ignore:* ; ... }
       => { ... }
     { default interface ?stuff-to-ignore:* ; ... }
       => { ... }
     { source interface ?stuff-to-ignore:* ; ... }
       => { ... }
-    { restricted interface ?stuff-to-ignore:* ; ... } 
+    { restricted interface ?stuff-to-ignore:* ; ... }
       => { ... }
     { name ?disp-class-name:name ; ... } // This option will shadow
       => { name: ?"disp-class-name" , ... } // the one in the template above.
@@ -386,7 +386,7 @@ clauses:
     { uuid ?uuid-stuff:expression ; ... }
       => { uuid: ?uuid-stuff , ... }
     { component-class ?component-class-name:expression ; ... }
-      => { class: ?component-class-name , ... } 
+      => { class: ?component-class-name , ... }
     { args { } ; ... }
       => { ... }
     { args { ?non-empty-argument-list:* } ; ... }
@@ -407,10 +407,10 @@ interfaces:
     { ?inner-interfaces } => { interfaces: vector(?inner-interfaces) }
 inner-interfaces:
     { } => { }
-    { interface ?component-interface-stuff:* ; ... } 
+    { interface ?component-interface-stuff:* ; ... }
       => {  make(<component-interface-description>,
 		 ?component-interface-stuff ),  ... }
-    { ?flag:name interface ?component-interface-stuff:* ; ... } 
+    { ?flag:name interface ?component-interface-stuff:* ; ... }
       => {  make(<component-interface-description>, flags: ?flag,
 		 ?component-interface-stuff ),  ... }
     { ?anything-else:name ?stuff-to-ignore:* ; ... }
@@ -421,8 +421,8 @@ flag:
     { restricted } => { $IMPLTYPEFLAG-FRESTRICTED }
 component-interface-stuff:
     { ?dispatch-class:expression, ?component-interface-options:* }
-	=> { class: ?dispatch-class, 
-	     ?component-interface-options, 
+	=> { class: ?dispatch-class,
+	     ?component-interface-options,
 	     typeinfo: ?dispatch-class.type-information }
 component-interface-options:
     { } => { }

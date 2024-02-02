@@ -37,8 +37,8 @@ end method describe-resource;
 
 // Stand-in for a loaded resource so we can load it lazily...
 define sealed class <resource-description>
-    (<win32-resource>) 
-  constant slot resource-type-value :: <resource-type>, 
+    (<win32-resource>)
+  constant slot resource-type-value :: <resource-type>,
     required-init-keyword: resource-type:;
 end class <resource-description>;
 
@@ -53,7 +53,7 @@ end method resource-type;
 
 // A resource once it as been loaded into memory
 define abstract class <loaded-resource>
-    (<win32-resource>) 
+    (<win32-resource>)
   constant slot memory-handle :: <HANDLE>,
     init-keyword: memory-handle:;
 end class <loaded-resource>;
@@ -104,7 +104,7 @@ end class <cursor-resource>;
 define sealed domain make (singleton(<cursor-resource>));
 define sealed domain initialize (<cursor-resource>);
 
-
+
 /// Dialog resources
 
 define sealed class <dialog-resource>
@@ -162,16 +162,16 @@ define sealed method describe-resource
   format-out("Number of accessible gadgets: %d\n\n", size(dialog-children(resource)))
 end method describe-resource;
 
-
+
 /// Control resources
 
-define sealed class <control-resource> 
+define sealed class <control-resource>
     (<pseudo-resource>, <window-resource>)
-  constant slot control-template :: <LPCDLGITEMTEMPLATEA>, 
+  constant slot control-template :: <LPCDLGITEMTEMPLATEA>,
     required-init-keyword: template:;
   slot control-text :: <raw-resource-id>;
   slot control-creation-data-size :: <integer>;
-  slot control-creation-data :: <LPWORD>; 
+  slot control-creation-data :: <LPWORD>;
   // The dialog that contains this control...
   slot control-parent :: false-or(<dialog-resource>) = #f;
 end class <control-resource>;
@@ -215,7 +215,7 @@ define method describe-resource
   next-method()
 end method describe-resource;
 
-
+
 /// Toolbar resources
 
 define sealed class <toolbar-resource>

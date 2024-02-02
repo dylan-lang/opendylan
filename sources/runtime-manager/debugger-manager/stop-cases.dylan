@@ -86,9 +86,9 @@ define class <interactive-thread-initialized-stop-reason>
 end class;
 
 
-///// <SOURCE-CODE-ALIGNMENT-STOP-REASON> 
+///// <SOURCE-CODE-ALIGNMENT-STOP-REASON>
 
-define class <source-code-alignment-stop-reason> 
+define class <source-code-alignment-stop-reason>
                  (<language-level-stop-reason>)
 end class;
 

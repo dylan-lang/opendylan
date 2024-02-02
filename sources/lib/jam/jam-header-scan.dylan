@@ -14,14 +14,14 @@ define method target-header-scan
   let hdrrule
     = element(target.target-variables, "HDRRULE", default: #f)
     | jam-variable(jam, "HDRRULE");
-  
+
   if (~hdrscan.empty? & ~hdrrule.empty?)
     let regexp = parse-regular-expression(hdrscan[0]);
 
     with-open-file(stream = target.target-bound-locator, direction: #"input")
       iterate loop (buf :: false-or(<buffer>) = get-input-buffer(stream))
         if (buf)
-          
+
           buf.buffer-next := buf.buffer-end;
           loop(next-input-buffer(stream));
         end if;

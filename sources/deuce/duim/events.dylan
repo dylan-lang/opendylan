@@ -313,7 +313,7 @@ define sealed method handle-event
   end
 end method handle-event;
 
-
+
 /// A little bit of streams for you...
 
 define sealed method read-character
@@ -396,7 +396,7 @@ define sealed method read-gesture
   values(keysym, char, make-deuce-modifiers(modifiers))
 end method read-gesture;
 
-
+
 /// DUIM -> Deuce conversions
 
 assert($control-key == deuce/$control-key * 2

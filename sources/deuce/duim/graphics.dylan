@@ -44,7 +44,7 @@ define inline function establish-color
   end
 end function establish-color;
 
-
+
 /// Fonts
 
 define variable $font-table :: <object-table> = make(<table>);
@@ -110,7 +110,7 @@ define method set-default-font-size
   end
 end method set-default-font-size;
 
-
+
 /// Graphics
 
 define sealed method deuce/draw-string

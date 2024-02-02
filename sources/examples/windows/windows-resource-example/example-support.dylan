@@ -90,7 +90,7 @@ define function
 	let win-struct = make(<LPCREATESTRUCT>, address: lParam);
 	let my-id = as(<integer>, win-struct.hMenu-value.pointer-address);
 
-	debug-out("About to create gadget window : %s hMenu: %=\n", 
+	debug-out("About to create gadget window : %s hMenu: %=\n",
 		  as(<byte-string>, win-struct.lpszName-value),
 		  my-id);
 	// register message table if there is one
@@ -123,32 +123,32 @@ define function duim-frame-function(
                 lParam :: <integer>)   // additional information
 	=> value :: <integer>;
   block(return)
-	
-    select ( message ) 
+
+    select ( message )
 
       $WM-COMMAND =>   // message: command from application menu
 
 	let wmId :: <signed-int> = LOWORD(uParam);
 	/* let wmEvent :: <signed-int> = HIWORD(uParam); */
 
-	select ( wmId ) 
+	select ( wmId )
 	  // we may want to handle some commands by default
-	  otherwise => 
+	  otherwise =>
 	    let status = dispatch-command(hWnd, wmId, uParam, lParam);
 	    unless(status)
 	      //debug-out("Calling default command handler\n");
 	      return(DefWindowProc(hWnd, message, uParam, lParam));
 	    end;
-                        
+
 	end select;
 
       $WM-NCCREATE =>
 	let win-struct = make(<LPCREATESTRUCT>, address: lParam);
 	let my-id = *creating-window-resource-id*;
-	
+
 	// This would be the place to initialize duim gadget structures
 	// using resource-database, lookup-control(...)
-	debug-out("About to create frame window : %s id %=\n", 
+	debug-out("About to create frame window : %s id %=\n",
 		  as(<byte-string>, win-struct.lpszName-value), my-id);
 	if(my-id = 0) // ??? $null-handle
 	  ErrorHandler("We are having problems, WM-NCCRETAE: id = 0");
@@ -156,11 +156,11 @@ define function duim-frame-function(
 	  let cmd-table = element(*command-dispatching-tables*, my-id, default: #f);
 	  if(cmd-table)
 	    register-command-table-internal(hWnd, cmd-table);
-	  else 
+	  else
 	    debug-out("\tNo command table found\n");
 	  end;
 	end;
-	
+
 	return(1); // true;
 
       $WM-DESTROY =>   // message: window being destroyed
@@ -169,7 +169,7 @@ define function duim-frame-function(
 
       otherwise =>           // Passes it on if unproccessed
 	return(DefWindowProc(hWnd, message, uParam, lParam));
-      
+
     end select;
     return(0);
   end block;
@@ -187,14 +187,14 @@ define method dialog-function(hDlg :: <HWND>, message :: <unsigned-int>,
 			      wParam :: <integer>, lParam :: <integer>)
  => value :: <boolean>;
 
-  select ( message ) 
+  select ( message )
     $WM-INITDIALOG =>  	// initialize dialog box
       let my-id = *creating-window-resource-id*;
-      
+
       // This would be the place to initialize duim gadget structures
       // using resource-database, lookup-control(...)
       debug-out("About to create dialog : %=\n", my-id);
-		
+
       if(my-id = 0)
 	ErrorHandler("We are having problems, WM-INITDIALOG: id = 0");
       else
@@ -208,8 +208,8 @@ define method dialog-function(hDlg :: <HWND>, message :: <unsigned-int>,
 	let wmId :: <signed-int> = LOWORD(wParam);
 	/* let wmEvent :: <signed-int> = HIWORD(wParam); */
 
-      select ( wmId ) 
-	otherwise => 
+      select ( wmId )
+	otherwise =>
 	  let status = dispatch-command(hDlg, wmId, wParam, lParam);
 	  if(wmId = $IDOK | wmId = $IDCANCEL)
 	    EndDialog(hDlg, 1);
@@ -232,7 +232,7 @@ define variable $szAppName = as(<LPTSTR>, "Duim App");
 
 define function initialize-application(hInstance :: <HINSTANCE>,
 				       cmd-show :: <signed-int>,
-				       name :: <LPTSTR>) 
+				       name :: <LPTSTR>)
  => (success? :: <boolean>);
   $szAppName := name;
   *app-instance* := hInstance;
@@ -240,8 +240,8 @@ define function initialize-application(hInstance :: <HINSTANCE>,
   register-duim-frame-class(hInstance) & register-duim-gadget-class(hInstance)
 end;
 
-define function create-modal-window(id :: <resource-id>, 
-				    #key 
+define function create-modal-window(id :: <resource-id>,
+				    #key
 				      parent :: <HWND> = $NULL-HWND,
 				    show :: <boolean> = #f)
  => (window :: <HWND>);
@@ -257,8 +257,8 @@ define function create-modal-window(id :: <resource-id>,
 end;
 
 
-define function create-window(id :: <resource-id>, 
-			      #key 
+define function create-window(id :: <resource-id>,
+			      #key
 //			        command-table :: <command-table> = unsupplied(),
 				parent :: <HWND> = $NULL-HWND,
 			        show :: <boolean> = #f)
@@ -270,9 +270,9 @@ define function create-window(id :: <resource-id>,
 				    encode-resource(id),
 				    parent,
 				    Null-Proc);
-				    
+
   // If window could not be created, return "failure"
-  if ( null-handle?(hWnd) ) 
+  if ( null-handle?(hWnd) )
     debug-out("CreateDialog failed for id: %=\n", decode-resource(id));
   else
     // Make the window visible; update its client area; and return "success"
@@ -299,7 +299,7 @@ define function message-loop(hAccelTable :: <HACCEL>) => (value :: <unsigned-int
 		    $NULL-HWND,  // handle of window receiving the message
 		    0,      // lowest message to examine
 		    0))     // highest message to examine
-    
+
     if ( TranslateAccelerator(pMsg.hwnd-value, hAccelTable, pMsg) = 0 )
       TranslateMessage(pMsg); // Translates virtual key codes
       DispatchMessage(pMsg);  // Dispatches message to window

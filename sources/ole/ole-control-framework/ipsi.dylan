@@ -44,7 +44,7 @@ define method IPersistStreamInit/GetSizeMax
 
   let max-size = OLE-part-max-save-size(this);
   if ( max-size == #f )
-    $E-NOTIMPL    
+    $E-NOTIMPL
   else
     pointer-value(max-size-ptr) := max-size;
     $S-OK
@@ -122,7 +122,7 @@ end method IPersistStreamInit/Load;
 
 define method IPersistStreamInit/IsDirty(this :: <CPersistStreamInit>)
  => (status :: <HRESULT>)
-	
+
   Output-Debug-String("IPersistStreamInit/IsDirty\r\n");
 
   // Has the application data changed since being written to storage?

@@ -37,11 +37,11 @@ define method initialize (stream :: <in-memory-connection-stream>, #key host, po
 end method;
 
 define method current-agent (id :: <symbol>)
-  let agent = element($connection-stream-agents, id, default: #"client");  
+  let agent = element($connection-stream-agents, id, default: #"client");
   if (agent = #"error")
     error("cannot have more than two ends of a connection: %s", id)
   end if;
-  element($connection-stream-agents, id) := 
+  element($connection-stream-agents, id) :=
     select (agent)
       #"client" => #"server";
       #"server" => #"error";
@@ -54,7 +54,7 @@ define method opposite-agent (agent :: <symbol>)
     #"client" => #"server";
     #"server" => #"client";
   end select;
-end method;  
+end method;
 
 define method connection-stream-agent-id(host :: <string>, port :: <integer>)
   as(<symbol>, format-to-string("%s:%d", host, port));

@@ -91,7 +91,7 @@ define constant $list-close        = 6;        // an close parenthesis or bracke
 assert($word-alphabetic == $list-alphabetic & $word-delimiter == $list-delimiter,
        "List syntax constants inconsistent");
 
-
+
 /// Default syntax tables
 
 define constant $default-word-syntax :: <syntax-table> = make(<syntax-table>);

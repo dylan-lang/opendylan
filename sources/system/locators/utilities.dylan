@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $default-path-separator :: <character> = '/';
 
-
+
 /// Basic parsing
 
 define method prefix-equal?
@@ -21,7 +21,7 @@ define method prefix-equal?
   end
 end method prefix-equal?;
 
-
+
 /// Delimiter handling
 
 define inline function delimiter-to-string
@@ -85,7 +85,7 @@ define method find-delimiters-from-end
   end
 end method find-delimiters-from-end;
 
-
+
 /// Path routines
 
 define method canonicalize-path
@@ -228,7 +228,7 @@ define function simplify-path
   reverse!(as(<simple-object-vector>, new-path))
 end function;
 
-
+
 /// Case insensitive comparisons
 //---*** andrewa: needed for comparison of Microsoft locators.
 //---*** Also, we should worry about internationalization issues.

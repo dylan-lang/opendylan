@@ -2,7 +2,7 @@ Module:    Dylan-User
 Synopsis:  This library is a complete application program which provides a
 	   very simple demonstration of using the low-level OLE API for
 	   creating a graphic object that can be embedded in compound
-	   documents.  
+	   documents.
 	   This program was translated from a C++ program in the Microsoft
 	   Win32 SDK, in directory "\MSTOOLS\samples\ole\simpsvr", where it
 	   is described as:

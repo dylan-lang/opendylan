@@ -1393,10 +1393,10 @@ end;
 define inline-only constant $LVM-SETITEMSTATE           = #x102B;
 
 define function ListView-SetItemState (hwndLV, i, data, mask);
-   with-stack-structure( ms_lvi :: <LPLV-ITEM> ) 
-	ms_lvi.stateMask-value := mask; 
-	ms_lvi.state-value := data; 
-	SendMessage( hwndLV, $LVM-SETITEMSTATE, i, ms_lvi.pointer-address); 
+   with-stack-structure( ms_lvi :: <LPLV-ITEM> )
+	ms_lvi.stateMask-value := mask;
+	ms_lvi.state-value := data;
+	SendMessage( hwndLV, $LVM-SETITEMSTATE, i, ms_lvi.pointer-address);
 	end with-stack-structure
 end;
 define inline-only constant $LVM-GETITEMSTATE           = #x102C;
@@ -1407,20 +1407,20 @@ end;
 define inline-only constant $LVM-GETITEMTEXT            = #x102D;
 
 define function ListView-GetItemText (hwndLV, i, iSubItem_, pszText_, cchTextMax_);
-   with-stack-structure( ms_lvi :: <LPLV-ITEM> ) 
-	ms_lvi.iSubItem-value := iSubItem_; 
-	ms_lvi.cchTextMax-value := cchTextMax_; 
-	ms_lvi.pszText-value := pszText_; 
-	SendMessage( hwndLV, $LVM-GETITEMTEXT, i, ms_lvi.pointer-address); 
+   with-stack-structure( ms_lvi :: <LPLV-ITEM> )
+	ms_lvi.iSubItem-value := iSubItem_;
+	ms_lvi.cchTextMax-value := cchTextMax_;
+	ms_lvi.pszText-value := pszText_;
+	SendMessage( hwndLV, $LVM-GETITEMTEXT, i, ms_lvi.pointer-address);
 	end with-stack-structure
 end;
 define inline-only constant $LVM-SETITEMTEXT            = #x102E;
 
 define function ListView-SetItemText (hwndLV, i, iSubItem_, pszText_);
-   with-stack-structure( ms_lvi :: <LPLV-ITEM> ) 
-	ms_lvi.iSubItem-value := iSubItem_; 
-	ms_lvi.pszText-value := pszText_; 
-	SendMessage( hwndLV, $LVM-SETITEMTEXT, i, ms_lvi.pointer-address); 
+   with-stack-structure( ms_lvi :: <LPLV-ITEM> )
+	ms_lvi.iSubItem-value := iSubItem_;
+	ms_lvi.pszText-value := pszText_;
+	SendMessage( hwndLV, $LVM-SETITEMTEXT, i, ms_lvi.pointer-address);
 	end with-stack-structure
 end;
 define inline-only constant $LVM-SETITEMCOUNT           = #x102F;
@@ -2137,7 +2137,7 @@ define inline-only function Animate-Create (hwndP, id, dwStyle, hInstance);
 end;
 
 define inline-only function Animate-Open (hwnd, szName);
-  ~ zero?(SendMessage(hwnd, $ACM-OPEN, 0, 
+  ~ zero?(SendMessage(hwnd, $ACM-OPEN, 0,
 	pointer-address(check-type( szName, <LPTSTR>))))
 end;
 

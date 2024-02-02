@@ -79,7 +79,7 @@ define method enum-keys (dsp :: <LPDISPATCH>) => (keys :: <sequence>)
   check-ole-status(status, "QueryInterface(IEnumVARIANT)", enum-punk);
   Release(enum-punk);
   let keys = make(<stretchy-vector>);
-  with-stack-structure (result :: <LPVARIANT>)  
+  with-stack-structure (result :: <LPVARIANT>)
     VariantInit(result);
     iterate loop ()
       let (status, num-fetched) = IEnumVARIANT/Next(enum, 1, result);

@@ -1,4 +1,4 @@
-module:    Dylan-user	
+module:    Dylan-user
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -350,7 +350,7 @@ define module win32-automation
   export $NULL-VARIANT;
   export <CY*>, <DATE*>, <PLARGE-INTEGER*>, <PULARGE-INTEGER*>, <BSTR*>;
   export <ole-arg-spec>, <ole-value-arg-spec>, <ole-by-ref-arg-spec>,
-     out-ref, inout-ref, pass-as, arg-spec-vt, arg-spec-value, 
+     out-ref, inout-ref, pass-as, arg-spec-vt, arg-spec-value,
      arg-spec-value-setter, arg-spec-direction, arg-spec-ptr;
 
   // from "strings.dylan":

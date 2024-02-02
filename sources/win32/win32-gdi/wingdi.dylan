@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                         *
 * wingdi.h -- GDI procedure declarations, constant definitions and macros *
 *                                                                         *
-* 
+*
 *                                                                         *
 **************************************************************************/
 define inline-only constant $R2-BLACK                   =    1;

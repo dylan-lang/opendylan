@@ -21,7 +21,7 @@ define sealed method get-environment-object-primitive-name
 end method get-environment-object-primitive-name;
 
 
-
+
 /// Context handling
 
 //---*** It would be nice to be able to have a real type for this!
@@ -66,7 +66,7 @@ define sealed method context-missing-error
   error("No compilation context found for '%='", object)
 end method context-missing-error;
 
-
+
 /// Macroexpansion
 
 define method project-macroexpand-code

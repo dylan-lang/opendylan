@@ -12,7 +12,7 @@ define interface-specification-suite duim-geometry-specification-suite ()
   // Coordinates
   constant $largest-coordinate :: <integer>;
   constant $smallest-coordinate :: <integer>;
-  // TODO(cgay): 
+  // TODO(cgay):
   //function do-coordinates (<function>, limited(<sequence>, of: <integer>)) => ();
   //function do-endpoint-coordinates (<function>, limited(<sequence>, of: <integer>)) => ();
   function fix-coordinate (<real>) => (<integer>);
@@ -62,7 +62,7 @@ define interface-specification-suite duim-geometry-specification-suite ()
   sealed instantiable class <singular-transform> (<transform-error>);
 end duim-geometry-specification-suite;
 
-
+
 /// DCs
 
 define interface-specification-suite duim-dcs-specification-suite ()
@@ -105,7 +105,7 @@ define interface-specification-suite duim-dcs-specification-suite ()
   open abstract instantiable class <text-style> (<object>);
 end duim-dcs-specification-suite;
 
-
+
 /// DUIM-Sheets classes
 
 define interface-specification-suite duim-events-specification-suite ()
@@ -149,7 +149,7 @@ define interface-specification-suite duim-sheets-specification-suite ()
   suite duim-events-specification-suite;
 end duim-sheets-specification-suite;
 
-
+
 /// Graphics
 
 define interface-specification-suite duim-graphics-specification-suite ()
@@ -162,7 +162,7 @@ end duim-graphics-specification-suite;
 // out. Remove this after the above TODO is todone.
 ignore($duim-graphics-specification-suite-spec);
 
-
+
 /// Layouts
 
 define interface-specification-suite duim-layouts-specification-suite ()
@@ -184,7 +184,7 @@ define interface-specification-suite duim-layouts-specification-suite ()
   open abstract instantiable class <grid-layout> (<table-layout>);
 end duim-layouts-specification-suite;
 
-
+
 /// Gadget classes
 
 define interface-specification-suite duim-gadgets-specification-suite ()
@@ -248,7 +248,7 @@ define interface-specification-suite duim-gadgets-specification-suite ()
   open abstract instantiable class <progress-bar> (<value-range-gadget>);
 end duim-gadgets-specification-suite;
 
-
+
 /// Frames
 
 define interface-specification-suite duim-commands-specification-suite ()
@@ -281,7 +281,7 @@ define interface-specification-suite duim-frames-specification-suite ()
   suite duim-frame-events-specification-suite;
 end duim-frames-specification-suite;
 
-
+
 /// Extended Geometry
 
 //---*** This should be in a separate test suite
@@ -294,7 +294,7 @@ define interface-specification-suite duim-extended-geometry-specification-suite 
   open abstract instantiable class <rectangle> (<area>);
 end duim-extended-geometry-specification-suite;
 
-
+
 /// Gadget panes
 
 /*---*** This should be in a separate test suite
@@ -313,7 +313,7 @@ define interface-specification-suite duim-gadget-panes-specification-suite ()
 end duim-gadget-panes-specification-suite;
 */
 
-
+
 /// The DUIM library specification
 
 define suite duim-test-suite ()

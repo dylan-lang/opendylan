@@ -37,10 +37,10 @@ define method write-dylan-value
     let result =
       if (spy-thread)
         run-spy-on-thread
-          (ap, 
+          (ap,
            spy-thread,
            ap.C-spy.write-location-through-barrier,
-           address, 
+           address,
            value);
       else
         #f
@@ -56,7 +56,7 @@ end method;
 
 ///// READ-DYLAN-VALUE
 //
-define method read-dylan-value 
+define method read-dylan-value
     (ap :: <debug-target>, address :: <remote-location>)
       => (v :: <remote-value>, ok :: <boolean>)
 
@@ -108,9 +108,9 @@ define method read-dylan-value
         // a remote-access-violation. The spy function will just
         // signal access-violations itself, and we don't want that.
         let spy-thread = select-thread-for-spy(ap);
-        let result = 
+        let result =
           if (spy-thread & quick-success)
-            run-spy-on-thread 
+            run-spy-on-thread
               (ap, spy-thread,
                ap.C-spy.read-location-through-barrier, address);
           else
@@ -170,7 +170,7 @@ end method;
 //    return it as a remote value. "ok" determines whether the read was
 //    successful.
 
-define method read-instance-header 
+define method read-instance-header
     (ap :: <debug-target>, object :: <remote-value>)
        => (v :: <remote-value>, ok :: <boolean>)
   read-dylan-value (ap, indexed-remote-value (object, 0));
@@ -181,7 +181,7 @@ end method;
 //    Given an instance of any dylan object, return the i'th slot value
 //    as a <remote-value>
 
-define method read-instance-slot-element 
+define method read-instance-slot-element
     (ap :: <debug-target>, object :: <remote-value>, i :: <integer>)
    => (v :: <remote-value>, ok :: <boolean>)
   read-dylan-value (ap, indexed-remote-value (object, i + 1));
@@ -192,7 +192,7 @@ end method;
 //    Given an instance of a wrapper, find the class and return it as
 //    a <remote-value>.
 
-define method wrapper-to-class 
+define method wrapper-to-class
     (ap :: <debug-target>, wrapper :: <remote-value>)
    => (c :: <remote-value>, ok :: <boolean>)
   let (iclass, ok) = wrapper-to-iclass(ap, wrapper);
@@ -200,7 +200,7 @@ define method wrapper-to-class
     values(dylan-iclass-class(ap, iclass), #t)
   else
     values(as-remote-value(0), #f)
-  end if  
+  end if
 end method;
 
 
@@ -219,7 +219,7 @@ end method;
 //    Given a (remote)  instance of <method>, return the vector of specializers
 //    as a <remote-value>.
 
-define method get-method-specializers 
+define method get-method-specializers
     (ap :: <debug-target>, method-object :: <remote-value>)
       => (s :: <remote-value>, ok :: <boolean>)
   let (siggy, ok) =
@@ -243,7 +243,7 @@ end method;
 //    Given an instance of <method>, return the method's IEP
 //    as a <remote-value>.
 
-define method method-iep 
+define method method-iep
     (ap :: <debug-target>, method-object :: <remote-value>)
        => (iep :: <remote-value>, ok :: <boolean>)
   read-instance-slot-element (ap, method-object, 3);
@@ -254,7 +254,7 @@ end method;
 //    Given an instance of <method>, return the method's MEP
 //    as a <remote-value>.
 
-define method method-mep 
+define method method-mep
     (ap :: <debug-target>, method-object :: <remote-value>)
        => (iep :: <remote-value>, ok :: <boolean>)
   read-instance-slot-element (ap, method-object, 2);
@@ -276,7 +276,7 @@ end method;
 //    Given a remote instance of <generic-function>, returns the vector
 //    of methods as a <remote-value>
 
-define method gf-methods 
+define method gf-methods
     (ap :: <debug-target>, gf :: <remote-value>)
       => (m :: <remote-value>, ok :: <boolean>)
   read-instance-slot-element (ap, gf, 4);
@@ -286,7 +286,7 @@ end method;
 ///// DYLAN-INTEGER-DATA
 //    Untag a dylan integer and return it as an actual <integer>
 
-define method dylan-integer-data 
+define method dylan-integer-data
     (ap :: <debug-target>, integer-instance :: <remote-value>)
       => (i :: <integer>)
   tagged-remote-value-as-integer (integer-instance)
@@ -296,7 +296,7 @@ end method;
 ///// DYLAN-CHARACTER-DATA
 //    Untag a dylan character and return it as an actual <character>
 
-define method dylan-character-data 
+define method dylan-character-data
     (ap :: <debug-target>, character-instance :: <remote-value>)
        => (c :: <character>)
   tagged-remote-value-as-character (character-instance)
@@ -375,7 +375,7 @@ end method;
 ///// DYLAN-LIMITED-ARRAY-ELEMENT-TYPE
 //    Given a simple-element-type-array instance, return its element-type.
 
-define method dylan-limited-array-element-type 
+define method dylan-limited-array-element-type
     (ap :: <debug-target>, instance :: <remote-value>)
        => (i :: <remote-value>)
   let (slot, ok) = read-instance-slot-element(ap, instance, 0);
@@ -425,7 +425,7 @@ end method;
 ///// DYLAN-VECTOR-SIZE
 //    Given a simple-object-vector instance, return its size as an integer.
 
-define method dylan-vector-size 
+define method dylan-vector-size
     (ap :: <debug-target>, sov-instance :: <remote-value>)
        => (i :: <integer>)
   let (size, ok) =
@@ -442,7 +442,7 @@ end method;
 ///// DYLAN-LIMITED-VECTOR-SIZE
 //    Given a simple-element-type-vector instance, return its size as an integer.
 
-define method dylan-limited-vector-size 
+define method dylan-limited-vector-size
     (ap :: <debug-target>, sov-instance :: <remote-value>)
        => (i :: <integer>)
   let (size, ok) =
@@ -459,7 +459,7 @@ end method;
 ///// DYLAN-LIMITED-VECTOR-ELEMENT-TYPE
 //    Given a simple-element-type-vector instance, return its element-type.
 
-define method dylan-limited-vector-element-type 
+define method dylan-limited-vector-element-type
     (ap :: <debug-target>, instance :: <remote-value>)
        => (i :: <remote-value>)
   let (slot, ok) = read-instance-slot-element(ap, instance, 0);
@@ -497,7 +497,7 @@ end method;
 //    Given a simple-object-vector instance and an index, return the
 //    appropriate vector element as a <remote-value>
 
-define method dylan-vector-element 
+define method dylan-vector-element
     (ap :: <debug-target>, sov-instance :: <remote-value>,
      i :: <integer>) => (v :: <remote-value>)
   let (slot, ok) = read-instance-slot-element (ap, sov-instance, i + 1);
@@ -513,7 +513,7 @@ end method;
 //    Given a simple-element-type-vector instance and an index, return the
 //    appropriate vector element as a <remote-value>
 
-define method dylan-limited-vector-element 
+define method dylan-limited-vector-element
     (ap :: <debug-target>, sov-instance :: <remote-value>,
      i :: <integer>) => (v :: <remote-value>)
   let (slot, ok) = read-instance-slot-element (ap, sov-instance, i + 2);
@@ -528,7 +528,7 @@ end method;
 ///// DYLAN-ENTRY-VECTOR-SIZE
 //    Given an entry-vector instance, return its size as an integer.
 
-define method dylan-entry-vector-size 
+define method dylan-entry-vector-size
     (ap :: <debug-target>, sov-instance :: <remote-value>)
        => (i :: <integer>)
   let (size, ok) =
@@ -546,7 +546,7 @@ end method;
 //    Given an entry-vector instance and an index, return the
 //    appropriate vector element as a <remote-value>
 
-define method dylan-entry-vector-element 
+define method dylan-entry-vector-element
     (ap :: <debug-target>, sov-instance :: <remote-value>,
      i :: <integer>) => (v :: <remote-value>)
   let (slot, ok) = read-instance-slot-element (ap, sov-instance, i + 2);
@@ -577,7 +577,7 @@ end method;
 //    Given an instance of a dylan pair, return the second element as a
 //    <remote-value>
 
-define method dylan-tail 
+define method dylan-tail
     (ap :: <debug-target>, pair :: <remote-value>)
        => (val :: <remote-value>)
   let (tl, ok) = read-instance-slot-element (ap, pair, 1);
@@ -613,7 +613,7 @@ end method;
 define method dylan-class-debug-name
     (application :: <debug-target>, class-instance :: <remote-value>)
   => (debug-name :: false-or(<string>))
-  let debug-name-data = 
+  let debug-name-data =
      read-instance-slot-element(application, class-instance, 1);
   let classification =
      classify-dylan-object(application, debug-name-data);
@@ -648,7 +648,7 @@ end method;
 define method dylan-iclass-class-storage
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (spaces, ok) 
+  let (spaces, ok)
     = read-instance-slot-element
         (ap, iclass-object, $iclass-class-storage-offset);
   if (ok)
@@ -666,7 +666,7 @@ end method;
 define method dylan-iclass-instance-slot-descriptors
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (descrs, ok) 
+  let (descrs, ok)
     = read-instance-slot-element
         (ap, iclass-object, $iclass-instance-slot-descriptors-offset);
   if (ok)
@@ -683,9 +683,9 @@ end method;
 define method dylan-iclass-all-slot-descriptors
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (descrs, ok) 
+  let (descrs, ok)
     = read-instance-slot-element
-        (ap, iclass-object, $iclass-all-slot-descriptors-offset); 
+        (ap, iclass-object, $iclass-all-slot-descriptors-offset);
   if (ok)
     descrs;
   else
@@ -701,7 +701,7 @@ end method;
 define method dylan-iclass-direct-slot-descriptors
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (descrs, ok) 
+  let (descrs, ok)
     = read-instance-slot-element
         (ap, iclass-object, $iclass-direct-slot-descriptors-offset);
   if (ok)
@@ -718,9 +718,9 @@ end method;
 define method dylan-iclass-direct-methods
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (descrs, ok) 
+  let (descrs, ok)
     = read-instance-slot-element
-        (ap, iclass-object, $iclass-direct-methods-offset); 
+        (ap, iclass-object, $iclass-direct-methods-offset);
   if (ok)
     descrs;
   else
@@ -737,7 +737,7 @@ end method;
 define method dylan-iclass-direct-superclasses
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (sups, ok) 
+  let (sups, ok)
     = read-instance-slot-element
         (ap, iclass-object, $iclass-direct-superclasses-offset);
   if (ok)
@@ -755,7 +755,7 @@ end method;
 define method dylan-iclass-all-superclasses
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (sups, ok) 
+  let (sups, ok)
     = read-instance-slot-element
         (ap, iclass-object, $iclass-all-superclasses-offset);
   if (ok)
@@ -773,7 +773,7 @@ end method;
 define method dylan-iclass-direct-subclasses
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (subs, ok) 
+  let (subs, ok)
     = read-instance-slot-element
         (ap, iclass-object, $iclass-direct-subclasses-offset);
   if (ok)
@@ -791,9 +791,9 @@ end method;
 define method dylan-iclass-mm-wrapper
     (ap :: <debug-target>, iclass-object :: <remote-value>)
        => (val :: <remote-value>)
-  let (wrapper, ok) 
+  let (wrapper, ok)
     = read-instance-slot-element
-        (ap, iclass-object, $iclass-mm-wrapper-offset); 
+        (ap, iclass-object, $iclass-mm-wrapper-offset);
   if (ok)
     wrapper;
   else
@@ -810,7 +810,7 @@ define method dylan-iclass-repeated-slot-descriptor
        => (val :: <remote-value>)
   let (descr, ok)
     = read-instance-slot-element
-        (ap, iclass-object, $iclass-repeated-slot-descriptor); 
+        (ap, iclass-object, $iclass-repeated-slot-descriptor);
   if (ok)
     descr;
   else
@@ -945,7 +945,7 @@ end method;
 ///// DYLAN-STRING-DATA
 //    Given a <byte-string> instance, returns a local copy.
 
-define method dylan-string-data 
+define method dylan-string-data
     (ap :: <debug-target>, string-instance :: <remote-value>,
      #key clip-at = #f)
        => (val :: <byte-string>, clipped? :: <boolean>)
@@ -958,7 +958,7 @@ define method dylan-string-data
   end if;
   if (ok)
     values(
-      read-byte-string (ap.debug-target-access-path, 
+      read-byte-string (ap.debug-target-access-path,
                         indexed-remote-value (string-instance, 2),
                         size),
       clipped?)
@@ -1100,7 +1100,7 @@ end method;
 ///// DYLAN-SINGLE-FLOAT-DATA
 //    Given a single-float instance, returns a local copy.
 
-define method dylan-single-float-data 
+define method dylan-single-float-data
     (application :: <debug-target>, float-instance :: <remote-value>)
        => (val :: <single-float>)
   let x :: <single-float> = 0.0;
@@ -1118,7 +1118,7 @@ end method;
 ///// DYLAN-DOUBLE-FLOAT-DATA
 //    Given a double-float instance, returns a local copy.
 
-define method dylan-double-float-data 
+define method dylan-double-float-data
     (application :: <debug-target>, float-instance :: <remote-value>)
        => (val :: <double-float>)
   let x :: <double-float> = as(<double-float>, 0.0);
@@ -1132,15 +1132,15 @@ define method dylan-double-float-data
   x
 end method;
 
- 
+
 ///// DYLAN-OBJECT?
 //    Returns #t if the supplied instance looks like a dylan object.
 //    Strategy: If the object is tagged as an integer or character, then
 //    it is a dylan object. Otherwise, it is treated as a pointer to
-//    a dylan object, which should have a header pointing to a valid 
+//    a dylan object, which should have a header pointing to a valid
 //    wrapper...
 
-define method dylan-object? 
+define method dylan-object?
     (ap :: <debug-target>, instance :: <remote-value>, #key address? :: <boolean>)
  => (val :: <boolean>)
   let tag = inspect-instance-tag(ap, instance);
@@ -1172,13 +1172,13 @@ end method;
 //    Given any direct (but untagged) instance, this attempts to find a
 //    name in the symbol table whose definition points to this object.
 
-define method dylan-instance-symbolic-name 
+define method dylan-instance-symbolic-name
     (ap :: <debug-target>, untagged-instance :: <remote-value>)
-       => (lib :: <string>, 
-           mod :: <string>, 
+       => (lib :: <string>,
+           mod :: <string>,
            name :: <string>,
            exact? :: <boolean>)
-  let (closest, offset) = 
+  let (closest, offset) =
     symbol-table-symbol-relative-address
         (ap.debug-target-symbol-table, untagged-instance);
   if (closest)
@@ -1194,7 +1194,7 @@ end method;
 //    Given a <remote-value> corresponding to a dylan slot descriptor, returns
 //    the name of the slot if it can be found.
 
-define method dylan-slot-name 
+define method dylan-slot-name
     (ap :: <debug-target>, slot-descriptor :: <remote-value>)
        => (name :: <string>)
   let (lib, mod, nm) =
@@ -1310,7 +1310,7 @@ end method;
 //    Given a stretchy vector representation instance, returns the filled
 //    size of the stretchy vector
 
-define method dylan-stretchy-vector-size 
+define method dylan-stretchy-vector-size
     (ap :: <debug-target>, svr-instance :: <remote-value>)
        => (i :: <integer>)
   let (size, ok) =
@@ -1328,7 +1328,7 @@ end method;
 //    Given a stretchy-vector-representation instance and an index, return the
 //    appropriate vector element as a <remote-value>
 
-define method dylan-stretchy-vector-element 
+define method dylan-stretchy-vector-element
     (ap :: <debug-target>, svr-instance :: <remote-value>,
      i :: <integer>) => (v :: <remote-value>)
   let (slot, ok) = read-instance-slot-element (ap, svr-instance, i + 2);
@@ -1362,7 +1362,7 @@ end method;
 //    Given a stretchy vector representation instance, returns the filled
 //    size of the stretchy vector
 
-define method dylan-limited-stretchy-vector-size 
+define method dylan-limited-stretchy-vector-size
     (ap :: <debug-target>, svr-instance :: <remote-value>)
        => (i :: <integer>)
   let (size, ok) =
@@ -1379,7 +1379,7 @@ end method;
 ///// DYLAN-LIMITED-STRETCHY-VECTOR-ELEMENT-TYPE
 //    Given a stretchy-element-type-vector instance, return its element-type.
 
-define method dylan-limited-stretchy-vector-element-type 
+define method dylan-limited-stretchy-vector-element-type
     (ap :: <debug-target>, instance :: <remote-value>)
        => (i :: <remote-value>)
   let (slot, ok) = read-instance-slot-element(ap, instance, 0);
@@ -1392,10 +1392,10 @@ end method;
 
 
 ///// DYLAN-LIMITED-STRETCHY-VECTOR-ELEMENT
-//    Given a stretchy-element-type-vector-representation instance and an index, 
+//    Given a stretchy-element-type-vector-representation instance and an index,
 //    return the appropriate vector element as a <remote-value>
 
-define method dylan-limited-stretchy-vector-element 
+define method dylan-limited-stretchy-vector-element
     (ap :: <debug-target>, svr-instance :: <remote-value>,
      i :: <integer>) => (v :: <remote-value>)
   let (slot, ok) = read-instance-slot-element (ap, svr-instance, i + 2);
@@ -1434,7 +1434,7 @@ define method dylan-table-keys-vector
   if (table-vector = as-remote-value(0))
     table-vector
   else
-    let (slot, ok) = 
+    let (slot, ok) =
       read-instance-slot-element(application, table-vector, 8);
     if (ok)
       slot
@@ -1456,7 +1456,7 @@ define method dylan-table-values-vector
   if (table-vector = as-remote-value(0))
     table-vector
   else
-    let (slot, ok) = 
+    let (slot, ok) =
       read-instance-slot-element(application, table-vector, 9);
     if (ok)
       slot
@@ -1480,7 +1480,7 @@ define method dylan-wrapper-properties
   let field-word-address = indexed-remote-value(wrapper, 3);
   let field-word =
     read-value(application.debug-target-access-path, field-word-address);
-  let version-word = 
+  let version-word =
     read-value(application.debug-target-access-path, version-word-address);
   let fixed-slot-count =
     tagged-remote-value-as-integer(field-word);
@@ -1504,10 +1504,10 @@ end method;
 
 define method dylan-signature-properties
     (application :: <debug-target>, sig-instance :: <remote-value>)
- => (number-required :: <integer>, 
+ => (number-required :: <integer>,
      number-values :: <integer>,
-     rest? :: <boolean>, 
-     keys? :: <boolean>, 
+     rest? :: <boolean>,
+     keys? :: <boolean>,
      all-keys? :: <boolean>,
      default-rest? :: <boolean>,
      default-values? :: <boolean>)
@@ -1522,11 +1522,11 @@ define method dylan-signature-properties
     let keys-bit =        logand(properties-integer,                 #x10000);
     let all-keys-bit =    logand(properties-integer,                 #x20000);
     let default-rest-bit = logand(properties-integer,               #x200000);
-    let default-vals-bit = logand(properties-integer,               #x400000); 
-    values(number-required, 
-           number-values, 
-           rest-bit > 0, 
-           keys-bit > 0, 
+    let default-vals-bit = logand(properties-integer,               #x400000);
+    values(number-required,
+           number-values,
+           rest-bit > 0,
+           keys-bit > 0,
            all-keys-bit > 0,
            default-rest-bit > 0,
            default-vals-bit > 0);
@@ -1589,7 +1589,7 @@ define method dylan-deque-size
     (application :: <debug-target>, instance :: <remote-value>)
    => (size :: <integer>)
   let rep = dylan-deque-representation(application, instance);
-  let (cap, first, last) = 
+  let (cap, first, last) =
     dylan-deque-representation-properties(application, rep);
   last - first + 1
 end method;
@@ -1603,7 +1603,7 @@ define method dylan-deque-element
      i :: <integer>)
    => (elt :: <remote-value>)
   let rep = dylan-deque-representation(application, instance);
-  let (cap, first, last) = 
+  let (cap, first, last) =
     dylan-deque-representation-properties(application, rep);
   let (el, ok) =
     read-instance-slot-element(application, rep, 3 + first + i);
@@ -1795,7 +1795,7 @@ end method;
 
 
 ///// DYLAN-SLOT-GETTER-FUNCTION
-//    Given a remote slot descriptor, return the value for the getter 
+//    Given a remote slot descriptor, return the value for the getter
 //    function.
 
 define method dylan-slot-getter-function

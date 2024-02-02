@@ -50,7 +50,7 @@ define method find-indexed-breakpoint
   end
 end method find-indexed-breakpoint;
 
-
+
 /// Debugging properties
 
 // Breakpoints property
@@ -89,7 +89,7 @@ define method show-property
   end
 end method show-property;
 
-
+
 /// Break application command
 
 define class <break-application-command> (<project-command>)
@@ -134,7 +134,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Trace command
 
 define class <trace-command> (<project-command>)
@@ -160,7 +160,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Untrace command
 
 define class <untrace-command> (<project-command>)
@@ -190,7 +190,7 @@ define method do-execute-command
   end
 end method do-execute-command;
 
-
+
 ///---*** To do
 
 /*
@@ -202,7 +202,7 @@ end method do-execute-command;
   ignore-breakpoint-for-n
 */
 
-
+
 /// Debugging commands
 
 define command-group breakpoints into environment

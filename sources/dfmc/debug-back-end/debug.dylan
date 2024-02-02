@@ -15,7 +15,7 @@ define method print-indent (stream, offset :: <integer>)
   end for;
 end method;
 
-
+
 //// FUNCTIONS
 
 define thread variable *lambdas-in-progress* = #();

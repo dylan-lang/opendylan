@@ -12,7 +12,7 @@ define constant $dialog-border         = 10;
 define constant $dialog-spacing        = 10;
 define constant $exit-button-min-width = 100;
 
-
+
 /// DUIM dialogs
 
 define sealed class <dialog-mirror> (<top-level-mirror>)
@@ -119,7 +119,7 @@ define sealed method compute-dialog-position
   end
 end method compute-dialog-position;
 
-
+
 /// Piggy-back on the default dialogs from gadget-panes for now
 
 define method top-level-layout-child
@@ -186,7 +186,7 @@ define sealed method default-dialog-extra-size
   values(0, 0)
 end method default-dialog-extra-size;
 
-
+
 /// Dialog flow control
 
 // Generate an ordinary exit event
@@ -221,7 +221,7 @@ define sealed method do-cancel-dialog
                         destroy-frame?: destroy?))
 end method do-cancel-dialog;
 
-
+
 /// Notify user
 
 define class <notification-dialog> (<dialog-frame>)
@@ -330,7 +330,7 @@ define sealed method make-exit-buttons
   end select;
 end method make-exit-buttons;
 
-
+
 /// Choose file
 define sealed method do-choose-file
     (framem :: <gtk-frame-manager>, owner :: <sheet>,
@@ -427,7 +427,7 @@ define table $file-type-table :: <table>
       #"resource"    => "res",
       #"library"     => "lib" };
 
-
+
 /// Choose directory
 
 define variable $Shell-IMalloc :: false-or(<C-Interface>) = #f;
@@ -488,7 +488,7 @@ end method browse-for-folder-function;
 
 define callback browse-for-folder :: <LPBFFCALLBACK> = browse-for-folder-function;
 
-
+
 /// Color chooser
 
 define variable *custom-colors* :: <LPCOLORREF>
@@ -520,7 +520,7 @@ define sealed method do-choose-color
   end
 end method do-choose-color;
 
-
+
 /// Text style chooser
 
 define sealed method do-choose-text-style

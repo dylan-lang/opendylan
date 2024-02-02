@@ -336,7 +336,7 @@ define test test-<progress-bar>
 end test;
 
 
-
+
 /// parent tests
 
 define method subchild?
@@ -367,7 +367,7 @@ define test parents-test ()
               layout, check-button.sheet-parent);
 end test parents-test;
 
-
+
 /// Gadget tests
 
 define method verify-gadget-box-pane-button-selection
@@ -653,7 +653,7 @@ define method test-table-control-values () => ()
   check-value(concatenate(name, " initial"), pane, 5);
 end method test-table-control-values;
 
-
+
 /// Gadget labels
 
 define method test-gadget-label (class :: <class>, #rest args) => ()
@@ -670,7 +670,7 @@ define method test-gadget-label (class :: <class>, #rest args) => ()
               gadget-label(pane), "New label");
 end method test-gadget-label;
 
-
+
 /// Gadget text testing
 
 define method test-text-gadget-text
@@ -684,7 +684,7 @@ define method test-text-gadget-text
               gadget-text(make-test-pane(class, text: "Initial")), "Initial")
 end method test-text-gadget-text;
 
-
+
 /// border-pane tests
 
 define method expected-named-border-size
@@ -768,7 +768,7 @@ define method test-border-pane-layout (class :: <class>) => ()
                                   child: make-test-pane(<test-list-box>)));
 end method test-border-pane-layout;
 
-
+
 /// Define gadgets test suite
 
 define suite duim-gadgets-suite ()

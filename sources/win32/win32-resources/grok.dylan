@@ -49,7 +49,7 @@ define sealed method retrieve-resource
   end
 end method retrieve-resource;
 
-
+
 /// Grokking of simple resources
 
 //--- $RT-ACCELERATOR  not yet handled

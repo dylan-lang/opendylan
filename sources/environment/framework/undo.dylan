@@ -18,7 +18,7 @@ define method initialize
   command-enabled?(<frame-redo-command>, frame) := #f;
 end method initialize;
 
-
+
 /// Undo commands
 
 define class <frame-undo-command> (<frame-selection-command>)
@@ -39,7 +39,7 @@ define method command-available-for-focus?
   #f
 end method command-available-for-focus?;
 
-
+
 /// Undo command table
 
 define variable $undo-bitmap :: <label-type> = "Undo";

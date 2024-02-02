@@ -151,7 +151,7 @@ define sealed method invalidate-cached-drawing-state
   #f
 end method invalidate-cached-drawing-state;
 
-
+
 /// Display forcing
 
 define sealed method force-display
@@ -164,7 +164,7 @@ define sealed method synchronize-display
   gdk-flush()
 end method synchronize-display;
 
-
+
 /// Drawing state updating
 
 define inline method get-gcontext
@@ -360,7 +360,7 @@ define sealed method establish-font
   // gdk-gc-set-font(gcontext, font.%font-id)
 end method establish-font;
 
-
+
 /// Ink decoding
 
 define generic decode-ink
@@ -455,7 +455,7 @@ define sealed method decode-ink
   values(color, fill-style, brush-mode(brush), pattern)
 end method decode-ink;
 
-
+
 /// Clipping region decoding
 
 define sealed method compute-clip-mask

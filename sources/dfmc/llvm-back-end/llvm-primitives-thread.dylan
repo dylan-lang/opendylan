@@ -94,7 +94,7 @@ define method op--teb-getelementptr
   apply(ins--gep-inbounds, be, teb, 0, index, indices)
 end method;
 
-
+
 /// Thread-local variables
 
 define runtime-variable %tlv-initializations :: <simple-object-vector> = #[],
@@ -108,7 +108,7 @@ define runtime-variable %tlv-initializations-cursor :: <raw-integer>
 define thread-local runtime-variable %tlv-initializations-local-cursor :: <raw-integer>
   = make-raw-literal(0);
 
-
+
 /// Thread primitives
 
 define side-effecting stateful dynamic-extent &c-primitive-descriptor primitive-make-thread

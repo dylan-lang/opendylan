@@ -238,7 +238,7 @@ define sealed method do-client-source-forms
      server, context)
 end method do-client-source-forms;
 
-
+
 /// ID handling
 
 define sealed method find-compiler-database-proxy
@@ -267,7 +267,7 @@ define sealed method compiler-database-proxy-id
   make(<library-id>, name: name-to-string(project.project-library-name))
 end method compiler-database-proxy-id;
 
-
+
 /// Implement do-project-file-libraries
 
 define sealed method do-project-file-libraries
@@ -291,7 +291,7 @@ define sealed method do-project-file-libraries
   do-project-used-libraries(do-library-file-libraries, project, project)
 end method do-project-file-libraries;
 
-
+
 /// Library lookup
 
 define sealed method environment-object-library

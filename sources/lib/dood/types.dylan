@@ -46,42 +46,42 @@ define inline function untag (pointer :: <pointer>)
   ash(pointer, - $number-tag-bits)
 end function;
 
-// define inline function marked? 
+// define inline function marked?
 //     (pointer :: <pointer>) => (res :: <boolean>)
 //   logand(pointer, $mark-mask) == $mark-tag
 // end function;
 
-define inline function address? 
+define inline function address?
     (pointer :: <pointer>) => (res :: <boolean>)
   logand(pointer, $address-mask) == $address-tag
 end function;
 
-define inline function integer? 
+define inline function integer?
     (pointer :: <pointer>) => (res :: <boolean>)
   logand(pointer, $tag-mask) == $integer-tag
 end function;
 
-define inline function pair? 
+define inline function pair?
     (pointer :: <pointer>) => (res :: <boolean>)
   logand(pointer, $tag-mask) == $pair-tag
 end function;
 
-define inline function byte-character? 
+define inline function byte-character?
     (pointer :: <pointer>) => (res :: <boolean>)
   logand(pointer, $tag-mask) == $byte-character-tag
 end function;
 
-define inline function tag-as-integer 
+define inline function tag-as-integer
     (address :: <address>) => (res :: <pointer>)
   logior(ash(address, $number-tag-bits), $integer-tag)
 end function;
 
-define inline function tag-as-pair 
+define inline function tag-as-pair
     (address :: <address>) => (res :: <pointer>)
   logior(ash(address, $number-tag-bits), $pair-tag)
 end function;
 
-define inline function tag-as-byte-character 
+define inline function tag-as-byte-character
     (address :: <address>) => (res :: <pointer>)
   logior(ash(address, $number-tag-bits), $byte-character-tag)
 end function;
@@ -96,7 +96,7 @@ end function;
 //   logand(pointer, lognot($mark-tag))
 // end function;
 
-define inline function tag-as-address 
+define inline function tag-as-address
     (object, address :: <address>) => (res :: <pointer>)
   if ($tag-pairs? & instance?(object, <pair>))
     tag-as-pair(address)

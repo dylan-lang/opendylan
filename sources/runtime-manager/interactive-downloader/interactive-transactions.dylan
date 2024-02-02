@@ -77,7 +77,7 @@ define class <interactive-transaction> (<object>)
 
   // We will be downloading raw data for a number of <coff-section>s.
   // This table, keyed on <coff-section>, stores the base address at
-  // which its data was downloaded. This address will be a 
+  // which its data was downloaded. This address will be a
   // <remote-value>.
   constant slot transaction-section-addresses :: <table> = make(<table>);
 
@@ -125,10 +125,10 @@ define method open-interactive-transaction
             end if;
           end for;
           let path = make(<byte-string>, size: index-slash + 1);
-          let source-ext = 
+          let source-ext =
             if (limit == index-dot)
               ""
-            else 
+            else
               make(<byte-string>, size: limit - index-dot - 1)
             end if;
           let obj-ext = "obj";
@@ -234,7 +234,7 @@ define method transaction-find-symbol
   symbol-table-find-symbol(global-table, name, library: library,
                            local-lookup-only?: #t, file: local-file) |
   symbol-table-find-symbol(global-table, name, library: library) |
-  symbol-table-find-symbol(global-table, name, 
+  symbol-table-find-symbol(global-table, name,
                            library: trans.transaction-dylan-library) |
   symbol-table-find-symbol(global-table, name)
 end method;

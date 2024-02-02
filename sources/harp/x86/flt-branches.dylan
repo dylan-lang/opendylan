@@ -28,7 +28,7 @@ end method;
 */
 
 
-with-ops-in pentium-instructions (fbeq, dbeq) info := bhi-x end; 
+with-ops-in pentium-instructions (fbeq, dbeq) info := bhi-x end;
         // see later frig with flags
 
 with-ops-in pentium-instructions (fbne, dbne) info := bne-x end;
@@ -50,7 +50,7 @@ with-ops-in pentium-instructions (fble, dble) info := bls-x end;
 /// within the status word before doing the conditional branch. This is used so
 /// that both equality and "orderedness" can be tested in one instruction
 
-define method make-flags-avail 
+define method make-flags-avail
     (be :: <harp-x86-back-end>, #key frig)
   emit(be, flt-esc + #b111, #b11100000);	// fstsw ax
   if (frig)

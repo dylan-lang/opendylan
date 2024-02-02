@@ -25,7 +25,7 @@ define method port-handles-repaint?
  => (true? :: <boolean>)
   #f
 end method port-handles-repaint?;
-
+
 /// GTK mirrors
 
 define open abstract class <gtk-mirror> (<mirror>)
@@ -93,7 +93,7 @@ define sealed method widget-mirror-setter
   #f
 end method widget-mirror-setter;
 
-
+
 /// Empty methods on non-window mirrors
 
 define sealed method mirror-edges
@@ -140,7 +140,7 @@ define method update-mirror-attributes
   #f
 end method update-mirror-attributes;
 
-
+
 /// Mirror creation and destruction
 
 define abstract class <widget-mirror> (<gtk-mirror>)
@@ -188,7 +188,7 @@ define sealed method note-mirror-destroyed
   // window-handle(mirror) := $NULL-HWND
 end method note-mirror-destroyed;
 
-
+
 /// Mirror manipulation
 
 // For non-top-level sheets, we just show the window
@@ -239,7 +239,7 @@ define sealed method mirror-visible?
   end
 end method mirror-visible?;
 
-
+
 /// Window mirrors
 
 define sealed method mirror-edges
@@ -290,7 +290,7 @@ define sealed method client-to-screen-position
   values(x, y)
 end method client-to-screen-position;
 
-
+
 /// Fixed container mirrors
 ///
 /// The class of mirror that can contain other mirrors

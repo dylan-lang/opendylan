@@ -30,7 +30,7 @@ define inline function is-whitespace?
   member?(character, $whitespace)
 end function is-whitespace?;
 
-
+
 /// Command line server
 
 define class <command-line-server> (<object>)
@@ -87,7 +87,7 @@ define method command-complete?
   #t
 end method command-complete?;
 
-
+
 /// Command info
 
 define abstract class <command-info> (<object>)
@@ -113,7 +113,7 @@ define function command-info-class-title
   end
 end function command-info-class-title;
 
-
+
 /// Command groups
 
 define class <command-group> (<basic-command-info>)
@@ -238,7 +238,7 @@ define inline function do-command-group-command-lines
   do-command-group-objects(function, group, type: <command-line>)
 end function do-command-group-command-lines;
 
-
+
 /// Context protocols
 
 define open generic context-command-group
@@ -257,7 +257,7 @@ define open generic parse-next-argument
      #key start, end: stop)
  => (value :: <object>, next-index :: <integer>);
 
-
+
 /// Utilities
 
 define class <command-line-server-error> (<format-string-condition>, <error>)
@@ -375,7 +375,7 @@ define method tokenize-string
   tokens
 end method tokenize-string;
 
-
+
 /// Command lines
 
 define abstract class <command-line> (<command-info>)
@@ -891,7 +891,7 @@ define macro command-line-constant-definer
                summary: ?summary) }
 end macro command-line-constant-definer;
 
-
+
 /// Command line user interface
 
 define method command-line-question
@@ -958,7 +958,7 @@ define method command-line-choose-file
   end
 end method command-line-choose-file;
 
-
+
 /// Aliases
 
 define class <command-line-alias> (<command-line>)
@@ -971,7 +971,7 @@ define method command-info-command-class
   alias.command-info-alias.command-info-command-class
 end method command-info-command-class;
 
-
+
 /// Boolean argument parsing
 
 define method parameter-type-name
@@ -1001,7 +1001,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// String argument parsing
 
 define method parameter-type-name
@@ -1022,7 +1022,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Symbol argument parsing
 
 define method parameter-type-name
@@ -1043,7 +1043,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Number argument parsing
 
 define method parameter-type-name
@@ -1063,7 +1063,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// File and directory argument parsing
 
 define method parameter-type-name
@@ -1092,7 +1092,7 @@ define method parameter-type-name
   "directory"
 end method parameter-type-name;
 
-
+
 /// Keyword list argument parsing
 
 define constant $keyword-list-type = singleton(#"keyword-list");
@@ -1117,7 +1117,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Command info argument parsing
 
 define method parameter-type-name

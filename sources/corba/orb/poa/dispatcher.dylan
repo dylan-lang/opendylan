@@ -16,7 +16,7 @@ define method ensure-poa-listener-started (poa :: <root-poa>)
 					 port,
 					 method (manager, socket)
 					   orb-service-port(orb) := local-port(socket);
-					 end method,					   
+					 end method,
 					 method (stream)
 					   ensure-poa-dispatcher-started(poa, stream)
 					 end method)
@@ -307,7 +307,7 @@ define method find-poa-port (poa :: <poa>)
     | begin
 	let parent = poa-parent(poa);
 	poa-port(poa) := parent & find-poa-port(parent)
-      end 
+      end
 end method;
 
 define method find-poa-port (poa :: <root-poa>)

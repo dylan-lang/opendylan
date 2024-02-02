@@ -85,7 +85,7 @@ define method write-html
   do(curry(write-element, stream), sequence)
 end method write-html;
 
-
+
 /// Some special tokens
 
 define class <html-anchor> (<object>)
@@ -120,7 +120,7 @@ define method write-element
   end
 end method write-element;
 
-
+
 /// Useful macro
 
 define macro with-html-output

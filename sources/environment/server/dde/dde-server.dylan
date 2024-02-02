@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // DispatchMessage), or the DDE calls will fail.
 
 
-
+
 /// -=- DDE SERVER CLASS -=-
 
 // The following string represents the service and topic name which
@@ -193,7 +193,7 @@ define function do-destroy-dde-server
 end function;
 
 
-
+
 /// -=- CALLBACK HANDLING -=-
 
 // NOTE:
@@ -333,7 +333,7 @@ define function broadcast-dde-execute-transaction
 end function;
 
 
-
+
 /// -=- ERROR HANDLING -=-
 
 // NOTE:
@@ -471,7 +471,7 @@ define function dde-report-xtyp-error (error-code :: <machine-word>) => ()
 end function;
 
 
-
+
 /// -=- DDE SERVER START & STOP -=-
 
 // This is used by the environment to identify the server (which

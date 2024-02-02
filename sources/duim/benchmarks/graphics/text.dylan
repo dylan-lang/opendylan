@@ -142,7 +142,7 @@ define method draw-benchmark-text
   end
 end method draw-benchmark-text;
 
-
+
 /// drawing-benchmark-definer
 
 define macro drawing-benchmark-definer
@@ -238,7 +238,7 @@ define drawing-benchmark triangle ("Triangle", 3)
                 filled?: filled?)
 end drawing-benchmark triangle;
 
-
+
 /// Frame
 
 define constant $default-drawing-operation = <rectangle-info>;

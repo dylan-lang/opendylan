@@ -22,7 +22,7 @@ define method int-to-string (num :: <integer>) => (<str :: <byte-string>)
   replace-subsequence!(res, top, end: top-size);
 end method;
 
-define method op--stdcall-c 
+define method op--stdcall-c
     (be :: <harp-x86-windows-back-end>, name :: <byte-string>,
      #rest args)
   let arg-bytes = int-to-string(args.size * 4);
@@ -31,7 +31,7 @@ define method op--stdcall-c
 end method;
 
 
-define method op--stdcall-c 
+define method op--stdcall-c
     (be :: <harp-x86-windows-back-end>, name-ref :: <constant-reference>,
      #rest args)
   // Push the args in reverse order
@@ -42,4 +42,4 @@ define method op--stdcall-c
   ins--call-alien(be, name-ref, 0);
   // But don't bother to pop the args
 end method;
- 
+

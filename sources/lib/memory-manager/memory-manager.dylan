@@ -14,7 +14,7 @@ define method last-size ()
   *last-size* | (*last-size* := room())
 end method;
 
-define method maybe-collect-garbage (delta) 
+define method maybe-collect-garbage (delta)
   let new-size = room();
   if ((new-size - last-size()) > delta)
     collect-garbage();
@@ -35,6 +35,6 @@ define method collect-garbage? (max-heap) => (collect? :: <boolean>)
   new-size > max-heap
 end method;
 
-define method collect-garbage! () 
+define method collect-garbage! ()
   collect-garbage();
 end method;

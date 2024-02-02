@@ -142,7 +142,7 @@ end class <composite-buffer>;
 define sealed domain make (singleton(<composite-buffer>));
 define sealed domain initialize (<composite-buffer>);
 
-
+
 /// Special-purpose buffers for browsing
 
 define open abstract class <definition-browsing-buffer>
@@ -216,7 +216,7 @@ define method fill-definition-browsing-buffer
   end
 end method fill-definition-browsing-buffer;
 
-
+
 /// Class and function browsing buffer classes
 
 define sealed class <subclasses-browsing-buffer>

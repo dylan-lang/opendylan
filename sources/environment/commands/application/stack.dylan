@@ -40,7 +40,7 @@ define method ensure-context-bug-report
       end
 end method ensure-context-bug-report;
 
-
+
 /// Stack properties
 
 define class <current-frame-property> (<application-property>)
@@ -75,7 +75,7 @@ define method set-property
   application-context.context-stack-frame := frame
 end method set-property;
 
-
+
 /// Up command
 
 define class <thread-up-command> (<thread-command>)
@@ -102,7 +102,7 @@ define method do-execute-command
   context-named-property(context, #"frame") := new-frame
 end method do-execute-command;
 
-
+
 /// Down command
 
 define class <thread-down-command> (<thread-command>)
@@ -130,7 +130,7 @@ define method do-execute-command
   context-named-property(context, #"frame") := new-frame
 end method do-execute-command;
 
-
+
 /// Top command
 
 define class <thread-top-command> (<thread-command>)
@@ -151,7 +151,7 @@ define method do-execute-command
   context-named-property(context, #"frame") := new-frame
 end method do-execute-command;
 
-
+
 /// Bottom command
 
 define class <thread-bottom-command> (<thread-command>)
@@ -174,7 +174,7 @@ define method do-execute-command
   context-named-property(context, #"frame") := new-frame
 end method do-execute-command;
 
-
+
 /// Backtrace command
 
 define class <thread-backtrace-command> (<thread-command>)
@@ -209,14 +209,14 @@ define method do-execute-command
      end:   unless (all?) index + count end)
 end method do-execute-command;
 
-
+
 ///---*** To do...
 
 /*
   :more
 */
 
-
+
 /// Stack commands
 
 define command-group stack into environment

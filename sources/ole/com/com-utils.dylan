@@ -79,7 +79,7 @@ define inline function C-element-pointer ( ptr :: <C-statically-typed-pointer>,
 
   pointer-value-address(ptr, index: index)
 end;
-
+
 
 //---- Change this to #f for the final version:		???
 define constant $enable-debug-messages = #t;
@@ -99,7 +99,7 @@ define method Output-Debug-String ( string :: <C-string> ) => ();
   values()
 end method;
 
-
+
 
 // ====  command line parsing  ====
 
@@ -215,7 +215,7 @@ define method parse-args () => ();
   values()
 end method parse-args;
 
-
+
 
 define method as( class == <string>, guid :: <REFGUID> )
  => ( string :: <byte-string> );
@@ -262,12 +262,12 @@ define method as( class == <REFGUID>, string :: <string> )
   guid
 end method;
 
-
+
 
 // Include `OleInitialize' and `OleUninitialize' in the "COM" library
 // instead of the "OLE" library because they are supposed to be used by
 // OLE Automation programs that don't need anything else from OLE.
-// In Win32, the COM and OLE functionality are both in the same file 
+// In Win32, the COM and OLE functionality are both in the same file
 // ("OLE32.DLL"), so it really doesn't matter which Dylan library contains
 // the declaration.
 
@@ -334,7 +334,7 @@ define macro with-ole
 	  }
 end macro with-ole;
 
-
+
 
 //  defined in both OLE and OLE-Controls:
 define open-accessor hAccel-value;

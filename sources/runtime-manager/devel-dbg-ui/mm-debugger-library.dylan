@@ -36,7 +36,7 @@ define module devel-dbg-ui
   use common-dylan;
   use collectors;
   use c-ffi;
-  use operating-system, 
+  use operating-system,
      exclude: {load-library},
      rename: {application-filename => os-application-filename};
   use streams;
@@ -44,7 +44,7 @@ define module devel-dbg-ui
   use format;
   use print;
   use format-out;
-  use threads, 
+  use threads,
     rename: {thread-name => threads-thread-name};
   use access-path,
     exclude: {kill-application, debugger-message};

@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Debugging support
 define variable $start-ticks :: <integer> = current-timestamp();
 
-define function delta () => (r :: <integer>) 
-  current-timestamp() - $start-ticks 
+define function delta () => (r :: <integer>)
+  current-timestamp() - $start-ticks
 end;
 
 define function log (#rest format-args) => ()

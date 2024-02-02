@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <foreign-object> (<application-code-object>)
 end class <foreign-object>;
 
-
+
 /// Implementation
 
 define method environment-object-type-name

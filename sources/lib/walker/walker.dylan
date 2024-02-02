@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro dont-walk-slots-definer
   { define dont-walk-slots ?class:name using ?walker:name = { ?entries } }
-    => { define method walker-shallow-getters 
+    => { define method walker-shallow-getters
 	     (walker :: ?walker, x :: ?class) => (res :: <sequence>)
            concatenate(?=next-method(), list(?entries))
 	 end method }
@@ -17,10 +17,10 @@ entries:
   { ?getter:name => ?default:expression, ... } => { pair(?getter, method () ?default end), ... }
 end macro;
 
-define macro dont-walk-object-definer 
+define macro dont-walk-object-definer
   { define dont-walk-object ?:name ?walker }
     => { define method deep-walk
-             (walker :: ?walker, function :: <function>, 
+             (walker :: ?walker, function :: <function>,
               parent, object :: ?name)
 	   object
 	 end method }
@@ -39,8 +39,8 @@ end class;
 define constant $default-walker-table-size = 128;
 
 define method initialize
-    (x :: <walker>, #rest all-keys, 
-     #key capacity = $default-walker-table-size, #all-keys) 
+    (x :: <walker>, #rest all-keys,
+     #key capacity = $default-walker-table-size, #all-keys)
   next-method();
   walker-walked(x) := make(<table>, size: capacity);
 end method;
@@ -84,7 +84,7 @@ end function;
 define method do-deep-walk
     (walker :: <walker>, function :: <function>, parent, object)
   let class = object-class(object);
-  walker-register-walked(walker, parent, object, object); 
+  walker-register-walked(walker, parent, object, object);
   function(object);
   for (slotd in walker-shallow-slot-descriptors(walker, class))
     function(walker-slot-value(object, slotd))
@@ -106,7 +106,7 @@ end method;
 
 define method do-deep-walk
     (walker :: <walker>, function :: <function>, parent, object :: <pair>)
-  walker-register-walked(walker, parent, object, object); 
+  walker-register-walked(walker, parent, object, object);
   function(object);
   deep-walk(walker, function, object, head(object));
   deep-walk(walker, function, object, tail(object));

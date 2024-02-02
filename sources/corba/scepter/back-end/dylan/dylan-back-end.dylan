@@ -93,7 +93,7 @@ define method scepter-back-end-emit (be :: <dylan-back-end>, root :: <ast-root>,
  => (result :: <dylan-back-end-result>)
 
   let scepter = get-scepter();
- 
+
   be.dbe-project-base-name := scepter-source-base-name(source);
   debug-message("Scepter Dylan back-end: emitting %=", be.dbe-project-base-name);
 
@@ -233,7 +233,7 @@ end method;
 /*
 define method project-library-file (project :: <project-description>, directory :: <directory-locator>)
  => (library-file :: <locator>)
-  merge-locators(make(<file-locator>, base: concatenate(project-name(project), "-library"), 
+  merge-locators(make(<file-locator>, base: concatenate(project-name(project), "-library"),
 		                      extension: "dylan"),
 		 directory)
 end method;

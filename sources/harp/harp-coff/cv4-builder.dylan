@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// Basic CodeView Housekeeping
 
 
-define constant $dylan-version 
+define constant $dylan-version
   = "Functional DeveloperWorks (R) Dylan compiler Version 1.0";
 
 define constant $dylan-flags = #x04098010;
@@ -20,10 +20,10 @@ define constant $dylan-flags = #x04098010;
   // 10 = Mode 32
 
 
-// Initialize-debug-section puts in the appropriate headers for the CV4 
+// Initialize-debug-section puts in the appropriate headers for the CV4
 // debug section
 
-define method initialize-debug-section 
+define method initialize-debug-section
     (builder :: <coff-builder>,
      object-file-name :: <byte-string>,
      #key version = $dylan-version,
@@ -39,24 +39,24 @@ end method;
 // Select-debug-section ensures that the debug section exists,
 // and caches it in the debug-section slot in the builder
 
-define method select-debug-section 
+define method select-debug-section
     (builder :: <coff-builder>, section-name :: <byte-string>,
-     #key alignment = 4, flags = $debug-flags) 
+     #key alignment = 4, flags = $debug-flags)
     => (section :: <coff-section>)
   builder.debug-section :=
     share-or-create(builder.binary-file.sections, section-name, unsupplied(),
                     method ()
-                      make-binary-section(builder, section-name, 
+                      make-binary-section(builder, section-name,
 					  alignment, flags);
                     end method);
 end method;
 
 
-// add-cv4-string adds a string to the CodeView record in normal format - 
+// add-cv4-string adds a string to the CodeView record in normal format -
 // i.e. preceded by a length byte.
 
-define method add-cv4-string 
-    (builder :: <coff-builder>, str :: <string>, 
+define method add-cv4-string
+    (builder :: <coff-builder>, str :: <string>,
      #key section = builder.debug-section)
  => ()
   add-data-byte(builder, str.size, section: section);
@@ -64,7 +64,7 @@ define method add-cv4-string
 end method;
 
 
-// coff-string-length calculates the size of a string in CodeView format 
+// coff-string-length calculates the size of a string in CodeView format
 // (i.e. allowing for the length byte).
 
 define method coff-string-length (str :: <string>) => (len :: <integer>)
@@ -77,8 +77,8 @@ end method;
 // length of data they directly add to the record, and pass
 // that as the length field.
 
-define method start-debug-field 
-     (builder :: <coff-builder>, 
+define method start-debug-field
+     (builder :: <coff-builder>,
       length :: <integer>, index :: <integer>,
       section :: <coff-section>)
  => ()
@@ -105,8 +105,8 @@ end method;
 
 
 define method add-cv4-register
-    (builder :: <coff-builder>, type :: <integer>, 
-     register :: <integer>, name :: <byte-string>, 
+    (builder :: <coff-builder>, type :: <integer>,
+     register :: <integer>, name :: <byte-string>,
      #key section = builder.debug-section)
  => ()
   let len = 4 + name.coff-string-length;
@@ -118,7 +118,7 @@ end method;
 
 
 define method add-cv4-user-defined-type
-    (builder :: <coff-builder>, type :: <integer>, name :: <string>, 
+    (builder :: <coff-builder>, type :: <integer>, name :: <string>,
      #key section = builder.debug-section)
  => ()
   let len = 2 + name.coff-string-length;
@@ -136,8 +136,8 @@ define method add-cv4-end-of-block
 end method;
 
 
-define method add-cv4-object-file-name 
-    (builder :: <coff-builder>, name :: <string>, 
+define method add-cv4-object-file-name
+    (builder :: <coff-builder>, name :: <string>,
      #key signature = 0,
           section = builder.debug-section)
  => ()
@@ -149,7 +149,7 @@ end method;
 
 
 define method add-cv4-bp-relative
-    (builder :: <coff-builder>, 
+    (builder :: <coff-builder>,
      offset :: <integer>, type :: <integer>, name :: <byte-string>,
      #key section = builder.debug-section)
  => ()
@@ -163,7 +163,7 @@ end method;
 
 define method add-cv4-local-data
     (builder :: <coff-builder>, type :: <integer>, name :: <byte-string>,
-     #key segment = 0, offset = 0, 
+     #key segment = 0, offset = 0,
           section = builder.debug-section)
  => ()
   let len = 8 + name.coff-string-length;
@@ -176,7 +176,7 @@ end method;
 
 define method add-cv4-global-data
     (builder :: <coff-builder>, type :: <integer>, name :: <byte-string>,
-     #key segment = 0, offset = 0, 
+     #key segment = 0, offset = 0,
           section = builder.debug-section)
  => ()
   let len = 8 + name.coff-string-length;
@@ -190,15 +190,15 @@ end method;
 define method add-cv4-local-proc-start
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     length :: <integer>, frame-on :: <integer>, frame-off :: <integer>, 
+     length :: <integer>, frame-on :: <integer>, frame-off :: <integer>,
      proctype :: <integer>,
-     #key p-parent = 0, p-end = 0, p-next = 0, 
-          segment = 0, offset = 0, flags = 0, 
+     #key p-parent = 0, p-end = 0, p-next = 0,
+          segment = 0, offset = 0, flags = 0,
           section = builder.debug-section)
  => ()
   add-cv4-procedure-start(builder, #x204, name, model-object,
-			  length, frame-on, frame-off, 
-                          proctype, p-parent, p-end, p-next, 
+			  length, frame-on, frame-off,
+                          proctype, p-parent, p-end, p-next,
                           segment, offset, flags, section);
 end method;
 
@@ -206,15 +206,15 @@ end method;
 define method add-cv4-global-proc-start
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     length :: <integer>, frame-on :: <integer>, frame-off :: <integer>, 
+     length :: <integer>, frame-on :: <integer>, frame-off :: <integer>,
      proctype :: <integer>,
-     #key p-parent = 0, p-end = 0, p-next = 0, 
-          segment = 0, offset = 0, flags = 0, 
+     #key p-parent = 0, p-end = 0, p-next = 0,
+          segment = 0, offset = 0, flags = 0,
           section = builder.debug-section)
  => ()
   add-cv4-procedure-start(builder, #x205, name, model-object,
-			  length, frame-on, frame-off, 
-                          proctype, p-parent, p-end, p-next, 
+			  length, frame-on, frame-off,
+                          proctype, p-parent, p-end, p-next,
                           segment, offset, flags, section);
 end method;
 
@@ -223,10 +223,10 @@ end method;
 define method add-cv4-procedure-start
     (builder :: <coff-builder>, index :: <integer>,
      name :: <byte-string>, model-object,
-     length :: <integer>, frame-on :: <integer>, frame-off :: <integer>, 
+     length :: <integer>, frame-on :: <integer>, frame-off :: <integer>,
      proctype :: <integer>,
-     p-parent :: <integer>, p-end :: <integer>, p-next :: <integer>, 
-     segment :: <integer>, offset :: <integer>, flags :: <integer>, 
+     p-parent :: <integer>, p-end :: <integer>, p-next :: <integer>,
+     segment :: <integer>, offset :: <integer>, flags :: <integer>,
      section :: <coff-section>)
  => ()
   let len = 33 + name.coff-string-length;
@@ -246,13 +246,13 @@ end method;
 
 
 define method add-cv4-block-start
-    (builder :: <coff-builder>, 
+    (builder :: <coff-builder>,
      reloc-name :: <byte-string>,
      model-object,
-     block-name :: <byte-string>, 
-     length :: <integer>, 
-     #key p-parent = 0, p-end = 0, 
-          segment = 0, offset = 0, 
+     block-name :: <byte-string>,
+     length :: <integer>,
+     #key p-parent = 0, p-end = 0,
+          segment = 0, offset = 0,
           section = builder.debug-section)
  => ()
   let len = 18 + block-name.coff-string-length;
@@ -267,7 +267,7 @@ end method;
 
 
 define method add-cv4-code-label
-    (builder :: <coff-builder>, name :: <byte-string>, 
+    (builder :: <coff-builder>, name :: <byte-string>,
      #key segment = 0, offset = 0, flags = 0,
           section = builder.debug-section)
  => ()
@@ -283,7 +283,7 @@ end method;
 define method add-cv4-relocation
     (builder :: <coff-builder>,
      name :: <byte-string>, model-object,
-     offset :: <integer>, segment :: <integer>, 
+     offset :: <integer>, segment :: <integer>,
      #key section = builder.debug-section)
  => ()
   add-data(builder, name, model-object,

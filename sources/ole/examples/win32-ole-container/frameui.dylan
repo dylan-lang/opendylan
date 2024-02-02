@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // the "application object" class for this program
 
-define COM-interface <sample-container-app> ( <container-app> ) 
+define COM-interface <sample-container-app> ( <container-app> )
 
   slot app-instance-handle :: <HINSTANCE> = $NULL-HINSTANCE;
   slot app-document :: false-or(<simple-doc>)= #f; // embedded document object

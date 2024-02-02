@@ -31,7 +31,7 @@ define method scribble-print
   end
 end method scribble-print;
 
-
+
 /// Win32 code
 
 define function ensure-no-dialog-error (name :: <string>) => ()

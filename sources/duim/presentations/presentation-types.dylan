@@ -14,7 +14,7 @@ define generic do-describe (...) => (...);
 define generic do-highlight (...) => (...);
 define generic do-position-test (...) => (...);
 
-
+
 /// Standard types
 
 <real>

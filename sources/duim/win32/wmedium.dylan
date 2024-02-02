@@ -220,7 +220,7 @@ define sealed method invalidate-cached-drawing-state
   end
 end method invalidate-cached-drawing-state;
 
-
+
 /// Display forcing
 
 define sealed method force-display
@@ -235,7 +235,7 @@ define sealed method synchronize-display
   release-DC(medium)
 end method synchronize-display;
 
-
+
 /// Drawing state updating
 
 define constant $null-region = null-pointer(<HRGN>);
@@ -460,7 +460,7 @@ define sealed method establish-font
   end
 end method establish-font;
 
-
+
 define generic convert-ink-to-DC-components
     (medium :: <win32-medium>, hDC :: <HDC>, brush)
  => (color :: <native-color>, fill-style, operation :: <integer>,
@@ -550,7 +550,7 @@ define sealed method convert-ink-to-DC-components
   values(color, fill-style, brush-mode(brush), pattern)
 end method convert-ink-to-DC-components;
 
-
+
 // Compute and cache the clip rectangle
 define sealed method compute-clip-mask
     (medium :: <win32-medium>) => (mask)

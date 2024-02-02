@@ -59,7 +59,7 @@ define method draw-figure (this :: <painter>, function :: <function>)
     let ok? = function(hdc, offset, offset, offset + size, offset + size);
     let status = if (ok?) $S-OK else scode-for-last-error() end;
     SelectObject(hdc, old-brush);
-    ReleaseDC(hwnd, hdc);  
+    ReleaseDC(hwnd, hdc);
     this.drawing-offset := offset + truncate/(size, 2);
     status
   end if

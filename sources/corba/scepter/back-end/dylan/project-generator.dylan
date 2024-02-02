@@ -263,7 +263,7 @@ end method;
 define method generate-library-file
     (project :: <project-description>, location :: <locator>)
  => ()
-  let file = merge-locators(make(<file-locator>, 
+  let file = merge-locators(make(<file-locator>,
 				 base: project-library-file-base-name(project),
 				 extension: $dylan-source-suffix),
 			    location);

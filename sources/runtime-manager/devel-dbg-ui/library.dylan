@@ -54,7 +54,7 @@ define module devel-dbg-ui
   use format;
   use print;
   use format-out;
-  use threads, 
+  use threads,
     rename: {thread-name => threads-thread-name};
   use access-path,
     exclude: {kill-application, debugger-message};

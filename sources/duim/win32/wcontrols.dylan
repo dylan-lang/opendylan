@@ -32,7 +32,7 @@ define constant $status-bar-spacing :: <integer> = 4;   // in pixels
 define constant $spin-box-spacing      :: <integer> =  0;
 define constant $up-down-control-width :: <integer> = 12;
 
-
+
 /// Win32 common controls
 
 define constant $KERNEL32       = "KERNEL32";
@@ -86,7 +86,7 @@ define sealed method do-make-mirror
   next-method()
 end method do-make-mirror;
 
-
+
 /// Progress controls
 
 define sealed class <win32-progress-bar>
@@ -184,7 +184,7 @@ define sealed method note-gadget-value-changed
   update-progress-bar(gadget)
 end method note-gadget-value-changed;
 
-
+
 /// Sliders
 
 define sealed class <win32-slider>
@@ -348,7 +348,7 @@ define sealed method handle-slider-increment
   end
 end method handle-slider-increment;
 
-
+
 /// Tool bars
 
 //---*** Someday we should do these for real!
@@ -401,7 +401,7 @@ define method note-sheet-unmapped (gadget :: <win32-tool-bar>) => ()
   end
 end method note-sheet-unmapped;
 
-
+
 /// Status bars
 
 define sealed class <win32-status-bar>
@@ -633,7 +633,7 @@ define method update-frame-documentation
   end
 end method update-frame-documentation;
 
-
+
 /// Tab controls
 
 // Tab controls are unusual among mirrored gadgets in that they can have as
@@ -906,7 +906,7 @@ define sealed method handle-notify
   end
 end method handle-notify;
 
-
+
 /// Up-down controls
 
 define sealed class <win32-up-down-control>
@@ -979,7 +979,7 @@ define sealed method handle-scrolling
   #t
 end method handle-scrolling;
 
-
+
 /// Spin boxes
 
 // Wraps up a text field and an up-down control
@@ -1069,7 +1069,7 @@ define sealed method note-gadget-disabled
   gadget-enabled?(gadget.%text-field)      := #f;
 end method note-gadget-disabled;
 
-
+
 /// List and table controls
 
 // On Windows, list and table controls are implemented using the
@@ -1990,7 +1990,7 @@ define sealed method do-remove-column
   SendMessage(handle, $LVM-DELETECOLUMN, index, 0)
 end method do-remove-column;
 
-
+
 /// Tree controls
 
 define sealed class <win32-tree-control>
@@ -2692,7 +2692,7 @@ define method tree-control-expanded-objects-setter
   objects
 end method tree-control-expanded-objects-setter;
 
-
+
 /// A little bit of glue to the homegrown graph controls
 
 define method initialize-tree-control-icons
@@ -2720,7 +2720,7 @@ define method initialize-tree-control-icons
   tree-control-contract-icon(graph) := contract-icon;
 end method initialize-tree-control-icons;
 
-
+
 /// Image lists utilities for List and Tree Views
 
 //--- Note that we create a masked image list, but that 'find-image' is really
@@ -2784,7 +2784,7 @@ define sealed method release-images
   remove-all-keys!(image-table)
 end method release-images;
 
-
+
 /// Other gadgets
 
 //--- Missing

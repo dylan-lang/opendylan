@@ -16,7 +16,7 @@ define function make-automation-factory (rclsid :: <REFCLSID>,
 
   Output-Debug-String("DllGetClassObject\r\n");
 
-  let class-id :: <REFCLSID> = 
+  let class-id :: <REFCLSID> =
     if (class-id) as(<REFCLSID>, class-id) else typeinfo.guid-value end if;
   if (~IsEqualIID?(rclsid, class-id))
     values ($CLASS-E-CLASSNOTAVAILABLE, $null-interface) // wrong class ID
@@ -73,7 +73,7 @@ define function unregister-auto-server (module-handle, #rest options)
   apply(register-or-unregister, #t, module-handle, options)
 end;
 
-
+
 
 define macro in-process-automation-server
   { in-process-automation-server( ?all-args:* ) }
@@ -102,7 +102,7 @@ define function validate-automation-server-options
  => ();
   // This function doesn't actually do anything, we just want to get an
   // error if any invalid options are passed.
-  
+
   // Note that the default values used here are just for the sake of type
   // validation; they are not necessarily the same default values that will
   // be actually used.

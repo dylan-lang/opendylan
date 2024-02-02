@@ -236,7 +236,7 @@ define method reset-history
   end
 end method reset-history;
 
-
+
 /// Kill ring history
 
 define sealed class <kill-history> (<basic-history>)

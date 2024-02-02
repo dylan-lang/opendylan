@@ -39,7 +39,7 @@ end class;
 define method parse-general-category(abbreviation :: <string>)
   => (gc :: <ucd-general-category>);
   let gc = element($ucd-general-categories, abbreviation);
-  unless(gc)                                                                                                                                                                        
+  unless(gc)
     error("Unknown general category %s", abbreviation);
   end;
   gc;

@@ -47,7 +47,7 @@ define method handle-expired-timeout
   abort()
 end method handle-expired-timeout;
 
-
+
 /// Tool bar handling
 
 define open generic make-environment-tool-bar-buttons
@@ -189,7 +189,7 @@ define method make-environment-tool-bar
   end
 end method make-environment-tool-bar;
 
-
+
 /// Basic environment tool
 
 define open abstract class <basic-environment-tool>
@@ -205,7 +205,7 @@ define open abstract class <basic-environment-tool>
      <environment-tool>)
 end class <basic-environment-tool>;
 
-
+
 /// Clipboard handling
 
 define method command-available-for-focus?
@@ -313,7 +313,7 @@ define method copy-object
   end
 end method copy-object;
 
-
+
 /// Environment project frame
 
 define open abstract class <environment-project-tool>

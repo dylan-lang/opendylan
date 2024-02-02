@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module access-path
-  
+
    use common-dylan;
 
    create
@@ -202,11 +202,11 @@ define module access-path
       ///// Breakpoints and Watchpoints
 
       enable-breakpoint, disable-breakpoint, query-breakpoint?,
-      enable-read-watchpoint, disable-read-watchpoint, 
+      enable-read-watchpoint, disable-read-watchpoint,
       query-read-watchpoint?,
-      enable-write-watchpoint, disable-write-watchpoint, 
+      enable-write-watchpoint, disable-write-watchpoint,
       query-write-watchpoint?,
-      enable-execute-watchpoint, disable-execute-watchpoint, 
+      enable-execute-watchpoint, disable-execute-watchpoint,
       query-execute-watchpoint?,
       recover-breakpoint,
 
@@ -529,8 +529,8 @@ end module;
 define module access-path-implementation
   use common-dylan;
   use dylan-extensions,
-     import: {<machine-word>, 
-              <double-integer>, 
+     import: {<machine-word>,
+              <double-integer>,
               $minimum-unsigned-machine-word, integer-as-raw},
      export: all;
   use dylan-primitives;

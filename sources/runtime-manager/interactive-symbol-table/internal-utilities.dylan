@@ -12,17 +12,17 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    might correspond to it.
 
 define method address-in-range-of-table?
-    (st :: <remote-library-subtable>, 
+    (st :: <remote-library-subtable>,
      page :: <integer>, offset :: <integer>)
         => (answer :: <boolean>)
   if (st.subtable-empty?)
     #f
   else
-    let first-page = 
+    let first-page =
       head(st.symbols-by-address[0]);
     let first-range =
       tail(st.symbols-by-address[0]);
-    let last-page = 
+    let last-page =
       head(st.symbols-by-address[size(st.symbols-by-address) - 1]);
     let last-range =
       tail(st.symbols-by-address[size(st.symbols-by-address) - 1]);
@@ -58,7 +58,7 @@ define method sort-symbol-table-by-address
     for (page-list-pair in subtable.symbols-by-address)
       tail(page-list-pair) := sort!(tail(page-list-pair), test: compare-heads)
     end for;
-    subtable.symbols-by-address := 
+    subtable.symbols-by-address :=
       sort!(subtable.symbols-by-address, test: compare-heads);
   end for;
 end method;

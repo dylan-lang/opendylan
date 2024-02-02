@@ -89,7 +89,7 @@ define method IBankAccount/name (account :: <account>)
   values($S-OK, account.name);
 end IBankAccount/name;
 
-define method IBankAccount/balance (account :: <account>) 
+define method IBankAccount/balance (account :: <account>)
  => (status :: <HRESULT>, balance :: <integer>)
   bank-log(account.bank, "Balance enquiry on %s.", account.name);
   let value = bank-value(account.bank,
@@ -165,7 +165,7 @@ define method IBank/name (bank :: <bank>)
  => (status :: <HRESULT>, name :: <string>)
   values($S-OK, bank.name);
 end method IBank/name;
- 
+
 define method IBank/open-account (bank :: <bank>,
                                   account-name :: <string>)
  => (status :: <HRESULT>, account :: <account-or-null>)

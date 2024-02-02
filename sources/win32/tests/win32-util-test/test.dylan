@@ -6,9 +6,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define test win32-util-test 
+define test win32-util-test
   (name: "win32-util-test",
-   description: 
+   description:
      "tests utility functions in the Win32-common library")
 
   check-equal("LOWORD(#x60003)", LOWORD(#x60003), 3);

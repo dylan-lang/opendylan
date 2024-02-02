@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/* 
+/*
 
 Moved all this to debugger-manager
 
@@ -36,7 +36,7 @@ define method take-thread-snapshot
   // the frames.
 
   let number-of-stack-frames = number-of-frames-on-stack (ap, thread);
-  if (number-of-stack-frames = 0) 
+  if (number-of-stack-frames = 0)
     number-of-stack-frames := 1;
   end if;
 

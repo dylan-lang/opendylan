@@ -69,7 +69,7 @@ define function broadcast-dde-transaction
     result
       := select (uType)
 	   $XTYP-CONNECT =>
-	     // Allow connection, provided the topic (hsz1) and 
+	     // Allow connection, provided the topic (hsz1) and
 	     // service (hsz2) names are what we expect ...
 	     if (DdeCmpStringHandles(hsz1, service-or-topic-handle) = 0
 		   & DdeCmpStringHandles(hsz2, service-or-topic-handle) = 0)

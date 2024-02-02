@@ -47,12 +47,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // some generic functions to be specialized by the back end:
 
 
-define open generic optimize-leaf-case-1 
-       (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>, top-block :: <basic-block>) 
+define open generic optimize-leaf-case-1
+       (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>, top-block :: <basic-block>)
     => (b :: <boolean>);
 
-define method optimize-leaf-case-1 
-       (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>, top-block :: <basic-block>) 
+define method optimize-leaf-case-1
+       (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>, top-block :: <basic-block>)
     => (b :: <boolean>)
   #f;
 end method;
@@ -66,20 +66,20 @@ end method;
 
 
 
-define open generic allowable-colours  
+define open generic allowable-colours
     (backend :: <harp-back-end>, vr :: <virtual-register>) => (i :: <integer>);
 
 define open generic make-pref-vector
     (backend :: <harp-back-end>) => (v :: <simple-integer-vector>);
 
-define inline method make-reg-bit-set 
+define inline method make-reg-bit-set
     (backend :: <harp-back-end>) => (n :: <vector-32bit>)
   let vars = backend.variables;
   make(<vector-32bit>, size: vars.word-size-of-bit-set, fill: $bit-set-zero$);
 end;
 
 
-define method select-central 
+define method select-central
     (backend :: <harp-back-end>, vr :: <greg>) => (c :: <central-spill>)
   backend.variables.vreg-state.gc-spill-central;
 end;
@@ -253,41 +253,41 @@ define inline method set-thingy-size (set :: <set-thingy>) => (i :: <integer>)
 end;
 
 
-define inline method add-set-thingy 
+define inline method add-set-thingy
     (item :: <virtual-register>, set :: <set-thingy>)
   set-bit-in-set(set.set-thingy-vect, item.virtual-register-id);
 end;
 
-define inline method add-set-thingy 
+define inline method add-set-thingy
     (item :: <real-register>, set :: <set-thingy>)
   add-set-thingy(item.real-register-mask, set);
 end;
 
-define inline method add-set-thingy 
+define inline method add-set-thingy
     (mask :: <integer>, set :: <set-thingy>)
   set.set-thingy-mask := r-union(set.set-thingy-mask, mask);
 end;
 
-define inline method remove-set-thingy 
+define inline method remove-set-thingy
     (item :: <virtual-register>, set :: <set-thingy>)
   unset-bit-in-set(set.set-thingy-vect, item.virtual-register-id);
 end;
 
-define inline method remove-set-thingy 
+define inline method remove-set-thingy
     (item :: <real-register>, set :: <set-thingy>)
   remove-set-thingy(item.real-register-mask, set);
 end;
 
-define inline method remove-set-thingy 
+define inline method remove-set-thingy
     (mask :: <integer>, set :: <set-thingy>)
   set.set-thingy-mask := r-set-diff(set.set-thingy-mask, mask);
 end;
 
-define generic remove-subset-thingy 
+define generic remove-subset-thingy
     (item, set :: <subset-thingy>)
  => (set :: <subset-thingy>);
 
-define inline method remove-subset-thingy 
+define inline method remove-subset-thingy
     (item :: <virtual-register>, set :: <subset-thingy>)
  => (set :: <subset-thingy>)
   let set :: <subset-thingy> =
@@ -302,13 +302,13 @@ define inline method remove-subset-thingy
   set
 end;
 
-define inline method remove-subset-thingy 
+define inline method remove-subset-thingy
     (item :: <real-register>, set :: <subset-thingy>)
  => (set :: <subset-thingy>)
   remove-subset-thingy(item.real-register-mask, set);
 end;
 
-define inline method remove-subset-thingy 
+define inline method remove-subset-thingy
     (mask :: <integer>, set :: <subset-thingy>)
  => (set :: <subset-thingy>)
   let set :: <subset-thingy> =
@@ -506,7 +506,7 @@ define method set-liveness
         // new-live-entry = use-before-def U (live-exit - defines-before-use)
         //
         // live-exit is U(successors) entry-set
-       
+
         for (next-bb :: <basic-block> in bb.bb-next-set)  // for successors
 	  set-thingy-live(bb.bb-live-entry, next-bb.bb-live-entry, bb.bb-defs);
         end for;
@@ -638,7 +638,7 @@ end;
 ///             colour spills.
 
 define method int-graph
-    (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>, 
+    (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>,
     top-block :: <basic-block>)
 
   let vars = backend.variables;
@@ -648,9 +648,9 @@ define method int-graph
   set-use-defs(backend, pgm);	// set up all use-def information
   set-liveness(backend, pgm);   // then do the live variable analysis
   warn-on-live-on-entry(backend);
-  let do-leaf-case = vars.optimize-leaf-case & 
+  let do-leaf-case = vars.optimize-leaf-case &
                      optimize-leaf-case-1(backend, pgm, top-block);
-      
+
   // AJW 14/1/88 - initialise the slots in all the VRs.
   // All this should really be done at vr creation time ...
   build-the-graph(backend, vars.pgm-vect, do-leaf-case);
@@ -667,7 +667,7 @@ define method eliminate-instruction
     sv[index] := #f;
   end for;
 end;
-	  
+
 define method init-vrs (backend :: <harp-back-end>)
   let state = backend.variables.vreg-state;
   let vr-vect :: <stretchy-virtual-register-vector> = state.vr-vect;
@@ -683,7 +683,7 @@ define method init-vrs (backend :: <harp-back-end>)
 
   for (j :: <integer> from 0 below fp)
     let vr :: <virtual-register> = vr-vect[j];
-    let central :: <central-spill> = select-central(backend, vr); 
+    let central :: <central-spill> = select-central(backend, vr);
     // the appropriate spill type
 
     vr.virtual-register-available-colours := allowable-colours(backend, vr);
@@ -697,12 +697,12 @@ define method init-vrs (backend :: <harp-back-end>)
       vr.virtual-register-colour-pref := make-pref-vector(backend);
     end if;
   end for;
-    
-  // Now a quick post-pass to set up the spill set limits 
+
+  // Now a quick post-pass to set up the spill set limits
   for (j :: <integer> from 0 below fp)
     let vr :: <virtual-register> = vr-vect[j];
     let spill-set :: <spill-set> = vr.virtual-register-spill-set;
-    spill-set.spill-set-limit := 
+    spill-set.spill-set-limit :=
       spill-set.spill-set-central.central-spill-lower-limit;
   end for;
 end;
@@ -730,7 +730,7 @@ define method build-the-graph
   let lr-table = make-reg-bit-set(backend);
   let live-cache :: <live-cache> =
     make(<live-cache>, live-set: make-reg-bit-set(backend));
-      
+
   for (blk :: <basic-block> in pgm)
     let bb-next-set :: <list> = blk.bb-next-set;
     if (bb-next-set.empty?)
@@ -791,36 +791,36 @@ define method walk-block
   // defined vr with all those that are live at that point except for the
   // source of the move.
   // Real registers are only removed from the colour sets, not added into the
-  // graph. 
+  // graph.
 
   // for the loop weighting we set a limit of 2^21 on the assumption that the
   // maximum preference (unweighted) doesn't exceed 127 (should check this)
 
   let to-shift :: <integer> = (blk.bb-loop-depth - 1) * loop-factor;
-  let loop-weighting :: <integer> = 
+  let loop-weighting :: <integer> =
       ash(1, if (to-shift > 21) 21 else to-shift end);
   let is-green :: <boolean> = blk.bb-colour == $green-colour;
 
   for-instructions-in-basic-block-backwards (ins in blk)
-						   
+
     // AJW 30/1/88. If, at this point, we find that any of the
     // defined virtual registers are not live here (that is,
     // immediately after the instruction), then we must go in and
     // change the defining reference to that VR to NIL. This is to
     // avoid the multiple-definition-partial-live-range bug that
     // nasty imperative programmers can generate.
-    
+
     // Since this doesn't happen very often, we can probably afford to
     // be rather inefficient. Check all the members of i-def for
     // membership of entry-set, and call zap-defining-references for
     // any that aren't. We'll also remove offending entries from the
     // i-def list, so that everything in both it and i-use is
     // hereafter guaranteed live.   Rehacked AJW 2/3/88.
-    
+
     // Something else that we could do here is to note what used vrs
     // are dead after the instruction, since for somewthing like BIT
     // this could help generate better code.
-	  
+
     let zapped-def :: <boolean> = #f;
     let unzapped-def :: <boolean> = #f;
     let the-op :: <op> = ins-op(sv, ins);
@@ -860,7 +860,7 @@ define method walk-block
       // calculations. This is easy - prefer all used and defined to
       // be same with a couple of small exceptions - back to
       // virtual/real only here! 19/4/88
-  
+
       // with the new implicit-uses we don't do any preferencing
       // simply because by definition these will be live and hence
       // will clash (cim)
@@ -883,7 +883,7 @@ define method walk-block
 		let num = def.real-register-number;
 		//avoid preferencing of out regs on
                 //sparc, screw up leaf-case
-		if (~ is-green | 
+		if (~ is-green |
                     ~ vars.optimize-leaf-case |
 		    num < 8 | num > 11)
 		  inc!(prefs[num], 4);
@@ -938,11 +938,11 @@ define method walk-block
       // may be very common, so there's an efficiency gain to be made by
       // assuming they will have little effect on allocation.
       // But there's also a potential necessity to avoid allowing for them
-      // in the clash count, because they are SO frequent that they can 
+      // in the clash count, because they are SO frequent that they can
       // cause overflows.
       // We assume here that SCL instructions do not have destroys functions,
       // implicit functions, disallow functions, clash functions, or
-      // any definitions, 
+      // any definitions,
 
       if (the-op.op-is-scl)
         let live-names-set :: <vector-32bit> = live-cache.live-bit-set;
@@ -959,11 +959,11 @@ define method walk-block
         let live-virtuals = live-set.set-thingy-vect;
         do-bit-set (bit-id in live-virtuals)
   	  let key :: <virtual-register> = element-no-bounds-check(vr-vect, bit-id);
-          key.virtual-register-available-colours := 
+          key.virtual-register-available-colours :=
   	    r-set-diff(key.virtual-register-available-colours, disallowed-reals);
         end do-bit-set;
-  
-        // For SCL instructions, we must annotate the parameters with the 
+
+        // For SCL instructions, we must annotate the parameters with the
         // named live registers
 
         unless (live-cache.cache-up-to-date?)
@@ -987,7 +987,7 @@ define method walk-block
 	  let live-virtuals = set-thingy-vect(live-set);
 	  do-bit-set (bit-id in live-virtuals)
 	    let key :: <virtual-register> = element-no-bounds-check(vr-vect, bit-id);
-  	    key.virtual-register-available-colours := 
+  	    key.virtual-register-available-colours :=
 	      r-set-diff(key.virtual-register-available-colours, destr-reals);
 	  end do-bit-set;
         end unless;
@@ -1001,7 +1001,7 @@ define method walk-block
         for-instruction-uses (u in sv at ins)
 	  add-register-to-live-sets(u, live-set, live-names-set, lr-table, loop-weighting);
         end for-instruction-uses;
-	  
+
         let implicit-fn =  the-op.op-implicit-uses;
         unless (implicit-fn == nil-fn)
 	  let implicit-uses :: <integer> = implicit-fn(backend, ins);
@@ -1012,22 +1012,22 @@ define method walk-block
         let disallowed-reals :: <integer> =
           r-union(live-set.set-thingy-mask, disallow-reals);
         let live-virtuals = live-set.set-thingy-vect;
-  	    
+
         do-bit-set (bit-id in live-virtuals)
   	  let key :: <virtual-register> = element-no-bounds-check(vr-vect, bit-id);
-          key.virtual-register-available-colours := 
+          key.virtual-register-available-colours :=
   	    r-set-diff(key.virtual-register-available-colours, disallowed-reals);
         end do-bit-set;
-  
+
         // Now for the clash fn - this bit will usually be skipped, as
         // few instructions actually have anything to say on this
         // subject.
-  
+
         let clashes :: <list> = the-op.op-clash-fn(backend, ins);
         for (c :: <list> in clashes)	// for each clash set
           let the-reals :: <integer> = empty-rset;
           let filter-from :: <list> = c;
-  
+
           c := #();
           for (x in filter-from)
 	    if (instance?(x, <real-register>))
@@ -1040,7 +1040,7 @@ define method walk-block
 	      harp-warning(backend, "Unexpected operand while colouring: %=.\n", x);
 	    end if;
           end for;
-  
+
           iterate clash-registers(c :: <list> = c)
 	    unless (c.empty?)
 	      let x :: <virtual-register> = c.head;
@@ -1074,8 +1074,8 @@ end;
 // end method;
 
 
-// define method named-arg-spills 
-//     (vr-vect :: <stretchy-virtual-register-vector>) => (res :: <simple-object-vector>) 
+// define method named-arg-spills
+//     (vr-vect :: <stretchy-virtual-register-vector>) => (res :: <simple-object-vector>)
 //   as(<simple-object-vector>, choose(named-arg-spill?, vr-vect));
 // end method;
 
@@ -1130,13 +1130,13 @@ define method make-virtuals-from-bit-set
 end method;
 
 define method add-live-registers-for-scl
-    (backend :: <harp-back-end>, 
-     ins :: <integer>, 
+    (backend :: <harp-back-end>,
+     ins :: <integer>,
      live-cache :: <live-cache>) => ()
 
   // This is an SCL instruction, so we must determine the set of live
   // named registers, and insert that set into instruction operands.
-  // 
+  //
   // We include all arg-spills too, because they are always live, and often useful
   // debugging aids
   //
@@ -1151,7 +1151,7 @@ define method add-live-registers-for-scl
   // Nosa  Jan 25, 1999
 
   if (live-cache.cache-bit-set == $empty-bit-set)
-    
+
     with-uu (backend.variables.sv-instructions at ins)
       let live-vrs :: <simple-object-vector> = uu-uze(2);
       live-cache.cache-bit-set := make-bit-set-from-virtuals(backend, live-vrs);
@@ -1168,8 +1168,8 @@ define method add-live-registers-for-scl
   end if;
 
   let all-live-regs :: <simple-object-vector> = live-cache.cache-vector;
-      
-    
+
+
   with-uu (backend.variables.sv-instructions at ins)
     let use1 :: <pair> = uu-uze(1);
     use1.tail := all-live-regs;
@@ -1181,7 +1181,7 @@ end method;
 
 // MJS 05/12/92: new stuff for removing unreferenced vregs from *vr-vect*
 //               DANGER: the vregs ids are changed
-define method compress-vreg-usage 
+define method compress-vreg-usage
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let vars = backend.variables;
   let sv :: <instructions-vector> = vars.sv-instructions;
@@ -1204,7 +1204,7 @@ define method compress-vreg-usage
     end for-instructions-in-basic-block;
   end for;
   let out-index :: <integer> = 0;
-  for (index :: <integer> from 0, 
+  for (index :: <integer> from 0,
        ureg :: <boolean> in used-vregs,
        vreg :: <virtual-register> in vrvect)
     if (ureg)

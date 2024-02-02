@@ -15,58 +15,58 @@ define constant $exists                        = 1;
 ///// EXPORTED GENERIC FUNCTIONS
 
 
-define generic enable-breakpoint 
+define generic enable-breakpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic disable-breakpoint 
-    (ap :: <access-path>, address :: <remote-value>) 
-      => (success :: <boolean>);
-
-define generic query-breakpoint? 
+define generic disable-breakpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic enable-read-watchpoint 
+define generic query-breakpoint?
+    (ap :: <access-path>, address :: <remote-value>)
+      => (success :: <boolean>);
+
+define generic enable-read-watchpoint
     (ap :: <access-path>, address :: <remote-value>, size :: <integer>)
       => (success :: <boolean>);
 
-define generic disable-read-watchpoint 
+define generic disable-read-watchpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic query-read-watchpoint? 
+define generic query-read-watchpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic enable-write-watchpoint 
+define generic enable-write-watchpoint
     (ap :: <access-path>, address :: <remote-value>, size :: <integer>)
       => (success :: <boolean>);
 
-define generic disable-write-watchpoint 
+define generic disable-write-watchpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic query-write-watchpoint? 
+define generic query-write-watchpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic enable-execute-watchpoint 
+define generic enable-execute-watchpoint
     (ap :: <access-path>, address :: <remote-value>, size :: <integer>)
       => (success :: <boolean>);
 
-define generic disable-execute-watchpoint 
+define generic disable-execute-watchpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
-define generic query-execute-watchpoint? 
+define generic query-execute-watchpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>);
 
 
 ///// ENABLE-BREAKPOINT
 
-define method enable-breakpoint 
+define method enable-breakpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   let success-code :: <integer> =
@@ -77,13 +77,13 @@ define method enable-breakpoint
 end method;
 
 define open generic set-breakpoint-in-application
-    (conn :: <access-connection>, ra :: <remote-value>) 
+    (conn :: <access-connection>, ra :: <remote-value>)
  => (success :: <integer>);
 
 
 ///// DISABLE-BREAKPOINT
 
-define method disable-breakpoint 
+define method disable-breakpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
 
@@ -95,23 +95,23 @@ define method disable-breakpoint
 end method;
 
 define open generic clear-breakpoint-in-application
-    (conn :: <access-connection>, ra :: <remote-value>) 
+    (conn :: <access-connection>, ra :: <remote-value>)
  => (success :: <integer>);
 
-define method recover-breakpoint 
+define method recover-breakpoint
     (ap :: <access-path>, thread :: <remote-thread>)
       => ()
   recover-breakpoint-in-application (ap.connection, thread);
 end method;
 
 define open generic recover-breakpoint-in-application
-    (conn :: <access-connection>, thread :: <remote-thread>) 
+    (conn :: <access-connection>, thread :: <remote-thread>)
  => ();
 
 
 ///// QUERY-BREAKPOINT?
 
-define method query-breakpoint? 
+define method query-breakpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   let code :: <integer> =
@@ -122,14 +122,14 @@ define method query-breakpoint?
 end method;
 
 define open generic query-breakpoint-in-application
-    (conn :: <access-connection>, ra :: <remote-value>) 
+    (conn :: <access-connection>, ra :: <remote-value>)
  => (success :: <integer>);
 
 
 ///// ENABLE-READ-WATCHPOINT
 
-define method enable-read-watchpoint 
-    (ap :: <access-path>, address :: <remote-value>, size :: <integer>) 
+define method enable-read-watchpoint
+    (ap :: <access-path>, address :: <remote-value>, size :: <integer>)
       => (success :: <boolean>)
   #f
 end method;
@@ -137,7 +137,7 @@ end method;
 
 ///// DISABLE-READ-WATCHPOINT
 
-define method disable-read-watchpoint 
+define method disable-read-watchpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   #f
@@ -146,7 +146,7 @@ end method;
 
 ///// QUERY-READ-WATCHPOINT?
 
-define method query-read-watchpoint? 
+define method query-read-watchpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   #f
@@ -155,8 +155,8 @@ end method;
 
 ///// ENABLE-WRITE-WATCHPOINT
 
-define method enable-write-watchpoint 
-    (ap :: <access-path>, address :: <remote-value>, size :: <integer>) 
+define method enable-write-watchpoint
+    (ap :: <access-path>, address :: <remote-value>, size :: <integer>)
       => (success :: <boolean>)
   #f
 end method;
@@ -164,7 +164,7 @@ end method;
 
 ///// DISABLE-WRITE-WATCHPOINT
 
-define method disable-write-watchpoint 
+define method disable-write-watchpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   #f
@@ -173,7 +173,7 @@ end method;
 
 ///// QUERY-WRITE-WATCHPOINT?
 
-define method query-write-watchpoint? 
+define method query-write-watchpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   #f
@@ -182,8 +182,8 @@ end method;
 
 ///// ENABLE-EXECUTE-WATCHPOINT
 
-define method enable-execute-watchpoint 
-    (ap :: <access-path>, address :: <remote-value>, size :: <integer>) 
+define method enable-execute-watchpoint
+    (ap :: <access-path>, address :: <remote-value>, size :: <integer>)
       => (success :: <boolean>)
   #f
 end method;
@@ -191,7 +191,7 @@ end method;
 
 ///// DISABLE-EXECUTE-WATCHPOINT
 
-define method disable-execute-watchpoint 
+define method disable-execute-watchpoint
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   #f
@@ -201,7 +201,7 @@ end method;
 ///// QUERY-EXECUTE-WATCHPOINT?
 
 
-define method query-execute-watchpoint? 
+define method query-execute-watchpoint?
     (ap :: <access-path>, address :: <remote-value>)
       => (success :: <boolean>)
   #f

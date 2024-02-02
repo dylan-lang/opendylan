@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define open primary COM-interface <container-advise-sink> ( <IAdviseSink> ) 
+define open primary COM-interface <container-advise-sink> ( <IAdviseSink> )
   constant slot get-site :: <contained-object>, required-init-keyword: site:;
 end <container-advise-sink>;
 
@@ -68,12 +68,12 @@ define method IAdviseSink/OnViewChange(this :: <container-advise-sink>,
 				       lindex /* :: <signed-long> */) => ();
 
   OutputDebugString("IAdviseSink/OnViewChange\r\n");
-  let doc = this.get-site;  
+  let doc = this.get-site;
   if ( aspect = doc.document-draw-aspect )
     // get a pointer to IViewObject2
     let ( hErr :: <HRESULT>, interface ) =
       QueryInterface(doc.document-ole-object, $IID-IViewObject2);
-    if ( SUCCEEDED?(hErr) ) 
+    if ( SUCCEEDED?(hErr) )
       let view-object :: <LPVIEWOBJECT2> =
 	pointer-cast(<LPVIEWOBJECT2>, interface);
       // get extent of the object

@@ -90,14 +90,14 @@ define open class <binary-builder> (<object>)
 
 end class;
 
-define open generic make-binary-builder 
+define open generic make-binary-builder
     (binary-builder-class :: <class>, #key destination, def-file)
  => (new :: <binary-builder>);
 
 
-define method make-binary-builder 
+define method make-binary-builder
     (binary-builder-class :: <class>,
-     #key destination, def-file) 
+     #key destination, def-file)
     => (new :: <binary-builder>)
   make(binary-builder-class,
        destination: destination,
@@ -149,7 +149,7 @@ define method fixups-element
 	let offsets = result.dynamic-offsets;
 	if (instance?(offsets, <integer>))
 	    let vec = make(<stretchy-vector>, size: 2);
-	    vec[0] := offsets; vec[1] := offset; 
+	    vec[0] := offsets; vec[1] := offset;
 	    result.dynamic-offsets := vec;
 	else
 	    add!(offsets, offset);
@@ -226,15 +226,15 @@ end method;
 
 /// Support for fixing up imported data in the initialized data section:
 ///
-/// We use code in the runtime to perform the indirection through the 
-/// DLL import table, and to store the value into the appropriate 
+/// We use code in the runtime to perform the indirection through the
+/// DLL import table, and to store the value into the appropriate
 /// place on the heap. The BINARY dumper is responsible for recording
 /// all those places that need to be fixed up. It does this by writing
 /// data into the fixup-section.
 ///
 /// The data in the fixup-section is organized as follows:
 ///
-/// 
+///
 /// $fixup-start-symbol
 ///     obj file-1:     address of start of data for file-1       4 bytes
 ///           N1:       number of locations to update             * encoded
@@ -272,30 +272,30 @@ end method;
 ///   if position is supplied, then it gives the address relative to start of data
 ///   if long-offset is supplied then it gives the address relative to the last
 ///     address in multiples of 4 bytes
-///   otherwise, offset gives the address relative to the last address in 
+///   otherwise, offset gives the address relative to the last address in
 ///     multiples of 4 bytes
 
 // Before the data has been fixed up, it will contain this dummy value
 define constant $not-yet-relocated-data = #x3;  // Invalid tag value
 
 
-// ADD-IMPORTED-DATA puts the dummy value in the data section, and 
+// ADD-IMPORTED-DATA puts the dummy value in the data section, and
 // records the fixup information for the fixup section
 //
 
 
 
 define open generic add-imported-data
-    (builder :: <binary-builder>, 
+    (builder :: <binary-builder>,
      item :: <byte-string>,
      model-object, offset) => ();
 
 define method add-imported-data
-    (builder :: <binary-builder>, 
+    (builder :: <binary-builder>,
      item :: <byte-string>,
      model-object, offset) => ()
   let this-item :: <stretchy-vector> =
-    fixups-element(builder, item, model-object, offset) 
+    fixups-element(builder, item, model-object, offset)
     | (fixups-element(builder, item, model-object, offset) := make(<stretchy-vector>));
 
   add!(this-item, builder.current-section.current-position);
@@ -311,9 +311,9 @@ define method add-imported-data-fixups
 
   let dynamic-linking? :: <boolean> = builder.dynamic-linking?;
 
-  local method add-fixups-for-one-section 
+  local method add-fixups-for-one-section
             (optional-section :: false-or(<section-with-fixups>),
-	     start-symbol :: <byte-string>) => () 
+	     start-symbol :: <byte-string>) => ()
           if (optional-section)
             let fixups = optional-section.import-fixups;
             let id-fixups = optional-section.id-import-fixups;
@@ -323,7 +323,7 @@ define method add-imported-data-fixups
 		if (dynamic-linking?) $import-section
 		else $fixup-section end;
 
-	      select-binary-section(builder, fixup-section, 
+	      select-binary-section(builder, fixup-section,
 				    alignment: 1, flags: fixup-flags(builder));
 
 	      add-data(builder, start-symbol, unsupplied());
@@ -373,11 +373,11 @@ define method add-imported-data-fixups
 end method;
 
 
-define open generic add-fixup-data 
+define open generic add-fixup-data
     (builder :: <binary-builder>, data, model-object)
     => ();
 
-define method add-fixup-data 
+define method add-fixup-data
     (builder :: <binary-builder>, data, model-object)
     => ()
   add-data(builder, data, model-object);
@@ -397,11 +397,11 @@ end method;
 
 // Dynamic derived import fixups require a sequence of indirections
 // to use when fixing up objects at enumerated positions at runtime
-// 
+//
 // The binary format for these differs slightly from .dyfix sections;
 // currently, each import and its accompanying indirections mask and
 // position are listed separately each time, room for improvement here.
-// 
+//
 
 define method add-dynamic-fixups-for-imported-symbol
     (builder :: <binary-builder>,  name, model-object, fixups :: <dynamic-fixups>)
@@ -462,7 +462,7 @@ end method;
 
 /// Managing DLL exports
 ///
-/// Symbols are exported by adding a "-export:<name>,data" linker directive 
+/// Symbols are exported by adding a "-export:<name>,data" linker directive
 /// in the .drectve section - unless there is genuinely a need to get
 /// a stub indirection function into the client (via the .lib file),
 /// in which case the ",data" prefix is not used.
@@ -471,21 +471,21 @@ end method;
 // and caches it in the directives-section slot in the builder
 
 
-define method ensure-directives-section 
-    (builder :: <binary-builder>, 
-     #key section-name = $directives-section) 
+define method ensure-directives-section
+    (builder :: <binary-builder>,
+     #key section-name = $directives-section)
     => (section :: <binary-section>)
   builder.directives-section
     | (builder.directives-section :=
          share-or-create(builder.binary-file.sections, section-name, unsupplied(),
                          method ()
-                           make-binary-section(builder, section-name, 
+                           make-binary-section(builder, section-name,
 					       1, directives-flags(builder));
                          end method));
 end method;
 
 
-define method undecorated-name 
+define method undecorated-name
     (name :: <byte-string>) => (export-name :: <byte-string>)
   // STDCALL Names of the form "_foo@4" should be exported as "foo"
   if (name[0] == '_')
@@ -506,7 +506,7 @@ define method add-symbol-export
           code-stub? = #f)
     => ()
   if (*add-exports-to-directives-section*)
-    local method add-export 
+    local method add-export
 	      (export-name :: <byte-string>, suffix :: <byte-string>)
 	    let prefix :: <byte-string> =
 	      if (section.current-position = 0)

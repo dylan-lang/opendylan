@@ -123,7 +123,7 @@ define function dylan-parser-action94 (arg$1, arg$2) => (value)
 end dylan-parser-action94;
 
 define function dylan-parser-action146 (arg$1, arg$2, arg$3) => (value)
-  make(<parens-fragment>, 
+  make(<parens-fragment>,
               record:           fragment-record(arg$1),
 	      source-position:  position-between(arg$1, arg$3),
 	      left-delimiter:   arg$1,
@@ -132,7 +132,7 @@ define function dylan-parser-action146 (arg$1, arg$2, arg$3) => (value)
 end dylan-parser-action146;
 
 define function dylan-parser-action147 (arg$1, arg$2, arg$3) => (value)
-  make(<brackets-fragment>, 
+  make(<brackets-fragment>,
               record:           fragment-record(arg$1),
 	      source-position:  position-between(arg$1, arg$3),
 	      left-delimiter:   arg$1,
@@ -141,7 +141,7 @@ define function dylan-parser-action147 (arg$1, arg$2, arg$3) => (value)
 end dylan-parser-action147;
 
 define function dylan-parser-action148 (arg$1, arg$2, arg$3) => (value)
-  make(<braces-fragment>, 
+  make(<braces-fragment>,
               record:           fragment-record(arg$1),
 	      source-position:  position-between(arg$1, arg$3),
 	      left-delimiter:   arg$1,
@@ -237,28 +237,28 @@ define function dylan-parser-action165 (arg$1, arg$2, arg$3, arg$4, arg$5, arg$6
 end dylan-parser-action165;
 
 define function dylan-parser-action171 (arg$1) => (value)
-  make(<definition-tail-fragment>, 
+  make(<definition-tail-fragment>,
               record:          fragment-record(arg$1),
               source-position: fragment-source-position(arg$1),
               end: arg$1)
 end dylan-parser-action171;
 
 define function dylan-parser-action172 (arg$1, arg$2) => (value)
-  make(<definition-tail-fragment>, 
+  make(<definition-tail-fragment>,
               record:          fragment-record(arg$1),
               source-position: position-between(arg$1, arg$2),
               end: arg$1, tail-name-1: arg$2)
 end dylan-parser-action172;
 
 define function dylan-parser-action173 (arg$1, arg$2, arg$3) => (value)
-  make(<definition-tail-fragment>, 
+  make(<definition-tail-fragment>,
               record:          fragment-record(arg$1),
               source-position: position-between(arg$1, arg$3),
               end: arg$1, tail-name-1: arg$2, tail-name-2: arg$3)
 end dylan-parser-action173;
 
 define function dylan-parser-action174 (arg$1, arg$2, arg$3, arg$4) => (value)
-  make(<prefix-call-fragment>, 
+  make(<prefix-call-fragment>,
               record:          fragment-record(arg$1),
               source-position: position-between(arg$1, arg$4),
               function: arg$1, arguments: arg$3)
@@ -266,9 +266,9 @@ end dylan-parser-action174;
 
 define function dylan-parser-action175 (arg$1, arg$2, arg$3, arg$4) => (value)
   begin
-	   let getter-name 
+	   let getter-name
              = if (size(arg$3) = 1) #"element" else #"aref" end;
-           make(<array-call-fragment>, 
+           make(<array-call-fragment>,
                 record:          fragment-record(arg$1),
                 source-position: position-between(arg$1, arg$4),
                 function:
@@ -283,7 +283,7 @@ define function dylan-parser-action175 (arg$1, arg$2, arg$3, arg$4) => (value)
 end dylan-parser-action175;
 
 define function dylan-parser-action176 (arg$1, arg$2, arg$3) => (value)
-  make(<dot-call-fragment>, 
+  make(<dot-call-fragment>,
 	      record:          fragment-record(arg$1),
               source-position: position-between(arg$1, arg$3),
               function: arg$3, arguments: list(arg$1))
@@ -306,7 +306,7 @@ define function dylan-parser-action184 (arg$1, arg$2, arg$3, arg$4) => (value)
 end dylan-parser-action184;
 
 define function dylan-parser-action199 (arg$1, arg$2) => (value)
-  make(<string-fragment>, 
+  make(<string-fragment>,
 	      record:          fragment-record(arg$1),
               source-position: position-between(arg$1, arg$2),
               value: concatenate(fragment-value(arg$1), fragment-value(arg$2)))
@@ -340,7 +340,7 @@ end dylan-parser-action217;
 
 define function dylan-parser-action219 (arg$1) => (value)
   make-variable-name-like
-	   (arg$1, 
+	   (arg$1,
             record:          fragment-record(arg$1),
             source-position: fragment-source-position(arg$1),
 	    name: #"...")
@@ -394,7 +394,7 @@ define function dylan-parser-action235 (arg$1, arg$2, arg$3) => (value)
               source-position: position-between(arg$1, arg$3),
               macro:
                 make-variable-name-like
-                  (arg$1, 
+                  (arg$1,
                    record:          fragment-record(arg$1),
                    source-position: fragment-source-position(arg$1),
                    name:            #"macro-template"),
@@ -426,7 +426,7 @@ define function dylan-parser-action251 (arg$1, arg$2) => (value)
 end dylan-parser-action251;
 
 define function dylan-parser-action252 (arg$1, arg$2, arg$3, arg$4, arg$5, arg$6) => (value)
-  pair(make(<parens-fragment>, 
+  pair(make(<parens-fragment>,
                    record:           fragment-record(arg$1),
 	           source-position:  position-between(arg$1, arg$5),
 	           left-delimiter:   arg$1,

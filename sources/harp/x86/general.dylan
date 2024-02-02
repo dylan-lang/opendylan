@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// (c) Copyright Functional Objects, Inc. 1988
 ///
-/// Begun AJW 19/7/88  
+/// Begun AJW 19/7/88
 /// Modified for PC, TonyM 11/11/91
 
 //// Basic utilities to support the Pentium backend.
@@ -20,7 +20,7 @@ define method ex-reg (reg :: <real-register>) => (i :: <integer>)
 end method;
 
 // ex-hi-byte-reg returns the number of its H register argument shifted
-// up by 3 
+// up by 3
 
 // define method ex-hi-byte-reg (reg :: <real-register>) => (i :: <integer>)
 //   ash(reg.real-register-number + 4, 3);
@@ -30,7 +30,7 @@ define method one-byte (x :: <integer>) => (i :: <integer>)
   logand(x, #xff);
 end method;
 
-define method emit-one-byte (be :: <harp-x86-back-end>, x :: <integer>) 
+define method emit-one-byte (be :: <harp-x86-back-end>, x :: <integer>)
   emit(be, one-byte(x));
 end method;
 
@@ -45,7 +45,7 @@ define method byte-reg-ref (x)
   end if;
 end method;
 
-    
+
 /// The code emission stuff has been changed to avoid ever generating
 /// raw values, since these are not supported on the PC. (TonyM 11/10/91)
 
@@ -133,7 +133,7 @@ end method;
 /// aligned into the right place for putting into the word. No masking or
 /// shifting is done.
 
-define method emit-reg-indir 
+define method emit-reg-indir
     (backend :: <harp-x86-back-end>, reg :: <real-register>, ex :: <integer>)
   let rn :: <integer> = reg.real-register-number;
   select (rn)                                // Can you say 'Orthogonal'?
@@ -143,19 +143,19 @@ define method emit-reg-indir
   end select;
 end method;
 
-define method emit-constant-operand 
-    (backend :: <harp-x86-back-end>, 
-     const-ref :: <constant-reference>, 
+define method emit-constant-operand
+    (backend :: <harp-x86-back-end>,
+     const-ref :: <constant-reference>,
      ex :: <integer>)
 // PC specific: Emit an indirect constant reference
   emit(backend, mod00 + ex + 5);
   emit-constant-ref(backend, const-ref);
 end method;
-	      
-define method emit-spill-operand 
+
+define method emit-spill-operand
     (backend :: <harp-x86-back-end>, spill :: <spill>, ex :: <integer>)
   let arg-spill :: <boolean> = arg-spill?(spill);
-  let offset :: <integer> = 
+  let offset :: <integer> =
     if (arg-spill)
       arg-offset(backend, spill)
     else
@@ -173,7 +173,7 @@ define method emit-spill-operand
        emit-four-bytes(backend, offset);
    end case;
 end method;
-	      
+
 
 /// EMIT-REG-OFFSET supports address constants as offsets too now.
 
@@ -220,7 +220,7 @@ end method;
 
 
 define method emit-reg-offset-scaled
-   (backend :: <harp-x86-back-end>, 
+   (backend :: <harp-x86-back-end>,
     reg :: <real-register>, scale :: <integer>,
     offset, ex :: <integer>)
   emit(backend, mod00 + ex + 4);
@@ -229,7 +229,7 @@ define method emit-reg-offset-scaled
 end method;
 
 
-define method emit-reg-constant-offset 
+define method emit-reg-constant-offset
     (backend :: <harp-x86-back-end>, offset, ex :: <integer>)
   emit(backend, mod00 + ex + 5);
   emit-immediate-constant(backend, offset);
@@ -250,7 +250,7 @@ end method;
 /// little extra chicanery.
 
 define method emit-reg-indexed
-    (backend :: <harp-x86-back-end>, 
+    (backend :: <harp-x86-back-end>,
      reg :: <real-register>, index :: <real-register>,
      ex :: <integer>)
   let r-n :: <integer> = reg.real-register-number;
@@ -265,10 +265,10 @@ end method;
 
 /// emit-double-indexed gives us one register offset by the other, no
 /// scaling, with a possible integer offset. This is for memory
-/// operands.  
-        
+/// operands.
+
 define method emit-double-indexed
-    (backend :: <harp-x86-back-end>, 
+    (backend :: <harp-x86-back-end>,
      reg1 :: <real-register>, reg2 :: <real-register>,
      offset :: <abstract-integer>, ex :: <integer>)
   let mod :: <integer> =
@@ -288,14 +288,14 @@ define method emit-double-indexed
 end method;
 
 
-/// emit-double-index-scaled gives us one scaled register offset 
-/// by another which is not scaled, with a possible integer offset. 
-/// This is for array operands.  
-        
+/// emit-double-index-scaled gives us one scaled register offset
+/// by another which is not scaled, with a possible integer offset.
+/// This is for array operands.
+
 define method emit-double-index-scaled
-    (backend :: <harp-x86-back-end>, 
-     reg1 :: <real-register>, scale :: <integer>, 
-     reg2 :: <real-register>, offset :: <abstract-integer>, 
+    (backend :: <harp-x86-back-end>,
+     reg1 :: <real-register>, scale :: <integer>,
+     reg2 :: <real-register>, offset :: <abstract-integer>,
      ex :: <integer>)
   let mod :: <integer> =
     case
@@ -314,16 +314,16 @@ define method emit-double-index-scaled
 end method;
 
 
-define method emit-m-spill-dest 
-    (backend :: <harp-x86-back-end>, 
-     x :: <real-register>, 
+define method emit-m-spill-dest
+    (backend :: <harp-x86-back-end>,
+     x :: <real-register>,
      extension :: <integer>)
   emit-reg-direct(backend, x, extension);
 end method;
 
-define method emit-m-spill-dest 
-    (backend :: <harp-x86-back-end>, 
-     x :: <spill>, 
+define method emit-m-spill-dest
+    (backend :: <harp-x86-back-end>,
+     x :: <spill>,
      extension :: <integer>)
   emit-spill-operand(backend, x, extension);
 end method;
@@ -331,8 +331,8 @@ end method;
 
 /// The following function recognises the similarity between spill
 /// references and PC indirect constant refs in terms of addressing
-/// modes. 
-define method emit-m-c-spill-dest 
+/// modes.
+define method emit-m-c-spill-dest
     (backend :: <harp-x86-back-end>, x, extension :: <integer>)
   if (indirect-constant-ref(x))
     emit-constant-operand(backend, x, extension);
@@ -354,7 +354,7 @@ define method emit-immediate-constant
   emit-constant-ref(backend, x);
 end method;
 
-  
+
 /* currently unused ...
 
 /// It looks as though the exchange instruction is so useful, I'm going to
@@ -372,7 +372,7 @@ define method xcg
 end method;
 
 define method xcg
-    (backend :: <harp-x86-back-end>, 
+    (backend :: <harp-x86-back-end>,
      one :: <real-register>, two :: <real-register>)
   emit(backend, #x87);
   emit-reg-direct(backend, one, ex-reg(two));
@@ -380,7 +380,7 @@ end method;
 */
 
 
-// define method dec-register 
+// define method dec-register
 //     (backend :: <harp-x86-back-end>, reg :: <real-register>)
 //   emit(backend, #x48 + reg.real-register-number);
 // end method;
@@ -394,7 +394,7 @@ define method byte-addressable (r)
   byte-reg-ref(r) | ic/spill-ref(r);
 end method;
 
-define method code-item-increment 
+define method code-item-increment
      (backend :: <harp-x86-back-end>) => (i :: <integer>)
   1;
 end method;
@@ -406,9 +406,9 @@ define sideways method return-address-on-stack?
 end method;
 
 /* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
-define method indirect-runtime-reference 
+define method indirect-runtime-reference
     (name :: <byte-string>) => (c :: <constant-reference>)
-  make(<constant-reference>, 
+  make(<constant-reference>,
        refers-to: name,
        address-mode: #"indirect",
        const-offset: 0);
@@ -417,11 +417,11 @@ end method;
 
 define method thread-local-runtime-reference
 (name :: <byte-string>) => (c :: <constant-reference>)
-  make(<i-thread-constant-reference>, 
+  make(<i-thread-constant-reference>,
        refers-to: name,
        const-offset: 0);
 end method;
-    
+
 
 define method output-implicit-externals
     (backend :: <harp-x86-unix-back-end>, outputter :: <harp-outputter>)

@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define class <simple-doc> ( <object> ) 
+define class <simple-doc> ( <object> )
   slot doc-container-window :: <HWND> = $NULL-HWND;
   slot contained-object :: false-or(<contained-object>) = #f;
 end <simple-doc>;
@@ -83,7 +83,7 @@ define method insert-object(app :: <sample-container-app>,
 					    doc.doc-container-window);
   doc.contained-object := contained;
   if ( contained )
-    // an object was successfully inserted 
+    // an object was successfully inserted
     // disable "Insert Object" menu item
     EnableMenuItem(app.app-edit-menu, 0,
 		   logior($MF-BYPOSITION, $MF-DISABLED, $MF-GRAYED));

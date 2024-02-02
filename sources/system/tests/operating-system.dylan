@@ -33,7 +33,7 @@ define test test-$machine-name ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Operating System functions
 
 define test test-login-name ()
@@ -339,13 +339,13 @@ define test test-machine-concurrent-thread-count ()
   check-true("There is at least one core", thread-count >= 1);
 end;
 
-
+
 define test test-command-line-option-prefix ()
   check-instance?("command-line-option-prefix returns a character",
                   <character>, command-line-option-prefix());
 end test;
 
-
+
 // Environment variables
 
 define test test-environment-variable ()
@@ -371,7 +371,7 @@ define test test-tokenize-environment-variable ()
   //---*** Fill this in...
 end test;
 
-
+
 // Macro tests
 
 define test test-with-application-output ()

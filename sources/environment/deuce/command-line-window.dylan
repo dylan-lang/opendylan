@@ -85,7 +85,7 @@ define method shell-execute-code
   end
 end method shell-execute-code;
 
-
+
 /// Command line tool
 
 define frame <command-line-window>

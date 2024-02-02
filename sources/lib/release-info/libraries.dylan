@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Useful constants
 define constant $library-pack-extension = "dlp";
 
-
+
 /// Release info
 define class <release-info> (<object>)
 end class <release-info>;
@@ -26,7 +26,7 @@ define method info-description
   ""
 end method info-description;
 
-
+
 /// Named release info
 define class <named-release-info> (<release-info>)
   constant slot info-name :: <symbol>,
@@ -38,7 +38,7 @@ define method info-title
   as-lowercase(as(<string>, info.info-name))
 end method info-title;
 
-
+
 /// Described release info
 
 define class <described-release-info> (<named-release-info>)
@@ -48,7 +48,7 @@ define class <described-release-info> (<named-release-info>)
     init-keyword: description:;
 end class <described-release-info>;
 
-
+
 /// Libraries
 
 define constant *libraries* :: <object-table> = make(<object-table>);
@@ -150,7 +150,7 @@ define method info-location
                  release-sources-directory())
 end method info-location;
 
-
+
 /// Library Packs
 
 define constant *library-packs* :: <object-table> = make(<object-table>);
@@ -376,7 +376,7 @@ if (file-exists?(release-library-packs-directory()))
                release-library-packs-directory());
 end if;
 
-
+
 /// Merged library DLL information
 
 define method merged-project-name
@@ -406,7 +406,7 @@ define method merged-project-libraries
          end)
 end method merged-project-libraries;
 
-
+
 /// Library category handling
 
 define class <library-category-info> (<release-info>)
@@ -499,7 +499,7 @@ define sealed method %split
   results
 end method %split;
 
-
+
 /// Examples
 
 define class <example-info> (<library-info>)
@@ -548,7 +548,7 @@ define function example-location
   end
 end function example-location;
 
-
+
 /// Example groups
 
 define macro example-group-definer
@@ -626,7 +626,7 @@ define function install-example-group
   add!(groups, info)
 end function install-example-group;
 
-
+
 /// DLL groupings
 
 define constant $release-dll-groups = make(<stretchy-vector>);
@@ -705,7 +705,7 @@ define macro renamed-dlls-definer
       => { define renamed-dll ?group-name = ?dll-name; ... }
 end macro renamed-dlls-definer;
 
-
+
 /// Library Groups
 define constant $release-library-groups = make(<stretchy-vector>);
 

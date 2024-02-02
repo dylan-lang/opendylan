@@ -194,7 +194,7 @@ define method frame-view-history
   end
 end method frame-view-history;
 
-
+
 /// History command table
 
 define variable $back-bitmap    :: <label-type> = "<";

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Record definitions
 
-define bitcode-block $MODULE_BLOCK = 8 
+define bitcode-block $MODULE_BLOCK = 8
   record VERSION     = 1;    // VERSION:     [version#]
   record TRIPLE      = 2;    // TRIPLE:      [strchr x N]
   record DATALAYOUT  = 3;    // DATALAYOUT:  [strchr x N]
@@ -205,7 +205,7 @@ define bitcode-block $STRTAB_BLOCK = 23
 end bitcode-block;
 
 
-
+
 /// Value and type enumeration
 
 define class <sequence-table> (<table>)
@@ -214,7 +214,7 @@ end class;
 define sealed method table-protocol
     (table :: <sequence-table>)
  => (test :: <function>, hash :: <function>);
-  values(method (x :: <sequence>, y :: <sequence>) x = y end, 
+  values(method (x :: <sequence>, y :: <sequence>) x = y end,
          method
              (key :: <sequence>, hash-state)
           => (hash :: <integer>, hash-state);
@@ -236,7 +236,7 @@ end class;
 define sealed method table-protocol
     (table :: <encoding-sequence-table>)
  => (test :: <function>, hash :: <function>);
-  values(method (x :: <sequence>, y :: <sequence>) x = y end, 
+  values(method (x :: <sequence>, y :: <sequence>) x = y end,
          method
              (key :: <sequence>, hash-state)
           => (hash :: <integer>, hash-state);
@@ -283,14 +283,14 @@ define function initial-traverse-type
       = element(initial-type-partition-table, partition-key, default: #f)
       | (initial-type-partition-table[partition-key]
            := initial-type-partition-table.size);
-    
+
     // Record the partition assignment
     type-partition-table[type] := partition-index;
-    
+
     // Record this type instance
     partition-types[partition-index]
       := add(element(partition-types, partition-index, default: #()), type);
-    
+
     // Traverse referenced types
     if (splittable?)
       for (referenced-type in type-referenced-types(type))
@@ -453,10 +453,10 @@ define function enumerate-types-constants-metadata-attributes
      attributes-exemplars :: <vector>);
   // Table mapping type instances to index (partition) numbers
   let type-partition-table = make(<object-table>);
-  
+
   // Vector of lists of the type instances in a partition
   let partition-types = make(<stretchy-object-vector>);
-  
+
   // Table mapping value instances to index (partition) numbers
   let value-partition-table = make(<object-table>);
 
@@ -481,7 +481,7 @@ define function enumerate-types-constants-metadata-attributes
             attributes-index-table[encoding] := attributes-exemplars.size;
           end;
     end method;
-  
+
   // Assign value indices to global variables
   let first-function-index :: <integer>
     = for (global :: <llvm-global-variable> in m.llvm-module-globals,
@@ -808,7 +808,7 @@ define function enumerate-function-values
       finally
         index
       end for;
- 
+
   // Vector of lists of the constant value instances in a partition
   let partition-constants = make(<stretchy-object-vector>);
 
@@ -1118,7 +1118,7 @@ define method write-type-record
   end if;
 end method;
 
-
+
 /// Constant output
 
 define method write-constant-record
@@ -1405,7 +1405,7 @@ define method encode-predicate
   end
 end;
 
-
+
 /// Constant table output
 
 define function write-constant-table
@@ -1444,7 +1444,7 @@ define function write-constant-table
   end unless;
 end function;
 
-
+
 /// Metadata output
 
 define method write-metadata-record
@@ -1799,7 +1799,7 @@ define method write-metadata-record
                 value-partition-table[value]);
 end method;
 
-
+
 /// Metadata table output
 
 define function write-metadata-kind-table
@@ -1846,7 +1846,7 @@ define function write-metadata-table
   end unless;
 end function;
 
-
+
 /// Instruction output
 
 define method add-value
@@ -2545,7 +2545,7 @@ define method write-instruction-record
   write-record(stream, #"INST_INSERTVAL", operands);
 end method;
 
-
+
 /// Function output
 
 define function write-function
@@ -2676,7 +2676,7 @@ define function write-function
   end unless;
 end function;
 
-
+
 /// String table
 
 define class <string-table-builder> (<object>)
@@ -2701,7 +2701,7 @@ define function add-string
   offset
 end function;
 
-
+
 /// Module output
 
 define function write-module

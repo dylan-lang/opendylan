@@ -50,12 +50,12 @@ define module dood
     dood-world-find-dood,
     dood-number-of-buffers, dood-number-of-buffers-setter,
     dood-buffer-size, dood-buffer-size-setter;
-  
+
   export
     <dood-segment>,
     <dood-typed-segment>,
     <dood-functional-segment>;
-  
+
   export
     <dood>,
     dood-name,
@@ -85,7 +85,7 @@ define module dood
     dood-flush-all,
     // dood-reset-live-objects,
     object-dood, object-dood-setter,
-    dood-address, 
+    dood-address,
     dood-object;
 
   export
@@ -148,7 +148,7 @@ define module dood
 
   export
     \dood-class-definer;
-    
+
   export
     make-dood-stream;
 
@@ -161,7 +161,7 @@ define module dood
     dood-lazy-slot-value,
     dood-disk-slot-value;
 
-  /// INTERNALS FOR DEBUGGING 
+  /// INTERNALS FOR DEBUGGING
 
   export
     dump;
@@ -171,7 +171,7 @@ define module dood
     dood-watchpoint-dood,  dood-watchpoint-dood-setter;
 
   export
-    *dood-debug?*,  
+    *dood-debug?*,
     *dood-dump?*,
     debug, no-debug;
 

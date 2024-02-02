@@ -19,8 +19,8 @@ define method open-database
   end with-dbms
 end method open-database;
 
-define method query-database 
-    (connection :: <connection>, query :: <byte-string>) 
+define method query-database
+    (connection :: <connection>, query :: <byte-string>)
  => (headings :: <sequence>, rows :: <sequence>)
   with-connection (connection)
     let statement = make(<sql-statement>, text: query);

@@ -30,7 +30,7 @@ define protocol <<image-protocol>> ()
     (image :: <image>, image-type) => (true? :: <boolean>);
 end protocol <<image-protocol>>;
 
-
+
 /// Stencils
 
 define constant $stencil-colors :: <simple-object-vector>
@@ -100,7 +100,7 @@ define method transform-image
   end
 end method transform-image;
 
-
+
 /// Patterns
 
 // A pattern is a portable bitmap of arbitrary colors
@@ -156,7 +156,7 @@ define method transform-image
   end
 end method transform-image;
 
-
+
 /// Images
 
 define method read-image

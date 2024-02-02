@@ -91,7 +91,7 @@ define sealed method image-depth
 end method image-depth;
 */
 
-
+
 /// GTK pixmap mediums
 
 define sealed class <gtk-pixmap-medium>
@@ -116,7 +116,7 @@ define sealed method make-pixmap-medium
   end
 end method make-pixmap-medium;
 
-
+
 /// BitBlt
 
 define sealed method do-copy-area

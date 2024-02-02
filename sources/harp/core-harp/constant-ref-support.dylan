@@ -13,41 +13,41 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // a constant.
 
 define instruction-function constant-ref
-   (backend :: <harp-back-end>, reference, 
+   (backend :: <harp-back-end>, reference,
     #key offset :: <integer> = 0,
          mode :: <symbol> = #"address",
-         import? :: <boolean> = #f) 
+         import? :: <boolean> = #f)
    => (new :: <i-constant-reference>)
-  make(<i-constant-reference>, 
+  make(<i-constant-reference>,
        const-offset: offset, refers-to: reference,
        address-mode: mode, import?: import?);
 end instruction-function;
 
 define instruction-function indirect-constant-ref
-   (backend :: <harp-back-end>, reference, 
+   (backend :: <harp-back-end>, reference,
     #key offset :: <integer> = 0,
-         import? :: <boolean> = #f) 
+         import? :: <boolean> = #f)
    => (new :: <i-constant-reference>)
-  make(<i-constant-reference>, 
+  make(<i-constant-reference>,
        const-offset: offset, refers-to: reference,
        address-mode: #"indirect", import?: import?);
 end instruction-function;
 
 define instruction-function interactor-constant-ref
-   (backend :: <harp-back-end>, reference) 
+   (backend :: <harp-back-end>, reference)
    => (new :: <i-constant-reference>)
-  make(<interactor-constant-reference>, 
+  make(<interactor-constant-reference>,
        const-offset: 0, refers-to: reference);
 end instruction-function;
 
 
 define instruction-function sf-constant-ref
-   (backend :: <harp-back-end>, reference, 
+   (backend :: <harp-back-end>, reference,
     #key offset :: <integer> = 0,
          mode :: <symbol> = #"address",
-         import? :: <boolean> = #f) 
+         import? :: <boolean> = #f)
    => (new :: <sf-constant-reference>)
-  make(<sf-constant-reference>, 
+  make(<sf-constant-reference>,
        const-offset: offset, refers-to: reference,
        address-mode: mode, import?: import?);
 end instruction-function;
@@ -57,19 +57,19 @@ define instruction-function sf-indirect-constant-ref
     #key offset :: <integer> = 0,
          import? :: <boolean> = #f)
    => (new :: <sf-indirect-constant-reference>)
-  make(<sf-constant-reference>, 
+  make(<sf-constant-reference>,
        const-offset: offset, refers-to: reference,
        address-mode: #"indirect", import?: import?);
 end instruction-function;
 
 
 define instruction-function df-constant-ref
-   (backend :: <harp-back-end>, reference, 
+   (backend :: <harp-back-end>, reference,
     #key offset :: <integer> = 0,
          mode :: <symbol> = #"address",
-         import? :: <boolean> = #f) 
+         import? :: <boolean> = #f)
    => (new :: <df-constant-reference>)
-  make(<df-constant-reference>, 
+  make(<df-constant-reference>,
        const-offset: offset, refers-to: reference,
        address-mode: mode);
 end instruction-function;
@@ -79,17 +79,17 @@ define instruction-function df-indirect-constant-ref
     #key offset :: <integer> = 0,
          import? :: <boolean> = #f)
    => (new :: <df-indirect-constant-reference>)
-  make(<df-constant-reference>, 
+  make(<df-constant-reference>,
        const-offset: offset, refers-to: reference,
        address-mode: #"indirect", import?: import?);
 end instruction-function;
 
 
 
-define open generic labelled-constant-increment 
+define open generic labelled-constant-increment
     (backend :: <harp-back-end>) => (res :: <integer>);
 
-define method labelled-constant-increment 
+define method labelled-constant-increment
     (backend :: <harp-back-end>) => (res :: <integer>)
   4;
 end method;
@@ -107,7 +107,7 @@ end instruction-function;
 //
 // Each time we want to reference data, we stick the data at the head of a list
 // so that it will be dumped in reverse order. The start-of-code will immediately
-// follow the end of this data - so the first element put on the list will be 
+// follow the end of this data - so the first element put on the list will be
 // referenced as (name - 4), the next as (name - 8) etc.
 
 
@@ -118,9 +118,9 @@ define method add-referenced-data
   let new-refs = pair(data, vars.referenced-data-words);
   let offset = new-refs.size * -4; // negative offset from start of code, in bytes
   vars.referenced-data-words := new-refs;
-  make(ref-class, 
-       const-offset: offset, 
-       refers-to: vars.function-name, 
+  make(ref-class,
+       const-offset: offset,
+       refers-to: vars.function-name,
        address-mode: #"indirect");
 end method;
 
@@ -129,8 +129,8 @@ end method;
 // being #f, and the second being a pair of low/high values
 //
 define method add-referenced-double-data
-    (backend :: <harp-back-end>, 
-     low :: <abstract-integer>, high :: <abstract-integer>, 
+    (backend :: <harp-back-end>,
+     low :: <abstract-integer>, high :: <abstract-integer>,
      ref-class :: <class>)
      => (ref :: <indirect-constant-reference>)
   let vars = backend.variables;
@@ -138,9 +138,9 @@ define method add-referenced-double-data
   let new-refs = pair(#f, second-ref);
   let offset = new-refs.size * -4; // negative offset from start of code, in bytes
   vars.referenced-data-words := new-refs;
-  make(ref-class, 
-       const-offset: offset, 
-       refers-to: vars.function-name, 
+  make(ref-class,
+       const-offset: offset,
+       refers-to: vars.function-name,
        address-mode: #"indirect");
 end method;
 

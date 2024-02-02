@@ -118,7 +118,7 @@ define method buffer-source-location-equals
   locator = as(<file-locator>, buffer-pathname)
 end method buffer-source-location-equals;
 
-
+
 /// Editor frames
 
 define constant <command-type>

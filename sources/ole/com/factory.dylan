@@ -1,5 +1,5 @@
 Module:    COM
-Synopsis:  simple way to create a class factory 
+Synopsis:  simple way to create a class factory
 Author:    David N. Gray
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -115,7 +115,7 @@ define macro with-class-factory
 	}
 end macro with-class-factory;
 
-
+
 
 // Client-side utilities:
 

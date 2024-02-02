@@ -11,28 +11,28 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // ---*** ordering of calls to receivers in broadcasts?
 // ---*** multi-threading for calls to receivers in broadcasts?
 // ---*** use add-method to dynamically build gf for piggybacking on Dylan dispatching?
-// 
+//
 
 
 /// <CHANNEL-OBJECT> (internal)
 
 define class <channel-object> (<object>)
-  constant slot channel-message? = unsupplied(), 
+  constant slot channel-message? = unsupplied(),
     init-keyword: message?:;
-  constant slot channel-receiver? = unsupplied(), 
+  constant slot channel-receiver? = unsupplied(),
     init-keyword: receiver?:;
   constant slot channel-callback :: false-or(<function>) = #f,
     init-keyword: callback:;
-end class; 
+end class;
 
 
 /// <CHANNEL> (channels)
 
 define open class <channel> (<channel-object>)
   constant slot channel-lock :: <lock> = make(<lock>);
-  constant slot channel-receivers :: <table> = make(<table>), 
+  constant slot channel-receivers :: <table> = make(<table>),
     init-keyword: receivers:;
-  constant slot channel-mapper :: <function> = do, 
+  constant slot channel-mapper :: <function> = do,
     init-keyword: mapper:;
 end class;
 

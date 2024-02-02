@@ -42,7 +42,7 @@ define module coff-builder
   use locators;
   use binary-builder, export: all;
 
-  export 
+  export
     <coff-builder>,
     make-coff-symbol,
     define-external-symbol,
@@ -59,7 +59,7 @@ define module coff-builder
     split-short-into-bytes,
     fixup-coff-builder,
     builder-model-object-name
-    
+
     ;
 
 end module;

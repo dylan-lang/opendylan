@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                           *
 * windef.h -- Basic Windows Type Definitions                                *
 *                                                                           *
-* 
+*
 *                                                                           *
 ****************************************************************************/
 define inline constant <ULONG> = <C-both-unsigned-long>;

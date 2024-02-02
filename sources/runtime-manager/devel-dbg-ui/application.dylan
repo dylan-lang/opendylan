@@ -102,10 +102,10 @@ define class <application> (<debug-target>)
        slot runtime-empty-list-object :: false-or(<remote-symbol>),
             init-value: #f;
 
-       constant slot runtime-allocator-name :: <string> = 
+       constant slot runtime-allocator-name :: <string> =
             "_dylan__malloc__misc";
 
-       constant slot application-profile-sets :: <table> = 
+       constant slot application-profile-sets :: <table> =
             make(<table>);
 
        slot application-profile-filter-1 :: <profile-set> = make(<profile-set-empty>);
@@ -141,13 +141,13 @@ define class <application> (<debug-target>)
 
 end class;
 
-define constant application-profile-filter     
+define constant application-profile-filter
   = application-profile-filter-1;
 //define constant application-profile-filter-setter
 //  = application-profile-filter-1-setter;
 define constant application-profile-aggregates
   = application-profile-aggregates-1;
-//define constant application-profile-aggregates-setter 
+//define constant application-profile-aggregates-setter
 //  = application-profile-aggregates-1-setter;
 
 define method initialize (application :: <application>, #key, #all-keys) => ()
@@ -170,9 +170,9 @@ end method;
 define method application-register-sets (app :: <application>) => ()
   let sets       = application-profile-sets(app);
   let aggregates = application-profile-aggregates(app);
-  let dylan-dll-set = make(<profile-set-dll>, 
+  let dylan-dll-set = make(<profile-set-dll>,
                            dll: as(<symbol>, $dylan-lib));
-  let system-set = 
+  let system-set =
     make(<profile-set-union>,
 	 unionees: vector(dylan-dll-set,
 	                  make(<profile-set-dll>, dll: #"ntdll"),
@@ -181,10 +181,10 @@ define method application-register-sets (app :: <application>) => ()
 	  make(<profile-set-union>, unionees: sets)
 	end method,
         method in-dylan-set (#rest sets)
-	  make(<profile-set-intersection>, 
+	  make(<profile-set-intersection>,
 	       intersectionees: vector(dylan-dll-set, apply(union-set, sets)))
 	end method;
-			
+
   let io-set =
      union-set
        (make(<profile-set-contains>, contains: "win32-read"),
@@ -267,33 +267,33 @@ define method application-register-sets (app :: <application>) => ()
 
   application-register-profile-set
     (app, #"closure", closure-set);
-                 
+
   application-register-profile-set
     (app, #"copy-vector", copy-vector-set);
-                 
+
   application-register-profile-set
     (app, #"gc", mm-set);
-                 
+
   /// MAIN SETS
 
   application-register-profile-set
     (app, #"malloc", allocation-set);
-                 
+
   application-register-profile-set
     (app, #"calls", call-set);
-                 
+
   application-register-profile-set
     (app, #"dispatch", dispatch-set);
 
   application-register-profile-set
     (app, #"type-checks", type-checks-set);
-                 
+
   application-register-profile-set
     (app, #"runtime", runtime-set);
-                 
+
   application-register-profile-set
     (app, #"input-output", io-set);
-                 
+
   /// USEFUL EXTRA SETS
 
   application-register-profile-set

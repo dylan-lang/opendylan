@@ -26,7 +26,7 @@ define method state-object
 end method state-object;
 */
 
-
+
 /// Object Browser
 
 define frame <object-browser>
@@ -163,7 +163,7 @@ define method handle-event
   end
 end method handle-event;
 
-
+
 /// Toolbars etc
 
 //---*** cpage: 1997.11.10 Temporary(?) kludge: This is a modified copy of
@@ -220,7 +220,7 @@ define method frame-show-bars?
   end
 end method frame-show-bars?;
 
-
+
 /// Clipboard support
 
 define method clipboard-object-to-browse
@@ -276,7 +276,7 @@ define method paste-object
   end
 end method paste-object;
 
-
+
 /// Tool-bar buttons
 
 define method make-browse-tool-bar-buttons
@@ -312,7 +312,7 @@ define method make-environment-tool-bar-buttons
   end
 end method make-environment-tool-bar-buttons;
 
-
+
 /// Browser options
 
 define method frame-edit-options (frame :: <object-browser>) => ()
@@ -358,7 +358,7 @@ end method object-browser-children-generator;
 
 */
 
-
+
 /// Frame title
 
 define method generate-frame-title
@@ -651,7 +651,7 @@ define sideways method browse-object-generic-function
   #f
 end method browse-object-generic-function;
 
-
+
 /// Frame refreshing
 
 define method frame-note-project-rebuilt
@@ -695,7 +695,7 @@ define method frame-note-breakpoint-state-changed
   refresh-frame-view(frame, pages: #[#"breakpoints"])
 end method frame-note-breakpoint-state-changed;
 
-
+
 /// Object Browser command table
 
 define command-table *object-browser-file-io-command-table* (*global-command-table*)

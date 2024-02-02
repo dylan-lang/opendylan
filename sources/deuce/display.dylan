@@ -87,7 +87,7 @@ define protocol <<line-display>> ()
  => (margin :: <integer>);
 end protocol <<line-display>>;
 
-
+
 /// Redisplay queueing
 
 // Queue up a redisplay for a window.
@@ -225,7 +225,7 @@ define method initialize-redisplay-for-buffer
   end
 end method initialize-redisplay-for-buffer;
 
-
+
 /// Redisplay centering
 
 define constant <recenter-type>
@@ -405,7 +405,7 @@ define sealed method set-centering-fraction
   window-centering-fraction(window) := fraction
 end method set-centering-fraction;
 
-
+
 /// Redisplay
 
 define sealed method redisplay-window
@@ -744,7 +744,7 @@ define method redisplay-text
   end
 end method redisplay-text;
 
-
+
 /// Redisplay helper functions
 
 define sealed method update-scroll-bars
@@ -877,7 +877,7 @@ define method adjust-display-line
   dline
 end method adjust-display-line;
 
-
+
 /// Maintaining the display line structure
 
 // Returns the Y coordinate of the first line at which the display
@@ -1105,7 +1105,7 @@ define sealed method ensure-line-visible
   end
 end method ensure-line-visible;
 
-
+
 /// Insert line and delete line optimizations
 
 // n > 0 means we're scrolling up   (forward)
@@ -1521,7 +1521,7 @@ define sealed method copy-display-line-into!
   to
 end method copy-display-line-into!;
 
-
+
 /// Region marking
 
 define variable $region-marking-color = make-color(210, 210, 210);
@@ -1719,7 +1719,7 @@ define sealed method decache-display-line-marking
   end
 end method decache-display-line-marking;
 
-
+
 /// Bracket matching
 
 define sealed method highlight-matching-thing
@@ -1825,7 +1825,7 @@ define sealed method unhighlight-matching-thing
   end
 end method unhighlight-matching-thing;
 
-
+
 /// BP <-> (x,y) mapping
 
 // This assumes that 'window-display-lines' is up to date and that
@@ -1886,7 +1886,7 @@ define sealed method position->bp
   end
 end method position->bp;
 
-
+
 /// Redisplay-related functions
 
 define inline function point () => (bp :: <basic-bp>)
@@ -1995,7 +1995,7 @@ define sealed method swap-point-and-mark!
   move-bp!(mark,  pl, px)
 end method swap-point-and-mark!;
 
-
+
 /// Default display methods for all kinds of lines
 
 define method position->index
@@ -2018,7 +2018,7 @@ define method line-margin
   0
 end method line-margin;
 
-
+
 /// Default display methods for text lines
 
 define method display-line

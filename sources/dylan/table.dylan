@@ -109,7 +109,7 @@ define function compute-entry-count (desired :: <integer>)
 end;
 
 
-//
+//
 // ---------------- Functions on table vectors ------------
 
 // Cache of the test function returned by table-protocol when the
@@ -770,7 +770,7 @@ define inline function find-rehash-insertion-point
   end if
 end;
 
-//
+//
 
 
 define method clear-table-vector! (tv :: <table-vector>) => ()
@@ -1014,7 +1014,7 @@ define function default-grow-size (old :: <integer>)
 end;
 
 
-//
+//
 // ---------------- Functions on tables (external) -------------------
 
 define open generic table-protocol (t :: <table>)
@@ -1442,7 +1442,7 @@ define sealed method remove-all-keys! (table :: <table>)
 end method remove-all-keys!;
 
 
-//
+//
 // Iteration states are not thread safe.  Attempting to use the same
 // iteration state simultaneously in different threads has undefined
 // consequences.

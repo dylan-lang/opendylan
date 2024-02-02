@@ -26,7 +26,7 @@ define constant block-vector-size = 40;
 
 /// As a preliminary, something to make a small block for the fixup branches.
 
-define method make-branch-block 
+define method make-branch-block
     (backend :: <harp-back-end>, dest-tag :: <tag>) => (b :: <basic-block>)
   let fixup-block :: <basic-block> = make-bb(backend);
   make-current-this-bb(backend, fixup-block);
@@ -121,7 +121,7 @@ define method linearise
   end for;
 
   let length :: <integer> = block-vector-size - 2;
-  let blk-vector = 
+  let blk-vector =
     make(<simple-basic-block-vector>, size: block-vector-size, fill: $empty-basic-block);
   let index :: <integer> = 0;
   let next-cand = #f;
@@ -142,20 +142,20 @@ define method linearise
 
       let empty-block :: <boolean> = #f;
       block (non-empty)
-  
+
         for-instructions-in-basic-block (ins in blk)
           let op :: <op> = ins-op(sv-ins, ins);
           unless (op.op-is-rem |
-                  (op.op-is-move & 
+                  (op.op-is-move &
                    with-du (sv-ins at ins) colour(du-def(1)) == colour(du-uze(1)) end))
             non-empty(#f);
           end unless;
         end for-instructions-in-basic-block;
-		
+
         let alias = blk.bb-fall-thru;
         if (alias)
           let alias-tags :: <list> = alias.bb-taags;
-          let real-alias :: <basic-block> = 
+          let real-alias :: <basic-block> =
             if (alias-tags == #()) alias else alias-tags.head.tag-bb end;
           let seen = real-alias.bb-seen;
           for (tag :: <tag> in blk.bb-taags)
@@ -166,7 +166,7 @@ define method linearise
             eliminate-local-branches(sv-ins, blk-vector, seen, real-alias);
           end if;
         end if;
-  		
+
         for (prev :: <basic-block> in blk.bb-prev-set)
           if (prev.bb-seen & blk == prev.bb-fall-thru)
             non-empty(#f);
@@ -175,7 +175,7 @@ define method linearise
 
         empty-block := #t;
       end block;
-	      
+
       if (index >= length)
 	length := length + length;
 	let new = make(<simple-basic-block-vector>, size: length, fill: $empty-basic-block);
@@ -238,7 +238,7 @@ define method linearise
 	  next-cand := fall-thru;
         end if;
       end if;
-	    
+
       queue-tail := add-queue(blk.bb-next-set,
 			      add-queue(blk.bb-other-set, queue-tail));
 
@@ -270,7 +270,7 @@ define method eliminate-local-branches
         begin
           let last-ins = finish - instruction-size;
 	  let last-tag = ins-tag(sv-ins, last-ins);
-          instance?(last-tag, <tag>) & 
+          instance?(last-tag, <tag>) &
             last-tag.tag-bb == the-next-block &
             begin prev-block.bb-end := last-ins; start == last-ins end;
         end)
@@ -286,10 +286,10 @@ define method eliminate-local-branches
     end if;
   end if;
 end;
-    
+
 
 define method untagged-prev (prev-block :: <basic-block>) => (b :: <boolean>)
   let prev-tags :: <list> = prev-block.bb-taags;
   prev-tags == #() | prev-tags.head.tag-bb == prev-block;
-end;    
+end;
 

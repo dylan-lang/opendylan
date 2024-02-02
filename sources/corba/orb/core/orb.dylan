@@ -212,7 +212,7 @@ end method;
 
 define method orb-initial-services-setter (services :: <sequence>)
   *orb-initial-services* := services
-end method;  
+end method;
 
 define macro initial-service-definer
   { define initial-service ?name:name (?orb:name) ?body:body end }

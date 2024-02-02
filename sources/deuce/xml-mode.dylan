@@ -132,7 +132,7 @@ define method source-file-type
   #"xml"
 end method source-file-type;
 
-
+
 /// XML sections
 
 define sealed class <xml-section> (<basic-section>)
@@ -156,7 +156,7 @@ end class <xml-header-node>;
 define sealed domain make (singleton(<xml-header-node>));
 define sealed domain initialize (<xml-header-node>);
 
-
+
 /// XML "expressions"
 
 define method do-atom-under-bp

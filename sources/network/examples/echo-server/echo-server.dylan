@@ -18,10 +18,10 @@ define method echo-server () => ();
 	     method ()
 	       block ()
 		 format-out("Responding to client at %s port: %d\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);      
+			    reply-socket.remote-host.host-name,
+			    reply-socket.remote-port);
 
-		 let stuff-to-echo = 
+		 let stuff-to-echo =
 		   read-line(reply-socket, on-end-of-stream: #"eoi");
 		 until (stuff-to-echo == #"eoi")
                    format-out("Echoing: %s\n", stuff-to-echo);
@@ -31,12 +31,12 @@ define method echo-server () => ();
 		 end until;
 		 close(reply-socket);
 		 format-out("Connection to %s port: %d closed\n",
-			    reply-socket.remote-host.host-name, 
-			    reply-socket.remote-port);      
+			    reply-socket.remote-host.host-name,
+			    reply-socket.remote-port);
 	       exception (condition :: <recoverable-socket-condition>)
 		 close(reply-socket, abort?: #t);
 		 format-out("Connection to %s port: %d aborted\n",
-			    reply-socket.remote-host.host-name, 
+			    reply-socket.remote-host.host-name,
 			    reply-socket.remote-port);
 	       end block;
 	     end method);

@@ -229,7 +229,7 @@ define method close
   next-method();
 end method close;
 
-
+
 /// Blocks
 
 define class <bitcode-block-definition> (<object>)
@@ -272,7 +272,7 @@ clause:
     { record ?:name = ?record-id:expression }
       => { make(<bitcode-record-definition>,
                 name: ?#"name", record-id: ?record-id) }
-    
+
 end macro;
 
 define macro with-block-output
@@ -353,7 +353,7 @@ define method stream-record-id
   record-definition.record-id
 end method;
 
-
+
 /// Abbreviations
 
 define class <abbrev-op> (<object>)
@@ -448,7 +448,7 @@ define method write-blockinfo-abbrev-definition
   map(curry(encode-abbrev-op, stream), ops);
 end method;
 
-
+
 /// Records
 
 define method write-record

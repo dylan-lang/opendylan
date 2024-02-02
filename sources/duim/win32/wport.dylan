@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $caret-width :: <integer> = 1;
 
-
+
 /// Win32 ports
 
 define sealed class <win32-port> (<basic-port>)
@@ -120,7 +120,7 @@ define function shutdown-win32-duim ()
   unregister-window-classes()
 end function shutdown-win32-duim;
 
-
+
 /// Port metrics
 
 define method port-metrics
@@ -175,7 +175,7 @@ define sealed inline method win32-pixels-per-inch
   win32-pixels-per-inch(port-metrics(client))
 end method win32-pixels-per-inch;
 
-
+
 /// Beeping, etc
 
 define sealed method beep
@@ -183,7 +183,7 @@ define sealed method beep
   MessageBeep($MB-OK)
 end method beep;
 
-
+
 /// Pointer position hacking
 
 define sealed method do-pointer-position
@@ -340,7 +340,7 @@ define sealed method realize-cursor
   error("Windows doesn't support full color cursors")
 end method realize-cursor;
 
-
+
 /// Focus and carets
 
 define constant $null-bitmap = null-pointer(<HBITMAP>);
@@ -416,7 +416,7 @@ define sealed method do-hide-caret
   end
 end method do-hide-caret;
 
-
+
 /// Focus handling
 
 define sealed method note-focus-in

@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sealed class <interactive-region> (<object>)
   // This is the <static-block> currently being used for
-  // downloading in this region. 
+  // downloading in this region.
   slot region-current-static-block :: false-or(<static-block>),
     init-value: #f;
 
@@ -111,7 +111,7 @@ end class;
 
 
 ///// *KNOWN-TARGETS*
-//    A maintained table that can map a <debug-target> to a 
+//    A maintained table that can map a <debug-target> to a
 //    <downloader-target>.
 
 define variable *known-targets* = make(<table>, weak: #"key");
@@ -126,7 +126,7 @@ define method find-downloader-target
   // If we already have this application in our table, then just return
   // the existing descriptor for it. Otherwise, create a new descriptor,
   // and add this application to the table.
-  let got-it-already = element(*known-targets*, application, 
+  let got-it-already = element(*known-targets*, application,
                                default: #f);
   if (got-it-already)
     got-it-already

@@ -64,7 +64,7 @@ define method marshall-request (request :: <request>, stream :: <marshalling-str
   set-buffer-size(stream,
 		  start-of-giop + 8, ///---*** magic number
 		  marshalling-stream-output-index(stream) - start-of-giop - 12); // ---*** magic number
-end method;  
+end method;
 
 
 /// MARSHALL-MESSAGE-HEADER

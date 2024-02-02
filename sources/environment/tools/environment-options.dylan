@@ -101,7 +101,7 @@ define function environment-auto-lower-all-frames
   $environment-settings.auto-lower-all-frames
 end function environment-auto-lower-all-frames;
 
-
+
 /// Environment options dialog
 
 define pane <environment-general-options-page> ()

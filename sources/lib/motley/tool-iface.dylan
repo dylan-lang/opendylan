@@ -7,17 +7,17 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define function motley-invoke 
+define function motley-invoke
 	(spec-file :: <locator>, project-file :: false-or(<locator>),
 	 last-run :: false-or(<date>), #key clean-build? :: <boolean> = #f)
-     => (success? :: <boolean>, 
+     => (success? :: <boolean>,
          modified-projects :: <sequence> /* of: <locator> */)
   // Read spec file:
   debug-message("Motley invoked.  Spec: %=, project: %=, last: %=, clean: %=\n",
   		spec-file, project-file, last-run & date-as-string(last-run),
 		clean-build?);
   let spec-keys = read-keyword-pair-file(spec-file);
-  motley-process-spec(spec-keys, spec-file, project-file, last-run, 
+  motley-process-spec(spec-keys, spec-file, project-file, last-run,
 		      clean-build?: clean-build?);
 end function motley-invoke;
 
@@ -27,11 +27,11 @@ end function motley-invoke;
 tool-register(#"com-type-library", motley-invoke);
 
 
-define function motley-process-spec 
+define function motley-process-spec
 	(spec :: <table>, spec-file :: <locator>,
 	 project-file :: false-or(<locator>), last-run :: false-or(<date>),
 	 #key clean-build? :: <boolean>)
-     => (success? :: <boolean>, 
+     => (success? :: <boolean>,
          modified-projects :: <sequence> /* of: <locator> */)
   let keyval = keyword-file-element-value;
   let keyline = keyword-file-element-line;
@@ -41,12 +41,12 @@ define function motley-process-spec
     if (sym.key.size = 1)
       sym.key.first.keyval
     elseif (default.unsupplied?)
-      tool-error("exactly one %s must be specified", 
+      tool-error("exactly one %s must be specified",
 		 format-arguments: list(as(<string>, sym)),
-		 file: spec-file, 
+		 file: spec-file,
 		 line: if (sym.key.size > 1) sym.key.second.keyline end if);
     elseif (sym.key.size > 1)
-      tool-error("no more than one %s may be specified", 
+      tool-error("no more than one %s may be specified",
 		 format-arguments: list(as(<string>, sym)),
 		 file: spec-file, line: sym.key.second.keyline);
     else
@@ -61,7 +61,7 @@ define function motley-process-spec
     clean-build? := #t;
   end if;
   let type-library-file = as(<file-locator>, single(type-library:));
-  let type-library-modification-date = 
+  let type-library-modification-date =
     block ()
       file-property(type-library-file, #"modification-date")
     exception (c :: <file-system-error>)
@@ -74,11 +74,11 @@ define function motley-process-spec
   end if;
 
   with-ole
-    let type-library = 
+    let type-library =
       block ()
 	make(<type-library>, file: type-library-file)
       exception (c :: <error>)
-	tool-error("reading type library: %s", format-arguments: list(c), 
+	tool-error("reading type library: %s", format-arguments: list(c),
 		   file: type-library-file);
       end block;
 
@@ -98,8 +98,8 @@ define function motley-process-spec
     let generate = as(<symbol>, single(generate:));
     if (~instance?(generate, <target-types>))
       tool-error("unsupported value given to generate keyword: %s; "
-		 "supported values: %s", 
-		 format-arguments: list(as(<string>, generate), $target-types), 
+		 "supported values: %s",
+		 format-arguments: list(as(<string>, generate), $target-types),
 		 file: spec-file, line: (generate:).key.first.keyline);
     end if;
     let stub-file = as(<file-locator>, single(stub-file:));
@@ -120,9 +120,9 @@ define function motley-process-spec
       client-suffix := #f;
     elseif (server-suffix = client-suffix)
       tool-error("vtable-server-suffix and vtable-client-suffix keywords "
-      		 "have same value: \"%s\"", 
-		 format-arguments: list(server-suffix), 
-		 file: spec-file, 
+      		 "have same value: \"%s\"",
+		 format-arguments: list(server-suffix),
+		 file: spec-file,
 		 line: (vtable-client-suffix:).key.first.keyline);
     end if;
 
@@ -133,8 +133,8 @@ define function motley-process-spec
 
     if (generate-project-from-type-library(type-library, type-library-file,
 	    project-file: dest-project, module-name: module-name,
-	    module-file: module-file, spec-file: spec-file, 
-	    parameters: parameters, stub-file: stub-file, 
+	    module-file: module-file, spec-file: spec-file,
+	    parameters: parameters, stub-file: stub-file,
 	    last-run: last-run, clean-build?: clean-build?))
       modified-projects := add(modified-projects, dest-project);
 
@@ -142,8 +142,8 @@ define function motley-process-spec
       if (project-file & dest-project ~= project-file)
 	// Manipulate the project file:
 	let project = read-project-file(project-file);
-	project.project-information-subprojects := 
-		add-new!(project.project-information-subprojects, 
+	project.project-information-subprojects :=
+		add-new!(project.project-information-subprojects,
 			 relative-locator(dest-project, project-file),
 			 test: \=);
 	write-project-file(project-file, project);
@@ -161,38 +161,38 @@ define function date-as-string (date :: false-or(<date>)) => (r :: <string>)
     date := date + make(<day/time-duration>, days: 0);	// Stupid way to copy
     date.date-time-zone-offset := local-time-zone-offset();
     let (year, month, day, hours, minutes) = decode-date(date);
-    format-to-string("%d:%02d %d-%02d-%02d %s", 
+    format-to-string("%d:%02d %d-%02d-%02d %s",
 		     hours, minutes, year, month, day, local-time-zone-name())
   else
     "<no date>"
   end if
 end function date-as-string;
 
-define method generate-project-from-type-library 
-	(typelib :: <type-library>, typelib-file :: <locator>, 
-	 #key project-file :: <locator>, module-name :: <string>, 
-	 module-file :: <locator>, spec-file :: <locator>, 
-	 parameters :: <motley-parameters>, stub-file :: <locator>, 
-	 last-run :: false-or(<date>), 
-	 clean-build? :: <boolean>, force? :: <boolean> = #f) 
+define method generate-project-from-type-library
+	(typelib :: <type-library>, typelib-file :: <locator>,
+	 #key project-file :: <locator>, module-name :: <string>,
+	 module-file :: <locator>, spec-file :: <locator>,
+	 parameters :: <motley-parameters>, stub-file :: <locator>,
+	 last-run :: false-or(<date>),
+	 clean-build? :: <boolean>, force? :: <boolean> = #f)
      => (project-modified? :: <boolean>)
 
   module-file := merge-locators(module-file, project-file);
   stub-file := merge-locators(stub-file, project-file);
 
-  let creation-comment = 
+  let creation-comment =
 	  format-to-string("Creator: created from \"%s\" at %s.",
-			   as(<string>, spec-file), 
+			   as(<string>, spec-file),
 			   date-as-string(current-date()));
   let doc-comment = format-to-string("");
 
   let typelib-date = file-property(typelib-file, #"modification-date");
-  let any-outdated-targets? :: <boolean> = 
+  let any-outdated-targets? :: <boolean> =
 	  clean-build? | ~last-run | ~typelib-date;
   let generated-files = list(module-file, stub-file);
   for (file-loc in generated-files)
     ensure-directories-exist(file-loc);
-    let last-mod = file-exists?(file-loc) & 
+    let last-mod = file-exists?(file-loc) &
 		   file-property(file-loc, #"modification-date");
     if (~last-mod | (typelib-date & last-mod < typelib-date))
       any-outdated-targets? := #t;
@@ -201,7 +201,7 @@ define method generate-project-from-type-library
       // Target file is newer than last translation.
       if (~tool-ask-yes-no-question(
 	      "The file %s has been modified since %s was last processed - "
-	      "do you want to overwrite it?", 
+	      "do you want to overwrite it?",
 	      as(<string>, relative-locator(file-loc, project-file)),
 	      as(<string>, relative-locator(spec-file, project-file))))
 	tool-error("processing cancelled by user", file: spec-file);
@@ -215,19 +215,19 @@ define method generate-project-from-type-library
     // Manipulate the project file:
     let project = read-project-file(project-file);
     let project-files = project.project-information-files;
-    // Make sure the module file is present, and is the second file in the 
+    // Make sure the module file is present, and is the second file in the
     // list (we assume that the library definition is in the first file):
     let ab-module-file = relative-locator(module-file, project-file);
     if (~member?(ab-module-file, project-files, test: \=))
       project-files := remove!(project-files, ab-module-file, test: \=);
-      project-files := replace-subsequence!(project-files, 
+      project-files := replace-subsequence!(project-files,
 					list(ab-module-file), start: 1, end: 1);
     end if;
     // Make sure the stub file is present:
     let ab-stub-file = relative-locator(stub-file, project-file);
     if (~member?(ab-stub-file, project-files, test: \=))
       project-files := remove!(project-files, ab-stub-file, test: \=);
-      project-files := replace-subsequence!(project-files, 
+      project-files := replace-subsequence!(project-files,
 				 list(ab-stub-file), start: project-files.size);
     end if;
     project.project-information-files := project-files;

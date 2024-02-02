@@ -24,7 +24,7 @@ end frame <list-control-bitmaps>;
 // Install the test
 install-test(<list-control-bitmaps>, "List control bitmaps");
 
-
+
 /// Icons within list controls
 
 define frame <list-control-icons> (<simple-frame>)
@@ -43,7 +43,7 @@ end frame <list-control-icons>;
 // Install the test
 install-test(<list-control-icons>, "List control icons");
 
-
+
 /// Bitmaps within tree controls
 
 define frame <tree-control-bitmaps> (<simple-frame>)
@@ -64,7 +64,7 @@ end frame <tree-control-bitmaps>;
 // Install the test
 install-test(<tree-control-bitmaps>, "Tree control bitmaps");
 
-
+
 /// Icons within tree controls
 
 define frame <tree-control-icons> (<simple-frame>)

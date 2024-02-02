@@ -28,7 +28,7 @@ define method perform-coff-file-relocations
     (trans :: <interactive-transaction>, coff-file :: <coff-file>)
        => ()
   for (coff-section in coff-file.sections.ordered-data)
-    let section-base-address = 
+    let section-base-address =
       get-section-base-address(trans, coff-section);
     if (section-base-address)
       perform-section-relocations
@@ -45,7 +45,7 @@ end method;
 //    nub and access-path to allow this.
 
 define method perform-section-relocations
-    (trans :: <interactive-transaction>, 
+    (trans :: <interactive-transaction>,
      coff-file :: <coff-file>,
      coff-section :: <coff-section>,
      section-base-address :: <remote-value>)
@@ -68,7 +68,7 @@ define method perform-coff-relocation-in-section
   let target = trans.transaction-downloader-target;
   let access-path = target.interactive-application.debug-target-access-path;
   let application = target.interactive-application;
-  let symbolic-name = 
+  let symbolic-name =
     relocation.relocation-symbol.symbol-name.string-data;
   let remote-symbol =
     transaction-find-symbol(trans, coff-file, symbolic-name);
@@ -93,7 +93,7 @@ define method perform-coff-relocation-in-section
   let target = trans.transaction-downloader-target;
   let access-path = target.interactive-application.debug-target-access-path;
   let application = target.interactive-application;
-  let symbolic-name = 
+  let symbolic-name =
     relocation.relocation-symbol.symbol-name.string-data;
   let remote-symbol =
     transaction-find-symbol(trans, coff-file, symbolic-name);
@@ -132,8 +132,8 @@ define method perform-coff-relocation-in-section
             initialize-interactive-region(application, i-region);
           end unless;
           let illegal-address = as-remote-value(0);
-          let (static-block, fresh?) = 
-            find-block-in-region(trans, i-region, 4, 
+          let (static-block, fresh?) =
+            find-block-in-region(trans, i-region, 4,
                                  library: trans.transaction-library);
           if (static-block)
             // If this resulted in the allocation of a new block of
@@ -142,13 +142,13 @@ define method perform-coff-relocation-in-section
             // runtime's garbage collector.
             if (fresh?)
               let base = static-block.static-block-base-address;
-              let final = 
+              let final =
                 byte-indexed-remote-value
                   (base, static-block.static-block-size);
               let number-of-cells =
                 truncate/(static-block.static-block-size, 4);
               let unbound-markers =
-                make(<vector>, 
+                make(<vector>,
                      size: number-of-cells,
                      fill: application.dylan-runtime-unbound-marker);
               download-remote-value-vector-into

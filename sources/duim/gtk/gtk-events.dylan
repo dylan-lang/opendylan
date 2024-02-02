@@ -28,7 +28,7 @@ define sealed method process-next-event
   #f;
 end method process-next-event;
 
-
+
 /// Event handlers
 
 define method handle-gtk-destroy-event

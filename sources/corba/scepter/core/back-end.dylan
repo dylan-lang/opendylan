@@ -46,7 +46,7 @@ define macro scepter-back-end-definer
       ?slots:*
     end}
   =>
-  { define class ?name (<scepter-back-end>) ?slots end class; 
+  { define class ?name (<scepter-back-end>) ?slots end class;
     setup-scepter-back-end-class(?name, ?syntax);
     define method scepter-back-end-command-line-syntax (back-end :: ?name)
      => (syntax :: <string>)
@@ -146,7 +146,7 @@ end method;
 define method initialize-scepter-back-end
     (back-end :: <scepter-back-end>)
  => ()
-end method;  
+end method;
 
 define method finalize-scepter-back-end
     (back-end :: <scepter-back-end>)

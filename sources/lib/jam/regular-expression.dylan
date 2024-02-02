@@ -16,46 +16,46 @@ define primary abstract class <regular-expression> (<object>)
   slot regular-expression-last-positions :: <list> = #();
   slot regular-expression-follow-positions :: <list> = #();
 end class;
-              
+
 define generic copy-regular-expression
     (regex1 :: <regular-expression>)
  => (regex2 :: <regular-expression>);
-              
+
 define class <epsilon-regular-expression> (<regular-expression>)
   // no additional slots
 end class;
-              
+
 define method copy-regular-expression
     (regex1 :: <epsilon-regular-expression>)
  => (regex2 :: <regular-expression>);
   make(<epsilon-regular-expression>);
 end method;
-              
+
 define class <symbol-regular-expression>
     (<regular-expression>)
   constant slot regular-expression-symbol :: <object>,
     required-init-keyword: symbol:;
 end class;
-              
+
 define method copy-regular-expression
     (regex1 :: <symbol-regular-expression>)
  => (regex2 :: <regular-expression>);
   make(<symbol-regular-expression>,
        symbol: regex1.regular-expression-symbol);
 end method;
-              
+
 define class <symbol-set-regular-expression> (<regular-expression>)
   constant slot regular-expression-symbol-set :: <collection>,
     required-init-keyword: symbol-set:;
 end class;
-              
+
 define method copy-regular-expression
     (regex1 :: <symbol-set-regular-expression>)
  => (regex2 :: <regular-expression>);
   make(<symbol-set-regular-expression>,
          symbol-set: regex1.regular-expression-symbol-set);
 end method;
-              
+
 define class <union-regular-expression>
     (<regular-expression>)
   constant slot regular-expression-union1,
@@ -63,7 +63,7 @@ define class <union-regular-expression>
   constant slot regular-expression-union2,
     required-init-keyword: union2:;
 end class;
-              
+
 define method copy-regular-expression
     (regex1 :: <union-regular-expression>)
  => (regex2 :: <regular-expression>);
@@ -71,7 +71,7 @@ define method copy-regular-expression
          union1: copy-regular-expression(regex1.regular-expression-union1),
          union2: copy-regular-expression(regex1.regular-expression-union2));
 end method;
-              
+
 define class <concatenation-regular-expression>
     (<regular-expression>)
   constant slot regular-expression-head,
@@ -79,7 +79,7 @@ define class <concatenation-regular-expression>
   constant slot regular-expression-tail,
     required-init-keyword: tail:;
 end class;
-              
+
 define method copy-regular-expression
     (regex1 :: <concatenation-regular-expression>)
  => (regex2 :: <regular-expression>);
@@ -87,30 +87,30 @@ define method copy-regular-expression
        head: copy-regular-expression(regex1.regular-expression-head),
        tail: copy-regular-expression(regex1.regular-expression-tail));
 end method;
-              
+
 define class <closure-regular-expression>
     (<regular-expression>)
   constant slot regular-expression-enclosed :: <object>,
     required-init-keyword: of:;
 end class;
-              
+
 define method copy-regular-expression
     (regex1 :: <closure-regular-expression>)
  => (regex2 :: <regular-expression>);
   make(<closure-regular-expression>,
        of: copy-regular-expression(regex1.regular-expression-enclosed));
 end method;
-              
+
 define /* open */ class <accept-regular-expression> (<regular-expression>)
   // no additional slots
 end class;
-              
+
 define sealed method initialize
    (instance :: <epsilon-regular-expression>, #next next-method, #key)
   next-method();
   instance.regular-expression-nullable? := #t;
 end method initialize;
-        
+
 define sealed method initialize
     (instance :: <symbol-regular-expression>, #next next-method, #key)
   next-method();
@@ -118,7 +118,7 @@ define sealed method initialize
     := instance.regular-expression-last-positions
     := list(instance);
 end method initialize;
-        
+
 define sealed method initialize
     (instance :: <symbol-set-regular-expression>, #next next-method, #key)
   next-method();
@@ -126,7 +126,7 @@ define sealed method initialize
     := instance.regular-expression-last-positions
     := list(instance);
 end method initialize;
-        
+
 define method initialize
     (instance :: <accept-regular-expression>, #next next-method, #key)
   next-method();
@@ -134,7 +134,7 @@ define method initialize
     := instance.regular-expression-last-positions
     := list(instance);
 end method initialize;
-        
+
 define sealed method initialize
     (instance :: <union-regular-expression>, #next next-method, #key)
   next-method();
@@ -150,7 +150,7 @@ define sealed method initialize
     := concatenate(regular-expression-last-positions(union1),
                    regular-expression-last-positions(union2));
 end method initialize;
-        
+
 define sealed method initialize
     (instance :: <concatenation-regular-expression>,
      #next next-method, #key)
@@ -174,23 +174,23 @@ define sealed method initialize
        else
          re-tail.regular-expression-last-positions;
        end if;
-  
+
   let followers :: <list> = re-tail.regular-expression-first-positions;
   for (node in re-head.regular-expression-last-positions)
     node.regular-expression-follow-positions
       := concatenate(node.regular-expression-follow-positions, followers);
   end for;
 end method initialize;
-        
+
 define method initialize
     (instance :: <closure-regular-expression>, #next next-method, #key)
   next-method();
   instance.regular-expression-nullable? := #t;
-  instance.regular-expression-first-positions 
+  instance.regular-expression-first-positions
     := instance.regular-expression-enclosed.regular-expression-first-positions;
-  instance.regular-expression-last-positions 
+  instance.regular-expression-last-positions
     := instance.regular-expression-enclosed.regular-expression-last-positions;
-  
+
   let enclosed = instance.regular-expression-enclosed;
   let followers :: <list> = enclosed.regular-expression-first-positions;
   for (node in enclosed.regular-expression-last-positions)
@@ -198,13 +198,13 @@ define method initialize
       := union(node.regular-expression-follow-positions, followers, test: \==);
   end for;
 end method;
-        
+
 define /* open */ class <regular-expression-dfa-state> (<object>)
   constant slot regular-expression-dfa-state-transitions
     :: <mutable-collection>,
     required-init-keyword: transitions:;
 end class;
-              
+
 define function regular-expression-dfa
     (regular-expression :: <regular-expression>,
      #key deterministic? = #f,
@@ -215,7 +215,7 @@ define function regular-expression-dfa
  => (start-state :: <regular-expression-dfa-state>,
      num-dfa-states :: <integer>);
   let worklist :: <deque> = make(<deque>);
-  
+
   let states :: <set-table> = make(<set-table>);
   local
     method locate-state
@@ -239,20 +239,20 @@ define function regular-expression-dfa
         state;
       end if;
     end method;
-  
+
   let start-state
     = locate-state(regular-expression.regular-expression-first-positions);
   while(~empty?(worklist))
-    
+
     let state = pop(worklist);
     let label = pop(worklist);
-    
+
     for(position in label)
       do-regular-expression-dfa-state-position(state, position,
                                                deterministic?: deterministic?);
     end for;
-    
-    
+
+
     let transitions = state.regular-expression-dfa-state-transitions;
     let (initial-state, limit, next-state, finished-state?, current-key,
          current-element, current-element-setter, copy-state)
@@ -267,11 +267,11 @@ define function regular-expression-dfa
   end while;
   values(start-state, states.size);
 end function;
-              
+
 define class <set-table> (<table>)
   // No additional slots.
 end class;
-          
+
 define method table-protocol(table :: <set-table>)
   => (test-function :: <function>, hash-function :: <function>);
   values(method(set1 :: <list>, set2 :: <list>) => (equivalent?);
@@ -285,7 +285,7 @@ define method table-protocol(table :: <set-table>)
            else
              let (hash-id :: <integer>, hash-state :: <object>)
                = object-hash(first(set), initial-state);
-             
+
              for(item in set, first? = #t then #f)
                if (~first?)
                  let (item-hash-id :: <integer>,
@@ -299,13 +299,13 @@ define method table-protocol(table :: <set-table>)
            end if;
          end method);
 end method;
-          
+
 define /* open */ generic do-regular-expression-dfa-state-position
     (state :: <regular-expression-dfa-state>,
      position :: <regular-expression>,
      #key deterministic?)
  => ();
-          
+
 define sealed method do-regular-expression-dfa-state-position
     (state :: <regular-expression-dfa-state>,
      position :: <symbol-regular-expression>,
@@ -327,7 +327,7 @@ define sealed method do-regular-expression-dfa-state-position
       := follow;
   end;
 end method;
-          
+
 define sealed method do-regular-expression-dfa-state-position
     (state :: <regular-expression-dfa-state>,
      position :: <symbol-set-regular-expression>,

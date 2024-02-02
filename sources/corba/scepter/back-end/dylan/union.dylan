@@ -38,7 +38,7 @@ define method union-branch-label-discriminator (label :: <ast-union-branch-label
     format-to-string("%s", map-to-dylan-symbol(label-value.expression-scoped-name.last));
   else
     format-to-string("%=", label-value.expression-value);
-  end if;    
+  end if;
 end method;
 
 define method union-branch-label-discriminator (label :: <ast-default-union-branch-label>)
@@ -415,7 +415,7 @@ define method emit-from-union-as-method-clause
 	 "    %s => %s(object);\n",
 	 dim-type-native-type(dim-member-type(branch)),
          dim-member-getter-name(branch));
-end method;  
+end method;
 
 define method emit-combined-from-union-as-method
     (stream :: <stream>, union :: <dim-union>, clauses :: <sequence>)

@@ -8,8 +8,8 @@ Copyright: (c) 1993 Apple Computer, Inc.
 Modified by: Shri Amit(amit)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // Chapter 17. Functional Operations
@@ -59,7 +59,7 @@ define test always-0 (description: "")
   check-true("",always(1)(99, 98) = 1);
 end test always-0;
 
-define suite test-functional-suite () 
+define suite test-functional-suite ()
   test compose-0;
   test complement-0;
   test disjoin-0;

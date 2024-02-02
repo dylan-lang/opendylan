@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <per-address-debug-point-list> (<dm-registered-descriptor>)
   constant slot registered-address :: <remote-value>,
     required-init-keyword: address:;
-  slot debug-point-sequence :: <stretchy-vector> 
+  slot debug-point-sequence :: <stretchy-vector>
     = make(<stretchy-vector>);
 end class;
 
@@ -53,14 +53,14 @@ end class;
 
 ///// HANDLE-DEBUG-POINT-EVENT (and its default method)
 
-define open generic handle-debug-point-event 
+define open generic handle-debug-point-event
   (application :: <debug-target>, debug-point :: <debug-point>,
-   thr :: <remote-thread>) 
+   thr :: <remote-thread>)
     => (register-interest? :: <boolean>);
 
 define method handle-debug-point-event
   (application :: <debug-target>, debug-point :: <debug-point>,
-   thr :: <remote-thread>) 
+   thr :: <remote-thread>)
     => (register-interest? :: <boolean>)
   let interested? =
      debug-point.debug-point-callback(application, debug-point, thr);
@@ -84,13 +84,13 @@ define method register-debug-point
   // returns it. (The boolean result is #t if a new list was created,
   // since this means that an actual new breakpoint has to be set in the
   // access-path.
-  local method get-per-address-list () 
+  local method get-per-address-list ()
       => (l :: <per-address-debug-point-list>, n :: <boolean>)
     let i = 0;
     let found = #f;
     let new? = #f;
     while ((~found) & (i < size (application.registered-debug-points)))
-      if (debug-point.debug-point-address = 
+      if (debug-point.debug-point-address =
         application.registered-debug-points[i].registered-address)
         found := application.registered-debug-points[i];
       else
@@ -154,7 +154,7 @@ define method clear-deregistered-debug-points
       per-address-list.debug-point-sequence :=
         dm-tidy-sequence (per-address-list.debug-point-sequence);
       if (per-address-list.debug-point-sequence = #[])
-        let worked? = 
+        let worked? =
           disable-breakpoint (application.debug-target-access-path,
                               per-address-list.registered-address);
         dm-deregister (per-address-list);
@@ -175,8 +175,8 @@ end method;
 ///// PROCESS-DEBUG-POINTS
 //    Is called when a <debug-point-stop-reason> is received. Selects all
 //    debug-points registered at this address and calls the generic
-//    handle-debug-point-event on each one. Also builds up a sequence of 
-//    those <debug-point> objects that signalled themselves as 
+//    handle-debug-point-event on each one. Also builds up a sequence of
+//    those <debug-point> objects that signalled themselves as
 //    being "interesting"
 define method process-debug-points
     (application :: <debug-target>, stop-reason :: <source-step-stop-reason>)
@@ -184,8 +184,8 @@ define method process-debug-points
   #[]
 end method;
 
-define method process-debug-points 
-    (application :: <debug-target>, stop-reason :: <debug-point-stop-reason>) 
+define method process-debug-points
+    (application :: <debug-target>, stop-reason :: <debug-point-stop-reason>)
   => (interested-debug-points :: <sequence>)
 
   local method get-per-address-list ()

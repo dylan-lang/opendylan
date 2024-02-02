@@ -19,7 +19,7 @@ define constant $project-channel :: <channel> = make(<channel>);
 ///
 /// #"make-application"                project :: <project-object>
 
-
+
 /// Some useful project message classes
 
 /// Messages about projects
@@ -50,7 +50,7 @@ end class <no-active-project-message>;
 define class <project-sources-updated-message> (<project-object-message>)
 end class <project-sources-updated-message>;
 
-
+
 /// Messages about compilation
 
 define class <project-database-updated-message> (<project-object-message>)
@@ -59,7 +59,7 @@ end class <project-database-updated-message>;
 define class <project-warnings-updated-message> (<project-object-message>)
 end class <project-warnings-updated-message>;
 
-
+
 /// Messages about breakpoints
 
 define abstract class <breakpoint-state-change-message>
@@ -85,7 +85,7 @@ define class <breakpoint-state-changes-failed-message>
     required-init-keyword: breakpoints:;
 end class <breakpoint-state-changes-failed-message>;
 
-
+
 /// Messages about profiling
 
 define abstract class <profiling-message> (<project-object-message>)
@@ -96,7 +96,7 @@ define class <profiling-state-change-message> (<profiling-message>)
     required-init-keyword: enabled?:;
 end class <profiling-state-change-message>;
 
-
+
 /// Messages about applications
 
 define abstract class <application-message>
@@ -122,7 +122,7 @@ end class <application-state-changed-message>;
 define class <application-threads-changed-message> (<application-message>)
 end class <application-threads-changed-message>;
 
-
+
 /// Thread messages
 
 define abstract class <thread-message> (<application-message>)

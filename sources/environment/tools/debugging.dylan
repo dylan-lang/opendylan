@@ -27,7 +27,7 @@ define sealed method find-debugger
                                  zoom: zoom)
 end method find-debugger;
 
-
+
 /// Just-in-time debugging
 
 define method just-in-time-debugging-arguments
@@ -95,7 +95,7 @@ define method frame-open-just-in-time-project
   end
 end method frame-open-just-in-time-project;
 
-
+
 /// Choose project for filename
 
 define variable $choose-project-dialog-width :: <integer> = 500;
@@ -204,7 +204,7 @@ define method frame-choose-project-for-filename
   end
 end method frame-choose-project-for-filename;
 
-
+
 /// Attach application
 
 define variable $application-attach-dialog-width :: <integer> = 450;
@@ -361,7 +361,7 @@ define method frame-attach-application
   end
 end method frame-attach-application;
 
-
+
 /// Remote connections
 
 define variable $new-connection-dialog-width :: <integer> = 250;
@@ -447,7 +447,7 @@ tune-in($environment-channel,
         end,
         message-type: <environment-stopping-message>);
 
-
+
 /// Application commands
 
 define open generic frame-start-application (frame :: <environment-frame>) => ();

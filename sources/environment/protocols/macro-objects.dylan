@@ -13,7 +13,7 @@ end class <macro-object>;
 
 //---*** What can you do with a macro object?
 
-
+
 /// Implementation
 
 define method environment-object-type-name

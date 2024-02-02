@@ -202,7 +202,7 @@ define method edge-attachment-points
   end
 end method edge-attachment-points;
 
-
+
 /// Useful macros
 
 define macro with-node-breadth-and-depth-functions
@@ -241,7 +241,7 @@ define macro with-node-breadth-and-depth-functions
          ?body }
 end macro with-node-breadth-and-depth-functions;
 
-
+
 /// Tree graphs
 
 define sealed class <tree-graph-record> (<basic-graph-record>)
@@ -385,7 +385,7 @@ define method layout-graph-edges
   end
 end method layout-graph-edges;
 
-
+
 /// Directed graphs, both acyclic and cyclic
 
 define sealed class <DAG-graph-record> (<basic-graph-record>)
@@ -677,7 +677,7 @@ define method traverse-graph
   do(method (root) traverse(#f, #f, root, max-depth) end, roots)
 end method traverse-graph;
 
-
+
 /// The grapher
 
 define variable *inter-generation-separation* :: <integer> = 20;

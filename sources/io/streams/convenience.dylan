@@ -91,7 +91,7 @@ define method skip-through
   found? & #t
 end method skip-through;
 
-
+
 ///  Line-oriented input and output
 
 define open generic read-line
@@ -206,7 +206,7 @@ define method write-line
   new-line(stream);
 end method write-line;
 
-
+
 /// Handle chunks of text obeying new-line conventions
 
 define open generic read-character

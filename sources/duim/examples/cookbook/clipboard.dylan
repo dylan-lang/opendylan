@@ -98,6 +98,6 @@ define method frame-paste
   end
 end method frame-paste;
 
-
+
 /// Install the example
 install-example(<clipboard-example-frame>, "Clipboard Example");

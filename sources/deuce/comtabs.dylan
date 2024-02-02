@@ -158,7 +158,7 @@ define sealed method find-command
   end
 end method find-command;
 
-
+
 /// Gestures
 
 define constant $control-key :: <integer> = #o01;
@@ -277,7 +277,7 @@ define method decode-gesture
   error("<gesture> objects are not supported in command tables")
 end method decode-gesture;
 
-
+
 /// Command sets
 
 define sealed class <standard-command-set> (<command-set>)

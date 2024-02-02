@@ -113,7 +113,7 @@ define method next-computation-setter
                          computation, %next-computation, next);
   computation.%next-computation := next
 end;
-
+
 //// <computation> initialization
 
 define inline method make-in-environment
@@ -150,7 +150,7 @@ end method;
 //   next-method();
 //   lambda-environment(lexical-environment(computation)) := environment;
 // end method;
-
+
 //// <temporary> tracking
 
 define /* inline */ method make
@@ -198,7 +198,7 @@ define inline function do-used-value-references
     (fn :: <function>, c :: <computation>)
   do-used-temporaries(fn, c)
 end function;
-
+
 ////
 //// Computation accessor methods
 ////
@@ -212,7 +212,7 @@ define method class-used-temporary-accessors
     (c :: subclass(<computation>)) => (res :: <simple-object-vector>)
   #[]
 end method;
-
+
 ////
 //// <computation> classes
 ////

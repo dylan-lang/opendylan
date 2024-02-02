@@ -31,7 +31,7 @@ define runtime-primitive strlen
   ins--move(be, ptr, arg0);
   //
   // Some strings might not be word aligned - so it might be
-  // more efficient to test the early bytes here, before dropping 
+  // more efficient to test the early bytes here, before dropping
   // into word-loop. We don't bother with that optimization just yet.
   //
   // Word aligned test
@@ -91,9 +91,9 @@ define runtime-primitive raw-as-string
   ins--add(be, total-size, len, base+null + 3); // add the byte part & word align
   ins--and(be, total-size, total-size, ash(-1, 2));
   ins--move(be, rep-size, len);
-  
+
   // call MM primitive
-  op--allocate-byte-repeated-unfilled(be, new, total-size, dylan-byte-string-class, 
+  op--allocate-byte-repeated-unfilled(be, new, total-size, dylan-byte-string-class,
 				      rep-size, rep-size-slot);
 
   ins--add(be, start, new, base-size);
@@ -129,7 +129,7 @@ define runtime-primitive raw-as-single-float
   sfreg sdata;
   nreg data;
   reg obj;
-  
+
   // Laboriously move around the data until its in the right place:
   ins--fmove(be, sdata, x);
 
@@ -157,7 +157,7 @@ define runtime-primitive raw-as-double-float
   dfreg ddata;
   nreg low, high;
   reg obj;
-  
+
   // Laboriously move around the data until its in the right place:
   ins--dmove(be, ddata, x);
 
@@ -188,7 +188,7 @@ define used-by-client runtime-primitive wrap-machine-word
   nreg x;
 
   ins--move(be, x, arg0);
-  
+
   // call MM primitive
   op--allocate-untraced(be, obj, 8, machine-word-class);
   ins--move(be, result, obj);
@@ -343,13 +343,13 @@ define runtime-primitive machine-word-count-low-zeros
   ins--bne(be, non-zero, x, 0); // handle the zero case early
   ins--move(be, result, 32);
   ins--rts-and-drop(be, 0);
-  
+
   ins--tag(be, non-zero);
   ins--move(be, word, x);
   ins--move(be, count, 0);
 
   local method skip-zero-bits (n :: <integer>)
-          // Skip bits by shuffling the higher bytes down, 
+          // Skip bits by shuffling the higher bytes down,
           // adding to count as we go
           ins--add(be, count, count, n);
           ins--lsr(be, word, word, n);
@@ -404,13 +404,13 @@ define runtime-primitive machine-word-count-high-zeros
   ins--bne(be, non-zero, x, 0); // handle the zero case early
   ins--move(be, result, 32);
   ins--rts-and-drop(be, 0);
-  
+
   ins--tag(be, non-zero);
   ins--move(be, word, x);
   ins--move(be, count, 0);
 
   local method skip-zero-bits (n :: <integer>)
-          // Skip bits by shuffling the higher bytes down, 
+          // Skip bits by shuffling the higher bytes down,
           // adding to count as we go
           ins--add(be, count, count, n);
           ins--asl(be, word, word, n);
@@ -507,7 +507,7 @@ define runtime-primitive type-check-values
 /*
   On entry:
     first-value, types, rest-type
-    
+
     first-value is the first multiple value
     types are the list of specified types to be matched against
     rest-type is the type-constraint specified for the rest parameter
@@ -522,7 +522,7 @@ define runtime-primitive type-check-values
   nreg first-value, types, rest-type,
        value, values-count, values-pointer, values-index,
        type, size-types, types-pointer, types-index;
-  tag check, check-next, 
+  tag check, check-next,
       check-rest, check-rest-internal, check-rest-next,
       done;
 
@@ -575,7 +575,7 @@ define runtime-primitive type-check-rest-values
 /*
   On entry:
     first-value-index, rest-type
-    
+
     first-value-index is the index of first multiple value of the #rest stuff
     rest-type is the type-constraint specified for the rest parameter
 
@@ -619,7 +619,7 @@ define method op--primitive-instance?
     nreg type-test;
     greg type-copy;
     result result;
-  
+
     ins--move(be, type-copy, type); // help the colourer
     // Don't check if the type is <object>
     ins--beq(be, true-tag, type-copy, object-class-class);
@@ -637,7 +637,7 @@ define method op--primitive-instance?-setting-result
     greg type-copy;
     result result;
     tag done, full-test;
-  
+
     ins--move(be, type-copy, type); // help the colourer
     // Don't check if the type is <object>
     ins--bne(be, full-test, type-copy, object-class-class);
@@ -681,7 +681,7 @@ define runtime-primitive adjust-mv
   ins--tag(be, set-single);
   ins--reset-values(be);
   ins--bra(be, mvs-done);
-  
+
   // Multiple values cases
   ins--tag(be, have-mvs);
   op--ld-mv-count(be, count);
@@ -740,7 +740,7 @@ define runtime-primitive adjust-mv-rest
   ins--tag(be, set-single);
   ins--reset-values(be);
   ins--bra(be, mvs-done);
-  
+
   // Multiple values cases
   ins--tag(be, have-mvs);
   op--ld-mv-count(be, count);
@@ -765,7 +765,7 @@ define runtime-primitive adjust-mv-rest
 
 end runtime-primitive;
 
-// This just pads extra required multiple-values with #f without 
+// This just pads extra required multiple-values with #f without
 // setting the MV count
 
 define runtime-primitive pad-mv
@@ -791,7 +791,7 @@ define runtime-primitive pad-mv
   op--ld-mv-area-address(be, mv-area);
   ins--fill-words-w(be, mv-area, wanted, dylan-false);
   ins--bra(be, mvs-done);
-  
+
   // Multiple values cases
   ins--tag(be, have-mvs);
   op--ld-mv-count(be, count);

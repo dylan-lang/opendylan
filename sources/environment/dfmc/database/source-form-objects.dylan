@@ -139,7 +139,7 @@ define sealed method do-client-source-forms
   end
 end method do-client-source-forms;
 
-
+
 /// Primitive name for top level expressions
 
 define sealed method get-environment-object-primitive-name
@@ -162,7 +162,7 @@ define function source-location-first-line
   end
 end function source-location-first-line;
 
-
+
 /// Macro calls
 
 define sealed method do-macro-call-source-forms
@@ -184,7 +184,7 @@ define sealed method do-macro-call-source-forms
   end
 end method do-macro-call-source-forms;
 
-
+
 /// Environment object library
 
 define sealed method environment-object-library
@@ -199,7 +199,7 @@ define sealed method environment-object-library
                               compiler-object-proxy: project)
 end method environment-object-library;
 
-
+
 /// ID handling
 
 define sealed method find-compiler-database-proxy

@@ -103,7 +103,7 @@ define method test-limited-collection-of-size
   end
 end method test-limited-collection-of-size;
 
-
+
 /// Test collection creation
 
 define constant $default-string  = "abcdefghijklmnopqrstuvwxyz";
@@ -308,7 +308,7 @@ define method expected-key-sequence
   range(from: 0, below: size(collection))
 end method expected-key-sequence;
 
-
+
 /// Some collection information
 define method collection-type-element-type
     (class :: subclass(<collection>)) => (element-type :: <class>)
@@ -365,7 +365,7 @@ define method collection-default (type :: subclass(<sequence>)) => (res)
   as(type, #[#"bad-default"])
 end method collection-default;
 
-
+
 /// Collection test functions
 define method test-collection
     (name :: <string>, collection :: <collection>) => ()
@@ -565,7 +565,7 @@ define method make-array
   array
 end method make-array;
 
-
+
 /// Iteration testing
 
 define constant $iteration-results = make(<stretchy-vector>);
@@ -603,7 +603,7 @@ define method iteration-test-equal?
   #f
 end method iteration-test-equal?;
 
-
+
 /// Utilities for collection testing
 
 // Is the collection 'proper' meaning that it isn't an error to call size?
@@ -627,7 +627,7 @@ define method proper-collection?
   end
 end method proper-collection?;
 
-
+
 /// collection-valid-as-class?
 ///
 /// Can the collection be converted to this class?
@@ -705,7 +705,7 @@ define method collection-valid-as-class?
   #t
 end method collection-valid-as-class?;
 
-
+
 /// Collection testing
 
 define method do-test-as
@@ -951,7 +951,7 @@ define method do-test-shallow-copy
   end
 end method;
 
-
+
 /// Mutable collection testing
 
 define method do-test-map-into
@@ -1041,7 +1041,7 @@ define method do-test-size-setter
 end method;
 
 
-
+
 /// Sequence testing
 
 define method do-test-concatenate
@@ -1455,7 +1455,7 @@ define method do-test-last-setter
   end;
 end method;
 
-
+
 /// Stretchy sequence testing
 
 define method do-test-rank
@@ -1488,7 +1488,7 @@ define method do-test-dimension
   //---*** Fill this in...
 end method;
 
-
+
 /// Vector tests
 
 define method do-test-vector
@@ -1496,7 +1496,7 @@ define method do-test-vector
   //---*** Fill this in...
 end method;
 
-
+
 /// Deque tests
 
 define method do-test-push
@@ -1519,7 +1519,7 @@ define method do-test-pop-last
   //---*** Fill this in...
 end method;
 
-
+
 /// List tests
 
 define method do-test-list
@@ -1542,7 +1542,7 @@ define method do-test-tail
   //---*** Fill this in...
 end method;
 
-
+
 /// Pair tests
 
 define method do-test-head-setter
@@ -1555,7 +1555,7 @@ define method do-test-tail-setter
   //---*** Fill this in...
 end method;
 
-
+
 /// String tests
 
 define method do-test-<
@@ -1621,7 +1621,7 @@ define method do-test-as-uppercase!
              end)
 end method;
 
-
+
 /// Table tests
 
 define method do-test-table-protocol
@@ -1629,4 +1629,4 @@ define method do-test-table-protocol
   //---*** Fill this in...
 end method;
 
-
+

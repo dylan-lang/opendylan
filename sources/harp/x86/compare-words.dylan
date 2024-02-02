@@ -62,7 +62,7 @@ end pentium-template;
 define pentium-template (bne-bytes)
   pattern (be, tag, mem1, mem2, how-many)
     // first do all full words
-    harp-out (be) 
+    harp-out (be)
       asr(be, ecx, how-many, 2);
       bne-words(be, tag, mem1, mem2, ecx);
     end harp-out;

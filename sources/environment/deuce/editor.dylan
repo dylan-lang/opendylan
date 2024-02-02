@@ -95,7 +95,7 @@ define method call-in-editor-frame-duim-frames
   end
 end method call-in-editor-frame-duim-frames;
 
-
+
 /// Environment editor pane classes
 
 //---*** Lose this class and everything that messes with 'primary-object-interval'
@@ -149,7 +149,7 @@ define sealed class <environment-editor-pane>
      <environment-deuce-pane>)
 end class <environment-editor-pane>;
 
-
+
 /// Environment editor frames
 
 define frame <environment-editor>
@@ -192,7 +192,7 @@ end frame <environment-editor>;
 define cascading-window-settings
   editor-window :: <environment-editor> = "Editor Window";
 
-
+
 /// Frame start-up and initialization
 
 // Note: If you change this method, change the reinitialize-frame method below.
@@ -306,7 +306,7 @@ define method frame-target-pane
   frame.%window
 end method frame-target-pane;
 
-
+
 /// Frame shutdown
 
 define method exit-editor (frame :: <environment-editor>) => ()
@@ -407,7 +407,7 @@ define method handle-event
   next-method();
 end method handle-event;
 
-
+
 /// Selecting buffers and loading files into buffers
 
 // In an editor pane (i.e., a pane in the Editor), obey the selection policy
@@ -510,7 +510,7 @@ define method get-initial-buffer
   | make-initial-buffer(editor: editor)
 end method get-initial-buffer;
 
-
+
 /// Editor implementations of 'environment-tools' generic functions
 
 //--- Ideally Deuce would use locators itself for buffer-pathname...
@@ -688,7 +688,7 @@ define method make-editor-tool-bar-mode-box
   mode-box */
 end method make-editor-tool-bar-mode-box;
 
-
+
 /// Frame-reuse protocol extensions
 
 define method editor-frame-showing-buffer?
@@ -767,7 +767,7 @@ define method reinitialize-frame
 end method reinitialize-frame;
 
 
-
+
 /// Frame<->project relationships
 
 define method frame-note-project-updated
@@ -847,7 +847,7 @@ define method frame-note-interactive-compilation-warnings
   end
 end method frame-note-interactive-compilation-warnings;
 
-
+
 /// Implementation of environment-manager functionality
 
 // This is added to the generic function in environment-manager, so
@@ -866,7 +866,7 @@ define sideways method find-and-call-in-deuce-frame
         initargs);
 end method find-and-call-in-deuce-frame;
 
-
+
 // Display the buffer name in the title bar
 define method deuce/display-buffer-name
     (window :: <environment-editor-pane>, buffer :: false-or(<basic-buffer>)) => ()
@@ -876,7 +876,7 @@ define method deuce/display-buffer-name
   end
 end method deuce/display-buffer-name;
 
-
+
 /// Notifications
 
 /*
@@ -979,7 +979,7 @@ define method window-note-undo/redo
   end
 end method window-note-undo/redo;
 
-
+
 /// File printing
 
 define method frame-hardcopy-document
@@ -989,7 +989,7 @@ define method frame-hardcopy-document
   pathname & frame-hardcopy-object(frame, as(<file-locator>, pathname))
 end method frame-hardcopy-document;
 
-
+
 /// Policy persistence
 
 define settings <dylan-editor-settings> (<open-dylan-user-settings>)
@@ -1214,7 +1214,7 @@ define method handle-event
 end method handle-event;
 */
 
-
+
 /// Bootstrapping
 
 define variable $environment-editor :: <deuce-editor> = make(<deuce-editor>);

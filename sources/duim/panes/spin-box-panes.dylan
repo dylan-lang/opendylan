@@ -71,7 +71,7 @@ define method handle-event
   end
 end method handle-event;
 
-
+
 /// Spin box pane
 
 define sealed pane <spin-box-pane>

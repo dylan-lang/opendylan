@@ -27,8 +27,8 @@ define open generic dood-disk-object
 //   dood-character-disk-pointer+object(dood, object)
 // end method;
 
-define inline function dood-indirect-disk-pointer+object 
-    (dood :: <dood>, info :: <walk-info>, object) 
+define inline function dood-indirect-disk-pointer+object
+    (dood :: <dood>, info :: <walk-info>, object)
  => (pointer :: <pointer>, disk-object, found-address)
   let disk-object = dood-disk-object(dood, object);
   let found-address
@@ -38,12 +38,12 @@ define inline function dood-indirect-disk-pointer+object
   values(tag-as-address(disk-object, address), disk-object, found-address)
 end function;
 
-// define method dood-disk-pointer+object 
+// define method dood-disk-pointer+object
 //     (dood :: <dood>, object) => (pointer :: <pointer>, disk-object)
-//   dood-indirect-disk-pointer+object(dood, object)  
+//   dood-indirect-disk-pointer+object(dood, object)
 // end method;
 
-define function dood-disk-pointer+object 
+define function dood-disk-pointer+object
     (dood :: <dood>, object) => (pointer :: <pointer>, disk-object)
   let class :: <class> = object-class(object);
   if (class == <integer>)
@@ -61,10 +61,10 @@ define inline function disk-pointer
     (dood :: <dood>, object) => (pointer :: <pointer>)
   dood-disk-pointer+object(dood, object)
 end function;
-
+
 // define constant <dood-queue> = <stretchy-vector>;
 
-define inline function dood-maybe-register-parent 
+define inline function dood-maybe-register-parent
     (dood :: <dood>, info :: <walk-info>, object, parent)
   when (walk-info-parents?(info) & parent)
     // when (*walk-progress-function* == $default-walk-progress-function)
@@ -75,8 +75,8 @@ define inline function dood-maybe-register-parent
   end when;
 end function;
 
-define function dood-walk-indirect-object 
-    (dood :: <dood>, info :: <walk-info>, parent, object) 
+define function dood-walk-indirect-object
+    (dood :: <dood>, info :: <walk-info>, parent, object)
  => (res :: <pointer>)
   let (pointer, disk-object, found-address)
     = dood-indirect-disk-pointer+object(dood, info, object);
@@ -117,7 +117,7 @@ define inline function maybe-walk-object
       if (maybe-address)
         let address :: <address> = maybe-address;  // TYPE ONLY
         let disk-object
-          = if ($tag-pairs? & instance?(object, <pair>)) 
+          = if ($tag-pairs? & instance?(object, <pair>))
               lookup-proxy(dood, object) | object;
             else
               object
@@ -125,7 +125,7 @@ define inline function maybe-walk-object
         tag-as-address(disk-object, address)
       elseif (queue?)
         $lazy-pointer
-      else 
+      else
         dood-walk-indirect-object(dood, info, parent, object)
       end if;
   end case
@@ -157,9 +157,9 @@ end function;
 
 define generic walk-slots (dood :: <dood>, info :: <walk-info>, object);
 
-define inline function dood-lazy-slot-value-using 
-    (dood :: <dood>, object, 
-     slotd :: <dood-slot-descriptor>, offset :: <integer>, 
+define inline function dood-lazy-slot-value-using
+    (dood :: <dood>, object,
+     slotd :: <dood-slot-descriptor>, offset :: <integer>,
      force?, flush?, commit?,
      force-proxy :: <function>, mark-proxy :: <function>)
  => (value, lazy?)
@@ -170,10 +170,10 @@ define inline function dood-lazy-slot-value-using
     else
       values(value, #t)
     end if
-  else 
+  else
     if (flush?)
       let address :: <address> = dood-address(dood, object);
-      // format-out("FLUSHING %= @ %= OFFSET %=\n", 
+      // format-out("FLUSHING %= @ %= OFFSET %=\n",
       //            object-class(object), address, offset);
       mark-proxy(dood, object, address, slotd, offset, #t);
     end if;
@@ -181,8 +181,8 @@ define inline function dood-lazy-slot-value-using
   end if;
 end function;
 
-define inline function walk-lazy-slot 
-    (dood :: <dood>, info :: <walk-info>, object, 
+define inline function walk-lazy-slot
+    (dood :: <dood>, info :: <walk-info>, object,
      slotd :: <dood-slot-descriptor>, offset :: <integer>,
      force-proxy :: <function>, mark-proxy :: <function>)
   let commit?     = walk-info-commit?(info);
@@ -200,8 +200,8 @@ end function;
 
 define method walk-slots (dood :: <dood>, info :: <walk-info>, object) => ()
   let class = object-class(object);
-  let (lazy-slotds, weak-slotds, deep-slotds, 
-       repeated-slot?, repeated-byte-slot?) 
+  let (lazy-slotds, weak-slotds, deep-slotds,
+       repeated-slot?, repeated-byte-slot?)
     = dood-all-slot-descriptors(dood, class);
 
   walk-slot(dood, info, object, class);
@@ -214,7 +214,7 @@ define method walk-slots (dood :: <dood>, info :: <walk-info>, object) => ()
   finally
     for (slotd :: <dood-slot-descriptor> in lazy-slotds,
          // TODO: this is inefficient -- only for lazy-slot-value
-         offset :: <integer> from size(deep-slotds)) 
+         offset :: <integer> from size(deep-slotds))
       walk-lazy-slot
         (dood, info, object, slotd, offset,
          dood-force-lazy-slot-value-proxy, mark-lazy-slot-using);
@@ -257,15 +257,15 @@ end function;
 
 define inline function dood-do-register-walked-address-using-table
     (dood :: <dood>, object, address)
-  // dood-walked-addresses(dood)[object] := address; 
+  // dood-walked-addresses(dood)[object] := address;
   two-level-table-element
-     (#f, dood-walked-addresses(dood), object, object-class, identity) 
+     (#f, dood-walked-addresses(dood), object, object-class, identity)
     := address;
 end function;
 
 define inline function dood-register-walked-address-using-table
     (dood :: <dood>, object, address)
-  // dood-walked-addresses(dood)[object] := address; 
+  // dood-walked-addresses(dood)[object] := address;
   unless (dood-addresses(dood) == dood-walked-addresses(dood))
     dood-do-register-walked-address-using-table(dood, object, address)
   end unless;
@@ -290,7 +290,7 @@ define thread variable *walk-progress-function* :: <function>
 
 define macro with-walk-progress
   { with-walk-progress (?progress:body) ?:body end }
-    => { dynamic-bind (*walk-progress-function* 
+    => { dynamic-bind (*walk-progress-function*
                          = method (?=count) ?progress end)
            ?body
          end dynamic-bind }
@@ -361,10 +361,10 @@ define method dood-register-predefines (dood :: <dood>) => ()
   for (object in dood-predefines(dood))
     dood-register-walked-address-using-table
       (dood, object, dood-address(dood, object));
-  end for; 
+  end for;
 end method;
 
-define method dood-initialize-walker! 
+define method dood-initialize-walker!
     (dood :: <dood>, #rest all-keys, #key size) => ()
   apply(dood-reset-walker!, dood, all-keys);
   dood-register-predefines(dood);
@@ -377,7 +377,7 @@ define method dood-finalize-walker! (dood :: <dood>) => ()
 end method;
 
 define method dood-walk-from
-    (dood :: <dood>, fn :: <function>, object, 
+    (dood :: <dood>, fn :: <function>, object,
      #rest all-keys, #key flush?, force? = #t, parents?, batch?, commit?)
   block ()
     let info = apply(make, <walk-info>, function: fn, all-keys);
@@ -400,14 +400,14 @@ define method dood-walk-from
   cleanup
     dood-finalize-walker!(dood);
   end block;
-end method;  
+end method;
 
 define method dood-walk
     (dood :: <dood>, fn :: <function>, #rest all-keys, #key, #all-keys) => ()
   dood-initialize-walker!(dood);
   apply(dood-walk-from, dood, fn, dood-root(dood), all-keys)
-end method;  
-  
+end method;
+
 /// WALK METHODS
 
 define method walk-slots

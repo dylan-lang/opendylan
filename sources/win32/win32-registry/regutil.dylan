@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method get-module-file-name (#key module-handle)
- => (path :: <LPTSTR>);  
+ => (path :: <LPTSTR>);
   let buf-size = $MAX-PATH;
   with-stack-structure( path-buf :: <LPTSTR>, size: buf-size)
     let hmodule :: <HMODULE> = module-handle | null-handle(<HMODULE>);
@@ -20,7 +20,7 @@ define method get-module-file-name (#key module-handle)
   end with-stack-structure
 end method get-module-file-name;
 
-// Copy `data' into `buffer', and return the buffer address following the 
+// Copy `data' into `buffer', and return the buffer address following the
 // last character.  (Note: does not store terminating nul.)
 define method append-c-string ( buffer :: <LPTSTR>, data :: <byte-string> )
  => (end-pointer :: <LPTSTR>);
@@ -53,7 +53,7 @@ define method register-item(subkey1 :: <byte-string>, subkey2 :: <byte-string>,
   values()
 end register-item;
 
-
+
 
 define method get-registry-item(subkey1 :: <byte-string>,
 				subkey2 :: <byte-string>,
@@ -83,7 +83,7 @@ define method get-registry-item(subkey1 :: <byte-string>,
   end with-stack-structure;
 end get-registry-item;
 
-
+
 
 define method delete-key-recursively (start-key :: <HKEY>,
 				      sub-key-name :: <string>)
@@ -99,7 +99,7 @@ end delete-key-recursively;
 
 /*
 From MSDN:
-  
+
  PSS ID Number: Q142491
  Article last modified on 01-16-1996
 
@@ -116,7 +116,7 @@ From MSDN:
 
 // The sample code makes no attempt to check or recover from partial
 // deletions.
- 
+
 define constant $MAX-KEY-LENGTH = 256;
 
 define method RegDeleteKeyNT(start-key :: <HKEY>, key-name :: <LPTSTR> )
@@ -153,7 +153,7 @@ define method RegDeleteKeyNT(start-key :: <HKEY>, key-name :: <LPTSTR> )
       RegCloseKey(hKey);
       // Do not save return code here because error has already occurred.
     end if;
-    return-code   
+    return-code
   end if
 end method RegDeleteKeyNT;
 

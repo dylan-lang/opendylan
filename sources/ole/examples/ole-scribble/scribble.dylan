@@ -30,23 +30,23 @@ define method handle-repaint
 end method handle-repaint;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <button-press-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <button-press-event>,
      button == $left-button) => ()
   sheet.scribble-segment := make(<stretchy-vector>);
   add-scribble-segment(sheet, event.event-x, event.event-y)
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <pointer-drag-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <pointer-drag-event>,
      button == $left-button) => ()
   add-scribble-segment(sheet, event.event-x, event.event-y)
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <button-release-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <button-release-event>,
      button == $left-button) => ()
   when (add-scribble-segment(sheet, event.event-x, event.event-y))
     add!(sheet.scribble-segments, sheet.scribble-segment);
@@ -56,8 +56,8 @@ define method handle-button-event
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <button-release-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <button-release-event>,
      button == $right-button) => ()
   let popup-menu-callback = scribble-popup-menu-callback(sheet);
   when (popup-menu-callback)
@@ -87,11 +87,11 @@ define method clear-surface (sheet :: <scribble-pane>) => ()
   end
 end method clear-surface;
 
-
+
 /// A wrapping frame, which gets realized as an OLE server
 define frame <scribble-frame> (<embeddable-frame>)
   pane surface (frame)
-    make(<scribble-pane>, 
+    make(<scribble-pane>,
 	 popup-menu-callback: method (sheet, x, y)
 				let frame = sheet-frame(sheet);
 				popup-scribble-menu(frame, x, y)

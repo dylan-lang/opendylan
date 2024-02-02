@@ -14,7 +14,7 @@ define c-fun runtime-external tlv-get-value     = "tlv_get_value";
 define c-fun runtime-external tlv-set-value     = "tlv_set_value";
 define c-fun runtime-external get-page-size     = "getpagesize";
 
-define sideways method op--create-TEB-tlv-index 
+define sideways method op--create-TEB-tlv-index
     (be :: <harp-native-unix-back-end>) => ()
   with-harp (be)
     tag done;
@@ -56,7 +56,7 @@ define sideways method op--get-stack-bottom
   // be performed very close to the stack bottom so it's OK. However
   // this is inappropriate for registering the stack lazily during a C
   // call-in.
-  
+
   with-harp (be)
     stack stack;
     c-result c-result;
@@ -79,7 +79,7 @@ end method;
 
 define sideways method op--shut-down-dll-library
     (be :: <harp-native-unix-back-end>) => ()
-  op--call-iep(be, primitive-deregister-traced-roots-ref, 
+  op--call-iep(be, primitive-deregister-traced-roots-ref,
 	       %ambig-root, %static-root, %exact-root);
 end method;
 
@@ -100,7 +100,7 @@ end unix-API-runtime-primitive;
 define shared init unix-API-runtime-primitive dylan-shared-object-entry
   ("DylanSOEntry")
   c-result c-result;
-  
+
   op--initialize-thread-instructions(be);
 
   /*
@@ -132,7 +132,7 @@ end method;
 define shared init unix-API-runtime-primitive dylan-shared-object-exit
   ("DylanSOExit")
   c-result c-result;
-  
+
   // Uninitialize any DLL roots etc.
   op--shut-down-dll-library(be);
   when-base
@@ -157,7 +157,7 @@ define sideways method op--init-dylan-data (be :: <harp-native-unix-back-end>) =
     let vars-start  = ins--constant-ref(be, $vars-start-symbol);
     let vars-end    = ins--constant-ref(be, $vars-end-symbol);
 
-    op--call-iep(be, primitive-register-traced-roots-ref, 
+    op--call-iep(be, primitive-register-traced-roots-ref,
 		 data-start, data-end, %ambig-root,
 		 objs-start, objs-end, %static-root,
 		 vars-start, vars-end, %exact-root);

@@ -4,13 +4,13 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define inline function switch-state-lookahead 
+define inline function switch-state-lookahead
     (p :: <parser>, ps :: <parser-state>, parsed)
-  let state :: <integer> 
+  let state :: <integer>
     = vector-element(ps.state-stack, ps.state-stack-ptr - 1);
   let reduction = is-all-same-reduction(p, state);
   case
-    reduction 
+    reduction
       => let reduction :: <integer> = reduction;
          reduce-state(p, ps, action-of-reduction(reduction));
     is-all-accept(p, state)
@@ -20,7 +20,7 @@ define inline function switch-state-lookahead
   end
 end function;
 
-define inline function switch-state 
+define inline function switch-state
     (p :: <parser>, ps :: <parser-state>, symbol, value, parsed, on-error)
   let current-state :: <integer>
     = vector-element(ps.state-stack, ps.state-stack-ptr - 1);
@@ -30,7 +30,7 @@ define inline function switch-state
        => on-error(symbol, value, get-history-sequence(ps));
      is-accept(action)
        => parsed();
-     otherwise 
+     otherwise
        => let action :: <integer> = action;
           if (is-shift(action))
             shift-state(ps, next-state-of-shift(action));
@@ -41,7 +41,7 @@ define inline function switch-state
 end function;
 
 /*
-define method recover-from-error 
+define method recover-from-error
     (p :: <parser>, ps :: <parser-state>, symbol, parsed)
   error("Parse error on %=", symbol);
 end method;

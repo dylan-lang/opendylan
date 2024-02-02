@@ -16,11 +16,11 @@ define constant $clsid-prefix = "CLSID\\";
 define constant $clsid-suffix = "\\CLSID";
 
 // Need to add:							???
-//          ToolboxBitmap32 = <filename>.DLL,resourceID 
+//          ToolboxBitmap32 = <filename>.DLL,resourceID
 
-// Need to add 
+// Need to add
 // Registering a Property Page
-//  
+//
 //    HKEY_CLASSES_ROOT
 //        CLSID
 //      {class id of property sheet} = friendly name of property page

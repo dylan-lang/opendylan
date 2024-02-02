@@ -52,7 +52,7 @@ define frame <number-graph-frame> (<simple-frame>)
   layout (frame) frame.main-layout;
 end frame <number-graph-frame>;
 
-
+
 /// Class graph controls
 
 define frame <class-graph-frame> (<simple-frame>)
@@ -91,7 +91,7 @@ define frame <class-graph-frame> (<simple-frame>)
   layout (frame) frame.main-layout;
 end frame <class-graph-frame>;
 
-
+
 /// Install the test
 
 define variable $graph-control-tests

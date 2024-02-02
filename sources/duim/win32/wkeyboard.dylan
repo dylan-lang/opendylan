@@ -163,7 +163,7 @@ define function character->virtual-key
   end
 end function character->virtual-key;
 
-
+
 /// Key translations
 
 define constant $key-translations :: <array>
@@ -226,7 +226,7 @@ define method read-key-translations
   end
 end method read-key-translations;
 
-
+
 /// Keyboard event handling
 
 // For detection of AltGr on Windows-95/98
@@ -500,7 +500,7 @@ define sealed method handle-syschar
   frame-alt-key-is-meta?(frame)
 end method handle-syschar;
 
-
+
 /// Modifier state handling
 
 define constant $vk->modifier :: <simple-object-vector>
@@ -558,7 +558,7 @@ define inline function get-key-state
   ~zero?(logand(GetKeyState(vk), if (toggle?) #x0001 else #x8000 end))
 end function get-key-state;
 
-
+
 /// Keyboard interrupt handling
 
 define sealed method maybe-handle-keyboard-interrupt

@@ -24,7 +24,7 @@ define module scepter
               idl-condition-title,
               idl-condition-body,
               idl-condition-source };
-              
+
 
   use scepter-driver,
     export: { <scepter>,

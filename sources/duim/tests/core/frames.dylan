@@ -30,7 +30,7 @@ define test test-<simple-frame> ()
   //---*** Fill this in...
 end test;
 
-
+
 /// Frame layout tests
 
 define method expected-named-size
@@ -116,7 +116,7 @@ define test frame-layouts-test
                     height: 500);
 end test frame-layouts-test;
 
-
+
 /// Frame wrapper tests
 
 define test frame-wrappers-test
@@ -141,7 +141,7 @@ define test frame-wrappers-test
               frame-status-bar(frame), status-bar);
 end test frame-wrappers-test;
 
-
+
 /// Define the frames test suite
 
 define suite duim-frames-suite ()

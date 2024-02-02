@@ -24,7 +24,7 @@ define constant <remote-value> = <machine-word>;
 define generic as-integer
     (x) => (i :: <abstract-integer>);
 
-define inline method as-integer 
+define inline method as-integer
     (x :: <remote-value>) => (i :: <abstract-integer>)
   if (primitive-machine-word-unsigned-greater-than?
 	(primitive-unwrap-machine-word(x),
@@ -57,7 +57,7 @@ end method;
 ///// AS-REMOTE-VALUE
 //    Conversion in the other direction. I hope this will work...
 
-define inline method as-remote-value 
+define inline method as-remote-value
     (x :: <abstract-integer>) => (ptr :: <remote-value>)
   as (<machine-word>, x)
 end method;
@@ -75,7 +75,7 @@ end method;
 //    Returns the address that is a word-sized offset from the
 //    given address, multiplied by the given index.
 
-define method indexed-remote-value 
+define method indexed-remote-value
     (x :: <remote-value>, i :: <integer>) => (ptr :: <remote-value>)
   u%+(x, u%*(i, truncate/($machine-word-size, 8)))
 end method;
@@ -190,7 +190,7 @@ end method;
 //    Converts a remote value to a string on the application's machine.
 
 define method remote-value-as-string
-    (ap :: <access-path>, val :: <remote-value>, radix :: <integer>) 
+    (ap :: <access-path>, val :: <remote-value>, radix :: <integer>)
        => (str :: <string>)
   // This is a bit of a hack. Pad with zero. Assume 8 digits. (Eugh!)
   let padding = 2;

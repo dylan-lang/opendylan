@@ -16,7 +16,7 @@ define test test-$nowhere ()
   check-true("$nowhere is empty", region-empty?($nowhere))
 end test;
 
-
+
 /// Region tests
 
 define method printable-value (point :: <point>) => (value)
@@ -463,7 +463,7 @@ define test regions-test ()
               region-empty?(make-bounding-box(0, 0, 100, 100)));
 end test regions-test;
 
-
+
 /// Define the regions test suite
 
 define suite duim-regions-suite ()

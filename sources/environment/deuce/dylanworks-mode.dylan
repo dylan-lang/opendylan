@@ -58,7 +58,7 @@ define method mode-name
   "Dylan"
 end method mode-name;
 
-
+
 /// Auxiliary functions
 
 define generic interval->location-info
@@ -88,7 +88,7 @@ define method interval->location-info
   values(string, #[0, 0, 0, 0])
 end method interval->location-info;
 
-
+
 /// Deuce primary object
 
 define method frame-primary-object
@@ -274,7 +274,7 @@ define sealed method make-command-target
   end
 end method make-command-target;
 
-
+
 /// Presentations
 
 define method do-handle-presentation-event
@@ -406,7 +406,7 @@ define method blank-area-menu
   dylanworks-default-editor-menu(window, mode, nothing, bp: bp, x: x, y: y)
 end method blank-area-menu;
 
-
+
 /// Mode-dependent Notifications
 
 // From Deuce
@@ -491,7 +491,7 @@ define method frame-note-project-updated
   #f
 end method frame-note-project-updated;
 
-
+
 /// Hooks to the Dylan environment
 
 define variable *environment-editor-token* :: false-or(<symbol>) = #f;
@@ -654,7 +654,7 @@ define method do-show-documentation
   #t
 end method do-show-documentation;
 
-
+
 /// Browser buffers
 
 define method definition-browser-parameters
@@ -714,7 +714,7 @@ define method definition-browser-parameters
   end
 end method definition-browser-parameters;
 
-
+
 /// Mapping from a definition to a source location
 
 define constant <code-viewer-source-type> = one-of(#"newest", #"canonical");
@@ -840,7 +840,7 @@ define method find-section-for-source-location
   values(section, line)
 end method find-section-for-source-location;
 
-
+
 /// Source container for interactive source records
 
 define sealed class <interactive-source-container> (<basic-source-container>)
@@ -962,7 +962,7 @@ define function find-interactive-source-buffer
   end
 end function find-interactive-source-buffer;
 
-
+
 /// Building
 
 define method compilation-supported?
@@ -1049,7 +1049,7 @@ define method do-macroexpand
   end
 end method do-macroexpand;
 
-
+
 /// Source location handling, e.g., for breakpoints
 
 // NB: Don't cache this in the line since the lines can logically
@@ -1188,7 +1188,7 @@ define method deuce-note-project-products-changed
   #f
 end method deuce-note-project-products-changed;
 
-
+
 /// Buffer protocols
 
 define open generic buffer-project
@@ -1399,7 +1399,7 @@ define method buffer-source-record
   end
 end method buffer-source-record;
 
-
+
 /// DylanWorks shells
 
 //--- It would be good for this to be abstract, but we can't make
@@ -1596,7 +1596,7 @@ define sealed method do-handle-presentation-event
   end
 end method do-handle-presentation-event;
 
-
+
 /// Optimization coloring
 /// Available so far: normal; by dispatch-optimization.
 

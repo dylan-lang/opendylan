@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   The body is generated in a context in which the argument registers
 //   and any other explicitly mentioned registers are preserved.
 
-define macro with-preserved-arguments 
+define macro with-preserved-arguments
   { with-preserved-arguments (?registers:*) ?:body end }
     => { with-harp (?=be)
            let other-regs = vector(?registers);
@@ -43,7 +43,7 @@ end macro;
 ignore(op--select-entry-point);
 
 define method op--select-entry-point
-    (be :: <harp-back-end>, dest :: <register>, required, refs :: <vector>) 
+    (be :: <harp-back-end>, dest :: <register>, required, refs :: <vector>)
     => ()
   with-harp (be)
     tag done;
@@ -75,7 +75,7 @@ end method;
 ignore(op--load-argument-n-leafcase);
 
 define method op--load-argument-n-leafcase
-    (be :: <harp-back-end>, argument :: <register>, arg-num :: <integer>) 
+    (be :: <harp-back-end>, argument :: <register>, arg-num :: <integer>)
     => ()
   let in-regs = be.registers.arguments-passed-in-registers;
   let last-in-reg = in-regs - 1; // the number of the last arg to be passed in a reg
@@ -87,13 +87,13 @@ define method op--load-argument-n-leafcase
     ins--move(be, argument, be.registers.reg-machine-arguments[arg-num]);
   end if;
 end method;
-  
+
 
 // For efficiency, the <register> method for op--load-argument-n-leafcase
 // takes the arg-num as a raw value already multiplied by 4 (to
-// use for a byte offset). Callers can probably calculate this 
+// use for a byte offset). Callers can probably calculate this
 // value just as easily as the non-multiplied value.
-  
+
 define method op--load-argument-n-leafcase
     (be :: <harp-back-end>, argument :: <register>, arg-num :: <register>)
     => ()
@@ -123,7 +123,7 @@ end method;
 ignore(op--load-argument-n-via-frame);
 
 define method op--load-argument-n-via-frame
-    (be :: <harp-back-end>, argument :: <register>, arg-num :: <integer>) 
+    (be :: <harp-back-end>, argument :: <register>, arg-num :: <integer>)
     => ()
   let in-regs = be.registers.arguments-passed-in-registers;
   let last-in-reg = in-regs - 1; // the number of the last arg to be passed in a reg
@@ -140,13 +140,13 @@ define method op--load-argument-n-via-frame
     ins--move(be, argument, argument-register(arg-num));
   end if;
 end method;
-  
+
 
 // For efficiency, the <register> method for op--load-argument-n-via-frame
 // takes the arg-num as a raw value already multiplied by 4 (to
-// use for a byte offset). Callers can probably calculate this 
+// use for a byte offset). Callers can probably calculate this
 // value just as easily as the non-multiplied value.
-  
+
 define method op--load-argument-n-via-frame
     (be :: <harp-back-end>, argument :: <register>, arg-num :: <register>)
     => ()
@@ -163,7 +163,7 @@ define method op--load-argument-n-via-frame
 end method;
 
 
-define method setup-args-for-dylan-call 
+define method setup-args-for-dylan-call
       (be :: <harp-back-end>, args) => (num-in-regs :: <integer>)
   let regs = be.registers;
   let argsize = args.size;
@@ -179,7 +179,7 @@ define method setup-args-for-dylan-call
  num-in-regs;
 end method;
 
-define method setup-args-for-c-call 
+define method setup-args-for-c-call
       (be :: <harp-back-end>, args) => (num-in-regs :: <integer>)
   let regs = be.registers;
   let argsize = args.size;
@@ -227,7 +227,7 @@ end method;
 define method op--call-iep
     (be :: <harp-back-end>, func, #rest args)
   let num-in-regs = setup-args-for-dylan-call(be, args);
-  // Do the call  
+  // Do the call
   ins--call(be, func, num-in-regs);
 end method;
 
@@ -238,17 +238,17 @@ define method op--call-xep
   // set the xep registers ...
   ins--move(be, regs.reg-function, func);
   ins--move(be, regs.reg-arg-count, args.size);
-  // Do the call  
+  // Do the call
   ins--call-indirect(be, regs.reg-function, be.function-xep-offset, num-in-regs);
 end method;
 
-define method op--call-c 
+define method op--call-c
     (be :: <harp-back-end>, name :: <byte-string>, #rest args)
   let name-ref = ins--constant-ref(be, c-mangle(be, name));
   apply(op--call-c, be, name-ref, args);
 end method;
 
-define method op--call-c 
+define method op--call-c
     (be :: <harp-back-end>, name-ref :: <constant-reference>, #rest args)
   // First push any caller-reserved-space
   op--push-space-for-callee(be);
@@ -256,7 +256,7 @@ define method op--call-c
   let num-in-regs = setup-args-for-c-call(be, args);
   let num-on-stack = args.size - num-in-regs;
 
-  // Do the call  
+  // Do the call
   ins--call-alien(be, name-ref, 0);
   // And pop the args
   unless (num-on-stack == 0)
@@ -300,7 +300,7 @@ end method;
 */
 
 
-define inline method op--rts-dropping-n-args 
+define inline method op--rts-dropping-n-args
     (be :: <harp-back-end>, num-args :: <integer>)
   let reg-args = be.registers.arguments-passed-in-registers;
   let stack-args = max(num-args - reg-args, 0);
@@ -329,10 +329,10 @@ define method op--rts-dropping-n-requireds-and-optionals
 end method;
 
 
-// For efficiency, the <register> method for 
+// For efficiency, the <register> method for
 // op--rts-dropping-n-requireds-and-optionals
 // takes the req-num number as a raw value already multiplied by 4
-// (to use for a byte offset). Callers can probably calculate this 
+// (to use for a byte offset). Callers can probably calculate this
 // value just as easily as the non-multiplied value.
 // NB THIS MAY ONLY BE USED IF ALL ARGUMENT REGISTERS ARE KNOWN TO BE FULL
 
@@ -353,7 +353,7 @@ define method op--rts-dropping-n-requireds-and-optionals
 end method;
 
 
-define method op--load-arguments 
+define method op--load-arguments
     (be :: <harp-back-end>, #rest regs) => ()
   let args-in-regs =
     min(regs.size,
@@ -374,7 +374,7 @@ end method;
 
 ignore(op--load-arguments-leafcase);
 
-define method op--load-arguments-leafcase 
+define method op--load-arguments-leafcase
     (be :: <harp-back-end>, #rest regs) => ()
   let args-in-regs =
     min(regs.size,
@@ -395,7 +395,7 @@ define method op--load-arguments-leafcase
 end method;
 
 
-define method op--c-load-arguments 
+define method op--c-load-arguments
     (be :: <harp-back-end>, #rest regs) => ()
   let args-in-regs =
     min(regs.size,
@@ -434,7 +434,7 @@ end method;
 
 ignore(op--ld-current-unwind-protect-frame);
 
-define method op--ld-current-unwind-protect-frame 
+define method op--ld-current-unwind-protect-frame
     (be :: <harp-back-end>, dest :: <register>) => ()
   ins--ld-teb(be, dest, be.teb-dynamic-environment-offset);
 end method;
@@ -442,7 +442,7 @@ end method;
 
 ignore(op--st-current-unwind-protect-frame);
 
-define method op--st-current-unwind-protect-frame 
+define method op--st-current-unwind-protect-frame
     (be :: <harp-back-end>, data) => ()
   ins--st-teb(be, data, be.teb-dynamic-environment-offset);
 end method;
@@ -451,7 +451,7 @@ end method;
 
 // OP--COPY-WORDS-WITH-UPDATE
 // A processor specific DUUU op, which does a copy-words, and loads
-// dest with the location  immediately after the copy. This can 
+// dest with the location  immediately after the copy. This can
 // be implemented efficiently on most platforms.
 
 define open generic op--copy-words-with-update

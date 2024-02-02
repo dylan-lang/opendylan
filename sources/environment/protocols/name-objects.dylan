@@ -33,7 +33,7 @@ define open generic name-imported?
     (server :: <server>, name :: <name-object>)
  => (imported? :: <boolean>);
 
-
+
 /// Project dispatching methods
 
 define method name-value
@@ -80,7 +80,7 @@ define method name-imported?
   end
 end method name-imported?;
 
-
+
 /// Implementation
 
 define method environment-object-type-name

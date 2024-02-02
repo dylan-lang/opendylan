@@ -90,7 +90,7 @@ end method;
 define method free-remote-object
     (application :: <debug-target>,
      robj :: <weak-remote-object>,
-     #key thread = #f) 
+     #key thread = #f)
        => ()
   unless (robj.explicitly-freed?)
     let spy-thread =
@@ -106,7 +106,7 @@ end method;
 define method free-remote-object
     (application :: <debug-target>,
      robj :: <remote-object>,
-     #key thread = #f) 
+     #key thread = #f)
        => ()
   unless (robj.explicitly-freed?)
     let spy-thread =
@@ -124,7 +124,7 @@ end method;
 define method remote-object-value
   (application :: <debug-target>,
    robj :: <remote-object>,
-   #key thread = #f) 
+   #key thread = #f)
       => (val-or-false :: false-or (<remote-value>))
   if (robj.explicitly-freed?)
     #f
@@ -139,7 +139,7 @@ end method;
 define method remote-object-value
   (application :: <debug-target>,
    robj :: <weak-remote-object>,
-   #key thread = #f) 
+   #key thread = #f)
       => (val-or-false :: false-or (<remote-value>))
   if (robj.explicitly-freed?)
     #f

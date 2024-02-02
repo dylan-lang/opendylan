@@ -73,7 +73,7 @@ define method note-editor-selected
   #f
 end method note-editor-selected;
 
-
+
 /// Error classes
 
 define open abstract class <editor-condition> (<condition>)

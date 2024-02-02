@@ -336,7 +336,7 @@ define method message-category
   end
 end method message-category;
 
-
+
 /// Messages pane
 
 define pane <messages-pane> ()

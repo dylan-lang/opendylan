@@ -15,7 +15,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method perform-all-registrations (trans :: <interactive-transaction>)
      => ()
-  let application = 
+  let application =
     trans.transaction-downloader-target.interactive-application;
   let thread = trans.transaction-thread;
   for (registration in trans.transaction-deferred-registrations)

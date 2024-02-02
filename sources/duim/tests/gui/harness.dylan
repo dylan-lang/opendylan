@@ -116,7 +116,7 @@ define method start-tests
   start-frame(frame) | 0
 end method start-tests;
 
-
+
 /// A useful graphic class
 
 define class <ellipse-pane> (<drawing-pane>)
@@ -137,7 +137,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-
+
 /// A useful text class
 
 define class <text-pane> (<drawing-pane>)

@@ -1,6 +1,6 @@
-module:    Dylan-user	
-Synopsis:  Win32 API for "Graphics Device Interface" - 
-	   drawing graphics and text and printing, 
+module:    Dylan-user
+Synopsis:  Win32 API for "Graphics Device Interface" -
+	   drawing graphics and text and printing,
 	   corresponding to "WINGDI.H" and "GDI32.DLL".
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

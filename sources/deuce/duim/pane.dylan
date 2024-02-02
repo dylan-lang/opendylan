@@ -254,7 +254,7 @@ define method deuce/display-buffer-name
   #f
 end method deuce/display-buffer-name;
 
-
+
 /// Scrolling
 
 // Note that there is an asymmetry in the behavior of horizontal and vertical
@@ -405,7 +405,7 @@ define sealed method page-scroll-amount
   end
 end method page-scroll-amount;
 
-
+
 /// Clipboard
 
 define sealed method add-to-clipboard
@@ -453,7 +453,7 @@ define sealed method get-from-clipboard
   data
 end method get-from-clipboard;
 
-
+
 /// Cursors and carets
 
 define sealed method deuce/cursor-position
@@ -526,7 +526,7 @@ define sealed method deuce/hide-caret
   end
 end method deuce/hide-caret;
 
-
+
 /// Repaint handling
 
 define sealed method handle-repaint
@@ -557,7 +557,7 @@ define sealed method handle-event
   end
 end method handle-event;
 
-
+
 /// Deuce gadget focus handling
 
 // Save the frame's accelerators, then turn them all off so that

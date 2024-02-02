@@ -17,7 +17,7 @@ define abstract class <llvm-binary-operator-flags-mixin> (<object>)
     init-value: #f, init-keyword: no-signed-wrap?:;
   constant slot llvm-binop-exact? :: <boolean>,
     init-value: #f, init-keyword: exact?:;
-end class;  
+end class;
 
 define constant <llvm-cast-operator>
   = one-of(#"TRUNC", #"ZEXT", #"SEXT", #"FPTOUI", #"FPTOSI",

@@ -675,7 +675,7 @@ define function slot-definition-type (form :: <slot-definition>)
   end;
 end function;
 
-
+
 /***********************************************************************/
 //  Global derived info
 
@@ -852,7 +852,7 @@ define method variable-referencing-forms
   end;
 end method;
 
-
+
 /// Warnings
 define function program-note-message (note :: <program-note>)
   apply(format-to-string,
@@ -925,7 +925,7 @@ define function source-form-notes
     element(context.dfmc-library-conditions-table, form, default: #())
   end
 end function;
-
+
 /////
 ////   Project compilation
 /////

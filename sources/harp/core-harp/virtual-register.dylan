@@ -8,23 +8,23 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // the common ancestor just is
 define abstract open class <register> (<object>)
-end;        
+end;
 
 
 define abstract primary open class <virtual-register> (<register>)
-  slot virtual-register-id :: <integer>, 
-    required-init-keyword: id:;      
+  slot virtual-register-id :: <integer>,
+    required-init-keyword: id:;
                                 // to allow us  to uniquely print them
 
   slot virtual-register-name = #f,
-    init-keyword: name:;      
+    init-keyword: name:;
 
   slot virtual-register-named-indirections :: <simple-object-vector> = #[],
-    init-keyword: indirections:;      
+    init-keyword: indirections:;
                                 // for source level debugging
   slot virtual-register-colour = #f;
                                 // the colouring - real register or spill
-  slot virtual-register-available-colours :: <integer> = 0; 
+  slot virtual-register-available-colours :: <integer> = 0;
                                 // set of all allocatable registers less
 			        // those disallowed by context, type or
 		 		// colours of neighbours
@@ -33,10 +33,10 @@ define abstract primary open class <virtual-register> (<register>)
                                 // This points to the start of this register's
                                 // entries for itself and all younger registers
   slot virtual-register-colour-pref :: <simple-integer-vector> = #[];
-                                // to be filled in ..., 
+                                // to be filled in ...,
   slot virtual-register-spill-set :: <spill-set>;
                                 // The set of available spill locations.
-                                // The compiler uses this for chaining os 
+                                // The compiler uses this for chaining os
                                 //  reusable registers Y 10/4/93
 
   slot virtual-register-clash-count :: <integer> = 0;
@@ -93,7 +93,7 @@ define class <central-spill> (<object>)
   slot central-spill-holder :: <stretchy-vector>, init-keyword: holder:;
   slot central-spill-maker :: <function>, init-keyword: maker:;
         // the thing to make spills of this type
-  slot central-spill-lower-limit :: <integer>, 
+  slot central-spill-lower-limit :: <integer>,
         init-value: 0, init-keyword: lower-limit:;
 end;
 

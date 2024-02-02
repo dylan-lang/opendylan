@@ -8,15 +8,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define primary open class <new-sdi> (<object>)
 
-  slot new-sdi-preceding-sdis :: <integer>, 
+  slot new-sdi-preceding-sdis :: <integer>,
 	init-value: 0;
 	// where we fit in the global sdi vector
 
-  constant slot new-sdi-dest-tag :: <tag>, 
+  constant slot new-sdi-dest-tag :: <tag>,
 	init-keyword: dest-tag:;
 	// where we're going
 
-  constant slot new-sdi-dest-offset :: <integer>, 
+  constant slot new-sdi-dest-offset :: <integer>,
 	init-value: 0, init-keyword: dest-offset:;
 	// + a fixed offset
 
@@ -24,7 +24,7 @@ define primary open class <new-sdi> (<object>)
 	init-value: 0, init-keyword: cached-span:;
 	// current estimate of required span
 
-  slot new-sdi-cached-size :: <integer>, 
+  slot new-sdi-cached-size :: <integer>,
 	init-value: 0, init-keyword: cached-size:;
 	// current estimate of instruction size
 
@@ -38,11 +38,11 @@ define primary open class <new-sdi> (<object>)
   slot new-sdi-diff :: false-or(<integer>) = #f;
 	// span difference from cached size
 
-  slot new-sdi-method-index :: <integer>, 
+  slot new-sdi-method-index :: <integer>,
 	init-value: 0, init-keyword: method-index:;
 	// current size's index in vector
 
-  constant slot new-sdi-method-vector :: <simple-object-vector>, 
+  constant slot new-sdi-method-vector :: <simple-object-vector>,
 	init-keyword: method-vector:;
 	// vector of methods to make sdis
 
@@ -52,7 +52,7 @@ define primary open class <new-sdi> (<object>)
   slot new-sdi-code-holder :: <sequence>, init-keyword: code-holder:;
 	// final piece of code
 
-  slot new-sdi-checked :: <boolean>, init-value: #f;	
+  slot new-sdi-checked :: <boolean>, init-value: #f;
 	// whether an sdi has been ok'd with respect to it's size and span
 
   /* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561

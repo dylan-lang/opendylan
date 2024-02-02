@@ -47,7 +47,7 @@ define method conc! (x :: <list>, y :: <list>) => (res :: <list>)
 end method;
 
 
-define method seq 
+define method seq
      (incl-lower :: <integer>, excl-upper :: <integer>) => (l :: <list>)
   let lst :: <list> = #();
   for (count from excl-upper - 1 to incl-lower by -1)
@@ -55,7 +55,7 @@ define method seq
   end for;
   lst
 end;
-      
+
 define method select-spill (vr :: <virtual-register>) => (s :: <spill>)
   let ss :: <spill-set> = vr.virtual-register-spill-set;
   if (ss.spill-set-scatter == #())
@@ -135,7 +135,7 @@ end;
 define variable delay-colouring :: <boolean> = #t;
 // "whether we should bother trying to delay colouring vrs with no preference"
 
-define method real-preserved-mask 
+define method real-preserved-mask
     (backend :: <harp-back-end>, reg :: <real-register>) => (mask :: <integer>)
   if (backend.variables.compiling-call-in)
     reg.real-register-c-preserved-mask
@@ -156,7 +156,7 @@ define method init-pref-vector
 end;
 
 define method really-colour-graph
-    (backend :: <harp-back-end>, 
+    (backend :: <harp-back-end>,
      lr-table :: <vector-32bit>, ranges :: <integer>)
   let state = backend.variables.vreg-state;
   let cache = state.vr-vect;
@@ -172,7 +172,7 @@ define method really-colour-graph
   end do-bit-set;
 
   let vrc-vect :: <simple-virtual-register-vector> =
-     make(<simple-virtual-register-vector>, 
+     make(<simple-virtual-register-vector>,
 	  size: ranges, fill: invalid-virtual-register());
 
   fill-vector-from-sort-groups(clashes, vrc-vect);
@@ -193,7 +193,7 @@ define method really-colour-graph
       let avail-colours :: <integer> = vr.virtual-register-available-colours;
       let number-avail :: <integer> = logcount(avail-colours);
       if (number-avail == 0)
-        let selected-colour :: <spill> = 
+        let selected-colour :: <spill> =
           select-spill-by-colour(backend, vr, old-colour);
 
 	// Colour as spill
@@ -221,14 +221,14 @@ define method really-colour-graph
 
         // Otherwise looks like we can select a real register. Do
 	// the preferencing to find out which one.
-		   
+
 	let r-r-vector :: <simple-object-vector> = regs.real-register-vector;
 	let selected-reg :: <real-register> = r-r-vector[0]; // dummy init
 	let selected-prf :: <integer> = -1000;
-	let pref-vector :: <simple-integer-vector> = 
+	let pref-vector :: <simple-integer-vector> =
             vr.virtual-register-colour-pref;
-		       
-        for (this-reg :: <real-register> in r-r-vector, 
+
+        for (this-reg :: <real-register> in r-r-vector,
              pref :: <integer> in pref-vector)
           let this-prf :: <integer> = pref + pref + pref;
           if (r-membr(this-reg, avail-colours) & this-prf >= selected-prf)
@@ -250,7 +250,7 @@ define method really-colour-graph
           for (this-reg :: <real-register> in r-r-vector,
                half-pref :: <integer> in pref-vector,
                this-all :: <integer> in pref-all)
-	    let this-prf :: <integer> = 
+	    let this-prf :: <integer> =
                 half-pref + half-pref + half-pref + this-all;
 	    if (this-prf >= selected-prf & r-membr(this-reg, avail-colours))
 	      selected-reg := this-reg;
@@ -258,9 +258,9 @@ define method really-colour-graph
             end if;
           end for;
         end if;
-        
+
         if (delay-colouring & (~  force-colour) & selected-prf <= 0)
-			
+
 	  without-bounds-checks
 
 	  if (number-avail > (j - i) & ~ (j == ranges))
@@ -299,7 +299,7 @@ define method really-colour-graph
             else
 	      selected-reg;
             end if;
-		       
+
 	  let colour-mask :: <integer> = selected-reg.real-register-mask;
 	  state.allocated-reals := r-union(state.allocated-reals, colour-mask);
 
@@ -325,20 +325,20 @@ define method really-colour-graph
 end;
 
 
-define open generic select-spill-by-colour 
-    (backend :: <harp-back-end>, vr :: <virtual-register>, 
+define open generic select-spill-by-colour
+    (backend :: <harp-back-end>, vr :: <virtual-register>,
      old-colour)
     => (spill :: <spill>);
 
-define method select-spill-by-colour 
-    (backend :: <harp-back-end>, vr :: <virtual-register>, 
+define method select-spill-by-colour
+    (backend :: <harp-back-end>, vr :: <virtual-register>,
      old-colour :: <integer>)
     => (spill :: <spill>)
   make-arg-spill(vr, old-colour);
 end method;
 
-define method select-spill-by-colour 
-    (backend :: <harp-back-end>, vr :: <virtual-register>, 
+define method select-spill-by-colour
+    (backend :: <harp-back-end>, vr :: <virtual-register>,
      old-colour)
     => (spill :: <spill>)
   select-spill(vr);
@@ -358,7 +358,7 @@ define method sort-by-block-clashes
 end method;
 
 /* Introduce sort-groups for virtual-register-clashes to reduce sorting
-   overhead by a factor of 6; often virtual-registers share the same 
+   overhead by a factor of 6; often virtual-registers share the same
    clash-count; registers are inserted into their groupings by clash-count
    and then copied in place into a vector in a post pass
 

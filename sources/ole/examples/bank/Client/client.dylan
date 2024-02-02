@@ -137,4 +137,4 @@ define method close-account (bank :: <IBank>, account :: <IBankAccount>) => ()
   let status = IBank/close-account(bank, account);
   com-check(status, "IBank/close-account", account);
 end close-account;
-  
+

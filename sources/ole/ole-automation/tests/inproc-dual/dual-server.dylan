@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $IID-IDonkey = 
+define constant $IID-IDonkey =
   as(<REFCLSID>, "{08448354-265D-11D2-9A67-006097C90313}");
 
 define constant $donkey-code = 192837;
@@ -24,7 +24,7 @@ define dual-interface <IDonkey> ( <simple-dispatch> )
   constant property Donkey-const :: <single-float>, name: "const";
   constant property Donkey-code :: <integer> = $donkey-code,
 	disp-id: $DISPID-VALUE;
-end;  
+end;
 
 define COM-interface <dll-donkey> ( <IDonkey> )
   slot IDonkey/Size :: <integer> = 0, init-keyword: size:;

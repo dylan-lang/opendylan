@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// This benchmark is a variant of the simple symbolic derivative program 
+/// This benchmark is a variant of the simple symbolic derivative program
 /// (DERIV). The main change is that it is `table-driven.'  Instead of using a
 /// large COND that branches on the CAR of the expression, this program finds
 /// the code that will take the derivative on the property list of the atom in

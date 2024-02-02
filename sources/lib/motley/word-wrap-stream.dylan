@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define constant <character-vector> :: <type> = 
+define constant <character-vector> :: <type> =
 	limited(<stretchy-vector>, of: <byte-character>);
 
 
@@ -38,7 +38,7 @@ define class <word-wrap-stream> (<wrapper-stream>)
 end class <word-wrap-stream>;
 
 
-define method initialize (this :: <word-wrap-stream>, 
+define method initialize (this :: <word-wrap-stream>,
 			  #rest rest, #key #all-keys) => ()
   ignore(rest);
   next-method();
@@ -46,7 +46,7 @@ define method initialize (this :: <word-wrap-stream>,
 end method initialize;
 
 
-define method write-element (this :: <word-wrap-stream>, elt :: <character>) 
+define method write-element (this :: <word-wrap-stream>, elt :: <character>)
 			 => ()
   select (elt)
     ' ', '\n', '\r', '\t' =>
@@ -107,7 +107,7 @@ define function flush-word-buffer (this :: <word-wrap-stream>) => ()
 end function flush-word-buffer;
 
 
-define method close (this :: <word-wrap-stream>, #rest rest, #key #all-keys) 
+define method close (this :: <word-wrap-stream>, #rest rest, #key #all-keys)
 		 => ()
   ignore(rest);
   flush-word-buffer(this);

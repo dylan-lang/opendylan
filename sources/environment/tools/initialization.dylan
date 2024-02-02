@@ -22,7 +22,7 @@ define constant $tutorial-description
       "Open Dylan and the Dylan language."];
 */
 
-
+
 /// Variables
 ///---*** These really need to be read from a registry
 
@@ -285,7 +285,7 @@ define function frame-start-tutorial
   #f
 end function frame-start-tutorial;
 
-
+
 /// Examples
 
 define frame <examples-dialog> (<dialog-frame>)

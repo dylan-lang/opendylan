@@ -15,10 +15,10 @@ define macro dood-format
     // 	    end block }
 end macro;
 
-define macro audit 
+define macro audit
   { audit(?dood:expression, ?format-string:expression, ?arguments:*) }
     => { }
-    // => { apply(format, dood-world-log-stream(dood-world(?dood)), 
+    // => { apply(format, dood-world-log-stream(dood-world(?dood)),
     // 	          ?format-string, dood-index(?dood), ?arguments) }
 end macro;
 
@@ -34,11 +34,11 @@ define macro weak-slots-definer
            concatenate(?=next-method(), list(?entries))
 	 end method }
 entries:
-  { } 
+  { }
     => { }
-  { ?getter:name, ... } 
+  { ?getter:name, ... }
     => { pair(?getter, #f), ... }
-  { ?getter:name => ?default:expression, ... } 
+  { ?getter:name => ?default:expression, ... }
     => { pair(?getter, method (?=self) ?default end), ... }
 end macro;
 
@@ -57,7 +57,7 @@ end macro;
 
 define macro dood-class-definer
   { define ?adjectives:* dood-class ?:name (?supers:*) ?slots:* end }
-    => { define ?adjectives dood-class-aux ?name (?supers) 
+    => { define ?adjectives dood-class-aux ?name (?supers)
            (?slots) (?slots) (?slots) (?slots)
          end }
 end macro;
@@ -127,29 +127,29 @@ wslots:
   { ?other:*; ... }
     => { ... }
 variable:
-  { ?:name :: ?:expression ?maybe-init-expression } 
+  { ?:name :: ?:expression ?maybe-init-expression }
     => { ?name :: ?expression ?maybe-init-expression }
-variable-name: 
+variable-name:
   { ?:name :: ?:expression ?maybe-init-expression }
     => { ?name }
-variable-name-and-type: 
+variable-name-and-type:
   { ?:name :: ?:expression ?maybe-init-expression }
     => { ?name :: ?expression }
-private-variable-name: 
-  { ?private-name :: ?:expression ?maybe-init-expression } 
+private-variable-name:
+  { ?private-name :: ?:expression ?maybe-init-expression }
     => { ?private-name }
 private-lazy-variable:
-  { ?private-name :: ?:expression ?maybe-init-expression } 
-    => { ?private-name :: type-union(<dood-slot-value-proxy>, ?expression) 
+  { ?private-name :: ?:expression ?maybe-init-expression }
+    => { ?private-name :: type-union(<dood-slot-value-proxy>, ?expression)
 	    ?maybe-init-expression }
 private-variable:
-  { ?private-name :: ?:expression ?maybe-init-expression } 
+  { ?private-name :: ?:expression ?maybe-init-expression }
     => { ?private-name :: ?expression ?maybe-init-expression }
 private-name:
-  { ?:name } 
+  { ?:name }
     => { "private-" ## ?name }
 standard-props:
-  { } 
+  { }
     => { }
   { reinit-expression: ?:expression, ... }
     => { ... }
@@ -166,43 +166,43 @@ maybe-init-expression:
 end macro;
 
 define macro dood-class-accessors-definer
-  { define dood-class-accessors ?class-name:name 
-    end } 
+  { define dood-class-accessors ?class-name:name
+    end }
     => { }
-  { define dood-class-accessors ?class-name:name 
+  { define dood-class-accessors ?class-name:name
       lazy slot ?:name :: ?type:expression, ?props:*; ?more-slots:*
-    end } 
+    end }
     => { define method ?name (x :: ?class-name) => (object :: ?type)
            dood-lazy-slot-value(x, "private-" ## ?name)
          end method;
-         define method ?name ## "-setter" 
+         define method ?name ## "-setter"
              (v :: ?type, x :: ?class-name) => (object :: ?type)
            "private-" ## ?name(x) := v
 	 end method;
          define dood-class-accessors ?class-name ?more-slots end }
-  { define dood-class-accessors ?class-name:name 
+  { define dood-class-accessors ?class-name:name
       lazy constant slot ?:name :: ?type:expression, ?props:*; ?more-slots:*
-    end } 
+    end }
     => { define method ?name (x :: ?class-name) => (object :: ?type)
            dood-lazy-slot-value(x, "private-" ## ?name)
          end method;
          define dood-class-accessors ?class-name ?more-slots end }
-  { define dood-class-accessors ?class-name:name 
+  { define dood-class-accessors ?class-name:name
       disk slot ?:name :: ?type:expression, ?props:*; ?more-slots:*
-    end } 
+    end }
     => { define method ?name (x :: ?class-name) => (object :: ?type)
            dood-disk-slot-value(x, "private-" ## ?name)
          end method;
          // TODO: should just use setter: ?name ## "-setter" in the
          // slot definition and get rid of private-xxx-setter altogether.
-         define method ?name ## "-setter" 
+         define method ?name ## "-setter"
              (v :: ?type, x :: ?class-name) => (object :: ?type)
            "private-" ## ?name(x) := v
 	 end method;
          define dood-class-accessors ?class-name ?more-slots end }
-  { define dood-class-accessors ?class-name:name  
+  { define dood-class-accessors ?class-name:name
       ?adjectives:* slot ?:name :: ?type:expression, ?stuff:*; ?more-slots:*
-    end } 
+    end }
     => { define dood-class-accessors ?class-name ?more-slots end }
 end macro;
 

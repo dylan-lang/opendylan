@@ -310,7 +310,7 @@ define method make-funcdesc (memid :: <disp-id>, // Function member ID
   fd.memid-value := memid;
   let num-codes :: <integer> = if (scodes) size(scodes) else -1 end;
   fd.cScodes-value := num-codes;
-  fd.lprgscode-value := 
+  fd.lprgscode-value :=
     if (num-codes > 0)
       let scp = make(<C-HRESULT*>, element-count: num-codes);
       for (i from 0 below num-codes)
@@ -372,7 +372,7 @@ define method ITypeInfo/ReleaseFuncDesc (this :: <Disp-Type-Info>,
   values()
 end method ITypeInfo/ReleaseFuncDesc;
 
-
+
 define constant $default-data-type = <object>;
 
 define sealed abstract primary class <data-description> (<member-description>)
@@ -538,7 +538,7 @@ define method store-result (pvarResult :: <LPVARIANT>,
 end method store-result;
 
 
-
+
 //  ====  other type info operations  ====
 
 
@@ -605,7 +605,7 @@ define generic find-member(this :: <ITypeInfo>, memid :: <disp-id>)
 define method ITypeInfo/GetDocumentation(this :: <Dylan-Type-Info>,
 					 memid :: <disp-id>)
  => (status :: <HRESULT>, Name :: <BSTR>, doc-string :: <BSTR>,
-     HelpContext :: <integer>, HelpFile :: <BSTR> ); 
+     HelpContext :: <integer>, HelpFile :: <BSTR> );
 
   // Problem: the caller is supposed to de-allocate the BSTR values
   // received, but won't know to do that if NULL is passed as the address. ???
@@ -700,7 +700,7 @@ define method ITypeInfo/GetIDsOfNames(this :: <Disp-Type-Info>,
 end method ITypeInfo/GetIDsOfNames;
 
 define method string-equal(s1 :: <string>, s2 :: <string> )
-			=> equal :: <boolean>; 
+			=> equal :: <boolean>;
   // Case-insensitive comparison.
   size(s1) = size(s2) &
     block (return)
@@ -739,7 +739,7 @@ define method ITypeInfo/GetNames(this :: <Dylan-Type-Info>,
   end if
 end method ITypeInfo/GetNames;
 
-
+
 // User code can signal this to return an error code from a dispatch member.
 define open primary class <OLE-server-condition> (<condition>)
   constant sealed slot ole-server-status :: <HRESULT>,
@@ -763,7 +763,7 @@ define method condition-to-string
   let message = win32-error-message(status);
   format-to-string("{<OLE-server-condition> %= [%=]}", status, message);
 end method condition-to-string;
-
+
 //  ====  Invoke  ====
 
 define method ITypeInfo/Invoke(this :: <Disp-Type-Info>,
@@ -890,7 +890,7 @@ define method invoke-member(var :: <variable-description>,
   values( status, 0 )
 end method invoke-member;
 
-define function return-property (value, type, 
+define function return-property (value, type,
 				 pdispparams :: <LPDISPPARAMS>,
 				 pvarResult :: <LPVARIANT> )
  => status :: <HRESULT>;
@@ -899,12 +899,12 @@ define function return-property (value, type,
     store-result(pvarResult, value, type)
   elseif ( (nargs = 1) & instance?(value, <collection>) )
     // property with one index argument
-    store-result(pvarResult, 
+    store-result(pvarResult,
 		 apply-to-dispparams(element, value, pdispparams),
 		 element-type(type))
   elseif ( instance?(value, <array>) & (nargs = rank(value)) )
     // indexed property with multiple arguments
-    store-result(pvarResult, 
+    store-result(pvarResult,
 		 apply-to-dispparams(aref, value, pdispparams),
 		 element-type(type))
   else // wrong number of arguments supplied
@@ -920,7 +920,7 @@ define method invoke-member(cd :: <constant-description>,
 			    pexcepinfo /* :: <LPEXCEPINFO> */)
 	=> ( status :: <HRESULT>, ArgErr :: <integer> );
 
-  let status :: <HRESULT> = 
+  let status :: <HRESULT> =
     if ( ~ zero?(logand(wFlags, $DISPATCH-PROPERTYGET)) ) // get value
       return-property(cd.constant-value, cd.data-type,
 		      pdispparams, pvarResult);
@@ -1109,12 +1109,12 @@ define method Disp-GetIDsOfNames(typeinfo :: <Disp-Type-Info>,
   ITypeInfo/GetIDsOfNames(typeinfo, rgszNames, cNames, rgdispid)
 end method Disp-GetIDsOfNames;
 
-
+
 // operations not supported:
 
 // Note that the following operations are not defined because they are
 // only applicable for a "component object class (coclass)":
-//   ITypeInfo/GetRefTypeOfImplType, ITypeInfo/GetRefTypeInfo, 
+//   ITypeInfo/GetRefTypeOfImplType, ITypeInfo/GetRefTypeInfo,
 //   ITypeInfo/CreateInstance
 
 define sideways method ITypeInfo/GetTypeComp (This :: <ITypeInfo>)
@@ -1157,7 +1157,7 @@ define method destroy(td :: <LPTYPEDESC>, #key ) => ();
 end method destroy;
 */
 
-
+
 
 // misc. stuff related to types
 

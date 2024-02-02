@@ -66,7 +66,7 @@ define open generic source-location-environment-object
     (server :: <server>, location :: <source-location>)
  => (object :: false-or(<environment-object>));
 
-
+
 /// Some convenience functions
 
 define method collect-environment-objects
@@ -83,7 +83,7 @@ define method collect-environment-objects
   results
 end method collect-environment-objects;
 
-
+
 /// Environment object types
 
 define method environment-object-type
@@ -98,7 +98,7 @@ define method environment-object-type-name
   "Object"
 end method environment-object-type-name;
 
-
+
 /// Environment object naming
 
 define method environment-object-primitive-name
@@ -117,7 +117,7 @@ define method get-environment-object-primitive-name
   #f
 end method get-environment-object-primitive-name;
 
-
+
 /// ID handling
 
 define method environment-object-id
@@ -132,7 +132,7 @@ define method environment-object-id
   object.%id
 end method environment-object-id;
 
-
+
 /// Library handling
 
 //---*** Hack to make library a valid keyword
@@ -168,7 +168,7 @@ define method environment-object-library
   #f
 end method environment-object-library;
 
-
+
 /// Source
 
 define method environment-object-source-location
@@ -205,7 +205,7 @@ define method environment-object-source
     & as(<string>, location.copy-source-location-contents)
 end method environment-object-source;
 
-
+
 /// Parsing environment objects
 
 define sealed generic parse-environment-object-name
@@ -369,7 +369,7 @@ define method parse-method-name
   end
 end method parse-method-name;
 
-
+
 /// Finding environment objects by name
 
 define open generic find-environment-object

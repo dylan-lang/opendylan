@@ -52,7 +52,7 @@ define function make-builder-with-test-function
   let parameter-types
     = if (arg-type) vector(arg-type) else #[] end if;
   let arguments
-    = map(method (arg-type, index) 
+    = map(method (arg-type, index)
             make(<llvm-argument>,
                  type: arg-type,
                  name: format-to-string("arg%d", index),
@@ -168,7 +168,7 @@ define function recognize-line
   ~empty?(line) & rec-0();
 end function;
 
-
+
 /// llvm-builder tests
 
 define test test-<llvm-builder> ()

@@ -11,9 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///// UPDATE-THREAD-STACK-SIZE-ON-CONNECTION
 
 define method update-thread-stack-size-on-connection
-    (connection :: <remote-access-connection>, thread :: <remote-thread>) 
+    (connection :: <remote-access-connection>, thread :: <remote-thread>)
     => ()
-  thread.stack-size := 
+  thread.stack-size :=
     Rtmgr/RemoteNub/initialize-stack-vectors
       (connection.nub, thread.rnub-descriptor);
   thread.stack-size-valid? := #t;
@@ -23,7 +23,7 @@ end method;
 ///// UPDATE-THREAD-STACK-TRACE-ON-CONNECTION
 
 define method update-thread-stack-trace-on-connection
-    (connection :: <remote-access-connection>, thread :: <remote-thread>) 
+    (connection :: <remote-access-connection>, thread :: <remote-thread>)
       => ()
   // We gain knowledge of the stack in two stages. The first stage is for
   // the debugger nub to do its initializations. A useful side-effect of that
@@ -62,7 +62,7 @@ define method update-thread-stack-trace-on-connection
   stack-frame-vector[last-frame].link-previous := #f;
   unless (last-frame == 0)
     stack-frame-vector[0].link-previous := stack-frame-vector[1];
-    stack-frame-vector[last-frame].link-next 
+    stack-frame-vector[last-frame].link-next
        := stack-frame-vector[last-frame - 1];
   end unless;
   for (i from 1 below last-frame)
@@ -80,7 +80,7 @@ end method;
 
 ///// READ-FRAME-LEXICALS
 
-define method read-frame-lexicals 
+define method read-frame-lexicals
   (conn :: <remote-access-connection>, frame :: <function-frame>) => ()
   unless (frame.partial-lexicals-read?)
     partial-read-frame-lexicals(conn, frame);
@@ -107,15 +107,15 @@ define method read-frame-lexicals
            (conn.nub, as-integer(frame.stack-frame-pointer), lookups, i + 1);
 
      let variable-name =
-      Rtmgr/RemoteNub/get-lexical-variable-name 
+      Rtmgr/RemoteNub/get-lexical-variable-name
       (conn.nub, lookups, i + 1);
 
      if (registers? == 1)
        // TODO: Make a register
-       let unassigned-register = 
+       let unassigned-register =
          find-register(frame.frame-thread.thread-access-path,
                        low-register-index);
-       variable-location := 
+       variable-location :=
          active-register(frame.frame-thread.thread-access-path,
                          frame.frame-thread,
                          unassigned-register);
@@ -173,7 +173,7 @@ end method;
 
 define method register-interactive-segment-on-connection
     (conn :: <remote-access-connection>,
-     from :: <remote-value>, to :: <remote-value>) 
+     from :: <remote-value>, to :: <remote-value>)
        => ()
   Rtmgr/RemoteNub/register-interactive-code-segment
     (conn.nub, as-integer(from), as-integer(to))

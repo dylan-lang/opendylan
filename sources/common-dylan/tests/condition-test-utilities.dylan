@@ -27,7 +27,7 @@ define method make-condition
        format-arguments: $condition-arguments)
 end method make-condition;
 
-
+
 /// Condition test functions
 
 define method test-condition (condition :: <condition>) => ()

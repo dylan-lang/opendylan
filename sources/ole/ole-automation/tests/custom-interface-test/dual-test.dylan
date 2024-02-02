@@ -9,9 +9,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // minimal macro call
 define dual-interface <IMinimal> ( <simple-dispatch> )
   uuid "{0844835F-265D-11D2-9A67-006097C90313}";
-end;  
+end;
 
-define constant $IID-IDonkey = 
+define constant $IID-IDonkey =
   as(<REFCLSID>, "{08448354-265D-11D2-9A67-006097C90313}");
 
 define constant $donkey-code = 192837;
@@ -29,7 +29,7 @@ define dual-interface <IDonkey> ( <simple-dispatch> )
   constant property Donkey-const :: <single-float>, name: "const";
   constant property Donkey-code :: <integer> = $donkey-code,
 	disp-id: $DISPID-VALUE;
-end;  
+end;
 
 define constant <C-IDonkey> = <Interface>;
 
@@ -65,7 +65,7 @@ define variable *dual-typeinfo* :: <interface> = $null-interface;
 
 define constant $magic-number = -3021;
 
-define test dual-interface-test 
+define test dual-interface-test
 		    (name: "dual-interface-test",
 		     description: "test dual interface")
 

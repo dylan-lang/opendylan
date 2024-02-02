@@ -5,8 +5,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/* ole-argument-test tests passing ole-variables to and from the server. 
-   <expected-values> contains all the variables that will be passed to the 
+/* ole-argument-test tests passing ole-variables to and from the server.
+   <expected-values> contains all the variables that will be passed to the
    server. After a value is passed to the server, it is retrieved and compared
    the original value passed. */
 
@@ -14,9 +14,9 @@ define class <expected-values> (<object>)
   constant slot the-integer-value :: <integer> = 143;
   constant slot the-negative-integer-value :: <integer> = -1234;
   constant slot the-large-integer-value :: <integer> = 5000000;
-  constant slot the-machine-word-value :: <machine-word> = 
+  constant slot the-machine-word-value :: <machine-word> =
     as(<machine-word>, #x80000000);
-  // constant slot the-character-value :: <character> = 'c'; 
+  // constant slot the-character-value :: <character> = 'c';
   constant slot the-single-float-value :: <single-float> =
     as(<single-float>, 1.234);
   constant slot the-double-float-value :: <double-float> =
@@ -29,9 +29,9 @@ define class <expected-values> (<object>)
     vector(vector(1, "one", #t),
 	   vector("two", 't', #f),
 	   "three");
-  constant slot the-string-sequence-value :: <sequence> = 
+  constant slot the-string-sequence-value :: <sequence> =
     vector("one", "two", "three", "four");
-  constant slot the-array-value :: <array> = 
+  constant slot the-array-value :: <array> =
     begin
       let the-array = make(<array>, dimensions: list(3));
       aref-setter("one", the-array, 0);
@@ -50,9 +50,9 @@ define class <expected-values> (<object>)
     end;
 end class <expected-values>;
 
-define test ole-argument-test 
+define test ole-argument-test
   (name: "ole-argument-test",
-   description: 
+   description:
      "tests passing arguments from a OLE controller to a OLE server")
   let expected-values = make(<expected-values>);
 
@@ -62,25 +62,25 @@ define test ole-argument-test
   check-equal("checking pi",
 	      get-property(*disp-interface*, *disp-id*),
 	      3.1416);
- 
+
   // check passing an integer
   check-not-crash("check getting the dispatch id",
 		  *disp-id* := get-id-of-name(*disp-interface*, "integer"));
   check-not-crash("setting integer",
 		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-integer-value));
-  check-equal("checking integer", 
+  check-equal("checking integer",
 	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-integer-value);
-  
+
   // check using name as direct reference instead of using a disp-id
   check-not-crash("setting integer using direct reference",
 		  set-property(*disp-interface*, "integer",
 			       expected-values.the-integer-value));
-  check-equal("checking integer", 
+  check-equal("checking integer",
 	      get-property(*disp-interface*, "integer"),
 	      expected-values.the-integer-value);
-  
+
   // check names of ole variables are case insensitive
   check-not-crash("check getting the dispatch id",
 		  *disp-id* := get-id-of-name(*disp-interface*, "iNteGer"));
@@ -88,8 +88,8 @@ define test ole-argument-test
 	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-integer-value);
 
-  // check using case-insensitive name as direct reference instead 
-  // of using a disp-id 
+  // check using case-insensitive name as direct reference instead
+  // of using a disp-id
   check-equal("checking integer using case insensitive name directly",
 	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-integer-value);
@@ -112,18 +112,18 @@ define test ole-argument-test
 
   // checking passing a machine-word
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
+		  *disp-id* :=
 		    get-id-of-name(*disp-interface*, "machine-word"));
   check-not-crash("setting machine-word",
-		  set-property(*disp-interface*, *disp-id*, 
+		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-machine-word-value));
-  check-equal("checking machine-word", 
+  check-equal("checking machine-word",
 	      get-property(*disp-interface*, *disp-id*),
-	      expected-values.the-machine-word-value); 
+	      expected-values.the-machine-word-value);
 
   // checking passing a single-float
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
+		  *disp-id* :=
 		    get-id-of-name(*disp-interface*, "single-float"));
   check-not-crash("setting single-float",
 		  set-property(*disp-interface*, *disp-id*,
@@ -134,10 +134,10 @@ define test ole-argument-test
 
   // checking passing a double-float
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
+		  *disp-id* :=
 		    get-id-of-name(*disp-interface*, "double-float"));
   check-not-crash("setting double-float",
-		  set-property(*disp-interface*, *disp-id*, 
+		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-double-float-value));
   check-equal("passing a double-float",
 	      get-property(*disp-interface*, *disp-id*),
@@ -146,7 +146,7 @@ define test ole-argument-test
   // checking passing a boolean
   check-not-crash("check getting the dispatch id",
 		  *disp-id* := get-id-of-name(*disp-interface*, "boolean"));
-  check-not-crash("setting true", 
+  check-not-crash("setting true",
 		  set-property(*disp-interface*, *disp-id*, #t));
   check-equal("passing true",
 	      get-property(*disp-interface*, *disp-id*),
@@ -160,7 +160,7 @@ define test ole-argument-test
 	      get-property(*disp-interface*, *disp-id*),
 	      #t);
 
-  check-not-crash("setting false", 
+  check-not-crash("setting false",
 		  get-property(*disp-interface*, *disp-id*) := #f);
   check-equal("passing false",
 	      get-property(*disp-interface*, *disp-id*),
@@ -169,31 +169,31 @@ define test ole-argument-test
   // check passing a string
   check-not-crash("check getting the dispatch id",
 		  *disp-id* := get-id-of-name(*disp-interface*, "string"));
-  check-not-crash("setting string", 
-		  set-property(*disp-interface*, *disp-id*, 
+  check-not-crash("setting string",
+		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-string-value));
   check-equal("passing a string",
 	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-string-value);
   check-true("string property is a <BSTR>",
-	     instance?(get-property(*disp-interface*, *disp-id*), 
+	     instance?(get-property(*disp-interface*, *disp-id*),
 		       <BSTR>));
 
   // check passing a sequence
   check-not-crash("check getting the dispatch id",
 		  *disp-id* := get-id-of-name(*disp-interface*, "sequence"));
   check-not-crash("setting sequence",
-		  set-property(*disp-interface*, *disp-id*, 
+		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-sequence-1-value));
-  
+
   check-equal("passing a sequence",
 	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-sequence-1-value);
- 
+
   // check passing a heterogenious sequence
   check-not-crash("setting another sequence",
-		  set-property(*disp-interface*, *disp-id*, 
-			       expected-values.the-sequence-2-value));  
+		  set-property(*disp-interface*, *disp-id*,
+			       expected-values.the-sequence-2-value));
   check-equal("passing another sequence",
  	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-sequence-2-value);
@@ -215,8 +215,8 @@ define test ole-argument-test
 	      expected-values.the-string-sequence-value);
 
   // check the ole-vector function, using sequence-2
-  let test-ole-vector = #f; 
-  check-true("make an ole vector", 
+  let test-ole-vector = #f;
+  check-true("make an ole vector",
 	     test-ole-vector := ole-vector(3, 4, #t));
   check-true("testing size of ole-vector",
 	     size(test-ole-vector) = 3);
@@ -235,15 +235,15 @@ define test ole-argument-test
   check-not-crash("check getting the dispatch id",
 		  *disp-id* := get-id-of-name(*disp-interface*, "array"));
   check-not-crash("setting array",
-		  set-property(*disp-interface*, *disp-id*, 
+		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-array-value));
   check-equal("passing an array",
 	      get-property(*disp-interface*, *disp-id*),
 	      expected-values.the-array-value);
-  
+
   // checking passing a multi-dimensional array
   check-not-crash("setting a multi-dimensional array",
-		  set-property(*disp-interface*, *disp-id*, 
+		  set-property(*disp-interface*, *disp-id*,
 			       expected-values.the-multi-dimensional-array-value));
   let mda = #f;
   check-not-crash("getting a multi-dimensional array",

@@ -111,7 +111,7 @@ define method current-stop-breakpoints
   end if;
 end method;
 
-
+
 /// Implementation
 
 // Override the default caching method, because the name can change

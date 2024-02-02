@@ -14,7 +14,7 @@ end;
 define sideways method emit-gluefile
     (back-end :: <harp-back-end>, ld :: <library-description>, cr-names,
      #key harp-output? = unsupplied(),
-          assembler-output? = unsupplied(), 
+          assembler-output? = unsupplied(),
           downloadable-data? = #f,
           debug-info? = *default-debug-info?*,
           compilation-layer,
@@ -44,7 +44,7 @@ define method glue-unit-name
   end if
 end method;
 
-define method main-unit-name 
+define method main-unit-name
     (lib-name, interactive?) => (name :: <byte-string>)
   let simple-name :: <byte-string> = "_main";
   if (interactive?)
@@ -76,7 +76,7 @@ define method emit-gluefile-internal
           assembler-output? = unsupplied(),
           downloadable-data? = #f,
           debug-info? = *default-debug-info?*,
-          compilation-layer) 
+          compilation-layer)
  => (data);
   let lib-name = as-lowercase(as(<string>, library-description-emit-name(ld)));
   let name = glue-name(lib-name);
@@ -85,7 +85,7 @@ define method emit-gluefile-internal
   let dylan-library? = *compiling-dylan?*;
   let main-unit? = main-unit?(back-end);
   let data = #f;
-  
+
   with-harp-outputter (back-end, stream, ld,
                        base: base-name,
                        harp-output?: harp-output?,
@@ -236,11 +236,11 @@ define open generic emit-shared-library-entry-points
 
 define method cr-init-names (ld, cr-names)
   concatenate
-    (map(method (cr) 
+    (map(method (cr)
            concatenate(cr-init-name(ld, cr), $system-init-code-tag);
          end,
          cr-names),
-     map(method (cr) 
+     map(method (cr)
            concatenate(cr-init-name(ld, cr), $user-init-code-tag);
          end,
          cr-names))
@@ -262,23 +262,23 @@ end method;
 //   map(library-description-glue-name, library-description-used-descriptions(ld))
 // end method;
 
-// 
+//
 // Support for Dynamic linking of Dylan derived implementation objects
-// 
+//
 // An attempt is made to only import/export language bindings, and all
 // other objects are fixed up at startup time by doing a number of
 // indirections off that
-// 
+//
 // The gluefile generator emits a binary "dyimp" section for dynamic linking.
-// 
+//
 
 
-// 
-// Definition of offset masks -- an encoding of a byte sequence of 
+//
+// Definition of offset masks -- an encoding of a byte sequence of
 // runtime indirections from parent to derived object
-// 
+//
 // These are set up lazily during first compilation session
-// 
+//
 
 define constant $offset-width = 8;
 define constant $offset-mask = ash(-1, $offset-width);
@@ -434,19 +434,19 @@ define method emit-library-imported-data
         (combined-cr & list(combined-cr))
           | compilation-context-records(description);
       end;
-    
+
     for (cr :: <compilation-record> in crs,
          first? = #t then #f)
       with-dependent ($compilation of cr)
         if (first?) first-cr := cr end;
         let heap = cr.compilation-record-model-heap;
         let objects
-          = if (heap) 
+          = if (heap)
               heap.heap-referenced-objects
-            else 
+            else
               compilation-record-heap-referenced-objects(cr);
             end if;
-      
+
         // dynamic-bind (*current-heap*          = heap)
         for (object in objects)
           emit-imported-data(back-end, stream, object, seen, first?);
@@ -695,12 +695,12 @@ define method output-imported-data
   output-external(back-end, stream, import, import?: #t);
 
   output-public(back-end, stream, name);
-  
+
   output-definition(back-end, stream, name,
                     section: #"variables");
-  
+
   output-data-item(back-end, stream, import,
                    import?: #t, offset: offset);
-  
+
   emit-data-footer(back-end, stream, name);
 end method;

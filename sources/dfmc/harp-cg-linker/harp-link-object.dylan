@@ -246,17 +246,17 @@ end method;
 // Override external visibility of model-objects here
 //
 // This can happen in the following cases:
-// 
+//
 // - model-objects (functions & classes) derived from their bindings
 // - wrappers derived from their classes
 // - methods derived from generic-function lists
 // - class-constructor methods derived from classes
 // - ieps derived from methods
-// 
+//
 // Only the parent objects are exported/imported across DLL boundary;
 // the derived objects will be derived locally at DLL load-time
 // from their imported parents
-// 
+//
 
 define inline function model-externally-visible?? (o)
  => (external? :: <boolean>)
@@ -359,7 +359,7 @@ define method emit-extern/import
   emit-extern(back-end, stream, name, o, import?);
 end method;
 
-define method emit-definition 
+define method emit-definition
     (back-end :: <harp-back-end>, stream, o :: <module-binding>) => ()
   emit-object(back-end, stream, o);
 end method;
@@ -469,7 +469,7 @@ define method emit-definition // !@#$ need unifying type
         otherwise =>
           values($dummy-name, apropo-model-object(o));
       end select;
-    
+
     output-definition(back-end,
                       stream,
                       name,
@@ -508,7 +508,7 @@ define method emit-definition
 		    $dummy-name,
 		    model-object: o,
 		    section: #"objects");
-  
+
   emit-object(back-end, stream, o);
 
   emit-data-footer(back-end, stream, $dummy-name, model-object: o);
@@ -519,23 +519,23 @@ define method emit-definition
                       stream,
                       name,
                       section: #"variables");
-    
+
     emit-data-item(back-end, stream, o.^generic-function-methods);
-    
+
     emit-data-footer(back-end, stream, name);
   end if;
 end method;
 
 
-// 
+//
 // Runtime derivation of generic function methods
-// 
+//
 // For sealed generic functions, just use the methods
 // slot, because this is not expected to change dynamically
-// 
+//
 // For incremental generics, have to define/export a binding
 // for the methods list, and indirect off that
-// 
+//
 
 define method emit-generic-methods-list?
     (o :: <&generic-function>,
@@ -637,7 +637,7 @@ define method emit-indirection-definition
   end if;
 end method;
 
-define sideways method emit-object 
+define sideways method emit-object
     (back-end :: <harp-back-end>, stream, o :: <module-binding>)
  => (object);
   output-definition(back-end, stream,
@@ -702,7 +702,7 @@ define method emit-object-slot
  => ();
   let the-slot = ^slot-value(o, slotd);
   // just use the iep model for mep models
-  let the-slot = 
+  let the-slot =
     select(the-slot by instance?)
       <&mep> =>
 	let sig-spec = signature-spec(o);
@@ -722,7 +722,7 @@ define method emit-object-slot
 end method;
 
 define method emit-object-slot
-    (back-end :: <harp-back-end>, stream, 
+    (back-end :: <harp-back-end>, stream,
      class,
      slotd :: <&repeated-slot-descriptor>,
      o)
@@ -742,7 +742,7 @@ define method emit-object-slot
 
       if (*stream-outputters?*)
         emit-line-comment(stream,
-                          " %s[%d] ", 
+                          " %s[%d] ",
                           struct-field-name(class, slotd, i),
                           i);
       end if;

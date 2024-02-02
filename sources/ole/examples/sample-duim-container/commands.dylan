@@ -45,7 +45,7 @@ define command-table *container-command-table* (*global-command-table*)
   menu-item "Help" = *help-command-table*;
 end command-table;
 
-
+
 
 define method new-document
     (frame :: <sample-container-frame>) => ()

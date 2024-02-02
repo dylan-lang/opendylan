@@ -26,7 +26,7 @@ define open generic definition-known-locations
     (server :: <server>, object :: <definition-object>)
  => (locations :: <sequence>);
 
-
+
 /// Project dispatching methods
 
 define method definition-modifiers
@@ -62,7 +62,7 @@ define method definition-known-locations
   end
 end method definition-known-locations;
 
-
+
 /// Some convenience functions built on these protocols
 
 define function find-named-definition

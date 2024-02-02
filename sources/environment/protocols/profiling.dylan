@@ -131,7 +131,7 @@ define open generic process-thread-snapshot-frame-snapshots
     (application :: <application>, snapshot :: <thread-snapshot>)
  => (frame-snapshots :: <simple-object-vector>);
 
-
+
 /// Project dispatching methods
 
 define method start-profiling-application
@@ -200,7 +200,7 @@ define method profile-snapshot-available-values
   profile-snapshot-available-values(application)
 end method profile-snapshot-available-values;
 
-
+
 /// Some convenience functions built on these protocols
 
 define inline function application-total-snapshots

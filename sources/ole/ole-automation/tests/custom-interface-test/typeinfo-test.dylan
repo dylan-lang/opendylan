@@ -26,7 +26,7 @@ define vtable-interface <IMonkey> ( <IUnknown> )
 	 => ( x :: <C-int>, y :: <integer>, z :: <C-short> );
   property IMonkey/Size :: <integer>;
   constant property Monkey-const :: <single-float>;
-end;  
+end;
 
 // Update the following if any members added above.
 define constant $number-of-monkey-members = 9;
@@ -71,7 +71,7 @@ define variable *vi3* :: <interface> = $null-interface;
 define variable *typeinfo* :: <interface> = $null-interface;
 define variable *attr* = $null-interface;
 
-define test vtable-interface-test 
+define test vtable-interface-test
 		    (name: "vtable-interface-test",
 		     description: "test custom interface with type info")
 

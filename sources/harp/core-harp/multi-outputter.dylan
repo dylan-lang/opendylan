@@ -18,21 +18,21 @@ define sealed class <harp-multiple-outputter> (<harp-outputter>)
     required-init-keyword: outputters:;
 end class;
 
-define method multiplex-outputters 
+define method multiplex-outputters
       (#rest outputters) => (mux :: <harp-multiple-outputter>)
-  make(<harp-multiple-outputter>, 
+  make(<harp-multiple-outputter>,
        outputters: as(<simple-object-vector>, outputters));
 end method;
 
 
-define method do-outputters 
+define method do-outputters
     (function :: <function>, multi :: <harp-multiple-outputter>) => ()
   for (outputter in multi.internal-outputters)
     do-outputters(function, outputter);
   end for;
 end method;
 
-define method do-outputters 
+define method do-outputters
     (function :: <function>, outputter :: <harp-outputter>) => ()
   function(outputter);
 end method;
@@ -42,7 +42,7 @@ define method make-harp-outputter-by-type
     (backend :: <harp-back-end>, filename, type :: <sequence>)
     => (output-stream :: <harp-multiple-outputter>)
   make(<harp-multiple-outputter>,
-       outputters: 
+       outputters:
        map-as(<simple-object-vector>,
 	      method (val)
 	        make-harp-outputter-by-type(backend, filename, val);
@@ -76,7 +76,7 @@ end method;
 
 
 define method output-comment
-    (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>, 
+    (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>,
      comment :: <string>) => ();
   for (outputter in multi.internal-outputters)
     output-comment(backend, outputter, comment);
@@ -84,7 +84,7 @@ define method output-comment
 end method;
 
 define method output-line-comment
-    (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>, 
+    (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>,
      comment :: <string>) => ();
   for (outputter in multi.internal-outputters)
     output-line-comment(backend, outputter, comment);
@@ -92,7 +92,7 @@ define method output-line-comment
 end method;
 
 
-define method output-external 
+define method output-external
     (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>, name,
     #rest all-keys, #key, #all-keys)
     => ()
@@ -130,8 +130,8 @@ end method;
 
 
 define method output-variable
-    (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>, 
-     name, initial-value, 
+    (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>,
+     name, initial-value,
      #rest all-keys, #key, #all-keys) => ()
   for (outputter in multi.internal-outputters)
     apply(output-variable, backend, outputter, name, initial-value, all-keys);
@@ -139,7 +139,7 @@ define method output-variable
 end method;
 
 
-define method output-header 
+define method output-header
     (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>) => ()
   for (outputter in multi.internal-outputters)
     output-header(backend, outputter);
@@ -147,7 +147,7 @@ define method output-header
 end method;
 
 
-define method output-footer 
+define method output-footer
     (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>) => ()
   for (outputter in multi.internal-outputters)
     output-footer(backend, outputter);
@@ -155,7 +155,7 @@ define method output-footer
 end method;
 
 
-define method output-data-start 
+define method output-data-start
     (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>) => ()
   for (outputter in multi.internal-outputters)
     output-data-start(backend, outputter);
@@ -163,7 +163,7 @@ define method output-data-start
 end method;
 
 
-define method output-code-start 
+define method output-code-start
     (backend :: <harp-back-end>, multi :: <harp-multiple-outputter>) => ()
   for (outputter in multi.internal-outputters)
     output-code-start(backend, outputter);
@@ -182,8 +182,8 @@ end method;
 
 
 define method output-data-item
-    (backend :: <harp-back-end>, 
-     multi :: <harp-multiple-outputter>, 
+    (backend :: <harp-back-end>,
+     multi :: <harp-multiple-outputter>,
      item,
      #rest all-keys, #key, #all-keys) => ()
   for (outputter in multi.internal-outputters)
@@ -192,8 +192,8 @@ define method output-data-item
 end method;
 
 define method output-data-footer
-    (backend :: <harp-back-end>, 
-     multi :: <harp-multiple-outputter>, 
+    (backend :: <harp-back-end>,
+     multi :: <harp-multiple-outputter>,
      item,
      #rest all-keys, #key, #all-keys) => ()
   for (outputter in multi.internal-outputters)
@@ -203,8 +203,8 @@ end method;
 
 
 define method output-data-byte
-    (backend :: <harp-back-end>, 
-     multi :: <harp-multiple-outputter>, 
+    (backend :: <harp-back-end>,
+     multi :: <harp-multiple-outputter>,
      byte) => ()
   for (outputter in multi.internal-outputters)
     output-data-byte(backend, outputter, byte);
@@ -213,8 +213,8 @@ end method;
 
 
 define method output-compiled-lambda
-    (backend :: <harp-back-end>, 
-     multi :: <harp-multiple-outputter>, 
+    (backend :: <harp-back-end>,
+     multi :: <harp-multiple-outputter>,
      item :: <fully-compiled-lambda>,
      #rest all-keys, #key, #all-keys) => ()
   for (outputter in multi.internal-outputters)

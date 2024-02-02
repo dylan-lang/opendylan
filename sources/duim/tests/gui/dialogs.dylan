@@ -115,7 +115,7 @@ define method new-choose-from-dialog
   end
 end method new-choose-from-dialog;
 
-
+
 /// Multiple values dialog
 
 define frame <multiple-values-dialog> (<dialog-frame>)
@@ -185,7 +185,7 @@ define method choose-multiple-values
   end
 end method choose-multiple-values;
 
-
+
 /// Simple wizard test
 
 define frame <simple-wizard-test> (<wizard-frame>)
@@ -248,7 +248,7 @@ define method choose-from-wizard
   end
 end method choose-from-wizard;
 
-
+
 /// Simple property test
 
 define frame <simple-property-test> (<property-frame>)
@@ -328,7 +328,7 @@ define method display-properties
   end
 end method display-properties;
 
-
+
 /// Modeless dialog test
 
 define function start-modeless-dialog
@@ -360,7 +360,7 @@ define function start-modeless-dialog
   end
 end function start-modeless-dialog;
 
-
+
 /// Simple Dialogs frame
 
 define method show-result (frame :: <simple-frame>, value) => ()

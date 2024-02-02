@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $maximum-object-name-length = 2000;
 
-
+
 /// General printing functions
 
 define open generic frame-qualify-names?
@@ -107,7 +107,7 @@ define method frame-print-environment-object
   name | default
 end method frame-print-environment-object;
 
-
+
 /// Find named objects
 
 define method find-named-object

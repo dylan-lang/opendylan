@@ -76,20 +76,20 @@ define module coff-representation
   export <coff-byte>, <coff-short>, <coff-word>,
          <coff-unit>,
          <coff-index>,
-         index, index-setter, 
+         index, index-setter,
 
          <coff-string>, <coff-short-string>, <coff-long-string>,
          string-data,
 
-         <coff-symbol-record>, 
+         <coff-symbol-record>,
          <coff-symbol>,
-         section, section-setter, symbol-name, 
+         section, section-setter, symbol-name,
          symbol-value, symbol-value-setter,
          symbol-type, symbol-type-setter,
          storage-class, storage-class-setter,
          aux-symbols, aux-symbols-setter,
 
-         <coff-auxiliary-symbol>, 
+         <coff-auxiliary-symbol>,
          <coff-plain-auxiliary-symbol>,
          <coff-string-auxiliary-symbol>,
          <coff-empty-auxiliary-symbol>,
@@ -100,8 +100,8 @@ define module coff-representation
          auxiliary-data, auxiliary-data-setter,
          auxiliary-string, auxiliary-string-setter,
          auxiliary-line-number, auxiliary-line-number-setter,
-         auxiliary-next-function, auxiliary-next-function-setter, 
-         auxiliary-tag, auxiliary-tag-setter, 
+         auxiliary-next-function, auxiliary-next-function-setter,
+         auxiliary-tag, auxiliary-tag-setter,
          auxiliary-next-function-index, auxiliary-tag-index,
          auxiliary-total-size, auxiliary-total-size-setter,
          auxiliary-line-numbers, auxiliary-line-numbers-setter,
@@ -112,7 +112,7 @@ define module coff-representation
          auxiliary-selection, auxiliary-selection-setter,
          next-function-index,
 
-         <coff-relocation>, 
+         <coff-relocation>,
          <coff-genuine-relocation>, <coff-interactor-relocation>,
          <coff-relative-relocation>, <coff-absolute-relocation>,
          relocation-symbol, relocation-symbol-setter,
@@ -132,7 +132,7 @@ define module coff-representation
          section-data-size-in-file,
          section-data-size-in-image,
          virtual-size, virtual-size-setter,
-         rva-offset, rva-offset-setter, 
+         rva-offset, rva-offset-setter,
          raw-data-pointer, raw-data-pointer-setter,
          relocs-pointer, relocs-pointer-setter,
          relocs-number, relocs-number-setter,
@@ -140,7 +140,7 @@ define module coff-representation
          linenumbers-number, linenumbers-number-setter,
          line-numbers, line-numbers-setter,
          big-endian?,
-         relocations, relocations-setter, 
+         relocations, relocations-setter,
          coff-section-undefined,
          coff-section-sym-absolute,
          coff-section-sym-debug,
@@ -148,20 +148,20 @@ define module coff-representation
          <coff-table>, <coff-duplicated-table>,
          id-table-data,
          ordered-data, ordered-data-setter,
-         coff-element, coff-element-setter, 
+         coff-element, coff-element-setter,
 
-         <coff-symbol-table>, 
+         <coff-symbol-table>,
 
-         <coff-string-table>, 
+         <coff-string-table>,
 
          <coff-section-table>,
 
-         machine, 
+         machine,
          time-stamp, time-stamp-setter,
          header-size, header-size-setter,
          characteristics, characteristics-setter,
          symbols, strings,
-         <coff-file>; 
+         <coff-file>;
 end module;
 
 
@@ -169,7 +169,7 @@ define module coff-sizes
   use dylan-and-big-integers;
   use coff-representation;
 
-  export 
+  export
     size-of-symbol,
     file-headers-size,
     section-headers-size,
@@ -196,7 +196,7 @@ define module coff-writer
   use coff-sizes;
   use byte-vector;
 
-  export 
+  export
     write-coff-header,
     write-section-table,
     write-relocations,

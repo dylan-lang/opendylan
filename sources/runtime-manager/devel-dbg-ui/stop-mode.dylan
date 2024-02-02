@@ -21,7 +21,7 @@ define method register-stopped-thread
 
   let index = 1;
   let found = #f;
-  application.stopped-thread := 
+  application.stopped-thread :=
     stop-reason.stop-reason-thread;
 
   while ((index <= size (application.application-thread-table)) &
@@ -52,7 +52,7 @@ end method;
 ///// BUILD-TOP-OF-STACK
 //    Gets ready for displaying backtraces.
 
-define method build-top-of-stack 
+define method build-top-of-stack
     (application :: <application>, thread :: <remote-thread>)
 
   // If we are stopping "for real", that is, we are entering a
@@ -62,7 +62,7 @@ define method build-top-of-stack
   let frame = first-stack-frame (application, thread);
   let index = 1;
   application.current-stack := make (<stretchy-vector>, size: 0);
-  application.current-stack := 
+  application.current-stack :=
      add! (application.current-stack, frame);
   application.current-frame-index := index;
 
@@ -120,7 +120,7 @@ define method process-stop-mode
       end if;
 
     if (did-something)
-      debugger-message 
+      debugger-message
         ("%s (%s:%s)",
          *opening-command*.application-filename,
          *open-application*.default-name-context.context-module,
@@ -160,12 +160,12 @@ define method process-stop-mode
       did-something := #f;
     else
       debugger-message("Illegally formed command.\n");
-    end if;   
+    end if;
   end while;
 
   // We're moving again. Don't remember anything about the stack.
 
-  *open-application*.current-stack := 
+  *open-application*.current-stack :=
      make (<stretchy-vector>, size: 0);
   *open-application*.current-frame-index := 0;
 

@@ -15,7 +15,7 @@ end class <graphics-record>;
 
 define protocol-predicate graphics-record;
 
-
+
 /// 'draw-point'
 
 define sealed class <point-record> (<graphics-record>)
@@ -65,7 +65,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-
+
 /// 'draw-points'
 
 define sealed class <points-record> (<graphics-record>)
@@ -154,7 +154,7 @@ define method highlight-output-record
   end
 end method highlight-output-record;
 
-
+
 /// 'draw-line'
 
 define sealed class <line-record> (<graphics-record>)
@@ -278,7 +278,7 @@ define method draw-arrow
   end
 end method draw-arrow;
 
-
+
 /// 'draw-lines'
 
 define sealed class <lines-record> (<graphics-record>)
@@ -377,7 +377,7 @@ define method highlight-output-record
   end
 end method highlight-output-record;
 
-
+
 /// 'draw-rectangle'
 
 define sealed class <rectangle-record> (<graphics-record>)
@@ -472,7 +472,7 @@ define method highlight-output-record
   end
 end method highlight-output-record;
 
-
+
 /// 'draw-rectangles'
 
 define sealed class <rectangles-record> (<graphics-record>)
@@ -581,7 +581,7 @@ define method highlight-output-record
   end
 end method highlight-output-record;
 
-
+
 /// 'draw-polygon'
 
 define sealed class <polygon-record> (<graphics-record>)
@@ -687,7 +687,7 @@ define method highlight-output-record
   next-method()
 end method highlight-output-record;
 
-
+
 /// 'draw-ellipse'
 
 define sealed class <ellipse-record> (<graphics-record>)
@@ -820,7 +820,7 @@ define method draw-oval
   end
 end method draw-oval;
 
-
+
 /// 'draw-text'
 
 define sealed class <text-record> (<graphics-record>)
@@ -1000,7 +1000,7 @@ define method text-bounding-box
   fix-box(vl, vt, vr, vb)
 end method text-bounding-box;
 
-
+
 /// 'draw-bezier-curve'
 
 define sealed class <bezier-curve-record> (<graphics-record>)
@@ -1059,7 +1059,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-
+
 /// 'draw-image'
 
 define sealed class <image-record> (<graphics-record>)
@@ -1107,7 +1107,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-
+
 /// 'draw-pixmap'
 
 define sealed class <pixmap-record> (<graphics-record>)

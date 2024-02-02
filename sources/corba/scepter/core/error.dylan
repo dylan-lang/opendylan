@@ -50,7 +50,7 @@ define open abstract class <idl-error> (<idl-condition>, <error>)
 end class;
 
 // unused
-// 
+//
 // define class <idl-ok> (<idl-error>)
 //   inherited slot condition-string = "all is fine ";
 // end class;

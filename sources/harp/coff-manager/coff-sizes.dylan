@@ -38,10 +38,10 @@ define generic string-table-offset
 define generic total-file-size
     (coff-file :: <coff-file>) => (size :: <integer>);
 
-define generic total-relocation-size 
+define generic total-relocation-size
     (section :: <coff-section>) => (size :: <integer>);
 
-define generic total-line-numbers-size 
+define generic total-line-numbers-size
     (section :: <coff-section>) => (size :: <integer>);
 
 
@@ -64,8 +64,8 @@ define method unit-size (unit :: <coff-section>) => (size :: <integer>)
   // The unit size of a COFF section is the size of the section data
   // plus any relocation or line number information. It does NOT include
   // the size of the section header (which is not located contiguously)
-  unit.section-data-size-in-file 
-  + unit.total-relocation-size 
+  unit.section-data-size-in-file
+  + unit.total-relocation-size
   + unit.total-line-numbers-size;
 end method;
 
@@ -105,7 +105,7 @@ define method unit-size (unit :: <coff-string-table>) => (size :: <integer>)
 end method;
 
 
-define method total-line-numbers-size 
+define method total-line-numbers-size
     (section :: <coff-section>) => (size :: <integer>)
   reduce(method (val :: <integer>, reloc :: <coff-line-number>)
            val + reloc.unit-size
@@ -115,7 +115,7 @@ define method total-line-numbers-size
 end method;
 
 
-define method total-relocation-size 
+define method total-relocation-size
     (section :: <coff-section>) => (size :: <integer>)
   let reloc-size =
     reduce(method (val :: <integer>, reloc :: <coff-relocation>)

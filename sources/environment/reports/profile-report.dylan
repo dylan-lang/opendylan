@@ -53,7 +53,7 @@ end class <full-profile-report>;
 install-report(#"full-profile", "Full profile", <full-profile-report>);
 */
 
-
+
 /// Raw profile
 
 define method write-report-as
@@ -159,7 +159,7 @@ define method write-report-as
 end method write-report-as;
 */
 
-
+
 /// Profile summary
 
 define abstract class <profile-info> (<object>)
@@ -351,7 +351,7 @@ define method write-report-as
 end method write-report-as;
 */
 
-
+
 /// Time line report
 
 define method write-report-as
@@ -542,7 +542,7 @@ define method write-thread-report
   error("Not yet implemented!")
 end method write-thread-report;
 
-
+
 /// Full profile
 
 /*
@@ -576,7 +576,7 @@ define method write-report-as
   end
 end method write-report-as;
 
-
+
 /// Profile processing
 
 define constant $profile-results = make(<table>, weak?: #t);
@@ -629,7 +629,7 @@ define method process-thread-profile-results
 end method process-thread-profile-results;
 */
 
-
+
 /// Utilities
 
 define method profile-object-name

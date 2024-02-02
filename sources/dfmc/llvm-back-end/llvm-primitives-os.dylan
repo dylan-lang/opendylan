@@ -34,7 +34,7 @@ define c-callable auxiliary &runtime-primitive-descriptor call-application-exit-
 end;
 
 
-
+
 /// Support for keyboard-break handling
 
 define runtime-variable dylan-keyboard-interrupt? :: <raw-machine-word>
@@ -61,7 +61,7 @@ define side-effect-free &c-primitive-descriptor primitive-keyboard-interrupt-pol
 define side-effecting &c-primitive-descriptor primitive-keyboard-interrupt-polling-thread-setter
   (interrupt-polling? :: <raw-boolean>, hThread :: <raw-pointer>) => ();
 
-
+
 /// (Win32) DLL Support
 
 // FIXME these both need to be per-DLL/local

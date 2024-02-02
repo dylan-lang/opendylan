@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// The abstract class from which all native HARP backends are derived. 
+// The abstract class from which all native HARP backends are derived.
 // Native backends have stack operations (unlike the IDVM).
 
 define abstract open primary class <harp-native-back-end> (<harp-back-end>)

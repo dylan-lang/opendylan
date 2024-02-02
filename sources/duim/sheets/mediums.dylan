@@ -114,7 +114,7 @@ define protocol <<medium-protocol>> ()
   function synchronize-display (drawable :: type-union(<drawable>, <frame>, <port>)) => ();
 end protocol <<medium-protocol>>;
 
-
+
 /// Output sheets
 
 // This must come before <basic-sheet> in the CPL
@@ -222,7 +222,7 @@ define function find-sheet-with-medium
   parent
 end function find-sheet-with-medium;
 
-
+
 /// Basic mediums
 
 define constant $medium-brush-cached   :: <integer> = #o01;
@@ -413,7 +413,7 @@ define method invalidate-cached-transform (medium :: <medium>) => ()
                           medium-transform(medium))
 end method invalidate-cached-transform;
 
-
+
 /// Ports vs. mediums
 
 define method allocate-medium
@@ -435,7 +435,7 @@ define method destroy-medium (medium :: <medium>) => ()
   #f
 end method destroy-medium;
 
-
+
 /// Attaching mediums to sheets
 
 // The idea here is to go searching up the sheet hierarchy for a sheet
@@ -527,7 +527,7 @@ define method do-detach-medium (sheet :: <sheet>, medium :: <medium>) => ()
   #f
 end method do-detach-medium;
 
-
+
 /// Medium-related sheet properties
 
 define method attach-medium
@@ -548,7 +548,7 @@ define method attach-medium
     := merge-text-styles(medium-text-style(medium), medium-default-text-style(medium))
 end method attach-medium;
 
-
+
 /// Drawing options
 
 define sealed method do-with-drawing-options
@@ -643,7 +643,7 @@ define sealed method do-with-transform
   end
 end method do-with-transform;
 
-
+
 // Some default methods
 
 define method beep (medium :: <medium>) => ();
@@ -672,7 +672,7 @@ define method synchronize-display (_port :: <port>) => ()
   #f
 end method synchronize-display;
 
-
+
 /// Trampolines from sheets to mediums
 
 define method do-with-drawing-options
@@ -725,7 +725,7 @@ define method synchronize-display (sheet :: <sheet-with-medium-mixin>) => ()
   end
 end method synchronize-display;
 
-
+
 /// CLEAR-BOX
 
 define method clear-box

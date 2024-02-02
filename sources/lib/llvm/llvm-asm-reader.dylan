@@ -75,7 +75,7 @@ define table $llvm-keywords :: <string-table>
      "alignstack" => $%ALIGNSTACK-token,
      "gc" => $%GC-token,
      "personality" => $%PERSONALITY-token,
-     
+
      "ccc" => $%CCC-token,
      "fastcc" => $%FASTCC-token,
      "coldcc" => $%COLDCC-token,
@@ -88,10 +88,10 @@ define table $llvm-keywords :: <string-table>
      "x86_thiscallcc" => $%X86_THISCALLCC-token,
      "ptx_kernel" => $%PTX_KERNELCC-token,
      "ptx_device" => $%PTX_DEVICECC-token,
-     
+
      "cc" => $%CC-token,
      "c" => $%C-token,
-     
+
      "signext" => $%SIGNEXT-token,
      "zeroext" => $%ZEROEXT-token,
      "inreg" => $%INREG-token,
@@ -104,7 +104,7 @@ define table $llvm-keywords :: <string-table>
      "nest" => $%NEST-token,
      "readnone" => $%READNONE-token,
      "readonly" => $%READONLY-token,
-     
+
      "inlinehint" => $%INLINEHINT-token,
      "noinline" => $%NOINLINE-token,
      "alwaysinline" => $%ALWAYSINLINE-token,
@@ -117,10 +117,10 @@ define table $llvm-keywords :: <string-table>
      "uwtable" => $%UWTABLE-token,
      "returns_twice" => $%RETURNS_TWICE-token,
      "nonlazybind" => $%NONLAZYBIND-token,
-     
+
      "type" => $%TYPE-token,
      "opaque" => $%OPAQUE-token,
-     
+
      "eq" => $%EQ-token,
      "ne" => $%NE-token,
      "slt" => $%SLT-token,
@@ -148,7 +148,7 @@ define table $llvm-keywords :: <string-table>
      "min" => $%MIN-TOKEN,
      "umax" => $%UMAX-token,
      "umin" => $%UMIN-token,
-     
+
      "x" => $%X-token,
      "blockaddress" => $%BLOCKADDRESS-token,
 
@@ -240,7 +240,7 @@ define function llvm-identifier-character?
   | ch == '_'
   | ch == '-'
   | ch == '$'
-  | ch == '.'  
+  | ch == '.'
 end function;
 
 define function llvm-asm-parse
@@ -252,7 +252,7 @@ define function llvm-asm-parse
       select (ch)
         #f =>
           values($EOF-token, #f);
-          
+
         ' ', '\t', '\r', '\n' =>
           lexer();
 
@@ -260,7 +260,7 @@ define function llvm-asm-parse
           let characters = make(<stretchy-object-vector>);
           add!(characters, ch);
           lexer-i(characters);
-          
+
         's', 'u' =>
           let characters = make(<stretchy-object-vector>);
           add!(characters, ch);
@@ -270,15 +270,15 @@ define function llvm-asm-parse
           let characters = make(<stretchy-object-vector>);
           add!(characters, ch);
           lexer-0(characters);
-        
+
         '+' =>
           let characters = make(<stretchy-object-vector>);
           add!(characters, ch);
           lexer-+(characters);
-          
+
         '@' =>
           lexer-@();
-          
+
         '%' =>
           lexer-%();
 
@@ -293,7 +293,7 @@ define function llvm-asm-parse
           let characters = make(<stretchy-object-vector>);
           add!(characters, ch);
           lexer-$(characters);
-          
+
         ';' =>
           let line = read-line(stream, on-end-of-stream: #f);
           if (line)
@@ -309,7 +309,7 @@ define function llvm-asm-parse
           let characters = make(<stretchy-object-vector>);
           add!(characters, ch);
           lexer-negative(characters);
-          
+
         '=' =>
           values($%EQUALS-token, #f);
 
@@ -329,7 +329,7 @@ define function llvm-asm-parse
           values($%LANGLE-token, #f);
         '>' =>
           values($%RANGLE-token, #f);
-          
+
         ',' =>
           values($%COMMA-token, #f);
         '*' =>
@@ -471,7 +471,7 @@ define function llvm-asm-parse
                    else
                      value
                    end);
-            
+
           'J' =>
             let start = position(number, 'x') + 1;
             let high
@@ -479,7 +479,7 @@ define function llvm-asm-parse
             let low
               = string-to-machine-word(number, start: start + 8);
             values($%FPVAL-token, encode-double-float(low, high));
-              
+
           otherwise =>
             error("Not handling 0x%c", class);
         end select;
@@ -562,7 +562,7 @@ define function llvm-asm-parse
       let ch = peek(stream, on-end-of-stream: #f);
       error("+-token");
     end method,
-    
+
     method lexer-@
         () => (token-class, token-value);
       let ch = read-element(stream, on-end-of-stream: #f);
@@ -668,7 +668,7 @@ define function llvm-asm-parse
         lexer-quote(characters, token-class)
       end if;
     end method,
-    
+
     method lexer-quote-backslash
         (characters :: <stretchy-object-vector>, token-class)
      => (token-class, token-value);
@@ -681,10 +681,10 @@ define function llvm-asm-parse
                 | ('A' <= ch & ch <= 'F'))
         lexer-quote-backslash-hex(characters, token-class, ch);
       else
-        error("bad \\xx in quoted string");  
+        error("bad \\xx in quoted string");
       end if;
     end method,
-    
+
     method hex-digit-value (ch :: <character>) => (v :: <integer>);
       select (ch)
         '0'      => 0;
@@ -705,7 +705,7 @@ define function llvm-asm-parse
         'F', 'f' => 15;
       end select
     end method,
-    
+
     method lexer-quote-backslash-hex
         (characters :: <stretchy-object-vector>, token-class, first-digit)
      => (token-class, token-value);
@@ -717,10 +717,10 @@ define function llvm-asm-parse
         add!(characters, as(<character>, value));
         lexer-quote(characters, token-class);
       else
-        error("bad \\xx in quoted string");  
+        error("bad \\xx in quoted string");
       end if;
     end method,
-    
+
     method lexer-dot
         () => (token-class, token-value);
       let ch = peek(stream, on-end-of-stream: #f);
@@ -802,8 +802,8 @@ end function;
 
 define function generic-string-to-integer
     (string :: <string>,
-     #key base :: <integer> = 10, 
-          start :: <integer> = 0, 
+     #key base :: <integer> = 10,
+          start :: <integer> = 0,
           end: _end :: <integer> = size(string),
           default = $unsupplied)
  => (result :: <abstract-integer>, next-key :: <integer>);
@@ -811,7 +811,7 @@ define function generic-string-to-integer
   let valid? :: <boolean> = #f;
   let negative? :: <boolean> = #f;
   let integer :: <abstract-integer> = 0;
-  
+
   block (return)
     for (i :: <integer> from start below _end)
       let char :: <character> = string[i];

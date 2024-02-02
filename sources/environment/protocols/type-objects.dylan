@@ -25,7 +25,7 @@ define method environment-object-type-name
   "Type"
 end method environment-object-type-name;
 
-
+
 /// Singleton objects
 
 define class <singleton-object> (<type-object>)
@@ -35,7 +35,7 @@ define open generic singleton-value
     (server :: <server>, object :: <singleton-object>)
  => (value :: <environment-object>);
 
-
+
 /// Project dispatching methods
 
 define method singleton-value
@@ -45,7 +45,7 @@ define method singleton-value
   singleton-value(server, object)
 end method singleton-value;
 
-
+
 /// Implementation
 
 define method environment-object-type-name

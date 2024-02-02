@@ -66,7 +66,7 @@ define abstract class <access-path> (<object>)
   slot register-tables-built? :: <boolean>,
     init-value: #f;
 
-  constant slot register-name-to-descriptor :: <string-table> 
+  constant slot register-name-to-descriptor :: <string-table>
     = make(<string-table>);
 
   constant slot register-code-to-descriptor :: <table>
@@ -79,7 +79,7 @@ end class;
 
 
 ///// <APPLICATION-ACCESS-PATH>
-//    An access path that was created with the "application:" keyword 
+//    An access path that was created with the "application:" keyword
 //    (and, optionally, the "arguments:" keyword).
 
 define class <application-access-path> (<access-path>)
@@ -153,7 +153,7 @@ end method;
 ///// MAKE (<ACCESS-PATH> ...)
 //    Creates and returns an <access-path>.
 
-define method make 
+define method make
   (class == <access-path>,
    #rest keys, #key application = #f,
                     arguments = #f, process = #f, core-file = #f,
@@ -182,9 +182,9 @@ define open generic make-access-connection
 //    Initializes an instance of <application-access-path>, which includes
 //    firing up the remote process.
 
-define method initialize 
-    (ap :: <application-access-path>, 
-     #key debugger-connection = *default-local-debugger-connection*, 
+define method initialize
+    (ap :: <application-access-path>,
+     #key debugger-connection = *default-local-debugger-connection*,
      #all-keys) => ()
   next-method();
 
@@ -196,7 +196,7 @@ define method initialize
   // a "frozen" state. Clients must call restart() on the returned
   // instance to get things moving...
 
-  start-application-on-connection 
+  start-application-on-connection
     (access-connection,
      ap.access-path-application,
      ap.access-path-arguments,
@@ -212,9 +212,9 @@ define method initialize
 end method;
 
 
-define method initialize 
-    (ap :: <process-access-path>, 
-     #key debugger-connection = *default-local-debugger-connection*, 
+define method initialize
+    (ap :: <process-access-path>,
+     #key debugger-connection = *default-local-debugger-connection*,
      #all-keys) => ()
   next-method();
 
@@ -222,11 +222,11 @@ define method initialize
     make-access-connection
     (ap, debugger-connection,
      description:
-       format-to-string 
+       format-to-string
        ("Attached to running process <PID = %s>",
 	ap.access-path-process.remote-process-system-identifier));
 
-  attach-application-on-connection 
+  attach-application-on-connection
     (access-connection,
      ap.access-path-process,
      ap.symbol-file-locations,

@@ -109,7 +109,7 @@ define method function-tree-find-node
 end method;
 
 define method function-tree-make-node
-    (parent :: <function-tree>, ip :: <remote-value>, target :: <debug-target>) 
+    (parent :: <function-tree>, ip :: <remote-value>, target :: <debug-target>)
  => (function :: <function-tree-node>)
   let ap = debug-target-access-path(target);
   let (start-ip, finish-ip) = function-bounding-addresses (ap, ip);
@@ -117,9 +117,9 @@ define method function-tree-make-node
   let finish-integer = as-integer-losing-precision (finish-ip);
   let start = min (start-integer, finish-integer);
   let finish = max (start-integer, finish-integer);
-  let function = make (<single-function-descriptor>, 
+  let function = make (<single-function-descriptor>,
 	               address: ip, debug-target: target);
-  make (<function-tree-node>, parent: parent, 
+  make (<function-tree-node>, parent: parent,
         lower-limit: start, upper-limit: finish, function: function);
 end method;
 
@@ -130,7 +130,7 @@ end method;
 //////
 // A <thread-counter-group> is a set of counters which maintain the top-
 // of-stack and seen-on-stack counts for the functions in a thread.
-// 
+//
 //
 define class <thread-counter-group> (<object>)
 
@@ -152,7 +152,7 @@ define method thread-counter-group-find-counters
  => (counters :: <first-function-counters>)
   let counters = thread-counter-group-counters(group);
   element(counters, function, default: #f)
-    | (element(counters, function) 
+    | (element(counters, function)
          := make(<first-function-counters>, function: function))
 end method;
 
@@ -172,7 +172,7 @@ define method thread-counter-group-find-function
       function-tree-find-node
 	(tree, ip, rcurry(function-tree-make-node, target))
     else
-      group.thread-counter-group-tree 
+      group.thread-counter-group-tree
 	:= function-tree-make-node(#f, ip, target)
     end if;
 
@@ -180,8 +180,8 @@ define method thread-counter-group-find-function
 end method;
 
 /*
-define method thread-counter-group-as-sequences 
-    (group :: <thread-counter-group>) 
+define method thread-counter-group-as-sequences
+    (group :: <thread-counter-group>)
  => (seen :: <simple-object-vector>, top :: <simple-object-vector>)
   let seen = as(<simple-object-vector>, thread-counter-group-counters(group));
   let top  = choose(method (counters) function-counters-top(counters) > 0 end, seen);
@@ -195,7 +195,7 @@ end method;
 
 /// TODO: SPLIT OUT REDUNDANT BITS
 
-define method normalize-second-counters 
+define method normalize-second-counters
     (counters-list :: <stretchy-vector>, weight :: <single-float>,
      inclusive? :: <boolean>, exclusive? :: <boolean>)
   for (counters :: <first-function-counters> in counters-list)
@@ -248,7 +248,7 @@ define method normalize-second-counters
   end for;
 end method;
 
-define method print-snapshot 
+define method print-snapshot
     (group :: <thread-counter-group>, snapshot :: <thread-snapshot>, ambiguous-index :: <integer>)
   format-out("\nSNAPSHOT\n\n");
   let ips = instruction-pointers(snapshot);
@@ -268,15 +268,15 @@ define inline method debug-format (string :: <byte-string>, #rest args)
   end if;
 end method;
 
-define method thread-snapshots-ambiguous-index 
-    (s0 :: false-or(<thread-snapshot>), s1 :: false-or(<thread-snapshot>)) 
+define method thread-snapshots-ambiguous-index
+    (s0 :: false-or(<thread-snapshot>), s1 :: false-or(<thread-snapshot>))
  => (res :: <integer>)
   if (s0 & s1)
     for (ip0 in instruction-pointers(s0) using backward-iteration-protocol,
 	 ip1 in instruction-pointers(s1) using backward-iteration-protocol,
 	 i :: <integer> from 0,
 	 until: ip0 ~== ip1)
-    finally    
+    finally
       i
     end for;
   else
@@ -284,9 +284,9 @@ define method thread-snapshots-ambiguous-index
   end if;
 end method;
 
-define inline method update-second-statistics 
+define inline method update-second-statistics
     (group :: <thread-counter-group>, snapshot-weight :: <integer>,
-     aggregates-1 :: <simple-object-vector>, aggregates-2 :: <simple-object-vector>, 
+     aggregates-1 :: <simple-object-vector>, aggregates-2 :: <simple-object-vector>,
      counters-functions :: <function>, counters-functions-setter :: <function>,
      counters-subtotal :: <function>, counters-subtotal-setter :: <function>,
      counters-normalizer :: <function>, counters-normalizer-setter :: <function>)
@@ -297,9 +297,9 @@ define inline method update-second-statistics
       unless (aggregate-1 == aggregate-2) // skip self calls
 	let counters-2
 	  = element(counters-1.counters-functions, aggregate-2, default: #f)
-	  | (element(counters-1.counters-functions, aggregate-2) 
+	  | (element(counters-1.counters-functions, aggregate-2)
 	       := make(<second-function-counters>, function: aggregate-2));
-	debug-format("  AGG-1 %s AGG-2 %s\n", 
+	debug-format("  AGG-1 %s AGG-2 %s\n",
 		     function-descriptor-display-name(aggregate-1),
 		     function-descriptor-display-name(aggregate-2));
 	incf(function-counters-called(counters-2));
@@ -341,7 +341,7 @@ define method thread-counter-group-process-snapshot
 	let counters-1 = thread-counter-group-find-counters(group, function);
 	if (member?(counters-1, seen-counters-1-list))
 	  count-increment := 0;
-	else 
+	else
 	  if (count = 0)
 	    debug-format("  TOP %s\n", function-descriptor-display-name(function));
 	    incf(function-counters-top(counters-1), snapshot-weight);
@@ -386,7 +386,7 @@ define method thread-counter-group-process-snapshot
 	     function-counters-subtotal, function-counters-subtotal-setter,
 	     function-counters-caller-normalizer, function-counters-caller-normalizer-setter);
 	end if;
-	unless (empty?(aggregates-2) & empty?(callee-aggregates-1)) 
+	unless (empty?(aggregates-2) & empty?(callee-aggregates-1))
 	  debug-format("  RESETTING CALLEE-AGGREGATES-2\n");
 	  callee-aggregates-2 := aggregates-2; // 2nd order recorded move on
 	end unless;
@@ -409,9 +409,9 @@ define thread variable *function-descriptor-index* = 0;
 define thread variable *function-descriptors* = #();
 
 /*
-define method index-and-collect-function-descriptors 
+define method index-and-collect-function-descriptors
     (counters-list :: <simple-object-vector>)
-  do (method (counter) 
+  do (method (counter)
 	let function = function-counters-descriptor(counter);
 	if (instance?(function, <single-function-descriptor>))
 	  unless (function-descriptor-index(function))
@@ -426,8 +426,8 @@ end method;
 */
 
 define method function-counters-display-sorted-table
-    (counters :: <table>, target :: <debug-target>, 
-     counter :: <function>, total :: false-or(<single-float>), 
+    (counters :: <table>, target :: <debug-target>,
+     counter :: <function>, total :: false-or(<single-float>),
      limits :: <list>, top-ns :: <list>, depth :: <integer>, max-depth :: <integer>,
      max-height :: false-or(<integer>))
   let sorted-seen :: <simple-object-vector>
@@ -437,7 +437,7 @@ define method function-counters-display-sorted-table
     = reduce(method (r :: <single-float>, c) r + counter(c) end, 0.0, sorted-seen);
   let total :: <single-float> = total | actual-total;
   let cumulative :: <single-float> = 0.0;
-  local method limit-precision 
+  local method limit-precision
             (x :: <number>, digits :: <integer>) => (res :: <string>)
           if (instance?(x, <float>))
 	    let s = float-to-string(x);
@@ -473,7 +473,7 @@ define method function-counters-display-sorted-table
 	  (cumulative > limit) | (top-n & count >= top-n) =>
 	    if (top-n & count > 0)
 	      display-results
-		("...", "...", "...", limit-precision(max(100 - cumulative, 0.0), 2), 
+		("...", "...", "...", limit-precision(max(100 - cumulative, 0.0), 2),
 		 limit-precision(100.0, 2), ".", "...");
 	      blow();
 	    end if;
@@ -486,8 +486,8 @@ define method function-counters-display-sorted-table
 	    incf(cumulative, actual-percentage);
 	    if (depth < max-depth)
 	      function-counters-display-sorted-table
-		(function-counters-callees(counters), 
-		 target, counter, #f, tail(limits), tail(top-ns), 
+		(function-counters-callees(counters),
+		 target, counter, #f, tail(limits), tail(top-ns),
 		 depth + 1, max-depth, #f);
 	    end if;
 	    let function
@@ -500,12 +500,12 @@ define method function-counters-display-sorted-table
 	    display-results
 	      (limit-precision(value, 2), limit-precision(called, 2),
 	       limit-precision(height, 2),
-	       limit-precision(percentage, 2), limit-precision(cumulative, 2), 
+	       limit-precision(percentage, 2), limit-precision(cumulative, 2),
 	       if (depth = 1) "+" else "|" end, display-name);
 	    if (depth < max-depth)
 	      function-counters-display-sorted-table
-		(function-counters-callers(counters), 
-		 target, counter, #f, tail(limits), tail(top-ns), 
+		(function-counters-callers(counters),
+		 target, counter, #f, tail(limits), tail(top-ns),
 		 depth + 1, max-depth, #f);
 	      format-out("\n");
 	    end if;
@@ -520,13 +520,13 @@ define method compute-call-height (group :: <thread-counter-group>) => ()
   local method function-name (counter)
 	  function-descriptor-display-name(function-counters-descriptor(counter))
 	end method;
-  let counters = 
+  let counters =
     thread-counter-group-counters(group);
   format-out("CALLEES\n");
   for (counter :: <first-function-counters> in counters)
     format-out("  FUNCTION %s\n", function-name(counter));
     for (callee in function-counters-callers(counter))
-      let callee :: <first-function-counters> = 
+      let callee :: <first-function-counters> =
 	thread-counter-group-find-counters
 	  (group, function-counters-descriptor(callee));
       format-out("    CALLEE %s\n", function-name(callee));
@@ -546,16 +546,16 @@ define method compute-call-height (group :: <thread-counter-group>) => ()
   until (empty?(queue))
     let counters :: <first-function-counters> = pop(queue);
     add!(visited?, counters);
-    format-out("VISITING %s HEIGHT %=\n", 
+    format-out("VISITING %s HEIGHT %=\n",
 	       function-name(counters), function-counters-height(counters));
     for (caller-2nd-counters in function-counters-callers(counters))
-      let caller :: <first-function-counters> = 
+      let caller :: <first-function-counters> =
 	thread-counter-group-find-counters
 	  (group, function-counters-descriptor(caller-2nd-counters));
-      format-out("  CALLER %s HEIGHT %=\n", 
+      format-out("  CALLER %s HEIGHT %=\n",
 		 function-name(caller), function-counters-height(caller));
       function-counters-height(caller)
-	:= max(function-counters-height(caller), 
+	:= max(function-counters-height(caller),
 	       function-counters-height(counters) + 1);
       unless (member?(caller, visited?))
 	push-last(queue, caller);
@@ -570,7 +570,7 @@ end method;
 // Display <thread-counter-group> results.
 //
 define method thread-counter-group-display
-    (group :: <thread-counter-group>, heading :: <string>, 
+    (group :: <thread-counter-group>, heading :: <string>,
      #key inclusive? = #t, exclusive? = #t, index? = #t)
  => ()
 
@@ -590,7 +590,7 @@ define method thread-counter-group-display
     if (samples > 0)
 
       if (inclusive?)
-	// compute-call-height(group); 
+	// compute-call-height(group);
 
 	// Display the seen counts
 	format-out ("  Inclusive Summary Report\n");
@@ -598,7 +598,7 @@ define method thread-counter-group-display
 	format-out ("  %16s |   Function name\n", heading);
 	format-out ("  ----------------------------------------------------------------------------\n");
 	function-counters-display-sorted-table
-	  (thread-counter-group-counters(group), debug-target, 
+	  (thread-counter-group-counters(group), debug-target,
 	   function-counters-seen, as(<single-float>, cpu-time), limits0, top-ns0, 1, 1,
 	   application-profile-height(debug-target));
 	format-out ("\n\n");
@@ -607,7 +607,7 @@ define method thread-counter-group-display
 	format-out ("  %16s |   Function name\n", heading);
 	format-out ("  ----------------------------------------------------------------------------\n");
 	function-counters-display-sorted-table
-	  (thread-counter-group-counters(group), debug-target, 
+	  (thread-counter-group-counters(group), debug-target,
 	   function-counters-seen, as(<single-float>, cpu-time), limits, top-ns, 1, 2,
 	   application-profile-height(debug-target));
       end if;
@@ -619,7 +619,7 @@ define method thread-counter-group-display
 	format-out ("  %16s |   Function name\n", heading);
 	format-out ("  ----------------------------------------------------------------------------\n");
 	function-counters-display-sorted-table
-	  (thread-counter-group-counters(group), debug-target, 
+	  (thread-counter-group-counters(group), debug-target,
 	   function-counters-top, as(<single-float>, cpu-time), limits0, top-ns0, 1, 1, #f);
 	format-out ("\n\n");
 	format-out ("  Exclusive Report\n");
@@ -627,7 +627,7 @@ define method thread-counter-group-display
 	format-out ("  %16s |   Function name\n", heading);
 	format-out ("  ----------------------------------------------------------------------------\n");
 	function-counters-display-sorted-table
-	  (thread-counter-group-counters(group), debug-target, 
+	  (thread-counter-group-counters(group), debug-target,
 	   function-counters-top, as(<single-float>, cpu-time), limits, top-ns, 1, 2, #f);
       end if;
 
@@ -637,8 +637,8 @@ define method thread-counter-group-display
 	format-out ("  Function Descriptions\n");
 	format-out ("  =======================\n\n");
 	for (function in *function-descriptors*)
-	  format-out("  %6s %s %s\n", 
-		     function-descriptor-index-name(function), 
+	  format-out("  %6s %s %s\n",
+		     function-descriptor-index-name(function),
 		     function-descriptor-display-name(function),
 		     function-descriptor-locator-name(function));
 	end for;

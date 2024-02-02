@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Some additional tests in addition to those in dummy-tests.
 // Each test ends up in test3.obj.
 
-define method quick-test 
-     (internal-test :: <function>, 
-      #rest all-keys, 
-      #key type, 
+define method quick-test
+     (internal-test :: <function>,
+      #rest all-keys,
+      #key type,
            print-harp? = #t,
            data-function = output-first-literal) => ()
   do-file-test(make(<harp-x86-back-end>),
@@ -82,7 +82,7 @@ end method;
 
 
 define lambda-test call-internal-test (be :: <harp-x86-back-end>)
-  name "lit1_caller_iep"; 
+  name "lit1_caller_iep";
   start-line 0;
   end-line 0;
 
@@ -91,8 +91,8 @@ define lambda-test call-internal-test (be :: <harp-x86-back-end>)
 end;
 
 define lambda-test return-first-literal (be :: <harp-x86-back-end>)
-  name "first_lit_iep"; 
-  start-line 5; 
+  name "first_lit_iep";
+  start-line 5;
   end-line 10;
   let regs = be.registers;
   ins--scl(be, scl(1));
@@ -100,7 +100,7 @@ define lambda-test return-first-literal (be :: <harp-x86-back-end>)
   ins--scl(be, scl(3));
   ins--rts-and-drop(be, 0);
 end;
-  
+
 
 
 

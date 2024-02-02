@@ -18,7 +18,7 @@ define method emit-name-internal
   global-mangle(back-end, o)
 end method;
 
-
+
 /// References
 
 define constant $dylan-tag-bits = 2;
@@ -67,7 +67,7 @@ define method emit-reference
   emit-reference(back-end, m, dylan-value(#"<object>"))
 end method;
 
-
+
 /// Direct objects
 
 // Raw objects

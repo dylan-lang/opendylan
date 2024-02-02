@@ -5,9 +5,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define test win32-types-test 
+define test win32-types-test
   (name: "win32-types-test",
-   description: 
+   description:
      "tests data types in the Win32-common library")
 
   // <LARGE-INTEGER>
@@ -28,7 +28,7 @@ define test win32-types-test
   test-wchar('w');
   test-wchar(as(<character>, #xFEFF)); // unicode byte order mark
 
-  // <BOOLEAN-test> 
+  // <BOOLEAN-test>
   test-bool-byte(#f);
   test-bool-byte(#t);
 

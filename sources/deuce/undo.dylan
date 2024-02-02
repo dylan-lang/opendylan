@@ -170,7 +170,7 @@ define sealed method undo-history-state
   values(index, size(records) - index)
 end method undo-history-state;
 
-
+
 /// Undo elements
 
 // The class for simple insertions, which get merged
@@ -646,7 +646,7 @@ define method do-redo
   queue-region-redisplay(window, start-bp, end-bp, centering: 0)
 end method do-redo;
 
-
+
 /// Undo and redo
 
 define sealed method undo!

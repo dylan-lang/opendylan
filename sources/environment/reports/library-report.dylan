@@ -107,7 +107,7 @@ define method compute-contents-file
   end if;
 end method compute-contents-file;
 
-
+
 /// <REPORT-STREAM> Protocols
 
 define class <report-stream> (<wrapper-stream>)
@@ -571,7 +571,7 @@ define method write-function-parameters-footer
  => ()
 end method write-function-parameters-footer;
 
-
+
 /// Utilities
 
 define method report-object-filename

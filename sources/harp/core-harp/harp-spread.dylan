@@ -52,7 +52,7 @@ define spread-function dduuu (backend, op, fn, ins)
   fn(backend, op, dduuu-def(1), dduuu-def(2), dduuu-uze(1), dduuu-uze(2), dduuu-uze(3));
 end;
 
-define spread-function tu (backend, op, fn, ins, #key sv-ins: sv) 
+define spread-function tu (backend, op, fn, ins, #key sv-ins: sv)
   fn(backend, op, ins-tag(sv, ins), tu-uze(1));
 end;
 

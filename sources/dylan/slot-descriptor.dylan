@@ -518,7 +518,7 @@ end function;
 define inline function slot-offset (sd :: <slot-descriptor>, c :: <class>)
   slot-offset-i(sd, class-implementation-class(c))
 end function;
-
+
 
 //// DYNAMIC ACCESSOR GLUE CODE
 
@@ -709,7 +709,7 @@ define method congruent? (g :: <generic-function>, m :: <accessor-method>)
   end block;
 
 end method congruent?;
-
+
 
 
 define method type-complete? (m :: <accessor-method>) => (well? :: <boolean>)

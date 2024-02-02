@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <expression-combinator> (<object>)
   constant slot combinator-name :: false-or(<string>) = #f, init-keyword: name:;
-  constant slot dylan-function :: false-or(<function>) = #f, init-keyword: function:; 
+  constant slot dylan-function :: false-or(<function>) = #f, init-keyword: function:;
 end class;
 
 define class <binary-expression-combinator> (<expression-combinator>)
@@ -247,7 +247,7 @@ define method coercable-value? (ast-expression :: <ast-expression>,
                                 from-type :: <idl-type>,
                                 to-type :: <idl-type>)
   from-type == to-type;
-end method;                                
+end method;
 
 define method coercable-value? (ast-expression :: <ast-expression>,
                                 from-type :: <real-idl-type>,
@@ -308,7 +308,7 @@ define method do-coerce-value (ast-expression :: <ast-expression>,
     #t  => 1;
   end select;
 end method;
-    
+
 define method do-coerce-value (ast-expression :: <ast-expression>,
                                 from-type :: <real-idl-type>,
                                 to-type :: <boolean-idl-type>)
@@ -359,7 +359,7 @@ end method;
 define method evaluate-wrt-kind (expression :: <ast-expression>, value, kind :: <constant-evaluation-kind>)
   value;
 end method;
-    
+
 define method evaluate-wrt-kind (expression :: <ast-expression>, value, kind :: <positive-integer-evaluation-kind>)
   coerce-value(expression, value, $ulong-idl-type);
 end method;

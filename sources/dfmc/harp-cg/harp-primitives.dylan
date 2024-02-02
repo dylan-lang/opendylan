@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-/* 
+/*
  * HARP PRIMITIVES
  */
 
@@ -118,16 +118,16 @@ define method op--store-bit-index
 
   ins--ld(back-end, word, base, offset);
   select (value)
-    0 => 
+    0 =>
       ins--unset-bit(back-end, word, word, bit);
-    1 => 
+    1 =>
       ins--set-bit(back-end, word, word, bit);
     otherwise =>
       let set-bit-tag = make-tag(back-end);
       let done-tag = make-tag(back-end);
       ins--bne(back-end, set-bit-tag, value, 0);
       ins--unset-bit(back-end, word, word, bit);
-      ins--bra(back-end, done-tag);      
+      ins--bra(back-end, done-tag);
       ins--tag(back-end, set-bit-tag);
       ins--set-bit(back-end, word, word, bit);
       ins--tag(back-end, done-tag);
@@ -387,7 +387,7 @@ end method op--string-as-raw;
 
 
 /* OBJECT REPRESENTATION PRIMITIVES AND SUPPORT */
- 
+
 
 define method op--init-slot-element
     (back-end :: <harp-back-end>, result, object, position) => ()
@@ -403,7 +403,7 @@ end method op--init-slot-element;
 define method op--slot-element
     (back-end :: <harp-back-end>, result, object, position) => ()
 
-  
+
   let dylan-library? = *compiling-dylan?*;
 
   if (#f)
@@ -1067,7 +1067,7 @@ define method op--function-parameter(back-end :: <harp-back-end>, result) => ()
 end method op--function-parameter;
 
 define method op--environment-parameter
-    (back-end :: <harp-back-end>, #key indirections = #[]) 
+    (back-end :: <harp-back-end>, #key indirections = #[])
     => (register :: <virtual-register>)
   let result = back-end.cg-variables.cg-temporaries[0];
 
@@ -1203,7 +1203,7 @@ define macro op--primitive-predicate
 	     operands: operands,
 	     result: result,
 	     continue: make-tag(back-end));
-       
+
     end method;
    }
 
@@ -1227,7 +1227,7 @@ define macro opposite-instruction
   }
 end macro;
 
-define opposite-instructions beq bne;   
+define opposite-instructions beq bne;
 define opposite-instructions blt bge;
 define opposite-instructions bgt ble;
 define opposite-instructions blo bhs;
@@ -1342,7 +1342,7 @@ end method op--check-range;
 define method op--range-check(back-end :: <harp-back-end>, result, #rest operands) => (result :: <test-result>)
 
   make(<test-result>,
-       branch: op--check-range, 
+       branch: op--check-range,
        operands: operands,
        result: result,
        continue: make-tag(back-end));
@@ -1381,7 +1381,7 @@ end method op--logbit?;
 define method op--integer?(back-end :: <harp-back-end>, result, x) => (result :: <test-result>)
 
   make(<test-result>,
-       branch: 
+       branch:
 	 method(back-end :: <harp-back-end>, tag, x)
 	     let temp = make-n-register(back-end);
 
@@ -1423,7 +1423,7 @@ define method make-word-mask(mask, no-of-bits :: <integer>) => (word-mask)
 end method;
 
 define method op--at-field
-    (back-end :: <harp-back-end>, result, pointer, byte-offset, 
+    (back-end :: <harp-back-end>, result, pointer, byte-offset,
      bit-offset :: <integer>, bit-size :: <integer>) => ()
   ins--ld(back-end, result, pointer, byte-offset);
   ins--lsr(back-end, result, result, bit-offset);
@@ -1432,7 +1432,7 @@ define method op--at-field
 end method;
 
 define method op--at-field-setter
-    (back-end :: <harp-back-end>, result, new, pointer, byte-offset, 
+    (back-end :: <harp-back-end>, result, new, pointer, byte-offset,
      bit-offset :: <integer>, bit-size :: <integer>) => ()
   let old-word = make-n-register(back-end);
   let word = make-n-register(back-end);
@@ -1442,7 +1442,7 @@ define method op--at-field-setter
   ins--ld(back-end, old-word, pointer, byte-offset);
 
   let no-of-bits = bit-offset + bit-size;
-  let mask = 
+  let mask =
     begin
       let mask = make-mask(bit-offset, bit-size);
       if (no-of-bits > $integer-no-of-bits)
@@ -1519,7 +1519,7 @@ define harp-transcendental-function
 define method op--allocate-filled
     (type :: <symbol>) => (op :: <function>)
   method
-    (back-end :: <harp-back-end>, result, word-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, wrapper,
      num-fixed, fill, rep-size, rep-slot, rep-fill) => ()
 
   let ($alloc-rf, $alloc-s-rf, sizeof%) =
@@ -1544,18 +1544,18 @@ define method op--allocate-filled
   let (allocator, args) =
     if (rep-slot == 0)
       select (num-fixed)
-	0 => 
+	0 =>
 	  values($primitive-alloc, #[]);
-	1 => 
+	1 =>
 	  values($primitive-alloc-s1, vector(fill));
-	2 => 
+	2 =>
 	  values($primitive-alloc-s2, vector(fill, fill));
 	otherwise =>
 	  values($primitive-alloc-s, vector(num-fixed, fill));
       end select;
     else
       select (num-fixed)
-	0 => 
+	0 =>
 	  values($alloc-rf, vector(rep-size, rep-slot, rep-fill));
 	otherwise =>
 	  values($alloc-s-rf, vector(num-fixed, fill, rep-size, rep-slot, rep-fill));
@@ -1568,37 +1568,37 @@ end method;
 
 
 define method op--allocate-exact-awl
-    (back-end :: <harp-back-end>, result, word-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, wrapper,
      num-fixed, fill, rep-size, rep-slot, assoc) => ()
-  op--allocate-awl(back-end, result, word-size, wrapper, 
+  op--allocate-awl(back-end, result, word-size, wrapper,
 		   num-fixed, fill, rep-size, rep-slot, assoc, #t);
 end method;
 
 define method op--allocate-weak-awl
-    (back-end :: <harp-back-end>, result, word-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, wrapper,
      num-fixed, fill, rep-size, rep-slot, assoc) => ()
-  op--allocate-awl(back-end, result, word-size, wrapper, 
+  op--allocate-awl(back-end, result, word-size, wrapper,
 		   num-fixed, fill, rep-size, rep-slot, assoc, #f);
 end method;
 
 
 define method op--allocate-awl
-    (back-end :: <harp-back-end>, result, word-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, wrapper,
      num-fixed, fill, rep-size, rep-slot, assoc, exact? :: <boolean>) => ()
 
   let byte-size = bytes%(back-end, word-size);
   let (allocator, args) =
     if (num-fixed == 1)
       // The only slot is the assoc slot - so only fill the repeated data
-      values(if (exact?) 
-	       $primitive-alloc-exact-awl-rf 
-	     else $primitive-alloc-weak-awl-rf 
+      values(if (exact?)
+	       $primitive-alloc-exact-awl-rf
+	     else $primitive-alloc-weak-awl-rf
 	     end if,
 	     vector(rep-size, rep-slot, fill));
     else
-      values(if (exact?) 
-	       $primitive-alloc-exact-awl-s-r 
-	     else $primitive-alloc-weak-awl-s-r 
+      values(if (exact?)
+	       $primitive-alloc-exact-awl-s-r
+	     else $primitive-alloc-weak-awl-s-r
 	     end if,
 	     vector(num-fixed, fill, rep-size, rep-slot));
     end if;
@@ -1608,85 +1608,85 @@ end method;
 
 // Byte allocators:
 // Assume that these can be allocated in the leaf pool. This is essential for
-// strings. If we ever need an object with both traceable slots and a byte 
+// strings. If we ever need an object with both traceable slots and a byte
 // repeated slot, then we'll need additional allocation primitives.
 
 
 define method op--byte-allocate-leaf-filled
-    (back-end :: <harp-back-end>, result, word-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, wrapper,
      num-fixed, fill, rep-size, rep-slot, rep-fill) => ()
   // NB: No zero termination -- it's not used for strings.
 
-  let tot-size = op--round-up-to-word(back-end, 
-				      op--add(back-end, #f, 
-					      bytes%(back-end, word-size), 
+  let tot-size = op--round-up-to-word(back-end,
+				      op--add(back-end, #f,
+					      bytes%(back-end, word-size),
 					      rep-size));
   if (rep-slot == 0)
-    call-c-primitive(back-end, result, $primitive-alloc-leaf-s, tot-size, wrapper, 
+    call-c-primitive(back-end, result, $primitive-alloc-leaf-s, tot-size, wrapper,
 		     num-fixed, fill);
   else
-    call-c-primitive(back-end, result, $primitive-alloc-leaf-s-rbf, tot-size, wrapper, 
+    call-c-primitive(back-end, result, $primitive-alloc-leaf-s-rbf, tot-size, wrapper,
 		     num-fixed, fill, rep-size, rep-slot, rep-fill);
   end if;
 end method;
 
 
 define method op--byte-allocate-leaf-filled-terminated
-    (back-end :: <harp-back-end>, result, word-size, byte-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, byte-size, wrapper,
      num-fixed, fill, rep-size, rep-slot) => ()
 
-  let tot-size = op--round-up-to-word(back-end, 
-				      op--add(back-end, #f, 
-					      bytes%(back-end, word-size), 
+  let tot-size = op--round-up-to-word(back-end,
+				      op--add(back-end, #f,
+					      bytes%(back-end, word-size),
 					      byte-size));
   let byte-fill = op--raw(back-end, #f, fill);
   let (allocator, args) =
     select (num-fixed)
       0 =>   // optimize this case for strings
-	values($primitive-alloc-leaf-rbfz, 
+	values($primitive-alloc-leaf-rbfz,
 	       vector(rep-size, rep-slot, byte-fill));
       otherwise =>
-	values($primitive-alloc-leaf-s-rbfz, 
+	values($primitive-alloc-leaf-s-rbfz,
 	       vector(num-fixed, fill, rep-size, rep-slot, byte-fill));
     end select;
   apply(call-c-primitive, back-end, result, allocator, tot-size, wrapper, args);
 end method;
 
 define method op--byte-allocate-filled
-    (back-end :: <harp-back-end>, result, word-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, wrapper,
      num-fixed, fill, rep-size, rep-slot, rep-fill) => ()
   // NB: No zero termination -- it's not used for strings.
 
-  let tot-size = op--round-up-to-word(back-end, 
-				      op--add(back-end, #f, 
-					      bytes%(back-end, word-size), 
+  let tot-size = op--round-up-to-word(back-end,
+				      op--add(back-end, #f,
+					      bytes%(back-end, word-size),
 					      rep-size));
   if (rep-slot == 0)
-    call-c-primitive(back-end, result, $primitive-alloc-s, tot-size, wrapper, 
+    call-c-primitive(back-end, result, $primitive-alloc-s, tot-size, wrapper,
 		     num-fixed, fill);
   else
-    call-c-primitive(back-end, result, $primitive-alloc-s-rbf, tot-size, wrapper, 
+    call-c-primitive(back-end, result, $primitive-alloc-s-rbf, tot-size, wrapper,
 		     num-fixed, fill, rep-size, rep-slot, rep-fill);
   end if;
 end method;
 
 
 define method op--byte-allocate-filled-terminated
-    (back-end :: <harp-back-end>, result, word-size, byte-size, wrapper, 
+    (back-end :: <harp-back-end>, result, word-size, byte-size, wrapper,
      num-fixed, fill, rep-size, rep-slot) => ()
 
-  let tot-size = op--round-up-to-word(back-end, 
-				      op--add(back-end, #f, 
-					      bytes%(back-end, word-size), 
+  let tot-size = op--round-up-to-word(back-end,
+				      op--add(back-end, #f,
+					      bytes%(back-end, word-size),
 					      byte-size));
   let byte-fill = op--raw(back-end, #f, fill);
   let (allocator, args) =
     select (num-fixed)
       0 =>   // optimize this case; leaf pool if no fixed slots
-	values($primitive-alloc-leaf-rbfz, 
+	values($primitive-alloc-leaf-rbfz,
 	       vector(rep-size, rep-slot, byte-fill));
       otherwise =>
-	values($primitive-alloc-s-rbfz, 
+	values($primitive-alloc-s-rbfz,
 	       vector(num-fixed, fill, rep-size, rep-slot, byte-fill));
     end select;
   apply(call-c-primitive, back-end, result, allocator, tot-size, wrapper, args);
@@ -1694,7 +1694,7 @@ end method;
 
 
 define method op--round-up-to-word
-    (back-end :: <harp-back-end>, val) => (aligned-val) 
+    (back-end :: <harp-back-end>, val) => (aligned-val)
   let res = make-n-register(back-end);
   ins--add(back-end, res, val, 3);
   ins--and(back-end, res, res, ash(-1, 2));
@@ -1702,7 +1702,7 @@ define method op--round-up-to-word
 end method;
 
 define method op--round-up-to-word
-    (back-end :: <harp-back-end>, val :: <integer>) => (aligned-val) 
+    (back-end :: <harp-back-end>, val :: <integer>) => (aligned-val)
   logand(val + 3, ash(-1, 2));
 end method;
 
@@ -1732,7 +1732,7 @@ define inline function lookup-primitive-descriptor (name) => (res :: <primitive-
 end function;
 
 define macro &primitive-descriptor-definer
-  { define &primitive-descriptor ?:name, 
+  { define &primitive-descriptor ?:name,
       #key ?emitter:expression = #f,
            ?mapping:expression = #f,
            ?reference:expression = #f}
@@ -1755,7 +1755,7 @@ define function &call-c-primitive(primitive :: <string>) => (call-primitive :: <
 end function;
 
 define macro &c-primitive-descriptor-definer
-  { define &c-primitive-descriptor ?:name, 
+  { define &c-primitive-descriptor ?:name,
       #key ?emitter:expression = #f,
            ?mapping:expression = #f}
     => { define constant ?name ## "-descriptor" =
@@ -1789,7 +1789,7 @@ define &primitive-descriptor primitive-word-size, emitter: op--word-size;
 define &primitive-descriptor primitive-header-size, emitter: op--word-size;
 define &primitive-descriptor primitive-read-cycle-counter, emitter: op--read-cycle-counter;
 define &primitive-descriptor primitive-read-return-address, emitter: op--read-return-address;
-    
+
 // Allocation.
 define &primitive-descriptor primitive-allocate;
 define &primitive-descriptor primitive-allocate-wrapper;
@@ -1876,7 +1876,7 @@ define &primitive-descriptor primitive-unicode-character-as-raw, emitter: op--ra
 define &primitive-descriptor primitive-raw-as-unicode-character, emitter: op--unicode-character;
 
 // Small integer.
-    
+
 // Big Integer.
 
 // Machine Integer.
@@ -2167,7 +2167,7 @@ define &primitive-descriptor primitive-exit-application;
 
 
 define macro at-primitive-definer
-  {define at-primitive ?:name, 
+  {define at-primitive ?:name,
       #key ?load:expression = #f,  ?store:expression = #f }
     => { define &primitive-descriptor "primitive-" ## ?name ## "-at", emitter: ?load;
          define &primitive-descriptor "primitive-" ## ?name ## "-at-setter", emitter: ?store

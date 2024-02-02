@@ -23,7 +23,7 @@ define open abstract class <embeddable-frame> ( duim/<simple-frame> )
     init-keyword: short-title:;
   slot ole-frame-status-message :: false-or(<string>) = #f; // in status bar
 
-  // Returns the OLE IUnknown interface pointer for a user who wants to 
+  // Returns the OLE IUnknown interface pointer for a user who wants to
   // access the OLE API directly.  Note that this does not call AddRef.
   slot frame-ole-object :: false-or(<basic-DUIM-OLE-server>) = #f;
 end class;
@@ -115,9 +115,9 @@ define method duim/note-win32-frame-destroyed (frame ::  <embeddable-frame>)
   end if;
 end method duim/note-win32-frame-destroyed;
 
-
 
-// status bar support 
+
+// status bar support
 
 define method duim/frame-status-message
     (frame :: <embeddable-frame>) => (message :: false-or(<string>))
@@ -157,7 +157,7 @@ define method duim/update-frame-documentation
   end if;
 end method duim/update-frame-documentation;
 
-
+
 // dummy methods for ordinary frame:
 
 define method note-embedded-data-changed ( frame :: duim/<frame> ) => ();

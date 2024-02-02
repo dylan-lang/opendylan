@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Now, the code
 
 
-define method as-direct-ref 
+define method as-direct-ref
     (be :: <harp-back-end>, ref :: <indirect-constant-reference>)
     => (nref :: <address-constant-reference>)
   ins--constant-ref(be, ref.cr-refers-to);

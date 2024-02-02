@@ -43,7 +43,7 @@ define open generic undo-command
 define open generic redo-command
     (command :: <command-oid>) => (#rest values);
 
-
+
 /// Command results
 
 define open abstract class <command-results> (<object>)
@@ -56,7 +56,7 @@ define open generic command-results-available?
 define open generic wait-for-command-results
     (results :: <command-results>, #key timeout) => (timed-out? :: <boolean>);
 
-
+
 /// Default methods for <command>
 
 define method make-command
@@ -167,7 +167,7 @@ define sealed method command-undoable?
   #f
 end method command-undoable?;
 
-
+
 /// Simple command classes
 
 define open abstract primary class <basic-command> (<command>)

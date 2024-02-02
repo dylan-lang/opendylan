@@ -20,17 +20,17 @@ define open COM-interface <basic-ole-server> ( <lib-init-mixin>,
   slot ole-menu :: <HOLEMENU> = null-handle(<HOLEMENU>);
   slot menu-group-widths :: <LPOLEMENUGROUPWIDTHS>
 		= null-pointer(<LPOLEMENUGROUPWIDTHS>);
-	
+
   constant slot in-place-frame-info :: <LPOLEINPLACEFRAMEINFO>
 		= make(<LPOLEINPLACEFRAMEINFO>);
-	
+
   slot container-parent-window	:: <HWND> = $NULL-HWND;
-  slot get-hatch-window	        :: <HWND> = $NULL-HWND;	
-  slot app-parent-window	:: <HWND> = $NULL-HWND;	
+  slot get-hatch-window	        :: <HWND> = $NULL-HWND;
+  slot app-parent-window	:: <HWND> = $NULL-HWND;
 
   // interfaces used
-	
-  slot container-IOleClientSite	     :: <Interface> = $NULL-interface; 
+
+  slot container-IOleClientSite	     :: <Interface> = $NULL-interface;
   slot container-IOleAdviseHolder    :: <Interface> = $NULL-interface;
   slot container-IDataAdviseHolder   :: <Interface> = $NULL-interface;
   slot container-IOleInPlaceFrame    :: <Interface> = $NULL-interface;
@@ -38,7 +38,7 @@ define open COM-interface <basic-ole-server> ( <lib-init-mixin>,
   slot container-IOleInPlaceSite     :: <Interface> = $NULL-interface;
 
   // interfaces implemented
-	
+
   slot server-IOleObject	:: <COleObject>;
   slot server-IDataObject	:: <CDataObject>;
   slot server-IOleInPlaceActiveObject :: <COleInPlaceActiveObject>;
@@ -54,7 +54,7 @@ define open COM-interface <basic-ole-server> ( <lib-init-mixin>,
   slot ROT-registration	:: <unsigned-fixnum> = 0;
 
   slot deferred-data-change? :: <boolean> = #f;
-	
+
   slot object-closing?	:: <boolean> = #f;
 
   slot embedded-width 	:: <fixnum> = 0;
@@ -120,7 +120,7 @@ define method terminate (obj :: <basic-ole-server>) => ();
   Release(obj.container-IOleInPlaceFrame);
   Release(obj.container-IOleInPlaceUIWindow);
   Release(obj.container-IOleInPlaceSite);
-  
+
   next-method();
 end method terminate ;
 
@@ -137,7 +137,7 @@ define method ole-local-server? (obj :: <basic-ole-server>)
   #t // .EXE file, not .DLL file
 end;
 
-
+
 // Note: the distinction between <ole-server-framework> and <basic-ole-server>
 // was due to a misunderstanding, and is not serving any current purpose, so
 // these might be recombined some day.
@@ -160,16 +160,16 @@ end method after-initialize;
 
 
 define method OLE-util-in-place-active?(obj :: <basic-ole-server>)
-	=> value :: <boolean>; 
- /* return */	obj.in-place-active? 
+	=> value :: <boolean>;
+ /* return */	obj.in-place-active?
 end method OLE-util-in-place-active?;
 
 define method OLE-util-UI-active?(obj :: <basic-ole-server>)
-	=> value :: <boolean>; 
+	=> value :: <boolean>;
  /* return */	obj.UI-active?
 end method OLE-util-UI-active?;
 
-
+
 // Returns a handle to a metafile representation of the object.
 
 define method get-meta-file-picture (server-obj :: <basic-ole-server>,
@@ -193,7 +193,7 @@ define method get-meta-file-picture (server-obj :: <basic-ole-server>,
   lpMFP.yExt-value := pt-y;
 
   // Create the metafile
-  let hDC :: <HDC> = 
+  let hDC :: <HDC> =
     if ( kind = $TYMED-ENHMF )
       with-stack-structure ( rect :: <LPRECT> )
 	rect.left-value := 0;
@@ -213,7 +213,7 @@ define method get-meta-file-picture (server-obj :: <basic-ole-server>,
 
   let status = OLE-part-draw-metafile(server-obj, hDC) | $S-OK;
 
-  lpMFP.hMF-value := 
+  lpMFP.hMF-value :=
     if ( kind = $TYMED-ENHMF )
       CloseEnhMetaFile(hDC)
     else
@@ -232,7 +232,7 @@ define method OLE-part-get-data (obj :: <basic-ole-server>,
 				 pformatetcIn :: <LPFORMATETC>,
 				 pmedium :: <LPSTGMEDIUM> )
  => status :: <HRESULT>;
-	
+
   // Check the data format
   if ( pformatetcIn.cfFormat-value ~= $CF-METAFILEPICT )
     $DV-E-FORMATETC
@@ -268,7 +268,7 @@ define method do-in-place-activate(obj :: <basic-ole-server>,
   let done :: <boolean> = #f;
 
   block(error-return)
-	
+
     Output-Debug-String("do-in-place-activate\r\n");
     obj.object-closing? := #f; // DLL server can be re-activated after close
 
@@ -281,7 +281,7 @@ define method do-in-place-activate(obj :: <basic-ole-server>,
 	// Application doesn't support in-place activation.
 	error-return();
       end if;
-		
+
       let site :: <LPOLEINPLACESITE> = obj.container-IOleInPlaceSite;
       if ( null?(site) )
 	// get the in-place site
@@ -317,7 +317,7 @@ define method do-in-place-activate(obj :: <basic-ole-server>,
       (~ obj.in-place-visible?) | ( show-hatch? & ~ obj.UI-active? );
 
     if ( make-visible? )
-		
+
       // get the window handle of the site
       let site = obj.container-IOleInPlaceSite;
       let ( status , container-window ) = IOleWindow/GetWindow(site);
@@ -328,7 +328,7 @@ define method do-in-place-activate(obj :: <basic-ole-server>,
        with-stack-structure ( clip-rect :: <LPRECT> )
 
 	// get window context from the container
-	let ( status, frame, doc ) = 
+	let ( status, frame, doc ) =
 	  IOleInPlaceSite/GetWindowContext(site, position-rect, clip-rect,
 					   obj.in-place-frame-info);
         check-ole-status(status, "GetWindowContext", site);
@@ -365,7 +365,7 @@ define method do-in-place-activate(obj :: <basic-ole-server>,
 
     // if not yet UI Active and not doing activate only
     if ( (~ obj.UI-active?) & (verb ~= $OLEIVERB-INPLACEACTIVATE) )
-		
+
       // tell the in-place site that we are activating
       IOleInPlaceSite/OnUIActivate(obj.container-IOleInPlaceSite);
 
@@ -403,7 +403,7 @@ define method do-in-place-activate(obj :: <basic-ole-server>,
   unless ( done )
     Output-Debug-String("failed in-place activate\r\n");
   end unless;
-  /* return */ done 
+  /* return */ done
 end method do-in-place-activate;
 
 
@@ -455,7 +455,7 @@ define method set-window-sizes ( obj :: <basic-ole-server>,
       OLE-part-position-window(obj, doc-rect, repaint?);
     else // when called from IOleObject/SetExtent
       let doc-window = OLE-part-doc-window(obj);
-      SetWindowPos(doc-window, $NULL-HWND, 
+      SetWindowPos(doc-window, $NULL-HWND,
 		   0, 0, // x and y ignored by $SWP-NOMOVE
 		   doc-rect.right-value - doc-rect.left-value,
 		   doc-rect.bottom-value - doc-rect.top-value,
@@ -573,7 +573,7 @@ end method hide-hatch-window;
 // Create the combined menus used during inplace activation.
 
 define method assemble-menus(obj :: <basic-ole-server>) => ();
-  
+
   Output-Debug-String("assemble-menus\r\n");
 
   let menugroupwidths :: <LPOLEMENUGROUPWIDTHS> = make(<LPOLEMENUGROUPWIDTHS>);
@@ -671,7 +671,7 @@ define method add-frame-level-UI(obj :: <basic-ole-server>) => ();
 
   // Negotiate for toolbar space and set the border space.
   set-border-space(obj);
-  
+
   obj.UI-active? := #t;
   OLE-part-UI-activated(obj);
   values()
@@ -682,7 +682,7 @@ define method set-border-space (obj :: <basic-ole-server>) => ();
   let in-place-frame = obj.container-IOleInPlaceFrame;
   unless ( null?(in-place-frame) )
 
-    // Negotiate for toolbar space and set the border space.   
+    // Negotiate for toolbar space and set the border space.
 
     let tool-bar = OLE-part-toolbar-window(obj);
     if ( null?(tool-bar) )
@@ -763,7 +763,7 @@ define method do-in-place-hide(obj :: <basic-ole-server>) => ();
     // release the in-place frame
     Release(obj.container-IOleInPlaceFrame);
     // only holding one ref. to frame.
-    obj.container-IOleInPlaceFrame := $NULL-Interface; 
+    obj.container-IOleInPlaceFrame := $NULL-Interface;
 
     // release the UIWindow if it is there.
     Release(obj.container-IOleInPlaceUIWindow);
@@ -817,7 +817,7 @@ define method disassemble-menus(obj :: <basic-ole-server>) => ();
 
   let shared-menu = obj.shared-menu-handle;
   unless ( null?(shared-menu) )
-		
+
     // remove the menus that we added
     let widths :: <PLONG> = obj.menu-group-widths.width-value;
     let offset :: <fixnum> = 0;
@@ -862,7 +862,7 @@ define method OLE-util-view-changed(obj :: <basic-ole-server>) => ();
 end method OLE-util-view-changed;
 
 /* // This is what we would like to do, but it isn't safe to do at this
-   // level because we don't always know when to force the notification 
+   // level because we don't always know when to force the notification
    // soon enough.  For example, if the container initiates a Save while
    // the component is still active, we don't have a chance to update the
    // view before the save begins.  However, a higher-level library may be
@@ -886,7 +886,7 @@ define constant OLE-util-data-changed = OLE-util-view-changed;
 define inline function OLE-util-defer-view-change (obj :: <basic-ole-server>)
  => ();
   obj.deferred-data-change? := #t;
-end;  
+end;
 
 define inline function OLE-util-flush-view-change (obj :: <basic-ole-server>)
  => ();
@@ -976,7 +976,7 @@ define method remove-frame-level-UI(obj :: <basic-ole-server>)
 
     // rip down the combined menus
     disassemble-menus(obj);
-		
+
     obj.UI-active? := #f;
 
     // if in an MDI container, call SetActiveObject on the doc.
@@ -1023,7 +1023,7 @@ define method OLE-part-UI-deactivated (obj :: <basic-ole-server>)
   values()
 end;
 
-
+
 define method OLE-util-close-server( server-object :: <basic-ole-server>,
 				     #key save = $OLECLOSE-SAVEIFDIRTY )
  => (status :: <HRESULT>);
@@ -1044,8 +1044,8 @@ define method OLE-util-close-server( server-object :: <basic-ole-server>,
 
     // unregister from the Running Object Table
     if ( ROT-registration(server-object) ~= 0 )
-      
-      let ( status :: <HRESULT>, ROT :: <LPRUNNINGOBJECTTABLE> ) = 
+
+      let ( status :: <HRESULT>, ROT :: <LPRUNNINGOBJECTTABLE> ) =
 	GetRunningObjectTable(0);
       if ( status = $NOERROR )
 	Output-Debug-String("IRunningObjectTable/Revoke\r\n");
@@ -1143,7 +1143,7 @@ define method OLE-part-dirty? ( obj :: <basic-ole-server> )
  => dirty? :: <boolean>;
   #t
 end method;
-
+
 
 define method OLE-util-translate-accelerator ( server-object, msg :: <LPMSG> )
  => handled? :: <boolean>;
@@ -1160,7 +1160,7 @@ define method OLE-util-translate-accelerator ( server-object, msg :: <LPMSG> )
     // items to work properly.
     OleTranslateAccelerator(container-IOleInPlaceFrame(server-object),
 			    in-place-frame-info(server-object),
-			    msg) = $S-OK 
+			    msg) = $S-OK
   else #f
   end if
 end method;

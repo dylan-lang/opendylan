@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <local-variable-object> (<variable-object>)
 end class <local-variable-object>;
 
-
+
 /// Implementation
 
 define method environment-object-type-name

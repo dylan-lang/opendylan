@@ -34,7 +34,7 @@ define method frame-page-setup (frame :: <frame>) => ()
   not-yet-implemented(frame)
 end method frame-page-setup;
 
-
+
 /// Print command table
 
 //--- Where should this really be defined?

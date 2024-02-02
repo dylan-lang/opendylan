@@ -37,14 +37,14 @@ end method;
 
 //// Key geometry.
 
-define method edges-to-polygon 
+define method edges-to-polygon
     (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
  => (coords :: <simple-object-vector>)
   vector(left, top, left, bottom, right, bottom, right, top)
 end method;
 
-define method natural-key-region 
-    (natural :: <integer>, naturals :: <integer>, 
+define method natural-key-region
+    (natural :: <integer>, naturals :: <integer>,
        board-width :: <integer>, board-height :: <integer>)
  => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
   let lhs = floor/(natural * board-width, naturals);
@@ -52,11 +52,11 @@ define method natural-key-region
   values(lhs, 0, rhs, board-height)
 end method;
 
-define method sharp-key-region 
-    (natural :: <integer>, naturals :: <integer>, 
+define method sharp-key-region
+    (natural :: <integer>, naturals :: <integer>,
        board-width :: <integer>, board-height :: <integer>)
  => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
-  let (left, top, right, bottom) 
+  let (left, top, right, bottom)
     = natural-key-region(natural, naturals, board-width, board-height);
   let key-space = floor/((right - left) * 1, 3);
   values(right - key-space, 0, right + key-space + 2, floor/(board-height * 2, 3))
@@ -97,8 +97,8 @@ define method handle-button-event
  => ()
   let note = compute-hit-note-for-event(sheet, event);
   let note-playing = keyboard-key-down(sheet);
-  if (note & note == note-playing) 
-    release-keyboard-note(sheet, note) 
+  if (note & note == note-playing)
+    release-keyboard-note(sheet, note)
   end;
 end method;
 
@@ -125,13 +125,13 @@ define method handle-event
     (sheet :: <keyboard-pane>, event :: <pointer-exit-event>)
  => ()
   let note-playing = keyboard-key-down(sheet);
-  if (note-playing) 
+  if (note-playing)
     // If we've left the keyboard entirely and a note was playing, release it
     // unless there's a key down. This is a hack: we need to record what's
     // playing what!
     let states = keyboard-key-press-states(sheet);
     if (empty?(states))
-      release-keyboard-note(sheet, note-playing); 
+      release-keyboard-note(sheet, note-playing);
     end;
   end;
 end method;
@@ -153,7 +153,7 @@ define method handle-event
  => ()
   let key = event-key-name(event);
   // format-out("Key release: %=\n", key);
-  if (key)  
+  if (key)
     element(keyboard-key-press-states(sheet), key) := #f;
     let note = keyboard-key-map-callback(sheet)(sheet, key);
     if (note) release-keyboard-note(sheet, note) end;
@@ -169,7 +169,7 @@ define method compute-hit-note-for-event
 end method;
 
 define method compute-hit-note
-    (sheet :: <keyboard-pane>, x :: <integer>, y :: <integer>) 
+    (sheet :: <keyboard-pane>, x :: <integer>, y :: <integer>)
  => (note :: false-or(<integer>))
   // Brute force "which key"... eek!
   let (left, top, right, bottom) = box-edges(sheet);
@@ -183,14 +183,14 @@ define method compute-hit-note
         let (k-left, k-top, k-right, k-bottom)
           = sharp-key-region(natural, naturals, right - 1, bottom - 1);
         // There must be DUIM stuff for this...
-        if (k-left <= x & x <= k-right & k-top <= y & y <= k-bottom)        
+        if (k-left <= x & x <= k-right & k-top <= y & y <= k-bottom)
           // format-out("Hit %= sharp\n", natural);
           return(note + 1);
         end;
       end;
       let (k-left, k-top, k-right, k-bottom)
-        = natural-key-region(natural, naturals, right - 1, bottom - 1);      
-      if (k-left <= x & x <= k-right & k-top <= y & y <= k-bottom)        
+        = natural-key-region(natural, naturals, right - 1, bottom - 1);
+      if (k-left <= x & x <= k-right & k-top <= y & y <= k-bottom)
         // format-out("Hit %= natural\n", natural);
         return(note);
       end;

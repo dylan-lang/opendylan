@@ -18,14 +18,14 @@ define variable *default-debug-info?* = #t;
 // *debug-info?* controls whether debug-info is output with compiled lambdas
 // dynamically. It should be dynamically bound at the linker entry points
 //
-define thread variable *debug-info?* :: <boolean> = *default-debug-info?*; 
+define thread variable *debug-info?* :: <boolean> = *default-debug-info?*;
 
 
 
 // DRIVER PROTOCOL FUNCTIONS
 define sideways method emit-library-records
     (back-end :: <harp-back-end>, ld :: <library-description>,
-     #rest flags, 
+     #rest flags,
      #key harp-output? = unsupplied(),
           assembler-output? = unsupplied(), cr, debug-info?,
      #all-keys)
@@ -43,7 +43,7 @@ define sideways method emit-library-record
     (back-end :: <harp-back-end>,
      cr :: <compilation-record>,
      ld :: <library-description>,
-     #rest flags, 
+     #rest flags,
      #key harp-output? = unsupplied(),
           assembler-output? = unsupplied(),
           force-link?, debug-info?,
@@ -78,7 +78,7 @@ end method;
 
 define sideways method link-and-download
     (back-end :: <harp-back-end>, il :: <interactive-layer>, runtime-context,
-     #rest flags, 
+     #rest flags,
      #key harp-output? = unsupplied(),
           assembler-output? = unsupplied(),
           debug-info? = #f,
@@ -90,7 +90,7 @@ define sideways method link-and-download
   let component-name
     = as-lowercase(as(<byte-string>, ld.library-description-emit-name));
   let init-function-name = glue-name(component-name);
-  let flags = vector(harp-output?: harp-output?, 
+  let flags = vector(harp-output?: harp-output?,
 		     assembler-output?: assembler-output?,
 		     debug-info?: debug-info?);
 
@@ -121,7 +121,7 @@ define sideways method link-and-download
 
   let cr-names = map-as(<vector>, compilation-record-name, crs);
   coff-files[crs.size]
-    := emit-gluefile(back-end, ld, cr-names, 
+    := emit-gluefile(back-end, ld, cr-names,
                      harp-output?: harp-output?,
                      assembler-output?: assembler-output?,
                      downloadable-data?: #t,
@@ -147,7 +147,7 @@ define method dll-imported-binding?
 end method;
 
 
-define method link-all 
+define method link-all
     (back-end :: <harp-back-end>,
      stream,
      cr :: <compilation-record>,
@@ -155,7 +155,7 @@ define method link-all
      #key debug-info? = *default-debug-info?*,
      #all-keys)
  => ();
-  with-simple-abort-retry-restart 
+  with-simple-abort-retry-restart
       ("Abort the emission phase", "Restart the emission phase")
 
     with-harp-variables(back-end)
@@ -195,7 +195,7 @@ define method link-all
           end for;
 
           emit-comment(stream, "Top-level");
-          let top-level-id = 
+          let top-level-id =
             cr-init-name(compilation-record-library(cr),
                          compilation-record-name(cr));
 
@@ -232,7 +232,7 @@ define method emit-data-definition
   emit-definition(back-end, stream, o);
 end method;
 
-define method emit-externs 
+define method emit-externs
     (back-end :: <harp-back-end>, stream, cr :: <compilation-record>)
  => ();
   emit-comment(stream, "Referenced object declarations");
@@ -255,13 +255,13 @@ define method emit-externs
     method emitted-object?(object)
       element(emitted-objects, object, default: #f);
     end method,
-    
+
     method emitted-object(object)
       element(emitted-objects, object) := #t
     end method;
 
   // emit classes
-  for (object in heap.heap-referenced-objects) 
+  for (object in heap.heap-referenced-objects)
     if (instance?(object, <&class>))
       emit-extern(object)
     end if;
@@ -283,7 +283,7 @@ define method emit-externs
         unless (locally-defined?)
 	  emit-extern(object);
         end unless;
-      otherwise => 
+      otherwise =>
 	let object = canonical-model-object(object);
 	unless (emitted-object?(object))
           emit-extern(object);
@@ -306,7 +306,7 @@ define method emit-forwards
   let heap = cr.compilation-record-model-heap;
 
   // emit classes
-  for (object in heap.heap-defined-objects) 
+  for (object in heap.heap-defined-objects)
     if (instance?(object, <&class>))
       emit-forward(back-end, stream, object);
     end if;
@@ -329,9 +329,9 @@ define method emit-indirection-definitions
     (back-end :: <harp-back-end>, stream, cr :: <compilation-record>)
  => ();
   emit-comment(stream, "Indirection variables");
-  
+
   let heap = cr.compilation-record-model-heap;
-  
+
   for (refs in heap.heap-load-bound-references)
     let object = load-bound-referenced-object(first(refs));
     emit-indirection-definition(back-end, stream, object);

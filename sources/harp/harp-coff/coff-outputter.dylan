@@ -32,7 +32,7 @@ end class;
 ///
 
 define sideways method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $coff-type$) 
+       (backend :: <harp-back-end>, type == $coff-type$)
        => (extension :: <byte-string>)
   "o";
 end method;
@@ -46,12 +46,12 @@ define sideways method make-harp-outputter-by-type
   let (machine, big-endian?) = coff-machine-type(backend);
   let stream = open-output-stream(backend, file-string, type);
   let obj-name
-    = concatenate(file-string, ".", 
+    = concatenate(file-string, ".",
                   file-extension-for-outputter-type(backend, type));
   let def-file = open-output-stream(backend, file-string, "def");
   let builder
     = make-binary-builder(<harp-coff-builder>,
-			  machine: machine, big-endian?: big-endian?, 
+			  machine: machine, big-endian?: big-endian?,
 			  destination: stream, def-file: def-file);
   add-source-file-definition(builder, concatenate(file-string, ".dylan"));
   initialize-debug-section(builder, obj-name);
@@ -65,7 +65,7 @@ define sideways method make-harp-outputter-by-type
   let (machine, big-endian?) = coff-machine-type(backend);
   let builder
     = make-binary-builder(<harp-coff-builder>,
-			  machine: machine, big-endian?: big-endian?, 
+			  machine: machine, big-endian?: big-endian?,
 			  destination: #f, def-file: #f);
   add-source-file-definition(builder, concatenate(file-string, ".dylan"));
   builder;
@@ -84,11 +84,11 @@ end method;
 /// a COFF file.
 ///
 define open generic coff-machine-type
-    (backend :: <harp-back-end>) 
+    (backend :: <harp-back-end>)
     => (machine :: <integer>, big-endian? :: <boolean>);
 
 define method coff-machine-type
-    (backend :: <harp-back-end>) 
+    (backend :: <harp-back-end>)
     => (machine :: <integer>, big-endian? :: <boolean>)
   values(#x14c, #f);
 end method;
@@ -108,7 +108,7 @@ define method output-glue-symbols
           import-start = $import-start-symbol,
           import-end = $import-end-symbol) => ()
 
-  local method put-symbol-in-section 
+  local method put-symbol-in-section
             (section, symbol, #key flags = $data-flags, alignment = 4)
           select-binary-section(builder, section, flags: flags, alignment: alignment);
           add-binary-symbol-definition(builder, symbol);
@@ -132,12 +132,12 @@ end method;
 
 
 
-define method output-code-start 
+define method output-code-start
     (be :: <harp-back-end>, builder :: <harp-coff-builder>) => ()
   // don't actually have to do anything
 end method;
 
-define method output-data-start 
+define method output-data-start
     (be :: <harp-back-end>, builder :: <harp-coff-builder>) => ()
   // don't actually have to do anything
 end method;
@@ -155,8 +155,8 @@ define method output-footer
   if (dest) write-binary(dest, builder) end;
 end method;
 
-define method output-external 
-    (be :: <harp-back-end>, 
+define method output-external
+    (be :: <harp-back-end>,
      builder :: <harp-coff-builder>,
      name :: <byte-string>,
      #key import?,
@@ -178,9 +178,9 @@ define method output-external
 
 end method;
 
-define method output-external 
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+define method output-external
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      name :: <constant-reference>,
      #key import?, #all-keys) => ()
   let import? = import? | instance?(name, <imported-constant-reference>);
@@ -210,8 +210,8 @@ define method output-public
 end method;
 
 define method output-public
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      name :: <constant-reference>,
      #key export? = and-force-dll-exports?(#t),
      #all-keys) => ()
@@ -240,8 +240,8 @@ define method output-definition
 end method;
 
 define method output-definition
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      name :: <constant-reference>,
      #rest all-keys,
      #key section,
@@ -260,12 +260,12 @@ end method;
 
 
 define method output-comment
-    (be :: <harp-back-end>, builder :: <harp-coff-builder>, comment :: <string>) 
+    (be :: <harp-back-end>, builder :: <harp-coff-builder>, comment :: <string>)
      => ()
 end method;
 
 define method output-line-comment
-    (be :: <harp-back-end>, builder :: <harp-coff-builder>, comment :: <string>) 
+    (be :: <harp-back-end>, builder :: <harp-coff-builder>, comment :: <string>)
      => ()
 end method;
 
@@ -302,7 +302,7 @@ define method output-compiled-lambda
 
   // Now we surely have a real lambda-name
   lambda.lambda-name-internal := name;
-  
+
   // output any external references
   for (ext :: <constant-reference> in lambda.lambda-externals)
     let import? = instance?(ext, <imported-constant-reference>);
@@ -329,7 +329,7 @@ end method;
 
 
 define method output-function-definition
-    (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>, builder :: <harp-coff-builder>,
      name :: <byte-string>, model-object,
      lambda :: <fully-compiled-lambda>,
      debug-info?)
@@ -340,9 +340,9 @@ define method output-function-definition
   let (start-line, end-line, file-name) = external-lambda-location(lambda);
   let public? = lambda.lambda-is-public?;
   let export? = lambda.lambda-is-export?.and-emit-dll?;          /// !"$% temporary interface
-  let representation = if (public?) 
-                         #"public-function" 
-                       else #"static-function" 
+  let representation = if (public?)
+                         #"public-function"
+                       else #"static-function"
                        end;
   let coff-symbol =
   if (debug-info? & start-line)
@@ -353,7 +353,7 @@ define method output-function-definition
     end;
     let coff-symbol =
       add-function-line-number-definition
-      (builder, name, model-object, lambda.lambda-code.size, 
+      (builder, name, model-object, lambda.lambda-code.size,
        line-count, start-line, end-line, representation: representation);
     output-function-line-numbers(builder, locators);
     coff-symbol
@@ -378,7 +378,7 @@ end method;
 define constant pointer32-type = #x403;
 
 define method output-variable-scopes
-    (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>, builder :: <harp-coff-builder>,
      name :: <byte-string>, model-object,
      lambda :: <fully-compiled-lambda>)
     => ()
@@ -399,7 +399,7 @@ define method output-variable-scopes
                              else
                                add-cv4-local-proc-start
                              end;
-    add-cv4-proc-start(builder, name, model-object, lambda.lambda-code.size, 
+    add-cv4-proc-start(builder, name, model-object, lambda.lambda-code.size,
                        start-offset, end-offset, pointer32-type);
     output-function-variable-scopes(be, builder, name, model-object, lambda);
     add-cv4-end-of-block(builder);
@@ -408,10 +408,10 @@ end method;
 
 
 // find-full-scope-with-frame
-// Finds an enclosing start and end offset for the region of the code that 
+// Finds an enclosing start and end offset for the region of the code that
 // has a stack frame, whether or not there are interim regions with no frame.
 
-define method find-full-scope-with-frame 
+define method find-full-scope-with-frame
     (lambda :: <fully-compiled-lambda>)
     => (with-frame? :: <boolean>, start-offset :: <integer>, end-offset :: <integer>)
   let scopes :: <debug-scopes> = lambda.lambda-variable-scopes-internal;
@@ -450,7 +450,7 @@ end method;
 
 
 define method output-variable-location
-     (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+     (be :: <harp-back-end>, builder :: <harp-coff-builder>,
       var :: <named-variable-in-spill>) => ()
   add-cv4-bp-relative(builder, var.variable-frame-pointer-offset,
                       pointer32-type, var.variable-name);
@@ -458,9 +458,9 @@ end method;
 
 
 define method output-variable-location
-     (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+     (be :: <harp-back-end>, builder :: <harp-coff-builder>,
       var :: <named-variable-in-register>) => ()
-  add-cv4-register(builder, pointer32-type, 
+  add-cv4-register(builder, pointer32-type,
                    var.variable-register-enumeration,
                    var.variable-name);
 end method;
@@ -468,11 +468,11 @@ end method;
 
 
 define method output-one-scope
-     (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+     (be :: <harp-back-end>, builder :: <harp-coff-builder>,
       name :: <byte-string>, model-object,
       scope :: <debug-scope>,
       all-scopes :: <simple-object-vector>,
-      all-names :: <simple-object-vector>) 
+      all-names :: <simple-object-vector>)
      => ()
   if (scope.debug-scope-with-frame?)
     if (scope.named-variables.empty-variables?)
@@ -487,24 +487,24 @@ define method output-one-scope
       add-cv4-end-of-block(builder);
     end if;
   end if;
-end method; 
+end method;
 
 
 define method output-nested-scopes
-     (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+     (be :: <harp-back-end>, builder :: <harp-coff-builder>,
       name :: <byte-string>, model-object,
       scope :: <debug-scope>,
       all-scopes :: <simple-object-vector>,
-      all-names :: <simple-object-vector>) 
+      all-names :: <simple-object-vector>)
      => ()
   for-debug-scope (scope in scope.nested-scopes of all-scopes)
     output-one-scope(be, builder, name, model-object, scope, all-scopes, all-names);
   end for-debug-scope;
-end method; 
+end method;
 
 
 define method output-function-variable-scopes
-     (be :: <harp-back-end>, builder :: <harp-coff-builder>, 
+     (be :: <harp-back-end>, builder :: <harp-coff-builder>,
       name :: <byte-string>, model-object,
       lambda :: <fully-compiled-lambda>)
      => ()
@@ -515,7 +515,7 @@ define method output-function-variable-scopes
   for-debug-scope (scope in scopes of all-scopes)
     output-one-scope(be, builder, name, model-object, scope, all-scopes, all-names);
   end for-debug-scope;
-end method; 
+end method;
 
 
 
@@ -541,8 +541,8 @@ end method;
 
 
 define method insert-code-label
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      item :: <relative-address-constant>,
      name :: <byte-string>,
      model-object,
@@ -556,8 +556,8 @@ end method;
 
 
 define method insert-code-label
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      item :: <labelled-absolute-constant>,
      name :: <byte-string>,
      model-object,
@@ -568,8 +568,8 @@ end method;
 
 
 define method insert-abs-relocation
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      ref,
      pos :: <integer>)
   let (name, model-object) = canonical-code-object(builder, ref);
@@ -578,8 +578,8 @@ define method insert-abs-relocation
 end method;
 
 define method insert-abs-relocation
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      ref :: <imported-constant-reference>,
      pos :: <integer>)
   let (name, model-object) = canonical-code-object(builder, ref);
@@ -588,8 +588,8 @@ define method insert-abs-relocation
 end method;
 
 define method insert-abs-relocation
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      ref :: <interactor-constant-reference>,
      pos :: <integer>)
   let handle = canonical-interactor-object(ref);
@@ -598,8 +598,8 @@ end method;
 
 
 define method insert-code-label
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      item :: <labelled-relative-constant>,
      name :: <byte-string>,
      model-object,
@@ -614,8 +614,8 @@ end method;
 
 
 define method insert-code-label
-    (be :: <harp-back-end>, 
-     builder :: <harp-coff-builder>, 
+    (be :: <harp-back-end>,
+     builder :: <harp-coff-builder>,
      item :: <labelled-constant-with-opcode>,
      name :: <byte-string>,
      model-object,
@@ -633,14 +633,14 @@ end method;
 
 /// Support for imported constants
 
-define open generic imported-name-mangler 
+define open generic imported-name-mangler
     (back-end :: <harp-back-end>) => (mangler :: <function>);
 
 
 // Imported names are now only created at binary-symbol creation time because
 // only then do we have for sure a real name in hand
 
-define method imported-name-mangler 
+define method imported-name-mangler
     (back-end :: <harp-back-end>) => (mangler :: <function>)
   $imported-name-mangler
 end method;

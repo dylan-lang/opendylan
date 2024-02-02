@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *                                                                       *
 *   commdlg.h -- This module defines the 32-Bit Common Dialog APIs      *
 *                                                                       *
-*   
+*
 *                                                                       *
 ************************************************************************/
 define constant <LPOFNHOOKPROC> = <C-function-pointer>;

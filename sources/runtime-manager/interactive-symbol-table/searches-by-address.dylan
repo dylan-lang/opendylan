@@ -28,8 +28,8 @@ define method symbol-table-register-region-for-library
   // Add these delimiting addresses to the known boundaries.
   let subtable = st.symbols-by-library[library];
   add!(subtable.subtable-address-boundaries,
-       make(<subtable-address-boundary>, 
-            from: lower-bound, to: upper-bound, 
+       make(<subtable-address-boundary>,
+            from: lower-bound, to: upper-bound,
             classification: classification));
 end method;
 
@@ -49,7 +49,7 @@ define method symbol-table-classify-address
   let lib = #f;
   let classification = #"heap";
   block (exit)
-    
+
   end block;
   values(lib, classification)
 end method;
@@ -96,9 +96,9 @@ define method symbol-table-symbol-relative-address
         for (sublist-index from 0 to last-page-index)
           if (head(subtable.symbols-by-address[sublist-index]) > page)
             if (sublist-index > 0)
-              target-sublist := 
+              target-sublist :=
                 tail(subtable.symbols-by-address[sublist-index - 1]);
-              actual-page := 
+              actual-page :=
                 head(subtable.symbols-by-address[sublist-index - 1]);
               found-sublist();
             end if
@@ -111,16 +111,16 @@ define method symbol-table-symbol-relative-address
               actual-page := page;
               found-sublist();
             elseif (sublist-index > 0)
-              target-sublist := 
+              target-sublist :=
                 tail(subtable.symbols-by-address[sublist-index - 1]);
-              actual-page := 
+              actual-page :=
                 head(subtable.symbols-by-address[sublist-index - 1]);
               found-sublist();
             end if
           elseif (sublist-index == last-page-index)
-            target-sublist := 
+            target-sublist :=
               tail(subtable.symbols-by-address[last-page-index]);
-            actual-page := 
+            actual-page :=
               head(subtable.symbols-by-address[last-page-index]);
             found-sublist();
           end if;
@@ -164,17 +164,17 @@ define method symbol-table-symbol-relative-address
         offset := page-offset - actual-page-offset
       else
         let page-difference = page - actual-page;
-        let page-byte-size = 
+        let page-byte-size =
           remote-value-byte-size(path) * remote-virtual-page-size(path);
         if (actual-page-offset = page-offset)
           offset := page-difference * page-byte-size
         elseif (actual-page-offset < page-offset)
-          offset := 
-            (page-difference * page-byte-size) + 
+          offset :=
+            (page-difference * page-byte-size) +
                 (page-offset - actual-page-offset);
         else
           offset :=
-            (page-difference * page-byte-size) - 
+            (page-difference * page-byte-size) -
                  (actual-page-offset - page-offset);
         end if
       end if

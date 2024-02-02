@@ -7,10 +7,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define sideways method emit-all
-    (back-end :: <harp-back-end>, cr :: <compilation-record>, 
+    (back-end :: <harp-back-end>, cr :: <compilation-record>,
      #rest flags, #key dfm-output? = #f, #all-keys)
  => ();
-  with-simple-abort-retry-restart 
+  with-simple-abort-retry-restart
       ("Abort the emission phase", "Restart the emission phase")
     with-harp-variables (back-end)
       let heap = cr.compilation-record-model-heap;
@@ -63,13 +63,13 @@ define sideways method emit-all
           end for;
 
           with-labeling-from-dynamic
-            let top-level-id = 
+            let top-level-id =
               cr-init-name(compilation-record-library(cr),
                            compilation-record-name(cr));
-            
+
             apply(emit-init-code-definition,
                   back-end, #f, heap, top-level-id, flags);
-            
+
             retract-local-methods-in-heap(heap);
 
           end with-labeling-from-dynamic;
@@ -115,7 +115,7 @@ end function;
 */
 
 define method emit-code
-    (back-end :: <harp-back-end>, o :: <&iep>, 
+    (back-end :: <harp-back-end>, o :: <&iep>,
      #rest flags, #key form?, force-emit?, #all-keys)
  => ()
   let re-emit? =
@@ -237,7 +237,7 @@ define method emit-init-code-definition
            end for;
          end with-harp-init-emitter;
   else
-    emitted-name(as(<symbol>, user-name)) := 
+    emitted-name(as(<symbol>, user-name)) :=
       apply(emit-user-init-code,
             back-end, stream, heap, user-name, flags);
   end if;
@@ -270,8 +270,8 @@ define method emit-system-init-code
     method emit-fixups (back-end)
       // Symbol Fixups
       let resolve-ref = make-g-register(back-end);
-      ins--move(back-end, 
-                resolve-ref, 
+      ins--move(back-end,
+                resolve-ref,
                 op--dylan-constant-ref(back-end, $dylan-resolve-symbol-iep));
 
       for (refs in heap.heap-load-bound-references)
@@ -400,7 +400,7 @@ define method emit-imports
       end select;
     with-build-area-output (stream = ld, name: concatenate(cr-name, ".import"))
       for (library in back-end.cg-variables.imports.key-sequence)
-        let (internal-library-name, library-name) = 
+        let (internal-library-name, library-name) =
           if (library == #"runtime")
             values("runtime", "runtime")
           else
@@ -426,7 +426,7 @@ define method emit-imports
   end unless;
 end method;
 
-define method settings-executable 
+define method settings-executable
     (#key executable = #f, #all-keys)
  => (executable :: false-or(<byte-string>))
   executable
@@ -437,7 +437,7 @@ define method cache-import-in-library
     (back-end :: <harp-back-end>, name :: <byte-string>, model-library) => ()
   unless (*compiling-dylan?*)
     let imports = imports-in-library(back-end, name, model-library);
-    
+
     imports[name] := #t
   end unless;
 end method;
@@ -445,15 +445,15 @@ end method;
 define method imports-in-library
     (back-end :: <harp-back-end>, name :: <byte-string>, model-library)
  => (imports :: <table>);
-  let entries = 
+  let entries =
     element(back-end.cg-variables.imports, model-library, default: #f);
   let new-entries = entries | make(<table>);
-  
+
   unless (entries)
     back-end.cg-variables.imports[model-library] := new-entries
   end unless;
-  
-  new-entries 
+
+  new-entries
 end method;
 
 // Generate imports for runtime primitives
@@ -622,10 +622,10 @@ define method emit-symbol-fixups
   let done-tag = make-tag(back-end);
   let worth-testing-limit = 2;
 
-  if (refs.size > worth-testing-limit)  
+  if (refs.size > worth-testing-limit)
     // It's more efficient to not perform this test if the number of fixups
     // is sufficiently small
-    ins--beq(back-end, done-tag, fixup, object-ref) 
+    ins--beq(back-end, done-tag, fixup, object-ref)
   end if;
 
   let fixed-indirection-variable = #f;
@@ -680,7 +680,7 @@ define method emit-fixup
 end method;
 
 define method emit-fixup
-    (back-end :: <harp-back-end>, stream, 
+    (back-end :: <harp-back-end>, stream,
      object, ref :: <load-bound-code-reference>, fixup)
  => ();
   ins--move(back-end,
@@ -689,7 +689,7 @@ define method emit-fixup
 end method;
 
 define method emit-fixup
-    (back-end :: <harp-back-end>, stream, 
+    (back-end :: <harp-back-end>, stream,
      object, ref :: <load-bound-binding-reference>, fixup)
  => ();
   ins--move(back-end,
@@ -699,12 +699,12 @@ define method emit-fixup
 end method;
 
 define method emit-fixup
-    (back-end :: <harp-back-end>, stream, 
+    (back-end :: <harp-back-end>, stream,
      object, ref :: <load-bound-instance-slot-reference>, fixup)
  => ();
   let referencing-object = load-bound-referencing-object(ref);
   let slotd = load-bound-referencing-slot(ref);
-  let (primitive, offset) 
+  let (primitive, offset)
     = fixed-slot-primitive-fixup-info(^object-class(referencing-object),
                                       slotd);
 
@@ -716,13 +716,13 @@ define method emit-fixup
 end method;
 
 define method emit-fixup
-    (back-end :: <harp-back-end>, stream, 
+    (back-end :: <harp-back-end>, stream,
      object, ref :: <load-bound-repeated-slot-reference>, fixup)
  => ();
   let referencing-object = load-bound-referencing-object(ref);
   let slotd = load-bound-referencing-slot(ref);
   let index = load-bound-referencing-slot-index(ref);
-  let (primitive, base-offset) 
+  let (primitive, base-offset)
     = repeated-slot-primitive-fixup-info (^object-class(referencing-object),
                                           slotd);
 
@@ -880,7 +880,7 @@ define method apropo-model-object (o :: <&c-function>) => (o);
 end method;
 
 define method apropo-model-object (o :: <&iep>) => (o);
-  let f = o.function; 
+  let f = o.function;
   if (instance?(f, <&c-callable-function>))
     if (*emitting-data?*)
       error("Harp Code Generator: "
@@ -1034,7 +1034,7 @@ define method emit-data-item
 		   import?: import?);
 end method;
 
-// ELF Outputters use this emitter to emit type and size of data, so the 
+// ELF Outputters use this emitter to emit type and size of data, so the
 // Linker can create appropriate dynamic relocation records for them
 
 define open generic emit-data-footer

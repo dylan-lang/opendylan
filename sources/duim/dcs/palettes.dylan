@@ -113,7 +113,7 @@ define method do-remove-colors (palette :: <palette>, #rest colors) => ()
   #f
 end method do-remove-colors;
 
-
+
 /// Dynamic Colors
 
 define protocol <<dynamic-color-protocol>> ()
@@ -202,7 +202,7 @@ define macro with-delayed-recoloring
          end }
 end macro with-delayed-recoloring;
 
-
+
 /// Layered Colors
 
 define protocol <<layered-color-protocol>> ()
@@ -331,7 +331,7 @@ define method layered-color-dynamic-colors
   end
 end method layered-color-dynamic-colors;
 
-
+
 /// Color constants
 
 define sealed class <color-not-found> (<error>)

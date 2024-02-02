@@ -11,14 +11,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method IDataObject/QueryGetData(this :: <CDataObject>,
 				       pformatetc :: <LPFORMATETC> )
 			=> status :: <HRESULT>;
-	
+
   Output-Debug-String("IDataObject/QueryGetData\r\n");
   // check the validity of the data format specified by formatetc.
   OLE-part-get-data(this.get-obj, pformatetc, null-pointer(<LPSTGMEDIUM>))
 end method IDataObject/QueryGetData;
 
 
-// Called by the container when it would like to be notified of 
+// Called by the container when it would like to be notified of
 // changes in the object data.
 
 define method IDataObject/DAdvise(this :: <CDataObject>,
@@ -37,7 +37,7 @@ define method IDataObject/DAdvise(this :: <CDataObject>,
     check-ole-status(status, "CreateDataAdviseHolder", this);
     obj.container-IDataAdviseHolder := result;
   end if;
-  
+
   // pass on to the DataAdviseHolder
   /* return */
   IDataAdviseHolder/Advise(obj.container-IDataAdviseHolder, this,
@@ -51,7 +51,7 @@ define method IDataObject/GetData(this :: <CDataObject>,
 				  pformatetcIn :: <LPFORMATETC>,
 				  pmedium :: <LPSTGMEDIUM> )
 		=> status :: <HRESULT>;
-  
+
   Output-Debug-String("IDataObject/GetData\r\n");
   if ( null-pointer?(pmedium) | null-pointer?(pformatetcIn) )
     $E-INVALIDARG
@@ -64,7 +64,7 @@ end method IDataObject/GetData;
 // Breaks down an Advise connection.
 
 define method IDataObject/DUnadvise(this :: <CDataObject>,
-				    advise-connection-ID :: <integer>) 
+				    advise-connection-ID :: <integer>)
 	=> status :: <HRESULT>;
 
   Output-Debug-String("IDataObject/DUnadvise\r\n");
@@ -80,7 +80,7 @@ end method IDataObject/DUnadvise;
 
 // Called to get a data format in a caller supplied location.
 // Note that this operation is not applicable to metafiles; the only relevant
-// storage media are $TYMED-ISTORAGE, $TYMED-ISTREAM, and $TYMED-FILE. 
+// storage media are $TYMED-ISTORAGE, $TYMED-ISTREAM, and $TYMED-FILE.
 
 define method IDataObject/GetDataHere(this :: <CDataObject>,
 				      pformatetc :: <LPFORMATETC>,
@@ -97,7 +97,7 @@ define method IDataObject/GetDataHere(this :: <CDataObject>,
    * CFSTR_EMBEDSOURCE and TYMED_ISTORAGE (and later for
    * CFSTR_LINKSOURCE).  This means the same as
    * IPersistStorage::Save.
-   */ 
+   */
 
   // Aspect is unimportant to us here, as is lindex and ptd.
   if ( logtest($TYMED-ISTORAGE, pformatetc.tymed-value)
@@ -125,14 +125,14 @@ define method IDataObject/GetCanonicalFormatEtc(this :: <CDataObject>,
 		=> status :: <HRESULT>;
 
   block(return)
-	
+
     Output-Debug-String("IDataObject/GetCanonicalFormatEtc\r\n");
-    
+
     if ( null?(pformatetc-out) )
       return( $E-INVALIDARG  ); // invalid argument
     end if;
 
-    /* OLE2NOTE: we must make sure to set all out parameters to NULL. */ 
+    /* OLE2NOTE: we must make sure to set all out parameters to NULL. */
     pformatetc-out.ptd-value := null-pointer(<LPDVTARGETDEVICE>);
 
     if ( null?(pformatetc-in) )
@@ -153,7 +153,7 @@ define method IDataObject/GetCanonicalFormatEtc(this :: <CDataObject>,
     **    rendering and printer rendering. if should return
     **    DATA_S_SAMEFORMATETC if the input and output formatetc's are
     **    identical.
-    */ 
+    */
 
     %memcpy(pformatetc-out, pformatetc-in, size-of(<FORMATETC>));
 
@@ -197,7 +197,7 @@ end method;
    // simplify the registry and to be user-extensible.
 define method IDataObject/EnumFormatEtc(this :: <CDataObject>,
 					direction /* :: <unsigned-fixnum> */ )
-			  
+
  => ( status :: <HRESULT>,
       penumFormatEtc :: <Interface> /* LPENUMFORMATETC */ );
   Output-Debug-String("IDataObject/EnumFormatEtc\r\n");

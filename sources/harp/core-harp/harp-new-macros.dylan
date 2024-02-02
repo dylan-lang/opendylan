@@ -27,7 +27,7 @@ define macro with-harp
   { with-harp (?backend:expression)
       ?binding-body
     end }
-    => 
+    =>
     { begin
         let $backend$ = ?backend;
         let $registers$ = $backend$.registers;
@@ -67,7 +67,7 @@ define macro with-harp
 
     { ?:body }
       => { ?body }
-  
+
   tag-bindings:
     { ?tag:name, ... }
       => { let ?tag = make-tag($backend$); ... }
@@ -104,29 +104,29 @@ define macro with-harp
 
   named-greg-bindings:
     { ?reg:name, ... }
-      => { let ?reg 
-             = make-g-register($backend$, name: ?"reg" . as-lowercase); 
+      => { let ?reg
+             = make-g-register($backend$, name: ?"reg" . as-lowercase);
            ... }
     { } => { }
 
   named-nreg-bindings:
     { ?reg:name, ... }
-      => { let ?reg 
-             = make-n-register($backend$, name: ?"reg" . as-lowercase); 
+      => { let ?reg
+             = make-n-register($backend$, name: ?"reg" . as-lowercase);
            ... }
     { } => { }
 
   named-sfreg-bindings:
     { ?reg:name, ... }
-      => { let ?reg 
-             = make-sf-register($backend$, name: ?"reg" . as-lowercase); 
+      => { let ?reg
+             = make-sf-register($backend$, name: ?"reg" . as-lowercase);
            ... }
     { } => { }
 
   named-dfreg-bindings:
     { ?reg:name, ... }
-      => { let ?reg 
-             = make-df-register($backend$, name: ?"reg" . as-lowercase); 
+      => { let ?reg
+             = make-df-register($backend$, name: ?"reg" . as-lowercase);
            ... }
     { } => { }
 

@@ -20,7 +20,7 @@ end method;
 
 /// STRUCT MANGLING
 
-define method struct-field-name 
+define method struct-field-name
     (class :: <&class>, slotd :: <&slot-descriptor>, position)
   harp-local-mangle
     (slotd.^debug-name | format-to-string("anon-slot-%d", position))

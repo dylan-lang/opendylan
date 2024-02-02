@@ -58,7 +58,7 @@ define generic register-key
 define generic unregister-key
     (settings :: <settings>, key :: <byte-string>) => ();
 
-
+
 /// Settings defining macro
 
 define variable $settings-table :: <object-table> = make(<object-table>);
@@ -300,7 +300,7 @@ define macro invalidate-settings-caches-method-definer
     => { }
 end macro invalidate-settings-caches-method-definer;
 
-
+
 /// Standard settings
 /// NB: for all standard settings, key names are supplied by the back-end
 

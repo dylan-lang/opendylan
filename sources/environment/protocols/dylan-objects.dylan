@@ -29,7 +29,7 @@ define open abstract class <dylan-compiler-object>
     (<dylan-object>, <compiler-object>)
 end class <dylan-compiler-object>;
 
-
+
 /// Dylan IDs
 
 define constant $dylan-library-id
@@ -76,19 +76,19 @@ define constant $<boolean>-id
          name: "<boolean>",
          module: $dylan-module-id);
 
-
+
 /// Characters
 
 define class <character-object> (<immediate-application-object>)
 end class <character-object>;
 
-
+
 /// Symbols
 
 define class <symbol-object> (<dylan-application-object>)
 end class <symbol-object>;
 
-
+
 /// Booleans
 
 define class <boolean-object> (<immediate-application-object>)
@@ -115,7 +115,7 @@ define method application-object-class
   make-environment-object(<class-object>, project: project, id: $<boolean>-id)
 end method application-object-class;
 
-
+
 /// Numbers
 
 define class <number-object> (<immediate-application-object>)
@@ -130,7 +130,7 @@ define open generic number-object-to-string
           format :: false-or(<symbol>))
  => (string :: false-or(<string>));
 
-
+
 /// Collections
 
 define class <collection-object>
@@ -191,7 +191,7 @@ define open generic range-by
     (server :: <server>, range :: <range-object>)
  => (by :: false-or(<number-object>));
 
-
+
 /// This only models non-proper lists, so it isn't a sequence object
 define class <pair-object> (<user-object>)
 end class <pair-object>;
@@ -204,7 +204,7 @@ define open generic pair-tail
     (server :: <server>, pair :: <pair-object>)
  => (head :: false-or(<application-object>));
 
-
+
 /// Project dispatching methods
 
 define method number-object-to-string
@@ -294,7 +294,7 @@ define method pair-tail
   server & pair-tail(server, pair)
 end method pair-tail;
 
-
+
 /// Type names
 
 define method environment-object-type-name

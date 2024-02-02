@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 /// Minimal static type inference: recurse until you ground out on data.
 ///
-
+
 ///
 /// A few tools.
 ///
@@ -472,7 +472,7 @@ define function lift-model-named(name :: <symbol>) => (te :: <type-estimate>)
   // Evaluate name in Dylan, lift resulting model type as type-estimate.
   as(<type-estimate>, dylan-value(name))
 end;
-
+
 ///
 /// The type inference rule compiler.
 ///
@@ -678,7 +678,7 @@ rhs: // ,-separated expressions Should be able to do: { ??item:expression, ... }
   { ?item:expression }       => { ?item }
   { ?item:expression, ?rhs } => { ?item, ?rhs }
 end;
-
+
 ///
 /// Type inference rules.  Twisted way to do abstract semantic interpretation!
 ///

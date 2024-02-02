@@ -27,7 +27,7 @@ end method;
 
 // Open as separate top-level window (instead of in-place).
 define method OLE-part-open-out(obj :: <basic-DUIM-OLE-server>)
- => window :: <HWND>; 
+ => window :: <HWND>;
 
   let doc :: <DUIM-server-doc> = obj.get-doc;
 
@@ -87,7 +87,7 @@ define method OLE-part-in-place-deactivated ( obj :: <basic-DUIM-OLE-server> )
   values()
 end method;
 
-/* // on second thought, maybe it is better not to do this, since this 
+/* // on second thought, maybe it is better not to do this, since this
    // position is relative to the container window, which DUIM doesn't
    // know anything about.	-- DNG 9/11/96
 define method OLE-part-position-window ( obj :: <basic-DUIM-OLE-server>,
@@ -109,7 +109,7 @@ define method OLE-part-change-size (obj :: <basic-DUIM-OLE-server>,
   note-embedded-region-changed(obj.app-frame, width, height)
 end method;
 
-
+
 define method OLE-part-insert-menus ( obj :: <basic-DUIM-OLE-server>,
 				     hmenuShared :: <HMENU>,
 				     edit-position :: <integer>,
@@ -124,7 +124,7 @@ define method OLE-part-insert-menus ( obj :: <basic-DUIM-OLE-server>,
     insert-menu-group (hmenuShared, help-menu-bar, help-position, frame);
   let object-count :: <fixnum> =
     insert-menu-group (hmenuShared, object-menu-bar, object-position, frame);
-  let edit-count :: <fixnum> = 
+  let edit-count :: <fixnum> =
     insert-menu-group (hmenuShared, edit-menu-bar, edit-position, frame);
   values( edit-count, object-count, help-count )
 end method;
@@ -168,7 +168,7 @@ define method insert-menu-group ( hmenuShared :: <HMENU>,
  => count :: <fixnum>;
 
   let mirror = duim/sheet-direct-mirror(sub-menu);
-  let sub-hmenu :: <HMENU> = 
+  let sub-hmenu :: <HMENU> =
     if ( mirror )
       duim/window-handle(mirror)
     else
@@ -222,7 +222,7 @@ define method OLE-part-release-menu (obj :: <basic-DUIM-OLE-server>,
   values()
 end method;
 
-
+
 
 define method OLE-part-draw-metafile(obj :: <basic-DUIM-OLE-server>,
 				     hDC :: <HDC>)
@@ -234,7 +234,7 @@ define method OLE-part-draw-metafile(obj :: <basic-DUIM-OLE-server>,
 end method OLE-part-draw-metafile;
 
 
-define method OLE-part-requested-size ( obj :: <basic-DUIM-OLE-server> ) 
+define method OLE-part-requested-size ( obj :: <basic-DUIM-OLE-server> )
  => (width :: <integer>, height :: <integer>);
   frame-embedded-size-requested(obj.app-frame)
 end method;

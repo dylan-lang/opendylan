@@ -80,7 +80,7 @@ define method IAdviseSink/OnViewChange(this :: <CAdviseSink>,
   // get a pointer to IViewObject2
   let ( hErr :: <HRESULT>, interface ) =
     QueryInterface(this.m-pSite.m-lpOleObject, $IID-IViewObject2);
-  if ( hErr = $NOERROR ) 
+  if ( hErr = $NOERROR )
     let lpViewObject2 :: <LPVIEWOBJECT2> =
       pointer-cast(<LPVIEWOBJECT2>, interface);
     // get extent of the object
@@ -91,7 +91,7 @@ define method IAdviseSink/OnViewChange(this :: <CAdviseSink>,
 			   this.m-pSite.m-pSizel);
     Release(lpViewObject2);
   end if;
-  
+
   InvalidateRect(this.m-pSite.m-lpDoc.m-hDocWnd, $NULL-RECT, #t);
   values()
 end method IAdviseSink/OnViewChange;

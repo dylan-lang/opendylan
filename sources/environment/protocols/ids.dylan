@@ -22,7 +22,7 @@ define sealed abstract class <named-id> (<unique-id>)
     required-init-keyword: name:;
 end class <named-id>;
 
-
+
 /// ID interning
 
 define constant $name-separator = ";";
@@ -47,7 +47,7 @@ define function make-id-cache
   make(<string-table>, weak: #"value")
 end function make-id-cache;
 
-
+
 /// Library IDs
 
 define sealed class <library-id> (<named-id>)
@@ -61,7 +61,7 @@ define method id-table-and-key
   values($library-ids, name)
 end method id-table-and-key;
 
-
+
 /// Module IDs
 
 define sealed class <module-id> (<named-id>)
@@ -79,7 +79,7 @@ define method id-table-and-key
   values($module-ids, mangled-name)
 end method id-table-and-key;
 
-
+
 /// Definition IDs
 
 define sealed class <definition-id> (<named-id>)
@@ -102,7 +102,7 @@ define method id-table-and-key
   values($definition-ids, mangled-name)
 end method id-table-and-key;
 
-
+
 /// Method IDs
 
 define sealed class <method-id> (<unique-id>)
@@ -139,7 +139,7 @@ define method id-table-and-key
   values($method-ids, mangled-name)
 end method id-table-and-key;
 
-
+
 /// Object location IDs
 
 define sealed class <object-location-id> (<id>)
@@ -164,7 +164,7 @@ define method id-table-and-key
   values($object-location-ids, mangled-name)
 end method id-table-and-key;
 
-
+
 /// Library object location IDs
 
 define sealed class <library-object-location-id> (<object-location-id>)

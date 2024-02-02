@@ -28,15 +28,15 @@ define macro dont-copy-slots-definer
            concatenate(?=next-method(), list(?entries))
 	 end method }
 entries:
-  { } 
+  { }
     => { }
-  { ?getter:name, ... } 
+  { ?getter:name, ... }
     => { ?getter, ... }
-  { ?getter:name => ?default:expression, ... } 
+  { ?getter:name => ?default:expression, ... }
     => { pair(?getter, method (?=self) ?default end), ... }
 end macro;
 
-define macro dont-copy-object-definer 
+define macro dont-copy-object-definer
   { define dont-copy-object ?:name ?copier }
     => { define method deep-copy (copier :: ?copier, object :: ?name) => (value)
 	   object
@@ -65,15 +65,15 @@ define open generic do-deep-copy (copier :: <copier>, object) => (copy);
 
 /*
 define macro do-copy-slots
-  { do-copy-slots () (?object:name, ?copy:name, ?start:expression) } 
+  { do-copy-slots () (?object:name, ?copy:name, ?start:expression) }
     => { }
-  { do-copy-slots (?slot:name, ...) (?object:name, ?copy:name, ?start:expression) } 
+  { do-copy-slots (?slot:name, ...) (?object:name, ?copy:name, ?start:expression) }
     => { walker-slot-value(?copy, ?index) := walker-slot-value(?object, ?index);
          do-copy-slots (...) (?start + 1) }
 end macro;
 
 define macro copy-slots-definer
-  { define copy-slots (?slots:*) (?:name) } 
+  { define copy-slots (?slots:*) (?:name) }
     => { define function "copy-slots-" ## "?name" (copier :: <copier>, object)
 	   let class = object-class(object);
 	   let copy  = walker-allocate-object(class, 0);
@@ -91,7 +91,7 @@ define method do-deep-copy (copier :: <copier>, object) => (value)
   let repeated? = walker-repeated-slot?(class);
   let sz        = if (repeated?) size(object) end;
   let copy      = walker-allocate-object(class, sz);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   let (shallow-slotds, defaulted-slotds, deep-slotds)
     = walker-all-slot-descriptors(copier, class);
   for (slotd in shallow-slotds)
@@ -103,7 +103,7 @@ define method do-deep-copy (copier :: <copier>, object) => (value)
     walker-slot-value(copy, slotd) := default-thunk(object);
   end for;
   for (slotd in deep-slotds)
-    walker-slot-value(copy, slotd) 
+    walker-slot-value(copy, slotd)
       := deep-copy(copier, walker-slot-value(object, slotd));
   end for;
   if (repeated?)
@@ -115,28 +115,28 @@ define method do-deep-copy (copier :: <copier>, object) => (value)
 end method;
 */
 
-define inline function do-deep-copy-simple 
+define inline function do-deep-copy-simple
     (copier :: <copier>, object, class :: <class>, walker-class :: <walker-class>)
  => (value)
   let copy = walker-allocate-simple-object(class);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   let deep-slotds = walker-class-deep-slot-descriptors(walker-class);
   for (slotd :: <walker-slot-descriptor> in deep-slotds)
-    walker-slot-value(copy, slotd) 
+    walker-slot-value(copy, slotd)
       := deep-copy(copier, walker-slot-value(object, slotd));
   end for;
   copy
 end function;
 
-define function do-deep-copy-repeated 
+define function do-deep-copy-repeated
     (copier :: <copier>, object, class :: <class>, walker-class :: <walker-class>)
  => (value)
   let sz   = size(object);
   let copy = walker-allocate-repeated-object(class, sz);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   let deep-slotds = walker-class-deep-slot-descriptors(walker-class);
   for (slotd :: <walker-slot-descriptor> in deep-slotds)
-    walker-slot-value(copy, slotd) 
+    walker-slot-value(copy, slotd)
       := deep-copy(copier, walker-slot-value(object, slotd));
   end for;
   for (i :: <integer> from 0 below sz)
@@ -145,11 +145,11 @@ define function do-deep-copy-repeated
   copy
 end function;
 
-define function do-deep-copy-complex 
+define function do-deep-copy-complex
     (copier :: <copier>, object, class :: <class>, walker-class :: <walker-class>)
  => (value)
   let copy = walker-allocate-simple-object(class);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   let shallow-slotds   = walker-class-shallow-slot-descriptors(walker-class);
   let defaulted-slotds = walker-class-defaulted-slot-descriptors(walker-class);
   let deep-slotds      = walker-class-deep-slot-descriptors(walker-class);
@@ -162,7 +162,7 @@ define function do-deep-copy-complex
     walker-slot-value(copy, slotd) := default-thunk(object);
   end for;
   for (slotd :: <walker-slot-descriptor> in deep-slotds)
-    walker-slot-value(copy, slotd) 
+    walker-slot-value(copy, slotd)
       := deep-copy(copier, walker-slot-value(object, slotd));
   end for;
   copy
@@ -181,7 +181,7 @@ end method;
 define method do-deep-copy
     (copier :: <copier>, object :: <pair>) => (value)
   let copy :: <pair> = pair(#f, #f);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   head(copy) := deep-copy(copier, head(object));
   tail(copy) := deep-copy(copier, tail(object));
   copy
@@ -191,7 +191,7 @@ define method do-deep-copy
     (copier :: <copier>, object :: <simple-object-vector>) => (value)
   let size :: <integer> = size(object);
   let copy :: <simple-object-vector> = make(<simple-object-vector>, size: size);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   for (i :: <integer> from 0 below size)
     copy[i] := deep-copy(copier, object[i]);
   end for;
@@ -202,7 +202,7 @@ define method do-deep-copy
     (copier :: <copier>, object :: <stretchy-object-vector>) => (value)
   let size :: <integer> = size(object);
   let copy :: <stretchy-object-vector> = make(<stretchy-object-vector>, size: size);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   for (i :: <integer> from 0 below size)
     copy[i] := deep-copy(copier, object[i]);
   end for;
@@ -220,7 +220,7 @@ define method do-deep-copy
     (copier :: <copier>, object :: <table>) => (value)
   let size :: <integer> = size(object);
   let copy :: <table> = make(object-class(object), size: size);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   for (val keyed-by key in object)
     copy[key] := val;
   end for;
@@ -230,7 +230,7 @@ end method;
 define method do-deep-copy
     (copier :: <copier>, object :: <byte-string>) => (value)
   let copy = copy-sequence(object);
-  copier-register-copied(copier, object, copy); 
+  copier-register-copied(copier, object, copy);
   copy
 end method;
 

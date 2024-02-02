@@ -35,7 +35,7 @@ end module;
 define module dfmc-harp-browser-support
   use common-dylan;
   use dylan-extensions, import: {case-insensitive-equal};
-  use dfmc-imports, 
+  use dfmc-imports,
     exclude: { source-record-start-line, source-record-end-line };
   use dfmc-namespace;
   use dfmc-derived-information;
@@ -43,7 +43,7 @@ define module dfmc-harp-browser-support
   // Use prefix to avoid conflicts with interface names.
   use harp-browser-used-modules, prefix: "dfmc-";
   // Rename to avoid conflicts with interface names.
-  use harp-for-extenders, 
+  use harp-for-extenders,
     rename: { <compiled-lambda> => <harp-compiled-lambda>,
               variable-name => harp-variable-name };
 end module;

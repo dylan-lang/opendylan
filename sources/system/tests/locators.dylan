@@ -40,7 +40,7 @@ define test test-<locator-error> ()
   assert-signals(<locator-error>, locator-error("test %s", "error"));
 end test;
 
-
+
 /// Web locator classes
 
 define sideways method make-test-instance
@@ -219,7 +219,7 @@ define test test-<mail-to-locator> ()
                                       address: "andrewa@fun.com")));
 end test;
 
-
+
 /// Locator function test cases
 
 define test test-locator-error ()

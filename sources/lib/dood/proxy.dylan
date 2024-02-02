@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //define constant $unbound-proxy-value = list("UNBOUND PROXY");
 
 define open dood-class <dood-proxy> (<dood-mapped-and-owned-object>)
-  // weak slot dood-proxy-value, 
+  // weak slot dood-proxy-value,
   //   init-value: $unbound-proxy-value, init-keyword: object:;
 end dood-class;
 
@@ -54,7 +54,7 @@ define inline function dood-as-proxy
 	  install-proxy(dood, object, proxy);
 	  proxy
 	end
-  // else 
+  // else
   //   apply(make-proxy, dood, object, arguments)
   // end if
 end function;
@@ -62,7 +62,7 @@ end function;
 define open generic dood-restore-proxy
     (dood :: <dood>, proxy :: <dood-proxy>) => (memory-object);
 
-define open generic dood-disk-object-default 
+define open generic dood-disk-object-default
     (dood :: <dood>, object) => (disk-object);
 
 define method dood-disk-object-default
@@ -70,7 +70,7 @@ define method dood-disk-object-default
   object
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object) => (disk-object)
   dood-disk-object-default(dood, object);
 end method;
@@ -88,7 +88,7 @@ define method dood-disk-object
     else
       dood-as-proxy(dood, object, dood-make-cross-proxy, external-dood)
     end if
-  else 
+  else
     object
   end if
   */
@@ -96,13 +96,13 @@ define method dood-disk-object
 end method;
 
 define method read-object-using-class-at
-    (dood :: <dood>, class :: subclass(<dood-proxy>), address :: <address>) 
+    (dood :: <dood>, class :: subclass(<dood-proxy>), address :: <address>)
  => (object)
   let object = dood-read-object-of-at(dood, class, address);
   let value  = dood-restore-proxy(dood, object);
   install-read-proxy(dood, value, object);
   dood-format("REREGISTERING PROXY\n");
-  dood-register-read-object(dood, value, address); 
+  dood-register-read-object(dood, value, address);
   // dood-proxy-value(object) := value;
   value
 end method;
@@ -129,7 +129,7 @@ define function dood-as-program-module-proxy
     = element(proxies, library-name, default: #f)
         | (element(proxies, library-name) := make(<dood-table>));
   element(proxies, module-name, default: #f)
-    | (element(proxies, module-name) 
+    | (element(proxies, module-name)
          := make(<dood-program-module-proxy>,
                  module: module-name, library: library-name))
 end function;
@@ -142,41 +142,41 @@ define function dood-make-program-binding-proxy
     error("Couldn't locate program variable for %=", object);
   end;
   make(<dood-program-binding-proxy>,
-       variable: variable, 
+       variable: variable,
        module:   dood-as-program-module-proxy(dood, library, module))
 end function;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <generic-function>)
  => (proxy :: <dood-program-binding-proxy>)
   dood-as-proxy(dood, object, dood-make-program-binding-proxy)
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <function>)
  => (proxy :: <dood-program-binding-proxy>)
   error("NON GENERIC-FUNCTIONS ARE UNSUPPORTED IN DOOD");
 end method;
 
-define method dood-restore-proxy 
+define method dood-restore-proxy
     (dood :: <dood>, proxy :: <dood-program-module-proxy>) => (object)
   proxy
 end method;
 
-define method dood-restore-proxy 
+define method dood-restore-proxy
     (dood :: <dood>, proxy :: <dood-program-binding-proxy>) => (object)
   let mod-proxy = dood-proxy-module(proxy);
   variable-value
-    (dood-proxy-variable-name(proxy), 
-     dood-proxy-module-name(mod-proxy), 
-     dood-proxy-library-name(mod-proxy)); 
+    (dood-proxy-variable-name(proxy),
+     dood-proxy-module-name(mod-proxy),
+     dood-proxy-library-name(mod-proxy));
 end method;
 
 // define constant <dood-class-program-binding-proxy>
 //   = <dood-program-binding-proxy>;
 // define constant dood-make-class-program-binding-proxy
 //   = dood-make-program-binding-proxy;
-// define method dood-disk-object 
+// define method dood-disk-object
 //     (dood :: <dood>, object :: <class>)
 //  => (proxy :: <dood-program-binding-proxy>)
 //   dood-as-proxy(dood, object, dood-make-program-binding-proxy)
@@ -193,38 +193,38 @@ define function dood-make-class-program-binding-proxy
   let (variable, module, library)
     = if (variable)
 	values(variable, module, library)
-      else 
+      else
 	class->variable(object);
       end if;
   if (~variable)
     error("Couldn't locate program variable for %=", object);
   end;
   make(<dood-class-program-binding-proxy>,
-       variable: variable, 
+       variable: variable,
        module:   dood-as-program-module-proxy(dood, library, module))
 end function;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <class>)
  => (proxy :: <dood-class-program-binding-proxy>)
   dood-as-proxy(dood, object, dood-make-class-program-binding-proxy)
 end method;
 
-define method dood-restore-proxy 
-    (dood :: <dood>, proxy :: <dood-class-program-binding-proxy>) 
+define method dood-restore-proxy
+    (dood :: <dood>, proxy :: <dood-class-program-binding-proxy>)
  => (object :: <class>)
   let mod-proxy = dood-proxy-module(proxy);
   local method booted-lookup ()
 	  variable->class
-	    (as(<string>, dood-proxy-variable-name(proxy)), 
-	     as(<string>, dood-proxy-module-name(mod-proxy)), 
-	     as(<string>, dood-proxy-library-name(mod-proxy))); 
+	    (as(<string>, dood-proxy-variable-name(proxy)),
+	     as(<string>, dood-proxy-module-name(mod-proxy)),
+	     as(<string>, dood-proxy-library-name(mod-proxy)));
 	end method,
         method boot-lookup ()
 	  variable-value
-	    (dood-proxy-variable-name(proxy), 
-	     dood-proxy-module-name(mod-proxy), 
-	     dood-proxy-library-name(mod-proxy)); 
+	    (dood-proxy-variable-name(proxy),
+	     dood-proxy-module-name(mod-proxy),
+	     dood-proxy-library-name(mod-proxy));
 	end method;
   block ()
     boot-lookup() | booted-lookup(); // TODO: BOOTSTRAPPING
@@ -246,7 +246,7 @@ define class <dood-slot-value-proxy> (<dood-address-proxy>)
 end class;
 
 define class <dood-slot-value-proxy-n> (<dood-slot-value-proxy>)
-  constant slot proxy-slot-descriptor :: <dood-slot-descriptor>, 
+  constant slot proxy-slot-descriptor :: <dood-slot-descriptor>,
     required-init-keyword: slot-descriptor:;
 end class;
 
@@ -260,14 +260,14 @@ define macro fixed-offset-slot-value-proxy-definer
              (<dood-slot-value-proxy>)
            keyword slot-descriptor:;
          end class;
-         define method proxy-slot-descriptor 
+         define method proxy-slot-descriptor
              (proxy :: "<dood-slot-value-" ## ?name ## ">")
-          => (res :: <dood-slot-descriptor>) 
+          => (res :: <dood-slot-descriptor>)
            ?offset
          end method;
          // HACK: EMULATOR HACK
          size($fixed-slot-value-proxy-classes) := ?offset + 1;
-         element($fixed-slot-value-proxy-classes, ?offset) 
+         element($fixed-slot-value-proxy-classes, ?offset)
            := "<dood-slot-value-" ## ?name ## ">" }
 end macro;
 
@@ -303,7 +303,7 @@ define fixed-offset-slot-value-proxy proxy-28 28;
 define fixed-offset-slot-value-proxy proxy-29 29;
 */
 
-define inline method lookup-slot-value-proxy-class 
+define inline method lookup-slot-value-proxy-class
     (slotd :: <dood-slot-descriptor>) => (res :: <class>)
   // if (slotd >= size($fixed-slot-value-proxy-classes))
     <dood-slot-value-proxy-n>
@@ -312,11 +312,11 @@ define inline method lookup-slot-value-proxy-class
   // end if;
 end method;
 
-define inline method make-slot-value-proxy 
+define inline method make-slot-value-proxy
     (dood :: <dood>, address :: <address>,
      disk-offset :: <integer>, slot-descriptor :: <dood-slot-descriptor>)
  => (res :: <dood-slot-value-proxy>)
-  make(lookup-slot-value-proxy-class(slot-descriptor), 
+  make(lookup-slot-value-proxy-class(slot-descriptor),
        dood:            dood,
        address:         address,
        slot-descriptor: slot-descriptor)
@@ -336,29 +336,29 @@ define constant dood-lazy-value? = lazy-value?;
 /*
 define constant $slot-value-proxies = make(<dood-table>);
 
-define method make-slot-value-proxy 
+define method make-slot-value-proxy
     (disk-offset :: <integer>, slot-descriptor :: <dood-slot-descriptor>)
  => (res :: <dood-slot-value-proxy>)
   let proxies :: <dood-table>
     = element($slot-value-proxies, disk-offset, default: #f)
         | (element($slot-value-proxies, disk-offset) := make(<table>));
   element(proxies, slot-descriptor, default: #f)
-    | (element(proxies, slot-descriptor) 
-         := make(<dood-slot-value-proxy>, 
+    | (element(proxies, slot-descriptor)
+         := make(<dood-slot-value-proxy>,
                  slot-offset:     disk-offset,
                  slot-descriptor: slot-descriptor));
 end method;
 */
 
-define method make-address-proxy 
+define method make-address-proxy
     (dood :: <dood>, address :: <address>, disk-offset :: <integer>)
  => (res :: <dood-address-proxy>)
- make(<dood-address-proxy>, 
+ make(<dood-address-proxy>,
       dood:    dood,
       address: address + disk-offset + 1)
 end method;
 
-define function dood-force-address-proxy 
+define function dood-force-address-proxy
     (x :: <dood-address-proxy>) => (res)
   let state :: <dood-state> = object-dood-state(x);
   let dood :: <dood>        = dood-dood-state(state);
@@ -370,7 +370,7 @@ define function dood-force-address-proxy
   end with-dood-state;
 end function;
 
-define function dood-force-slot-value-proxy 
+define function dood-force-slot-value-proxy
     (x :: <dood-slot-value-proxy>) => (res)
   let state :: <dood-state> = object-dood-state(x);
   let dood :: <dood>        = dood-dood-state(state);
@@ -382,7 +382,7 @@ define function dood-force-slot-value-proxy
   end with-dood-state;
 end function;
 
-define inline function dood-maybe-force-address-proxy 
+define inline function dood-maybe-force-address-proxy
     (x) => (value, forced? :: <boolean>)
   if (lazy-value?(x))
     values(dood-force-address-proxy(x), #t)
@@ -391,7 +391,7 @@ define inline function dood-maybe-force-address-proxy
   end if
 end function;
 
-define inline function dood-maybe-force-slot-value-proxy 
+define inline function dood-maybe-force-slot-value-proxy
     (x) => (value, forced? :: <boolean>)
   if (lazy-value?(x))
     values(dood-force-slot-value-proxy(x), #t)
@@ -406,7 +406,7 @@ define inline function dood-force-lazy-slot-value-proxy (object, x) => (res)
   if (lazy-value?(x))
     if (*trace-allocation?*)
       let slotds = slot-descriptors(object-class(object));
-      depth-format-out("FORCING %= %=\n", object-class(object), 
+      depth-format-out("FORCING %= %=\n", object-class(object),
 	     	       slot-getter(element(slotds, proxy-slot-descriptor(x))));
       *print-depth* := *print-depth* + 1;
     end if;
@@ -433,7 +433,7 @@ define inline function dood-force-disk-slot-value-proxy (object, x) => (res)
   end if
 end function;
 
-define inline function dood-disk-slot-value (object, getter :: <function>) 
+define inline function dood-disk-slot-value (object, getter :: <function>)
   dood-force-disk-slot-value-proxy(object, getter(object));
 end function;
 
@@ -449,10 +449,10 @@ define open generic dood-make-cross-proxy
 //// WRAPPER PROXY
 
 define open dood-class <dood-wrapper-proxy> (<dood-proxy>)
-  constant slot dood-wrapper-proxy-object, 
+  constant slot dood-wrapper-proxy-object,
     required-init-keyword: object:;
   // @@@@ REMOVE ME @@@@
-  weak constant slot dood-wrapper-proxy-object-address = #f; 
+  weak constant slot dood-wrapper-proxy-object-address = #f;
 end dood-class;
 
 define method walk-slots
@@ -463,7 +463,7 @@ define method walk-slots
   // HACK: SHOULDN'T REALLOCATE
   let address :: <address>
     = predefined-address | dood-allocate-instance(dood, object);
-  next-method(); 
+  next-method();
   // WRITE OVER WRAPPED OBJECT SLOT WITH REAL OBJECT
   if (walk-info-commit?(info))
     let proxy-address :: <address> = dood-walked-address(dood, proxy);
@@ -476,8 +476,8 @@ define method walk-slots
 end method;
 
 define method read-object-using-class-at
-    (dood :: <dood>, class :: subclass(<dood-wrapper-proxy>), 
-     address :: <address>) 
+    (dood :: <dood>, class :: subclass(<dood-wrapper-proxy>),
+     address :: <address>)
  => (object)
   dood-forwarding-address(dood) := address;
   with-saved-position (dood)

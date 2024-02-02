@@ -19,11 +19,11 @@ define method string-returned
 end method string-returned;
 
 define method string-to-boolean
-    (test :: <values>, string :: <BSTR>) => 
+    (test :: <values>, string :: <BSTR>) =>
     (status :: <HRESULT>, passed :: <boolean>)
   values($S-OK, string = "hello")
 end method;
-      
+
 define method multiply
     (test :: <values>, arg1 :: <integer>, arg2 :: <integer>) =>
     (status :: <HRESULT>, result :: <integer>)
@@ -61,12 +61,12 @@ define method raise-exception2
   $S-FALSE // shouldn't get here
 end method raise-exception2;
 
-define constant the-sequence = 
+define constant the-sequence =
   list(1, 2, list(3, "four"), list("five"), 6, #t);
 
 define method test-copy-automation-value
-    (test :: <values>, passed-sequence :: <ole-vector>) => 
-    (status :: <HRESULT>, result :: <boolean>) 
+    (test :: <values>, passed-sequence :: <ole-vector>) =>
+    (status :: <HRESULT>, result :: <boolean>)
   let returned-sequence = copy-automation-value(passed-sequence);
   if (instance?(returned-sequence, <simple-vector>) &
 	(as(<vector>, returned-sequence) = as(<vector>, the-sequence)))
@@ -78,8 +78,8 @@ end method test-copy-automation-value;
 
 define test ole-function-test
   (name: "ole-function-test",
-   description: 
-     "tests passing arguments from a OLE controller to a OLE server")  
+   description:
+     "tests passing arguments from a OLE controller to a OLE server")
   // check status-codes
   check-true("$E-UNEXPECTED", instance?($E-UNEXPECTED, <SCODE>));
   check-true("$E-NOTIMPL", instance?($E-UNEXPECTED, <SCODE>));
@@ -90,10 +90,10 @@ define test ole-function-test
   check-true("$E-ABORT", instance?($E-ABORT, <SCODE>));
   check-true("$E-FAIL", instance?($E-FAIL, <SCODE>));
   check-true("$E-ACCESSDENIED", instance?($E-ACCESSDENIED, <SCODE>));
-  
+
   // checks if client can call a basic function on the server
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
+		  *disp-id* :=
 		    get-id-of-name(*disp-interface*, "bare-method"));
   // Note: the following check is currently failing, probably because of:
   //    Bug 788: extra let-bound variables default to random values, not false
@@ -105,19 +105,19 @@ define test ole-function-test
 
   // check if function on the server can return a result
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
+		  *disp-id* :=
 		    get-id-of-name(*disp-interface*, "string-returned"));
   check-equal("call simple method string-returned",
 	      call-simple-method(*disp-interface*, *disp-id*),
 	      "passed");
-    
+
   // check if function can accept an argument and return a result
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
+		  *disp-id* :=
 		    get-id-of-name(*disp-interface*, "string-to-boolean"));
   let temp-boolean = #f;
   check-equal("call-simple-method string-to-boolean passing string 'hello'",
-	      temp-boolean := 
+	      temp-boolean :=
 		call-simple-method(*disp-interface*, *disp-id*, "hello"),
 	      #t);
 
@@ -127,7 +127,7 @@ define test ole-function-test
   check-equal("call simple method multiply passing 2 integers",
 	      call-simple-method(*disp-interface*, *disp-id*, 4, 7),
 	      28);
-	   
+
   // check if function can return a sequence
   check-not-crash("check getting the dispatch id",
 		  *disp-id* :=
@@ -139,8 +139,8 @@ define test ole-function-test
 
   // check if copy-automation-value function works
   check-not-crash("check getting the dispatch id",
-		  *disp-id* := 
-		    get-id-of-name(*disp-interface*, 
+		  *disp-id* :=
+		    get-id-of-name(*disp-interface*,
 				   "test-copy-automation-value"));
   check-equal("check if test-copy-automation-value is true",
 	      call-simple-method(*disp-interface*, *disp-id*, the-sequence),
@@ -148,7 +148,7 @@ define test ole-function-test
 
   // check exception protocol
   check-not-crash("check getting the dispatch id",
-		    *disp-id* := 
+		    *disp-id* :=
 		    get-id-of-name(*disp-interface*, "raise-exception"));
   check-condition("call simple method raise-exception", <ole-error>,
 		  call-simple-method(*disp-interface*, *disp-id*));

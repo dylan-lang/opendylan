@@ -9,7 +9,7 @@ define COM-interface <IRotN-implementation> (<IRotNExample>)
   slot IRotNExample/key :: type-union(<integer>, <machine-word>) = 13;
 end;
 
-define method IRotNExample/encrypt 
+define method IRotNExample/encrypt
         (this :: <IRotN-implementation>, pre :: <string>)
      => (result :: <HRESULT>, post :: <string>)
   if (instance?(this.IRotNExample/key, <integer>))
@@ -23,7 +23,7 @@ define method IRotNExample/encrypt
   end if
 end;
 
-define method IRotNExample/decrypt 
+define method IRotNExample/decrypt
         (this :: <IRotN-implementation>, pre :: <string>)
      => (result :: <HRESULT>, post :: <string>)
   if (instance?(this.IRotNExample/key, <integer>))
@@ -40,7 +40,7 @@ end;
 define function rot-char-by-n
         (char :: <character>, n :: <integer>) => (r :: <character>)
   let char-as-int = as(<integer>, char);
-  local method rot-if-in-range 
+  local method rot-if-in-range
           (lower :: <integer>, upper :: <integer>) => ()
     if (lower <= char-as-int & char-as-int <= upper)
       char-as-int := lower + modulo(char-as-int - lower + n, upper - lower + 1);
@@ -71,9 +71,9 @@ define method main () => ()
 
     with-stack-structure (pmsg :: <PMSG>)
       while (GetMessage(pmsg, $NULL-HWND, 0, 0))
-        TranslateMessage(pmsg);          
+        TranslateMessage(pmsg);
         DispatchMessage(pmsg);
-      end while;     
+      end while;
     end with-stack-structure;
 
     revoke-registration(factory);

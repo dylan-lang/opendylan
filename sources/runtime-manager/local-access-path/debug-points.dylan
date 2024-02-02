@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///// ENABLE-BREAKPOINT
 
 define method set-breakpoint-in-application
-    (conn :: <local-access-connection>, ra :: <remote-value>) 
+    (conn :: <local-access-connection>, ra :: <remote-value>)
        => (success :: <integer>)
   nub-set-breakpoint (conn.connection-process, ra);
 end method;
@@ -19,13 +19,13 @@ end method;
 ///// DISABLE-BREAKPOINT
 
 define method clear-breakpoint-in-application
-    (conn :: <local-access-connection>, ra :: <remote-value>) 
+    (conn :: <local-access-connection>, ra :: <remote-value>)
       => (success :: <integer>)
   nub-clear-breakpoint (conn.connection-process, ra);
 end method;
 
 define method recover-breakpoint-in-application
-    (conn :: <local-access-connection>, thread :: <remote-thread>) 
+    (conn :: <local-access-connection>, thread :: <remote-thread>)
        => ()
   nub-recover-breakpoint (conn.connection-process, thread.nub-descriptor);
 end method;
@@ -34,7 +34,7 @@ end method;
 ///// QUERY-BREAKPOINT?
 
 define method query-breakpoint-in-application
-    (conn :: <local-access-connection>, ra :: <remote-value>) 
+    (conn :: <local-access-connection>, ra :: <remote-value>)
       => (success :: <integer>)
   nub-query-breakpoint (conn.connection-process, ra);
 end method;

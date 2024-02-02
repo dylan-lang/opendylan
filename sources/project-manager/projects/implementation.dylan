@@ -872,7 +872,7 @@ define function target-platform-name-setter (new-platform-name)
   end;
 end function;
 
-
+
 // This got moved out of the compiler, it should probably get moved even
 // further out into the environment...
 

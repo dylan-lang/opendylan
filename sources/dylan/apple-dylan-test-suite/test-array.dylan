@@ -12,8 +12,8 @@ Modified by: Shri Amit(amit) &
 	     James Kirsch(jkirsch)
 Date: August 24 1996
 Summary: Converted to new testworks protocol
-Copyright: (c) 1996 Functional Objects, Inc. 
-           All rights reserved.  
+Copyright: (c) 1996 Functional Objects, Inc.
+           All rights reserved.
 ----------------------------------------------*/
 
 // array operations
@@ -41,7 +41,7 @@ define test aref-set! ()
   t[1] := 0;
   check-equal("t[1] = 0", t[1], 0);
   let t = #[1, 2, 3];
-  t[1] := 0; 
+  t[1] := 0;
   check-equal("t = #[1, 0, 3]", t, #[1, 0, 3]);
   check-equal("abc[1] := 'd' = 'd'",  "abc"[1] := as(<character>, 100), 'd');
   let t = as(<stretchy-vector>, #(1, 0, 0, 0));

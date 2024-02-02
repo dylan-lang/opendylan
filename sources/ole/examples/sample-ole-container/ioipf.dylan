@@ -32,7 +32,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //********************************************************************
 
 
-define method IOleWindow/GetWindow(this :: <COleInPlaceFrame>) 
+define method IOleWindow/GetWindow(this :: <COleInPlaceFrame>)
 	=> ( status :: <HRESULT>, hwnd :: <HWND> );
 
   OutputDebugString("In IOIPF::GetWindow\r\n");
@@ -69,14 +69,14 @@ end method IOleWindow/GetWindow;
 
 
 define method IOleWindow/ContextSensitiveHelp(this :: <COleInPlaceFrame>,
-					      fEnterMode :: <boolean>) 
+					      fEnterMode :: <boolean>)
  => status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::ContextSensitiveHelp\r\n");
 
   this.m-pApp.m-fMenuMode := fEnterMode;
 
-  $S-OK 
+  $S-OK
 end method IOleWindow/ContextSensitiveHelp;
 
 //**********************************************************************
@@ -111,7 +111,7 @@ end method IOleWindow/ContextSensitiveHelp;
 
 
 define method IOleInPlaceUIWindow/GetBorder(this :: <COleInPlaceFrame>,
-					    lprectBorder :: <LPRECT>) 
+					    lprectBorder :: <LPRECT>)
  => status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::GetBorder\r\n");
@@ -119,7 +119,7 @@ define method IOleInPlaceUIWindow/GetBorder(this :: <COleInPlaceFrame>,
   // get the rect for the entire frame.
   GetClientRect(this.m-pApp.m-hAppWnd, lprectBorder);
 
- $S-OK 
+ $S-OK
 end method IOleInPlaceUIWindow/GetBorder;
 
 //**********************************************************************
@@ -154,12 +154,12 @@ end method IOleInPlaceUIWindow/GetBorder;
 //********************************************************************
 
 define method IOleInPlaceUIWindow/RequestBorderSpace
-    (this :: <COleInPlaceFrame>, lpborderwidths /* :: <LPCBORDERWIDTHS> */ ) 
+    (this :: <COleInPlaceFrame>, lpborderwidths /* :: <LPCBORDERWIDTHS> */ )
 	=> status :: <HRESULT>;
-	
+
   OutputDebugString("In IOIPF::RequestBorderSpace\r\n");
   // always approve the request
-  $S-OK 
+  $S-OK
 end method IOleInPlaceUIWindow/RequestBorderSpace;
 
 //**********************************************************************
@@ -199,7 +199,7 @@ end method IOleInPlaceUIWindow/RequestBorderSpace;
 
 
 define method IOleInPlaceUIWindow/SetBorderSpace
-    (this :: <COleInPlaceFrame>, lpborderwidths :: <LPCBORDERWIDTHS>) 
+    (this :: <COleInPlaceFrame>, lpborderwidths :: <LPCBORDERWIDTHS>)
  => status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::SetBorderSpace\r\n");
@@ -207,9 +207,9 @@ define method IOleInPlaceUIWindow/SetBorderSpace
 
   let app = this.m-pApp;
   if ( null-pointer?(lpborderwidths) )
-    AddFrameLevelTools(app); 
+    AddFrameLevelTools(app);
   else
-	        
+
     let rect :: <LPRECT> = make(<LPRECT>);
 
     GetClientRect(app.m-hAppWnd, rect);
@@ -224,7 +224,7 @@ define method IOleInPlaceUIWindow/SetBorderSpace
 	       #t);
     destroy(rect);
   end if;
-  $S-OK 
+  $S-OK
 end method IOleInPlaceUIWindow/SetBorderSpace;
 
 //**********************************************************************
@@ -264,7 +264,7 @@ end method IOleInPlaceUIWindow/SetBorderSpace;
 define method IOleInPlaceUIWindow/SetActiveObject
     (this :: <COleInPlaceFrame>,
      lpActiveObject :: <LPOLEINPLACEACTIVEOBJECT>,
-     lpszObjName :: <LPCOLESTR>) 
+     lpszObjName :: <LPCOLESTR>)
  => status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::SetActiveObject\r\n");
@@ -273,7 +273,7 @@ define method IOleInPlaceUIWindow/SetActiveObject
   let app = this.m-pApp;
   // AddRef() it and save it...
   if ( ~ null-pointer?(lpActiveObject) )
-	        
+
     AddRef(lpActiveObject);
 
     let ( status , window ) = IOleWindow/GetWindow(lpActiveObject);
@@ -282,9 +282,9 @@ define method IOleInPlaceUIWindow/SetActiveObject
     unless ( null-handle?(window) )
       SendMessage(window, $WM-QUERYNEWPALETTE, 0, 0);
     end unless;
-	        
+
   else
-	        
+
     unless ( null?(app.m-lpDoc.m-lpActiveObject) )
       Release(app.m-lpDoc.m-lpActiveObject);
       app.m-hwndUIActiveObj := $NULL-HWND;
@@ -329,7 +329,7 @@ end method IOleInPlaceUIWindow/SetActiveObject;
 
 
 define method IOleInPlaceFrame/InsertMenus(this :: <COleInPlaceFrame>,
-	hmenuShared :: <HMENU>, lpMenuWidths :: <LPOLEMENUGROUPWIDTHS>) 
+	hmenuShared :: <HMENU>, lpMenuWidths :: <LPOLEMENUGROUPWIDTHS>)
  => status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::InsertMenus\r\n");
@@ -385,7 +385,7 @@ end method IOleInPlaceFrame/InsertMenus;
 define method IOleInPlaceFrame/SetMenu(this :: <COleInPlaceFrame>,
 				       hmenuShared :: <HMENU>,
 				       holemenu :: <HOLEMENU>,
-				       hwndActiveObject :: <HWND>) 
+				       hwndActiveObject :: <HWND>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::SetMenu\r\n");
@@ -436,9 +436,9 @@ end method IOleInPlaceFrame/SetMenu;
 
 
 define method IOleInPlaceFrame/RemoveMenus(this :: <COleInPlaceFrame>,
-					   hmenuShared :: <HMENU>) 
+					   hmenuShared :: <HMENU>)
 	=> status :: <HRESULT>;
-	
+
   OutputDebugString("In IOIPF::RemoveMenus\r\n");
 
   while( GetMenuItemCount(hmenuShared) > 0 )
@@ -476,7 +476,7 @@ end method IOleInPlaceFrame/RemoveMenus;
 //********************************************************************
 
 define method IOleInPlaceFrame/SetStatusText(this :: <COleInPlaceFrame>,
-					     lpszStatusText :: <LPCOLESTR>) 
+					     lpszStatusText :: <LPCOLESTR>)
 	=> status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::SetStatusText\r\n");
@@ -552,5 +552,5 @@ define method IOleInPlaceFrame/TranslateAccelerator
  => status :: <HRESULT>;
 
   OutputDebugString("In IOIPF::TranslateAccelerator\r\n");
-  $S-FALSE 
+  $S-FALSE
 end method IOleInPlaceFrame/TranslateAccelerator;

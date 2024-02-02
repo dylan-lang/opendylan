@@ -39,7 +39,7 @@ define method context-application-tethered?
   project & project.application-tethered?
 end method context-application-tethered?;
 
-
+
 /// Application command library
 
 define constant $interactive-command-prompt = "? ";
@@ -70,7 +70,7 @@ define method command-library-default-command-class
   end
 end method command-library-default-command-class;
 
-
+
 /// Useful command classes
 
 define abstract class <application-command> (<project-command>)
@@ -99,7 +99,7 @@ define method ensure-property-available
   end
 end method ensure-property-available;
 
-
+
 /// Thread argument parsing
 
 define sideways method parameter-type-name
@@ -143,7 +143,7 @@ define method find-indexed-thread
   end
 end method find-indexed-thread;
 
-
+
 /// Restart argument parsing
 
 define sideways method parameter-type-name
@@ -186,7 +186,7 @@ define method find-indexed-restart
   end
 end method find-indexed-restart;
 
-
+
 /// Stack frame argument parsing
 
 define sideways method parameter-type-name
@@ -242,7 +242,7 @@ define method find-indexed-stack-frame
   end
 end method find-indexed-stack-frame;
 
-
+
 /// Remote machine argument parsing
 
 define sideways method parameter-type-name

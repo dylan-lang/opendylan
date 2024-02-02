@@ -15,7 +15,7 @@ define open generic domain-specializers
     (server :: <server>, object :: <domain-object>)
  => (specializers :: <sequence>);
 
-
+
 /// Implementations
 
 define method domain-specializers

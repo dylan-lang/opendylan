@@ -82,7 +82,7 @@ define method clear-surface (sheet :: <scribble-pane>) => ()
   clear-box*(sheet, sheet-region(sheet))
 end method clear-surface;
 
-
+
 /// A top-level frame
 define frame <scribble-frame> (<simple-frame>)
   pane surface (frame)

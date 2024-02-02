@@ -43,7 +43,7 @@ define method parse-next-argument
   end
 end method parse-next-argument;
 
-
+
 /// Project properties
 
 // Project
@@ -106,7 +106,7 @@ define method show-property
   end
 end method show-property;
 
-
+
 /// Open project
 
 define class <open-project-command> (<environment-command>)
@@ -186,7 +186,7 @@ define sealed method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Import project
 
 define class <import-project-command> (<environment-command>)
@@ -212,7 +212,7 @@ define sealed method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Close project
 
 define class <close-project-command> (<environment-command>)
@@ -262,7 +262,7 @@ define sealed method do-execute-command
   end
 end method do-execute-command;
 
-
+
 /// Project commands
 
 define command-group project

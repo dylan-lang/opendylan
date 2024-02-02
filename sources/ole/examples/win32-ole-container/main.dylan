@@ -25,8 +25,8 @@ define function main-program () => ()
   let msg :: <LPMSG> = make(<LPMSG>);
   while( GetMessage(msg, $NULL-HWND, 0, 0) )
     unless ( container-handle-accelerators(*sample-app*, msg) )
-      TranslateMessage(msg);    /* Translates virtual key codes */ 
-      DispatchMessage(msg);     /* Dispatches message to window */ 
+      TranslateMessage(msg);    /* Translates virtual key codes */
+      DispatchMessage(msg);     /* Dispatches message to window */
     end unless;
   end while;
 

@@ -10,7 +10,7 @@ define constant $splash-screen-duration = 60;
 define variable $splash-screen-bitmap   = #f;
 define variable $splash-screen-resource = "SPLASHSCREEN";
 
-
+
 /// Bitmaps
 
 define variable *bitmaps-initialized?* :: <boolean> = #f;
@@ -31,7 +31,7 @@ define function default-splash-screen-image
   $splash-screen-bitmap
 end function default-splash-screen-image;
 
-
+
 /// Splash screen
 
 define frame <splash-screen> (<dialog-frame>)

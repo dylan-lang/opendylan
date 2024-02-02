@@ -30,7 +30,7 @@ define module example-support
   use Win32-kernel;
   use patches, export: all;
   use win32-resource-database;
-  export 
+  export
     initialize-application,
     create-window,
     create-modal-window,

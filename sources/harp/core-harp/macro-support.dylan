@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-////// All the macros in this file are potentially useful for all Dylan 
+////// All the macros in this file are potentially useful for all Dylan
 ////// applications.
 
 
@@ -20,7 +20,7 @@ define macro alias-with-setter-definer
 end macro;
 
 
-//// Increment and decrement macros 
+//// Increment and decrement macros
 
 
 define macro inc!

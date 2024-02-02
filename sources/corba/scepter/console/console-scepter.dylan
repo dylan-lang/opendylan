@@ -96,7 +96,7 @@ define method scepter-format-progress-end (scepter :: <console-scepter>, result,
   else
     format(*standard-error*, "Aborted.");
   end if;
-end method;  
+end method;
 
 define method scepter-print-usage (scepter :: <console-scepter>)
   format(*standard-error*,

@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method remote-call-on-connection
     (conn :: <remote-access-connection>, thr :: <remote-thread>,
-     function :: <remote-value>, 
+     function :: <remote-value>,
      thread-was-suspended? :: <boolean>,
      #rest arguments)
        => (ra :: <remote-value>, cookie :: <object>)
@@ -51,7 +51,7 @@ end method;
 ///// REMOTE-RESTORE-CONTEXT-ON-CONNECTION
 
 define method remote-restore-context-on-connection
-    (conn :: <remote-access-connection>, thr :: <remote-thread>, 
+    (conn :: <remote-access-connection>, thr :: <remote-thread>,
      ctx :: <THREAD-CONTEXT>)
       => ()
   Rtmgr/RemoteNub/restore-context(conn.nub, thr.rnub-descriptor,

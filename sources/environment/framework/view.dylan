@@ -50,7 +50,7 @@ define method frame-show-bars?
   end
 end method frame-show-bars?;
 
-
+
 /// Basic View menu items
 
 define open generic frame-edit-options
@@ -78,7 +78,7 @@ define command-table *basic-view-command-table* (*global-command-table*)
 end command-table *basic-view-command-table*;
 
 
-
+
 // View menu
 
 define command-table *view-command-table* (*global-command-table*)

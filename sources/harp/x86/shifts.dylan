@@ -34,7 +34,7 @@ end pentium-template;
 
 /// ASR-UNSAFE allows us to leave junk in the upper bits after the shift.
 /// Here we optimise the case where we are shifting by 8, 16 or 24 bits, and
-/// the source is an indirect constant reference. In this case we can just 
+/// the source is an indirect constant reference. In this case we can just
 /// indirect to an address with the appropriate offset.
 
 define method byte-shift-offset (x)
@@ -46,9 +46,9 @@ define method byte-shift-offset (x)
   end select;
 end method;
 
-define method shift-indirection 
-    (be :: <harp-x86-back-end>, 
-     ind-const :: <constant-reference>, 
+define method shift-indirection
+    (be :: <harp-x86-back-end>,
+     ind-const :: <constant-reference>,
      offset :: <integer>) => (c :: <constant-reference>)
 
   call-instruction(constant-ref, be,  ind-const.cr-refers-to-object,
@@ -71,7 +71,7 @@ end pentium-template;
 
 
 // NB. DO-THE-SHIFT uses ecx (tmp2)
-define method do-the-shift 
+define method do-the-shift
     (be :: <harp-x86-back-end>, ins :: <integer>, dest, count :: <integer>)
   unless (zero?(count))
     emit(be, #xc1);
@@ -81,7 +81,7 @@ define method do-the-shift
 end method;
 
 
-define method do-the-shift 
+define method do-the-shift
     (be :: <harp-x86-back-end>, ins :: <integer>, dest, count :: <object>)
   harp-out (be) move(be, ecx, count) end;
   emit(be, #xd3);
@@ -184,7 +184,7 @@ define method double-shift-right
   end if;
 end method;
 
-  
+
 
 
 define pentium-template (aslx)
@@ -198,7 +198,7 @@ end pentium-template;
 
 define pentium-template (lslx)
   pattern (be, low :: any, high :: any, s, count)
-    harp-out (be) 
+    harp-out (be)
       move(be, eax, s);
       move(be, edx, 0); // 64bit zero-extend EAX into EDX
     end;
@@ -209,7 +209,7 @@ end pentium-template;
 
 define pentium-template (lslxx)
   pattern (be, low :: any, high :: any, s-low, s-high, count)
-    harp-out (be) 
+    harp-out (be)
       move(be, eax, s-low);
       move(be, edx, s-high);
     end;
@@ -220,7 +220,7 @@ end pentium-template;
 
 define pentium-template (lsrxx)
   pattern (be, low :: any, high :: any, s-low, s-high, count)
-    harp-out (be) 
+    harp-out (be)
       move(be, eax, s-low);
       move(be, edx, s-high);
     end;
@@ -238,8 +238,8 @@ with-ops-in pentium-instructions (aslx, lslx)
 		 prefer(dduu-def(2), $vector-edx);
 		 prefer(dduu-uze(1), $vector-eax);
 		 prefer(dduu-uze(2), $vector-ecx);
-               end pentium-method; 
-		  
+               end pentium-method;
+
   clash-fn := pentium-method (dduu)
                 if (instance?(dduu-uze(2), <register>))
 		  list(list(dduu-uze(2), eax, edx),
@@ -262,8 +262,8 @@ with-ops-in pentium-instructions (lslxx, lsrxx)
 		 prefer(dduuu-uze(1), $vector-eax);
 		 prefer(dduuu-uze(2), $vector-edx);
 		 prefer(dduuu-uze(3), $vector-ecx);
-               end pentium-method; 
-		  
+               end pentium-method;
+
   clash-fn := pentium-method (dduuu)
                 if (instance?(dduuu-uze(3), <register>))
 		  list(list(dduuu-uze(2), eax),

@@ -44,7 +44,7 @@ define module binary-manager
     <binary-table>,
     table-data,
     binary-table-member?, binary-element-add!
-    
+
     ;
 
 end module;

@@ -205,10 +205,10 @@ define method IPersistStorage/SaveCompleted(this :: <CPersistStorage>,
 	**    * this is a strange case that is possible. it is inefficient
 	**    for the caller; it would be better to pass lpStgNew==NULL for
 	**    the Save operation.
-	*/ 
+	*/
 
   if ( ~ null?(pStgNew) | (lpObj.m-fSaveWithSameAsLoad) )
-		
+
     if ( lpObj.m-fNoScribbleMode )
       IOleAdviseHolder/SendOnSave(GetOleAdviseHolder(lpObj));
     end if;  // normally would clear a dirty bit
@@ -308,7 +308,7 @@ end method IPersistStorage/Load;
 
 define method IPersistStorage/IsDirty(this :: <CPersistStorage>)
 			=> status :: <HRESULT>;
-	
+
   OutputDebugString("In CPersistStorage::IsDirty\r\n");
   $S-OK
 end method IPersistStorage/IsDirty;
@@ -384,7 +384,7 @@ end method IPersistStorage/HandsOffStorage;
 define method CreateStreams(this :: <CPersistStorage>, lpStg :: <LPSTORAGE>)
 	=> ();
 
-  let lpObj :: <CSimpSvrObj> = this.m-lpObj;	
+  let lpObj :: <CSimpSvrObj> = this.m-lpObj;
   unless ( null?( lpObj.m-lpColorStm ) )
     Release(lpObj.m-lpColorStm);
   end unless;
@@ -442,7 +442,7 @@ end method CreateStreams;
 define method OpenStreams(this :: <CPersistStorage>, lpStg :: <LPSTORAGE>)
 			 => ();
 
-  let lpObj :: <CSimpSvrObj> = this.m-lpObj;	
+  let lpObj :: <CSimpSvrObj> = this.m-lpObj;
   unless ( null?( lpObj.m-lpColorStm ) )
     Release(lpObj.m-lpColorStm);
   end unless;
@@ -497,7 +497,7 @@ end method OpenStreams;
 
 define method ReleaseStreamsAndStorage(this :: <CPersistStorage>) => ();
 
-  let lpObj :: <CSimpSvrObj> = this.m-lpObj;	
+  let lpObj :: <CSimpSvrObj> = this.m-lpObj;
 
   unless ( null?( lpObj.m-lpColorStm ) )
     Release(lpObj.m-lpColorStm);

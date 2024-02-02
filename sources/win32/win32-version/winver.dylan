@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 *               designed to allow version stamping of Windows executable files*
 *               and of special .VER files for DOS executable files.           *
 *                                                                             *
-*          
+*
 *                                                                             *
 \*****************************************************************************/
 define inline-only constant $VS-VERSION-INFO            =    1;

@@ -23,7 +23,7 @@ define inline function fix-box
   values(floor(left), floor(top), ceiling(right), ceiling(bottom))
 end function fix-box;
 
-
+
 /// Transforming positions and distances
 
 // Translate the coordinate pairs by dx/dy
@@ -120,7 +120,7 @@ define macro transform-distances!
          transform-distances!(_transform, ?more); }
 end macro transform-distances!;
 
-
+
 /// Fixing coordinates and distances
 
 // fix-coordinates!(x1, y1, x2, y2, ...);
@@ -135,7 +135,7 @@ define macro fix-coordinates!
          fix-coordinates!(?more); }
 end macro fix-coordinates!;
 
-
+
 /// Device transformations
 
 // Use this in preference to 'convert-to-device-coordinates!', since it
@@ -211,7 +211,7 @@ define macro convert-to-device-distances!
          convert-to-device-distances!(?transform, ?more); }
 end macro convert-to-device-distances!;
 
-
+
 /// Mapping over coordinate sequences
 
 define method do-coordinates

@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// "coclass" = 
+// "coclass" =
 // Component object model class. A top-level object in the object hierarchy.
 
 
@@ -35,7 +35,7 @@ define sideways method ITypeInfo/CreateInstance(this :: <ITypeInfo>,
   values( $TYPE-E-WRONGTYPEKIND, $null-interface )
 end method ITypeInfo/CreateInstance;
 
-
+
 //  Dylan implementation
 
 // The following class serves as the type info interface for a coclass object,
@@ -131,7 +131,7 @@ define method terminate (this :: <coclass-Type-Info>) => ();
   values()
 end method terminate;
 
-
+
 // ITypeInfo methods
 
 define constant $href-offset = #x5000; // arbitrary offset for validation
@@ -189,7 +189,7 @@ end method ITypeInfo/CreateInstance;
 define method ITypeInfo/GetDocumentation(this :: <coclass-Type-Info>,
 					 memid :: <integer> )
  => (status :: <HRESULT>, Name :: <BSTR>, doc-string :: <BSTR>,
-     HelpContext :: <integer>, HelpFile :: <BSTR> ); 
+     HelpContext :: <integer>, HelpFile :: <BSTR> );
 
   let member = element(this.coclass-interfaces, memid, default: #f);
   if ( member == #f )
@@ -236,7 +236,7 @@ define method ITypeInfo/GetContainingTypeLib(typeinfo :: <Dylan-Type-Info>)
   end block
 end;
 
-
+
 
 // Instantiation class for an OLE object
 
@@ -294,7 +294,7 @@ define method terminate(this :: <Simple-Component-Object>) => ();
   values()
 end;
 
-
+
 
 // class factory
 
@@ -330,7 +330,7 @@ So now the user can do:
 				 ...)
 			    ...
 			    ));
-				 
+
 
   let factory = make-object-factory(my-type-info);
 */

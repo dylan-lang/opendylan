@@ -41,7 +41,7 @@ define method sheet-handles-keyboard?
   #f
 end method sheet-handles-keyboard?;
 
-
+
 /// Input focus frame
 define frame <input-focus-frame> (<simple-frame>)
   pane text-pane (frame)

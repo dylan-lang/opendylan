@@ -30,7 +30,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // default is to not do scheduling
 
-define open generic do-scheduling 
+define open generic do-scheduling
     (backend :: <harp-back-end>) => (b :: <boolean>);
 
 define method do-scheduling (backend :: <harp-back-end>) => (b :: <boolean>)
@@ -39,7 +39,7 @@ end;
 
 
 
-define method find-defining 
+define method find-defining
     (sv :: <instructions-vector>, ins :: <integer>) => (b :: <boolean>)
   block (return)
     for-instruction-defs (d in sv at ins)
@@ -51,7 +51,7 @@ end method;
 
 
 
-define method code-select-program 
+define method code-select-program
     (backend :: <harp-back-end>,
      blk-s-vector :: <simple-basic-block-vector>,
      blk-num :: <integer>)
@@ -76,7 +76,7 @@ define method code-select-program
     vars.with-stack := (~ vars.optimize-leaf-case) | (state == $with-stack-state);
     vars.block-fixed-offset := 0;
     vars.in-back-end := #t;
-	  
+
     blk.bb-fixed-offset := total-fixed-offset;
     blk.bb-preceding-sdis := vars.all-the-sdis.size;
     blk.bb-code-ptr := vars.code-vector.size;
@@ -130,7 +130,7 @@ end method;
 // this next used to allow 32-bit parcels to never be bignums
 
 
-define method emit-2 
+define method emit-2
     (backend :: <harp-back-end>, hi, lo)
   let vars = backend.variables;
   let vec = vars.code-vector;
@@ -159,7 +159,7 @@ define method emit-sdi (backend :: <harp-back-end>, sdi :: <new-sdi>)
   target-bb.bb-prev-set := pair(sdi, prev-set); // IS THIS SAFE????
 
   add!(all-sdis, sdi);
-  
+
   // code vector stuff
   add!(vec, sdi);
   inc!(vars.block-fixed-offset, sdi.new-sdi-cached-size);
@@ -167,7 +167,7 @@ end method;
 
 
 
-define method emit-constant-ref 
+define method emit-constant-ref
      (backend :: <harp-back-end>,
       constant-ref :: <constant-reference>)
   // Emit a reference to a constant. A constant-reference should be
@@ -175,11 +175,11 @@ define method emit-constant-ref
   let ins-size = backend.labelled-constant-increment;
   let class =
     case
-      instance?(constant-ref, <i-thread-constant-reference>) 
+      instance?(constant-ref, <i-thread-constant-reference>)
         => <labelled-absolute-thread-constant>;
       otherwise => <labelled-absolute-constant>;
     end;
-  let label 
+  let label
     = make(class,
            size: ins-size,
            constant-reference: constant-ref);
@@ -187,14 +187,14 @@ define method emit-constant-ref
 end method;
 
 
-define method emit-constant-ref-relative 
+define method emit-constant-ref-relative
      (backend :: <harp-back-end>,
       constant-ref :: <constant-reference>)
   // Emit a reference to a constant. A constant-reference should be
   // supplied, and from that a relative label-constant will be created.
   let ins-size = backend.labelled-constant-increment;
-  let label 
-    = make(<labelled-relative-constant>, 
+  let label
+    = make(<labelled-relative-constant>,
            size: ins-size,
            constant-reference: constant-ref);
   emit-labelled-constant(backend, label, ins-size);
@@ -206,11 +206,11 @@ define method emit-constant-ref-with-opcode
       value :: <integer>,
       constant-ref :: <constant-reference>,
       ins-size :: <integer>)
-  // Emit a reference to a n opcode with a constant. 
+  // Emit a reference to a n opcode with a constant.
   // A symbolic opcode and a constant-reference should be
   // supplied
-  let label 
-    = make(<labelled-constant-with-opcode>, 
+  let label
+    = make(<labelled-constant-with-opcode>,
            size: ins-size,
            constant-reference: constant-ref,
            opcode: opcode,

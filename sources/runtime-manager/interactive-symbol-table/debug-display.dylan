@@ -34,7 +34,7 @@ define method debug-display-symbol-table (st :: <interactive-symbol-table>)
             let offset = head(sym-pair);
             let sym = tail(sym-pair);
             format-out("    Symbol %s At Offset %d (Address = 0x%s)\n",
-                       sym.remote-symbol-name, offset, 
+                       sym.remote-symbol-name, offset,
                        remote-value-as-string
                           (st.symbol-table-access-path,
                            sym.remote-symbol-address,

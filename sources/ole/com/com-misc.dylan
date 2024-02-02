@@ -1,6 +1,6 @@
 Module:    COM
 Synopsis:  FFI declarations for some miscellaneous pieces of the
-	   COM interface that do not need special treatment. 
+	   COM interface that do not need special treatment.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define interface COM-misc
  #include: { "objbase.h", "wtypes.h", "unknwn.h", "objidl.h" };
- import: { 
+ import: {
 	// structures used in member function arguments:
 	RPCOLEMESSAGE, BIND_OPTS, STATSTG, STATDATA,
 	FORMATETC, STGMEDIUM, INTERFACEINFO, CLASSDETAIL, StorageLayout,
@@ -27,16 +27,16 @@ define interface COM-misc
 	FMTID, LPFMTID, uSTGMEDIUM,
 
 	// structure pointer types not used internally but otherwise unnamed:
-	LPBIND_OPTS, 
+	LPBIND_OPTS,
 
 	// types needed by OLE although not used in COM itself:
 	LPFORMATETC, LPSTGMEDIUM,
 
 	// types needed by the OLE2UI library:
-	LPSTATDATA, 
+	LPSTATDATA,
 
 	// assorted non-member functions (probably not all of these are
-	//   really needed; at some time this list should be reviewed 
+	//   really needed; at some time this list should be reviewed
 	//   for relevance.)
 	CoInitialize, CoUninitialize, CoGetMalloc,
 	CoGetCurrentProcess, CoGetClassObject, CoRegisterClassObject,
@@ -94,7 +94,7 @@ define interface COM-misc
 
 	// only used for IPropertyStorage, not yet fully supported:
 	// PROPVARIANT, LPPROPVARIANT, BLOB, LPBLOB, CLIPDATA, LPCLIPDATA,
- 
+
     // additional integer constants for user:
     STGM_*, CLSCTX_*
     };
@@ -102,7 +102,7 @@ define interface COM-misc
 	    FLAG_STGMEDIUM // used only in stubs
 	      };
 end interface;
- 
+
 /*
 Note: the following functions are not included because they are not
       supported in Windows 95:

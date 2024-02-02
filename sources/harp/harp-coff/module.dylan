@@ -21,7 +21,7 @@ define module cv4-builder
   export
     initialize-debug-section,
     select-debug-section,
-    add-cv4-string, 
+    add-cv4-string,
     add-cv4-compile-flag,
     add-cv4-register,
     add-cv4-user-defined-type,
@@ -41,7 +41,7 @@ define module harp-coff
   use dylan-and-big-ints;
   use table-extensions, import: {<string-table>};
   use format-out;
-  use harp-for-extenders, 
+  use harp-for-extenders,
     exclude: { big-endian? };
   use cv4-builder, export: all;
   use binary-outputter;

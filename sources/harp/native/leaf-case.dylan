@@ -19,7 +19,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// the other blocks are "red". The boundaries (and note there usually will
 /// more than one - or more importantly in tak there are) are "brown" (green ->
 /// red) or "yellow (red -> green).
-/// 
+///
 /// At each boundary we split the live range of any virtuals live at that point
 /// so that we effectively have different virtuals for the two regions. This
 /// has the advantage that in the green blocks (if the preferencing is done
@@ -29,9 +29,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// a handy function for splicing in new blocks
 
-define method with-spliced-block 
-    (backend :: <harp-back-end>, 
-     preds :: <list>, succ :: <basic-block>, 
+define method with-spliced-block
+    (backend :: <harp-back-end>,
+     preds :: <list>, succ :: <basic-block>,
      body :: <function>) => (bb :: <basic-block>)
   let sv-ins = backend.variables.sv-instructions;
   let tag :: <tag> = make-tag(backend);
@@ -58,7 +58,7 @@ define method with-spliced-block
   last-bb.bb-fall-thru := succ;
   new-bb;
 end method;
-       
+
 
 define method safe-substitute (l :: <list>, old, new) => (l :: <list>)
   let safe = copy-sequence(l);
@@ -68,11 +68,11 @@ end method;
 
 // first we find those blocks which involve calls
 
-define method find-red-blocks 
+define method find-red-blocks
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let sv-ins = backend.variables.sv-instructions;
   for (bb :: <basic-block> in pgm)
-    bb.bb-colour := 
+    bb.bb-colour :=
       block (scan-bb)
 	for-instructions-in-basic-block-backwards (ins in bb)
           if (stack-op?(ins-op(sv-ins, ins)))
@@ -136,7 +136,7 @@ end method;
 
 /// now the splitting of the live ranges
 
-define method split-red-green 
+define method split-red-green
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>) => (b :: <boolean>)
   let splits :: <integer> = 0;
   let rgs :: <list> = #();
@@ -180,7 +180,7 @@ define method split-red-green
 end method;
 
 define method add-coloured-block
-    (backend :: <harp-back-end>, preds :: <list>, 
+    (backend :: <harp-back-end>, preds :: <list>,
      succ :: <basic-block>, reverse :: <boolean>)
     => (b :: <basic-block>)
   with-spliced-block
@@ -192,7 +192,7 @@ define method add-coloured-block
      end method);
 end method;
 
-define method add-green-red 
+define method add-green-red
     (backend :: <harp-back-end>, preds :: <list>, succ :: <basic-block>)
   let bb = add-coloured-block(backend, preds, succ, #f);
   bb.bb-colour := $brown-colour;
@@ -210,14 +210,14 @@ define method red-green-vrs
     (backend :: <harp-back-end>, index :: <integer>, reverse :: <boolean>)
   let state = backend.variables.vreg-state;
   let red-vr :: <virtual-register> = state.vr-vect[index];
-  unless (member?(red-vr, state.unique-registers) 
+  unless (member?(red-vr, state.unique-registers)
           | red-vr.possible-arg-spill?)
     let green-vr :: <virtual-register> =
       begin
 	let vr = state.green-vr-vect[index];
 	if (vr.invalid-virtual-register?)
-	  state.green-vr-vect[index] := 
-	    make-register(backend, 
+	  state.green-vr-vect[index] :=
+	    make-register(backend,
 			  reg-class: object-class(red-vr),
 			  name: red-vr.virtual-register-name,
 			  indirections: red-vr.virtual-register-named-indirections);
@@ -241,7 +241,7 @@ end method;
 
 /// here we rename all the vrs in the green/blue blocks
 
-define method rename-green-vrs 
+define method rename-green-vrs
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let sv :: <instructions-vector> = backend.variables.sv-instructions;
   let green-vrs = backend.variables.vreg-state.green-vr-vect;
@@ -311,9 +311,9 @@ end method;
 /// that either this bb will always need a stack frame (ie it contains a stack
 /// or constants reg reference etc) or in any possible route through the bb's a
 /// stack frame is needed. nil means that this bb doesn't need a stack frame
-/// nor do it's or any of their successors etc etc need stack frames. #"before" 
+/// nor do it's or any of their successors etc etc need stack frames. #"before"
 /// means that this bb doesn't need a stack frame but some of it successor or
-/// their succ... need stack frames. 
+/// their succ... need stack frames.
 
 /// stack state can also be #"prolog" which means that this bb mustn't have a
 /// stack (ie a special kind of #"before")
@@ -323,17 +323,17 @@ end method;
 /// state #"constants" we are well and truly buggered because reg::function will
 /// be playing at being the constants register...
 
-define method colour-needs-stack? 
+define method colour-needs-stack?
     (preserved :: <vector>, colour :: <spill>) => (b :: <boolean>)
   ~ arg-spill?(colour);
 end method;
 
-define method colour-needs-stack? 
+define method colour-needs-stack?
     (preserved :: <vector>, colour :: <real-register>) => (b :: <boolean>)
   member?(colour, preserved);
 end method;
 
-define method colour-needs-stack? 
+define method colour-needs-stack?
     (preserved :: <vector>, colour :: <object>) => (b :: <boolean>)
   #f;
 end method;
@@ -342,7 +342,7 @@ end method;
 /// For some architectures (notably the Pentium), instructions may
 /// clobber registers which are preserved by C, and yet which are
 /// not allocatable HARP registers. In this case, the block must be
-/// with stack, and the clobbered registers must be saved. We check for 
+/// with stack, and the clobbered registers must be saved. We check for
 /// this here.
 
 define method block-uses-unknown-c-preserved-reg?
@@ -371,16 +371,16 @@ define method block-uses-unknown-c-preserved-reg?
 end method;
 
 
-define method find-with-stack 
+define method find-with-stack
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let regs = backend.registers;
   let vars = backend.variables;
   let sv   = vars.sv-instructions;
   let call-in = vars.compiling-call-in;
-  let preserved  = if (call-in) 
-                       regs.c-preserved-register-vector 
-                     else 
-                       regs.preserved-register-vector 
+  let preserved  = if (call-in)
+                       regs.c-preserved-register-vector
+                     else
+                       regs.preserved-register-vector
                      end if;
   for (bb :: <basic-block> in pgm)
     block (done)
@@ -443,7 +443,7 @@ end method;
 // the addition of #"constants" I decided to simplify things slightly (ie rewrite
 // the function + half of the rest of the file) _cim
 
-define method propagate-stack-state 
+define method propagate-stack-state
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let vars = backend.variables;
   let count :: <integer> = 1;
@@ -464,7 +464,7 @@ define method propagate-stack-state
         end if;
       end if;
 
-      // now we look for the #"before" -> #"with" transition. 
+      // now we look for the #"before" -> #"with" transition.
       if (bb.bb-stack-state == $before-stack-state)
 	if (should-be-with?(bb))
 	  bb.bb-stack-state := $with-stack-state;
@@ -492,7 +492,7 @@ end method;
 
 
 define method should-be-before? (bb :: <basic-block>) => (b :: <boolean>)
-  if (any?(method (bb :: <basic-block>) bb.bb-stack-state ~== $no-stack-state end, 
+  if (any?(method (bb :: <basic-block>) bb.bb-stack-state ~== $no-stack-state end,
            bb.bb-next-set))
     #t;
   else
@@ -540,7 +540,7 @@ end method;
 /// 		0 -> ins::load-symbol-constants reg::constants reg::function
 ///   		1 -> ins::move reg::constants reg::function
 ///   		()-> ins::move reg::constants reg::constants ie nop
-/// 
+///
 ///
 ///         *TO*   nil     #"before"  #"constants"#"with"    #"self"
 /// *FROM*
@@ -550,11 +550,11 @@ end method;
 /// #"with"	   st-ext  dupl       dupl,rf     -          only through bsr
 /// #"self"	   -       dupl       dupl,rf     st-ent(()) -
 ///
-///       
+///
 
 
 
-define method maybe-duplicate-bbs 
+define method maybe-duplicate-bbs
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let vars = backend.variables;
   let pgmvect :: <stretchy-basic-block-vector> = vars.pgm-vect;
@@ -567,7 +567,7 @@ define method maybe-duplicate-bbs
       if (bb.bb-stack-state == $before-stack-state)
 	let withs :: <list> = #();
 	let others :: <list> = #();
-	       
+
 	for (pred :: <basic-block> in bb.bb-prev-set)
 	  if (~ (pred.bb-colour == $no-colour) & member?(bb, pred.bb-next-set))
 	    // filter out the phonies
@@ -578,7 +578,7 @@ define method maybe-duplicate-bbs
             end if;
           end if;
         end for;
-		 
+
 	if (~ empty?(withs))
 	  changed := #t;
 	  let clone-bb :: false-or(<basic-block>) = bb.bb-copy-of;
@@ -586,7 +586,7 @@ define method maybe-duplicate-bbs
             clone-bb := clone-bb.bb-copy-of;
           end while;
 
-          let clone-tag :: <tag> = 
+          let clone-tag :: <tag> =
             if (clone-bb) first(clone-bb.bb-taags) else make-tag(backend) end;
 	  unless (clone-bb)
 	    clone-bb := copy-bb(bb);
@@ -607,7 +607,7 @@ define method maybe-duplicate-bbs
             end until;
 	    vars.fp-instructions := dest;
 	    finish-bb(backend);
-		       
+
 	    clone-bb.bb-stack-state := $with-stack-state;
 
             if (clone-bb.bb-fall-thru & clone-bb.bb-fall-thru.bb-taags == #())
@@ -624,11 +624,11 @@ define method maybe-duplicate-bbs
 
 	  clone-bb.bb-prev-set := concatenate(withs, clone-bb.bb-prev-set);
           bb.bb-prev-set := others;
-		 
+
 	  for (succ :: <basic-block> in bb.bb-next-set)
             push!(clone-bb, succ.bb-prev-set);
           end for;
-		 
+
 	  let sv :: <instructions-vector> = vars.sv-instructions;
 	  for (pred :: <basic-block> in withs)
 	    pred.bb-next-set := safe-substitute(pred.bb-next-set, bb, clone-bb);
@@ -671,7 +671,7 @@ define method insert-stack-code-etc
         inc!(entries);
       end if;
       if (~ empty?(befores))
-	add-stack-entry(backend, befores, bb); 
+	add-stack-entry(backend, befores, bb);
         inc!(entries);
       end if;
     else
@@ -719,10 +719,10 @@ end method;
 
 
 
-define method add-stack-entry 
+define method add-stack-entry
     (backend :: <harp-back-end>, pred-list :: <list>, succ :: <basic-block>)
     => (b :: <basic-block>)
-  with-spliced-block 
+  with-spliced-block
    (backend, pred-list, succ,
     method ()
       ins-stack-entry(backend);
@@ -735,7 +735,7 @@ define method add-stack-exit
   if (dangling-block?(backend, succ))
     succ;
   else
-    with-spliced-block 
+    with-spliced-block
      (backend, pred-list, succ,
       method ()
         ins-stack-exit(backend);
@@ -744,12 +744,12 @@ define method add-stack-exit
 end method;
 
 
-/// In some circumstances (e.g. after an end-cleanup) a block may be 
+/// In some circumstances (e.g. after an end-cleanup) a block may be
 /// encountered which has no instructions associated with it (e.g.
 /// the block is empty and has no successors). There is no point
 /// inserting stack-exit code before such a block (TonyM 27/9/94)
 
-define method dangling-block? 
+define method dangling-block?
    (backend :: <harp-back-end>, bb :: <basic-block>)
   empty?(bb.bb-next-set) & (bb.bb-start = bb.bb-end);
 end method;
@@ -760,7 +760,7 @@ end method;
 
 /// this is called after dataflow but before graph colouring
 
-define method optimize-leaf-case-1 
+define method optimize-leaf-case-1
     (backend :: <harp-native-back-end>, pgm :: <stretchy-basic-block-vector>,
      top-block :: <basic-block>) => (b :: <boolean>)
   let vars = backend.variables;
@@ -775,7 +775,7 @@ define method optimize-leaf-case-1
       rename-green-vrs(backend, pgm);
       // and now we redo the dataflow stuff all over again - probably
       // should be a bit more intelligent here and avoid redoing the work
-      // but... 
+      // but...
       vars.pgm-vect := build-pgm-vector(backend, top-block);
       for (bb :: <basic-block> in vars.pgm-vect)
 	bb.bb-last-entry := -1;
@@ -788,7 +788,7 @@ define method optimize-leaf-case-1
 end method;
 
 /// this is called after graph colouring - here we try to move the stack
-/// building stuff 
+/// building stuff
 
 define method optimize-leaf-case-2
     (backend :: <harp-native-back-end>, pgm :: <stretchy-basic-block-vector>) => ()

@@ -36,7 +36,7 @@ define method test-number-class
   test-limited-integers();
 end method;
 
-
+
 /// Number test functions
 /*
 define method test-number
@@ -109,18 +109,18 @@ define method test-number
             ))
 end method test-number;
 
-
+
 /// Number testing
 
 //---*** These methods should be on <complex> but the hierarchy isn't correct
 //---*** in the emulator at least so we do it on <number> instead.
 
-define method do-test-= 
+define method do-test-=
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
 end method;
 
-define method do-test-zero? 
+define method do-test-zero?
     (name :: <string>, number :: <number>) => ()
   check-equal(format-to-string("zero?(%d)", number),
               zero?(number),
@@ -132,13 +132,13 @@ define method do-test-+
   //---*** Fill this in...
 end method;
 
-define method do-test-* 
+define method do-test-*
     (name :: <string>, number :: <number>) => ()
   check-equal(format-to-string("%d * 1 = %d", number, number),
               number * 1, number)
 end method;
 
-define method do-test-- 
+define method do-test--
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
 end method;
@@ -153,7 +153,7 @@ define method do-test-^
   //---*** Fill this in...
 end method;
 
-
+
 /// Real number testing
 define method do-test-floor
     (name :: <string>, number :: <real>) => ()
@@ -241,7 +241,7 @@ define method do-test-negative
               number)
 end method;
 
-
+
 /// Integer number testing
 
 define method do-test-odd?

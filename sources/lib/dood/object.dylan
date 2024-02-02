@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// ATTACHING
 
-define inline method dood-segment-initialized? 
+define inline method dood-segment-initialized?
     (segment :: <dood-segment-state>) => (well? :: <boolean>)
   dood-segment-free-address(segment) > 0
 end method;
@@ -52,7 +52,7 @@ define macro with-segment-excursion
           dood-current-segment(?dood) := saved-segment }
 end macro;
 
-define inline method dood-address-page-mask 
+define inline method dood-address-page-mask
     (dood :: <dood>) => (res :: <integer>)
   ash(dood-address-buffer-mask(), -2)
 end method;
@@ -62,21 +62,21 @@ define inline method dood-page-size
   ash(dood-buffer-size(), -2)
 end method;
 
-define inline method dood-address-page-bit-offset 
+define inline method dood-address-page-bit-offset
     (dood :: <dood>) => (res :: <integer>)
   dood-address-buffer-bit-offset() - 2
 end method;
 
-define inline method dood-fits-in-page? 
+define inline method dood-fits-in-page?
     (dood :: <dood>, address :: <address>, size :: <integer>) => (well? :: <boolean>)
   let fits?
     = size < logand(address + size, dood-address-page-mask(dood));
-  // format-out("FITS? %= ADDR %= SIZE %= MASK %=\n", 
+  // format-out("FITS? %= ADDR %= SIZE %= MASK %=\n",
   //            fits?, address, size, dood-address-page-mask(dood));
   fits?
 end method;
 
-define inline method dood-number-pages 
+define inline method dood-number-pages
     (dood :: <dood>, size :: <integer>) => (res :: <integer>)
   let number-pages
     = ash(size, - dood-address-page-bit-offset(dood))
@@ -94,14 +94,14 @@ define inline method dood-allocate-pages
   address
 end method;
 
-define inline method dood-segment-fits-in-page? 
-    (dood :: <dood>, segment :: <dood-segment-state>, size :: <integer>) 
+define inline method dood-segment-fits-in-page?
+    (dood :: <dood>, segment :: <dood-segment-state>, size :: <integer>)
  => (well? :: <boolean>)
   dood-fits-in-page?(dood, dood-segment-free-address(segment), size)
 end method;
 
 define method dood-allocate-in
-    (dood :: <dood>, segment :: <dood-segment-state>, size :: <integer>) 
+    (dood :: <dood>, segment :: <dood-segment-state>, size :: <integer>)
  => (address :: <address>)
   let address
     = if (dood-segment-initialized?(segment)
@@ -109,7 +109,7 @@ define method dood-allocate-in
         segment.dood-segment-free-address
       else
         let address = dood-allocate-pages(dood, dood-number-pages(dood, size));
-        // format-out("ALLOCATING %= PAGES @ %d IN %s\n", 
+        // format-out("ALLOCATING %= PAGES @ %d IN %s\n",
         //         dood-number-pages(dood, size), address,
         //         dood-segment-name(dood-segment-state-segment(segment)));
         address
@@ -119,12 +119,12 @@ define method dood-allocate-in
 end method;
 
 define method dood-allocate
-    (dood :: <dood>, object, dood-class :: <dood-class>, size :: <integer>) 
+    (dood :: <dood>, object, dood-class :: <dood-class>, size :: <integer>)
  => (address :: <address>)
   let segment = dood-lookup-segment-state(dood, dood-class, object);
   let address = dood-allocate-in(dood, segment, size);
-  // format-out("ALLOCATING %= (%d) @ %d IN %s\n", 
-  //         object-class(object), size, address, 
+  // format-out("ALLOCATING %= (%d) @ %d IN %s\n",
+  //         object-class(object), size, address,
   //         dood-segment-name(dood-segment-state-segment(segment)));
   address
 end method;
@@ -149,7 +149,7 @@ define method dood-compute-instance-size
   1 + 1 + 1
 end method;
 
-define method dood-allocate-instance 
+define method dood-allocate-instance
     (dood :: <dood>, object) => (address :: <address>)
   dood-format("ALLOCATING DOOD INSTANCE %=\n", object);
   let class      = object-class(object);
@@ -158,7 +158,7 @@ define method dood-allocate-instance
   dood-allocate(dood, object, dood-class, disk-size);
 end method;
 
-define method attach-object 
+define method attach-object
     (dood :: <dood>, memory-object, disk-object) => (address :: <address>)
   let address = dood-allocate-instance(dood, disk-object);
   dood-format("ATTACHING INSTANCE %= -> %=\n", memory-object, disk-object);
@@ -179,19 +179,19 @@ end method;
 // define function dood-address! (dood :: <dood>, object)
 //   dood-address(dood, object) | attach(dood, object)
 // end function;
-
+
 //// READING
 
 define inline function mark-lazy-slot-using
-    (dood :: <dood>, x, address :: <address>, 
+    (dood :: <dood>, x, address :: <address>,
      slotd :: <dood-slot-descriptor>, offset :: <integer>, force? :: <boolean>)
  => ()
   when (force? | ~lazy-value?(dood-slot-value(x, slotd)))
     let (found?, address-or-object) = shallow-read-object(dood);
-    dood-slot-value(x, slotd) 
+    dood-slot-value(x, slotd)
       := if (found?)
            address-or-object
-         else 
+         else
            make-slot-value-proxy(dood, address-or-object, offset, slotd);
          end if;
   end when;
@@ -199,9 +199,9 @@ end function;
 
 define inline function mark-lazy-slots-using
     (dood :: <dood>, x, address :: <address>,
-     lazy-slotds :: <dood-slot-sequence-type>, 
+     lazy-slotds :: <dood-slot-sequence-type>,
      deep-slotds :: <dood-slot-sequence-type>,
-     #key force?) 
+     #key force?)
  => (y)
   for (slotd in lazy-slotds,
        offset :: <integer> from size(deep-slotds))
@@ -210,7 +210,7 @@ define inline function mark-lazy-slots-using
   x
 end function;
 
-define inline function mark-lazy-slots-at 
+define inline function mark-lazy-slots-at
     (dood :: <dood>, x, address :: <address>, #key force? = #t) => (y)
   let (lazy-slotds, weak-slotds, deep-slotds)
     = dood-all-slot-descriptors(dood, object-class(x));
@@ -266,7 +266,7 @@ define inline function dood-read-slot!
     let (found?, address-or-object) = shallow-read-object(dood);
     if (found?)
       slot-value(x, index) := address-or-object;
-    else 
+    else
       dood-queue-push-last(work, index);
       dood-queue-push-last(work, address-or-object);
     end if;
@@ -276,7 +276,7 @@ define inline function dood-read-slot!
 end function;
 
 define inline function dood-do-slot-work
-    (dood :: <dood>, x, work :: <dood-queue>, 
+    (dood :: <dood>, x, work :: <dood-queue>,
      slot-value-setter :: <function>, next-in :: <integer>)
   when ($queue-deep-slots?)
     let index   = dood-queue-pop(work);
@@ -288,7 +288,7 @@ define inline function dood-do-slot-work
 end function;
 
 define inline function dood-do-work
-    (dood :: <dood>, x, work :: <dood-queue>, 
+    (dood :: <dood>, x, work :: <dood-queue>,
      required-out :: <integer>, repeated-out :: <integer>, final-out :: <integer>)
   when ($queue-deep-slots?)
     let final-out = dood-queue-in(work);
@@ -315,12 +315,12 @@ define function dood-read-object-of-at
   end if;
   let work = dood-work(dood);
   // dynamic-bind (*print-depth* = *print-depth* + 1)
-  let (lazy-slotds, weak-slotds, deep-slotds, repeated-slot?, repeated-byte-slot?) 
+  let (lazy-slotds, weak-slotds, deep-slotds, repeated-slot?, repeated-byte-slot?)
     = dood-all-slot-descriptors(dood, class);
   let size = if (repeated-slot?) read-object(dood) end;
   let object = allocate-object(class, size);
   unless (instance?(object, <dood-proxy>)) // DONT WANT THIS IN CACHE
-    dood-register-read-object(dood, object, address); 
+    dood-register-read-object(dood, object, address);
   end unless;
   let required-out = dood-queue-in(work);
   for (slotd :: <dood-slot-descriptor> in deep-slotds)
@@ -426,7 +426,7 @@ define inline function maybe-read-pointer
       if (value == $address-not-found)
         if (read?)
           read-pair(dood, address);
-        else 
+        else
           default
         end if
       else
@@ -437,7 +437,7 @@ define inline function maybe-read-pointer
       if (value == $address-not-found)
         if (read?)
           read-address(dood, address);
-        else 
+        else
           default
         end if
       else
@@ -460,7 +460,7 @@ define inline function peek-pointer
   maybe-read-pointer(dood, pointer, #f, default)
 end function;
 
-define inline function read-object-at 
+define inline function read-object-at
     (dood :: <dood>, address :: <address>) => (object)
   read-pointer(dood, dood-read-at(dood, address))
 end function;
@@ -474,11 +474,11 @@ define function shallow-read-object (dood :: <dood>) => (found?, object-or-addre
   let object  = peek-pointer(dood, address, $unfound);
   if (found?(object))
     values(#t, object)
-  else 
+  else
     values(#f, address)
   end if;
 end function;
-
+
 //// REINITIALIZATION
 
 // define open generic dood-weak-reinitialize (object) => ();

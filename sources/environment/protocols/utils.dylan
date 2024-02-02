@@ -11,7 +11,7 @@ define constant $not-applicable = "not applicable";
 define constant $not-available  = "not available";
 
 
-
+
 // Describer-specific methods
 
 define generic environment-object-description
@@ -188,7 +188,7 @@ define environment-object-description-method (<constant-object>)
      end)
 end environment-object-description-method;
 
-
+
 /// Counting contents
 
 define generic environment-object-content-counts
@@ -336,7 +336,7 @@ define function print-content-count
          string-pluralize(content-type-name(content-type), count: count))
 end function print-content-count;
 
-
+
 /// print-environment-object-contents
 //
 // Return a string describing the contents of an environment object.
@@ -595,7 +595,7 @@ define function print-function-values
   end
 end function print-function-values;
 
-
+
 /// Source location display
 
 define open generic print-environment-object-location

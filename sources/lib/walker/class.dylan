@@ -12,12 +12,12 @@ define constant <slot-sequence-type>
 define constant <walker-slot-sequence-type>
   = limited(<vector>, of: <walker-slot-descriptor>);
 
-define inline function walker-slot-value 
+define inline function walker-slot-value
     (object, slot-descriptor :: <walker-slot-descriptor>) => (value)
   initialized-slot-element(object, slot-descriptor)
 end function;
 
-define inline function walker-slot-value-setter 
+define inline function walker-slot-value-setter
     (new-value, object, slot-descriptor :: <walker-slot-descriptor>)
   slot-element(object, slot-descriptor) := new-value;
 end function;
@@ -33,7 +33,7 @@ define inline function walker-slot-value (object, slot-descriptor)
   slot-value(object, slot-descriptor)
 end function;
 
-define inline function walker-slot-value-setter 
+define inline function walker-slot-value-setter
     (new-value, object, slot-descriptor)
   slot-value(object, slot-descriptor) := new-value;
 end function;
@@ -53,9 +53,9 @@ define method walker-shallow-getters
 end method;
 
 define class <walker-defaulted-descriptor> (<object>)
-  constant slot walker-default-slot-descriptor :: <walker-slot-descriptor>, 
+  constant slot walker-default-slot-descriptor :: <walker-slot-descriptor>,
     required-init-keyword: slot-descriptor:;
-  constant slot walker-default-thunk :: <function>, 
+  constant slot walker-default-thunk :: <function>,
     required-init-keyword: thunk:;
 end class;
 
@@ -82,7 +82,7 @@ define inline method walker-default-thunk (spec :: <walker-defaulted-spec>)
 end method;
 
 
-define constant <walker-defaulted-slot-sequence-type> 
+define constant <walker-defaulted-slot-sequence-type>
   = limited(<vector>, of: <walker-defaulted-descriptor>);
 
 define function walker-defaulted-shallow-getters
@@ -95,14 +95,14 @@ define constant $walker-complex  = #"complex";
 define constant $walker-repeated = #"repeated";
 
 define class <walker-class> (<object>)
-  constant slot walker-class-repeated-slot? :: <boolean>, 
+  constant slot walker-class-repeated-slot? :: <boolean>,
     required-init-keyword: repeated-slot?:;
 
-  constant slot walker-class-deep-slot-descriptors :: <walker-slot-sequence-type>, 
+  constant slot walker-class-deep-slot-descriptors :: <walker-slot-sequence-type>,
     required-init-keyword: deep-slot-descriptors:;
-  constant slot walker-class-shallow-slot-descriptors :: <walker-slot-sequence-type>, 
+  constant slot walker-class-shallow-slot-descriptors :: <walker-slot-sequence-type>,
     required-init-keyword: shallow-slot-descriptors:;
-  constant slot walker-class-defaulted-slot-descriptors :: <walker-defaulted-slot-sequence-type>, 
+  constant slot walker-class-defaulted-slot-descriptors :: <walker-defaulted-slot-sequence-type>,
     required-init-keyword: defaulted-slot-descriptors:;
 
   slot walker-class-kind :: <symbol> = #"default";
@@ -112,10 +112,10 @@ define method initialize (class :: <walker-class>, #key) => ()
   next-method();
   let kind
     = case
-	walker-class-repeated-slot?(class) 
+	walker-class-repeated-slot?(class)
 	  => $walker-repeated;
 	empty?(walker-class-shallow-slot-descriptors(class))
-	  & empty?(walker-class-defaulted-slot-descriptors(class)) 
+	  & empty?(walker-class-defaulted-slot-descriptors(class))
 	  => $walker-simple;
 	otherwise
 	  => $walker-complex;
@@ -123,13 +123,13 @@ define method initialize (class :: <walker-class>, #key) => ()
   walker-class-kind(class) := kind;
 end method;
 
-define function walker-real-shallow-getters 
+define function walker-real-shallow-getters
      (walker :: <walker>, class :: <class>) => (res :: <list>)
-  choose(complement(walker-defaulted-getter?), 
+  choose(complement(walker-defaulted-getter?),
          walker-shallow-getters(walker, class))
 end function;
 
-define method walker-compute-defaulted-slot-descriptors 
+define method walker-compute-defaulted-slot-descriptors
     (walker :: <walker>, class :: <class>)
  => (res :: <walker-defaulted-slot-sequence-type>)
   let shallow-getters = walker-defaulted-shallow-getters(walker, class);
@@ -138,7 +138,7 @@ define method walker-compute-defaulted-slot-descriptors
       for (shallow-getter in shallow-getters)
 	if (slot-getter(sd) == walker-default-getter(shallow-getter))
 	  collect(make-walker-defaulted-descriptor
-		    (as-walker-slot-descriptor(class, sd), 
+		    (as-walker-slot-descriptor(class, sd),
 		     walker-default-thunk(shallow-getter)))
 	end if;
       end for;
@@ -146,15 +146,15 @@ define method walker-compute-defaulted-slot-descriptors
   end collecting;
 end method;
 
-define method walker-compute-shallow-slot-descriptors 
+define method walker-compute-shallow-slot-descriptors
     (walker :: <walker>, class :: <class>) => (res :: <walker-slot-sequence-type>)
   let shallow-getters = walker-real-shallow-getters(walker, class);
   map-as(<walker-slot-sequence-type>, curry(as-walker-slot-descriptor, class),
-         choose(method (sd) member?(sd.slot-getter, shallow-getters) end, 
+         choose(method (sd) member?(sd.slot-getter, shallow-getters) end,
                 walker-slot-descriptors(class)))
 end method;
 
-define method walker-compute-deep-slot-descriptors 
+define method walker-compute-deep-slot-descriptors
     (walker :: <walker>, class :: <class>) => (res :: <walker-slot-sequence-type>)
   let defaulted-getters = walker-defaulted-shallow-getters(walker, class);
   let shallow-getters   = walker-real-shallow-getters(walker, class);
@@ -162,11 +162,11 @@ define method walker-compute-deep-slot-descriptors
 	 if (empty?(defaulted-getters) & empty?(shallow-getters))
 	   walker-slot-descriptors(class)
 	 else
-	   choose(method (sd) 
-		    ~member?(sd.slot-getter, 
+	   choose(method (sd)
+		    ~member?(sd.slot-getter,
 			     map(walker-default-getter, defaulted-getters)) &
 		      ~member?(sd.slot-getter, shallow-getters)
-		  end method, 
+		  end method,
 		  walker-slot-descriptors(class))
 	 end)
 end method;
@@ -175,7 +175,7 @@ define function walker-class
     (walker :: <walker>, class :: <class>) => (res :: <walker-class>)
   element(walker-classes(walker), class, default: #f) |
     (element(walker-classes(walker), class)
-       :=  make(<walker-class>, 
+       :=  make(<walker-class>,
 		repeated-slot?:
 		  walker-repeated-slot?(class),
 		shallow-slot-descriptors:
@@ -205,7 +205,7 @@ define inline function walker-slot-descriptors-of
 end function;
 
 define function walker-shallow-slot-descriptors
-    (walker :: <walker>, class :: <class>) 
+    (walker :: <walker>, class :: <class>)
  => (res :: <walker-slot-sequence-type>)
   walker-slot-descriptors-of
     (walker, class, walker-class-shallow-slot-descriptors)

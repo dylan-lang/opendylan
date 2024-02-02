@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //  3.  trap handlers for the GC and Dylan (by means of a trampoline)
 //
 // These are created via different mechanisms depending on the "type" of the
-// thread. We distinguish 3 "types": 
+// thread. We distinguish 3 "types":
 //  a.  the main thread (which is used to initialize the Dylan library)
 //  b.  Dylan threads (created by the threads library)
 //  c   foreign threads
@@ -25,8 +25,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 // 2a:  The Dylan DLL entry registers the stack (even though it will later return)
 // 2b:  The trampoline function registers the stack
-// 2c:  The FFI code will register the stack whenever a first-time call-in is 
-//      detected. It will register from the bottom of stack, and the stack 
+// 2c:  The FFI code will register the stack whenever a first-time call-in is
+//      detected. It will register from the bottom of stack, and the stack
 //      will remain registered until the thread dies.
 //
 // 3a:  The entry point for each Dylan DLL and EXE file will invoke the DLL's
@@ -39,18 +39,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // or a call-in) some special actions are required so that the runtime system
 // knows what state we are in.
 //
-// This is necessary for 2 reasons. First, the Dylan SEH handling mechanism needs 
-// to be able to determine whether Dylan code is currently running. It will 
+// This is necessary for 2 reasons. First, the Dylan SEH handling mechanism needs
+// to be able to determine whether Dylan code is currently running. It will
 // handle various exceptions, but it should only do this if it is Dylan code which
 // is currently executing. Any exceptions signalled from foreign code get passed
-// on to any existing foreign handler. Secondly, we need to ensure that the TEB 
+// on to any existing foreign handler. Secondly, we need to ensure that the TEB
 // doesn't get lost when calling out to foreign code. This might conceivably happen
 // because we store the value in a location which is efficient to access, and yet
 // which might also be used by foreign code.
 //
 // As a mechanism for supporting both requirements, we use a normal Windows thread
-// local variable to store the TEB for the thread. The value of this variable will 
-// be 0 if the thread doesn't have a TEB (yet). Within the TEB, we use a slot to 
+// local variable to store the TEB for the thread. The value of this variable will
+// be 0 if the thread doesn't have a TEB (yet). Within the TEB, we use a slot to
 // store the FFI barrier state. The value of this slot will be -1 while Dylan code
 // is running in the thread, and will be 0 while foreign code is running.
 //
@@ -66,11 +66,11 @@ define constant $outside-dylan = 0;       // value of the TEB runtime state outs
 define constant $uninitialized-teb = 0;   // value of the TLV when we don't have a TEB
 
 
-// Allocation of TEBs: 
+// Allocation of TEBs:
 // The TEB data structure is defined in native/thread-environment-offsets.dylan
 // However, the GC interface of the runtime system also uses slots in the TEB (unknown
 // to Dylan). TEB's are allocated by code in this file - and we always ensure that
-// there is also a GC-TEB immediately before the TEB. I.e. the GC-TEB is always at a 
+// there is also a GC-TEB immediately before the TEB. I.e. the GC-TEB is always at a
 // known negative offset from the TEB
 
 define method gc-teb-total-size (be :: <harp-back-end>) => (size :: <integer>)
@@ -82,15 +82,15 @@ define method teb-allocation-size (be :: <harp-back-end>) => (size :: <integer>)
 end method;
 
 
-// Define the master TEB as a static block. 
+// Define the master TEB as a static block.
 // NB: this must appear in the set of ambiguously traced roots of the GC.
 // It must be immediately preceded by the gc-teb.
 
-define direct runtime-variable master-gc-teb = "%master-gc-teb", data: 0, 
+define direct runtime-variable master-gc-teb = "%master-gc-teb", data: 0,
   repeat: method(be) ash(gc-teb-total-size(be), -2) end,
   section: #"ambiguous-data";
 
-define direct runtime-variable master-teb = "%master-teb", data: 0, 
+define direct runtime-variable master-teb = "%master-teb", data: 0,
   repeat: method(be) ash(teb-total-size(be), -2) end,
   section: #"ambiguous-data";
 
@@ -101,7 +101,7 @@ define direct runtime-variable master-teb = "%master-teb", data: 0,
 define runtime-variable TEB-tlv-index = "%teb-tlv-index", data: -1;
 
 
-// TEB-chain is a variable holding the current TEB in a chain of live TEBs 
+// TEB-chain is a variable holding the current TEB in a chain of live TEBs
 
 define runtime-variable TEB-chain = "%teb-chain", data: 0;
 
@@ -126,16 +126,16 @@ define extensions-iep runtime-external call-application-exit-functions-iep
   = "call-application-exit-functions";
 
 
-define direct runtime-variable %static-root = "%static-root", 
+define direct runtime-variable %static-root = "%static-root",
   data: 0, client?: #t, base?: #t, public?: #f;
 
-define direct runtime-variable %immut-root = "%immut-root", 
+define direct runtime-variable %immut-root = "%immut-root",
   data: 0, client?: #t, base?: #t, public?: #f;
 
-define direct runtime-variable %ambig-root = "%ambig-root", 
+define direct runtime-variable %ambig-root = "%ambig-root",
   data: 0, client?: #t, base?: #t, public?: #f;
 
-define direct runtime-variable %exact-root = "%exact-root", 
+define direct runtime-variable %exact-root = "%exact-root",
   data: 0, client?: #t, base?: #t, public?: #f;
 
 
@@ -144,7 +144,7 @@ define runtime-variable %started-unloading = "%started-unloading", data: 0;
 
 
 // module_hInstance holds the module handle for Dylan DLLs
-define c runtime-variable module-hinstance = "module_hInstance", 
+define c runtime-variable module-hinstance = "module_hInstance",
    data: 0, client?: #t, base?: #t;
 
 define runtime-variable init-dylan-library = "-init-dylan-library",
@@ -214,7 +214,7 @@ end method;
 
 /// Management of the TEB and its corresponding TLV:
 
-define open generic op--create-TEB-tlv-index 
+define open generic op--create-TEB-tlv-index
     (be :: <harp-back-end>) => ();
 
 
@@ -322,7 +322,7 @@ define method op--allocate-dynamic-teb (be :: <harp-back-end>, teb :: <register>
     // Initialize the TEB & GC-TEB to show we are still outside Dylan
     op--initialize-GC-TEB(be, gc-teb);
     op--initialize-TEB(be, teb, $outside-dylan);
-  
+
   end with-harp;
 end method;
 
@@ -348,7 +348,7 @@ define method op--deallocate-dynamic-teb (be :: <harp-back-end>, gc-teb)
 end method;
 
 
-define method op--maybe-deregister-thread-from-TEB 
+define method op--maybe-deregister-thread-from-TEB
     (be :: <harp-back-end>, gc-teb)
   with-harp (be)
     tag not-registered;
@@ -361,7 +361,7 @@ define method op--maybe-deregister-thread-from-TEB
   end with-harp;
 end method;
 
-// Deregister any dynamically created threads which haven't been 
+// Deregister any dynamically created threads which haven't been
 // deregistered yet.
 // Also deregister/deallocate the TEB chain itself.
 
@@ -399,8 +399,8 @@ define method op--initialize-dylan-thread (be :: <harp-back-end>, teb)
     ins--move(be, result, stack);
 
     op--set-runtime-state(be, $inside-dylan, teb);
-    op--call-c(be, dylan-init-thread, result, 
-               primitive-make-foreign-thread-internal-ref, 
+    op--call-c(be, dylan-init-thread, result,
+               primitive-make-foreign-thread-internal-ref,
                0, 0);
     ins--add(be, stack, stack, 4); // pop the result from the stack
 
@@ -413,7 +413,7 @@ end method;
 define method op--get-valid-teb (be :: <harp-back-end>, teb :: <register>)
   with-harp (be)
     tag done;
-  
+
     op--get-teb-tlv(be, teb);        // Get the TEB
     ins--bne(be, done, teb, 0);      // Check it's valid
 
@@ -422,7 +422,7 @@ define method op--get-valid-teb (be :: <harp-back-end>, teb :: <register>)
     //   1. allocate & initialize a new TEB in an ambiguous root
     //   2. initialize the thread with the GC (which involves finding bot of stack)
     //   3. Initialize the thread with Dylan (inside the MM trampoline)
-    
+
     op--allocate-dynamic-teb(be, teb);
     op--initialize-thread-with-gc(be);
     op--initialize-dylan-thread(be, teb);
@@ -455,7 +455,7 @@ define used-by-client runtime-primitive ensure-valid-teb
   //    no args
   // On exit:
   //    A valid TEB for this thread (registering the thread with the GC if necessary)
-  
+
   result result;
   nreg teb;
 
@@ -501,23 +501,23 @@ define method op--dylan-call-in (be :: <harp-back-end>, stdcall? :: <boolean>)
     c-arg-count arg-count;
     stack stack;
     tag done;
-  
+
     ins--move(be, arg-amount, arg-count);
     ins--move(be, the-function, arg0);
     op--ensure-valid-teb(be, teb);        // Get the TEB & store it in Dylan's place
     op--set-runtime-state(be, $inside-dylan, teb);
-  
+
     // Setup a struct { real-callin-function, base-of-args }
     ins--load-address-of-stack-arg-n(be, first-arg, 0);
     ins--push(be, first-arg);
     ins--push(be, the-function);
-    ins--move(be, func-args-struct, stack); 
-  
+    ins--move(be, func-args-struct, stack);
+
     // Call dylan-callin-handler, which will setup the MM trampoline etc
     // and then call dylan-callin-internal with the same args
     op--call-c(be, dylan-callin-handler, func-args-struct, arg-amount);
     ins--add(be, stack, stack, 8); // pop the struct from the stack
-  
+
     ins--move(be, the-result, c-result);
     op--set-runtime-state(be, $outside-dylan, teb);
     ins--move(be, c-result, the-result);
@@ -543,7 +543,7 @@ define c-runtime-primitive dylan-call-in
   //
   // On entry: SPECIAL CALLING CONVENTION (likely to be platform specific)
   //           C args setup for a call-in
-  //           PLUS: 
+  //           PLUS:
   //              c-arg-count - size of arguments to call-in in words
   //              arg0        - function to be called inside MM trampoline
   // Behaviour:
@@ -562,7 +562,7 @@ define c-runtime-primitive dylan-call-in-syscall
   //
   // On entry: SPECIAL CALLING CONVENTION (likely to be platform specific)
   //           C args setup for a call-in
-  //           PLUS: 
+  //           PLUS:
   //              c-arg-count - size of arguments to call-in in words
   //              arg0        - function to be called inside MM trampoline
   // Behaviour:
@@ -581,10 +581,10 @@ end c-runtime-primitive;
 
 
 define c-runtime-primitive dylan-callin-internal
-  // On entry: 
+  // On entry:
   //    arg-info  pointer to struct { real-callin-function, base-of-args }
   //    arg-size  size of args to copy
-  // Purpose: 
+  // Purpose:
   //    Calls real-callin-function with a copied set of args
   // On exit
   //    Returns the result of real-callin-function
@@ -605,7 +605,7 @@ define c-runtime-primitive dylan-callin-internal
   // ins--add(be, stack, stack, size-in-bytes);
   ins--rts(be);
 end c-runtime-primitive;
- 
+
 
 
 define c-runtime-primitive inside-dylan-ffi-barrier
@@ -637,7 +637,7 @@ end c-runtime-primitive;
 /// Initialization support
 
 
-define method op--initialize-TEB 
+define method op--initialize-TEB
     (be :: <harp-back-end>, teb, state) => ()
   with-harp (be)
     // Fill in some important fields
@@ -648,12 +648,12 @@ define method op--initialize-TEB
     ins--set-teb(be, teb);
     // Install it in the TLV for the runtime system
     op--set-teb-tlv(be, teb);
-    // Set the runtime state 
+    // Set the runtime state
     op--set-runtime-state(be, state, teb);
   end with-harp;
 end method;
 
-define method op--initialize-GC-TEB 
+define method op--initialize-GC-TEB
     (be :: <harp-back-end>, gc-teb) => ()
   with-harp (be)
     // Fill the "inside_tramp" field
@@ -662,7 +662,7 @@ define method op--initialize-GC-TEB
   end with-harp;
 end method;
 
-define method op--mark-unregistered-GC-TEB 
+define method op--mark-unregistered-GC-TEB
     (be :: <harp-back-end>, gc-teb) => ()
   with-harp (be)
     // Zero the main allocation point to show that the TEB is not registered
@@ -727,7 +727,7 @@ define method op--maybe-uninitialize-thread (be :: <harp-back-end>)
 
     op--get-teb-tlv(be, teb);
     ins--beq(be, done, teb, 0);
-    // If the TEB is non-zero, then we must unregister the thread 
+    // If the TEB is non-zero, then we must unregister the thread
     // with the MM when it dies.
     ins--sub(be, gc-teb, teb, be.gc-teb-total-size);
     op--uninitialize-thread(be, gc-teb);
@@ -773,7 +773,7 @@ define method op--init-thread-and-TEB (be :: <harp-back-end>) => (gc-teb)
       ins--sub(be, stack, stack, be.gc-teb-total-size);
       ins--move(be, gc-teb, stack);
       ins--move(be, gc-teb-result, stack);
-      
+
       // Initialize the TEB & GC-TEB to show we are inside Dylan
       op--initialize-GC-TEB(be, gc-teb);
       op--initialize-TEB(be, teb, $inside-dylan);
@@ -783,7 +783,7 @@ define method op--init-thread-and-TEB (be :: <harp-back-end>) => (gc-teb)
 
       // Set the runtime state to show we are inside Dylan
       op--set-runtime-state(be, $inside-dylan, teb);
-      
+
       ins--sub(be, gc-teb-result, teb, be.gc-teb-total-size);
     end if;
 
@@ -822,7 +822,7 @@ define method op--dylan-thread-trampoline
     ins--ld(be, thread, thread-ptr, 0);
     op--call-c(be, raw-free-root, thread-ptr, 4);
 
-    op--call-c(be, dylan-init-thread, the-result, 
+    op--call-c(be, dylan-init-thread, the-result,
 	       trampoline-body, thread, 0);
 
     // Eagerly uninitialize the thread before we lose the TEB
@@ -853,13 +853,13 @@ define used-by-client init runtime-primitive register-traced-roots
   //     var-start, var-end, exact-root-var)
   // On exit:
   //    no result - but the MM will have been initialized for this DLL
-  
+
   tag ambig-done, heap-done, var-done;
   nreg ambig-start, ambig-end, ambig-root-var;
   nreg heap-start, heap-end, static-root-var;
   nreg var-start, var-end, exact-root-var;
 
-  op--load-arguments(be, ambig-start, ambig-end, ambig-root-var, 
+  op--load-arguments(be, ambig-start, ambig-end, ambig-root-var,
 		     heap-start, heap-end, static-root-var,
 		     var-start, var-end, exact-root-var);
 
@@ -903,14 +903,14 @@ define c-runtime-primitive call-dylan-exit-functions
 
   ins--move(be, argc, 0);
   ins--move(be, arg0, primitive-call-dylan-exit-functions-internal-ref);
-  ins--jmp-alien(be, primitive-dylan-call-in-syscall-ref, 1, 
+  ins--jmp-alien(be, primitive-dylan-call-in-syscall-ref, 1,
 		 arg-count: #t);
 end c-runtime-primitive;
 
 
 define method op--perform-dylan-shutdown (be :: <harp-back-end>) => ()
   // Call the application exit functions.
-  // This must be done after detecting that a shutdown is happening 
+  // This must be done after detecting that a shutdown is happening
   // but before anything drastic happens like parking the GC.
   op--call-c(be, primitive-call-dylan-exit-functions-ref);
 end method;
@@ -921,7 +921,7 @@ define used-by-client init runtime-primitive deregister-traced-roots
   //    (ambig-root-var, static-root-var, exact-root-var)
   // On exit:
   //    no result - but the MM roots for this DLL will have been destroyed
-  
+
   tag mm-is-parked;
   nreg root, ambig-root-var, static-root-var, exact-root-var;
 
@@ -951,16 +951,16 @@ define open generic op--shut-down-exe-library (be :: <harp-back-end>) => ();
 
 define method op--shut-down-dylan-library (be :: <harp-back-end>) => ()
   // Assumption: all threads created from within Dylan must have been
-  // deregistered by now. This had better be true, if there is any 
-  // possibility of that thread continuing - otherwise there will be a 
-  // Dylan return address on the stack somewhere - but all Dylan code is 
+  // deregistered by now. This had better be true, if there is any
+  // possibility of that thread continuing - otherwise there will be a
+  // Dylan return address on the stack somewhere - but all Dylan code is
   // about to be unmapped. Hence the only threads we need to clean up
-  // explicitly are (potentially) those with dynamically created TEBs, and 
-  // the one with the master TEB. We do a test to see if all threads 
+  // explicitly are (potentially) those with dynamically created TEBs, and
+  // the one with the master TEB. We do a test to see if all threads
   // have been cleaned up before stopping the MM, because if this we are just
-  // about to exit the process we don't really care whether the MM is 
+  // about to exit the process we don't really care whether the MM is
   // shut down, and we know that any remaining threads cannot be re-activated.
-  
+
   with-harp (be)
     tag done;
     // Deregister the main thread if necessary
@@ -1046,8 +1046,8 @@ end c-runtime-primitive;
 // DYLAN-INITIALIZE
 //
 // This is the inner entry point for both EXE & DLL files.
-// It performs the 2-stage initialization for the library, fixing 
-// up data first, and then calling the initialization code for the library 
+// It performs the 2-stage initialization for the library, fixing
+// up data first, and then calling the initialization code for the library
 // inside an MM trampoline.
 
 define shared init no-public c-runtime-primitive dylan-initialize
@@ -1055,7 +1055,7 @@ define shared init no-public c-runtime-primitive dylan-initialize
   //    no args
   // On exit:
   //    Returns 0
-  
+
   c-result c-result;
   stack stack;
   nreg the-result, teb;
@@ -1065,13 +1065,13 @@ define shared init no-public c-runtime-primitive dylan-initialize
   op--call-c(be, primitive-init-dylan-data-ref);
 
   // Find the TEB. For the base runtime, we know it's in the fast-access
-  // location, because the cold-start put it there. For client DLLs, 
+  // location, because the cold-start put it there. For client DLLs,
   // we might even have to create a new one.
   when-client op--ensure-valid-teb(be, teb) end;
   when-base ins--get-teb(be, teb) end;
 
   op--set-runtime-state(be, $inside-dylan, teb);
-  op--call-c(be, primitive-dylan-init-thread-local-ref, the-result, 
+  op--call-c(be, primitive-dylan-init-thread-local-ref, the-result,
              primitive-call-init-dylan-ref, 0, 0);
   op--set-runtime-state(be, $outside-dylan, teb);
 
@@ -1142,15 +1142,15 @@ end method;
 define method op--maybe-uninitialize-thread-for-p-detach
     (be :: <harp-back-end>)
   // This now does nothing.
-  // Used to unregister the current thread, but this caused problems 
+  // Used to unregister the current thread, but this caused problems
   // in Win95 because the detach callback might happen after
   // the OS has silently trashed the TEB on the stack if this happened
   // to be a Dylan thread. If this is a non-Dylan thread (or the main thread)
-  // then the final dylan library shutdown will deregister the thread 
+  // then the final dylan library shutdown will deregister the thread
   // anyway. But if this is a Dylan thread, then it's safe to not deregister
-  // it since this will leave the thread count as non-zero and so the final gc 
-  // shutdown won't happen. We never need the final gc shutdown if a Dylan 
-  // thread is still active, because the lack of a running Dylan thread is 
+  // it since this will leave the thread count as non-zero and so the final gc
+  // shutdown won't happen. We never need the final gc shutdown if a Dylan
+  // thread is still active, because the lack of a running Dylan thread is
   // specified as a shutdown condition.
 
   // Do any deregistration of the MM state for this thread here

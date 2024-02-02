@@ -11,38 +11,38 @@ define constant <fixnum> = <integer>; // formerly known as <small-integer>
 define open primary class <DUIM-server-app> ( <object> )
 
   slot app-frame :: <embeddable-frame>, required-init-keyword: frame:;
-        
+
   slot app-window :: <HWND> = $NULL-HWND;   // top-level frame window handle
-        
+
   slot started-by-ole? :: <boolean> = #f; // true if process started by OLE
 
   slot dummy-object :: <interface> = $null-interface;
-        
+
   slot get-doc :: false-or(<DUIM-server-doc>) = #f;
 
   slot get-factory :: false-or(<class-factory>) = #f;
 
 end class <DUIM-server-app>;
 
-
+
 // The "document" object:
 define open primary class <DUIM-server-doc> ( <object> )
-        
+
   constant slot get-app :: <DUIM-server-app>, required-init-keyword: app:;
   slot get-object  :: false-or(<basic-DUIM-OLE-server>) = #f,
     init-keyword: interface:;
-        
+
   slot doc-window  :: <HWND> = $NULL-HWND;
   slot doc-sheet   :: false-or(duim/<sheet>) = #f;
-        
+
 end class <DUIM-server-doc>;
 
 
-define method app-window(this :: <DUIM-server-doc>) => value :: <HWND>; 
+define method app-window(this :: <DUIM-server-doc>) => value :: <HWND>;
   this.get-app.app-window
 end method app-window;
 
-
+
 
 // The OLE "object" object:
 

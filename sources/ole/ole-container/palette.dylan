@@ -37,16 +37,16 @@ ignorable(wVersion, cpe, rgpe-array); // to suppress warnings about unused
 //********************************************************************
 
 define method create-standard-palette() => value :: <HPALETTE>;
-   
+
   let hpal :: <HPALETTE> = null-pointer(<HPALETTE>);
   let hdc :: <HDC> = GetDC($NULL-HWND);
   if ( ( ~ null-handle?(hdc) )
 	& ~ zero?(logand( GetDeviceCaps(hdc, $RASTERCAPS), $RC-PALETTE)) )
-      
+
     let cpeSysPal :: <fixnum> = GetDeviceCaps( hdc, $SIZEPALETTE);
     let cpeReserved :: <fixnum> = GetDeviceCaps( hdc, $NUMRESERVED);
     if ( cpeSysPal > cpeReserved )
-	 
+
       let logpal :: <PLOGPAL> = make(<PLOGPAL>);
       let cpeReserved2 :: <fixnum> = truncate/(cpeReserved,2);
 
@@ -81,7 +81,7 @@ define method create-standard-palette() => value :: <HPALETTE>;
 end method create-standard-palette;
 
 
-// This is just a helper routine 
+// This is just a helper routine
 define method select-palette(hWnd :: <HWND>, hPal :: <HPALETTE>,
 			     fBackground :: <boolean>)
 	=> value :: <fixnum>;

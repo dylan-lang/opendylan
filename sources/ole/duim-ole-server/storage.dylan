@@ -158,7 +158,7 @@ end method;
 
 // default method
 define method frame-init-new-object ( frame :: <object> );
-  // Note: The COM documentation suggests returning E_NOTIMPL from 
+  // Note: The COM documentation suggests returning E_NOTIMPL from
   //  IPersistStreamInit::InitNew if it doesn't actually do anything,
   //  but Visual Basic 5.0 does not accept that as a valid response.
   $S-OK

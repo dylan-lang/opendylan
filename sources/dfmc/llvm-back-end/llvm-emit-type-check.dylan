@@ -67,7 +67,7 @@ define method op--type-check-error
   op--call-error-iep(back-end, #"type-check-error", object, type-ref);
 end method;
 
-
+
 /// Instance testing
 
 define method do-emit-instance-cmp

@@ -25,7 +25,7 @@ define variable *factory* = #f;
 define variable *disp-interface* = #f;
 
 define variable *ole-server-typeinfo* = #f;
- 
+
 // Ole server
 // 6e5d60a0-e735-11d0-8a24-02070119f639
 
@@ -38,9 +38,9 @@ define constant $class-id =
 
 define constant heterogeneous-vector = ole-array-type(<VARIANT>);
 
-define method make-ole-server-typeinfo 
+define method make-ole-server-typeinfo
     () => ()
-  let disp-type-info = 
+  let disp-type-info =
     make(<Disp-Type-Info>,
 	 name: "AutoTest",
 	 documentation: "ole-communication-test",
@@ -55,12 +55,12 @@ define method make-ole-server-typeinfo
 				 name: "machine-word",
 				 getter: machine-word-value,
 				 setter: machine-word-value-setter,
-				 type: <C-short>), 
+				 type: <C-short>),
 			    make(<variable-description>,
 				 name: "character",
 				 getter: character-value,
 				 setter: character-value-setter,
-				 type: <C-character>), 
+				 type: <C-character>),
 			    make(<variable-description>,
 				 name: "boolean",
 				 getter: boolean-value,
@@ -116,7 +116,7 @@ define method make-ole-server-typeinfo
 				 name: "indexcon",
 				 value: #["zero", "one", "two"],
 				 type: ole-array-type(<string>)) ),
-		       methods: 
+		       methods:
 			 vector(make(<function-description>,
 				     name: "bare-method",
 				     function: bare-method),
@@ -134,7 +134,7 @@ define method make-ole-server-typeinfo
 				     name: "multiply",
 				     function: multiply,
 				     argument-names: #["arg1", "arg2"],
-				     argument-types: 
+				     argument-types:
 				       vector(<C-short>, <C-short>),
 				     result-type: <C-short>),
 				make(<function-description>,
@@ -202,14 +202,14 @@ define variable *string-table-value* :: <collection> = make(<string-table>);
 *string-table-value*["TX"] := "Texas";
 
 define COM-interface <values> (<Simple-Dispatch>)
-  slot integer-value :: <integer>, init-value: 1; 
+  slot integer-value :: <integer>, init-value: 1;
   slot machine-word-value :: <machine-word>, init-value: as(<machine-word>, 1);
-  slot character-value :: <character>; 
+  slot character-value :: <character>;
   slot boolean-value :: <boolean>, init-value: #f;
-  slot single-float-value :: <single-float>, 
+  slot single-float-value :: <single-float>,
     init-value: as(<single-float>, 1);
-  slot double-float-value :: <double-float>, 
-    init-value: as(<double-float>, 1); 
+  slot double-float-value :: <double-float>,
+    init-value: as(<double-float>, 1);
   slot string-value :: <string>, init-value: "init-value";
   slot sequence-value :: <sequence>, init-value: list(2, "hi");
   slot array-value :: <array> =  make(<array>, dimensions: #(2));

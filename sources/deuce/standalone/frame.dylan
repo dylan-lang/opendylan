@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define sealed class <deuce-editor> (<basic-editor>)
 end class <deuce-editor>;
 
-
+
 /// Random test commands
 
 define sealed class <random-sections-buffer>
@@ -47,7 +47,7 @@ define function edit-random-sections (frame :: <editor-state-mixin>) => ()
   frame-last-command-type(frame) := #"file"
 end function edit-random-sections;
 
-
+
 /* ---*** The mail sending hack...
 /// Glue to simple SMTP client
 
@@ -107,7 +107,7 @@ define sideways method do-send-mail
 end method do-send-mail;
 */
 
-
+
 /// DUIM command tables for Deuce
 
 define function make-deuce-command
@@ -197,7 +197,7 @@ define command-table *deuce-command-table* ()
   menu-item "Help"   = *deuce-help-comtab*;
 end command-table *deuce-command-table*;
 
-
+
 /// Toolbar icons
 
 define variable $undo-bitmap          = "Undo";
@@ -213,7 +213,7 @@ define variable $new-bitmap           = "New";
 define variable $open-bitmap          = "Open";
 define variable $save-bitmap          = "Save";
 
-
+
 /// DUIM back-end for a top-level Deuce editor frame
 
 define variable $deuce-small-icon = #f;

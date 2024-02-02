@@ -260,7 +260,7 @@ define sealed method resectionize-section
   end
 end method resectionize-section;
 
-
+
 /// Adding and removing lines to sections
 
 define sealed method add-line!

@@ -118,7 +118,7 @@ define method ensure-line-breakpoint
   end
 end method ensure-line-breakpoint;
 
-
+
 /// Breakpoints
 
 define method frame-note-all-breakpoints-changed
@@ -426,7 +426,7 @@ define method breakpoint-state-setter
   state
 end method breakpoint-state-setter;
 
-
+
 /// Breakpoint popup menu
 
 define method do-handle-presentation-event

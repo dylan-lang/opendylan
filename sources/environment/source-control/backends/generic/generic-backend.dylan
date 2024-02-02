@@ -255,7 +255,7 @@ define generic-command remove
   keyword pattern-string: = *remove-command-string*;
 end;
 
-
+
 /// Source control argument gathering
 
 define method get-source-control-arguments

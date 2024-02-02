@@ -42,7 +42,7 @@ define open generic library-read-only?-setter
     (read-only? :: <boolean>, server :: <server>, library :: <library-object>)
  => (read-only? :: <boolean>);
 
-
+
 /// Project dispatching methods
 
 // I guess main library
@@ -103,7 +103,7 @@ define method library-read-only?-setter
   database & library-read-only?-setter(read-only?, database, library)
 end method library-read-only?-setter;
 
-
+
 /// Implementation
 
 define function library-modules

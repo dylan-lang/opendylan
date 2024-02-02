@@ -565,7 +565,7 @@ define method make-primitive-signature
                                           required-value-type-specs)))
 end method;
 
-
+
 /// Primitive function debug info
 
 define constant $empty-diexpression-value
@@ -680,7 +680,7 @@ define method make-primitive-dbg-function
   values(dbg-function, dbg-parameters)
 end method;
 
-
+
 /// Runtime support variables
 
 define class <llvm-runtime-variable-descriptor> (<object>)

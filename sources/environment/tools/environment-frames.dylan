@@ -16,7 +16,7 @@ define method environment-frame-class-name
   #f
 end method environment-frame-class-name;
 
-
+
 /// Environment frame
 
 define open abstract class <environment-frame> (<frame>)
@@ -63,7 +63,7 @@ define method frame-primary-object-name
   frame-default-object-name(frame, object)
 end method frame-primary-object-name;
 
-
+
 /// Environment frame protocols
 
 define open generic generate-frame-title
@@ -105,7 +105,7 @@ define method note-frame-command-target-updated
   #f
 end method note-frame-command-target-updated;
 
-
+
 /// Notification protocols
 
 define open generic frame-note-application-state-changed
@@ -197,7 +197,7 @@ define method frame-note-project-changed
   // Do nothing.
 end method frame-note-project-changed;
 
-
+
 /// Application message handlers
 
 define function environment-tools-application-message-receiver
@@ -322,7 +322,7 @@ define method frame-note-all-breakpoints-changed
   #f
 end method frame-note-all-breakpoints-changed;
 
-
+
 /// Frame operation handling
 ///--- Should this be in DUIM?
 
@@ -342,7 +342,7 @@ define macro with-frame-background-operation
       }
 end macro with-frame-background-operation;
 
-
+
 /// Open
 
 define open generic frame-open-object
@@ -359,7 +359,7 @@ define method frame-open-object
   frame-open-project(frame, project)
 end method frame-open-object;
 
-
+
 /// Locator type handling
 ///--- Probably should use MIME types, somehow
 
@@ -382,7 +382,7 @@ define method locator-has-source?
   end
 end method locator-has-source?;
 
-
+
 /// Browsing
 
 define open generic frame-browse-object
@@ -470,7 +470,7 @@ define method frame-browse-object-generic-function
     | next-method()
 end method frame-browse-object-generic-function;
 
-
+
 /// Describe
 
 define method frame-describe-object?
@@ -515,7 +515,7 @@ define method frame-describe-object
   describe-object(name, project, module, object)
 end method frame-describe-object;
 
-
+
 /// Documentation
 
 define method frame-document-object?
@@ -547,7 +547,7 @@ define method frame-document-object
   show-documentation(name, project, module, object)
 end method frame-document-object;
 
-
+
 /// frame-target-object
 
 define method frame-target-object
@@ -578,7 +578,7 @@ define method frame-target-object
   breakpoint-object(breakpoint)
 end method frame-target-object;
 
-
+
 /// Wrapper objects
 
 define open abstract class <object-wrapper> (<object>)
@@ -626,7 +626,7 @@ define method \=
   wrapper1.wrapper-object = wrapper2.wrapper-object
 end method \=;
 
-
+
 /// Object and location wrappers
 
 define open abstract class <object-and-location-wrapper> (<object-wrapper>)
@@ -640,7 +640,7 @@ define method frame-target-edit-object
   wrapper.wrapper-source-location
 end method frame-target-edit-object;
 
-
+
 /// Source wrappers
 
 define abstract class <source-wrapper> (<project-object-wrapper>)
@@ -711,7 +711,7 @@ define sealed domain initialize (<source-record-wrapper>);
 define sealed domain initialize (<source-locator-wrapper>);
 define sealed domain initialize (<source-project-wrapper>);
 
-
+
 /// frame-target-browse-object
 
 define method frame-target-browse-object
@@ -728,7 +728,7 @@ define method frame-target-browse-object
   project & warning-owner(project, warning)
 end method frame-target-browse-object;
 
-
+
 /// String coercion
 
 define method target-as-string
@@ -810,7 +810,7 @@ define method target-sheet-items-to-string
   end
 end method target-sheet-items-to-string;
 
-
+
 /// Standard popup menu
 
 // Displays and "executes" a target-specific menu
@@ -1084,7 +1084,7 @@ define method do-frame-edit-object
   value & do-frame-edit-object(frame, value)
 end method do-frame-edit-object;
 
-
+
 /// Clipboard handling
 
 define method dylan-clipboard-object
@@ -1117,7 +1117,7 @@ define method dylan-clipboard-object-available?
   end
 end method dylan-clipboard-object-available?;
 
-
+
 /// Popup menu handling
 
 define method make-environment-popup-menu
@@ -1254,7 +1254,7 @@ define method update-environment-popup-menu
   menu-default-gadget(menu) := default-button
 end method update-environment-popup-menu;
 
-
+
 /// Activation
 
 define method environment-activate-callback
@@ -1284,7 +1284,7 @@ define method environment-activate-callback
   environment-activate-callback(top-level-sheet(frame), object)
 end method environment-activate-callback;
 
-
+
 /// Environment status bar
 
 define method make-environment-status-bar
@@ -1446,7 +1446,7 @@ define method frame-search-frame-class
   <environment-search-frame>
 end method frame-search-frame-class;
 
-
+
 /// Window Layering
 
 // Perform some actions on all frames when certain frames are manipulated
@@ -1554,7 +1554,7 @@ define method note-frame-state-changed
   end unless;
 end method note-frame-state-changed;
 
-
+
 /// Environment project frame
 /// Frames "permanently" associated with one project
 
@@ -1608,7 +1608,7 @@ define method handle-event
     (frame, application & application.application-state);
 end method handle-event;
 
-
+
 /// Cloning
 
 define open generic clone-tool
@@ -1660,7 +1660,7 @@ define method make-clone-tool-bar-buttons
                                  end))
 end method make-clone-tool-bar-buttons;
 
-
+
 /// Import files
 
 //--- cpage: 1997.08.27 I'm not sure this Import LID stuff belongs here, but

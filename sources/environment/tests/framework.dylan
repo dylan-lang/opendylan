@@ -49,7 +49,7 @@ define test environment-history-test ()
              end);
 end test environment-history-test;
 
-
+
 /// Environment framework suite
 
 define suite environment-framework-suite ()

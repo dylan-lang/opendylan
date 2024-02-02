@@ -29,26 +29,26 @@ define class <pentium-segment-register> (<pentium-register>)
 end;
 
 define method make-integer-register
-    (number :: <integer>, pname :: <string>, mask-bit :: <integer>, 
-     #key pmask = -1, cpmask = -1) 
+    (number :: <integer>, pname :: <string>, mask-bit :: <integer>,
+     #key pmask = -1, cpmask = -1)
       => (new :: <pentium-integer-register>)
-  make(<pentium-integer-register>, 
+  make(<pentium-integer-register>,
        number: number, pname: pname, mask: ash(1, mask-bit),
        preserved-mask: ash(1, pmask),
        c-preserved-mask: ash(1, cpmask));
 end;
 
 define method make-float-register
-    (number :: <integer>, pname :: <string>, mask-bit :: <integer>) 
+    (number :: <integer>, pname :: <string>, mask-bit :: <integer>)
     => (new :: <pentium-float-register>)
-  make(<pentium-float-register>, 
+  make(<pentium-float-register>,
         number: number, pname: pname, mask: ash(1, mask-bit));
 end;
 
 define method make-segment-register
-    (number :: <integer>, pname :: <string>) 
+    (number :: <integer>, pname :: <string>)
     => (new :: <pentium-segment-register>)
-  make(<pentium-segment-register>, 
+  make(<pentium-segment-register>,
         number: number, pname: pname, mask: 0);
 end;
 
@@ -56,7 +56,7 @@ end;
 define constant eax = make-integer-register(0, "eax", 0);
 define constant ecx = make-integer-register(1, "ecx", 1);
 define constant edx = make-integer-register(2, "edx", 2);//
-// As a temporary fix for a Windows NT 3.51 bug, we treat EBX as a C preserved 
+// As a temporary fix for a Windows NT 3.51 bug, we treat EBX as a C preserved
 // register, even though we know that it isn't.
 // #!$%
 define constant ebx = make-integer-register(3, "ebx", 3, cpmask: 3);
@@ -95,7 +95,7 @@ define constant reg--function  = ebx;
 define constant reg--arg-count = ecx;
 
 define constant reg--float-arg0  = f-st;
-define constant temps-list :: <list> = 
+define constant temps-list :: <list> =
   list(reg--tmp1, reg--tmp2, reg--tmp3);
 
 /// Some ref predicates for back end
@@ -110,29 +110,29 @@ define method esi-ref (x) => (x) esi == x & x end;
 
 define method st-ref  (x) => (x) f-st == x & x end;
 
-define method direction-flag-ref  (x) => (x) 
-  direction-flag == x & x 
+define method direction-flag-ref  (x) => (x)
+  direction-flag == x & x
 end method;
 
 
 define constant zero-args-mask = rset-from-args();
 define constant have-args-mask = rset-from-args(eax);
 
-define constant pentium-arg-masks = 
+define constant pentium-arg-masks =
   as(<simple-integer-vector>,
-     vector(zero-args-mask, have-args-mask, have-args-mask, have-args-mask, 
+     vector(zero-args-mask, have-args-mask, have-args-mask, have-args-mask,
 	    have-args-mask, have-args-mask, have-args-mask, have-args-mask));
 
-define constant pentium-c-arg-masks = 
+define constant pentium-c-arg-masks =
   as(<simple-integer-vector>,
-     vector(zero-args-mask, zero-args-mask, zero-args-mask, zero-args-mask, 
+     vector(zero-args-mask, zero-args-mask, zero-args-mask, zero-args-mask,
 	    zero-args-mask, zero-args-mask, zero-args-mask, zero-args-mask));
 
 define constant pentium-machine-arguments = vector(eax);
 
 define constant pentium-float-machine-arguments = vector(reg--float-arg0);
 
-define constant pentium-allocatable-registers = 
+define constant pentium-allocatable-registers =
   vector(eax, ecx, edx, ebx, edi);
 
 define constant pentium-real-registers =
@@ -142,7 +142,7 @@ define constant pentium-savable-registers =
   vector(edi, esi, edx, ecx, ebx);
 
 //
-// As a temporary fix for a Windows NT 3.51 bug, we treat EBX as a C preserved 
+// As a temporary fix for a Windows NT 3.51 bug, we treat EBX as a C preserved
 // register, even though we know that it isn't.
 // #!$%
 // define constant pentium-c-preserved-registers = vector(edi, esi, direction-flag);
@@ -153,7 +153,7 @@ define constant pentium-c-not-preserved = vector(eax, ecx, edx, ebx);
 define constant $ev = vector();
 
 define method initialize
-    (model :: <pentium-register-model>, #key) 
+    (model :: <pentium-register-model>, #key)
      => (new :: <pentium-register-model>)
   next-method();
 
@@ -211,14 +211,14 @@ define method make-pref-vector
 end;
 
 
-define method the-real-dfreg 
-    (backend :: <harp-x86-back-end>, x :: <real-register>) 
+define method the-real-dfreg
+    (backend :: <harp-x86-back-end>, x :: <real-register>)
      => (reg :: <real-register>)
   x;
 end;
 
 define constant pentium-floating-registers =
-  rset-from-args(); // yep thats right 
+  rset-from-args(); // yep thats right
 
 define constant pentium-allowable-colours =
   rset-from-list(pentium-allocatable-registers);
@@ -226,7 +226,7 @@ define constant pentium-allowable-colours =
 /// this is a bit simpler than for the other processors !
 
 define method allowable-colours
-   (backend :: <harp-x86-back-end>, vr :: <virtual-register>) 
+   (backend :: <harp-x86-back-end>, vr :: <virtual-register>)
     => (i :: <integer>)
   if (instance?(vr, <floating-virtual-register>))
     pentium-floating-registers;
