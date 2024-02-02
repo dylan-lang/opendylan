@@ -42,6 +42,9 @@ don't yet have a GitHub account and ssh keys, now is a good time to get them.
 To checkout the main "opendylan" repository::
 
     git clone --recursive https://github.com/dylan-lang/opendylan
+    cd opendylan
+    git config blame.ignoreRevsFile .git-blame-ignore-revs  # (optional)
+
 
 You'll want to fork this repository so you can push changes to your
 fork and then submit pull requests.
