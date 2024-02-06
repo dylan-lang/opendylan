@@ -22,6 +22,10 @@ now here is a manual check-list.
 
 #. Test on supported platforms.
 
+   * To ensure that you catch any bootstrapping dependency issues, make sure
+     your active ``dylan-compiler`` is set to the previous release binary,
+     **not** to a more recent local build.
+
    * Do a 3-stage boostrap: make distclean, autogen.sh, configure, make, make
      install, make dist.
 
