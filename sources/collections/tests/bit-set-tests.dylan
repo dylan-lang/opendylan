@@ -759,13 +759,13 @@ define test bit-set-iteration ()
   check-equal("Forward iteration over a finite set", result, #t);
 
   let result = #t;
-  let expect = 100;
+  let want = 100;
   for (count from 0, i in *infinite-set*, while: i < 120)
     if (count < size(*infinite-members*))
       result := result & (i = *infinite-members*[count]);
     else
-      result := result & (i = expect);
-      expect := expect + 1;
+      result := result & (i = want);
+      want := want + 1;
     end if;
   end for;
   check-equal("Forward iteration over an infinite set", result, #t);
