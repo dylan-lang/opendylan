@@ -382,10 +382,7 @@ TEST_LOADS = $(shell for lib in $(TEST_LIBS); do echo "--load lib$${lib}.@shrext
 check: bootstrap-stage-3
 	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
 	  testworks-run $(TEST_LIBS)
-	$(BOOTSTRAP_3_ROOT)/bin/testworks-run \
-	  --report json \
-	  --report-file $(BOOTSTRAP_3_ROOT)/logs/make-check.json \
-	  $(TEST_LOADS)
+	$(BOOTSTRAP_3_ROOT)/bin/testworks-run $(TEST_LOADS)
 
 check-environment: bootstrap-stage-3
 	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
