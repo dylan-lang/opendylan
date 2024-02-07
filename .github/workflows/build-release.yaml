@@ -9,8 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # TODO: ubuntu-latest
-        os: [macos-latest]
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,9 +17,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-            # if [ "$RUNNER_OS" == "Linux" ]; then
-            #   sudo apt-get install libgc-dev
-            # fi
             if [ "$RUNNER_OS" == "macOS" ]; then
               brew install autoconf automake ninja
             fi
@@ -43,8 +39,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: release-tarball
-          # TODO: appropriate path based on architecture and release
-          path: release/opendylan-2023.1-x86_64-darwin.tar.bz2
+          path: release/opendylan.tar.bz2
           compression-level: 0
           retention-days: 3
           overwrite: true
