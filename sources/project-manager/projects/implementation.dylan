@@ -288,13 +288,13 @@ define method make-project
                end if
         end;
 
+    debug-out(#"project-manager", "Make-project: %s parent: %s\n", key,
+              parent & parent.project-name);
     let project =
       apply(make, c,
             platform-name: platform-name,
             compiler-back-end:, back-end,
             keys);
-    debug-out(#"project-manager", "make-project(%=, key: %=, parent: %=) => %=\n",
-              c, key, parent & parent.project-name, project);
 
     if (mode) project-compilation-mode(project) := mode end;
 
@@ -389,7 +389,7 @@ define function project-open-compilation-context
                                              ~project-personal-library?(project),
                                            load-namespace?: load-namespace?);
     if (project.project-dylan-library?)
-      debug-out(#"project-manager", "  Opened compilation context for the Dylan library\n")
+      debug-out(#"project-manager", "  Opened compilation context for the Dylan library")
     end;
     // we have to set the context in either case,
     // otherwise project closing code won't work
@@ -566,7 +566,7 @@ define method close-project (project :: <project>, #key system? = #f)
         *all-open-projects*);
     closed?
   else
-    debug-out(#"project-manager", "Closing non top level project %s\n", project.project-name);
+    debug-out(#"project-manager", "Closing non top level project %s", project.project-name);
     empty?(project.project-owners) & %close-project(project)
   end
 end method;
@@ -594,7 +594,7 @@ define function project-reset-database (project :: <project>)
     let (mj, mn) = compilation-context-version(context);
     install-project-sources(context, make(<source-record-vector>, size: 0), mj, mn);
     note-database-invalidated(project);
-    debug-out(#"project-manager", "Reset database for project %s\n", project.project-name);
+    debug-out(#"project-manager", "Reset database for project %s", project.project-name);
   end;
 end;
 
@@ -618,7 +618,7 @@ define function project-remove-database (project :: <project>) => ()
     project-close-compilation-contexts(project);
     let db = project.project-database-location;
     %delete-file-if-exists(db);
-    debug-out(#"project-manager", "Removed database for project %s\n", project.project-name);
+    debug-out(#"project-manager", "Removed database for project %s", project.project-name);
     project-open-compilation-context(project, load-namespace?: #f);
     project-set-compilation-parameters(project);
 
@@ -704,7 +704,7 @@ define function canonicalize-project-sources
                 if (empty?(compiler-sources))
                   // fixup
                   debug-out(#"project-manager",
-                            "Fixing up sources for %s\n",
+                            "Fixing up sources for %s",
                             project.project-name);
                   values(project-current-source-records(project),
                          project-major-version(project),

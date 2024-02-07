@@ -1,8 +1,0 @@
-syntax = "proto2";
-
-// Same package as pbtool-test-one-a.proto
-package pbtool.test.one.pb;
-
-message Message2 {
-  optional string field1 = 1;
-}
