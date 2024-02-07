@@ -1,0 +1,51 @@
+name: Build Release
+
+on:
+  # Manual trigger only
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # TODO: ubuntu-latest
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Dependencies
+        run: |
+            # if [ "$RUNNER_OS" == "Linux" ]; then
+            #   sudo apt-get install libgc-dev
+            # fi
+            if [ "$RUNNER_OS" == "macOS" ]; then
+              brew install autoconf automake ninja
+            fi
+
+      - name: Install bootstrap compiler
+        run: |
+            if [ "$RUNNER_OS" == "Linux" ]; then
+              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2023.1.0/opendylan-2023.1-x86_64-linux.tar.bz2
+              tar xvf opendylan-2023.1-x86_64-linux.tar.bz2
+            fi
+            if [ "$RUNNER_OS" == "macOS" ]; then
+              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2023.1.0/opendylan-2023.1-x86_64-darwin.tar.bz2
+              tar xvf opendylan-2023.1-x86_64-darwin.tar.bz2
+            fi
+            echo "`pwd`/opendylan-2023.1/bin" >> $GITHUB_PATH
+
+      - name: "Build with batteries"
+        run: ./build/unix/release-with-batteries.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-tarball
+          # TODO: appropriate path based on architecture and release
+          path: release/opendylan-2023.1-x86_64-darwin.tar.bz2
+          compression-level: 0
+          retention-days: 3
+          overwrite: true
+          if-no-files-found: error
