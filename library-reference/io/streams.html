@@ -642,9 +642,9 @@ several features to make using them easier.</p>
 <ol class="arabic simple">
 <li><p>Calling <code class="docutils literal notranslate"><span class="pre">make(&lt;sequence-stream&gt;,</span> <span class="pre">contents:</span> <span class="pre">&quot;a</span> <span class="pre">string&quot;,</span> <span class="pre">direction:</span> <span class="pre">#&quot;input&quot;)</span></code>
 returns a <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a>.</p></li>
-<li><p><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-output-to-string</span></code> provides a convenient way to create a string
+<li><p><a class="reference internal" href="#io:streams:with-output-to-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-output-to-string</span></code></a> provides a convenient way to create a string
 using multiple calls to <a class="reference internal" href="format.html#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a>.</p></li>
-<li><p><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-input-from-string</span></code> can be used to read the contents of a string.</p></li>
+<li><p><a class="reference internal" href="#io:streams:with-input-from-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-input-from-string</span></code></a> can be used to read the contents of a string.</p></li>
 <li><p><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format-to-string</span></code> is implemented by making an output
 <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a>, calling <a class="reference internal" href="format.html#io:format:format"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">format</span></code></a> on it, and then returning the
 stream contents.</p></li>
@@ -731,6 +731,58 @@ most libraries that provide stream classes provide a macro. For example,
 <span class="w">  </span><span class="p">...</span><span class="n">read</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">write</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">stream</span><span class="p">...</span>
 <span class="w">  </span><span class="c1">// close(stream) is called automatically</span>
 <span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="with-output-to-string-with-input-from-string-macros">
+<h3>with-output-to-string / with-input-from-string macros<a class="headerlink" href="#with-output-to-string-with-input-from-string-macros" title="Permalink to this heading">#</a></h3>
+<p>The macro <a class="reference internal" href="#io:streams:with-output-to-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-output-to-string</span></code></a> provides a convenient way of
+returning a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> after performing a series of operations on a
+<a class="reference internal" href="#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>, and then close the stream.</p>
+<p>Instead of writing this code:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;string-stream&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">direction:</span><span class="w"> </span><span class="ss">#&quot;output&quot;</span><span class="p">);</span>
+<span class="n">write-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;O&#39;</span><span class="p">);</span>
+<span class="n">write-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;k&#39;</span><span class="p">);</span>
+<span class="n">contents</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>we can write:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-output-to-string</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="w">  </span><span class="n">write-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;O&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">write-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;k&#39;</span><span class="p">);</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The symmetric macro <a class="reference internal" href="#io:streams:with-input-from-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-input-from-string</span></code></a> creates a
+<a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with direction <cite>#”input”</cite>, provides an
+opportunity to perform operations and closes the stream.</p>
+<p>For instance:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-input-from-string</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Foobar&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">       </span><span class="n">char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">on-end-of-stream:</span><span class="w"> </span><span class="l">#f</span><span class="p">)</span>
+<span class="w">       </span><span class="k">then</span><span class="w">   </span><span class="n">read-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">on-end-of-stream:</span><span class="w"> </span><span class="l">#f</span><span class="p">),</span>
+<span class="w">       </span><span class="k">while:</span><span class="w"> </span><span class="n">char</span><span class="p">)</span>
+<span class="w">    </span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%d: %c</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">char</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="c1">// 0: F</span>
+<span class="c1">// 1: o</span>
+<span class="c1">// 2: o</span>
+<span class="c1">// 3: b</span>
+<span class="c1">// 4: a</span>
+<span class="c1">// 5: r</span>
+</pre></div>
+</div>
+<p>will replace:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;string-stream&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">contents:</span><span class="w"> </span><span class="s">&quot;Foobar&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">direction:</span><span class="w"> </span><span class="ss">#&quot;input&quot;</span><span class="p">);</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">     </span><span class="n">char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read-element</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="k">on-end-of-stream:</span><span class="w"> </span><span class="l">#f</span><span class="p">)</span>
+<span class="w">     </span><span class="k">then</span><span class="w">   </span><span class="n">read-element</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="k">on-end-of-stream:</span><span class="w"> </span><span class="l">#f</span><span class="p">),</span>
+<span class="w">     </span><span class="k">while:</span><span class="w"> </span><span class="n">char</span><span class="p">)</span>
+<span class="w">  </span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%d: %c</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">char</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="n">close</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -3776,6 +3828,98 @@ around the body of code.</p>
 </dd></dl>
 
 <dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="io:streams:with-input-from-string">
+<span class="sig-name descname"><span class="pre">with-input-from-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-input-from-string" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates an input stream, to perform operations on it and closes the
+stream.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
+<dd class="field-odd"><p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">string</span> <span class="p">(</span><span class="n">stream</span><span class="o">-</span><span class="n">name</span> <span class="o">=</span> <span class="n">string</span><span class="p">)</span>
+  <span class="n">body</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">string</span> <span class="p">(</span><span class="n">stream</span><span class="o">-</span><span class="n">name</span> <span class="o">=</span> <span class="n">string</span><span class="p">,</span> <span class="n">class</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
+  <span class="n">body</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream-name</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>string-expression</strong> – A Dylan string expression <em>bnf</em>.</p></li>
+<li><p><strong>classname</strong> – A Dylan class.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>In the first use, it creates a <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with
+direction <cite>#”input”</cite> that is associated with a variable name.  In
+the second use, it allows to specify a class for the stream type.</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-input-from-string</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Foobar&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">       </span><span class="n">char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">on-end-of-stream:</span><span class="w"> </span><span class="l">#f</span><span class="p">)</span>
+<span class="w">       </span><span class="k">then</span><span class="w">   </span><span class="n">read-element</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">on-end-of-stream:</span><span class="w"> </span><span class="l">#f</span><span class="p">),</span>
+<span class="w">       </span><span class="k">while:</span><span class="w"> </span><span class="n">char</span><span class="p">)</span>
+<span class="w">    </span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%d: %c</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">char</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See-also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#io:streams:with-output-to-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-output-to-string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="io:streams:with-output-to-string">
+<span class="sig-name descname"><span class="pre">with-output-to-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-output-to-string" title="Permalink to this definition">#</a></dt>
+<dd><p>Provides a convenient way of returning a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> after
+performing a series of operations on a <a class="reference external" href="https://opendylan.org/books/drm/&lt;stream&gt;"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>, and then
+close the stream.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
+<dd class="field-odd"><p><pre class="literal-block">with-output-to-string (<cite>stream-name</cite>)
+  <cite>body</cite>
+end =&gt; <cite>string</cite></pre>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>stream-name</strong> – A Dylan variable-name <em>bnf</em>.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>bnf</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – Instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
+<dd class="field-even"><p>Creates a <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with direction <cite>#”output”</cite> and
+provides an opportunity to perform operations and close the
+stream.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-output-string</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="w">  </span><span class="n">print-document</span><span class="p">(</span><span class="n">document</span><span class="p">,</span><span class="w"> </span><span class="n">stream</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-even">See-also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#io:streams:with-input-from-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-input-from-string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:with-stream-locked">
 <span class="sig-name descname"><span class="pre">with-stream-locked</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-stream-locked" title="Permalink to this definition">#</a></dt>
 <dd><p>Run a body of code while the stream is locked.</p>
@@ -4130,6 +4274,7 @@ write to the stream.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#closing-streams">Closing streams</a></li>
+<li><a class="reference internal" href="#with-output-to-string-with-input-from-string-macros">with-output-to-string / with-input-from-string macros</a></li>
 <li><a class="reference internal" href="#locking-streams">Locking streams</a></li>
 </ul>
 </li>

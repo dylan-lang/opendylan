@@ -329,6 +329,67 @@ most libraries that provide stream classes provide a macro. For example,
      // close(stream) is called automatically
    end
 
+with-output-to-string / with-input-from-string macros
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The macro :macro:`with-output-to-string` provides a convenient way of
+returning a :drm:`<string>` after performing a series of operations on a
+:class:`<stream>`, and then close the stream.
+
+Instead of writing this code:
+
+.. code-block:: dylan
+
+   let stream = make(<string-stream>, direction: #"output");
+   write-element(stream, 'O');
+   write-element(stream, 'k');
+   contents(stream);
+
+we can write:
+
+.. code-block:: dylan
+
+   with-output-to-string (stream)
+     write-element(stream, 'O');
+     write-element(stream, 'k');
+   end;
+
+The symmetric macro :macro:`with-input-from-string` creates a
+:class:`<string-stream>` with direction `#"input"`, provides an
+opportunity to perform operations and closes the stream.
+
+For instance:
+
+.. code-block:: dylan
+
+   with-input-from-string (stream = "Foobar")
+     for (i from 0,
+          char = read-element(stream, on-end-of-stream: #f)
+          then   read-element(stream, on-end-of-stream: #f),
+          while: char)
+       format-out("%d: %c\n", i, char)
+     end;
+   end;
+
+   // 0: F
+   // 1: o
+   // 2: o
+   // 3: b
+   // 4: a
+   // 5: r
+
+will replace:
+
+.. code-block:: dylan
+
+   let s = make(<string-stream>, contents: "Foobar", direction: #"input");
+   for (i from 0,
+        char = read-element(s, on-end-of-stream: #f)
+        then   read-element(s, on-end-of-stream: #f),
+        while: char)
+     format-out("%d: %c\n", i, char)
+   end;
+   close(s);
 
 Locking streams
 ^^^^^^^^^^^^^^^
@@ -2778,6 +2839,89 @@ are exported from the *streams* module.
 
      * :class:`<indenting-stream>`
      * :gf:`indent`
+
+.. macro:: with-input-from-string
+   :statement:
+
+   Creates an input stream, to perform operations on it and closes the
+   stream.
+
+
+   :macrocall:
+     .. parsed-literal::
+
+        with-input-from-string (stream-name = string)
+          body
+        end
+
+     .. parsed-literal::
+
+        with-input-from-string (stream-name = string, class-name)
+          body
+        end
+
+   :parameter stream-name: A Dylan variable-name *bnf*.
+   :parameter string-expression: A Dylan string expression *bnf*.
+   :parameter classname: A Dylan class.
+   :parameter body: A Dylan body *bnf*.
+
+   :description:
+
+     In the first use, it creates a :class:`<string-stream>` with
+     direction `#"input"` that is associated with a variable name.  In
+     the second use, it allows to specify a class for the stream type.
+
+   :example:
+
+     .. code-block:: dylan
+
+        with-input-from-string (stream = "Foobar")
+          for (i from 0,
+               char = read-element(stream, on-end-of-stream: #f)
+               then   read-element(stream, on-end-of-stream: #f),
+               while: char)
+            format-out("%d: %c\n", i, char)
+          end;
+        end;
+
+   :see-also:
+      :macro:`with-output-to-string`
+
+.. macro:: with-output-to-string
+   :statement:
+
+   Provides a convenient way of returning a :drm:`<string>` after
+   performing a series of operations on a :drm:`<stream>`, and then
+   close the stream.
+
+   :macrocall:
+     .. parsed-literal::
+
+        with-output-to-string (`stream-name`)
+          `body`
+        end => `string`
+
+   :parameter stream-name: A Dylan variable-name *bnf*.
+   :parameter body: A Dylan body *bnf*.
+   :value string: Instance of :drm:`<string>`.
+
+   :description:
+
+     Creates a :class:`<string-stream>` with direction `#"output"` and
+     provides an opportunity to perform operations and close the
+     stream.
+
+   :example:
+
+     .. code-block:: dylan
+
+        with-output-string (stream)
+          print-document(document, stream)
+        end;
+
+   :see-also:
+      :macro:`with-input-from-string`
+
 
 .. macro:: with-stream-locked
    :statement:
