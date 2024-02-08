@@ -333,7 +333,7 @@ with-output-to-string / with-input-from-string macros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The macro :macro:`with-output-to-string` provides a convenient way of
-returning a :class:`<string>` after performing a series of operations on a
+returning a :drm:`<string>` after performing a series of operations on a
 :class:`<stream>`, and then close the stream.
 
 Instead of writing this code:
@@ -354,7 +354,7 @@ we can write:
      write-element(stream, 'k');
    end;
 
-The symmetric macro :macro:`with-input-to-string` creates a
+The symmetric macro :macro:`with-input-from-string` creates a
 :class:`<string-stream>` with direction `#"input"`, provides an
 opportunity to perform operations and closes the stream.
 
@@ -2850,13 +2850,13 @@ are exported from the *streams* module.
    :macrocall:
      .. parsed-literal::
 
-        with-input-from-string (name = string)
+        with-input-from-string (stream-name = string)
           body
         end
 
      .. parsed-literal::
 
-        with-input-from-string (name = string, classname)
+        with-input-from-string (stream-name = string, class-name)
           body
         end
 
@@ -2890,8 +2890,8 @@ are exported from the *streams* module.
 .. macro:: with-output-to-string
    :statement:
 
-   Provides a convenient way of returning a :class:`<string>` after
-   performing a series of operations on a :class:`<stream>`, and then
+   Provides a convenient way of returning a :drm:`<string>` after
+   performing a series of operations on a :drm:`<stream>`, and then
    close the stream.
 
    :macrocall:
@@ -2903,8 +2903,7 @@ are exported from the *streams* module.
 
    :parameter stream-name: A Dylan variable-name *bnf*.
    :parameter body: A Dylan body *bnf*.
-   :value string: Instance of :class:`<string>`.
-   :
+   :value string: Instance of :drm:`<string>`.
 
    :description:
 
