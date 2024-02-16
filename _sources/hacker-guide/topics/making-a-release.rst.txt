@@ -22,14 +22,18 @@ now here is a manual check-list.
 
 #. Test on supported platforms.
 
+   * To ensure that you catch any bootstrapping dependency issues, make sure
+     your active ``dylan-compiler`` is set to the previous release binary,
+     **not** to a more recent local build.
+
    * Do a 3-stage boostrap: make distclean, autogen.sh, configure, make, make
      install, make dist.
 
    * Run ``make check`` and if anything fails that is not marked ``EXPECTED TO
      FAIL``, fix the problem or discuss with others how to proceed.
 
-   * As a smoke test, verify that the "hello world" instructions in `README.md
-     <https://github.com/dylan-lang/opendylan/blob/master/README.md>`_ work on
+   * As a smoke test, verify that the `"Hello World" instructions
+     <https://opendylan.org/getting-started-cli/hello-world.html>`_ work on
      each platform.
 
    **TODO:** This should be done automatically by GitHub CI. See

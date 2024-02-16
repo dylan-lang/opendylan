@@ -1,0 +1,57 @@
+*****************
+Open Dylan 2024.1
+*****************
+
+This document describes the 2024.1 release of Open Dylan, released 8
+February, 2024.  The highlights of the release are listed below.  For complete
+details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2023.1.0...v2024.1.0>`_ for
+this release.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+* The ``dylan-compiler-with-tools`` executable has been removed and its
+  functionality has been merged into ``dylan-compiler``.
+
+* The warning for ``x ^ y`` where y is a negative integer has been improved.
+
+* Warnings for mismatched end words have been improved.
+
+* Multi-line string literals may now be formatted in such a way that they
+  adhere to the Rectangle Rule, as laid out in
+  https://opendylan.org/proposals/dep-0012-string-literals.html#the-rectangle-rule
+
+Library Updates
+===============
+
+Submodules
+----------
+
+* The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command-line tool has
+  been updated to v0.11.0 to incorporate minor changes.
+
+* Testworks
+  * An ``expect-true`` macro has been added for symmetry with expect-false.
+  * A bug in ``--debug crashes`` has been fixed.
+
+* Several other submodules have had their own submodules removed and are now
+  assumed to be developed using packages via the `dylan
+  <https://github.com/dylan-lang/dylan-tool>`_ tool.
+
+
+Contributors
+============
+
+* Fernando Raya
+* Peter S. Housel
+* Carl Gay

@@ -404,6 +404,7 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2020.1.html">Open Dylan 2020.1</a></li>
@@ -481,11 +482,14 @@ be allowed to get too stale.</p>
 </li>
 <li><p>Test on supported platforms.</p>
 <ul class="simple">
+<li><p>To ensure that you catch any bootstrapping dependency issues, make sure
+your active <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> is set to the previous release binary,
+<strong>not</strong> to a more recent local build.</p></li>
 <li><p>Do a 3-stage boostrap: make distclean, autogen.sh, configure, make, make
 install, make dist.</p></li>
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code> and if anything fails that is not marked <code class="docutils literal notranslate"><span class="pre">EXPECTED</span> <span class="pre">TO</span>
 <span class="pre">FAIL</span></code>, fix the problem or discuss with others how to proceed.</p></li>
-<li><p>As a smoke test, verify that the “hello world” instructions in <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/README.md">README.md</a> work on
+<li><p>As a smoke test, verify that the <a class="reference external" href="https://opendylan.org/getting-started-cli/hello-world.html">“Hello World” instructions</a> work on
 each platform.</p></li>
 </ul>
 <p><strong>TODO:</strong> This should be done automatically by GitHub CI. See
