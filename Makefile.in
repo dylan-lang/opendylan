@@ -360,7 +360,7 @@ dist: 3-stage-bootstrap
 	cp $(srcdir)/BUILDING.rst release/opendylan-$(version)/
 	cd release \
 	  && tar cjf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan-$(version) \
-	  && ln -s opendylan.tar.bz2 opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2
+	  && ln -s opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan.tar.bz2
 
 
 TEST_LIBS = \
