@@ -20,7 +20,6 @@ define module console-environment
               working-directory };
   use standard-io;
   use format;
-  use format-out;
   use commands;
   use command-lines;
 
