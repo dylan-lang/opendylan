@@ -38,38 +38,16 @@ Submodules
 ----------
 
 * The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command-line tool has
-  been updated to v0.11.0 to fix a bug in ``dylan update`` on macOS and to
-  incorporate other minor changes.
+  been updated to v0.11.0 to incorporate minor changes.
 
 * Testworks
-  * An ``expect-true`` macro has been added for symmetry with ``expect-false``.
+  * An ``expect-true`` macro has been added for symmetry with expect-false.
   * A bug in ``--debug crashes`` has been fixed.
 
 * Several other submodules have had their own submodules removed and are now
   assumed to be developed using packages via the `dylan
   <https://github.com/dylan-lang/dylan-tool>`_ tool.
 
-Documentation
-=============
-
-* `opendylan.org <https://opendylan.org>`_ has been completely redone to
-  combine all Open Dylan and package documentation in a single, searchable
-  index and to use the Furo them provided by Sphinx, which improves local
-  tables of contents, provides light and dark themes, and more.
-
-* Many warnings during website generation have been fixed.
-
-* GitHub workflows were added to automatically build and deploy documentation
-  changes.
-
-* IO library: ``with-input-from-string`` and ``with-output-to-string`` have
-  been documented.
-
-* System library: graphs of the locators class hierarchy have been added and
-  file streams are now correctly documented under the ``file-system`` module
-  instead of the ``streams`` module in the ``IO`` library.
-
-* Many minor documentation bugs have been fixed.
 
 Contributors
 ============
