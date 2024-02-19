@@ -38,10 +38,11 @@ Submodules
 ----------
 
 * The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command-line tool has
-  been updated to v0.11.0 to incorporate minor changes.
+  been updated to v0.11.0 to fix a bug in ``dylan update`` on macOS and to
+  incorporate other minor changes.
 
 * Testworks
-  * An ``expect-true`` macro has been added for symmetry with expect-false.
+  * An ``expect-true`` macro has been added for symmetry with ``expect-false``.
   * A bug in ``--debug crashes`` has been fixed.
 
 * Several other submodules have had their own submodules removed and are now
