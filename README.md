@@ -30,11 +30,11 @@ the same directory).
 ## What Next?
 
 If this is your first time trying Open Dylan, take a look at the [Getting
-Started guide](http://opendylan.org/documentation/getting-started-cli/).
+Started](https://opendylan.org/getting-started-cli/) guide.
 
 See also:
 
 *  [BUILDING.rst](BUILDING.rst) - how to build the compiler and IDE
-*  [How to Contribute to Open
-   Dylan](https://opendylan.org/documentation/hacker-guide/contribute.html)
+*  See the [Open Dylan Hacker's Guide](https://opendylan.org/hacker-guide/) for
+   how to contribute to Open Dylan or its libraries.
 *  [opendylan.org](https://opendylan.org) - our main website
