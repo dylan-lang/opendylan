@@ -12,11 +12,10 @@ of its most unique features is that it actually lets you compile
 selections of code as you develop your application. This is why we say
 the editor is *interactive*.
 
-You can use the editor in one of two styles: Emacs or Windows. Using the
-editor options, as described in
-` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_,
-you can choose from either an Emacs or Windows style keyboard layout and
-default settings.
+You can use the editor in one of two styles: Emacs or Windows. Using the editor
+options, as described in `Changing the editor options and layout`_, you can
+choose from either an Emacs or Windows style keyboard layout and default
+settings.
 
 The editor allows you to perform a wide range of operations by using
 menu commands, as well as keyboard commands. These operations range from
@@ -100,9 +99,7 @@ associates each opened file with a new editor window. However, you can
 change this and edit many different files at once in the same editor by
 using the **View > Editor Options…** Display tab page. Alternatively, you
 can use the Restore tab page to switch to Emacs defaults, which changes
-this default (and others). For details about the Editor Options dialog,
-its tab pages and settings, see
-` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_.
+this default (and others).
 
 The editor offers a number of different viewing options for the window's
 layout.
@@ -114,7 +111,7 @@ layout.
    as "Compiling definition…" when you compile a selection.
 -  The standard Dylan toolbar can be viewed or hidden with **View >
    Toolbar**.
--  The color dispatch optimizations feature, as described in 
+-  The color dispatch optimizations feature, as described in
    :doc:`coloring`, shows you where and how to optimize
    your code and is controlled by **View > Color Dispatch Optimizations**.
 
