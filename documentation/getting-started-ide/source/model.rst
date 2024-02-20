@@ -397,7 +397,7 @@ Versioning
 
 A project can have major and minor version numbers that will be recorded
 in the DLL or EXE that the project builds. You can enter these numbers
-on the **Project > Settings…** dialog's Link page.
+on the **Project > Settings...** dialog's Link page.
 
 Open Dylan uses version numbers at compile time and run time to
 determine if compatible versions of Dylan libraries are in use.
@@ -449,8 +449,8 @@ a library is loosely bound, other libraries will be loosely bound to it.
 Similarly, if code is tightly bound within a library, other libraries
 will bind tightly to it.
 
-The code within all libraries that Open Dylan supplies—the system
-libraries—is tightly bound. This means that all libraries you develop
+The code within all libraries that Open Dylan supplies — the system
+libraries — is tightly bound. This means that all libraries you develop
 will bind tightly to whichever of the system libraries you use.
 
 When libraries are compiled in Interactive Development mode, they are
@@ -514,7 +514,7 @@ Linkers
 Open Dylan offers you a choice of linkers to use to link your Dylan
 programs. The default linker is a GNU linker. If you own Microsoft
 Developer Studio, you can use Microsoft's linker instead. See the Linker
-page of the main window's **Options > Environment Options…** dialog.
+page of the main window's **Options > Environment Options...** dialog.
 
 Executing programs
 ==================
@@ -582,7 +582,7 @@ Source, database, and run-time views
 We have seen that Open Dylan provides several tools to allow us to
 view projects in different ways. Some tools can look at the source
 representation of a project, while others can look at the run-time
-representation—the threads of a running application built from a
+representation — the threads of a running application built from a
 project.
 
 It is useful to think of there being three "worlds" in which we can
