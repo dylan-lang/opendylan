@@ -3053,7 +3053,7 @@ of the Dylan function is <a class="reference internal" href="#c-ffi:c-ffi:[c-fun
 </pre></div>
 </div>
 <p>expands into something like:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">functon</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">function</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">)</span>
 <span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">c-string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">%as-c-representation</span><span class="p">(</span><span class="nc">&lt;C-char*&gt;</span><span class="p">,</span>
 <span class="w">                                      </span><span class="n">string</span><span class="p">);</span>
 <span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">c-count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">%as-c-representation</span><span class="p">(</span><span class="nc">&lt;C-int&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">);</span>

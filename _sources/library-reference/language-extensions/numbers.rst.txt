@@ -7,7 +7,7 @@ Integers
 
 .. TODO:
    * This should be combined into language-extensions/
-   * Note that content below includes things compeletely unrelated to numbers.
+   * Note that content below includes things completely unrelated to numbers.
 
 This document describes the Open Dylan implementation of arithmetic
 functions, especially integer arithmetic. It describes a number of

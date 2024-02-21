@@ -3199,7 +3199,7 @@ Describing C functions to Dylan
 
      .. code-block:: dylan
 
-       define functon foo (string, count)
+       define function foo (string, count)
          let c-string = %as-c-representation(<C-char*>,
                                              string);
          let c-count = %as-c-representation(<C-int>, count);

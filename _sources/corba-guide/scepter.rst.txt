@@ -131,7 +131,7 @@ Miscellaneous options
    By default console-scepter ignores case when recognizing keywords
    and identifiers, but this option requires the characters in
    identifiers and keywords to have exactly the same case as the
-   identifer or keyword definition in order to be recognised.
+   identifier or keyword definition in order to be recognised.
 
 ``/nowarnings``
    Suppress compilation warning messages.

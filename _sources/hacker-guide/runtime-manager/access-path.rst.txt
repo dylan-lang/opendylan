@@ -2557,7 +2557,7 @@ would want the application to ignore it. The opposite may be true of,
 say, an :class:`<array-bounds-exception-stop-reason>`.  If a
 first-chance exception is “given back” to the application to handle,
 and no handler is installed to deal with it, the debugger may receive
-notifaction of the exception again, as a second-chance exception. Some
+notification of the exception again, as a second-chance exception. Some
 systems, however, do not provide this second notification, in which
 case first-chance would be the default (and only) case.
 

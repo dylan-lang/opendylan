@@ -507,7 +507,7 @@ but synchronizes with the UI by operating a callback system, calling on UI
 routines when important events are received from the running application.</p>
 <p>Callbacks are invoked under the following circumstances:</p>
 <ol class="arabic simple">
-<li><p>The application stopped because a debug event or exception occured
+<li><p>The application stopped because a debug event or exception occurred
 (an “internal” stop), or because some event in the debugger UI
 signaled that the application should stop (an “external” stop).</p></li>
 <li><p>The application hit a breakpoint/watchpoint. At the low level, a
@@ -527,7 +527,7 @@ registered, and the precise form they must take.</p>
 <h2>Debug Targets<a class="headerlink" href="#debug-targets" title="Permalink to this heading">#</a></h2>
 <p>A “debug target” represents whatever is being debugged. In most cases,
 this will be a newly created application. Basically, a debug target is
-very similar to an access path, and has a one-to-one correspondance
+very similar to an access path, and has a one-to-one correspondence
 with an <a class="reference internal" href="access-path.html#access-path:access-path:[access-path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;access-path&gt;</span></code></a> instance. The main difference is that
 the <a class="reference internal" href="access-path.html#access-path:access-path:[access-path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;access-path&gt;</span></code></a> is a sealed description of the connection
 to the debugger nub, whereas the <a class="reference internal" href="#debugger-manager:debugger-manager:[debug-target]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;debug-target&gt;</span></code></a> can be
@@ -554,7 +554,7 @@ with slots specific to their own purposes.</p>
 <p>It is always possible to map between a &lt;debug-target&gt; and its
 corresponding <a class="reference internal" href="access-path.html#access-path:access-path:[access-path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;access-path&gt;</span></code></a>.</p>
 <p>When a <a class="reference internal" href="#debugger-manager:debugger-manager:[debug-target]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;debug-target&gt;</span></code></a> is made, an <a class="reference internal" href="access-path.html#access-path:access-path:[access-path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;access-path&gt;</span></code></a>
-of the approriate type is made automatically. The DM will also
+of the appropriate type is made automatically. The DM will also
 install the <a class="reference internal" href="#debugger-manager:debugger-manager:[debug-target]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;debug-target&gt;</span></code></a> as the
 <a class="reference internal" href="access-path.html#access-path:access-path:access-path-abstract-handle"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">access-path-abstract-handle</span></code></a> slot of the access path.</p>
 <p>This class is specified to take the same init-keywords as
@@ -1079,7 +1079,7 @@ the <a class="reference internal" href="../../library-reference/common-dylan/com
 </ul>
 </dd>
 </dl>
-<p>A sublass of &lt;language-level-stop-reason&gt;. A stop-reason indicating
+<p>A subclass of &lt;language-level-stop-reason&gt;. A stop-reason indicating
 that the execution of an interactive form has just returned, and
 that its results are available.</p>
 </dd></dl>
@@ -2049,7 +2049,7 @@ mangles to <code class="docutils literal notranslate"><span class="pre">TpantsTY
 </dl>
 <p>Specifies a context for name mangling. Calling make on this class
 returns a context specifying the dylan library and the internal
-module, but these can be overriden by supplying keyword arguments
+module, but these can be overridden by supplying keyword arguments
 <code class="docutils literal notranslate"><span class="pre">library:</span></code> and <code class="docutils literal notranslate"><span class="pre">module:</span></code>, both with strings.</p>
 </dd></dl>
 
@@ -3495,7 +3495,7 @@ function, as well as further information such as specializers.</p>
 </dd>
 </dl>
 <p>Returns the number of lexical variables active inside the call
-frame. Performance note: this function scans for the existance of
+frame. Performance note: this function scans for the existence of
 live lexical variables without reading in names/addresses over the
 tether. If it turns out that performance is not affected too much
 by reading names and addresses straight away, we can ditch this
@@ -3789,7 +3789,7 @@ machine code instructions. The breakpoints will be signalled later, when the
 thread reaches the destination source location.</p>
 <p>Upon calling one of these functions, the DM attempts to calculate the
 destination <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;source-locator&gt;</span></code> for the step. There may be
-several possibilties (for example, the entry points of all methods
+several possibilities (for example, the entry points of all methods
 when a generic function is being called). If the DM fails to calculate
 any possible destination, it will return <code class="docutils literal notranslate"><span class="pre">#f</span></code> as the success code
 from these functions. Otherwise, true is returned.  (The most likely
@@ -3802,7 +3802,7 @@ information - just don’t rely on obtaining a <code class="xref dylan dylan-cla
 the destination when the thread arrives there! (Step-out, for
 example, can break the frame’s return address regardless of whether
 that address is a known source location).</p>
-<p>These functions should be considered analagous to register-debug-point
+<p>These functions should be considered analogous to register-debug-point
 (since that is what they end up doing!), hence the need for the
 callback argument. The callbacks should be of the same signature as
 those passed to <a class="reference internal" href="#debugger-manager:debugger-manager:register-debug-point"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">register-debug-point</span></code></a>.</p>
@@ -4572,7 +4572,7 @@ instruction to execute for the frame.</p>
 </ul>
 </dd>
 </dl>
-<p>Includes a &lt;snapshot-seqence&gt; for the thread and an indication of
+<p>Includes a &lt;snapshot-sequence&gt; for the thread and an indication of
 which thread the data was collected from.</p>
 <p>This describes the data collected from a thread during a
 “snapshot”. It includes the sequence of instruction pointers

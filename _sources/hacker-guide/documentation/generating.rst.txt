@@ -11,7 +11,7 @@ simply::
 
    export -format rst interface-reference
 
-The generated documention will need cleaning up and will not include
+The generated documentation will need cleaning up and will not include
 anything from comments in the source.
 
 We hope to improve this tool in the future.
