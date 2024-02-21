@@ -9,6 +9,7 @@ subdir          = sources/jamfiles
 BUILD_SCRIPTS_DEST = $(OPEN_DYLAN_USER_INSTALL)/share/opendylan/build-scripts
 
 SCRIPTS         = \
+                  $(srcdir)/aarch64-darwin-build.jam \
                   $(srcdir)/mini-jambase.jam \
                   $(srcdir)/posix-build.jam \
                   $(srcdir)/shared-darwin-build.jam \

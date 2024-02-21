@@ -28,6 +28,11 @@ case $host in
       SUPPORT_HARP=yes
       SUPPORT_LLVM=yes
     ;;
+  aarch64-*-darwin*)
+      OPEN_DYLAN_TARGET_PLATFORM="aarch64-darwin";
+      MACOS_SDK=`xcrun --show-sdk-path`
+      shrext=dylib
+    ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_TARGET_PLATFORM="x86_64-darwin";
       MACOS_SDK=`xcrun --show-sdk-path`
