@@ -20,14 +20,14 @@ commit logs
 Compiler
 ========
 
-* Fixed a crash in the optimizer that ocurred when compiling certain
+* Fixed a crash in the optimizer that occurred when compiling certain
   C-FFI primitive functions.
 
 * Improved support for code generation of ``apply`` calls to known
   methods.
 
 * Improved source line tracking in the generated code, reducing the
-  occurence of code marked as being at line 0 by the debugger.
+  occurrence of code marked as being at line 0 by the debugger.
 
 * Added support for linking executable Dylan libraries and all of
   their dependencies into a single unified executable using the

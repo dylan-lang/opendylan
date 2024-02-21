@@ -203,7 +203,7 @@ definition. This is described in `Updating the user interface`_.
 
 .. index::
    single: callbacks; assigning to gadgets
-   single: gadgets; specifiying callbacks
+   single: gadgets; specifying callbacks
    single: specifying; callbacks in gadget definitions
    
 Specifying a callback in the definition of each gadget

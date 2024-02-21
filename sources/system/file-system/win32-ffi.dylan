@@ -295,7 +295,7 @@ define function win32-last-error-message () => (message :: <string>)
 end function win32-last-error-message;
 */
 
-// Should really signal a distint error class, perhaps a subclass of <file-error> ...
+// Should really signal a distinct error class, perhaps a subclass of <file-error> ...
 define function win32-file-system-error
     (operation :: <string>, additional-information, #rest additional-information-args) => (res :: <bottom>)
   let status-message = win32-last-error-message();

@@ -993,7 +993,7 @@ File-System module.
 .. class:: <microsoft-unc-locator>
    :sealed:
 
-   A server located using Microsoft's Univeral Naming Convention,
+   A server located using Microsoft's Universal Naming Convention,
    for example ``\\ComputerName\Share``
 
    :superclasses: :class:`<microsoft-server-locator>`

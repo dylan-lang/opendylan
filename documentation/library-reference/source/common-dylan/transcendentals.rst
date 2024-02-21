@@ -401,18 +401,18 @@ Functions
    :parameter y: An instance of type :drm:`<number>`.
    :value z: An instance of type :drm:`<number>`.
 
-   Returns the Euclidian distance without unnecessary overflow or underflow.
+   Returns the Euclidean distance without unnecessary overflow or underflow.
 
 .. method:: hypot
    :specializer: <single-float>, <single-float>
 
-   Returns the Euclidian distance as a :drm:`<single-float>` without
+   Returns the Euclidean distance as a :drm:`<single-float>` without
    unnecessary overflow or underflow.
 
 .. method:: hypot
    :specializer: <double-float>, <double-float>
 
-   Returns the Euclidian distance as a :drm:`<double-float>` without
+   Returns the Euclidean distance as a :drm:`<double-float>` without
    unnecessary overflow or underflow.
 
 .. method:: hypot

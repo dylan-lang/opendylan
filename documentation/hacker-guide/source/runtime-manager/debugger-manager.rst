@@ -57,7 +57,7 @@ routines when important events are received from the running application.
 
 Callbacks are invoked under the following circumstances:
 
-#. The application stopped because a debug event or exception occured
+#. The application stopped because a debug event or exception occurred
    (an "internal" stop), or because some event in the debugger UI
    signaled that the application should stop (an "external" stop).
 
@@ -80,7 +80,7 @@ Debug Targets
 
 A "debug target" represents whatever is being debugged. In most cases,
 this will be a newly created application. Basically, a debug target is
-very similar to an access path, and has a one-to-one correspondance
+very similar to an access path, and has a one-to-one correspondence
 with an :class:`<access-path>` instance. The main difference is that
 the :class:`<access-path>` is a sealed description of the connection
 to the debugger nub, whereas the :class:`<debug-target>` can be
@@ -105,7 +105,7 @@ store.
    corresponding :class:`<access-path>`.
 
    When a :class:`<debug-target>` is made, an :class:`<access-path>`
-   of the approriate type is made automatically. The DM will also
+   of the appropriate type is made automatically. The DM will also
    install the :class:`<debug-target>` as the
    :func:`access-path-abstract-handle` slot of the access path.
 
@@ -386,7 +386,7 @@ along with various specific accessors.
 
    :keyword required transaction-id: An instance of :drm:`<object>`.
 
-   A sublass of <language-level-stop-reason>. A stop-reason indicating
+   A subclass of <language-level-stop-reason>. A stop-reason indicating
    that the execution of an interactive form has just returned, and
    that its results are available.
 
@@ -1024,7 +1024,7 @@ mangles to ``TpantsTYinternalVdylan``.
 
    Specifies a context for name mangling. Calling make on this class
    returns a context specifying the dylan library and the internal
-   module, but these can be overriden by supplying keyword arguments
+   module, but these can be overridden by supplying keyword arguments
    ``library:`` and ``module:``, both with strings.
 
 .. generic-function:: context-library
@@ -1897,7 +1897,7 @@ application.
    :value i: An instance of :drm:`<integer>`.
 
    Returns the number of lexical variables active inside the call
-   frame. Performance note: this function scans for the existance of
+   frame. Performance note: this function scans for the existence of
    live lexical variables without reading in names/addresses over the
    tether. If it turns out that performance is not affected too much
    by reading names and addresses straight away, we can ditch this
@@ -2079,7 +2079,7 @@ thread reaches the destination source location.
 
 Upon calling one of these functions, the DM attempts to calculate the
 destination :class:`<source-locator>` for the step. There may be
-several possibilties (for example, the entry points of all methods
+several possibilities (for example, the entry points of all methods
 when a generic function is being called). If the DM fails to calculate
 any possible destination, it will return ``#f`` as the success code
 from these functions. Otherwise, true is returned.  (The most likely
@@ -2094,7 +2094,7 @@ the destination when the thread arrives there! (Step-out, for
 example, can break the frame's return address regardless of whether
 that address is a known source location).
 
-These functions should be considered analagous to register-debug-point
+These functions should be considered analogous to register-debug-point
 (since that is what they end up doing!), hence the need for the
 callback argument. The callbacks should be of the same signature as
 those passed to :func:`register-debug-point`.
@@ -2553,7 +2553,7 @@ instruction to execute for the frame.
    :keyword required instruction-pointers: An instance of :const:`<instruction-pointers>`.
    :keyword required thread: An instance of :class:`<remote-thread>`.
 
-   Includes a <snapshot-seqence> for the thread and an indication of
+   Includes a <snapshot-sequence> for the thread and an indication of
    which thread the data was collected from.
 
    This describes the data collected from a thread during a

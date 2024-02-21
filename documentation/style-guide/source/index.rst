@@ -34,7 +34,7 @@ Controversial comments
 -  6 character rule seems like overkill (but jonathan thinks that it
    does help in practice but is willing to get rid of it to simplify the
    pretty printing rules).
--  ``_`` is a weird notation, but does have precendent in syntax-case and
+-  ``_`` is a weird notation, but does have precedent in syntax-case and
    prolog for dont care. keith likes the return values to be named for
    better documentation. Dylan book names return values.
 -  tucker disagrees with consistency rule. he thinks that there should

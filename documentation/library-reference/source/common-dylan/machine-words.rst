@@ -254,7 +254,7 @@ The following variables are exported from the ``machine-words`` module.
 
    :parameter t: A type
    :parameter m: An instance of :class:`<machine-word>`
-   :value result: An istance of ``t``
+   :value result: An instance of ``t``
 
    :description:
 

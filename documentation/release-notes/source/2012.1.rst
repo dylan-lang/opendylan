@@ -100,7 +100,7 @@ Library Changes
 * Previously, sometimes using ``force-output()`` would also result
   in an ``fsync()`` without specifying ``synchronize?: #t``. This
   has been corrected. If you want to make sure that something
-  makes it to the disk, either use ``sychronize-output()``
+  makes it to the disk, either use ``synchronize-output()``
   or pass ``synchronize?: #t`` to ``force-output()``.
 
 * ``format-date`` from the ``system`` library is faster.

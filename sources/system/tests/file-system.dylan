@@ -1254,7 +1254,7 @@ define test test-multi-buffered-read-only (title: "<multi-buffered-stream> reado
 end test test-multi-buffered-read-only;
 
 // This test tests the type of things that might fail with an async stream,
-// but is still valid applied to a syncronous stream.
+// but is still valid applied to a synchronous stream.
 // stream should be input-output.
 define function async-stream-test (stream :: <file-stream>) => ()
   let rand :: <random> = make(<random>, seed: 0);
