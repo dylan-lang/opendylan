@@ -955,7 +955,7 @@ void dylan_dump_callstack(void *ctxt)
 {
   unw_context_t context;
   unw_cursor_t cursor;
-#if (defined (OPEN_DYLAN_PLATFORM_DARWIN) && defined(OPEN_DYLAN_ARCH_X86_64))
+#if defined (OPEN_DYLAN_PLATFORM_DARWIN) && (defined(OPEN_DYLAN_ARCH_X86_64) || defined(OPEN_DYLAN_ARCH_AARCH64))
   // We can use the passed-in ucontext_t as the libunwind context
   if (ctxt == NULL) {
     unw_getcontext(&context);
