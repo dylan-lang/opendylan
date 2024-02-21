@@ -104,7 +104,7 @@ Run-time
 
 * An error in the LLVM run-time which prevented call-site method
   dispatch caches from being used has been fixed. This change
-  significanly improves the performance of code using the LLVM
+  significantly improves the performance of code using the LLVM
   back-end.
 
 * Support for ``apply-mep`` method entry (used for calling a known

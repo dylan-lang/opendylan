@@ -344,7 +344,7 @@ define interface-specification-suite transcendentals-specification-suite ()
 
   open generic function hypot (<number>, <number>) => (<number>);
 
-// Returns the Euclidian distance.
+// Returns the Euclidean distance.
 
 // The floating point precision of the result is given by the precision
 // of _x_.

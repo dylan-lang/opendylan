@@ -24,7 +24,7 @@ a single sequence:
    #[key1:, 1, key2:, 2]
 
 Conveniently, this is the same layout as a sequence of arguments when
-using ``#rest`` in conjuction with keyword arguments and ``#all-keys``
+using ``#rest`` in conjunction with keyword arguments and ``#all-keys``
 as can be seen in the example using :macro:`with-keywords-removed`.
 
 Reading

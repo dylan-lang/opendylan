@@ -597,7 +597,7 @@ define inline-only function process-information-hThread
         integer-as-raw(1), integer-as-raw(0)))
 end function process-information-hThread;
 
-/// Masks out all but the result code to enable easier comparisions.
+/// Masks out all but the result code to enable easier comparisons.
 define constant $HRESULT_CODE_MASK = #x0000FFFF;
 
 define inline-only function win32-last-error () => (status :: <integer>)
@@ -908,7 +908,7 @@ end method table-protocol;
 define function make-envp
     (environment :: <explicit-key-collection>)
  => (result :: <machine-word>);
-  // Table for collecting current and overrided environment variable settings
+  // Table for collecting current and overridden environment variable settings
   let temp-table :: <case-insensitive-string-table>
     = make(<case-insensitive-string-table>);
 

@@ -6384,7 +6384,7 @@ are exported from the *duim-gadgets* module.
 
    Sets the initial depth of the specified tree control.
 
-   :signature: tree-control-inital-depth *initial-depth* *tree-control* => *initial-depth*
+   :signature: tree-control-initial-depth *initial-depth* *tree-control* => *initial-depth*
 
    :param initial-depth: An instance of type :drm:`<integer>`.
    :param tree-control: An instance of type :class:`<tree-control>`.

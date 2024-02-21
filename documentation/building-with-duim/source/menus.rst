@@ -212,8 +212,8 @@ documentation strings for all the menu items in a frame. Documentation
 strings for other gadgets become tooltips in Windows.
 
 .. index::
-   single: accelerators; keyboard, specifiying
-   single: keyboard accelerators; specifiying
+   single: accelerators; keyboard, specifying
+   single: keyboard accelerators; specifying
    single: specifying; keyboard accelerators
    
 Keyboard accelerators
