@@ -164,7 +164,7 @@ define method shell-parse-input
             = project-valid-code?(project, text, thread, module: module,
                                   stack-frame: stack-frame);
           if (complete?)
-            //---*** Should construct a more specific message from the conditons
+            //---*** Should construct a more specific message from the conditions
             let message = if (empty?(warnings)) #f else "Syntax error." end;
             values(#t, message);
           else

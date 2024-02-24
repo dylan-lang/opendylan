@@ -157,7 +157,7 @@ define method make-type-model (type :: <ast-scoped-name>)
   let (scoped-name, found, subobject-data)
     = lookup-scoped-name(type);
   unless (found)
-    error("Unkown type-spec %=", type);
+    error("Unknown type-spec %=", type);
   end unless;
   values( // (if (consp scoped-name) (first scoped-name) scoped-name)
 	 environment-entry-typecode(subobject-data),

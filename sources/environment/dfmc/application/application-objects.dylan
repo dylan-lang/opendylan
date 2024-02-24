@@ -268,14 +268,14 @@ define method application-object-class
 
       // The DM function DYLAN-OBJECT-CLASS is permitted to return #f
       // in its first result position. This is not expected, and probably
-      // indicates a pathalogical case, but nonetheless we should be
+      // indicates a pathological case, but nonetheless we should be
       // prepared to handle it.
 
       if (class-value)
         let class
           = make-environment-object-for-runtime-value
               (application, class-value);
-        // Again due to possible pathalogical case, discard any environment
+        // Again due to possible pathological case, discard any environment
         // object that does not correspond to a class. (Eg. we may have been
         // fooled into treating a foreign object as a dylan object, or possibly
         // the runtime refused to yield enough information to construct the

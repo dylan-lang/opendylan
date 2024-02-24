@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $asynchronous-timeout = 10;
 
 // Return whether the frame can issue Find/Replace commands at this time.
-// These are used to determine when the relavent commands should be enabled.
+// These are used to determine when the relevant commands should be enabled.
 define open generic frame-can-find?    (frame :: <frame>) => (can? :: <boolean>);
 define open generic frame-can-replace? (frame :: <frame>) => (can? :: <boolean>);
 
@@ -2291,7 +2291,7 @@ define method note-search-frame-items-changed
   gadget-items(frame.%replace-text-pane) := as(<vector>, frame.search-frame-previous-replace-strings);
 
   //--- hughg, 1998/09/11: This call is intentionally *not* done with
-  //--- call-in-frame, because the enclosing methos is only ever called
+  //--- call-in-frame, because the enclosing method is only ever called
   //--- during the initialize method for the <search-frame>.  If that
   //--- ever changes, we probably need to do the whole lot via call-in-frame.
   note-search-frame-current-search-target-frame-changed(frame);

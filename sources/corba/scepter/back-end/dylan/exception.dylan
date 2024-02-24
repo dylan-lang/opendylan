@@ -23,7 +23,7 @@ define method before-code-emission (exception :: <dim-exception>)
   initialize-members(exception);
 end method;
 
-define method after-code-emission (excepion :: <dim-exception>)
+define method after-code-emission (exception :: <dim-exception>)
  => ()
 end method;
 

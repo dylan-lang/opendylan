@@ -260,7 +260,7 @@ public class AccountManager extends Frame {
 	};
 
       } else if (command == "Retrieve Account...") {
-	dialog = new AccountDialog(this, "Retieve Account", "Enter Account Name:");
+	dialog = new AccountDialog(this, "Retrieve Account", "Enter Account Name:");
 	dialog.show();
 	if (dialog_value != null) {
 	  account_name = dialog_value;

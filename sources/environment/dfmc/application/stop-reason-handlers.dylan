@@ -852,7 +852,7 @@ end method stop-reason-admin;
 
 /// STOP-REASON-TRANSACTION-ADMIN (internal)
 ///
-/// This function performs some adminstrative work that ultimately requires
+/// This function performs some administrative work that ultimately requires
 /// a lock on the target application object. This work cannot be done in
 /// STOP-REASON-ADMIN since that is called by the DM with the target app
 /// already locked.

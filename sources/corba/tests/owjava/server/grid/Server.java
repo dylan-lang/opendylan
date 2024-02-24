@@ -27,7 +27,7 @@ public class Server {
       print_stream.close();}
     catch (IOException e) {System.err.println(e.getMessage());};
    
-    //  mock request fowarding 
+    //  mock request forwarding
     FileOutputStream wrong_grid_ior_file;
     try {
       wrong_grid_ior_file = new FileOutputStream("wrong-grid.ior");

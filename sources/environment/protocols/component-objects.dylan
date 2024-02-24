@@ -47,7 +47,7 @@ end method component-image-filename;
 
 ///// COMPONENT-VERSION
 //    Synopsis: Returns the version number for a component. This is assumed
-//              to be both meaninful and obtainable on all platforms.
+//              to be both meaningful and obtainable on all platforms.
 //    Inputs:
 //      server     - The dispatching context.
 //      component  - The <component-object> in question.

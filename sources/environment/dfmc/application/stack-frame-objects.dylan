@@ -33,7 +33,7 @@ define method source-location-from-frame-proxy
 end method source-location-from-frame-proxy;
 
 
-///// FUNTION-OBJECT-FROM-FRAME-PROXY (Internal function)
+///// FUNCTION-OBJECT-FROM-FRAME-PROXY (Internal function)
 
 define method function-object-from-frame-proxy
     (application :: <dfmc-application>,
