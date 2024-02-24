@@ -91,7 +91,7 @@ define class <thread-interaction-request> (<object>)
 end class;
 
 
-///// PROCESS-NEXT-INTERATION-REQUEST (Internal function)
+///// PROCESS-NEXT-INTERACTION-REQUEST (Internal function)
 //    If a thread is at an interactive location, and has a pending
 //    interaction request on its queue, then download the code now,
 //    and perform the deferred ID management.

@@ -13,7 +13,7 @@ define open generic frame-reusable?
  => (reusable? :: <boolean>);
 
 define open generic frame-reusable?-setter
-    (resuable? :: <boolean>, frame :: <frame>)
+    (reusable? :: <boolean>, frame :: <frame>)
  => (reusable? :: <boolean>);
 
 define open generic reuse-frames?

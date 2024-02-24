@@ -44,7 +44,7 @@ define suite grid-test-suite ()
   test grid-request-tests;
 end suite;
 
-/// ASYNCHRONOUS CLIENT IMPLEMENTION USING DII
+/// ASYNCHRONOUS CLIENT IMPLEMENTATION USING DII
 
 define method grid/asynch-height (object :: <grid>)
  => (result :: corba/<short>)

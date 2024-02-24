@@ -70,7 +70,7 @@ define open generic stack-frame-environment-object
 /// stack-frame-source-location
 ///
 /// Returns the source-location and whether it is exact.  When it is not
-/// exact, the source-location is chosen by the comiler-interface and
+/// exact, the source-location is chosen by the compiler-interface and
 /// debugger-manager libraries to be a known source location.  This returns
 /// #f, #f when the stack frame is not a call frame.
 ///

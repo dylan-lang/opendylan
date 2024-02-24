@@ -138,7 +138,7 @@ define function initialize-dde-server (server :: <environment-dde-server>)
       debug-message("  ... DDE server ID is %=", server.dde-server-id);
     end with-stack-structure;
     // Don't chance signalling errors until C memory is deallocated!
-    dde-report-error("DdeIniitialize", result);
+    dde-report-error("DdeInitialize", result);
     debug-message("  ... DDE server initialised.");
     server.dde-server-service-handle
       := DdeCreateStringHandle
@@ -155,7 +155,7 @@ define function initialize-dde-server (server :: <environment-dde-server>)
 end function;
 
 
-// -=- "Desctructor" -=-
+// -=- "Destructor" -=-
 
 define function destroy-dde-server () => ()
   with-lock (*environment-dde-server*)

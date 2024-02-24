@@ -30,7 +30,7 @@ define frame <bank-frame> (<simple-frame>)
                        documentation: "Creates a new checking account (with overdraft allowed).",
                        activate-callback: opencheckingaccount-callback),
                   make(<menu-button>,
-                       label: "Retieve Account...",
+                       label: "Retrieve Account...",
                        documentation: "Finds an account given its name.",
                        activate-callback: retrieveaccount-callback),
                   make(<menu-button>,

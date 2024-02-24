@@ -17,7 +17,7 @@ define class <debug-process> (<process>)
 end class;
 
 
-///// DO-PROCESSES-ON-MACHINE (Environment Procotols)
+///// DO-PROCESSES-ON-MACHINE (Environment Protocols)
 //    This method applies to any <connected-machine>, whether it is
 //    local or remote.
 

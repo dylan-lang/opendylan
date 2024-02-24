@@ -57,7 +57,7 @@ define sealed class <editor-policy> (<object>)
   // when #"right-margin", region marking extends all the way to the right margin
   sealed slot marking-policy :: <marking-policy> = #"end-of-line",
     init-keyword: marking-policy:;
-  // When #t, the point moves during scrolling to ensure that it is alway
+  // When #t, the point moves during scrolling to ensure that it is always
   // visible on the screen; when #f, scrolling doesn't move the point
   sealed slot scrolling-moves-point? :: <boolean> = #t,
     init-keyword: scrolling-moves-point?:;

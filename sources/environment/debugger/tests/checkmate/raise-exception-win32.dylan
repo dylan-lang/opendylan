@@ -16,7 +16,7 @@ define function big-literal
   as(<machine-word>, generic-+(generic-ash(hi, 16), lo));
 end function;
 
-/// $EXECPTION-* (WinNT.h via WinBase.h)
+/// $EXCEPTION-* (WinNT.h via WinBase.h)
 
 // define constant $EXCEPTION-WAIT-0                        = big-literal(#x0000, #x0000);
 // define constant $EXCEPTION-ABANDONED-WAIT-0                = big-literal(#x0000, #x0080);
