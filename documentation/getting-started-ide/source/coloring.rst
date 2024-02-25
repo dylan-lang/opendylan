@@ -254,7 +254,7 @@ We can recompile the application to see what effect our change has had.
 The refreshed coloring shows the call to ``make`` on ``<reversi-board>`` in
 the *reversi-game-board* slot definition in light gray. This coloring
 means that the compiler determined which ``make`` method to call, computed
-the result of the call—a ``<reversi-board>`` object—and inlined the
+the result of the call — a ``<reversi-board>`` object — and inlined the
 object.
 
 Looking further down *game.dylan*, notice that the definition of
@@ -332,7 +332,7 @@ being made.
 
 The *size(squares)* call is now colored green. Green coloring means the
 compiler determined that the call was equivalent to a slot
-access—particularly, an access to slot having a fixed offset from the
+access — particularly, an access to a slot having a fixed offset from the
 memory address at which its class is located. The compiler removed the
 need for run-time method dispatch by replacing the call with code to
 access the location that would contain the slot value.

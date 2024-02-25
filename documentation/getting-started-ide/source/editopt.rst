@@ -12,11 +12,10 @@ of its most unique features is that it actually lets you compile
 selections of code as you develop your application. This is why we say
 the editor is *interactive*.
 
-You can use the editor in one of two styles: Emacs or Windows. Using the
-editor options, as described in
-` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_,
-you can choose from either an Emacs or Windows style keyboard layout and
-default settings.
+You can use the editor in one of two styles: Emacs or Windows. Using the editor
+options, as described in `Changing the editor options and layout`_, you can
+choose from either an Emacs or Windows style keyboard layout and default
+settings.
 
 The editor allows you to perform a wide range of operations by using
 menu commands, as well as keyboard commands. These operations range from
@@ -71,14 +70,14 @@ Display conventions
 The editor separates each definition in a source file with a gray line.
 Printed in the middle of each line is the name of the definition below
 it. These code separators also appear above top-level expressions
-wrapped with *begin* … *end*. A file has to have been compiled for code
+wrapped with *begin* ... *end*. A file has to have been compiled for code
 separators to show.
 
 The code separators are just a visual aid, and are not part of the file
 itself. If you opened the source file in a different editor you would
 not see the separators. The compiler also ignores them.
 
-When you add a new definition, or a new *begin* … *end* top-level form,
+When you add a new definition, or a new *begin* ... *end* top-level form,
 the code separators will only be updated if you manually refresh the
 editor window (**View > Refresh** ), move the cursor past an existing
 separator, or perform some other operation that forces the editor to
@@ -98,11 +97,9 @@ Changing the editor options and layout
 By default the editor uses Windows-style defaults and therefore
 associates each opened file with a new editor window. However, you can
 change this and edit many different files at once in the same editor by
-using the **View > Editor Options…** Display tab page. Alternatively, you
+using the **View > Editor Options...** Display tab page. Alternatively, you
 can use the Restore tab page to switch to Emacs defaults, which changes
-this default (and others). For details about the Editor Options dialog,
-its tab pages and settings, see
-` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_.
+this default (and others).
 
 The editor offers a number of different viewing options for the window's
 layout.
@@ -111,10 +108,10 @@ layout.
    examine any output messages from the environment. You can show or
    hide the status bar using **View > Status Bar**. This is where you
    will see messages displayed about your interactive development, such
-   as "Compiling definition…" when you compile a selection.
+   as "Compiling definition..." when you compile a selection.
 -  The standard Dylan toolbar can be viewed or hidden with **View >
    Toolbar**.
--  The color dispatch optimizations feature, as described in 
+-  The color dispatch optimizations feature, as described in
    :doc:`coloring`, shows you where and how to optimize
    your code and is controlled by **View > Color Dispatch Optimizations**.
 
@@ -124,7 +121,7 @@ The editor window's context: the active project
 In an editor window, the toolbar and menu commands act upon the
 application of the active project. For instance, the **Project**,
 **Build**, and **Application** menus are not available in the editor
-if the source file being edited is not part of the active project—the
+if the source file being edited is not part of the active project — the
 project whose name is visible in the main window's drop-down list. See
 :ref:`active-project` for more details.
 
@@ -269,7 +266,7 @@ Change the word *circle* to *square*, so that the line reads:
 
 Select the line of code and choose **Project > Compile Selection**.
 
-Notice that the status bar says "Compiling region…" and then
+Notice that the status bar says "Compiling region..." and then
 "\*reversi-piece-shape\* successfully downloaded".
 
 Make a few moves on the board.
@@ -340,45 +337,45 @@ The SourceSafe menu commands
 
 The **SourceSafe** menu provides the following commands:
 
-Get Latest Version…
+Get Latest Version...
    Copies the latest version of a file in the database onto the
    developer's machine.
 
-Check Out…
+Check Out...
    Copies the latest version of a file in the database onto
    the developer's machine. In addition, the database is updated to note
    that the file is being edited by the developer.
 
-Check In…
+Check In...
    Copies a file from the developer's machine back into the
    database, creating a new version of the file, and notes that the file
    is no longer being edited by the developer.
 
-Undo Check Out…
+Undo Check Out...
    Notes in the database that a file is no longer being edited by the
    developer and does not change the latest version of the file. In
    addition, the latest version of the file is copied from the database
    onto the developer's machine; any changes the developer may have made
    to the local copy of the file are abandoned.
 
-Merge with Source Control…
+Merge with Source Control...
    Merges the changes made by the developer to the local copy of a file
    with the latest version of the file in the database and replaces the
    local copy of the file with the merged edition; the file remains
    checked out by the developer.
 
-Add to Source Control…
+Add to Source Control...
    Creates the first version of a file in the source control database
    using the copy on the developer's machine as the initial content.
 
-Remove from Source Control…
+Remove from Source Control...
    Removes a file and its history from the database.
 
-Show History…
+Show History...
    Displays the list of changes made to a file as recorded
    in the database.
 
-Show Differences…
+Show Differences...
    Compares the latest version of a file in the database against a copy
    on the developer's machine and displays the differences, if any. This
    command can be used to check to see if others may have made changes
@@ -422,8 +419,8 @@ SourceSafe database. In :ref:`select-project-file-dialog` the developer
 has selected a project three levels below the root.
 
 When using Visual SourceSafe, you may omit the file name in all
-operations (except for **SourceSafe > Add to Source Control…** and **Remove
-from Source Control…** ) to cause the operation to be performed on all
+operations (except for **SourceSafe > Add to Source Control...** and **Remove
+from Source Control...** ) to cause the operation to be performed on all
 files in the project. For instance, to check out all the files in a
 project, leave the File field empty in the Select Project and File
 dialog.

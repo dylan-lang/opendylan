@@ -37,13 +37,13 @@ perform these steps on the target machine:
 
 #. Install the Open Dylan runtime system.
 
-   The runtime installer executable, the name of which begins "*hdrun* …",
+   The runtime installer executable, the name of which begins "*hdrun* ...",
    resides in the *Extras* folder at the top-level of your Dylan CD-ROM.
 
 #. Install the debugging server application.
 
    The debugging server installer executable, the name of which begins with
-   "*hddbg* …", also resides in the *Extras* folder.
+   "*hddbg* ...", also resides in the *Extras* folder.
 
 #. Copy the *bin* folder for your project onto the remote machine.
 
@@ -98,14 +98,14 @@ menu items **Application > Start**, **Application > Debug** and
 The only difference is that for remote startup you must specify a remote
 machine in the project's debug settings.
 
-#. Select **Project > Settings…** and select the Debug page.
+#. Select **Project > Settings...** and select the Debug page.
 
    In the "Remote machine" section, an option box displays the name of the
    machine on which the project's application is to be run. By default, the
    selection will be the local machine. Before you can select a remote
    machine, you must first establish a debugging connection.
 
-#. Click the **Open New Connection…** button.
+#. Click the **Open New Connection...** button.
 
 #. In the dialog that appears, enter the network address of the machine to
    which you wish to connect, and enter the password for the debugging
@@ -170,8 +170,8 @@ by the environment. It is very simple to do this:
 
 #. Open the project whose application, DLL, or control is running.
 
-#. Choose **Application > Attach…** from the project window, or choose
-   **Tools > Attach Debugger…** from the main window.
+#. Choose **Application > Attach...** from the project window, or choose
+   **Tools > Attach Debugger...** from the main window.
 
    A dialog listing all available running processes appears.
 
@@ -191,7 +191,7 @@ machine. You can also attach to a process that is running on a remote
 machine provided that the debugging server application (see
 `Starting the debugging server`_) is running on that machine. The process
 list dialog has an option box that allows you to select the machine whose
-process list you want to view. There is also an **Open New Connection…**
+process list you want to view. There is also an **Open New Connection...**
 button for creating new connections to remote machines, which works in
 the same way as described in `Starting an application remotely`_.
 

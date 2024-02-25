@@ -15,20 +15,20 @@ Clone the git repository::
 UNIX
 ====
 
+.. note:: Much of what is described here is encoded into
+          `release-with-batteries.sh
+          <https://github.com/dylan-lang/opendylan/blob/master/build/unix/release-with-batteries.sh>`_
+          and running that script may be sufficient.
+
 Dependencies
 ------------
 
-Binary releases come packaged with all of the necessary
-dependencies. The current binary release includes
+Binary releases come packaged with all of the necessary dependencies. The
+current binary release includes
 
-- `LLVM/Clang
-  <https://github.com/llvm/llvm-project/releases/tag/llvmorg-10.0.1
-  version 10.0.1>`_ (subsetted to include only necessary components)
-- `LLVM libunwind
-  <https://clang.llvm.org/docs/Toolchain.html#unwind-library>`_
-  (snapshot revision `22b615a9
-  <https://github.com/llvm/llvm-project/tree/22b615a96593f13109a27cabfd1764ec4f558c7a>`_)
-- `BDW GC 8.0.4 <https://github.com/ivmai/bdwgc/releases/tag/v8.0.4>`_
+- `LLVM/Clang <https://github.com/llvm/llvm-project>`_ (subsetted to include
+  only necessary components, including libunwind)
+- `BDW GC <https://github.com/ivmai/bdwgc>`_
 
 If you build from source, you may need to supply these dependencies as
 described below.
@@ -38,7 +38,7 @@ All 64-bit platforms and macOS must use the Boehm Demers Weiser conservative GC
 is only integrated with the HARP back-end, which itself only works on 32-bit
 x86 platforms.
 
-* 64-bit systems and macOS (LLVM or C back-end) -> `boehm-gc
+* 64-bit systems (LLVM or C back-end) -> `boehm-gc
   <https://github.com/ivmai/bdwgc>`_, usually installed via a package (see
   below).
 * 32-bit x86 Linux or FreeBSD (HARP back-end) -> `MPS 1.114
@@ -64,7 +64,7 @@ FreeBSD. If available, it is used to display stack traces for
 unhandled error conditions. (The ``libunwind`` API is built-in on
 macOS.)
 
-You may also want to install ``lldb-10`` for debugging if you are using the LLVM
+You may also want to install ``lldb`` for debugging if you are using the LLVM
 back-end.
 
 Building

@@ -44,7 +44,7 @@ Creating the server stubs library
 First we use the New Project wizard to create a Dylan library defining
 server-side stubs for the encryption interface.
 
-Choose **File > New…** from the main window.
+Choose **File > New...** from the main window.
 
 #. Select **Project** and click **OK**.
 
@@ -57,7 +57,7 @@ The next page allows you to name a type library to be translated. Most
 COM components store the location of their type libraries in the Windows
 Registry. These registered type libraries are listed in the Installed
 Type Libraries section of the window. You can select a type library from
-the list, or click **Browse…** in the Location pane to select a type
+the list, or click **Browse...** in the Location pane to select a type
 library file from disk.
 
 .. figure:: images/motwiz.png
@@ -67,7 +67,7 @@ library file from disk.
 
 In this case, we use a type library supplied with Open Dylan.
 
-#. Click **Browse…** and navigate to the Open Dylan examples folder.
+#. Click **Browse...** and navigate to the Open Dylan examples folder.
 
 The folder required is called Examples and is placed under the top-level
 Open Dylan folder.
@@ -164,7 +164,7 @@ The specification file looks something like this:
 .. code-block:: dylan
 
     Origin: COM-type-library
-    Type-library: C:\\Program Files\\Open Dylan\\Examples\\…\\RotNExample.tlb
+    Type-library: C:\\Program Files\\Open Dylan\\Examples\\...\\RotNExample.tlb
     Module: type-library-module
     Module-file: type-library-module.dylan
     Generate: dispatch-servers
@@ -254,7 +254,7 @@ Creating the server
 
 Now we create the actual server application.
 
-Choose **File > New…** from the main window.
+Choose **File > New...** from the main window.
 
 #. Select *Project* and click **OK**.
 
@@ -468,7 +468,7 @@ Creating the client stubs library
 Now we create a project for the client-side stubs of the encryption
 interface.
 
-Choose **File > New…** from the main window.
+Choose **File > New...** from the main window.
 
 #. Select **Project** and click **OK**.
 
@@ -476,7 +476,7 @@ The New Project wizard appears.
 
 #. In the Project Type section, select "Interface to COM Type Library"
    and click **Next**.
-#. Click **Browse…** and navigate to the Open Dylan examples folder.
+#. Click **Browse...** and navigate to the Open Dylan examples folder.
 
 The folder required is called Examples and is placed under the top-level
 Open Dylan folder.
@@ -510,7 +510,7 @@ Note that the "OLE Automation" option on the "OLE Automation support"
 page is automatically selected. That is what we want.
 
 #. Click **Next**.
-#. Choose the "NoneÝ" option from "Database support" and click **Next**.
+#. Choose the "None" option from "Database support" and click **Next**.
 
 We are now at the final page of the New Project wizard.
 
@@ -578,7 +578,7 @@ Creating the client
 
 Now we create the actual client application.
 
-Choose **File > New…** from the main window.
+Choose **File > New...** from the main window.
 
 #. Select **Project** and click **OK**.
 
@@ -664,7 +664,7 @@ return ``#t``, and the server to call ``register-coclass``.
 
 Open the RotNExample-server project and build it.
 
-#. Select *Project > Settings…* in the RotNExample-server project
+#. Select *Project > Settings...* in the RotNExample-server project
    window.
 
 The Project Settings dialog appears.
@@ -685,7 +685,7 @@ the environment.
 First, however, we need to remove the */RegServer* argument from the
 project settings, so that the server can run normally.
 
-#. Select **Project > Settings…** in the RotNExample-server project
+#. Select **Project > Settings...** in the RotNExample-server project
    window.
 
 The Project Settings dialog appears.

@@ -135,13 +135,13 @@ An editor window appears.
 Notice how the editor separates each definition in a source file with a
 gray line. Printed in the middle of each line is the name of the
 definition below it. These code separators also appear above top-level
-expressions wrapped with *begin* … *end*.
+expressions wrapped with *begin* ... *end*.
 
 The code separators are just a visual aid, and are not part of the file
 itself. If you opened the source file in a different editor you would
 not see the separators. They are ignored by the compiler.
 
-When you add a new definition, or a new *begin* … *end* top-level form,
+When you add a new definition, or a new *begin* ... *end* top-level form,
 the code separators will only be updated if you manually refresh the
 editor window (**View > Refresh**), move the cursor past an existing
 separator, or perform some other operation that forces the editor to
@@ -190,7 +190,7 @@ Change the last line of the definition so that it appears as follows::
 Choose **File > Save** in the editor.
 
 Open Dylan saves the file, first making a backup of the previous
-version in *saving.dylan~* —that is, in a file of the same name, but
+version in *saving.dylan~* — that is, in a file of the same name, but
 with an extra character in the file extension, a tilde (~), to show that
 it is a backup file.
 
@@ -329,7 +329,7 @@ recent at the top of the list. The frames are represented by the names
 of the functions whose call created them, and are accompanied by an icon
 denoting the sort of call it was. See :ref:`call-frames` for details
 of the icons and their meanings, but note for now that the green arrow
-icon represents the current location of the stack pointer—that is, the
+icon represents the current location of the stack pointer — that is, the
 call at which the thread was paused.
 
 .. _searching-stack-backtrace-for-cause:
@@ -404,10 +404,10 @@ Filtered visible frames
 Filtered local frames
     Shows a filtered list of function calls from the current module only.
 
-The "Filtered…" settings do not, by default, show foreign function
-calls, cleanup frames, and frames of unknown type, whereas the "All…"
+The "Filtered..." settings do not, by default, show foreign function
+calls, cleanup frames, and frames of unknown type, whereas the "All..."
 settings show everything. You can set the filtering rules using **View >
-Debugger Options…**, see :ref:`stack-options` for details.
+Debugger Options...**, see :ref:`stack-options` for details.
 
 .. figure:: images/unfilterederrstack2-0.png
    :align: center
@@ -486,7 +486,7 @@ We can see that this method calls ``reversi-board-squares`` on the
 ``<reversi-board>`` instance and then iterates over the value returned,
 apparently writing each element to the stream with
 ``reversi-square-write-data``. (Notice that ``reversi-square-write-data``
-does not appear on the stack—this is because it contains only a tail
+does not appear on the stack — this is because it contains only a tail
 call to ``write-element``, and so is optimized away.)
 
 We are closing in on the bug. It is looking like the value representing
@@ -520,7 +520,7 @@ The notation
 
     board = {<reversi-board>}
 
-means that *board* is an instance of ``<reversi-board>`` —an actual
+means that *board* is an instance of ``<reversi-board>`` — an actual
 instance in the paused application. The curly braces mean that this is
 an instance of the class rather than the class definition itself.
 
@@ -645,7 +645,7 @@ Here is the code:
 
 So *number-for-piece* is most likely returning the integer value that
 was passed to ``write-element`` (and that we can see on the stack as the
-*elt* local variable). The square value has type ``<piece>`` —this, then,
+*elt* local variable). The square value has type ``<piece>``  — this, then,
 is the element type of the sequence used to represent the state of the
 board.
 
