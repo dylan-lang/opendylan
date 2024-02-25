@@ -1,15 +1,15 @@
 Library:      network
 Author:       Andy Armstrong
-Synopsis:     Linux (x86) version of the Functional Objects Network library
+Synopsis:     Linux version of the Functional Objects Network library
 Target-Type:  dll
 Major-Version: 2
 Minor-Version: 1
 Files:  linux-network-library
-        unix-sockets/x86-unix-sockets-data
-        unix-sockets/x86-linux-sockets-data
+        unix-sockets/unix-sockets-data
+        unix-sockets/linux-sockets-data
         unix-sockets/sockets-interfaces
         unix-sockets/sockets-extras
-        unix-sockets/x86-linux-address-data
+        unix-sockets/linux-address-data
         unix-sockets/address-interfaces
         unix-sockets/errno
         unix-sockets/poll
