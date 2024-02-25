@@ -750,7 +750,7 @@ target file type setting on the <em>Project &gt; Settings</em> dialog’s Link p
 the thread being debugged. In an editor window, the commands act upon
 the application of the active project. (Note that the <strong>Application</strong> menu
 is not available in the editor if the source file being edited is not
-part of the active project—the project whose name is visible in the main
+part of the active project — the project whose name is visible in the main
 window’s drop-down list. See <a class="reference internal" href="#the-active-project">The active project</a> for more details.)</p>
 <section id="starting-and-stopping-applications">
 <span id="index-5"></span><h3>Starting and stopping applications<a class="headerlink" href="#starting-and-stopping-applications" title="Permalink to this heading">#</a></h3>
@@ -918,9 +918,9 @@ application has paused because you used <strong>Application &gt; Pause</strong>.
 displays a dialog listing all available restarts.</p>
 <p>For convenience, there are two other menu items for signalling <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a>
 restarts, which are defined to mean “terminate the current computation”.</p>
-<p><strong>Thread &gt; Abort</strong> signals the innermost available <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restart—that
-is, it aborts as little as possible—whereas <strong>Thread &gt; Abort All</strong> signals
-the outermost <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restart—that is, it aborts as much as possible.</p>
+<p><strong>Thread &gt; Abort</strong> signals the innermost available <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restart — that
+is, it aborts as little as possible — whereas <strong>Thread &gt; Abort All</strong> signals
+the outermost <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restart — that is, it aborts as much as possible.</p>
 <p>Although the meaning of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#abort"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;abort&gt;</span></code></a> restarts is part of the Dylan
 language, your application must provide handlers to implement them. If
 you are using DUIM for your application’s GUI, note that DUIM frames
@@ -1254,7 +1254,7 @@ rebuild?</p>
 project whose name is visible in the drop-down list in the main window.
 You can change the active project by changing the setting in the list.
 The active project is always one of the projects that have been
-explicitly opened—that is, one for which there is a project window.</p>
+explicitly opened — that is, one for which there is a project window.</p>
 <p>The editor also uses the active project to determine two other things.
 First, the editor shows breakpoint information in its leftmost column
 for source files in the active project <strong>only</strong>. Second, the <strong>Project</strong>,
@@ -1317,7 +1317,7 @@ effect if the application is executing under debugger control within the
 development environment, via <strong>Application &gt; Start</strong> and similar commands.</p>
 <p>When you set a breakpoint in a function that is in a used library, the
 breakpoint does not go into the project that owns the function, but
-instead into the project you are browsing—or the active project, if in
+instead into the project you are browsing — or the active project, if in
 the editor.</p>
 </section>
 <section id="setting-breakpoints-on-functions">
@@ -1561,8 +1561,8 @@ run two instances of the environment, with one debugging the client and
 the other debugging the server: if any libraries are shared between the
 applications, both environment instances will attempt to lock the
 compiler database files for those libraries. Since all applications
-ultimately use the Dylan library, and most share other libraries—not the
-least of which in this case being networking libraries—using two
+ultimately use the Dylan library, and most share other libraries — not the
+least of which in this case being networking libraries — using two
 Open Dylan processes is never a practical debugging method.</p>
 <p>This is not a disadvantage. By running both client and server in one
 Open Dylan, you can be debugging in the client, and then when the
@@ -1619,7 +1619,7 @@ on the development environment’s threads.</p>
 <p>The <strong>View &gt; Debugger Options</strong> command brings up a dialog that controls
 the options for the debugger. This dialog has three property pages:
 Stack, Exceptions, and Misc. The options on these pages apply on a
-per-thread basis—you can have different settings for different threads’
+per-thread basis — you can have different settings for different threads’
 debuggers.</p>
 <section id="stack-options">
 <span id="index-26"></span><span id="id6"></span><h3>Stack options<a class="headerlink" href="#stack-options" title="Permalink to this heading">#</a></h3>

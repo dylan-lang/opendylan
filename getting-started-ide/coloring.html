@@ -710,7 +710,7 @@ the method selection itself.</p>
 <p>The refreshed coloring shows the call to <code class="docutils literal notranslate"><span class="pre">make</span></code> on <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> in
 the <em>reversi-game-board</em> slot definition in light gray. This coloring
 means that the compiler determined which <code class="docutils literal notranslate"><span class="pre">make</span></code> method to call, computed
-the result of the call—a <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> object—and inlined the
+the result of the call — a <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> object — and inlined the
 object.</p>
 <p>Looking further down <em>game.dylan</em>, notice that the definition of
 <em>reversi-game-size-setter</em> also calls <code class="docutils literal notranslate"><span class="pre">make</span></code> on <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>, a
@@ -780,7 +780,7 @@ being made.</p>
 </ol>
 <p>The <em>size(squares)</em> call is now colored green. Green coloring means the
 compiler determined that the call was equivalent to a slot
-access—particularly, an access to slot having a fixed offset from the
+access — particularly, an access to a slot having a fixed offset from the
 memory address at which its class is located. The compiler removed the
 need for run-time method dispatch by replacing the call with code to
 access the location that would contain the slot value.</p>

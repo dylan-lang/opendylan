@@ -312,7 +312,7 @@ of an interactive evaluation.
 -  If you issue the pause command (**Application > Pause** or
 
 -  If you issue the pause command from the project window or editor, the
-   debugger for the application’s main thread is refreshed.
+   debugger for the application's main thread is refreshed.
 
 In all of these circumstances, any other open debugger windows will not
 be refreshed unless you choose **View > Refresh** in them. If you choose
@@ -346,7 +346,7 @@ In a debugger window, the commands act upon the application that created
 the thread being debugged. In an editor window, the commands act upon
 the application of the active project. (Note that the **Application** menu
 is not available in the editor if the source file being edited is not
-part of the active project—the project whose name is visible in the main
+part of the active project — the project whose name is visible in the main
 window's drop-down list. See `The active project`_ for more details.)
 
 .. index::
@@ -466,7 +466,7 @@ to set things running, such as a call to start an event loop in a
 windowing application. See :ref:`start-function` for details.
 
 You can specify a start function on the Debug page of the **Project >
-Settings…** dialog. When you use **Application > Debug** or **Application >
+Settings...** dialog. When you use **Application > Debug** or **Application >
 Interact**, the environment places a temporary breakpoint on the start
 function so that the application starts and then enters the debugger on
 entry to the start function. For this reason, the expression that calls
@@ -497,7 +497,7 @@ debugger.
 Nonetheless, for debugging it is still useful to be able to pause the
 DLL once it has initialized completely but before it exits. To do this,
 simply remove the name in the Start Function section of the **Project >
-Settings…** dialog's Debug page. Then, when you choose **Application >
+Settings...** dialog's Debug page. Then, when you choose **Application >
 Debug** or **Application > Interact**, the debugger lets the DLL execute
 all its top-level expressions, and pauses the DLL just as its main
 thread is about to exit. This gives you access to all the definitions
@@ -519,7 +519,7 @@ Interact** the environment runs the EXE. The point at which the EXE is
 paused again depends on whether you supply a start function.
 
 Alternatively, you can supply your own EXE in the Executable field of
-the **Project > Settings…** dialog's Debug page. The **Application > Start**,
+the **Project > Settings...** dialog's Debug page. The **Application > Start**,
 **Application > Debug**, and **Application > Interact** commands then
 call your EXE and behave in the same way as if your EXE was the
 project target file. That is to say, execution of the EXE proceeds
@@ -537,7 +537,7 @@ DLLs, you can use the same debugging processes as described in
 
 If you want to test your server or control in a container application,
 simply enter the name of the application executable in the Executable
-field of the **Project > Settings…** dialog's Debug page. This executable
+field of the **Project > Settings...** dialog's Debug page. This executable
 could be any OLE container, such as WordPad. The **Application > Start**,
 **Application > Debug**, and **Application > Interact** commands then
 execute the container executable. Execution proceeds normally until the
@@ -566,15 +566,15 @@ handled, or due to it reaching a breakpoint. You cannot do so if the
 application has paused because you used **Application > Pause**. (Use
 **Application > Resume** to restart your application in that case.)
 
-To select a restart to be signalled, choose **Thread > Continue…**, which
+To select a restart to be signalled, choose **Thread > Continue...**, which
 displays a dialog listing all available restarts.
 
 For convenience, there are two other menu items for signalling :drm:`<abort>`
 restarts, which are defined to mean "terminate the current computation".
 
-**Thread > Abort** signals the innermost available :drm:`<abort>` restart—that
-is, it aborts as little as possible—whereas **Thread > Abort All** signals
-the outermost :drm:`<abort>` restart—that is, it aborts as much as possible.
+**Thread > Abort** signals the innermost available :drm:`<abort>` restart — that
+is, it aborts as little as possible — whereas **Thread > Abort All** signals
+the outermost :drm:`<abort>` restart — that is, it aborts as much as possible.
 
 Although the meaning of :drm:`<abort>` restarts is part of the Dylan
 language, your application must provide handlers to implement them. If
@@ -596,7 +596,7 @@ time. The command we have seen so far, **Application > Debug**, debugs
 only the application's main thread. To debug another thread in the
 application, choose **Go > Threads** from the debugger, project window, or
 editor. From the debugger window you can also use **Thread > Select
-Thread…**. To bring up multiple debugger windows, use **Window > New
+Thread...**. To bring up multiple debugger windows, use **Window > New
 Window** from an existing debugger.
 
 The **Go > Threads** command launches a browser on the application itself,
@@ -1008,7 +1008,7 @@ The answer is that the editor has an *active project*. This is the
 project whose name is visible in the drop-down list in the main window.
 You can change the active project by changing the setting in the list.
 The active project is always one of the projects that have been
-explicitly opened—that is, one for which there is a project window.
+explicitly opened — that is, one for which there is a project window.
 
 The editor also uses the active project to determine two other things.
 First, the editor shows breakpoint information in its leftmost column
@@ -1018,7 +1018,7 @@ source files that are not part of the active project.
 
 A project can become the active project automatically as well as by
 being set explicitly in the main window's drop-down list. The main
-window's **Options > Environment Options…** dialog has two options on the
+window's **Options > Environment Options...** dialog has two options on the
 General page controlling when projects become active automatically:
 "Project becomes active when opened" and "Project becomes active when
 application started".
@@ -1088,7 +1088,7 @@ development environment, via **Application > Start** and similar commands.
 
 When you set a breakpoint in a function that is in a used library, the
 breakpoint does not go into the project that owns the function, but
-instead into the project you are browsing—or the active project, if in
+instead into the project you are browsing — or the active project, if in
 the editor.
 
 Setting breakpoints on functions
@@ -1200,7 +1200,7 @@ complete list of commands follows.
 "Clear Breakpoint"
     Removes any breakpoint at the line the mouse pointer is on.
 
-Edit Breakpoint Options…
+Edit Breakpoint Options...
     Pops up a dialog for editing breakpoint options. See `Breakpoint
     options`_.
 
@@ -1236,7 +1236,7 @@ all enabled breakpoints.
 Breakpoint options
 ------------------
 
-The **Edit Breakpoint Options…** dialog, available from the shortcut
+The **Edit Breakpoint Options...** dialog, available from the shortcut
 (right-click) menu, contains the following sections.
 
 -  "Enabled" Check item for toggling whether a breakpoint is enabled or
@@ -1385,8 +1385,8 @@ run two instances of the environment, with one debugging the client and
 the other debugging the server: if any libraries are shared between the
 applications, both environment instances will attempt to lock the
 compiler database files for those libraries. Since all applications
-ultimately use the Dylan library, and most share other libraries—not the
-least of which in this case being networking libraries—using two
+ultimately use the Dylan library, and most share other libraries — not the
+least of which in this case being networking libraries — using two
 Open Dylan processes is never a practical debugging method.
 
 This is not a disadvantage. By running both client and server in one
@@ -1398,7 +1398,7 @@ Once you have both projects open, you can start both applications up.
 Note that by default the action of starting a project will switch the
 active project, so the last project you start will be the active one by
 default. You can change this behavior in the main window with **Options >
-Environment Options…** so that the active project does not switch in this
+Environment Options...** so that the active project does not switch in this
 situation. See `The active project`_ for more information.
 
 If you need to rebuild a library shared between the client and server,
@@ -1427,12 +1427,12 @@ Exporting a bug report or a compiler warnings report
 ====================================================
 
 You can save a formatted bug report or compiler warnings report for an
-application by choosing **File > Export…** in the debugger or project
+application by choosing **File > Export...** in the debugger or project
 window. The bug report includes a stack backtrace for all threads in the
 application, while the compiler warnings report contains the same
 information provided in the project window's Warnings page.
 
-The Export… dialog gives you the option of saving the report as either
+The Export... dialog gives you the option of saving the report as either
 text HTML. If you choose to save the report to a file, an editor window
 automatically opens to show the file. The saved report contains a
 section for user-supplied information into which you can type
@@ -1445,7 +1445,7 @@ supplemental text.
 .. figure:: images/export.png
    :align: center
 
-   The Export… dialog.
+   The Export... dialog.
 
 .. index::
    single: debugging; debugger options
@@ -1458,7 +1458,7 @@ Debugger options
 The **View > Debugger Options** command brings up a dialog that controls
 the options for the debugger. This dialog has three property pages:
 Stack, Exceptions, and Misc. The options on these pages apply on a
-per-thread basis—you can have different settings for different threads'
+per-thread basis — you can have different settings for different threads'
 debuggers.
 
 .. index::

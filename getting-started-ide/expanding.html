@@ -608,7 +608,7 @@ a method, but the <code class="docutils literal notranslate"><span class="pre">e
 </div>
 <p>Choose <strong>File &gt; Save</strong> in the editor.</p>
 <p>Open Dylan saves the file, first making a backup of the previous
-version in <em>saving.dylan~</em> —that is, in a file of the same name, but
+version in <em>saving.dylan~</em> — that is, in a file of the same name, but
 with an extra character in the file extension, a tilde (~), to show that
 it is a backup file.</p>
 <p>Having attended to the cause of the serious warnings and warnings, we
@@ -714,7 +714,7 @@ recent at the top of the list. The frames are represented by the names
 of the functions whose call created them, and are accompanied by an icon
 denoting the sort of call it was. See <a class="reference internal" href="debug.html#call-frames"><span class="std std-ref">Call frames</span></a> for details
 of the icons and their meanings, but note for now that the green arrow
-icon represents the current location of the stack pointer—that is, the
+icon represents the current location of the stack pointer — that is, the
 call at which the thread was paused.</p>
 <section id="searching-the-stack-backtrace-for-the-cause-of-the-error">
 <span id="searching-stack-backtrace-for-cause"></span><h3>Searching the stack backtrace for the cause of the error<a class="headerlink" href="#searching-the-stack-backtrace-for-the-cause-of-the-error" title="Permalink to this heading">#</a></h3>
@@ -844,7 +844,7 @@ re-loaded later.</p>
 <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance and then iterates over the value returned,
 apparently writing each element to the stream with
 <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>. (Notice that <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>
-does not appear on the stack—this is because it contains only a tail
+does not appear on the stack — this is because it contains only a tail
 call to <code class="docutils literal notranslate"><span class="pre">write-element</span></code>, and so is optimized away.)</p>
 <p>We are closing in on the bug. It is looking like the value representing
 the Reversi board squares (<em>squares</em> ), and the file stream the squares
@@ -870,7 +870,7 @@ arguments are listed first: <em>board</em> and <em>stream</em>, followed by the
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nc">&lt;reversi-board&gt;</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>means that <em>board</em> is an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> —an actual
+<p>means that <em>board</em> is an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> — an actual
 instance in the paused application. The curly braces mean that this is
 an instance of the class rather than the class definition itself.</p>
 <p>We can look at this <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code> instance in the <em>browser</em>, which
@@ -971,7 +971,7 @@ code for the method.</p>
 </div>
 <p>So <em>number-for-piece</em> is most likely returning the integer value that
 was passed to <code class="docutils literal notranslate"><span class="pre">write-element</span></code> (and that we can see on the stack as the
-<em>elt</em> local variable). The square value has type <code class="docutils literal notranslate"><span class="pre">&lt;piece&gt;</span></code> —this, then,
+<em>elt</em> local variable). The square value has type <code class="docutils literal notranslate"><span class="pre">&lt;piece&gt;</span></code>  — this, then,
 is the element type of the sequence used to represent the state of the
 board.</p>
 <p>Browse the definition of <code class="docutils literal notranslate"><span class="pre">number-for-piece</span></code>.</p>

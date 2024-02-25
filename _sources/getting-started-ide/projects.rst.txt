@@ -110,7 +110,7 @@ Windows file names.
 
 In addition, the project name is used as the default name of the library
 and module that the project defines, so unless you change those names
-(with the *Advanced…* dialog; see `Advanced project settings`_), the
+(with the *Advanced...* dialog; see `Advanced project settings`_), the
 project name must also be a valid Dylan name.
 
 Here we can also specify, using the "Include any available templates"
@@ -292,14 +292,14 @@ Name the project *GUI-App* and choose a location for it.
 
 The New Project wizard can set up some skeleton program code for our
 project, according to the project's characteristics as we specify them.
-Template code is not relevant for all kinds of projects—for instance,
+Template code is not relevant for all kinds of projects — for instance,
 our Hello project would not have benefited from any more initial program
-structure than it had—but the wizard will include any that is relevant
+structure than it had — but the wizard will include any that is relevant
 if we check the "Include any available templates" box.
 
 Make sure the "Include any available templates" box is checked.
 
-We ignore the **Advanced…** button again.
+We ignore the **Advanced...** button again.
 
 Click **Next**.
 
@@ -479,7 +479,7 @@ that are saved persistently are as follows.
 The parent folder is saved in the expectation that you will want to
 create several projects in sibling folders.
 
--  In the *Advanced…* dialog (see `Advanced project settings`_),
+-  In the *Advanced...* dialog (see `Advanced project settings`_),
    the contents of the Start Function box and the setting of
    Compilation Mode.
 -  The setting of the "Include any available templates" check-box.
@@ -507,10 +507,10 @@ The Library and Module Names section allows you to specify names for
 your project's main library and module. The default value in both cases
 is the name of the project.
 
-The remaining sections—Start Function, Version Information, Compilation
-Mode, and Windows Subsystem—all control settings that you can both set
+The remaining sections — Start Function, Version Information, Compilation
+Mode, and Windows Subsystem — all control settings that you can both set
 here and change after creating a project by choosing **Project >
-Settings…**. See `Project settings`_ for details.
+Settings...**. See `Project settings`_ for details.
 
 Adding, moving, and deleting project sources
 ============================================
@@ -596,7 +596,7 @@ your start function to be recorded in its project information. By
 default, this name will be *main*, and corresponds to the *main*
 function that the New Project creates by default in the *project-name*
 *.dylan* file for all new projects. However, you are free to change the
-name if you like—there is nothing special about it.
+name if you like — there is nothing special about it.
 
 The *project-name* *.dylan* file for all new projects will contain a
 definition of *main* and a call to it. Projects that include template
@@ -626,7 +626,7 @@ with this expression:
     end;
 
 The name of the Start Function is one of the project settings you can
-change in the **Project > Settings…** dialog. It appears on the Debug page
+change in the **Project > Settings...** dialog. It appears on the Debug page
 in the Start Function section. The default name is *main*, but you can
 change it to any valid Dylan name you like. If you do so, make sure to
 replace the call to *main* with a call to your new start function. The
@@ -634,7 +634,7 @@ source file is not updated automatically.
 
 Note that you can make the wizard use a different start function name in
 new project files by changing the default setting in the Advanced
-Project Settings dialog. Click **Advanced…** on the second wizard page to
+Project Settings dialog. Click **Advanced...** on the second wizard page to
 produce the dialog. In this case, the generated project code will call
 the correct new name without requiring you to make a change by hand.
 
@@ -672,7 +672,7 @@ each category, each described below.
 Compile page
 ------------
 
-The **Project > Settings…** dialog's Compile page controls the compilation
+The **Project > Settings...** dialog's Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 :ref:`compilation-modes` for details of the modes.
@@ -685,7 +685,7 @@ of two modes: Interactive Development mode, and Production mode. See
 Link page
 ---------
 
-The **Project > Settings…** dialog's Link page controls whether a project
+The **Project > Settings...** dialog's Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target, a base
 address for it, and the Windows subsystem it runs in.
@@ -693,13 +693,13 @@ address for it, and the Windows subsystem it runs in.
 .. note:: The default linker used in Open Dylan is a GNU linker. If
    you own Microsoft Developer Studio, you can use the Microsoft linker
    instead. To change the default linker, go to the main window and choose
-   **Options > Environment Options…**, then choose that dialog's Build
+   **Options > Environment Options...**, then choose that dialog's Build
    page.
 
 Target File section of the Link page
 ------------------------------------
 
-The **Project > Settings…** dialog's Link page has a Target File section
+The **Project > Settings...** dialog's Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
 that the name will always end in .EXE or .DLL according to the target
@@ -708,7 +708,7 @@ type, regardless of any extension you give to the target's name.
 Base Address section of the Link page
 -------------------------------------
 
-The **Project > Settings…** dialog's Link page has a Base Address section
+The **Project > Settings...** dialog's Link page has a Base Address section
 that allows you to specify a base address for your target file. This is
 the address at which the target will be loaded into memory.
 
@@ -722,7 +722,7 @@ hexadecimal, using Dylan's *#x* prefix: for example, *#x1000000*.
 Version Information section of the Link page
 --------------------------------------------
 
-The **Project > Settings…** dialog's Link page has a Version Information
+The **Project > Settings...** dialog's Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
@@ -732,7 +732,7 @@ See :ref:`versioning` for details.
 Windows Subsystem section of the Link page
 ------------------------------------------
 
-The **Project > Settings…** dialog's Link page has a Win32 Subsystem
+The **Project > Settings...** dialog's Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 "Windows GUI" (WINDOWS) subsystem or the "Windows Console" (CONSOLE)
 subsystem. You may wish to change this value if you change the code of a
@@ -750,7 +750,7 @@ to run in the "Windows GUI" (WINDOWS) subsystem.
 Debug page
 ----------
 
-The **Project > Settings…** dialog's Debug page allows you to specify a
+The **Project > Settings...** dialog's Debug page allows you to specify a
 command line with which to execute the project target, and the start
 function for the project.
 
