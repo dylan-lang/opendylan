@@ -37,7 +37,7 @@ now here is a manual check-list.
      each platform.
 
    **TODO:** This should be done automatically by GitHub CI. See
-   https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yaml
+   https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yml
    which currently only runs on Ubuntu.
 
 #. Update the version number in the sources
@@ -97,8 +97,8 @@ now here is a manual check-list.
 
 #. Test the tarballs
 
-   In your own branch, modify the `libraries-test-suite.yaml workflow
-   <https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yaml#L28>`_
+   In your own branch, modify the `libraries-test-suite.yml workflow
+   <https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yml#L28>`_
    to explicitly specify the new release version and tag so that it will be
    installed and tested on a clean machine on multiple platforms. You'll have
    to go to your fork in the GitHub UI, click on Actions, and find the workflow

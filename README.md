@@ -1,4 +1,4 @@
-[![Gitter](https://badges.gitter.im/dylan-lang/general.svg)](https://gitter.im/dylan-lang/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![libraries-test-suite](https://github.com/dylan-lang/opendylan/actions/workflows/libraries-test-suite.yaml/badge.svg)](https://github.com/dylan-lang/opendylan/actions/workflows/libraries-test-suite.yaml)
+[![Gitter](https://badges.gitter.im/dylan-lang/general.svg)](https://gitter.im/dylan-lang/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![libraries-test-suite](https://github.com/dylan-lang/opendylan/actions/workflows/libraries-test-suite.yml/badge.svg)](https://github.com/dylan-lang/opendylan/actions/workflows/libraries-test-suite.yml)
 
 # Welcome to Open Dylan!
 
