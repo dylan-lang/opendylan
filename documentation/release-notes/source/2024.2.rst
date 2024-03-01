@@ -1,0 +1,37 @@
+*****************
+Open Dylan 2024.2
+*****************
+
+This document describes the 2024.2 release of Open Dylan, released DD
+MMM, 2024.  The highlights of the release are listed below.  For complete
+details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2024.1.0...v2024.2.0>`_ for
+this release.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+Library Updates
+===============
+
+System
+------
+
+* The `$machine-name:operating-system:system
+  <https://opendylan.org/library-reference/system/operating-system.html#system:operating-system:$machine-name>`_
+  constant has been renamed to `$machine-architecture
+  <https://opendylan.org/library-reference/system/operating-system.html#system:operating-system:$machine-architecture>`_.
+  The old name will remain, for backward compatibility.
+
+Contributors
+============
+
