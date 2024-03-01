@@ -227,8 +227,8 @@ System library's operating-system module.
 
    Constant specifying the type of hardware installed in the host machine.
 
-   :type: <symbol>
-   :value: #"x86", #"x86-64", #"ppc"
+   :type: :drm:`<symbol>`
+   :value: One of ``#"aarch64"``, ``#"arm"``, ``#"riscv64"``  ``#"x86"``, ``#"x86-64"``
 
    :description:
 
@@ -247,8 +247,8 @@ System library's operating-system module.
 
    Constant specifying the operating system running on the host machine.
 
-   :type: <symbol>
-   :value: #"win32", #"linux", #"darwin", #"freebsd"
+   :type: :drm:`<symbol>`
+   :value: One of  ``#"darwin"``, ``#"freebsd"``, ``#"linux"``, ``#"netbsd"``, ``#"win32"``
 
    :description:
 
@@ -268,7 +268,7 @@ System library's operating-system module.
    Constant specifying which variant of an operating system the current
    machine is running, where relevant.
 
-   :type: <symbol>
+   :type: :drm:`<symbol>`
 
    :description:
 
@@ -291,7 +291,7 @@ System library's operating-system module.
    Constant specifying which version of an operating system the current
    machine is running.
 
-   :type: <string>
+   :type: :drm:`<string>`
 
    :description:
 
@@ -361,15 +361,15 @@ System library's operating-system module.
    Constant specifying the operating system running on and the type of
    hardware installed in the host machine.
 
-   :type: <symbol>
+   :type: :drm:`<symbol>`
    :value: ``#"x86-win32"``, ``#"x86-linux"``, etc.
 
    :description:
 
-     This constant is a symbol that represents the both the operating
-     system running on, and the type of hardware installed in, the host
-     machine. It is a combination of the :const:`$os-name` and
-     :const:`$machine-name` constants.
+     Represents both the architecture and the operating system running on the
+     host machine. It is a concatenation of :const:`$machine-name`, ``"-"``,
+     and :const:`$os-name`.  See those constants to determine the full list of
+     possible values.
 
    :example:
 
@@ -417,7 +417,8 @@ System library's operating-system module.
    :parameter #key under-shell?: An instance of :drm:`<boolean>`. If true (the
       default), use a shell to invoke the *command*. On Unix systems this is
       equivalent to ``/bin/sh -c '...command...'``. On Windows the
-      :envvar:`COMSPEC` environment variable specifies
+      :envvar:`COMSPEC` environment variable specifies which command
+      interpreter to use.
 
    :parameter #key inherit-console?: An instance of :drm:`<boolean>`. Whether
       to run in the same session and process group as the calling process and
