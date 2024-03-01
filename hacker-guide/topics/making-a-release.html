@@ -493,7 +493,7 @@ install, make dist.</p></li>
 each platform.</p></li>
 </ul>
 <p><strong>TODO:</strong> This should be done automatically by GitHub CI. See
-<a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yaml">https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yaml</a>
+<a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yml">https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yml</a>
 which currently only runs on Ubuntu.</p>
 </li>
 <li><p>Update the version number in the sources</p>
@@ -545,7 +545,7 @@ to indicate which version <strong>can</strong> be used to bootstrap the compiler
 uncheck the “This is a pre-release” checkbox yet.</p>
 </li>
 <li><p>Test the tarballs</p>
-<p>In your own branch, modify the <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yaml#L28">libraries-test-suite.yaml workflow</a>
+<p>In your own branch, modify the <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yml#L28">libraries-test-suite.yml workflow</a>
 to explicitly specify the new release version and tag so that it will be
 installed and tested on a clean machine on multiple platforms. You’ll have
 to go to your fork in the GitHub UI, click on Actions, and find the workflow
