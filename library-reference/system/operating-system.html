@@ -759,10 +759,10 @@ current machine is a member, or <a class="reference external" href="https://open
 <dd><p>Constant specifying the type of hardware installed in the host machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt;symbol&gt;</p>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Value<span class="colon">:</span></dt>
-<dd class="field-even"><p>#”x86”, #”x86-64”, #”ppc”</p>
+<dd class="field-even"><p>One of <code class="docutils literal notranslate"><span class="pre">#&quot;aarch64&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;arm&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;riscv64&quot;</span></code>  <code class="docutils literal notranslate"><span class="pre">#&quot;x86&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;x86-64&quot;</span></code></p>
 </dd>
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This constant is a symbol that represents the type of hardware
@@ -787,10 +787,10 @@ installed in the host machine.</p>
 <dd><p>Constant specifying the operating system running on the host machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt;symbol&gt;</p>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Value<span class="colon">:</span></dt>
-<dd class="field-even"><p>#”win32”, #”linux”, #”darwin”, #”freebsd”</p>
+<dd class="field-even"><p>One of  <code class="docutils literal notranslate"><span class="pre">#&quot;darwin&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;freebsd&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;linux&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;netbsd&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;win32&quot;</span></code></p>
 </dd>
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This constant is a symbol that represents the operating system
@@ -816,7 +816,7 @@ running on the host machine.</p>
 machine is running, where relevant.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt;symbol&gt;</p>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>This constant is a symbol value distinguishing between variants of
@@ -845,7 +845,7 @@ possible values are <code class="docutils literal notranslate"><span class="pre"
 machine is running.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt;string&gt;</p>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p>The constant <em>$os-version</em> is a string value that identifies the
@@ -947,16 +947,16 @@ name is unavailable.</p>
 hardware installed in the host machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt;symbol&gt;</p>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#symbol"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;symbol&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Value<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86-win32&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;x86-linux&quot;</span></code>, etc.</p>
 </dd>
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This constant is a symbol that represents the both the operating
-system running on, and the type of hardware installed in, the host
-machine. It is a combination of the <a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a> and
-<a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a> constants.</p>
+<dd class="field-odd"><p>Represents both the architecture and the operating system running on the
+host machine. It is a concatenation of <a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a>, <code class="docutils literal notranslate"><span class="pre">&quot;-&quot;</span></code>,
+and <a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a>.  See those constants to determine the full list of
+possible values.</p>
 </dd>
 <dt class="field-even">Example<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86-win32&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;x86_64-linux&quot;</span></code></p>
@@ -1021,7 +1021,8 @@ strings.</p>
 <li><p><strong>under-shell?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. If true (the
 default), use a shell to invoke the <em>command</em>. On Unix systems this is
 equivalent to <code class="docutils literal notranslate"><span class="pre">/bin/sh</span> <span class="pre">-c</span> <span class="pre">'...command...'</span></code>. On Windows the
-<span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">COMSPEC</span></code> environment variable specifies</p></li>
+<span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">COMSPEC</span></code> environment variable specifies which command
+interpreter to use.</p></li>
 <li><p><strong>inherit-console?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Whether
 to run in the same session and process group as the calling process and
 therefore retain the same controlling TTY. Essentially, whether or not to
