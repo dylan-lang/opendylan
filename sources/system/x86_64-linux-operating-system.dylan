@@ -7,5 +7,5 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $architecture-little-endian? :: <boolean> = #t;
 
-define constant $machine-name = #"x86_64";
-define constant $os-name      = #"linux";
+define constant $machine-architecture = #"x86_64";
+define constant $os-name = #"linux";

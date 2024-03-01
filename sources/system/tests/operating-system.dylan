@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define test test-$architecture-little-endian? ()
   check-true("$architecture-little-endian? is true if x86",
-             $machine-name ~== #"x86" | $architecture-little-endian?);
+             $machine-architecture ~== #"x86" | $architecture-little-endian?);
 end test;
 
 define test test-$os-name ()
@@ -29,7 +29,7 @@ define test test-$platform-name ()
   //---*** Fill this in...
 end test;
 
-define test test-$machine-name ()
+define test test-$machine-architecture ()
   //---*** Fill this in...
 end test;
 
@@ -388,7 +388,7 @@ define suite operating-system-test-suite ()
   test test-$os-variant;
   test test-$os-version;
   test test-$platform-name;
-  test test-$machine-name;
+  test test-$machine-architecture;
   test test-login-name;
   test test-login-group;
   test test-owner-name;

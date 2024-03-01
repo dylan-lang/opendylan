@@ -41,6 +41,9 @@ end macro with-storage;
 define constant $os-variant = $os-name;
 define constant $os-version = "Unknown";
 
+// $machine-name is deprecated as of v2024.2 but is kept for backward compatibility.
+define constant $machine-name = $machine-architecture;
+
 define constant $command-line-option-prefix = '-';
 
 define function command-line-option-prefix

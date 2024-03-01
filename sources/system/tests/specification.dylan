@@ -184,7 +184,8 @@ define interface-specification-suite operating-system-specification-suite ()
   constant $os-variant :: <symbol>;
   constant $os-version :: <string>;
   constant $platform-name :: <symbol>;
-  constant $machine-name :: <symbol>;
+  constant $machine-architecture :: <symbol>;
+  constant $machine-name :: <symbol>; // Deprecated, use $machine-architecture
 
   // Operating System functions
   function login-name () => (false-or(<string>));
