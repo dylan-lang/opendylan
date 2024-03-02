@@ -20,7 +20,7 @@ environment variable in the system.
 The following constants contain machine-specific information:
 
 - :const:`$architecture-little-endian?`
-- :const:`$machine-name`
+- :const:`$machine-architecture`
 - :const:`$os-name`
 - :const:`$os-variant`
 - :const:`$os-version`
@@ -93,7 +93,7 @@ System library's operating-system module.
 
    :seealso:
 
-     - :const:`$machine-name`
+     - :const:`$machine-architecture`
      - :const:`$os-name`
      - :const:`$os-variant`
      - :const:`$os-version`
@@ -223,7 +223,7 @@ System library's operating-system module.
 
      - :func:`login-name`
 
-.. constant:: $machine-name
+.. constant:: $machine-architecture
 
    Constant specifying the type of hardware installed in the host machine.
 
@@ -243,6 +243,11 @@ System library's operating-system module.
      - :const:`$os-version`
      - :const:`$platform-name`
 
+.. constant:: $machine-name
+
+   This constant is the **deprecated** name for :const:`$machine-architecture`
+   and will be removed in a future release.
+
 .. constant:: $os-name
 
    Constant specifying the operating system running on the host machine.
@@ -258,7 +263,7 @@ System library's operating-system module.
    :seealso:
 
      - :const:`$architecture-little-endian?`
-     - :const:`$machine-name`
+     - :const:`$machine-architecture`
      - :const:`$os-variant`
      - :const:`$os-version`
      - :const:`$platform-name`
@@ -281,7 +286,7 @@ System library's operating-system module.
    :seealso:
 
      - :const:`$architecture-little-endian?`
-     - :const:`$machine-name`
+     - :const:`$machine-architecture`
      - :const:`$os-name`
      - :const:`$os-version`
      - :const:`$platform-name`
@@ -303,7 +308,7 @@ System library's operating-system module.
    :seealso:
 
      - :const:`$architecture-little-endian?`
-     - :const:`$machine-name`
+     - :const:`$machine-architecture`
      - :const:`$os-name`
      - :const:`$os-variant`
      - :const:`$platform-name`
@@ -367,9 +372,9 @@ System library's operating-system module.
    :description:
 
      Represents both the architecture and the operating system running on the
-     host machine. It is a concatenation of :const:`$machine-name`, ``"-"``,
-     and :const:`$os-name`.  See those constants to determine the full list of
-     possible values.
+     host machine. It is a concatenation of :const:`$machine-architecture`,
+     ``"-"``, and :const:`$os-name`.  See those constants to determine the full
+     list of possible values.
 
    :example:
 
@@ -377,7 +382,7 @@ System library's operating-system module.
 
    :seealso:
 
-     - :const:`$machine-name`
+     - :const:`$machine-architecture`
      - :const:`$os-name`
 
 .. function:: machine-concurrent-thread-count

@@ -476,7 +476,7 @@ environment variable in the system.</p>
 <p>The following constants contain machine-specific information:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
-<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
@@ -549,7 +549,7 @@ architecture this value is <a class="reference external" href="https://opendylan
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
@@ -754,8 +754,8 @@ current machine is a member, or <a class="reference external" href="https://open
 </dd></dl>
 
 <dl class="dylan constant">
-<dt class="sig sig-object dylan-api dylan" id="system:operating-system:$machine-name">
-<span class="sig-name descname"><span class="pre">$machine-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-name" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object dylan-api dylan" id="system:operating-system:$machine-architecture">
+<span class="sig-name descname"><span class="pre">$machine-architecture</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-architecture" title="Permalink to this definition">#</a></dt>
 <dd><p>Constant specifying the type of hardware installed in the host machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -782,6 +782,13 @@ installed in the host machine.</p>
 </dd></dl>
 
 <dl class="dylan constant">
+<dt class="sig sig-object dylan-api dylan" id="system:operating-system:$machine-name">
+<span class="sig-name descname"><span class="pre">$machine-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-name" title="Permalink to this definition">#</a></dt>
+<dd><p>This constant is the <strong>deprecated</strong> name for <a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a>
+and will be removed in a future release.</p>
+</dd></dl>
+
+<dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$os-name">
 <span class="sig-name descname"><span class="pre">$os-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-name" title="Permalink to this definition">#</a></dt>
 <dd><p>Constant specifying the operating system running on the host machine.</p>
@@ -799,7 +806,7 @@ running on the host machine.</p>
 <dt class="field-even">See also<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
-<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
@@ -828,7 +835,7 @@ possible values are <code class="docutils literal notranslate"><span class="pre"
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
-<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-version"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-version</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
@@ -856,7 +863,7 @@ value would be <em>“4.0.1212 B”</em>.</p>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><a class="reference internal" href="#system:operating-system:$architecture-little-endian?"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$architecture-little-endian?</span></code></a></p></li>
-<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-variant"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-variant</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$platform-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$platform-name</span></code></a></p></li>
@@ -954,16 +961,16 @@ hardware installed in the host machine.</p>
 </dd>
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Represents both the architecture and the operating system running on the
-host machine. It is a concatenation of <a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a>, <code class="docutils literal notranslate"><span class="pre">&quot;-&quot;</span></code>,
-and <a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a>.  See those constants to determine the full list of
-possible values.</p>
+host machine. It is a concatenation of <a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a>,
+<code class="docutils literal notranslate"><span class="pre">&quot;-&quot;</span></code>, and <a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a>.  See those constants to determine the full
+list of possible values.</p>
 </dd>
 <dt class="field-even">Example<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">#&quot;x86-win32&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">#&quot;x86_64-linux&quot;</span></code></p>
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#system:operating-system:$machine-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:$os-name"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$os-name</span></code></a></p></li>
 </ul>
 </p>
