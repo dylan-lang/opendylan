@@ -18,7 +18,7 @@ define function main(name, arguments)
 
   // Useful built-in variables
   jam-variable(state, "OS") := vector(as(<string>, $os-name));
-  jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
+  jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-architecture));
   jam-variable(state, "TARGET_PLATFORM") := vector(as(<string>, target-platform-name()));
 
   select($os-name)

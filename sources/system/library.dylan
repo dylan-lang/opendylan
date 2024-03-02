@@ -55,7 +55,8 @@ define module operating-system
 
   create $architecture-little-endian?,
          $os-name, $os-variant, $os-version,
-         $platform-name, $machine-name,
+         $platform-name, $machine-architecture,
+         $machine-name, // Deprecated, use $machine-architecture
          login-name, login-group, owner-name, owner-organization,
          environment-variable, environment-variable-setter,
          tokenize-environment-variable,

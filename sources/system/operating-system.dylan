@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $platform-name
     = as(<symbol>,
-         concatenate(as(<string>, $machine-name), "-",
+         concatenate(as(<string>, $machine-architecture), "-",
                      as(<string>, $os-name)));
 
 define macro with-application-output
