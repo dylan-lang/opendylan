@@ -104,7 +104,7 @@ endif
 CC = @CC@
 AR = ar -rcs
 
-CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir) @DEFS@ @CPPFLAGS@
+CFLAGS		= $(PLATFORM_CFLAGS) -Wall -Wno-nullability-completeness -O -g -I$(srcdir) @DEFS@ @CPPFLAGS@ @CFLAGS@
 LFLAGS		= $(PLATFORM_LFLAGS)
 
 HARP_CFLAGS     = -DOPEN_DYLAN_BACKEND_HARP
