@@ -311,7 +311,8 @@ define sealed method build-project
           abort-on-all-warnings? = #f,
           abort-on-serious-warnings? = #f,
           warning-callback :: false-or(<function>),
-          progress-callback :: false-or(<function>), error-handler,
+          progress-callback :: false-or(<function>),
+          error-handler :: <function>,
           save-databases? = #f,
           process-subprojects? = #t,
           messages = #"external")
