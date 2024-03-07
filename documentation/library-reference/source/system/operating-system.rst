@@ -228,12 +228,16 @@ System library's operating-system module.
    Constant specifying the type of hardware installed in the host machine.
 
    :type: :drm:`<symbol>`
-   :value: One of ``#"aarch64"``, ``#"arm"``, ``#"riscv64"``  ``#"x86"``, ``#"x86-64"``
+   :value: One of ``#"aarch64"``, ``#"arm"``, ``#"riscv64"``  ``#"x86"``, ``#"x86_64"``
 
    :description:
 
-     This constant is a symbol that represents the type of hardware
-     installed in the host machine.
+     This constant represents the execution platform's instruction set
+     architecture.
+
+     Note that this not always the same as the architecture of the hardware
+     installed in the host machine. For example, when running ``x86_64`` code
+     on Apple Silicon the value is ``#"x86_64``, not ``#"aarch64"``.
 
    :seealso:
 
@@ -245,8 +249,10 @@ System library's operating-system module.
 
 .. constant:: $machine-name
 
-   This constant is the **deprecated** name for :const:`$machine-architecture`
-   and will be removed in a future release.
+   .. deprecated:: 2024.2
+      Use :const:`$machine-architecture` instead.
+
+   This constant will be removed in a future release.
 
 .. constant:: $os-name
 
@@ -367,14 +373,14 @@ System library's operating-system module.
    hardware installed in the host machine.
 
    :type: :drm:`<symbol>`
-   :value: ``#"x86-win32"``, ``#"x86-linux"``, etc.
+   :value: ``#"x86-win32"``, ``#"x86_64-darwin"``, etc.
 
    :description:
 
      Represents both the architecture and the operating system running on the
-     host machine. It is a concatenation of :const:`$machine-architecture`,
-     ``"-"``, and :const:`$os-name`.  See those constants to determine the full
-     list of possible values.
+     host machine. It is a symbol created from the concatenation of
+     :const:`$machine-architecture`, ``"-"``, and :const:`$os-name`.  See those
+     constants to determine the full list of possible values.
 
    :example:
 
