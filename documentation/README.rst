@@ -10,7 +10,7 @@ Before building this documentation, you will need a copy of Sphinx
 installed. The latest versions of Sphinx use Python 3 so we assume Python 3 is
 in use here.  The easiest way to install Sphinx is to get it from the `Python
 Package Index <http://pypi.python.org/pypi/Sphinx>`_ or to use ``pip3``::
- 
+
   sudo pip3 install -U Sphinx
 
 On some systems it might be called just ``pip`` even when installing Python 3
@@ -20,7 +20,7 @@ You also need to have the git submodule for our Sphinx extension populated.  If
 this is not present for you, do this at the top level of the opendylan
 repository::
 
-  git submodule init && git submodule update
+  git submodule update --init --recursive
 
 Building
 ========
@@ -57,7 +57,7 @@ least on Debian) to install these packages:
 *  texlive-latex-recommended
 *  texlive-fonts-recommended
 *  texlive-latex-extra
- 
+
 
 Link Validation
 ---------------
@@ -72,9 +72,9 @@ Section Header Markup
 =====================
 
 We are following the `Sphinx suggestions
-<http://sphinx.pocoo.org/rest.html#sections>`_ for header markup, which
-are as follows:
-    
+<https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#sections>`_
+for header markup, which are as follows:
+
     * # with overline, for parts
     * \* with overline, for chapters
     * =, for sections
