@@ -67,7 +67,7 @@ For further details of the LID file format, see :doc:`../library-reference/lid`.
 
    Platform-specific LID files should use the ``Platforms`` keyword to indicate
    which platforms they apply to. This tells the `dylan update
-   <https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html#dylan-update>`_
+   <https://opendylan.org/package/dylan-tool/index.html#dylan-update>`_
    command which registry files to create.
 
    =============== ========================= =========================
