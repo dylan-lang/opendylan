@@ -6,7 +6,7 @@ manager and the :program:`dylan` tool. When using the :program:`dylan` tool
 dependencies are added to the "dylan-package.json" file in your project. Each
 dependency includes a `semantic version <https://semver.org>`_ and `dependency
 resolution
-<https://docs.opendylan.org/packages/dylan-tool/documentation/source/pacman.html#dependency-resolution>`_
+<https://opendylan.org/package/dylan-tool/pacman.html#dependency-resolution>`_
 is done with "minimal version selection".  See the `dylan-tool`_ documentation
 for details.
 
@@ -82,4 +82,4 @@ a number of submodules, so you don't need to pull each
 of those in directly, but can reference them through
 the ``ext/http/`` directory.
 
-.. _dylan-tool: https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html
+.. _dylan-tool: https://opendylan.org/package/dylan-tool/index.html

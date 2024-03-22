@@ -135,7 +135,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -456,7 +456,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -467,67 +467,101 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using the <strong class="program">dylan</strong> tool source registries are created
-for you via the <code class="docutils literal notranslate"><span class="pre">dylan</span> <span class="pre">update</span></code> command and you should not have to
-create them explicitly. You may want to skip this section for now.</p>
+for you via the <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html#dylan-update">dylan update</a>
+command and you should not have to create them explicitly. You may
+want to skip this section for now.</p>
 </div>
 <p>Passing the name of a “.lid” file to <strong class="program">dylan-compiler</strong> works great when
 you have a single library that only uses other libraries that are part of Open
 Dylan, but what if you want to use a second library that you wrote yourself or
 that you installed from GitHub?  How will <strong class="program">dylan-compiler</strong> find the
-sources for that library?  The answer is registries.  For each Dylan library
-that isn’t part of Open Dylan itself, you create a file in the registry that
-points to the “.lid” file for the library.  For example, here’s the registry
-file for hello-world, created in the previous section. Note that this assumes
-you are still in the directory created by <strong class="command">dylan new application</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat ./registry/{platform}/hello-world   # substitute your platform
-abstract://dylan/hello-world.lid
+sources for that library?  The answer is registries.</p>
+<p>For each Dylan library that isn’t part of Open Dylan itself, you create a file
+in the registry which is named the same as the library and contains a pointer
+to the “.lid” file for the library.  For example, here’s the registry file for
+hello-world, created in the previous section. Note that this assumes you are
+still in the directory created by <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html#dylan-new-application">dylan new application</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls registry/*/hello-world
+registry/x86_64-darwin/hello-world
 </pre></div>
 </div>
 <p>What’s going on here?  First of all, the registry mechanism makes it possible
-to have platform-specific libraries.  Anything platform-independent goes in the
-<code class="file docutils literal notranslate"><span class="pre">registry/generic</span></code> directory. Other supported platform names are
-<code class="docutils literal notranslate"><span class="pre">x86_64-freebsd</span></code>, <code class="docutils literal notranslate"><span class="pre">x86_64-linux</span></code>, <code class="docutils literal notranslate"><span class="pre">x86-win32</span></code>, etc. For a full list see
-<a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/registry">the Open Dylan registry</a>.</p>
+to have platform-specific libraries.  The <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan</a> tool currently always
+writes registry entries to a platform-specific directory, in this case
+<code class="docutils literal notranslate"><span class="pre">x86_64-darwin</span></code>, but anything platform-independent can actually go in the
+<code class="file docutils literal notranslate"><span class="pre">registry/generic</span></code> subdirectory.</p>
 <p>Platform-specific registry directories are searched before
 <code class="file docutils literal notranslate"><span class="pre">registry/generic</span></code>, so if you have a library that includes an extra file
-for Windows-only definitions, you can use two registry entries: one in the
-“x86-win32” directory and one in the “generic” directory.</p>
+for Windows-only definitions, you can use two registry entries: one in
+<code class="file docutils literal notranslate"><span class="pre">registry/x86-win32/hello-world</span></code> pointing to the Windows-specific LID
+file and one in <code class="file docutils literal notranslate"><span class="pre">registry/generic/hello-world</span></code> pointing to the LID file
+that works on other platforms.</p>
 <p>Now let’s look at the actual content of our hello-world registry file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abstract</span><span class="p">:</span><span class="o">//</span><span class="n">dylan</span><span class="o">/</span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">lid</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat registry/x86_64-darwin/hello-world
+abstract://dylan/hello-world.lid
 </pre></div>
 </div>
 <p>What this is doing is locating a file <em>relative to the directory containing the
 registry directory itself</em>.  If the <code class="file docutils literal notranslate"><span class="pre">registry</span></code> directory is
-<code class="docutils literal notranslate"><span class="pre">/home/you/xyz/registry</span></code> then <code class="docutils literal notranslate"><span class="pre">abstract://dylan/hello-world.lid</span></code> says the
-hello-world “.lid” file is in <code class="docutils literal notranslate"><span class="pre">/home/you/xyz/hello-world.lid</span></code>.
+<code class="docutils literal notranslate"><span class="pre">/tmp/hello-world/registry</span></code> then <code class="docutils literal notranslate"><span class="pre">abstract://dylan/hello-world.lid</span></code> says
+the hello-world LID file is in <code class="docutils literal notranslate"><span class="pre">/tmp/hello-world/hello-world.lid</span></code>.
 “abstract://dylan/” is just boilerplate.</p>
-<p>When you invoke <strong class="program">dylan-compiler</strong> in the directory containing the
+<p>When you invoke <strong class="program">dylan-compiler</strong> in the directory containing a
 “registry” directory it automatically uses that registry, in addition to (and
 taking precedence over) the registry in the Open Dylan installation directory.</p>
-<p>If you prefer to invoke the compiler from elsewhere, you can set the
-<span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> environment variable to point your
-registry directory. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export OPEN_DYLAN_USER_REGISTRIES=/home/you/xyz/registry
+<section id="open-dylan-user-registries">
+<h2>OPEN_DYLAN_USER_REGISTRIES<a class="headerlink" href="#open-dylan-user-registries" title="Permalink to this heading">#</a></h2>
+<p>If you prefer to invoke the compiler from outside your workspace or if you want
+to include multiple workspace registries when searching for libraries, you can
+set the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> environment variable. For
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export OPEN_DYLAN_USER_REGISTRIES=/tmp/workspace1/registry
 </pre></div>
 </div>
-<p>Once you’ve set <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> to your new registry,
-<strong class="program">dylan-compiler</strong> can find the hello-world library source no matter
-what directory you’re currently working in. You only need to specify the
-library name:</p>
+<p>Once you’ve set <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code>, <strong class="program">dylan-compiler</strong>
+can find library source code no matter what directory you’re currently working
+in. You only need to specify the library name:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd /tmp
 $ dylan-compiler -build hello-world
 </pre></div>
 </div>
 <p>You can add more than one registry to <span class="target" id="index-2"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> by
 separating them with colons (Unix) or semicolons (Windows):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export OPEN_DYLAN_USER_REGISTRIES=/my/registry:/their/registry
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export OPEN_DYLAN_USER_REGISTRIES=/tmp/workspace1/registry:/tmp/workspace2/registry
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If <span class="target" id="index-3"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> is set, the “registry”
-directory in the current working directory is ignored.</p>
+</section>
+<section id="registry-search-order">
+<h2>Registry Search Order<a class="headerlink" href="#registry-search-order" title="Permalink to this heading">#</a></h2>
+<p>For each step in the following list, the directory named for the current
+platform is searched <strong>before</strong> the “generic” directory.</p>
+<ol class="arabic simple">
+<li><p>If <span class="target" id="index-3"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> is set then its list of registries
+is searched in order.</p></li>
+<li><p>If a directory named <code class="file docutils literal notranslate"><span class="pre">registry</span></code> exists in the current working
+directory where the Dylan compiler is started, it is searched.</p></li>
+<li><p>The internal Open Dylan registry in the <code class="file docutils literal notranslate"><span class="pre">sources/registry</span></code> directory
+in your Open Dylan installation is searched last.</p></li>
+</ol>
+<p>To see the list of registries in the order they will be searched, use the
+<code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">registries</span></code> command in the interactive compiler.  Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo $OPEN_DYLAN_USER_REGISTRIES
+OPEN_DYLAN_USER_REGISTRIES=/tmp/a:/tmp/b
+$ cd /tmp/x
+$ mkdir registry
+$ dylan-compiler
+&gt; show registries
+  {personal registry in /tmp/a/x86_64-linux/}
+  {personal registry in /tmp/b/x86_64-linux/}
+  {personal registry in /tmp/x/registry/x86_64-linux/}
+  {personal registry in /opt/opendylan-2024.2/sources/registry/x86_64-linux/}
+  {personal registry in /tmp/a/generic/}
+  {personal registry in /tmp/b/generic/}
+  {personal registry in /tmp/x/registry/generic/}
+  {personal registry in /opt/opendylan-2024.2/sources/registry/generic/}
+</pre></div>
 </div>
+</section>
 </section>
 
         </article>
@@ -573,8 +607,28 @@ directory in the current working directory is ignored.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Using Source Registries</a><ul>
+<li><a class="reference internal" href="#open-dylan-user-registries">OPEN_DYLAN_USER_REGISTRIES</a></li>
+<li><a class="reference internal" href="#registry-search-order">Registry Search Order</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

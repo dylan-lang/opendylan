@@ -467,9 +467,9 @@
 <p>We recommend managing inter-library dependencies by use of the Dylan package
 manager and the <strong class="program">dylan</strong> tool. When using the <strong class="program">dylan</strong> tool
 dependencies are added to the “dylan-package.json” file in your project. Each
-dependency includes a <a class="reference external" href="https://semver.org">semantic version</a> and <a class="reference external" href="https://docs.opendylan.org/packages/dylan-tool/documentation/source/pacman.html#dependency-resolution">dependency
+dependency includes a <a class="reference external" href="https://semver.org">semantic version</a> and <a class="reference external" href="https://opendylan.org/package/dylan-tool/pacman.html#dependency-resolution">dependency
 resolution</a>
-is done with “minimal version selection”.  See the <a class="reference external" href="https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html">dylan-tool</a> documentation
+is done with “minimal version selection”.  See the <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan-tool</a> documentation
 for details.</p>
 <p>The second way to manage dependencies is to use Git submodules. The remainder
 of this document explains how to do that.</p>
@@ -524,7 +524,7 @@ that you’re using.</p>
 <section id="transitive-dependencies">
 <h2>Transitive Dependencies<a class="headerlink" href="#transitive-dependencies" title="Permalink to this heading">#</a></h2>
 <p>The Dylan compiler won’t find transitive dependencies automatically (unless you
-are using <a class="reference external" href="https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html">dylan-tool</a>), so you will need to create registry entries for them
+are using <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan-tool</a>), so you will need to create registry entries for them
 as well.</p>
 <p>Sometimes, you will want to create git submodules for them as
 well, but other times you can just reference them from the

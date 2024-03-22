@@ -478,7 +478,7 @@ Hello, world!
 </div>
 <p>Ta da!  Now a quick review of the steps with a little bit of explanation.</p>
 <p>First you must set <code class="docutils literal notranslate"><span class="pre">PATH</span></code> so that the <strong class="program">dylan</strong> and
-<strong class="program">dylan-compiler</strong> commands will be found.  <code class="docutils literal notranslate"><span class="pre">./_build/bin</span></code> is where
+<strong class="program">dylan-compiler</strong> executables will be found.  <code class="docutils literal notranslate"><span class="pre">./_build/bin</span></code> is where
 <strong class="program">dylan-compiler</strong> puts the executables it builds.</p>
 <div class="alert alert-block alert-warning admonition note">
 <p class="admonition-title">Note</p>
@@ -487,25 +487,30 @@ to read <a class="reference internal" href="windows.html"><span class="doc">Note
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">dylan</span> <span class="pre">new</span> <span class="pre">application</span> <span class="pre">--simple</span> <span class="pre">hello-world</span></code> creates a directory named
 “hello-world”, and several files. The <code class="docutils literal notranslate"><span class="pre">--simple</span></code> flag says to skip generating
-a test suite library.</p>
+a test suite library and instead of a separate <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> library and
+<code class="docutils literal notranslate"><span class="pre">hello-world-app</span></code> executable library to just make one <code class="docutils literal notranslate"><span class="pre">hello-world</span></code>
+executable library.</p>
 <ol class="arabic simple">
 <li><p><code class="file docutils literal notranslate"><span class="pre">hello-world.lid</span></code> lists the files in the project.  The order in which
 the files are listed here determines the order in which the code in them is
 loaded. The library definition file should always be first.</p></li>
 <li><p><code class="file docutils literal notranslate"><span class="pre">library.dylan</span></code> contains the library and module definitions.  These
-can be extended as your project grows in complexity.</p></li>
-<li><p><code class="file docutils literal notranslate"><span class="pre">hello-world.dylan</span></code> contains the main program code.</p></li>
+can be extended as your project grows in complexity. Note that the library
+and modules are defined in the pre-defined <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code> module.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">hello-world.dylan</span></code> contains the main program code. Note that this
+code is defined in the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> module of the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code>
+library.</p></li>
 <li><p>The <code class="file docutils literal notranslate"><span class="pre">registry</span></code> directory is how <strong class="program">dylan-compiler</strong> locates each
 used library. When using the <strong class="program">dylan</strong> tool, this directory is
 generated for you. See <a class="reference internal" href="source-registries.html"><span class="doc">Using Source Registries</span></a> for details on the registry
 format.</p></li>
 <li><p><code class="file docutils literal notranslate"><span class="pre">dylan-package.json</span></code> describes the new “hello-world” package. This is
 where you can specify dependencies, the package location, etc. See the
-<a class="reference external" href="https://docs.opendylan.org/packages/dylan-tool/documentation/source/index.html">dylan-tool documentation</a>
-for more on this. Note that the existence of this file turns the
-“hello-world” directory into a <strong class="program">dylan</strong> workspace.</p></li>
+<a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan tool documentation</a> for more on
+this. Note that the existence of this file turns the “hello-world” directory
+into a <strong class="program">dylan</strong> workspace.</p></li>
 </ol>
-<p>The first time you build <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> all used libraries are built, all the
+<p>The first time you build your project all used libraries are built, all the
 way down to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library itself. Subsequent builds only need to
 recompile <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> itself and are therefore much faster.</p>
 <div class="admonition note">
@@ -513,7 +518,7 @@ recompile <code class="docutils literal notranslate"><span class="pre">hello-wor
 <p>Don’t confuse the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library with the <strong class="program">dylan</strong>
 executable program. The <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library contains the core Dylan
 language features that are not implemented inside the compiler. The
-<code class="docutils literal notranslate"><span class="pre">dylan</span></code> program is a tool to help manager Dylan projects and is
+<code class="docutils literal notranslate"><span class="pre">dylan</span></code> program is a tool to help manage Dylan projects and is
 created from a library called <code class="docutils literal notranslate"><span class="pre">dylan-tool</span></code>.</p>
 </div>
 <p>The compiler places its output in the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory in the current
