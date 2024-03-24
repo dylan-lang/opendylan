@@ -470,34 +470,35 @@ compiler knows about your source code.  It allows you to view cross
 references, locate definitions, view argument lists, compile your
 code, browse class hierarchies, and more.  This section gives a
 brief introduction to using DIME.</p>
-<p>The first thing you need to use DIME is the emacs Lisp code for
-dylan-mode, which can be downloaded from <a class="reference external" href="https://github.com/dylan-lang/dylan-mode">the dylan-mode GitHub
-repository</a>.  If you don’t
-have ready access to git there is a link on that page to download as a
-.zip file.</p>
-<p>Next set up your .emacs file as follows.  Adjust the pathnames to
-match your Open Dylan installation location and the directory where
-you put dylan-mode.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="nb">list</span> <span class="s1">&#39;load-path &quot;/path/to/dylan-mode&quot;)</span>
-<span class="p">(</span><span class="n">setq</span> <span class="n">inferior</span><span class="o">-</span><span class="n">dylan</span><span class="o">-</span><span class="n">program</span> <span class="s2">&quot;/opt/opendylan/bin/dswank&quot;</span><span class="p">)</span>
-<span class="p">(</span><span class="n">require</span> <span class="s1">&#39;dime)</span>
-<span class="p">(</span><span class="n">dime</span><span class="o">-</span><span class="n">setup</span> <span class="s1">&#39;(dime-dylan dime-repl))</span>
-<span class="p">(</span><span class="n">setenv</span> <span class="s2">&quot;OPEN_DYLAN_USER_REGISTRIES&quot;</span> <span class="s2">&quot;/path/to/your/registry:...more...&quot;</span><span class="p">)</span>
+<p>The first thing you need to use DIME is the emacs Lisp code for dylan-mode,
+which can be downloaded from <a class="reference external" href="https://github.com/dylan-lang/dylan-emacs-support">https://github.com/dylan-lang/dylan-emacs-support</a>.</p>
+<p>Next set up your <code class="file docutils literal notranslate"><span class="pre">.emacs</span></code> file as follows.  Adjust the pathnames to match
+your Open Dylan installation location and the directory where you put the
+dylan-emacs-support repository.</p>
+<div class="highlight-emacs-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">add-to-list</span><span class="w"> </span><span class="ss">&#39;load-path</span><span class="w"> </span><span class="s">&quot;/path/to/dylan-mode&quot;</span><span class="p">)</span>
+<span class="p">(</span><span class="nb">require</span><span class="w"> </span><span class="ss">&#39;dime</span><span class="p">)</span>
+<span class="p">(</span><span class="nv">dime-setup</span><span class="w"> </span><span class="o">&#39;</span><span class="p">(</span><span class="nv">dime-repl</span><span class="w"> </span><span class="nv">dime-note-tree</span><span class="p">))</span>
+<span class="p">(</span><span class="k">setq</span><span class="w"> </span><span class="nv">dime-dylan-implementations</span>
+<span class="w">      </span><span class="o">&#39;</span><span class="p">((</span><span class="nv">opendylan</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;/opt/opendylan/bin/dswank&quot;</span><span class="p">)</span>
+<span class="w">                   </span><span class="nb">:env</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;OPEN_DYLAN_USER_REGISTRIES=/tmp/dime-test/registry&quot;</span><span class="p">))))</span>
 </pre></div>
 </div>
-<p>Setting <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> is important because that’s how
-DIME finds your projects.</p>
+<p>Setting <a class="reference external" href="source-registries.html#open-dylan-user-registries">OPEN_DYLAN_USER_REGISTRIES</a> is important because
+that’s how DIME finds your projects. Above we set it to the dime-test registry
+that is created in the example below.</p>
 <p>For this tutorial let’s use a “dime-test” project created with the
-<strong class="program">dylan</strong> tool.  See the section <a class="reference internal" href="hello-world.html"><span class="doc">Hello World</span></a> to create the
-project, and also make sure you have a registry entry for it.  See
-<a class="reference internal" href="source-registries.html"><span class="doc">Using Source Registries</span></a> if you’re not sure how to set that up.</p>
+<strong class="program">dylan</strong> tool.  Create the project with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ dylan new application dime-test
+</pre></div>
+</div>
+<p>which creates a library named “dime-test” and a corresponding executable
+library and test suite, as well as downloading dependencies and creating
+registry files.  See the <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html#dylan-new-application">dylan new application</a>
+command for more.</p>
 <p><strong>Start dime:</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export PATH=/opt/opendylan/bin:$PATH
-$ cd ...dir containing registry...
-$ echo abstract://dylan/dime-test/dime-test.lid &gt; registry/generic/dime-test
-$ dylan new application --simple dime-test
-$ cd dime-test
-$ emacs dime-test.dylan
+$ cd dime-test         # Created by dylan new application, above.
+$ emacs dime-test-app.dylan
 M-x dime &lt;Enter&gt;
 </pre></div>
 </div>
@@ -510,26 +511,30 @@ like this:</p>
 <p>This is the Open Dylan compiler interactive shell.  You can issue
 commands directly here if you like, but mostly you’ll issue dime
 commands from your Dylan source buffers.</p>
-<p><strong>Change projects:</strong> Switch back to the dime-test.dylan buffer and
-type <code class="docutils literal notranslate"><span class="pre">C-c</span> <span class="pre">M-p</span> <span class="pre">dime-test</span></code> to tell DIME to switch to the dime-test
-project.  If DIME doesn’t let you enter “dime-test” as the project
-name that means it couldn’t find the registry entry.  Press &lt;Tab&gt; to
-see a complete list of available projects.</p>
-<p><strong>Compile:</strong> To build the project, type <code class="docutils literal notranslate"><span class="pre">C-c</span> <span class="pre">C-k</span></code>.  You should see
-something like “Compilation finished: 3 warnings, 18 notes”.  (The
-reason there are so many warnings is because there are some warnings
-in the dylan library itself.  This is a bug that should be fixed
-eventually.)</p>
-<p><strong>Edit definition:</strong> There’s not much code in dime-test.dylan except
-for a <code class="docutils literal notranslate"><span class="pre">main</span></code> method.  Move the cursor onto the call to “format-out”
+<p><strong>Change projects:</strong> Switch back to the <code class="file docutils literal notranslate"><span class="pre">dime-test.dylan</span></code> buffer and type
+<code class="docutils literal notranslate"><span class="pre">C-c</span> <span class="pre">M-p</span> <span class="pre">dime-test-app</span></code> to tell DIME to switch to the dime-test-app project.
+If DIME doesn’t let you enter “dime-test-app” as the project name that means it
+couldn’t find the registry entry.  Make sure <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code>
+(see above) is set correctly.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Press &lt;Tab&gt; to see a complete list of available projects and in the
+<code class="docutils literal notranslate"><span class="pre">*dime-repl</span> <span class="pre">nil*</span></code> buffer run the “show registries” command to see
+the active registries the order they’re searched.</p>
+</div>
+<p><strong>Compile:</strong> To build the project, type <code class="docutils literal notranslate"><span class="pre">C-c</span> <span class="pre">C-k</span></code>.  You should see something
+like “Compilation finished: 15 notes”.  (The reason there are so many notes is
+because there are some non-serious warnings in the dylan library itself.  This
+is a bug that should be fixed eventually.)</p>
+<p><strong>Edit definition:</strong> There’s not much code in <code class="file docutils literal notranslate"><span class="pre">dime-test-app.dylan</span></code>
+except for a <code class="docutils literal notranslate"><span class="pre">main</span></code> function.  Move the cursor onto the call to “format-out”
 and type <code class="docutils literal notranslate"><span class="pre">M-.</span></code>.  It should jump to the format-out definition in the
 <code class="docutils literal notranslate"><span class="pre">io-internals</span></code> module.</p>
-<p><strong>Compiler warnings:</strong> Switch back to the dime-test.dylan buffer and
-make a change that causes a compiler warning, such as removing the
-semicolon at the end of the <code class="docutils literal notranslate"><span class="pre">format-out</span></code> line.  Recompile with <code class="docutils literal notranslate"><span class="pre">C-c</span>
-<span class="pre">C-k</span></code> and you should see something like “Compilation finished: 6
-warnings, 18 notes”.  You can jump to the first warning using the
-standard for emacs: <code class="docutils literal notranslate"><span class="pre">C-x</span> <span class="pre">`</span></code>.</p>
+<p><strong>Compiler warnings:</strong> Switch back to the <code class="file docutils literal notranslate"><span class="pre">dime-test-app.dylan</span></code> buffer
+and make a change that causes a compiler warning, such as removing the
+semicolon at the end of the <code class="docutils literal notranslate"><span class="pre">format-out</span></code> line.  Recompile with <code class="docutils literal notranslate"><span class="pre">C-c</span> <span class="pre">C-k</span></code>
+and you should see something like “Compilation finished: 3 warnings, 15 notes”.
+You can jump to the first warning using the standard for emacs: <code class="docutils literal notranslate"><span class="pre">C-x</span> <span class="pre">`</span></code>.</p>
 <p><strong>Argument lists:</strong> Note that when you type an open parenthesis, or
 comma, or space after a function name dime will display the <strong>argument
 list</strong> and return values in the emacs minibuffer.  e.g., try typing

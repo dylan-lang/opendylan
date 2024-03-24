@@ -8,73 +8,80 @@ references, locate definitions, view argument lists, compile your
 code, browse class hierarchies, and more.  This section gives a
 brief introduction to using DIME.
 
-The first thing you need to use DIME is the emacs Lisp code for
-dylan-mode, which can be downloaded from `the dylan-mode GitHub
-repository <https://github.com/dylan-lang/dylan-mode>`_.  If you don't
-have ready access to git there is a link on that page to download as a
-.zip file.
+The first thing you need to use DIME is the emacs Lisp code for dylan-mode,
+which can be downloaded from https://github.com/dylan-lang/dylan-emacs-support.
 
-Next set up your .emacs file as follows.  Adjust the pathnames to
-match your Open Dylan installation location and the directory where
-you put dylan-mode.  ::
+Next set up your :file:`.emacs` file as follows.  Adjust the pathnames to match
+your Open Dylan installation location and the directory where you put the
+dylan-emacs-support repository.
 
-    (add-to-list 'load-path "/path/to/dylan-mode")
-    (setq inferior-dylan-program "/opt/opendylan/bin/dswank")
-    (require 'dime)
-    (dime-setup '(dime-dylan dime-repl))
-    (setenv "OPEN_DYLAN_USER_REGISTRIES" "/path/to/your/registry:...more...")
+.. code-block:: emacs-lisp
 
-Setting ``OPEN_DYLAN_USER_REGISTRIES`` is important because that's how
-DIME finds your projects.
+   (add-to-list 'load-path "/path/to/dylan-mode")
+   (require 'dime)
+   (dime-setup '(dime-repl dime-note-tree))
+   (setq dime-dylan-implementations
+         '((opendylan ("/opt/opendylan/bin/dswank")
+                      :env ("OPEN_DYLAN_USER_REGISTRIES=/tmp/dime-test/registry"))))
+
+Setting `OPEN_DYLAN_USER_REGISTRIES
+<source-registries.html#open-dylan-user-registries>`_ is important because
+that's how DIME finds your projects. Above we set it to the dime-test registry
+that is created in the example below.
 
 For this tutorial let's use a "dime-test" project created with the
-:program:`dylan` tool.  See the section :doc:`hello-world` to create the
-project, and also make sure you have a registry entry for it.  See
-:doc:`source-registries` if you're not sure how to set that up.
+:program:`dylan` tool.  Create the project with ::
+
+   $ dylan new application dime-test
+
+which creates a library named "dime-test" and a corresponding executable
+library and test suite, as well as downloading dependencies and creating
+registry files.  See the `dylan new application
+<https://opendylan.org/package/dylan-tool/index.html#dylan-new-application>`_
+command for more.
 
 **Start dime:**  ::
 
     $ export PATH=/opt/opendylan/bin:$PATH
-    $ cd ...dir containing registry...
-    $ echo abstract://dylan/dime-test/dime-test.lid > registry/generic/dime-test
-    $ dylan new application --simple dime-test
-    $ cd dime-test
-    $ emacs dime-test.dylan
+    $ cd dime-test         # Created by dylan new application, above.
+    $ emacs dime-test-app.dylan
     M-x dime <Enter>
 
 You should now have a buffer called ``*dime-repl nil*`` that looks
 like this::
 
     Welcome to dswank - the Hacker Edition SLIME interface
-    opendylan> 
+    opendylan>
 
 This is the Open Dylan compiler interactive shell.  You can issue
 commands directly here if you like, but mostly you'll issue dime
 commands from your Dylan source buffers.
 
-**Change projects:** Switch back to the dime-test.dylan buffer and
-type ``C-c M-p dime-test`` to tell DIME to switch to the dime-test
-project.  If DIME doesn't let you enter "dime-test" as the project
-name that means it couldn't find the registry entry.  Press <Tab> to
-see a complete list of available projects.
+**Change projects:** Switch back to the :file:`dime-test.dylan` buffer and type
+``C-c M-p dime-test-app`` to tell DIME to switch to the dime-test-app project.
+If DIME doesn't let you enter "dime-test-app" as the project name that means it
+couldn't find the registry entry.  Make sure ``OPEN_DYLAN_USER_REGISTRIES``
+(see above) is set correctly.
 
-**Compile:** To build the project, type ``C-c C-k``.  You should see
-something like "Compilation finished: 3 warnings, 18 notes".  (The
-reason there are so many warnings is because there are some warnings
-in the dylan library itself.  This is a bug that should be fixed
-eventually.)
+.. hint:: Press <Tab> to see a complete list of available projects and in the
+          ``*dime-repl nil*`` buffer run the "show registries" command to see
+          the active registries the order they're searched.
 
-**Edit definition:** There's not much code in dime-test.dylan except
-for a ``main`` method.  Move the cursor onto the call to "format-out"
+**Compile:** To build the project, type ``C-c C-k``.  You should see something
+like "Compilation finished: 15 notes".  (The reason there are so many notes is
+because there are some non-serious warnings in the dylan library itself.  This
+is a bug that should be fixed eventually.)
+
+**Edit definition:** There's not much code in :file:`dime-test-app.dylan`
+except for a ``main`` function.  Move the cursor onto the call to "format-out"
 and type ``M-.``.  It should jump to the format-out definition in the
 ``io-internals`` module.
 
-**Compiler warnings:** Switch back to the dime-test.dylan buffer and
-make a change that causes a compiler warning, such as removing the
-semicolon at the end of the ``format-out`` line.  Recompile with ``C-c
-C-k`` and you should see something like "Compilation finished: 6
-warnings, 18 notes".  You can jump to the first warning using the
-standard for emacs: ``C-x ```.
+**Compiler warnings:** Switch back to the :file:`dime-test-app.dylan` buffer
+and make a change that causes a compiler warning, such as removing the
+semicolon at the end of the ``format-out`` line.  Recompile with ``C-c C-k``
+and you should see something like "Compilation finished: 3 warnings, 15 notes".
+You can jump to the first warning using the standard for emacs: ``C-x ```.
 
 **Argument lists:** Note that when you type an open parenthesis, or
 comma, or space after a function name dime will display the **argument
