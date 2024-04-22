@@ -29,21 +29,21 @@ Setting `OPEN_DYLAN_USER_REGISTRIES
 that's how DIME finds your projects. Above we set it to the dime-test registry
 that is created in the example below.
 
-For this tutorial let's use a "dime-test" project created with the
-:program:`dylan` tool.  Create the project with ::
+For this tutorial let's use a "dime-test" project created with :program:`deft`.
+Create the project with ::
 
-   $ dylan new application dime-test
+   $ deft new application dime-test
 
 which creates a library named "dime-test" and a corresponding executable
 library and test suite, as well as downloading dependencies and creating
-registry files.  See the `dylan new application
-<https://opendylan.org/package/dylan-tool/index.html#dylan-new-application>`_
+registry files.  See the `deft new application
+<https://opendylan.org/package/deft/index.html#deft-new-application>`_
 command for more.
 
 **Start dime:**  ::
 
     $ export PATH=/opt/opendylan/bin:$PATH
-    $ cd dime-test         # Created by dylan new application, above.
+    $ cd dime-test         # Created by deft new application, above.
     $ emacs dime-test-app.dylan
     M-x dime <Enter>
 
