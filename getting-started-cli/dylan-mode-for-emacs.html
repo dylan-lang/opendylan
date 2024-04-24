@@ -486,18 +486,18 @@ dylan-emacs-support repository.</p>
 <p>Setting <a class="reference external" href="source-registries.html#open-dylan-user-registries">OPEN_DYLAN_USER_REGISTRIES</a> is important because
 that’s how DIME finds your projects. Above we set it to the dime-test registry
 that is created in the example below.</p>
-<p>For this tutorial let’s use a “dime-test” project created with the
-<strong class="program">dylan</strong> tool.  Create the project with</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ dylan new application dime-test
+<p>For this tutorial let’s use a “dime-test” project created with <strong class="program">deft</strong>.
+Create the project with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ deft new application dime-test
 </pre></div>
 </div>
 <p>which creates a library named “dime-test” and a corresponding executable
 library and test suite, as well as downloading dependencies and creating
-registry files.  See the <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html#dylan-new-application">dylan new application</a>
+registry files.  See the <a class="reference external" href="https://opendylan.org/package/deft/index.html#deft-new-application">deft new application</a>
 command for more.</p>
 <p><strong>Start dime:</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export PATH=/opt/opendylan/bin:$PATH
-$ cd dime-test         # Created by dylan new application, above.
+$ cd dime-test         # Created by deft new application, above.
 $ emacs dime-test-app.dylan
 M-x dime &lt;Enter&gt;
 </pre></div>

@@ -468,16 +468,16 @@
 how do you write the canonical Hello World app?  This example assumes the
 <code class="docutils literal notranslate"><span class="pre">bash</span></code> shell is used.  You may need to adjust for your local shell.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export PATH=/opt/opendylan/bin:$PATH
-$ dylan new application --simple hello-world
+$ deft new application --simple hello-world
 $ cd hello-world
-$ dylan build --all
+$ deft build --all
 ...lots of output...
 $ _build/bin/hello-world
 Hello, world!
 </pre></div>
 </div>
 <p>Ta da!  Now a quick review of the steps with a little bit of explanation.</p>
-<p>First you must set <code class="docutils literal notranslate"><span class="pre">PATH</span></code> so that the <strong class="program">dylan</strong> and
+<p>First you must set <code class="docutils literal notranslate"><span class="pre">PATH</span></code> so that the <strong class="program">deft</strong> and
 <strong class="program">dylan-compiler</strong> executables will be found.  <code class="docutils literal notranslate"><span class="pre">./_build/bin</span></code> is where
 <strong class="program">dylan-compiler</strong> puts the executables it builds.</p>
 <div class="alert alert-block alert-warning admonition note">
@@ -485,7 +485,7 @@ Hello, world!
 <p>Some of these differ on Windows, so please be sure
 to read <a class="reference internal" href="windows.html"><span class="doc">Notes for Windows Users</span></a> if you are on Windows.</p>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">dylan</span> <span class="pre">new</span> <span class="pre">application</span> <span class="pre">--simple</span> <span class="pre">hello-world</span></code> creates a directory named
+<p><code class="docutils literal notranslate"><span class="pre">deft</span> <span class="pre">new</span> <span class="pre">application</span> <span class="pre">--simple</span> <span class="pre">hello-world</span></code> creates a directory named
 “hello-world”, and several files. The <code class="docutils literal notranslate"><span class="pre">--simple</span></code> flag says to skip generating
 a test suite library and instead of a separate <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> library and
 <code class="docutils literal notranslate"><span class="pre">hello-world-app</span></code> executable library to just make one <code class="docutils literal notranslate"><span class="pre">hello-world</span></code>
@@ -501,26 +501,17 @@ and modules are defined in the pre-defined <code class="docutils literal notrans
 code is defined in the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> module of the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code>
 library.</p></li>
 <li><p>The <code class="file docutils literal notranslate"><span class="pre">registry</span></code> directory is how <strong class="program">dylan-compiler</strong> locates each
-used library. When using the <strong class="program">dylan</strong> tool, this directory is
-generated for you. See <a class="reference internal" href="source-registries.html"><span class="doc">Using Source Registries</span></a> for details on the registry
-format.</p></li>
+used library. <strong class="program">deft</strong> generates this directory for you. See
+<a class="reference internal" href="source-registries.html"><span class="doc">Using Source Registries</span></a> for details on the registry format.</p></li>
 <li><p><code class="file docutils literal notranslate"><span class="pre">dylan-package.json</span></code> describes the new “hello-world” package. This is
-where you can specify dependencies, the package location, etc. See the
-<a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan tool documentation</a> for more on
+where you can specify dependencies, the package location, etc. See the <a class="reference external" href="https://opendylan.org/package/deft/index.html">deft
+documentation</a> for more on
 this. Note that the existence of this file turns the “hello-world” directory
-into a <strong class="program">dylan</strong> workspace.</p></li>
+into a <strong class="program">deft</strong> workspace.</p></li>
 </ol>
 <p>The first time you build your project all used libraries are built, all the
 way down to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library itself. Subsequent builds only need to
 recompile <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> itself and are therefore much faster.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Don’t confuse the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library with the <strong class="program">dylan</strong>
-executable program. The <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library contains the core Dylan
-language features that are not implemented inside the compiler. The
-<code class="docutils literal notranslate"><span class="pre">dylan</span></code> program is a tool to help manage Dylan projects and is
-created from a library called <code class="docutils literal notranslate"><span class="pre">dylan-tool</span></code>.</p>
-</div>
 <p>The compiler places its output in the <code class="docutils literal notranslate"><span class="pre">_build</span></code> directory in the current
 working directory. This includes the libraries and executables that it builds.
 You can run the executable from this location, as noted above.</p>
