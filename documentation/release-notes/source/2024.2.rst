@@ -20,6 +20,18 @@ this release.
 Compiler
 ========
 
+Tools
+=====
+
+* A new binary, ``dylan-lsp-server``, is bundled in this release. This is a
+  Language Server Protocol (LSP) implementation for use with VS Code and
+  emacs. It currently supports jump to definition/declaration, compiler
+  warnings, and hover text.
+
+  See the `lsp-server documentation
+  <https://opendylan.org/package/lsp-dylan/index.html>`_ for configuration
+  details.
+
 Library Updates
 ===============
 

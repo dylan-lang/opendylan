@@ -37,3 +37,6 @@
 [submodule "sources/app/deft"]
 	path = sources/app/deft
 	url = https://github.com/dylan-lang/deft
+[submodule "sources/app/lsp-dylan"]
+	path = sources/app/lsp-dylan
+	url = https://github.com/dylan-lang/lsp-dylan
