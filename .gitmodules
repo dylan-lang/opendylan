@@ -31,9 +31,9 @@
 [submodule "sources/lib/meta"]
 	path = sources/lib/meta
 	url = https://github.com/dylan-lang/meta.git
-[submodule "sources/app/dylan-tool"]
-	path = sources/app/dylan-tool
-	url = https://github.com/dylan-lang/dylan-tool
 [submodule "documentation/website"]
 	path = documentation/website
 	url = https://github.com/dylan-lang/website
+[submodule "sources/app/deft"]
+	path = sources/app/deft
+	url = https://github.com/dylan-lang/deft

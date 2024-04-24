@@ -302,7 +302,7 @@ SIMPLE_DAYTIME_CLIENT_SOURCE = $(NETWORK_EXAMPLES_SOURCE)\simple-daytime-client
 SIMPLE_DAYTIME_CLIENT_INSTALL_DIRECTORY = $(NETWORK_EXAMPLES_INSTALL_DIRECTORY)\simple-daytime-client
 SIMPLE_DAYTIME_SERVER_SOURCE = $(NETWORK_EXAMPLES_SOURCE)\simple-daytime-server
 SIMPLE_DAYTIME_SERVER_INSTALL_DIRECTORY = $(NETWORK_EXAMPLES_INSTALL_DIRECTORY)\simple-daytime-server
-DYLAN_TOOL_SOURCE = $(APP_DIRECTORY)\dylan-tool
+DEFT_SOURCE = $(APP_DIRECTORY)\deft
 
 #
 # CORBA projects
@@ -380,7 +380,7 @@ PARSER_COMPILER = $(INSTALL_BIN_DIRECTORY)\parser-compiler.exe
 TESTWORKS_REPORT = $(INSTALL_BIN_DIRECTORY)\testworks-report.exe
 WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\win32-environment.exe
 WITH_SPLASH_SCREEN = $(INSTALL_BIN_DIRECTORY)\with-splash-screen.exe
-DYLAN_TOOL_APP = $(INSTALL_BIN_DIRECTORY)\dylan-tool-app.exe
+DEFT_APP = $(INSTALL_BIN_DIRECTORY)\deft-app.exe
 
 BIG_INTEGERS_DLL = $(RUNTIME_PREFIX)bigint
 CHANNELS_DLL = $(RUNTIME_PREFIX)chnnls
@@ -753,7 +753,7 @@ devel-dbg-ui: $(DEVEL_DBG_UI)
 dll-wrap: $(DLL_WRAP)
 parser-compiler: $(PARSER_COMPILER)
 testworks-report: $(TESTWORKS_REPORT)
-dylan-tool-app: $(DYLAN_TOOL_APP)
+deft-app: $(DEFT_APP)
 
 project-manager-libraries: tools-interface user-projects
 core-compiler-libraries: file-source-records release-info dood binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-debug-back-end
@@ -1070,7 +1070,7 @@ rel-environment: dylan-environment win32-environment with-splash-screen
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
-tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger parser-compiler dylan-tool-app
+tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger parser-compiler deft-app
 release: release-info dylan-compiler compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
@@ -1991,14 +1991,14 @@ $(TESTWORKS_REPORT):
   $(ENSURE_SOURCES) testworks-report $(TESTWORKS_REPORT_SOURCE)
   $(BUILD_APPLICATION) testworks-report
 
-$(DYLAN_TOOL_APP):
+$(DEFT_APP):
   $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(STRINGS_DLL) strings
-  $(ENSURE_SOURCES) dylan-tool $(DYLAN_TOOL_SOURCE)
-  $(BUILD_APPLICATION) dylan-tool-app
-  $(COPY) $(DYLAN_TOOL_APP) $(INSTALL_BIN_DIRECTORY)\dylan.exe
+  $(ENSURE_SOURCES) deft $(DEFT_SOURCE)
+  $(BUILD_APPLICATION) deft-app
+  $(COPY) $(DEFT_APP) $(INSTALL_BIN_DIRECTORY)\deft.exe
 
 # Test Suites
 

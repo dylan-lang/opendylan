@@ -6,16 +6,16 @@ how do you write the canonical Hello World app?  This example assumes the
 ``bash`` shell is used.  You may need to adjust for your local shell.  ::
 
   $ export PATH=/opt/opendylan/bin:$PATH
-  $ dylan new application --simple hello-world
+  $ deft new application --simple hello-world
   $ cd hello-world
-  $ dylan build --all
+  $ deft build --all
   ...lots of output...
   $ _build/bin/hello-world
   Hello, world!
 
 Ta da!  Now a quick review of the steps with a little bit of explanation.
 
-First you must set ``PATH`` so that the :program:`dylan` and
+First you must set ``PATH`` so that the :program:`deft` and
 :program:`dylan-compiler` executables will be found.  ``./_build/bin`` is where
 :program:`dylan-compiler` puts the executables it builds.
 
@@ -23,7 +23,7 @@ First you must set ``PATH`` so that the :program:`dylan` and
    to read :doc:`windows` if you are on Windows.
    :class: alert alert-block alert-warning
 
-``dylan new application --simple hello-world`` creates a directory named
+``deft new application --simple hello-world`` creates a directory named
 "hello-world", and several files. The ``--simple`` flag says to skip generating
 a test suite library and instead of a separate ``hello-world`` library and
 ``hello-world-app`` executable library to just make one ``hello-world``
@@ -42,26 +42,18 @@ executable library.
    library.
 
 4. The :file:`registry` directory is how :program:`dylan-compiler` locates each
-   used library. When using the :program:`dylan` tool, this directory is
-   generated for you. See :doc:`source-registries` for details on the registry
-   format.
+   used library. :program:`deft` generates this directory for you. See
+   :doc:`source-registries` for details on the registry format.
 
 5. :file:`dylan-package.json` describes the new "hello-world" package. This is
-   where you can specify dependencies, the package location, etc. See the
-   `dylan tool documentation
-   <https://opendylan.org/package/dylan-tool/index.html>`_ for more on
+   where you can specify dependencies, the package location, etc. See the `deft
+   documentation <https://opendylan.org/package/deft/index.html>`_ for more on
    this. Note that the existence of this file turns the "hello-world" directory
-   into a :program:`dylan` workspace.
+   into a :program:`deft` workspace.
 
 The first time you build your project all used libraries are built, all the
 way down to the ``dylan`` library itself. Subsequent builds only need to
 recompile ``hello-world`` itself and are therefore much faster.
-
-.. note:: Don't confuse the ``dylan`` library with the :program:`dylan`
-          executable program. The ``dylan`` library contains the core Dylan
-          language features that are not implemented inside the compiler. The
-          ``dylan`` program is a tool to help manage Dylan projects and is
-          created from a library called ``dylan-tool``.
 
 The compiler places its output in the ``_build`` directory in the current
 working directory. This includes the libraries and executables that it builds.
