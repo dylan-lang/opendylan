@@ -191,7 +191,7 @@ BOOTSTRAP_3_ROOT = $(abs_builddir)/Bootstrap.3
 BOOTSTRAP_3_LIBRARIES = \
 	dylan-compiler dylan-environment parser-compiler dswank
 BOOTSTRAP_3_STATICS = \
-	deft-app
+	deft-app dylan-lsp-server
 
 BOOTSTRAP_3_COMPILER = \
         $(BOOTSTRAP_2_ROOT)/bin/dylan-compiler \
